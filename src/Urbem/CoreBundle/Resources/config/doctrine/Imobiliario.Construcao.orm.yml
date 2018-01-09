@@ -1,0 +1,90 @@
+Urbem\CoreBundle\Entity\Imobiliario\Construcao:
+    type: entity
+    table: imobiliario.construcao
+    repositoryClass: Urbem\CoreBundle\Repository\Imobiliario\ConstrucaoRepository
+    id:
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+    oneToMany:
+        fkImobiliarioAreaConstrucoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AreaConstrucao
+            mappedBy: fkImobiliarioConstrucao
+        fkImobiliarioBaixaConstrucoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BaixaConstrucao
+            mappedBy: fkImobiliarioConstrucao
+        fkImobiliarioConstrucaoReformas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoReforma
+            mappedBy: fkImobiliarioConstrucao
+        fkImobiliarioConstrucaoProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoProcesso
+            mappedBy: fkImobiliarioConstrucao
+        fkImobiliarioLicencaImovelNovaConstrucoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaImovelNovaConstrucao
+            mappedBy: fkImobiliarioConstrucao
+        fkImobiliarioUnidadeDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\UnidadeDependente
+            mappedBy: fkImobiliarioConstrucao
+        fkImobiliarioConstrucaoEdificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoEdificacao
+            mappedBy: fkImobiliarioConstrucao
+        fkImobiliarioConstrucaoCondominios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoCondominio
+            mappedBy: fkImobiliarioConstrucao
+    oneToOne:
+        fkImobiliarioConstrucaoOutros:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoOutros
+            mappedBy: fkImobiliarioConstrucao
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+        fkImobiliarioDataConstrucao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\DataConstrucao
+            mappedBy: fkImobiliarioConstrucao
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao

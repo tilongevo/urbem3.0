@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoOrgaoUnidade:
+    type: entity
+    table: tcmgo.configuracao_orgao_unidade
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codPoder:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_poder
+    fields:
+        numOrgao:
+            type: integer
+            nullable: false
+            column: num_orgao
+        numUnidade:
+            type: integer
+            nullable: false
+            column: num_unidade
+    manyToOne:
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcmgoConfiguracaoOrgaoUnidades
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcmgoConfiguracaoOrgaoUnidades
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcmgoPoder:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Poder
+            inversedBy: fkTcmgoConfiguracaoOrgaoUnidades
+            joinColumns:
+                cod_poder:
+                    referencedColumnName: cod_poder

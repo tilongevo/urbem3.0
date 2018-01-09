@@ -1,0 +1,67 @@
+Urbem\CoreBundle\Entity\SwCgaLogradouroCorrespondencia:
+    type: entity
+    table: sw_cga_logradouro_correspondencia
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        timestampCga:
+            type: datetimepk
+            generator:
+                strategy: NONE
+            column: timestamp_cga
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+        cep:
+            type: string
+            generator:
+                strategy: NONE
+        codBairro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bairro
+        codMunicipio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_municipio
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+    fields: {  }
+    manyToOne:
+        fkSwCga:
+            targetEntity: Urbem\CoreBundle\Entity\SwCga
+            inversedBy: fkSwCgaLogradouroCorrespondencias
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp_cga:
+                    referencedColumnName: timestamp
+        fkSwCepLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwCepLogradouro
+            inversedBy: fkSwCgaLogradouroCorrespondencias
+            joinColumns:
+                cep:
+                    referencedColumnName: cep
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+        fkSwBairroLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwBairroLogradouro
+            inversedBy: fkSwCgaLogradouroCorrespondencias
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_bairro:
+                    referencedColumnName: cod_bairro
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro

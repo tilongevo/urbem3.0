@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Pessoal\Requisito:
+    type: entity
+    table: pessoal.requisito
+    id:
+        codRequisito:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.requisito_cod_requisito_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_requisito
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    oneToMany:
+        fkPessoalCargoRequisitos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CargoRequisito
+            mappedBy: fkPessoalRequisito

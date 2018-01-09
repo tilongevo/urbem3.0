@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Contabilidade\PagamentoEstorno:
+    type: entity
+    table: contabilidade.pagamento_estorno
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        exercicioLiquidacao:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_liquidacao
+        codNota:
+            type: integer
+            nullable: false
+            column: cod_nota
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        timestampAnulada:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_anulada
+    manyToOne:
+        fkEmpenhoNotaLiquidacaoPagaAnulada:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPagaAnulada
+            inversedBy: fkContabilidadePagamentoEstornos
+            joinColumns:
+                exercicio_liquidacao:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                timestamp:
+                    referencedColumnName: timestamp
+                timestamp_anulada:
+                    referencedColumnName: timestamp_anulada
+    oneToOne:
+        fkContabilidadePagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Pagamento
+            inversedBy: fkContabilidadePagamentoEstorno
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                sequencia:
+                    referencedColumnName: sequencia
+                tipo:
+                    referencedColumnName: tipo
+                cod_lote:
+                    referencedColumnName: cod_lote
+                cod_entidade:
+                    referencedColumnName: cod_entidade

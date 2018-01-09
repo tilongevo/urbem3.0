@@ -1,0 +1,441 @@
+{% extends "base.html.twig" %}
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    {% if(atividade.fkEconomicoCadastroEconomico.fkEconomicoCadastroEconomicoEmpresaFato) %}
+        {% set nomCgm = '' %}
+    {% endif %}
+
+    {% if(atividade.fkEconomicoCadastroEconomico.fkEconomicoCadastroEconomicoAutonomo) %}
+        {% set nomCgm = '' %}
+    {% endif %}
+
+    {% if(atividade.fkEconomicoCadastroEconomico.fkEconomicoCadastroEconomicoEmpresaDireito) %}
+        {% set nomCgm = ' - ' ~ atividade.fkEconomicoCadastroEconomico.fkEconomicoCadastroEconomicoEmpresaDireito.fkSwCgmPessoaJuridica.nomFantasia %}
+    {% endif %}
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#tab_dados_consulta" data-toggle="tab" aria-expanded="true"><i
+                            class="fa fa-exclamation-circle has-errors hide"></i> Dados da Consulta</a></li>
+            <li class=""><a href="#tab_detalhamento_valores" data-toggle="tab" aria-expanded="false"><i
+                            class="fa fa-exclamation-circle has-errors hide"></i> Detalhamento de Valores</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="tab_dados_consulta">
+                <div class="box-body  container-fluid">
+                    <div class="sonata-ba-collapsed-fields">
+                        <div class="row">
+                            <div class="">
+                                <div class="box box-primary">
+                                    <div class="box-header col s12">
+                                        <h5 class="col s12 box-title center-align show">
+                                            {{ 'label.arrecadacaoConsultaEscrituracao.dadosConsulta'|trans }}
+                                        </h5>
+                                    </div>
+                                    <table class="table show-table">
+                                        <tbody>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.contribuinte'|trans }}</th>
+                                            <td>
+                                                {% if atividade.getInscricaoEconomica() %}
+                                                    {{ atividade.fkEconomicoCadastroEconomico }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.inscricaoEconomica'|trans }}</th>
+                                            <td>
+                                                {% if atividade.getInscricaoEconomica() %}
+                                                    {{ atividade.getInscricaoEconomica() ~ nomCgm }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.modalidade'|trans }}</th>
+                                            <td>
+                                                {% if atividade.fkEconomicoAtividade.fkEconomicoAtividadeModalidadeLancamentos.last.fkEconomicoModalidadeLancamento.getNomModalidade() %}
+                                                    {{ atividade.fkEconomicoAtividade.fkEconomicoAtividadeModalidadeLancamentos.last.fkEconomicoModalidadeLancamento.getNomModalidade() }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.competencia'|trans }}</th>
+                                            <td>
+                                                {% if atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.getCompetencia() %}
+                                                    {{ atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.getCompetencia() }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="box-header">
+                                        <h2 class="box-title left-align">
+                                            {{ 'label.arrecadacaoConsultaEscrituracao.receitasEscritura.dados'|trans }}
+                                        </h2>
+                                        <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                                    </div>
+                                    <table class="table show-table">
+                                        <thead>
+                                        <tr>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.codigo'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.receitasEscritura.itensSerie'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.receitasEscritura.itensNroNota'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.receitasEscritura.itensDataEmissao'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.receitasEscritura.itensValorNota'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.receitasEscritura.itensValorMercadoria'|trans }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last %}
+                                            <tr class="sonata-ba-view-container">
+                                                <td>
+                                                    <span>{{ '' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{ '' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{ '' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{ '' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{ '' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{ '' }}</span>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <div class="box-header">
+                                        <h2 class="box-title left-align">
+                                            {{ 'label.arrecadacaoConsultaEscrituracao.servico.dados'|trans }}
+                                        </h2>
+                                        <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                                    </div>
+                                    <table class="table show-table">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.servico.itensServico'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.servico.itensAliquota'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.servico.itensValorDeclarado'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.servico.itensDeducao'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.servico.itensValorRetido'|trans }}</th>
+                                            <th>{{ 'label.arrecadacaoConsultaEscrituracao.servico.itensValorLancado'|trans }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last %}
+                                        <tr class="sonata-ba-view-container">
+                                            <td class="td-rh">
+                                            </td>
+                                            <td class="td-rh">
+                                                <span>{{ atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last.fkArrecadacaoServicoSemRetencao.getCodServico() ~ '-' ~ atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last.fkArrecadacaoServicoSemRetencao.fkArrecadacaoFaturamentoServico.fkEconomicoServicoAtividade.fkEconomicoServico.nomServico }}</span>
+                                            </td>
+                                            <td class="td-rh">
+                                                <span>{{ atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last.fkArrecadacaoServicoSemRetencao.getAliquota()|number_format_decimal({'fraction_digits': 2}) }}</span>
+                                            </td>
+                                            <td class="td-rh">
+                                                <span>{{ atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last.fkArrecadacaoServicoSemRetencao.getValorDeclarado()|number_format_decimal({'fraction_digits': 2}) }}</span>
+                                            </td>
+                                            <td class="td-rh">
+                                                <span>{{ atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last.fkArrecadacaoServicoSemRetencao.getValorDeducao()|number_format_decimal({'fraction_digits': 2}) }}</span>
+                                            </td>
+                                            <td class="td-rh">
+                                                <span>{{ atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last.fkArrecadacaoServicoSemRetencao.getValorDeducaoLegal()|number_format_decimal({'fraction_digits': 2}) }}</span>
+                                            </td>
+                                            <td class="td-rh">
+                                                <span>{{ atividade.fkEconomicoCadastroEconomico.fkArrecadacaoCadastroEconomicoFaturamentos.last.fkArrecadacaoFaturamentoServicos.last.fkArrecadacaoServicoSemRetencao.getValorLancado()|number_format_decimal({'fraction_digits': 2}) }}</span>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade in" id="tab_detalhamento_valores">
+
+                <div class="box-body  container-fluid">
+                    <div class="sonata-ba-collapsed-fields">
+                        <div class="row">
+                            <div class="">
+                                <div class="box box-primary">
+                                    <h5 class="col s12 box-title center-align show">
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                {{ 'label.arrecadacaoConsultaEscrituracao.dadosDetalhamento'|trans }}
+                                            </h5>
+                                        </div>
+                                    </h5>
+                                    {% if valores.tp_pagamento == 't' %}
+                                        <table class="table show-table">
+                                            <tbody class="sonata-ba-view-container">
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.numeracao'|trans }}</th>
+                                                <td>
+                                                    {% if valores.numeracao %}
+                                                        {{ valores.numeracao }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.consolidacaoNumeracao'|trans }}</th>
+                                                <td>
+                                                    {% if valores.consolidacao_numeracao %}
+                                                        {{ valores.consolidacao_numeracao }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.vencimento'|trans }}</th>
+                                                <td>
+                                                    {% if valores.parcela_vencimento_original %}
+                                                        {{ valores.parcela_vencimento_original }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.situacao'|trans }}</th>
+                                                <td>
+                                                    {% if valores.situacao %}
+                                                        {{ valores.situacao }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.pagamentoData'|trans }}</th>
+                                                <td>
+                                                    {% if valores.pagamento_data %}
+                                                        {{ valores.pagamento_data }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.lote'|trans }}</th>
+                                                <td>
+                                                    {% if valores.pagamento_cod_lote %}
+                                                        {{ valores.pagamento_cod_lote ~ '/' ~ valores.pagamento_tipo }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.diaProcessamento'|trans }}</th>
+                                                <td>
+                                                    {% if valores.pagamento_data_baixa %}
+                                                        {{ valores.pagamento_data_baixa }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.processo'|trans }}</th>
+                                                <td>
+                                                    {% if valores.processo_pagamento %}
+                                                        {{ valores.processo_pagamento }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.observacoes'|trans }}</th>
+                                                <td>
+                                                    {% if valores.observacao %}
+                                                        {{ valores.observacao }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.banco'|trans }}</th>
+                                                <td>
+                                                    {% if valores.pagamento_num_banco %}
+                                                        {{ valores.pagamento_num_banco ~ '-' ~ valores.pagamento_nom_banco }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.usuario'|trans }}</th>
+                                                <td>
+                                                    {% if valores.pagamento_numcgm %}
+                                                        {{ valores.pagamento_numcgm ~ '-' ~ valores.pagamento_nomcgm }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.valorPago'|trans }}</th>
+                                                <td>
+                                                    {% if valores.pagamento_valor %}
+                                                        {{ valores.pagamento_valor }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.desconto'|trans }}</th>
+                                                <td>
+                                                    {% if valores.parcela_valor_desconto %}
+                                                        {{ valores.parcela_valor_desconto }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.juros'|trans }}</th>
+                                                <td>
+                                                    {% if valores.parcela_juros_pago %}
+                                                        {{ valores.parcela_juros_pago }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.multa'|trans }}</th>
+                                                <td>
+                                                    {% if valores.parcela_multa_pago %}
+                                                        {{ valores.parcela_multa_pago }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.diferencaPagamento'|trans }}</th>
+                                                <td>
+                                                    {% if valores.tmp_pagamento_diferenca %}
+                                                        {{ valores.tmp_pagamento_diferenca }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.correcao'|trans }}</th>
+                                                <td>
+                                                    {% if valores.parcela_correcao_pago %}
+                                                        {{ valores.parcela_correcao_pago }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.totalPago'|trans }}</th>
+                                                <td>
+                                                    {% if valores.valor_total %}
+                                                        {{ valores.valor_total }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                        <form method="get">
+                                            <input type="hidden" name="cod_calculo" id="cod_calculo"
+                                                   value={{ codCalculo }}>
+                                            <table class="table show-table">
+                                                <tbody class="sonata-ba-view-container">
+                                                <tr class="sonata-ba-view-container">
+                                                <tr>
+                                                    <th> {{ 'label.arrecadacaoConsultaEscrituracao.dataBase'|trans }}</th>
+                                                    <td>
+                                                        <div class="form_row col s3 campo-sonata"
+                                                             id="sonata-ba-field-container-data_base"
+                                                             style="display: block;">
+                                                            <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                                                                <div class="input-group date our-datepicker" id="itemdata_base">
+                                                                    <input type="text" id="data_base" name="data_base"
+                                                                           class="sonata-medium-datecampo-sonata form-control"
+                                                                           value="{{ "now"|date("d/m/Y") }}"
+                                                                           data-date-format="DD/MM/YYYY"
+                                                                           style="width: 100%;">
+                                                                    <span class="input-group-addon"><span
+                                                                                class="fa-calendar fa"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form_row col s1 campo-sonata"
+                                                             id="sonata-ba-field-container-data_base"
+                                                             style="display: block;">
+                                                            <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                                                                <div class="input-group date" id="dp_dataBase">
+                                                                    <button type="button" id="calcular" name="calcular"
+                                                                            class="waves-effect waves-light btn blue darken-4 btn btn-success"
+                                                                            title="Atualizar">
+                                                                        <i class="fa-refresh fa" aria-hidden="true"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <th>{{ 'label.arrecadacaoConsultaEscrituracao.valorPagar'|trans }}</th>
+                                                <td>
+                                                    {% if valores.parcela_valor %}
+                                                        <span id="valor_pagar">{{ valores.parcela_valor - valores.parcela_valor_desconto|number_format(2, '.', '') }} </span>
+                                                    {% endif %}
+                                                </td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.arrecadacaoConsultaEscrituracao.juros'|trans }}</th>
+                                                    <td>
+                                                        {% if valores.parcela_juros_pagar %}
+                                                            <span id="juros">{{ valores.parcela_juros_pagar|number_format(2, '.', '') }}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.arrecadacaoConsultaEscrituracao.multa'|trans }}</th>
+                                                    <td>
+                                                        {% if valores.parcela_multa_pagar %}
+                                                            <span id="multa">{{ valores.parcela_multa_pagar|number_format(2, '.', '') }}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.arrecadacaoConsultaEscrituracao.correcao'|trans }}</th>
+                                                    <td>
+                                                        {% if valores.parcela_correcao_pagar %}
+                                                            <span id="correcao">{{ valores.parcela_correcao_pagar|number_format(2, '.', '') }}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.arrecadacaoConsultaEscrituracao.totalPagar'|trans }}</th>
+                                                    <td>
+                                                        {% if valores.valor_total %}
+                                                            <span id="total_pagar">{{ valores.valor_total|number_format(2, '.', '') }}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <a class="btn-floating white-text blue darken-4"
+               href="{{ path('urbem_tributario_arrecadacao_consulta_escrituracao_list') }}"><i class="material-icons">arrow_back</i></a>
+        </div>
+    </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script src="/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/moment/min/moment.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/moment/locale/pt-br.js"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/tributario/javascripts/arrecadacao/consulta-escrituracao.js') }}"></script>
+    <script>
+        $(function ($) {
+           $('.our-datepicker').datetimepicker({"pickTime":false,"useCurrent":true,"minDate":"1\/1\/1900","maxDate":null,"showToday":true,"language":"pt_BR","defaultDate":"","disabledDates":[],"enabledDates":[],"icons":{"time":"fa fa-clock-o","date":"fa fa-calendar","up":"fa fa-chevron-up","down":"fa fa-chevron-down"},"useStrict":false,"sideBySide":false,"daysOfWeekDisabled":[],"useSeconds":false});
+        });
+    </script>
+{% endblock javascripts %}

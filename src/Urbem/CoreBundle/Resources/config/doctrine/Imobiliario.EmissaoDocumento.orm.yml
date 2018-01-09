@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Imobiliario\EmissaoDocumento:
+    type: entity
+    table: imobiliario.emissao_documento
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+        timestampEmissao:
+            type: datetime
+            nullable: false
+            column: timestamp_emissao
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkImobiliarioEmissaoDocumentos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkImobiliarioLicencaDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaDocumento
+            inversedBy: fkImobiliarioEmissaoDocumento
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

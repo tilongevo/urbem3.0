@@ -1,0 +1,35 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    {% if value|length > 0 %}
+        <table class="">
+            <thead>
+            <tr class="sonata-ba-list-field-header">
+                <th class="sonata-ba-list-field-header-text text-center th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.codigo'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.descricao'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.grupoCredito.ordem'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.grupoCredito.descontos'|trans }}</th>
+            </thead>
+            <tbody>
+            {% for creditoGrupo in value %}
+                {% set codigoComposto = creditoGrupo.codCredito ~ '.' ~ creditoGrupo.codGenero ~ '.' ~ creditoGrupo.codEspecie ~ '.' ~ creditoGrupo.codNatureza %}
+                <tr class="tr-rh">
+                    {% set codigoComposto = creditoGrupo.codCredito ~ '.' ~ creditoGrupo.codGenero ~ '.' ~ creditoGrupo.codEspecie ~ '.' ~ creditoGrupo.codNatureza %}
+                    <td>{{ codigoComposto }}</td>
+                    <td>{{ creditoGrupo.fkMonetarioCredito.descricaoCredito }}</td>
+                    <td>{{ creditoGrupo.ordem }}</td>
+                    <td>
+                        {% if creditoGrupo.desconto == true %}
+                            {{ 'label_type_yes'|trans }}
+                        {% else %}
+                            {{ 'label_type_no'|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        -
+    {% endif %}
+{% endblock %}

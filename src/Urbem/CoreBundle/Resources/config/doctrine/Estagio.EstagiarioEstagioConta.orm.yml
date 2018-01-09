@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioConta:
+    type: entity
+    table: estagio.estagiario_estagio_conta
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codEstagio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_estagio
+        codCurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_curso
+        cgmInstituicaoEnsino:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_instituicao_ensino
+    fields:
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        numConta:
+            type: string
+            nullable: false
+            length: 15
+            column: num_conta
+    manyToOne:
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkEstagioEstagiarioEstagioContas
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+    oneToOne:
+        fkEstagioEstagiarioEstagio:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio
+            inversedBy: fkEstagioEstagiarioEstagioConta
+            joinColumns:
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                numcgm:
+                    referencedColumnName: cgm_estagiario
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino

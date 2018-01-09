@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Administracao\TipoPrimitivo:
+    type: entity
+    table: administracao.tipo_primitivo
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: true
+            length: 10
+            column: nom_tipo
+    oneToMany:
+        fkAdministracaoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            mappedBy: fkAdministracaoTipoPrimitivo
+        fkAdministracaoVariaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Variavel
+            mappedBy: fkAdministracaoTipoPrimitivo

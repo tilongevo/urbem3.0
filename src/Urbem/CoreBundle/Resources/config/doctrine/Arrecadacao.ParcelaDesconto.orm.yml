@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ParcelaDesconto:
+    type: entity
+    table: arrecadacao.parcela_desconto
+    id:
+        codParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcela
+    fields:
+        vencimento:
+            type: date
+            nullable: true
+        valor:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+    oneToOne:
+        fkArrecadacaoParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Parcela
+            inversedBy: fkArrecadacaoParcelaDesconto
+            joinColumns:
+                cod_parcela:
+                    referencedColumnName: cod_parcela

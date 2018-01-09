@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmgo\TipoLancamento:
+    type: entity
+    table: tcmgo.tipo_lancamento
+    id:
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkTcmgoDividaConsolidadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\DividaConsolidada
+            mappedBy: fkTcmgoTipoLancamento

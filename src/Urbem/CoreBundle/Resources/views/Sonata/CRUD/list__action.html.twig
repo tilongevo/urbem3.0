@@ -1,0 +1,33 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends admin.getTemplate('base_list_field') %}
+
+{% block field %}
+
+    <div class="btn-group dados-abertos" style="display: none">
+        {% for actions in field_description.options.actions %}
+            {% include actions.template %}
+        {% endfor %}
+    </div>
+
+    <!-- Single button -->
+    <div class="dropdown-menu-action-button btn-group-list-actions-dropdown dados-agrupados">
+        <button type="button" class="btn btn-default dropdown-toggle-custom glyphicon glyphicon-cog" placement="left">
+            <span class="caret"></span>
+            <div class="dropdown-menu-action-content">
+                {% for actions in field_description.options.actions %}
+                    {% include actions.template %}
+                {% endfor %}
+            </div>
+        </button>
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Imobiliario\LicencaImovelNovaConstrucao:
+    type: entity
+    table: imobiliario.licenca_imovel_nova_construcao
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+    fields:
+        codConstrucao:
+            type: integer
+            nullable: false
+            column: cod_construcao
+    manyToOne:
+        fkImobiliarioConstrucao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Construcao
+            inversedBy: fkImobiliarioLicencaImovelNovaConstrucoes
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+    oneToOne:
+        fkImobiliarioLicencaImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaImovel
+            inversedBy: fkImobiliarioLicencaImovelNovaConstrucao
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

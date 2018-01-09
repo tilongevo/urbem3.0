@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Tceto\Credor:
+    type: entity
+    table: tceto.credor
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        tipo:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcetoCredores
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkTcetoTipoCredor:
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\TipoCredor
+            inversedBy: fkTcetoCredores
+            joinColumns:
+                tipo:
+                    referencedColumnName: cod_tipo

@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Pessoal\DeParaOrgaoUnidade:
+    type: entity
+    table: pessoal.de_para_orgao_unidade
+    id:
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkPessoalDeParaOrgaoUnidades
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkPessoalDeParaOrgaoUnidades
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao

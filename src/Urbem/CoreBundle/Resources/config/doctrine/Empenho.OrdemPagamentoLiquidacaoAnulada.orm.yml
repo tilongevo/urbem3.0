@@ -1,0 +1,69 @@
+Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoLiquidacaoAnulada:
+    type: entity
+    table: empenho.ordem_pagamento_liquidacao_anulada
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        exercicioLiquidacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_liquidacao
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        vlAnulado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_anulado
+    manyToOne:
+        fkEmpenhoOrdemPagamentoAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoAnulada
+            inversedBy: fkEmpenhoOrdemPagamentoLiquidacaoAnuladas
+            joinColumns:
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                timestamp:
+                    referencedColumnName: timestamp
+        fkEmpenhoPagamentoLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PagamentoLiquidacao
+            inversedBy: fkEmpenhoOrdemPagamentoLiquidacaoAnuladas
+            joinColumns:
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_liquidacao:
+                    referencedColumnName: exercicio_liquidacao
+                cod_nota:
+                    referencedColumnName: cod_nota

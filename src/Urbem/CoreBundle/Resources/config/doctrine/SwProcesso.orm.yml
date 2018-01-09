@@ -1,0 +1,529 @@
+Urbem\CoreBundle\Entity\SwProcesso:
+    type: entity
+    table: public.sw_processo
+    repositoryClass: Urbem\CoreBundle\Repository\SwProcessoRepository
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+        codAssunto:
+            type: integer
+            nullable: false
+            column: cod_assunto
+        codUsuario:
+            type: integer
+            nullable: false
+            column: cod_usuario
+        codSituacao:
+            type: integer
+            nullable: false
+            column: cod_situacao
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        observacoes:
+            type: text
+            nullable: false
+        confidencial:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        resumoAssunto:
+            type: string
+            nullable: false
+            length: 80
+            column: resumo_assunto
+        codCentro:
+            type: integer
+            nullable: true
+            column: cod_centro
+    manyToOne:
+        fkSwAssunto:
+            fetch: EXTRA_LAZY
+            targetEntity: Urbem\CoreBundle\Entity\SwAssunto
+            inversedBy: fkSwProcessos
+            joinColumns:
+                cod_assunto:
+                    referencedColumnName: cod_assunto
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+        fkAdministracaoUsuario:
+            fetch: EXTRA_LAZY
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkSwProcessos
+            joinColumns:
+                cod_usuario:
+                    referencedColumnName: numcgm
+        fkSwSituacaoProcesso:
+            fetch: EXTRA_LAZY
+            targetEntity: Urbem\CoreBundle\Entity\SwSituacaoProcesso
+            inversedBy: fkSwProcessos
+            joinColumns:
+                cod_situacao:
+                    referencedColumnName: cod_situacao
+        fkAlmoxarifadoCentroCusto:
+            fetch: EXTRA_LAZY
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto
+            inversedBy: fkSwProcessos
+            joinColumns:
+                cod_centro:
+                    referencedColumnName: cod_centro
+    oneToMany:
+        fkAlmoxarifadoDoacaoEmprestimos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\DoacaoEmprestimo
+            mappedBy: fkSwProcesso
+        fkArrecadacaoLancamentoProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoProcesso
+            mappedBy: fkSwProcesso
+        fkArrecadacaoProcessoSuspensoes:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ProcessoSuspensao
+            mappedBy: fkSwProcesso
+        fkComprasCompraDiretaProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDiretaProcesso
+            mappedBy: fkSwProcesso
+        fkDividaProcessoCancelamentos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ProcessoCancelamento
+            mappedBy: fkSwProcesso
+        fkDividaRemissaoProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\RemissaoProcesso
+            mappedBy: fkSwProcesso
+        fkDividaProcessoEstornos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ProcessoEstorno
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoBaixaCadEconomicos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoBaixaCadEconomico
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoBaixaLicencas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoBaixaLicenca
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoCadastroEconomicos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoCadastroEconomico
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoDomicilioFiscais:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoDomicilioFiscal
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoDomicilioInformados:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoDomicilioInformado
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoEmpDireitoNatJuridicas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoEmpDireitoNatJuridica
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoLicencas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoLicenca
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoModLancInscEcons:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoModLancInscEcon
+            mappedBy: fkSwProcesso
+        fkFiscalizacaoInfracaoBaixaProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoBaixaProcesso
+            mappedBy: fkSwProcesso
+        fkFiscalizacaoProcessoFiscais:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            mappedBy: fkSwProcesso
+        fkFiscalizacaoPenalidadeBaixaProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeBaixaProcesso
+            mappedBy: fkSwProcesso
+        fkFrotaVeiculoLocacoes:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoLocacao
+            mappedBy: fkSwProcesso
+        fkImobiliarioConstrucaoReformaProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoReformaProcesso
+            mappedBy: fkSwProcesso
+        fkImobiliarioImovelProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelProcesso
+            mappedBy: fkSwProcesso
+        fkImobiliarioConstrucaoProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoProcesso
+            mappedBy: fkSwProcesso
+        fkImobiliarioLoteProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteProcesso
+            mappedBy: fkSwProcesso
+        fkImobiliarioProcessoLoteamentos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ProcessoLoteamento
+            mappedBy: fkSwProcesso
+        fkImobiliarioLicencaProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaProcesso
+            mappedBy: fkSwProcesso
+        fkImobiliarioTransferenciaProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaProcesso
+            mappedBy: fkSwProcesso
+        fkLicitacaoLicitacoes:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkSwProcesso
+        fkLicitacaoPenalidadesCertificacoes:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PenalidadesCertificacao
+            mappedBy: fkSwProcesso
+        fkLicitacaoEditalImpugnados:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\EditalImpugnado
+            mappedBy: fkSwProcesso
+        fkPatrimonioBemProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemProcesso
+            mappedBy: fkSwProcesso
+        fkPessoalContratoPensionistaProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaProcesso
+            mappedBy: fkSwProcesso
+        fkProtocoloProcessoHistoricos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Protocolo\ProcessoHistorico
+            mappedBy: fkSwProcesso
+        fkSwAndamentos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAndamento
+            mappedBy: fkSwProcesso
+        fkSwAssuntoAtributoValores:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAssuntoAtributoValor
+            mappedBy: fkSwProcesso
+        fkSwDocumentoProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwDocumentoProcesso
+            mappedBy: fkSwProcesso
+        fkSwProcessoApensados:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoApensado
+            mappedBy: fkSwProcesso
+        fkSwProcessoAtributoValores:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoAtributoValor
+            mappedBy: fkSwProcesso
+        fkSwProcessoInteressados:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoInteressado
+            mappedBy: fkSwProcesso
+        fkTcernConvenios:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Convenio
+            mappedBy: fkSwProcesso
+        fkTcernContratos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Contrato
+            mappedBy: fkSwProcesso
+        fkArrecadacaoProcessoPagamentos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ProcessoPagamento
+            mappedBy: fkSwProcesso
+        fkDividaDividaProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaProcesso
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoDiasCadEcons:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoDiasCadEcon
+            mappedBy: fkSwProcesso
+        fkEconomicoProcessoSociedades:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoSociedade
+            mappedBy: fkSwProcesso
+        fkFrotaVeiculoCessoes:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoCessao
+            mappedBy: fkSwProcesso
+        fkImobiliarioCondominioProcessos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\CondominioProcesso
+            mappedBy: fkSwProcesso
+        fkSwProcessoConfidenciais:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoConfidencial
+            mappedBy: fkSwProcesso
+        fkTcernContratoAditivos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ContratoAditivo
+            mappedBy: fkSwProcesso
+    oneToOne:
+        fkSwUltimoAndamento:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwUltimoAndamento
+            mappedBy: fkSwProcesso
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwProcessoArquivado:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoArquivado
+            mappedBy: fkSwProcesso
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwProcessoFuncionario:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoFuncionario
+            mappedBy: fkSwProcesso
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwProcessoInscricao:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoInscricao
+            mappedBy: fkSwProcesso
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwProcessoMatricula:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoMatricula
+            mappedBy: fkSwProcesso
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

@@ -1,0 +1,88 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Lancamento:
+    type: entity
+    table: arrecadacao.lancamento
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\LancamentoRepository
+    id:
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+    fields:
+        vencimento:
+            type: date
+            nullable: false
+        totalParcelas:
+            type: integer
+            nullable: false
+            column: total_parcelas
+        ativo:
+            type: boolean
+            nullable: false
+        observacao:
+            type: text
+            nullable: true
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        observacaoSistema:
+            type: text
+            nullable: true
+            column: observacao_sistema
+        divida:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        situacao:
+            type: string
+            nullable: true
+            length: 1
+    oneToMany:
+        fkArrecadacaoLancamentoCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoCalculo
+            mappedBy: fkArrecadacaoLancamento
+        fkArrecadacaoLancamentoDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoDesconto
+            mappedBy: fkArrecadacaoLancamento
+        fkArrecadacaoLancamentoProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoProcesso
+            mappedBy: fkArrecadacaoLancamento
+        fkArrecadacaoParcelas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Parcela
+            mappedBy: fkArrecadacaoLancamento
+        fkArrecadacaoSuspensoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Suspensao
+            mappedBy: fkArrecadacaoLancamento
+    oneToOne:
+        fkDividaRelatorioRemissaoCredito:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\RelatorioRemissaoCredito
+            mappedBy: fkArrecadacaoLancamento
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento

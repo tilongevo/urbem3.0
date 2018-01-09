@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Orcamento\UsuarioEntidade:
+    type: entity
+    table: orcamento.usuario_entidade
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields: {  }
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkOrcamentoUsuarioEntidades
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkOrcamentoUsuarioEntidades
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

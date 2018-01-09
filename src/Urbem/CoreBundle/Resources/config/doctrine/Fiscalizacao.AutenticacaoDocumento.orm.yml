@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\AutenticacaoDocumento:
+    type: entity
+    table: fiscalizacao.autenticacao_documento
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        nrLivro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: nr_livro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+    manyToOne:
+        fkFiscalizacaoAutenticacaoLivro:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutenticacaoLivro
+            inversedBy: fkFiscalizacaoAutenticacaoDocumentos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                nr_livro:
+                    referencedColumnName: nr_livro
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoAutenticacaoDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento

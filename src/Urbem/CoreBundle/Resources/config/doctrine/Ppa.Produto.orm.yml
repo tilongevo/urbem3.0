@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Ppa\Produto:
+    type: entity
+    table: ppa.produto
+    repositoryClass: Urbem\CoreBundle\Repository\Ppa\ProdutoRepository
+    id:
+        codProduto:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ppa.produto_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_produto
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        especificacao:
+            type: string
+            nullable: false
+            length: 450
+    oneToMany:
+        fkPpaAcaoDados:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            mappedBy: fkPpaProduto

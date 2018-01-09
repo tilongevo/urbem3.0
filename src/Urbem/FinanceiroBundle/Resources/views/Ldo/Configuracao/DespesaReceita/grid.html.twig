@@ -1,0 +1,860 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <form name="form" method="post" action="/financeiro/ldo/configuracao/despesa-receita/gravar">
+        <input type="hidden" value="{{ ppa.codPpa }}" name="cod_ppa" />
+        <input type="hidden" value="{{ ano }}" name="ano" />
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#tab_arrecadado_liquidado" data-toggle="tab" aria-expanded="true"><i class="fa fa-exclamation-circle has-errors hide"></i> Arrecadado/Liquidado</a></li>
+                <li class=""><a href="#tab_previsto_fixado" data-toggle="tab" aria-expanded="false"><i class="fa fa-exclamation-circle has-errors hide"></i> Previsto/Fixado</a></li>
+                <li class=""><a href="#tab_projetado" data-toggle="tab"><i class="fa fa-exclamation-circle has-errors hide"></i> Projetado</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="tab_arrecadado_liquidado">
+                    <div class="box-body  container-fluid">
+                        <div class="sonata-ba-collapsed-fields">
+
+                            <div class="row">
+                                <div class="">
+                                    <div class="box box-primary">
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Receitas
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr>
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh">Arrecadado {{ (ano - 4) }}</th>
+                                                <th class="th-rh">Arrecadado {{ (ano - 3) }}</th>
+                                                <th class="th-rh">Arrecadado {{ (ano - 2) }}</th>
+                                                <th class="th-rh">Reestimado {{ (ano - 1) }}</th>
+                                            </tr>
+                                            {% for receitaConfiguracaoRow in receitaConfiguracao %}
+                                                <tr>
+                                                    {% if receitaConfiguracaoRow.nivel == 0 %}
+                                                        <td class="title-table"><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td class="title-table">{{ receitaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td class="title-table">{{ receitaConfiguracaoRow.descricao }}</td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh receitaArrecadado mask-monetaria" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" value="{{ receitaConfiguracaoRow.valor_1 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh receitaArrecadado mask-monetaria" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" value="{{ receitaConfiguracaoRow.valor_2 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh receitaArrecadado mask-monetaria" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" value="{{ receitaConfiguracaoRow.valor_3 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh receitaArrecadado mask-monetaria" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" value="{{ receitaConfiguracaoRow.valor_4 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                    {% else %}
+                                                        <td><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td>{{ receitaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td>{{ receitaConfiguracaoRow.descricao }}</td>
+                                                        {% if receitaConfiguracaoRow.orcamento_1 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial arrecadado mask-monetaria" data-operacao="r" data-grupo="Arrecadado" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" name="receitaArrecadado[{{ receitaConfiguracaoRow.cod_tipo }}][{{ ( ano - 4 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh receitaArrecadado mask-monetaria" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" name="receitaArrecadado[{{ receitaConfiguracaoRow.cod_tipo }}][{{ ( ano - 4 ) }}]" value="{{ receitaConfiguracaoRow.valor_1 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if receitaConfiguracaoRow.orcamento_2 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial arrecadado mask-monetaria" data-operacao="r" data-grupo="Arrecadado" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" name="receitaArrecadado[{{ receitaConfiguracaoRow.cod_tipo }}][{{ ( ano - 3 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh receitaArrecadado mask-monetaria" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" name="receitaArrecadado[{{ receitaConfiguracaoRow.cod_tipo }}][{{ ( ano - 3 ) }}]" value="{{ receitaConfiguracaoRow.valor_2 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if receitaConfiguracaoRow.orcamento_3 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial arrecadado mask-monetaria" data-operacao="r" data-grupo="Arrecadado" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" name="receitaArrecadado[{{ receitaConfiguracaoRow.cod_tipo }}][{{ ( ano - 2 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh receitaArrecadado mask-monetaria" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" name="receitaArrecadado[{{ receitaConfiguracaoRow.cod_tipo }}][{{ ( ano - 2 ) }}]" value="{{ receitaConfiguracaoRow.valor_3 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if receitaConfiguracaoRow.orcamento_4 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial arrecadado mask-monetaria" data-operacao="r" data-grupo="Arrecadado" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" name="receitaArrecadado[{{ receitaConfiguracaoRow.cod_tipo }}][{{ ( ano - 1 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh receitaArrecadado mask-monetaria" data-rpps="{{ receitaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaConfiguracaoRow.indiceTotalizador }}" id="receitaArrecadado_{{ receitaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ receitaConfiguracaoRow.cod_tipo }}" name="receitaArrecadado[{{ receitaConfiguracaoRow.cod_tipo }}][{{ ( ano - 1 ) }}]" value="{{ receitaConfiguracaoRow.valor_4 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Despesas
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr>
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh">Liquidado {{ (ano - 4) }}</th>
+                                                <th class="th-rh">Liquidado {{ (ano - 3) }}</th>
+                                                <th class="th-rh">Liquidado {{ (ano - 2) }}</th>
+                                                <th class="th-rh">Liquidado {{ (ano - 1) }}</th>
+                                            </tr>
+                                            {% for despesaConfiguracaoRow in despesaConfiguracao %}
+                                                <tr>
+                                                    {% if despesaConfiguracaoRow.nivel == 0 %}
+                                                        <td class="title-table"><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td class="title-table">{{ despesaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td class="title-table">{{ despesaConfiguracaoRow.descricao }}</td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh despesaArrecadado mask-monetaria" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" value="{{ despesaConfiguracaoRow.valor_1 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh despesaArrecadado mask-monetaria" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" value="{{ despesaConfiguracaoRow.valor_2 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh despesaArrecadado mask-monetaria" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" value="{{ despesaConfiguracaoRow.valor_3 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh despesaArrecadado mask-monetaria" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" value="{{ despesaConfiguracaoRow.valor_4 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                    {% else %}
+                                                        <td><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td>{{ despesaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td>{{ despesaConfiguracaoRow.descricao }}</td>
+                                                        {% if despesaConfiguracaoRow.orcamento_1 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial arrecadado mask-monetaria" data-operacao="d" data-grupo="Arrecadado" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" name="despesaArrecadado[{{ despesaConfiguracaoRow.cod_tipo }}][{{ ( ano - 4 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh despesaArrecadado mask-monetaria" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" name="despesaArrecadado[{{ despesaConfiguracaoRow.cod_tipo }}][{{ ( ano - 4 ) }}]" value="{{ despesaConfiguracaoRow.valor_1 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if despesaConfiguracaoRow.orcamento_2 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial arrecadado mask-monetaria" data-operacao="d" data-grupo="Arrecadado" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" name="despesaArrecadado[{{ despesaConfiguracaoRow.cod_tipo }}][{{ ( ano - 3 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh despesaArrecadado mask-monetaria" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" name="despesaArrecadado[{{ despesaConfiguracaoRow.cod_tipo }}][{{ ( ano - 3 ) }}]" value="{{ despesaConfiguracaoRow.valor_2 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if despesaConfiguracaoRow.orcamento_3 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial arrecadado mask-monetaria" data-operacao="d" data-grupo="Arrecadado" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" name="despesaArrecadado[{{ despesaConfiguracaoRow.cod_tipo }}][{{ ( ano - 2 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh despesaArrecadado mask-monetaria" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" name="despesaArrecadado[{{ despesaConfiguracaoRow.cod_tipo }}][{{ ( ano - 2 ) }}]" value="{{ despesaConfiguracaoRow.valor_3 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if despesaConfiguracaoRow.orcamento_4 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                   <input type="text" class="grey lighten-5 input-rh valorParcial arrecadado mask-monetaria" data-operacao="d" data-grupo="Arrecadado" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" name="despesaArrecadado[{{ despesaConfiguracaoRow.cod_tipo }}][{{ ( ano - 1 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh despesaArrecadado mask-monetaria" data-rpps="{{ despesaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaConfiguracaoRow.indiceTotalizador }}" id="despesaArrecadado_{{ despesaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ despesaConfiguracaoRow.cod_tipo }}" name="despesaArrecadado[{{ despesaConfiguracaoRow.cod_tipo }}][{{ ( ano - 1 ) }}]" value="{{ despesaConfiguracaoRow.valor_4 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Reservas de Contigência
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr>
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh">Reestimado {{ (ano - 4) }}</th>
+                                                <th class="th-rh">Reestimado {{ (ano - 3) }}</th>
+                                                <th class="th-rh">Reestimado {{ (ano - 2) }}</th>
+                                                <th class="th-rh">Reestimado {{ (ano - 1) }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="title-table">1</td>
+                                                <td class="title-table">9.0.00.00.00.00.00</td>
+                                                <td class="title-table">RESERVA DE CONTIGÊNCIA</td>
+                                                <td>
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaArrecadado mask-monetaria" id="reservaArrecadado_{{ (ano - 4) }}" name="reservaArrecadado[{{ (ano - 4) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaArrecadado mask-monetaria" id="reservaArrecadado_{{ (ano - 3) }}" name="reservaArrecadado[{{ (ano - 3) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaArrecadado mask-monetaria" id="reservaArrecadado_{{ (ano - 2) }}" name="reservaArrecadado[{{ (ano - 2) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaArrecadado mask-monetaria" id="reservaArrecadado_{{ (ano - 1) }}" name="reservaArrecadado[{{ (ano - 1) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title-table">2</td>
+                                                <td class="title-table">7.7.99.99.99.99.99</td>
+                                                <td class="title-table">RESERVA DE CONTIGÊNCIA DO RPPS</td>
+                                                <td>
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsArrecadado mask-monetaria" id="rppsArrecadado_{{ (ano - 4) }}" name="rppsArrecadado[{{ (ano - 4) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsArrecadado mask-monetaria" id="rppsArrecadado_{{ (ano - 3) }}" name="rppsArrecadado[{{ (ano - 3) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsArrecadado mask-monetaria" id="rppsArrecadado_{{ (ano - 2) }}" name="rppsArrecadado[{{ (ano - 2) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsArrecadado mask-monetaria" id="rppsArrecadado_{{ (ano - 1) }}" name="rppsArrecadado[{{ (ano - 1) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade in" id="tab_previsto_fixado">
+                    <div class="box-body  container-fluid">
+                        <div class="sonata-ba-collapsed-fields">
+
+                            <div class="row">
+                                <div class="">
+                                    <div class="box box-primary">
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Receitas
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr>
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh">Previsto {{ (ano - 4) }}</th>
+                                                <th class="th-rh">Previsto {{ (ano - 3) }}</th>
+                                                <th class="th-rh">Previsto {{ (ano - 2) }}</th>
+                                                <th class="th-rh">Reestimado {{ (ano - 1) }}</th>
+                                            </tr>
+                                            {% for receitaPrevistaConfiguracaoRow in receitaPrevistaConfiguracao %}
+                                                <tr>
+                                                    {% if receitaPrevistaConfiguracaoRow.nivel == 0 %}
+                                                        <td class="title-table"><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td class="title-table">{{ receitaPrevistaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td class="title-table">{{ receitaPrevistaConfiguracaoRow.descricao }}</td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" value="{{ receitaPrevistaConfiguracaoRow.valor_1 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" value="{{ receitaPrevistaConfiguracaoRow.valor_2 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" value="{{ receitaPrevistaConfiguracaoRow.valor_3 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" value="{{ receitaPrevistaConfiguracaoRow.valor_4 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                    {% else %}
+                                                        <td><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td>{{ receitaPrevistaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td>{{ receitaPrevistaConfiguracaoRow.descricao }}</td>
+                                                        {% if receitaPrevistaConfiguracaoRow.orcamento_1 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial previsto mask-monetaria" data-operacao="r" data-grupo="Previsto" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" name="receitaPrevisto[{{ receitaPrevistaConfiguracaoRow.cod_tipo }}][{{ ( ano - 4 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" name="receitaPrevisto[{{ receitaPrevistaConfiguracaoRow.cod_tipo }}][{{ ( ano - 4 ) }}]" value="{{ receitaPrevistaConfiguracaoRow.valor_1 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if receitaPrevistaConfiguracaoRow.orcamento_2 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial previsto mask-monetaria" data-operacao="r" data-grupo="Previsto" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" name="receitaPrevisto[{{ receitaPrevistaConfiguracaoRow.cod_tipo }}][{{ ( ano - 3 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" name="receitaPrevisto[{{ receitaPrevistaConfiguracaoRow.cod_tipo }}][{{ ( ano - 3 ) }}]" value="{{ receitaPrevistaConfiguracaoRow.valor_2 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if receitaPrevistaConfiguracaoRow.orcamento_3 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial previsto mask-monetaria" data-operacao="r" data-grupo="Previsto" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" name="receitaPrevisto[{{ receitaPrevistaConfiguracaoRow.cod_tipo }}][{{ ( ano - 2 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" name="receitaPrevisto[{{ receitaPrevistaConfiguracaoRow.cod_tipo }}][{{ ( ano - 2 ) }}]" value="{{ receitaPrevistaConfiguracaoRow.valor_3 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if receitaPrevistaConfiguracaoRow.orcamento_4 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial previsto mask-monetaria" data-operacao="r" data-grupo="Previsto" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" name="receitaPrevisto[{{ receitaPrevistaConfiguracaoRow.cod_tipo }}][{{ ( ano - 1 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ receitaPrevistaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaPrevistaConfiguracaoRow.indiceTotalizador }}" id="receitaPrevisto_{{ receitaPrevistaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ receitaPrevistaConfiguracaoRow.cod_tipo }}" name="receitaPrevisto[{{ receitaPrevistaConfiguracaoRow.cod_tipo }}][{{ ( ano - 1 ) }}]" value="{{ receitaPrevistaConfiguracaoRow.valor_4 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Despesas
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr>
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh">Fixado {{ (ano - 4) }}</th>
+                                                <th class="th-rh">Fixado {{ (ano - 3) }}</th>
+                                                <th class="th-rh">Fixado {{ (ano - 2) }}</th>
+                                                <th class="th-rh">Reestimado {{ (ano - 1) }}</th>
+                                            </tr>
+                                            {% for despesaFixadaConfiguracaoRow in despesaFixadaConfiguracao %}
+                                                <tr>
+                                                    {% if despesaFixadaConfiguracaoRow.nivel == 0 %}
+                                                        <td class="title-table"><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td class="title-table">{{ despesaFixadaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td class="title-table">{{ despesaFixadaConfiguracaoRow.descricao }}</td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" value="{{ despesaFixadaConfiguracaoRow.valor_1 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" value="{{ despesaFixadaConfiguracaoRow.valor_2 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" value="{{ despesaFixadaConfiguracaoRow.valor_3 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" value="{{ despesaFixadaConfiguracaoRow.valor_4 }}" readonly="readonly">
+                                                            </div>
+                                                        </td>
+                                                    {% else %}
+                                                        <td><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td>{{ despesaFixadaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td>{{ despesaFixadaConfiguracaoRow.descricao }}</td>
+                                                        {% if despesaFixadaConfiguracaoRow.orcamento_1 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial previsto mask-monetaria" data-operacao="d" data-grupo="Previsto" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" name="despesaPrevisto[{{ despesaFixadaConfiguracaoRow.cod_tipo }}][{{ ( ano - 4 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 4 ) }}" data-ano="{{ ( ano - 4 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" name="despesaPrevisto[{{ despesaFixadaConfiguracaoRow.cod_tipo }}][{{ ( ano - 4 ) }}]" value="{{ despesaFixadaConfiguracaoRow.valor_1 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if despesaFixadaConfiguracaoRow.orcamento_2 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial previsto mask-monetaria" data-operacao="d" data-grupo="Previsto" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" name="despesaPrevisto[{{ despesaFixadaConfiguracaoRow.cod_tipo }}][{{ ( ano - 3 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 3 ) }}" data-ano="{{ ( ano - 3 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" name="despesaPrevisto[{{ despesaFixadaConfiguracaoRow.cod_tipo }}][{{ ( ano - 3 ) }}]" value="{{ despesaFixadaConfiguracaoRow.valor_2 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if despesaFixadaConfiguracaoRow.orcamento_3 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial previsto mask-monetaria" data-operacao="d" data-grupo="Previsto" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" name="despesaPrevisto[{{ despesaFixadaConfiguracaoRow.cod_tipo }}][{{ ( ano - 2 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 2 ) }}" data-ano="{{ ( ano - 2 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" name="despesaPrevisto[{{ despesaFixadaConfiguracaoRow.cod_tipo }}][{{ ( ano - 2 ) }}]" value="{{ despesaFixadaConfiguracaoRow.valor_3 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if despesaFixadaConfiguracaoRow.orcamento_4 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh valorParcial previsto mask-monetaria" data-operacao="d" data-grupo="Previsto" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" name="despesaPrevisto[{{ despesaFixadaConfiguracaoRow.cod_tipo }}][{{ ( ano - 1 ) }}]" value="" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh previsto mask-monetaria" data-rpps="{{ despesaFixadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaFixadaConfiguracaoRow.indiceTotalizador }}" id="despesaPrevisto_{{ despesaFixadaConfiguracaoRow.cod_tipo }}_{{ ( ano - 1 ) }}" data-ano="{{ ( ano - 1 ) }}" data-codtipo="{{ despesaFixadaConfiguracaoRow.cod_tipo }}" name="despesaPrevisto[{{ despesaFixadaConfiguracaoRow.cod_tipo }}][{{ ( ano - 1 ) }}]" value="{{ despesaFixadaConfiguracaoRow.valor_4 }}" readonly="readonly">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Reservas de Contigência
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr>
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh">Fixado {{ (ano - 4) }}</th>
+                                                <th class="th-rh">Fixado {{ (ano - 3) }}</th>
+                                                <th class="th-rh">Fixado {{ (ano - 2) }}</th>
+                                                <th class="th-rh">Reestimado {{ (ano - 1) }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="title-table">1</td>
+                                                <td class="title-table">9.0.00.00.00.00.00</td>
+                                                <td class="title-table">RESERVA DE CONTIGÊNCIA</td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaPrevisto mask-monetaria" id="reservaPrevisto_{{ (ano - 4) }}" name="reservaPrevisto[{{ (ano - 4) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaPrevisto mask-monetaria" id="reservaPrevisto_{{ (ano - 3) }}" name="reservaPrevisto[{{ (ano - 3) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaPrevisto mask-monetaria" id="reservaPrevisto_{{ (ano - 2) }}" name="reservaPrevisto[{{ (ano - 2) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaPrevisto mask-monetaria" id="reservaPrevisto_{{ (ano - 1) }}" name="reservaPrevisto[{{ (ano - 1) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title-table">2</td>
+                                                <td class="title-table">7.7.99.99.99.99.99</td>
+                                                <td class="title-table">RESERVA DE CONTIGÊNCIA DO RPPS</td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsPrevisto mask-monetaria" id="rppsPrevisto_{{ (ano - 4) }}" name="rppsPrevisto[{{ (ano - 4) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsPrevisto mask-monetaria" id="rppsPrevisto_{{ (ano - 3) }}" name="rppsPrevisto[{{ (ano - 3) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsPrevisto mask-monetaria" id="rppsPrevisto_{{ (ano - 2) }}" name="rppsPrevisto[{{ (ano - 2) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsPrevisto mask-monetaria" id="rppsPrevisto_{{ (ano - 1) }}" name="rppsPrevisto[{{ (ano - 1) }}]" value="" readonly="readonly">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade in" id="tab_projetado">
+                    <div class="box-body  container-fluid">
+                        <div class="sonata-ba-collapsed-fields">
+                            <div class="row">
+                                <div class="">
+                                    <div class="box box-primary">
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Receitas
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr class="receitas">
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh {{ ano }}">Projetado {{ ano }}</th>
+                                                <th class="th-rh {{ ano + 1 }}">Projetado {{ (ano + 1) }}</th>
+                                                <th class="th-rh {{ ano + 2 }}">Projetado {{ (ano + 2) }}</th>
+                                            </tr>
+                                            {% for receitaProjetadaConfiguracaoRow in receitaProjetadaConfiguracao %}
+                                                <tr>
+                                                    {% if receitaProjetadaConfiguracaoRow.nivel == 0 %}
+                                                        <td class="title-table"><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td class="title-table">{{ receitaProjetadaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td class="title-table">{{ receitaProjetadaConfiguracaoRow.descricao }}</td>
+                                                        <td>
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano ) }}" data-ano="{{ ( ano ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" value="{{ receitaProjetadaConfiguracaoRow.valor_1 }}" readonly="readonly" tabindex="-1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano + 1 ) }}" data-ano="{{ ( ano + 1 ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" value="{{ receitaProjetadaConfiguracaoRow.valor_2 }}" readonly="readonly" tabindex="-1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano + 2 ) }}" data-ano="{{ ( ano + 2 ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" value="{{ receitaProjetadaConfiguracaoRow.valor_3 }}" readonly="readonly" tabindex="-1">
+                                                            </div>
+                                                        </td>
+                                                    {% else %}
+                                                        <td><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td>{{ receitaProjetadaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td>{{ receitaProjetadaConfiguracaoRow.descricao }}</td>
+                                                        {% if receitaProjetadaConfiguracaoRow.orcamento_1 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="input-rh valorParcial projetada mask-monetaria" data-operacao="r" data-grupo="Projetada" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano ) }}" data-ano="{{ ( ano ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" name="receitaProjetada[{{ receitaProjetadaConfiguracaoRow.cod_tipo }}][{{ ( ano ) }}]"  value="{{ receitaProjetadaConfiguracaoRow.valor_1 }}">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano ) }}" data-ano="{{ ( ano ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" name="receitaProjetada[{{ receitaProjetadaConfiguracaoRow.cod_tipo }}][{{ ( ano ) }}]" value="{{ receitaProjetadaConfiguracaoRow.valor_1 }}" readonly="readonly" tabindex="-1">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if receitaProjetadaConfiguracaoRow.orcamento_2 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="input-rh valorParcial projetada mask-monetaria" data-operacao="r" data-grupo="Projetada" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano + 1 ) }}" data-ano="{{ ( ano + 1 ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" name="receitaProjetada[{{ receitaProjetadaConfiguracaoRow.cod_tipo }}][{{ ( ano + 1 ) }}]" value="{{ receitaProjetadaConfiguracaoRow.valor_2 }}">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano + 1 ) }}" data-ano="{{ ( ano + 1 ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" name="receitaProjetada[{{ receitaProjetadaConfiguracaoRow.cod_tipo }}][{{ ( ano + 1 ) }}]" value="{{ receitaProjetadaConfiguracaoRow.valor_2 }}" readonly="readonly" tabindex="-1">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if receitaProjetadaConfiguracaoRow.orcamento_3 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="input-rh valorParcial projetada mask-monetaria" data-operacao="r" data-grupo="Projetada" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano + 2 ) }}" data-ano="{{ ( ano + 2 ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" name="receitaProjetada[{{ receitaProjetadaConfiguracaoRow.cod_tipo }}][{{ ( ano + 2 ) }}]" value="{{ receitaProjetadaConfiguracaoRow.valor_3 }}">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ receitaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ receitaProjetadaConfiguracaoRow.indiceTotalizador }}" id="receitaProjetada_{{ receitaProjetadaConfiguracaoRow.cod_tipo }}_{{ ( ano + 2 ) }}" data-ano="{{ ( ano + 2 ) }}" data-codtipo="{{ receitaProjetadaConfiguracaoRow.cod_tipo }}" name="receitaProjetada[{{ receitaProjetadaConfiguracaoRow.cod_tipo }}][{{ ( ano + 2 ) }}]" value="{{ receitaProjetadaConfiguracaoRow.valor_3 }}" readonly="readonly" tabindex="-1">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                            <tr>
+                                                <td class="title-table"><p style="color: #354d66;">26</p></td>
+                                                <td class="title-table"></td>
+                                                <td class="title-table">TOTAL DA RECEITA</td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria"  name="receita-col-1"  id="receitaProjetada_26_{{ ano }}" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria"  name="receita-col-2" id="receitaProjetada_26_{{ ( ano + 1 ) }}" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria"  name="receita-col-3" id="receitaProjetada_26_{{ ( ano + 2 ) }}" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Despesas
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr>
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh">Projetado {{ ano }}</th>
+                                                <th class="th-rh">Projetado {{ (ano + 1) }}</th>
+                                                <th class="th-rh">Projetado {{ (ano + 2) }}</th>
+                                            </tr>
+                                            {% for despesaProjetadaConfiguracaoRow in despesaProjetadaConfiguracao %}
+                                                <tr>
+                                                    {% if despesaProjetadaConfiguracaoRow.nivel == 0 %}
+                                                        <td class="title-table"><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td class="title-table">{{ despesaProjetadaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td class="title-table">{{ despesaProjetadaConfiguracaoRow.descricao }}</td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ ano }}" data-ano="{{ ( ano ) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" value="{{ despesaProjetadaConfiguracaoRow.valor_1 }}" readonly="readonly" tabindex="-1">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ (ano + 1) }}" data-ano="{{ (ano + 1) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" value="{{ despesaProjetadaConfiguracaoRow.valor_2 }}" readonly="readonly" tabindex="-1">
+                                                            </div>
+                                                        </td>
+                                                        <td class="title-table">
+                                                            <div class="col s12">
+                                                                <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ (ano + 2) }}" data-ano="{{ (ano + 2) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" value="{{ despesaProjetadaConfiguracaoRow.valor_3 }}" readonly="readonly" tabindex="-1">
+                                                            </div>
+                                                        </td>
+                                                    {% else %}
+                                                        <td><p style="color: #354d66;">{{ loop.index }}</p></td>
+                                                        <td>{{ despesaProjetadaConfiguracaoRow.cod_estrutural }}</td>
+                                                        <td>{{ despesaProjetadaConfiguracaoRow.descricao }}</td>
+                                                        {% if despesaProjetadaConfiguracaoRow.orcamento_1 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="input-rh valorParcial projetada mask-monetaria" data-operacao="d" data-grupo="Projetada" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ ano }}" data-ano="{{ ( ano ) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" name="despesaProjetada[{{ despesaProjetadaConfiguracaoRow.cod_tipo }}][{{ ano }}]" value="{{ despesaProjetadaConfiguracaoRow.valor_1 }}">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ ano }}" data-ano="{{ ( ano ) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" name="despesaProjetada[{{ despesaProjetadaConfiguracaoRow.cod_tipo }}][{{ ano }}]" value="{{ despesaProjetadaConfiguracaoRow.valor_1 }}" readonly="readonly" tabindex="-1">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if despesaProjetadaConfiguracaoRow.orcamento_2 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="input-rh valorParcial projetada mask-monetaria" data-operacao="d" data-grupo="Projetada" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ (ano + 1) }}" data-ano="{{ (ano + 1) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" name="despesaProjetada[{{ despesaProjetadaConfiguracaoRow.cod_tipo }}][{{ (ano + 1) }}]" value="{{ despesaProjetadaConfiguracaoRow.valor_2 }}">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ (ano + 1) }}" data-ano="{{ (ano + 1) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" name="despesaProjetada[{{ despesaProjetadaConfiguracaoRow.cod_tipo }}][{{ (ano + 1) }}]" value="{{ despesaProjetadaConfiguracaoRow.valor_2 }}" readonly="readonly" tabindex="-1">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if despesaProjetadaConfiguracaoRow.orcamento_3 == 0 %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="input-rh valorParcial projetada mask-monetaria" data-operacao="d" data-grupo="Projetada" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ (ano + 2) }}" data-ano="{{ (ano + 2) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" name="despesaProjetada[{{ despesaProjetadaConfiguracaoRow.cod_tipo }}][{{ (ano + 2) }}]" value="{{ despesaProjetadaConfiguracaoRow.valor_3 }}">
+                                                                </div>
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <div class="col s12">
+                                                                    <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria" data-rpps="{{ despesaProjetadaConfiguracaoRow.rpps }}" data-totalizador="{{ despesaProjetadaConfiguracaoRow.indiceTotalizador }}" id="despesaProjetada_{{ despesaProjetadaConfiguracaoRow.cod_tipo }}_{{ (ano + 2) }}" data-ano="{{ (ano + 2) }}" data-codtipo="{{ despesaProjetadaConfiguracaoRow.cod_tipo }}" name="despesaProjetada[{{ despesaProjetadaConfiguracaoRow.cod_tipo }}][{{ (ano + 2) }}]" value="{{ despesaProjetadaConfiguracaoRow.valor_3 }}" readonly="readonly" tabindex="-1">
+                                                                </div>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                            <tr>
+                                                <td class="title-table"><p style="color: #354d66;">19</p></td>
+                                                <td class="title-table"></td>
+                                                <td class="title-table">TOTAL DA DESPESA</td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria"  name="despesa-col-1"  id="despesaProjetada_44_{{ ano }}" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria"  name="despesa-col-2" id="despesaProjetada_44_{{ ( ano + 1 ) }}" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh projetada mask-monetaria"  name="despesa-col-3" id="despesaProjetada_44_{{ ( ano + 2 ) }}" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="box-header col s12">
+                                            <h5 class="col s12 box-title center-align show">
+                                                Reservas de Contigência
+                                            </h5>
+                                        </div>
+                                        <table class="bordered highlight" style="font-size: 12px">
+                                            <tr>
+                                                <th class="th-rh"></th>
+                                                <th class="th-rh">Código</th>
+                                                <th class="th-rh">Descrição</th>
+                                                <th class="th-rh">Projetado {{ ano }}</th>
+                                                <th class="th-rh">Projetado {{ (ano + 1) }}</th>
+                                                <th class="th-rh">Projetado {{ (ano + 2) }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="title-table">1</td>
+                                                <td class="title-table">9.0.00.00.00.00.00</td>
+                                                <td class="title-table">RESERVA DE CONTIGÊNCIA</td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaProjetada mask-monetaria" id="reservaProjetada_{{ ano }}" name="ppa_valor[{{ ano }}]" value="" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaProjetada mask-monetaria" id="reservaProjetada_{{ (ano + 1) }}" name="ppa_valor[{{ (ano + 1) }}]" value="" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh reservaProjetada mask-monetaria" id="reservaProjetada_{{ (ano + 2) }}" name="ppa_valor[{{ (ano + 2) }}]" value="" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title-table">2</td>
+                                                <td class="title-table">7.7.99.99.99.99.99</td>
+                                                <td class="title-table">RESERVA DE CONTIGÊNCIA DO RPPS</td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsProjetada mask-monetaria" id="rppsProjetada_{{ ano }}" name="rppsProjetada[{{ ano }}]" value="" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsProjetada mask-monetaria" id="rppsProjetada_{{ (ano + 1) }}" name="rppsProjetada[{{ (ano + 1) }}]" value="" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                                <td class="title-table">
+                                                    <div class="col s12">
+                                                        <input type="text" class="grey lighten-5 input-rh rppsProjetada mask-monetaria" id="rppsProjetada_{{ (ano + 2) }}" name="rppsProjetada[{{ (ano + 2) }}]" value="" readonly="readonly" tabindex="-1">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 right-align">
+            <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="ReceitaDespesa"><i class="material-icons left">save</i>Gravar Despesa / Receita</button>
+        </div>
+    </form>
+{% endblock content %}
+{% block javascripts %}
+    <script src="/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/financeiro/javascripts/ldo/configuracao/DespesaReceita/grid.js') }}"></script>
+{% endblock javascripts %}

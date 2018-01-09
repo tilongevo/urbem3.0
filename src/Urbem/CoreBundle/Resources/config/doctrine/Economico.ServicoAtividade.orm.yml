@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Economico\ServicoAtividade:
+    type: entity
+    table: economico.servico_atividade
+    id:
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkEconomicoServico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Servico
+            inversedBy: fkEconomicoServicoAtividades
+            joinColumns:
+                cod_servico:
+                    referencedColumnName: cod_servico
+        fkEconomicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Atividade
+            inversedBy: fkEconomicoServicoAtividades
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+    oneToMany:
+        fkArrecadacaoFaturamentoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FaturamentoServico
+            mappedBy: fkEconomicoServicoAtividade
+        fkFiscalizacaoFaturamentoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FaturamentoServico
+            mappedBy: fkEconomicoServicoAtividade

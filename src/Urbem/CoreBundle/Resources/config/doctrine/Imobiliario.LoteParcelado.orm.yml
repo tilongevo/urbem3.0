@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Imobiliario\LoteParcelado:
+    type: entity
+    table: imobiliario.lote_parcelado
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcelamento
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        validado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioLoteParcelados
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkImobiliarioParcelamentoSolo:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ParcelamentoSolo
+            inversedBy: fkImobiliarioLoteParcelados
+            joinColumns:
+                cod_parcelamento:
+                    referencedColumnName: cod_parcelamento

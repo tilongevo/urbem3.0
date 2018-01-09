@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Frota\Turno:
+    type: entity
+    table: frota.turno
+    id:
+        codTurno:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_turno
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkFrotaTransporteEscolares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\TransporteEscolar
+            mappedBy: fkFrotaTurno

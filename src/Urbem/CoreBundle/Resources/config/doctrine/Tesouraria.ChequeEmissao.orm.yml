@@ -1,0 +1,78 @@
+Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissao:
+    type: entity
+    table: tesouraria.cheque_emissao
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\ChequeEmissaoRepository
+    id:
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+        numCheque:
+            type: string
+            generator:
+                strategy: NONE
+            column: num_cheque
+        timestampEmissao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_emissao
+    fields:
+        dataEmissao:
+            type: date
+            nullable: false
+            column: data_emissao
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        descricao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkTesourariaCheque:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Cheque
+            inversedBy: fkTesourariaChequeEmissoes
+            joinColumns:
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+                num_cheque:
+                    referencedColumnName: num_cheque
+    oneToMany:
+        fkTesourariaChequeEmissaoOrdemPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoOrdemPagamento
+            mappedBy: fkTesourariaChequeEmissao
+        fkTesourariaChequeEmissaoTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoTransferencia
+            mappedBy: fkTesourariaChequeEmissao
+        fkTesourariaChequeEmissaoReciboExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoReciboExtra
+            mappedBy: fkTesourariaChequeEmissao

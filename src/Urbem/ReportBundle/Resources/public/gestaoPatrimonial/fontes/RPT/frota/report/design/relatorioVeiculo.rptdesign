@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="author">Diego Lemos de Souza</property>
+    <property name="comments">Copyright (c) 2006 &lt;&lt;Your Company Name here>></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.4.0.v201405191524 Build &lt;4.4.0.v20140606-1451></property>
+    <property name="units">in</property>
+    <text-property name="displayName">Template Urbem Paisagem</text-property>
+    <property name="layoutPreference">auto layout</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">../../../../../../gestaoAdministrativa/fontes/RPT/framework/library/urbem.rptlibrary</property>
+            <property name="namespace">urbem</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="term_user" id="6666">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="exercicio" id="230">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">2007</value>
+            </simple-property-list>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="cod_acao" id="232">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">154</value>
+            </simple-property-list>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="db_conn_url" id="238">
+            <property name="hidden">true</property>
+            <text-property name="promptText">Connection URL</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">jdbc:postgresql://172.16.30.4:5432/des_alagoinhas_1910</value>
+            </simple-property-list>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="stPlaca" id="1067">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="stPrefixo" id="1068">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="inCodVeiculo" id="1069">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="echoQuery" id="1070">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ordenacao" id="1098">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="baixado" id="1099">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="inCodEntidade" id="1100">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Postgres" id="234" extends="urbem.postgres">
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="rsVeiculo" id="1046">
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">cod_veiculo</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">placa_masc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">prefixo</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">nom_tipo</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">nom_marca</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">nom_modelo</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">ano_fabricacao</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">cor</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">capacidade</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">baixado</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[var stFiltro = '';
+if(params["inCodVeiculo"] != '' ) {
+	stFiltro = " AND veiculo.cod_veiculo = "+params["inCodVeiculo"]+" ";
+}
+if( params["stPlaca"] != '' ) {
+	stFiltro = stFiltro + " AND veiculo.placa = '"+params["stPlaca"]+"' ";
+}
+if( params["stPrefixo"] != '' ) {
+	stFiltro = stFiltro + " AND veiculo.prefixo = '"+params["stPrefixo"]+"' ";
+}
+if( params["baixado"] == 2 ){
+	stFiltro = stFiltro + " AND EXISTS ( SELECT 1 FROM frota.veiculo_baixado WHERE veiculo_baixado.cod_veiculo = veiculo.cod_veiculo ) ";
+}
+if( params["baixado"] == 3 ){
+	stFiltro = stFiltro + " AND NOT EXISTS ( SELECT 1 FROM frota.veiculo_baixado WHERE veiculo_baixado.cod_veiculo = veiculo.cod_veiculo ) ";
+}
+
+if( params["inCodEntidade"] != ''){
+	stFiltro = stFiltro + "AND EXISTS(SELECT veiculo_propriedade.cod_veiculo";
+	stFiltro = stFiltro + "                , MAX(veiculo_propriedade.timestamp) AS timestamp";
+  	stFiltro = stFiltro + "             FROM frota.veiculo_propriedade";
+	stFiltro = stFiltro + "       INNER JOIN frota.proprio";
+	stFiltro = stFiltro + "               ON proprio.cod_veiculo = veiculo_propriedade.cod_veiculo";
+	stFiltro = stFiltro + "              AND proprio.timestamp = veiculo_propriedade.timestamp";
+	stFiltro = stFiltro + "       LEFT JOIN patrimonio.bem_comprado";
+	stFiltro = stFiltro + "               ON bem_comprado.cod_bem = proprio.cod_bem";
+	stFiltro = stFiltro + "            WHERE veiculo_propriedade.cod_veiculo = veiculo.cod_veiculo";
+	stFiltro = stFiltro + "              AND bem_comprado.cod_entidade IN ("+ params["inCodEntidade"] +")";
+	stFiltro = stFiltro + "         GROUP BY veiculo_propriedade.cod_veiculo) ";
+}
+
+if( params["ordenacao"] == 1 ){
+	stFiltro = stFiltro + " ORDER BY veiculo.placa ";
+}
+if( params["ordenacao"] == 2 ){
+	stFiltro = stFiltro + " ORDER BY veiculo.cod_veiculo ";
+}
+if( stFiltro != '' ){
+	this.queryText = this.queryText + stFiltro;
+}
+params["echoQuery"] = this.queryText;]]></method>
+            <property name="dataSource">Postgres</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">cod_veiculo</property>
+                    <property name="nativeName">cod_veiculo</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">placa_masc</property>
+                    <property name="nativeName">placa_masc</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">prefixo</property>
+                    <property name="nativeName">prefixo</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">nom_tipo</property>
+                    <property name="nativeName">nom_tipo</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">nom_marca</property>
+                    <property name="nativeName">nom_marca</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">nom_modelo</property>
+                    <property name="nativeName">nom_modelo</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">ano_fabricacao</property>
+                    <property name="nativeName">ano_fabricacao</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">cor</property>
+                    <property name="nativeName">cor</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">capacidade</property>
+                    <property name="nativeName">capacidade</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">baixado</property>
+                    <property name="nativeName">baixado</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[	SELECT veiculo.cod_veiculo
+         , CASE WHEN veiculo.placa = ''
+         		THEN ''
+         		ELSE SUBSTR(veiculo.placa,1,3) || '-' || SUBSTR(veiculo.placa,4,4) 
+           END AS placa_masc
+         , veiculo.prefixo
+         , tipo_veiculo.nom_tipo
+         , marca.nom_marca
+         , modelo.nom_modelo
+         , veiculo.ano_fabricacao
+         , veiculo.cor
+         , veiculo.capacidade
+         , veiculo_baixado.cod_veiculo AS baixado
+      FROM frota.veiculo
+INNER JOIN frota.tipo_veiculo
+        ON tipo_veiculo.cod_tipo = veiculo.cod_tipo_veiculo
+INNER JOIN frota.marca
+        ON marca.cod_marca = veiculo.cod_marca
+INNER JOIN frota.modelo
+        ON modelo.cod_marca = veiculo.cod_marca
+       AND modelo.cod_modelo = veiculo.cod_modelo
+ LEFT JOIN frota.veiculo_baixado
+        ON veiculo_baixado.cod_veiculo = veiculo.cod_veiculo
+     WHERE 1 = 1]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">landscape</property>
+            <property name="topMargin">0.302in</property>
+            <property name="leftMargin">0.15in</property>
+            <property name="bottomMargin">0.218in</property>
+            <property name="rightMargin">0.1in</property>
+            <page-header>
+                <grid name="Cabecalho Paisagem" id="241" extends="urbem.Cabecalho Paisagem">
+                    <property name="canShrink">false</property>
+                    <property name="width">180mm</property>
+                    <overridden-values>
+                        <ref-entry baseId="937" id="937"/>
+                        <ref-entry baseId="938" id="938"/>
+                        <ref-entry baseId="939" id="939"/>
+                        <ref-entry baseId="940" id="940"/>
+                        <ref-entry baseId="941" id="941"/>
+                        <ref-entry baseId="942" name="NewText6121" id="942"/>
+                        <ref-entry baseId="943" id="943"/>
+                        <ref-entry baseId="944" name="NewData2111" id="944"/>
+                        <ref-entry baseId="945" id="945"/>
+                        <ref-entry baseId="946" name="NewGrid1" id="946"/>
+                        <ref-entry baseId="947" id="947"/>
+                        <ref-entry baseId="948" id="948"/>
+                        <ref-entry baseId="949" id="949"/>
+                        <ref-entry baseId="950" id="950"/>
+                        <ref-entry baseId="951" id="951"/>
+                        <ref-entry baseId="952" id="952"/>
+                        <ref-entry baseId="953" id="953"/>
+                        <ref-entry baseId="954" id="954"/>
+                        <ref-entry baseId="955" name="NewData12121" id="955"/>
+                        <ref-entry baseId="956" id="956"/>
+                        <ref-entry baseId="957" name="NewData14121" id="957"/>
+                        <ref-entry baseId="958" id="958"/>
+                        <ref-entry baseId="959" id="959"/>
+                        <ref-entry baseId="960" name="NewData13121" id="960"/>
+                        <ref-entry baseId="961" id="961"/>
+                        <ref-entry baseId="962" name="NewData1521" id="962"/>
+                        <ref-entry baseId="963" id="963"/>
+                        <ref-entry baseId="964" id="964"/>
+                        <ref-entry baseId="965" name="NewData11121" id="965"/>
+                        <ref-entry baseId="966" id="966"/>
+                        <ref-entry baseId="967" id="967"/>
+                        <ref-entry baseId="968" name="NewData1621" id="968"/>
+                        <ref-entry baseId="969" id="969"/>
+                        <ref-entry baseId="970" id="970"/>
+                        <ref-entry baseId="971" name="NewText721" id="971"/>
+                        <ref-entry baseId="972" id="972"/>
+                        <ref-entry baseId="973" name="NewText1121" id="973"/>
+                        <ref-entry baseId="974" id="974"/>
+                        <ref-entry baseId="975" name="NewLabel2121" id="975"/>
+                        <ref-entry baseId="976" id="976"/>
+                        <ref-entry baseId="977" id="977"/>
+                        <ref-entry baseId="978" id="978"/>
+                        <ref-entry baseId="979" id="979"/>
+                        <ref-entry baseId="980" id="980"/>
+                        <ref-entry baseId="981" id="981"/>
+                        <ref-entry baseId="982" id="982"/>
+                        <ref-entry baseId="983" id="983"/>
+                        <ref-entry baseId="984" name="NewData6111" id="984"/>
+                        <ref-entry baseId="985" id="985"/>
+                        <ref-entry baseId="986" id="986"/>
+                        <ref-entry baseId="987" name="NewData3111" id="987"/>
+                        <ref-entry baseId="988" id="988"/>
+                        <ref-entry baseId="989" id="989"/>
+                        <ref-entry baseId="990" name="NewData8111" id="990"/>
+                        <ref-entry baseId="991" id="991"/>
+                        <ref-entry baseId="992" id="992"/>
+                        <ref-entry baseId="993" name="NewData4111" id="993"/>
+                        <ref-entry baseId="994" id="994"/>
+                        <ref-entry baseId="995" id="995"/>
+                        <ref-entry baseId="996" name="NewData5111" id="996"/>
+                        <ref-entry baseId="997" id="997"/>
+                        <ref-entry baseId="998" id="998"/>
+                        <ref-entry baseId="999" name="NewLabel8121" id="999"/>
+                    </overridden-values>
+                </grid>
+            </page-header>
+            <page-footer>
+                <grid name="Rodape" id="229" extends="urbem.Rodape">
+                    <property name="width">280cm</property>
+                    <overridden-values>
+                        <ref-entry baseId="180" id="180"/>
+                        <ref-entry baseId="181" id="181"/>
+                        <ref-entry baseId="182" id="182"/>
+                        <ref-entry baseId="183" name="NewText2" id="183"/>
+                    </overridden-values>
+                </grid>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="1001">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+            <property name="width">280mm</property>
+            <property name="dataSet">rsVeiculo</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">cod_veiculo</property>
+                    <expression name="expression">dataSetRow["cod_veiculo"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">placa_masc</property>
+                    <expression name="expression">dataSetRow["placa_masc"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">prefixo</property>
+                    <expression name="expression">dataSetRow["prefixo"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nom_tipo</property>
+                    <expression name="expression">dataSetRow["nom_tipo"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nom_marca</property>
+                    <expression name="expression">dataSetRow["nom_marca"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nom_modelo</property>
+                    <expression name="expression">dataSetRow["nom_modelo"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">ano_fabricacao</property>
+                    <expression name="expression">dataSetRow["ano_fabricacao"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">cor</property>
+                    <expression name="expression">dataSetRow["cor"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">capacidade</property>
+                    <expression name="expression">dataSetRow["capacidade"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">baixado</property>
+                    <expression name="expression">if( dataSetRow["baixado"] != null ){
+	'Sim'
+}
+else{
+	'Não'
+}</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">50</property>
+            <column id="1035">
+                <property name="textAlign">right</property>
+                <property name="width">20mm</property>
+            </column>
+            <column id="1036">
+                <property name="width">20mm</property>
+            </column>
+            <column id="1037">
+                <property name="width">25mm</property>
+            </column>
+            <column id="1038">
+                <property name="width">35mm</property>
+            </column>
+            <column id="1039">
+                <property name="width">50mm</property>
+            </column>
+            <column id="1040">
+                <property name="width">50mm</property>
+            </column>
+            <column id="1041">
+                <property name="textAlign">center</property>
+                <property name="width">20mm</property>
+            </column>
+            <column id="1042">
+                <property name="width">25mm</property>
+            </column>
+            <column id="1043">
+                <property name="textAlign">right</property>
+                <property name="width">20mm</property>
+            </column>
+            <column id="1044">
+                <property name="textAlign">center</property>
+                <property name="width">15mm</property>
+            </column>
+            <header>
+                <row id="1002">
+                    <property name="fontWeight">bold</property>
+                    <cell id="1003">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1047">
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Código</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1004">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1049">
+                            <text-property name="text">Placa</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1005">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1051">
+                            <text-property name="text">Prefixo</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1006">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1053">
+                            <text-property name="text">Tipo</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1007">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1055">
+                            <text-property name="text">Marca</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1008">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1057">
+                            <text-property name="text">Modelo</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1009">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1059">
+                            <text-property name="text">Ano Fab.</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1010">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1061">
+                            <text-property name="text">Cor</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1011">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1063">
+                            <text-property name="text">Capacidade</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1012">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1065">
+                            <text-property name="text">Baixado</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="1013">
+                    <cell id="1014">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1048">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">cod_veiculo</property>
+                        </data>
+                    </cell>
+                    <cell id="1015">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1050">
+                            <property name="resultSetColumn">placa_masc</property>
+                        </data>
+                    </cell>
+                    <cell id="1016">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1052">
+                            <property name="resultSetColumn">prefixo</property>
+                        </data>
+                    </cell>
+                    <cell id="1017">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1054">
+                            <property name="resultSetColumn">nom_tipo</property>
+                        </data>
+                    </cell>
+                    <cell id="1018">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1056">
+                            <property name="resultSetColumn">nom_marca</property>
+                        </data>
+                    </cell>
+                    <cell id="1019">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1058">
+                            <property name="resultSetColumn">nom_modelo</property>
+                        </data>
+                    </cell>
+                    <cell id="1020">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1060">
+                            <property name="resultSetColumn">ano_fabricacao</property>
+                        </data>
+                    </cell>
+                    <cell id="1021">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1062">
+                            <property name="resultSetColumn">cor</property>
+                        </data>
+                    </cell>
+                    <cell id="1022">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1064">
+                            <property name="resultSetColumn">capacidade</property>
+                        </data>
+                    </cell>
+                    <cell id="1023">
+                        <property name="paddingLeft">2px</property>
+                        <property name="paddingRight">2px</property>
+                        <data id="1066">
+                            <property name="resultSetColumn">baixado</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="1024">
+                    <cell id="1025">
+                        <property name="colSpan">10</property>
+                        <property name="rowSpan">1</property>
+                        <property name="textAlign">left</property>
+                        <table id="1071">
+                            <property name="marginTop">10pt</property>
+                            <property name="width">70mm</property>
+                            <property name="dataSet">rsVeiculo</property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">cod_veiculo</property>
+                                    <expression name="expression">dataSetRow["cod_veiculo"]</expression>
+                                    <property name="dataType">integer</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">placa_masc</property>
+                                    <expression name="expression">dataSetRow["placa_masc"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">prefixo</property>
+                                    <expression name="expression">dataSetRow["prefixo"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">nom_tipo</property>
+                                    <expression name="expression">dataSetRow["nom_tipo"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">nom_marca</property>
+                                    <expression name="expression">dataSetRow["nom_marca"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">nom_modelo</property>
+                                    <expression name="expression">dataSetRow["nom_modelo"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">ano_fabricacao</property>
+                                    <expression name="expression">dataSetRow["ano_fabricacao"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">cor</property>
+                                    <expression name="expression">dataSetRow["cor"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">capacidade</property>
+                                    <expression name="expression">dataSetRow["capacidade"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">baixado</property>
+                                    <expression name="expression">dataSetRow["baixado"]</expression>
+                                    <property name="dataType">integer</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">total_veiculos</property>
+                                    <expression name="expression">Total.count()</expression>
+                                    <property name="dataType">integer</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>group_tipo</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <property name="pageBreakInterval">50</property>
+                            <column id="1084">
+                                <property name="width">3.4782608696in</property>
+                            </column>
+                            <column id="1086">
+                                <property name="width">0.4565217391in</property>
+                            </column>
+                            <header>
+                                <row id="1072">
+                                    <cell id="1073">
+                                        <property name="colSpan">2</property>
+                                        <property name="rowSpan">1</property>
+                                        <property name="borderBottomColor">#000000</property>
+                                        <property name="borderBottomStyle">solid</property>
+                                        <property name="borderBottomWidth">thin</property>
+                                        <property name="borderLeftColor">#000000</property>
+                                        <property name="borderLeftStyle">solid</property>
+                                        <property name="borderLeftWidth">thin</property>
+                                        <property name="borderRightColor">#000000</property>
+                                        <property name="borderRightStyle">solid</property>
+                                        <property name="borderRightWidth">thin</property>
+                                        <property name="borderTopColor">#000000</property>
+                                        <property name="borderTopStyle">solid</property>
+                                        <property name="borderTopWidth">thin</property>
+                                        <label id="1087">
+                                            <property name="fontWeight">bold</property>
+                                            <property name="textAlign">left</property>
+                                            <text-property name="text">Veículos Cadastrados:</text-property>
+                                        </label>
+                                    </cell>
+                                </row>
+                            </header>
+                            <group id="1088">
+                                <property name="groupName">group_tipo</property>
+                                <property name="interval">none</property>
+                                <property name="sortDirection">asc</property>
+                                <expression name="keyExpr">row["nom_tipo"]</expression>
+                                <structure name="toc">
+                                    <expression name="expressionValue">row["nom_tipo"]</expression>
+                                </structure>
+                                <property name="repeatHeader">true</property>
+                                <property name="hideDetail">false</property>
+                                <property name="pageBreakAfter">auto</property>
+                                <property name="pageBreakBefore">auto</property>
+                                <header>
+                                    <row id="1089">
+                                        <property name="textAlign">left</property>
+                                        <cell id="1090">
+                                            <data id="1095">
+                                                <property name="resultSetColumn">nom_tipo</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="1091">
+                                            <data id="1097">
+                                                <property name="resultSetColumn">total_veiculos</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </header>
+                                <footer>
+                                    <row id="1092">
+                                        <cell id="1093"/>
+                                        <cell id="1094"/>
+                                    </row>
+                                </footer>
+                            </group>
+                            <detail>
+                                <row id="1076">
+                                    <list-property name="visibility">
+                                        <structure>
+                                            <property name="format">all</property>
+                                            <expression name="valueExpr">true</expression>
+                                        </structure>
+                                    </list-property>
+                                    <cell id="1077"/>
+                                    <cell id="1079"/>
+                                </row>
+                            </detail>
+                            <footer>
+                                <row id="1080">
+                                    <cell id="1081"/>
+                                    <cell id="1083"/>
+                                </row>
+                            </footer>
+                        </table>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

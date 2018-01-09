@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Economico\Elemento:
+    type: entity
+    table: economico.elemento
+    id:
+        codElemento:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: economico.elemento_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_elemento
+    fields:
+        nomElemento:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_elemento
+    oneToMany:
+        fkEconomicoAtributoElementos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoElemento
+            mappedBy: fkEconomicoElemento
+        fkEconomicoElementoAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoAtividade
+            mappedBy: fkEconomicoElemento
+        fkEconomicoElementoTipoLicencaDiversas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoTipoLicencaDiversa
+            mappedBy: fkEconomicoElemento

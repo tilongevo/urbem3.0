@@ -1,0 +1,75 @@
+Urbem\CoreBundle\Entity\Divida\Autoridade:
+    type: entity
+    table: divida.autoridade
+    repositoryClass: Urbem\CoreBundle\Repository\Tributario\DividaAtiva\AutoridadeRepository
+    id:
+        codAutoridade:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: divida.divida_cod_autoridade_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_autoridade
+    fields:
+        codContrato:
+            type: integer
+            nullable: false
+            column: cod_contrato
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        numcgm:
+            type: integer
+            nullable: false
+        assinatura:
+            type: blob
+            nullable: false
+        tipoAssinatura:
+            type: string
+            nullable: false
+            length: 20
+            column: tipo_assinatura
+        tamanhoAssinatura:
+            type: integer
+            nullable: false
+            column: tamanho_assinatura
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkDividaAutoridades
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkDividaAutoridades
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkDividaAutoridades
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkDividaDividaAtivas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAtiva
+            mappedBy: fkDividaAutoridade
+    oneToOne:
+        fkDividaProcurador:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Procurador
+            mappedBy: fkDividaAutoridade
+            joinColumns:
+                cod_autoridade:
+                    referencedColumnName: cod_autoridade

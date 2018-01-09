@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoBaixa:
+    type: entity
+    table: fiscalizacao.infracao_baixa
+    id:
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+        timestampInicio:
+            type: datetimepk
+            generator:
+                strategy: NONE
+            column: timestamp_inicio
+    fields:
+        timestampTermino:
+            type: datetime
+            nullable: true
+            column: timestamp_termino
+        motivo:
+            type: text
+            nullable: false
+    manyToOne:
+        fkFiscalizacaoInfracao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Infracao
+            inversedBy: fkFiscalizacaoInfracaoBaixas
+            joinColumns:
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+    oneToOne:
+        fkFiscalizacaoInfracaoBaixaProcesso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoBaixaProcesso
+            mappedBy: fkFiscalizacaoInfracaoBaixa
+            joinColumns:
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+                timestamp_inicio:
+                    referencedColumnName: timestamp_inicio

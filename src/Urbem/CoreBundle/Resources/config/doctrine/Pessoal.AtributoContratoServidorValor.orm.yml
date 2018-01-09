@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Pessoal\AtributoContratoServidorValor:
+    type: entity
+    table: pessoal.atributo_contrato_servidor_valor
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\AtributoContratoServidorValorRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalAtributoContratoServidorValores
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkPessoalAtributoContratoServidorValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

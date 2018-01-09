@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Licitacao\JustificativaRazao:
+    type: entity
+    table: licitacao.justificativa_razao
+    id:
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        razao:
+            type: text
+            nullable: false
+        fundamentacaoLegal:
+            type: string
+            nullable: false
+            length: 250
+            column: fundamentacao_legal
+    oneToOne:
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkLicitacaoJustificativaRazao
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio

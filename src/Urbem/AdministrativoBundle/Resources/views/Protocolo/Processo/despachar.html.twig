@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {% include 'AdministrativoBundle::Protocolo/Processo/detalhe.html.twig' %}
+
+        {{ form_start(form) }}
+            <input type="hidden" value="{{ processo.codProcesso }}" name="processo" />
+            <input type="hidden" value="{{ processo.anoExercicio }}" name="exercicio" />
+        <div class="col s4">
+            <label for="despachar_observacoes" class="control-label required">{{ 'label.observacoes'|trans }}</label>
+            <input class="materialize-textarea input-rh" id="despachar_observacoes" name="despachar[observacoes]" disabled="disabled" required="required" value="{{ processo.observacoes }}">
+        </div>
+        <div class="col s4">
+            <label for="despachar_situacao" class="control-label required">{{ 'label.situacao'|trans }}</label>
+            <input type="text" id="despachar_situacao" name="despachar[situacao]" disabled="disabled" required="required" value="{{ processo.fkSwSituacaoProcesso.nomSituacao }}" class="input-rh">
+        </div>
+        <div class="col s4">
+            <label for="despachar_responsavel" class="control-label required">{{ 'label.responsavel'|trans }}</label>
+            <input type="text" id="despachar_responsavel" name="despachar[responsavel]" disabled="disabled" required="required" value="{{ responsavel }}" class="input-rh">
+        </div>
+        <div class="col s12">
+            {{ form_label(form.descricao, null, {'label_attr': {'class': 'control-label label-rh '}}) }}
+            {{ form_widget(form.descricao, {'attr': {'class': 'input-rh '}}) }}
+            {{ form_errors(form.descricao) }}
+        </div>
+        <div class="col s12 right-align">
+            <button type="submit" class="waves-effect waves-light btn blue darken-4" value="Despachar"><i class="material-icons left">send</i>Despachar</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}

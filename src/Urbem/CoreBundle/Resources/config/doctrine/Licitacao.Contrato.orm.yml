@@ -1,0 +1,324 @@
+Urbem\CoreBundle\Entity\Licitacao\Contrato:
+    type: entity
+    table: licitacao.contrato
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Licitacao\ContratoRepository
+    uniqueConstraints:
+        uk_contrato_1:
+            columns:
+                - numero_contrato
+                - exercicio
+                - cod_entidade
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        cgmResponsavelJuridico:
+            type: integer
+            nullable: false
+            column: cgm_responsavel_juridico
+        cgmContratado:
+            type: integer
+            nullable: false
+            column: cgm_contratado
+        dtAssinatura:
+            type: date
+            nullable: false
+            column: dt_assinatura
+        vencimento:
+            type: date
+            nullable: false
+        valorContratado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_contratado
+        valorGarantia:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_garantia
+        inicioExecucao:
+            type: date
+            nullable: false
+            column: inicio_execucao
+        fimExecucao:
+            type: date
+            nullable: false
+            column: fim_execucao
+        codTipoContrato:
+            type: integer
+            nullable: false
+            column: cod_tipo_contrato
+        numeroContrato:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 0
+            column: numero_contrato
+        exercicioOrgao:
+            type: string
+            nullable: true
+            length: 4
+            column: exercicio_orgao
+        numOrgao:
+            type: integer
+            nullable: true
+            column: num_orgao
+        numUnidade:
+            type: integer
+            nullable: true
+            column: num_unidade
+        tipoObjeto:
+            type: integer
+            nullable: true
+            column: tipo_objeto
+        objeto:
+            type: text
+            nullable: true
+        codGarantia:
+            type: integer
+            nullable: true
+            column: cod_garantia
+        formaFornecimento:
+            type: string
+            nullable: true
+            length: 50
+            column: forma_fornecimento
+        formaPagamento:
+            type: string
+            nullable: true
+            length: 100
+            column: forma_pagamento
+        cgmSignatario:
+            type: integer
+            nullable: true
+            column: cgm_signatario
+        justificativa:
+            type: string
+            nullable: false
+            length: 250
+        razao:
+            type: string
+            nullable: false
+            length: 250
+        fundamentacaoLegal:
+            type: string
+            nullable: false
+            length: 250
+            column: fundamentacao_legal
+        multaRescisoria:
+            type: string
+            nullable: false
+            length: 100
+            column: multa_rescisoria
+        prazoExecucao:
+            type: string
+            nullable: false
+            length: 100
+            column: prazo_execucao
+        multaInadimplemento:
+            type: string
+            nullable: true
+            length: 100
+            column: multa_inadimplemento
+        codTipoInstrumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_instrumento
+        cgmRepresentanteLegal:
+            type: integer
+            nullable: true
+            column: cgm_representante_legal
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                cgm_responsavel_juridico:
+                    referencedColumnName: numcgm
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                cgm_contratado:
+                    referencedColumnName: cgm_fornecedor
+        fkLicitacaoTipoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoContrato
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                cod_tipo_contrato:
+                    referencedColumnName: cod_tipo
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                exercicio_orgao:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkComprasTipoObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\TipoObjeto
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                tipo_objeto:
+                    referencedColumnName: cod_tipo_objeto
+        fkLicitacaoTipoGarantia:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoGarantia
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                cod_garantia:
+                    referencedColumnName: cod_garantia
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                cgm_signatario:
+                    referencedColumnName: numcgm
+        fkLicitacaoTipoInstrumento:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoInstrumento
+            inversedBy: fkLicitacaoContratos
+            joinColumns:
+                cod_tipo_instrumento:
+                    referencedColumnName: cod_tipo
+        fkSwCgmPessoaFisica1:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkLicitacaoContratos1
+            joinColumns:
+                cgm_representante_legal:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkEmpenhoEmpenhoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoContrato
+            mappedBy: fkLicitacaoContrato
+        fkLicitacaoContratoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoDocumento
+            mappedBy: fkLicitacaoContrato
+        fkLicitacaoContratoAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoAditivos
+            mappedBy: fkLicitacaoContrato
+        fkLicitacaoContratoApostilas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoApostila
+            mappedBy: fkLicitacaoContrato
+        fkLicitacaoContratoArquivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoArquivo
+            mappedBy: fkLicitacaoContrato
+        fkLicitacaoPublicacaoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PublicacaoContrato
+            mappedBy: fkLicitacaoContrato
+    oneToOne:
+        fkLicitacaoContratoLicitacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoLicitacao
+            mappedBy: fkLicitacaoContrato
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato
+        fkLicitacaoContratoAnulado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoAnulado
+            mappedBy: fkLicitacaoContrato
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato
+        fkLicitacaoRescisaoContrato:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\RescisaoContrato
+            mappedBy: fkLicitacaoContrato
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio_contrato
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato
+        fkLicitacaoContratoCompraDireta:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoCompraDireta
+            mappedBy: fkLicitacaoContrato
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato

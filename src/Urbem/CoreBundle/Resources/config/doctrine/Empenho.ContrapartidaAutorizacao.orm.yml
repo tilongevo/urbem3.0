@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Empenho\ContrapartidaAutorizacao:
+    type: entity
+    table: empenho.contrapartida_autorizacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autorizacao
+    fields:
+        contaContrapartida:
+            type: integer
+            nullable: false
+            column: conta_contrapartida
+    manyToOne:
+        fkEmpenhoContrapartidaResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ContrapartidaResponsavel
+            inversedBy: fkEmpenhoContrapartidaAutorizacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                conta_contrapartida:
+                    referencedColumnName: conta_contrapartida
+    oneToOne:
+        fkEmpenhoAutorizacaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho
+            inversedBy: fkEmpenhoContrapartidaAutorizacao
+            joinColumns:
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

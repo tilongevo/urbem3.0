@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\RaisAfastamento:
+    type: entity
+    table: pessoal.rais_afastamento
+    id:
+        codRais:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_rais
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    oneToMany:
+        fkPessoalAssentamentoRaisAfastamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoRaisAfastamento
+            mappedBy: fkPessoalRaisAfastamento

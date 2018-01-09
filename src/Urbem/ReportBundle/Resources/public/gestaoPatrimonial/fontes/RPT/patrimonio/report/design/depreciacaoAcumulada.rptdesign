@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">Analista: Tonismar Régis Bernardo &lt;tonismar.bernardo@cnm.org.br>
+Desenvolvedor: Henrique Boaventura &lt;henrique.boaventura@cnm.org.br></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.4.0.v201405191524 Build &lt;4.4.0.v20140606-1451></property>
+    <html-property name="description">Template para o formato A4 paisagem</html-property>
+    <property name="units">in</property>
+    <text-property name="displayName">Template Urbem Paisagem</text-property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">../../../../../../gestaoAdministrativa/fontes/RPT/framework/library/urbem_250.rptlibrary</property>
+            <property name="namespace">urbem_250</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="term_user" id="6666">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="exercicio" id="1151" extends="urbem_250.exercicio">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="cod_acao" id="1152" extends="urbem_250.cod_acao">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="db_conn_url" id="1154" extends="urbem_250.db_conn_url">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="entidade" id="1157" extends="urbem_250.entidade">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="stExercicio" id="3074">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="stFiltro" id="3075">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="stSqlDebug" id="3076">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="postgres" id="1150"
+ extends="urbem_250.postgres"/>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsQuery" id="1397">
+            <list-property name="columnHints"/>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData"/>
+            <method name="beforeOpen"><![CDATA[this.queryText = this.queryText.replaceAll("_exercicio_",params["stExercicio"]);
+this.queryText = this.queryText.replaceAll("_filtro_",params["stFiltro"]);
+
+params['stSqlDebug'] = this.queryText;]]></method>
+            <property name="dataSource">postgres</property>
+            <list-property name="resultSet"/>
+            <xml-property name="queryText"><![CDATA[SELECT cod_bem
+     , descricao
+     , cod_estrutural
+     , nom_conta
+     , TO_CHAR(dt_incorporacao,'DD/MM/YYYY') AS dt_incorporacao
+     , vl_bem
+     , vl_reavaliacao
+     , COALESCE(SUM(vl_depreciado),0) + valor_depreciacao_inicial AS vl_acumulado
+     , (COALESCE(vl_reavaliacao, vl_bem) - (COALESCE(ABS(SUM(vl_depreciado)),0) + valor_depreciacao_inicial)) as vl_atualizado
+  FROM (
+          SELECT bem.cod_bem
+               , bem.descricao
+               , bem.vl_bem
+               , bem.vl_depreciacao as valor_depreciacao_inicial
+               , reavaliacao.vl_reavaliacao AS vl_reavaliacao
+               , coalesce(bem.dt_incorporacao,bem.dt_aquisicao) AS dt_incorporacao
+               , especie.nom_especie
+               , depreciacao.cod_depreciacao
+               , coalesce(depreciacao.vl_depreciado,0) AS vl_depreciado
+               , depreciacao.competencia
+               , CASE WHEN bem_plano_depreciacao.cod_plano IS NOT NULL
+	              THEN bem_plano_depreciacao.nom_conta
+	              ELSE grupo_plano_depreciacao.nom_conta
+                 END AS nom_conta
+               , CASE WHEN bem_plano_depreciacao.cod_plano IS NOT NULL
+	              THEN bem_plano_depreciacao.cod_estrutural
+	              ELSE grupo_plano_depreciacao.cod_estrutural
+                 END AS cod_estrutural 
+               , reavaliacao.dt_reavaliacao
+               , reavaliacao.vida_util
+               , reavaliacao.motivo
+             FROM patrimonio.bem
+             
+       INNER JOIN patrimonio.bem_comprado
+               ON bem.cod_bem = bem_comprado.cod_bem
+
+       INNER JOIN patrimonio.especie
+               ON bem.cod_natureza = especie.cod_natureza
+              AND bem.cod_grupo    = especie.cod_grupo
+              AND bem.cod_especie  = especie.cod_especie
+
+       INNER JOIN patrimonio.depreciacao
+               ON depreciacao.cod_bem   = bem.cod_bem
+
+        LEFT JOIN ( SELECT bem_plano_depreciacao.cod_bem
+                         , bem_plano_depreciacao.cod_plano 
+                         , MAX(bem_plano_depreciacao.timestamp::timestamp) AS timestamp
+                         , plano_conta.cod_estrutural
+                         , plano_conta.nom_conta
+                         , plano_conta.cod_conta
+                         , plano_conta.exercicio			 
+                      FROM patrimonio.bem_plano_depreciacao 
+    
+                  LEFT JOIN contabilidade.plano_analitica
+                         ON plano_analitica.cod_plano = bem_plano_depreciacao.cod_plano
+                        AND plano_analitica.exercicio = bem_plano_depreciacao.exercicio
+    
+                  LEFT JOIN contabilidade.plano_conta
+                         ON plano_conta.cod_conta = plano_analitica.cod_conta
+                        AND plano_conta.exercicio = plano_analitica.exercicio
+                             
+                      WHERE bem_plano_depreciacao.timestamp::timestamp = ( SELECT MAX(bem_plano.timestamp::timestamp) AS timestamp 
+                                                                             FROM patrimonio.bem_plano_depreciacao AS bem_plano
+                                                                            WHERE bem_plano_depreciacao.cod_bem   = bem_plano.cod_bem
+                                                                              AND bem_plano_depreciacao.exercicio = bem_plano.exercicio		
+                                                                         GROUP BY bem_plano.cod_bem
+                                                                                , bem_plano.exercicio )
+                      GROUP BY bem_plano_depreciacao.cod_bem
+                                     , bem_plano_depreciacao.cod_plano
+                                     , bem_plano_depreciacao.exercicio
+                                     , plano_conta.cod_estrutural
+                                     , plano_conta.nom_conta 
+                                     , plano_conta.cod_conta
+                                     , plano_conta.exercicio
+              
+                      ORDER BY timestamp DESC                  
+                      
+                 )AS bem_plano_depreciacao
+               ON bem_plano_depreciacao.cod_bem = depreciacao.cod_bem
+
+	LEFT JOIN ( SELECT grupo_plano_depreciacao.cod_plano
+	                 , bem.cod_bem
+			 , plano_conta.nom_conta
+			 , plano_conta.cod_estrutural
+			 , plano_conta.cod_conta
+		         , plano_conta.exercicio 			  
+  		     FROM patrimonio.grupo_plano_depreciacao 
+       
+               INNER JOIN patrimonio.grupo
+                       ON grupo.cod_natureza = grupo_plano_depreciacao.cod_natureza
+                      AND grupo.cod_grupo    = grupo_plano_depreciacao.cod_grupo
+               
+               INNER JOIN patrimonio.especie
+                       ON especie.cod_grupo    = grupo.cod_grupo
+                      AND especie.cod_natureza = grupo.cod_natureza
+               
+               INNER JOIN patrimonio.bem
+                       ON bem.cod_especie  = especie.cod_especie
+                      AND bem.cod_grupo    = especie.cod_grupo
+                      AND bem.cod_natureza = especie.cod_natureza
+
+               LEFT JOIN contabilidade.plano_analitica
+                      ON plano_analitica.exercicio = grupo_plano_depreciacao.exercicio  
+                     AND plano_analitica.cod_plano = grupo_plano_depreciacao.cod_plano
+
+               LEFT JOIN contabilidade.plano_conta
+                      ON plano_conta.exercicio = plano_analitica.exercicio 
+                     AND plano_conta.cod_conta = plano_analitica.cod_conta
+                      
+                  ) AS grupo_plano_depreciacao
+                 ON grupo_plano_depreciacao.cod_bem = depreciacao.cod_bem
+
+          LEFT JOIN (  SELECT MAX(cod_reavaliacao) AS cod_reavaliacao
+                            , cod_bem
+                         FROM patrimonio.reavaliacao
+                     GROUP BY cod_bem 
+                    ) AS max_reavaliacao
+                 ON bem.cod_bem = max_reavaliacao.cod_bem
+
+          LEFT JOIN patrimonio.reavaliacao
+                 ON reavaliacao.cod_bem         = max_reavaliacao.cod_bem
+                AND reavaliacao.cod_reavaliacao = max_reavaliacao.cod_reavaliacao
+
+          LEFT JOIN patrimonio.depreciacao_reavaliacao
+                 ON reavaliacao.cod_bem         = depreciacao_reavaliacao.cod_bem
+                AND reavaliacao.cod_reavaliacao = depreciacao_reavaliacao.cod_reavaliacao
+                AND depreciacao.cod_depreciacao = depreciacao_reavaliacao.cod_depreciacao
+                AND depreciacao.cod_bem         = depreciacao_reavaliacao.cod_bem
+                AND depreciacao.timestamp       = depreciacao_reavaliacao.timestamp
+
+          LEFT JOIN patrimonio.depreciacao_anulada
+                 ON depreciacao_anulada.cod_depreciacao = depreciacao.cod_depreciacao
+                AND depreciacao_anulada.cod_bem         = depreciacao.cod_bem
+                AND depreciacao_anulada.timestamp       = depreciacao.timestamp
+
+	          WHERE CASE WHEN reavaliacao.cod_reavaliacao IS NOT NULL 
+                		 THEN reavaliacao.dt_reavaliacao < depreciacao.dt_depreciacao
+	                ELSE reavaliacao.cod_reavaliacao IS NULL
+    	        END
+       			AND depreciacao.competencia  LIKE ('_exercicio_%')
+		        AND depreciacao_anulada.cod_bem IS NULL 
+     
+            _filtro_
+       
+           ORDER BY depreciacao.timestamp
+       )AS depreciacao
+
+GROUP BY  cod_bem
+       , descricao
+       , nom_conta
+       , cod_estrutural
+       , dt_incorporacao
+       , vl_bem
+       , vl_reavaliacao
+       , valor_depreciacao_inicial]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>cod_bem</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>cod_bem</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>cod_bem</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>descricao</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>700</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>descricao</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>descricao</design:label>
+            <design:formattingHints>
+              <design:displaySize>700</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>cod_estrutural</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>160</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>cod_estrutural</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>cod_estrutural</design:label>
+            <design:formattingHints>
+              <design:displaySize>160</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>nom_conta</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>160</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>nom_conta</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nom_conta</design:label>
+            <design:formattingHints>
+              <design:displaySize>160</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>dt_incorporacao</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>dt_incorporacao</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>dt_incorporacao</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>vl_bem</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>14</design:precision>
+            <design:scale>2</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>vl_bem</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>vl_bem</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>vl_reavaliacao</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>14</design:precision>
+            <design:scale>2</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>vl_reavaliacao</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>vl_reavaliacao</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>vl_acumulado</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>vl_acumulado</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>vl_acumulado</design:label>
+            <design:formattingHints>
+              <design:displaySize>131089</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>vl_atualizado</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>vl_atualizado</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>vl_atualizado</design:label>
+            <design:formattingHints>
+              <design:displaySize>131089</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab" id="4">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="NewStyle" id="1148">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+        </style>
+        <style name="padrão_urbem" id="1149">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">landscape</property>
+            <property name="topMargin">0.3in</property>
+            <property name="leftMargin">0.2in</property>
+            <property name="bottomMargin">0.21in</property>
+            <property name="rightMargin">0.1in</property>
+            <page-header>
+                <grid name="cabecalho_paisagem" id="1160" extends="urbem_250.cabecalho_paisagem">
+                    <overridden-values>
+                        <ref-entry baseId="1308" id="1308"/>
+                        <ref-entry baseId="1309" id="1309"/>
+                        <ref-entry baseId="1310" id="1310"/>
+                        <ref-entry baseId="1311" id="1311"/>
+                        <ref-entry baseId="1312" id="1312"/>
+                        <ref-entry baseId="1395" name="NewText6122" id="1395"/>
+                        <ref-entry baseId="1396" name="NewText61211" id="1396"/>
+                        <ref-entry baseId="1315" id="1315"/>
+                        <ref-entry baseId="1316" name="NewGrid4" id="1316"/>
+                        <ref-entry baseId="1317" id="1317"/>
+                        <ref-entry baseId="1318" id="1318"/>
+                        <ref-entry baseId="1319" id="1319"/>
+                        <ref-entry baseId="1320" name="NewData14" id="1320"/>
+                        <ref-entry baseId="1321" name="NewData61" id="1321"/>
+                        <ref-entry baseId="1322" id="1322"/>
+                        <ref-entry baseId="1323" id="1323"/>
+                        <ref-entry baseId="1324" name="NewData15" id="1324"/>
+                        <ref-entry baseId="1325" name="NewData71" id="1325"/>
+                        <ref-entry baseId="1326" id="1326"/>
+                        <ref-entry baseId="1327" id="1327"/>
+                        <ref-entry baseId="1328" name="NewData21" id="1328"/>
+                        <ref-entry baseId="1329" name="NewData81" id="1329"/>
+                        <ref-entry baseId="1330" id="1330"/>
+                        <ref-entry baseId="1331" id="1331"/>
+                        <ref-entry baseId="1332" name="NewData31" id="1332"/>
+                        <ref-entry baseId="1333" name="NewData91" id="1333"/>
+                        <ref-entry baseId="1334" id="1334"/>
+                        <ref-entry baseId="1335" id="1335"/>
+                        <ref-entry baseId="1336" name="NewData41" id="1336"/>
+                        <ref-entry baseId="1337" name="NewData101" id="1337"/>
+                        <ref-entry baseId="1338" id="1338"/>
+                        <ref-entry baseId="1339" id="1339"/>
+                        <ref-entry baseId="1340" name="NewData51" id="1340"/>
+                        <ref-entry baseId="1341" name="NewData111" id="1341"/>
+                        <ref-entry baseId="1342" id="1342"/>
+                        <ref-entry baseId="1343" name="NewGrid11" id="1343"/>
+                        <ref-entry baseId="1344" id="1344"/>
+                        <ref-entry baseId="1345" id="1345"/>
+                        <ref-entry baseId="1346" id="1346"/>
+                        <ref-entry baseId="1347" name="NewGrid32" id="1347"/>
+                        <ref-entry baseId="1348" id="1348"/>
+                        <ref-entry baseId="1349" id="1349"/>
+                        <ref-entry baseId="1350" id="1350"/>
+                        <ref-entry baseId="1351" id="1351"/>
+                        <ref-entry baseId="1352" name="NewData12121" id="1352"/>
+                        <ref-entry baseId="1353" id="1353"/>
+                        <ref-entry baseId="1354" name="NewData14121" id="1354"/>
+                        <ref-entry baseId="1355" id="1355"/>
+                        <ref-entry baseId="1356" id="1356"/>
+                        <ref-entry baseId="1357" name="NewGrid311" id="1357"/>
+                        <ref-entry baseId="1358" id="1358"/>
+                        <ref-entry baseId="1359" id="1359"/>
+                        <ref-entry baseId="1360" id="1360"/>
+                        <ref-entry baseId="1361" id="1361"/>
+                        <ref-entry baseId="1362" name="NewData13121" id="1362"/>
+                        <ref-entry baseId="1363" id="1363"/>
+                        <ref-entry baseId="1364" name="NewData1521" id="1364"/>
+                        <ref-entry baseId="1365" id="1365"/>
+                        <ref-entry baseId="1366" id="1366"/>
+                        <ref-entry baseId="1367" name="NewData11121" id="1367"/>
+                        <ref-entry baseId="1368" id="1368"/>
+                        <ref-entry baseId="1369" id="1369"/>
+                        <ref-entry baseId="1370" name="NewData1621" id="1370"/>
+                        <ref-entry baseId="1371" id="1371"/>
+                        <ref-entry baseId="1372" id="1372"/>
+                        <ref-entry baseId="1373" name="NewGrid21" id="1373"/>
+                        <ref-entry baseId="1374" id="1374"/>
+                        <ref-entry baseId="1375" id="1375"/>
+                        <ref-entry baseId="1376" id="1376"/>
+                        <ref-entry baseId="1377" id="1377"/>
+                        <ref-entry baseId="1378" id="1378"/>
+                        <ref-entry baseId="1379" id="1379"/>
+                        <ref-entry baseId="1380" id="1380"/>
+                        <ref-entry baseId="1381" id="1381"/>
+                        <ref-entry baseId="1382" name="NewText721" id="1382"/>
+                        <ref-entry baseId="1383" id="1383"/>
+                        <ref-entry baseId="1384" name="NewText1121" id="1384"/>
+                        <ref-entry baseId="1385" id="1385"/>
+                        <ref-entry baseId="1386" name="NewLabel2122" id="1386"/>
+                        <ref-entry baseId="1387" id="1387"/>
+                        <ref-entry baseId="1388" name="NewAutoText11" id="1388"/>
+                        <ref-entry baseId="1389" id="1389"/>
+                        <ref-entry baseId="1390" name="NewLabel21211" id="1390"/>
+                        <ref-entry baseId="1391" id="1391"/>
+                        <ref-entry baseId="1392" name="NewAutoText2" id="1392"/>
+                    </overridden-values>
+                </grid>
+            </page-header>
+            <page-footer>
+                <grid name="rodape" id="1159" extends="urbem_250.rodape">
+                    <property name="width">285mm</property>
+                    <overridden-values>
+                        <ref-entry baseId="180" id="180"/>
+                        <ref-entry baseId="181" id="181"/>
+                        <ref-entry baseId="182" id="182"/>
+                        <ref-entry baseId="183" name="NewText2" id="183"/>
+                    </overridden-values>
+                </grid>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="1161">
+            <property name="width">11.291666666666666in</property>
+            <property name="dataSet">dsQuery</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">cod_bem</property>
+                    <expression name="expression">dataSetRow["cod_bem"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">descricao</property>
+                    <expression name="expression">dataSetRow["descricao"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_estrutural</property>
+                    <expression name="expression">dataSetRow["cod_estrutural"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nom_conta</property>
+                    <expression name="expression">dataSetRow["nom_conta"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">dt_incorporacao</property>
+                    <expression name="expression">dataSetRow["dt_incorporacao"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">vl_bem</property>
+                    <expression name="expression">dataSetRow["vl_bem"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">vl_reavaliacao</property>
+                    <expression name="expression">dataSetRow["vl_reavaliacao"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">vl_acumulado</property>
+                    <expression name="expression">dataSetRow["vl_acumulado"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">vl_atualizado</property>
+                    <expression name="expression">dataSetRow["vl_atualizado"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">bem</property>
+                    <expression name="expression">dataSetRow["cod_bem"]+' - '+dataSetRow["descricao"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">estrutural</property>
+                    <expression name="expression">dataSetRow["cod_estrutural"]+' - '+dataSetRow["nom_conta"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">conta</property>
+                    <expression name="expression">dataSetRow["nom_conta"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">incorporacao</property>
+                    <expression name="expression">dataSetRow["dt_incorporacao"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">valor_bem</property>
+                    <expression name="expression">dataSetRow["vl_bem"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">valor_reavaliacao</property>
+                    <expression name="expression">dataSetRow["vl_reavaliacao"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">valor_acumulado</property>
+                    <expression name="expression">dataSetRow["vl_acumulado"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">valor_atualizado</property>
+                    <expression name="expression">dataSetRow["vl_atualizado"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation</property>
+                    <property name="dataType">decimal</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>NewTableGroup1</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value">dataSetRow["vl_acumulado"]</expression>
+                        </structure>
+                    </list-property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <expression name="expression">dataSetRow["vl_reavaliacao"]-row["Aggregation"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">vl_atualizado_bem</property>
+                    <expression name="expression">dataSetRow["vl_atualizado"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <column id="1189">
+                <property name="width">2.9791666666666665in</property>
+            </column>
+            <column id="1190">
+                <property name="width">2.1145833333333335in</property>
+            </column>
+            <column id="1192">
+                <property name="width">1.15625in</property>
+            </column>
+            <column id="1193">
+                <property name="width">0.7604166666666666in</property>
+            </column>
+            <column id="1194">
+                <property name="width">1.0416666666666667in</property>
+            </column>
+            <column id="1195">
+                <property name="width">1.0729166666666667in</property>
+            </column>
+            <column id="1402">
+                <property name="width">1.1041666666666667in</property>
+            </column>
+            <header>
+                <row id="1162">
+                    <cell id="1163">
+                        <label id="1248">
+                            <property name="style">padrão_siamweb</property>
+                            <text-property name="text">Bem</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1164">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <label id="1249">
+                            <property name="style">padrão_siamweb</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Conta</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1166">
+                        <label id="1250">
+                            <property name="style">padrão_siamweb</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Data incorporação</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1167">
+                        <label id="1251">
+                            <property name="style">padrão_siamweb</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Aquisição</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1168">
+                        <label id="1252">
+                            <property name="style">padrão_siamweb</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Reavaliação</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1169">
+                        <label id="1253">
+                            <property name="style">padrão_siamweb</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Acumulado</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1398">
+                        <label id="1403">
+                            <property name="style">padrão_siamweb</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text"> Atualizado</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <group id="1224">
+                <property name="groupName">NewTableGroup1</property>
+                <property name="interval">none</property>
+                <property name="sortDirection">asc</property>
+                <expression name="keyExpr">row["cod_bem"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue">row["cod_bem"]</expression>
+                </structure>
+                <property name="repeatHeader">true</property>
+                <property name="hideDetail">false</property>
+                <property name="pageBreakAfter">auto</property>
+                <property name="pageBreakBefore">auto</property>
+                <property name="pageBreakInside">auto</property>
+                <footer>
+                    <row id="1234">
+                        <property name="height">0.25in</property>
+                        <list-property name="visibility">
+                            <structure>
+                                <property name="format">all</property>
+                                <expression name="valueExpr">true</expression>
+                            </structure>
+                        </list-property>
+                        <cell id="1235"/>
+                        <cell id="1236"/>
+                        <cell id="1238">
+                            <data id="1246">
+                                <property name="style">padrão_siamweb</property>
+                                <property name="fontFamily">sans-serif</property>
+                                <property name="textAlign">right</property>
+                                <list-property name="visibility">
+                                    <structure>
+                                        <property name="format">all</property>
+                                        <expression name="valueExpr">true</expression>
+                                    </structure>
+                                </list-property>
+                                <property name="resultSetColumn">Aggregation</property>
+                            </data>
+                        </cell>
+                        <cell id="1239">
+                            <property name="colSpan">2</property>
+                            <property name="rowSpan">1</property>
+                        </cell>
+                        <cell id="1241"/>
+                        <cell id="1400"/>
+                    </row>
+                </footer>
+            </group>
+            <detail>
+                <row id="1171">
+                    <property name="height">0.25in</property>
+                    <cell id="1172">
+                        <data id="1197">
+                            <property name="style">padrão_siamweb</property>
+                            <property name="resultSetColumn">bem</property>
+                        </data>
+                    </cell>
+                    <cell id="1173">
+                        <data id="1198">
+                            <property name="style">padrão_siamweb</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">estrutural</property>
+                        </data>
+                    </cell>
+                    <cell id="1175">
+                        <data id="1200">
+                            <property name="style">padrão_siamweb</property>
+                            <structure name="dateTimeFormat">
+                                <property name="category">Unformatted</property>
+                            </structure>
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">incorporacao</property>
+                        </data>
+                    </cell>
+                    <cell id="1176">
+                        <data id="1201">
+                            <property name="style">padrão_siamweb</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">valor_bem</property>
+                        </data>
+                    </cell>
+                    <cell id="1177">
+                        <data id="1202">
+                            <property name="style">padrão_siamweb</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">valor_reavaliacao</property>
+                        </data>
+                    </cell>
+                    <cell id="1178">
+                        <data id="1203">
+                            <property name="style">padrão_siamweb</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">valor_acumulado</property>
+                        </data>
+                    </cell>
+                    <cell id="1399">
+                        <data id="3073">
+                            <property name="style">padrão_siamweb</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">vl_atualizado_bem</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="1180">
+                    <property name="height">0.23958333333333334in</property>
+                    <cell id="1181"/>
+                    <cell id="1182"/>
+                    <cell id="1184"/>
+                    <cell id="1185"/>
+                    <cell id="1186"/>
+                    <cell id="1187"/>
+                    <cell id="1401"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

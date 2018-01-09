@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    <table class="js-table-lista-downloads">
+        <thead>
+            <tr>
+                <th>{{ 'label.dividaAtivaEmitirDocumento.arquivo'|trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for documento in documentos %}
+                <tr>
+                    <td>{{ '%s - %s'|format(documento['contribuinte'], documento['modeloDocumento']) }}</td>
+                    <td>
+                        {% set emissaoDocumento = documento['documento'].getFkDividaEmissaoDocumentos().last() %}
+                        {% if emissaoDocumento is empty %}
+                            <span> - </span>
+                        {% else %}
+                            <a href="{{ path('urbem_tributario_divida_ativa_cobranca_administrativa_cobrar_divida_download_documento', { 'id': '%d~%d~%d~%d~%d~%d'|format(emissaoDocumento.getNumParcelamento(), emissaoDocumento.getNumEmissao(), emissaoDocumento.getCodTipoDocumento(), emissaoDocumento.getCodDocumento(), emissaoDocumento.getNumDocumento(), emissaoDocumento.getExercicio()) }) }}" class="waves-effect waves-light btn blue darken-4 btn btn-success">
+                                {{ 'label.dividaAtivaEmitirDocumento.download'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {% if not documentos|length %}
+                <tr>
+                    <td colspan="2" style="text-align:center">{{ 'label.dividaAtivaEmitirDocumento.nenhumRegistroEncontrado'|trans }}</td>
+                </tr>
+            {% endif %}
+
+            {% if carne %}
+                <tr>
+                    <td>
+                        <a href="{{ path('urbem_tributario_divida_ativa_cobranca_administrativa_cobrar_divida_download_carne', { 'lancamento': lancamento, 'numcgm': numcgm, 'exercicio': admin.getExercicio(), 'modelo': carne, 'cobranca': dividaAtiva.getFkDividaDividaParcelamentos().last().getFkDividaParcelamento().getNumeroParcelamento() }) }}" class="waves-effect waves-light btn blue darken-4 btn btn-success">
+                                {{ 'label.tributarioCobrarDividaAtiva.downloadCarne'|trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% endif %}
+
+        </tbody>
+    </table>
+{% endblock content %}

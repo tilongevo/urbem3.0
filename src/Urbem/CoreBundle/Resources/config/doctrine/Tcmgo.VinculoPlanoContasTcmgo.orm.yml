@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Tcmgo\VinculoPlanoContasTcmgo:
+    type: entity
+    table: tcmgo.vinculo_plano_contas_tcmgo
+    id:
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+            generator:
+                strategy: NONE
+    fields:
+        codPlanoTcmgo:
+            type: integer
+            nullable: false
+            column: cod_plano_tcmgo
+        exercicioTcmgo:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_tcmgo
+    manyToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkTcmgoVinculoPlanoContasTcmgos
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcmgoPlanoContasTcmgo:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\PlanoContasTcmgo
+            inversedBy: fkTcmgoVinculoPlanoContasTcmgos
+            joinColumns:
+                cod_plano_tcmgo:
+                    referencedColumnName: cod_plano
+                exercicio_tcmgo:
+                    referencedColumnName: exercicio

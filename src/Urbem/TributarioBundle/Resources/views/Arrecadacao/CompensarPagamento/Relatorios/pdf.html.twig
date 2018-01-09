@@ -1,0 +1,111 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-custom">
+            <tr>
+                <td><b>{{ 'label.arrecadacaoCompensarPagamento.contribuinte'|trans }}:</b></td><td>{{ admin.getContribuinte(contribuinte) }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.arrecadacaoCompensarPagamento.exercicio'|trans }}:</b></td><td>{{ exercicio }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.arrecadacaoCompensarPagamento.saldoDisponivel'|trans }}:</b></td><td>{{ saldoDisponivel }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.arrecadacaoCompensarPagamento.valorParcelasSelecionadas'|trans }}:</b></td><td>{{ valorParcelasSelecionadas }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.arrecadacaoCompensarPagamento.totalCompensacao'|trans }}:</b></td><td>{{ totalCompensacao }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.arrecadacaoCompensarPagamento.valorCompensar'|trans }}:</b></td><td>{{ valorCompensar }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.arrecadacaoCompensarPagamento.saldoRestante'|trans }}:</b></td><td>{{ saldoRestante }}</td>
+            </tr>
+            <tr>
+                <td colspan="10"><h5><b>{{ 'label.arrecadacaoCompensarPagamento.parcelasOrigem'|trans }}</b></h5></td>
+            </tr>
+            <tr>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.numeracao'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.parcela'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.origem'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.vencimento'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.valor'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.valorCorrigido'|trans }}</th>
+            </tr>
+
+            {% if parcelasOrigem is defined %}
+                {% for parcela in parcelasOrigem %}
+                    {% set parcelaPart = parcela|split('~') %}
+                    <tr>
+                        <td>{{ parcelaPart[0] }} / {{ parcelaPart[1] }}</td>
+                        <td>{{ parcelaPart|last }}</td>
+                        <td>{{ parcelaPart[6] }}</td>
+                        <td>{{ parcelaPart[7] }}</td>
+                        <td>{{ valorParcelasSelecionadas }}</td>
+                        <td>{{ totalCompensacao }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            <tr>
+                <td colspan="10"><h5><b>{{ 'label.arrecadacaoCompensarPagamento.parcelasCompensadas'|trans }}</b></h5></td>
+            </tr>
+            <tr>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.numeracao'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.parcela'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.origem'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.vencimento'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.valor'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.valorCorrigido'|trans }}</th>
+            </tr>
+
+            {% if parcelasCompensadas is defined %}
+                {% for parcela in parcelasCompensadas %}
+                    {% set parcelaPart = parcela|split('~') %}
+                    <tr>
+                        <td>{{ parcelaPart[0] }} / {{ parcelaPart[1] }}</td>
+                        <td>{{ parcelaPart|last }}</td>
+                        <td>{{ parcelaPart[5] }}</td>
+                        <td>{{ parcelaPart[6] }}</td>
+                        <td>{{ valorCompensar }}</td>
+                        <td>{{ totalCompensacao }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            <tr>
+                <td colspan="10"><h5><b>{{ 'label.arrecadacaoCompensarPagamento.parcelasNovas'|trans }}</b></h5></td>
+            </tr>
+            <tr>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.numeracao'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.parcela'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.origem'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.vencimento'|trans }}</th>
+                <th>{{ 'label.arrecadacaoCompensarPagamento.valor'|trans }}</th>
+            </tr>
+
+            {% if parcelasNovas is defined %}
+                {% for parcela in parcelasNovas %}
+                    <tr>
+                        <td>{{ parcela.numeracao }}</td>
+                        <td>{{ parcela.parcela }}</td>
+                        <td>{{ parcela.origem }}</td>
+                        <td>{{ parcela.vencimento }}</td>
+                        <td>{{ parcela.valor }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+        </table>
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoDocCredor:
+    type: entity
+    table: tcemg.tipo_doc_credor
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\TipoDocCredorRepository
+    id:
+        codigo:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkTcemgDeParaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\DeParaDocumento
+            mappedBy: fkTcemgTipoDocCredor

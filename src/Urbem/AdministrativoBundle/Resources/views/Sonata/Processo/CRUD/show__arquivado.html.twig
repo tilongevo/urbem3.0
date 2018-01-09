@@ -1,0 +1,107 @@
+{% set swCgmDestinatario = swProcesso.fkSwProcessoArquivado.fkSwCgm %}
+
+<div class="row">
+    <div class="col s12 servidor-table">
+        <a class="btn-flat">
+            <i class="mdi mdi-file left"></i>
+            {{ 'label.processo.arquivamento.carta'|trans }}
+        </a>
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <tr>
+            <th class="th-rh" colspan="2"></th>
+        </tr>
+        </thead>
+        <tbody class="tbody-rh">
+        <tr>
+            <th class="th-rh" width="20"
+                style="text-align: right !important;">{{ 'label.processo.codigo'|trans }}</th>
+            <td class="left">{{ admin.mascaraDoProcesso(swProcesso) }}</td>
+        </tr>
+        <tr>
+            <th class="th-rh"
+                style="text-align: right !important;">{{ 'label.processo.arquivamento.destinatario'|trans }}</th>
+            <td class="left">
+                <p class="left-align">{{ swCgmDestinatario }}</p>
+                {% if swCgmDestinatario.logradouroCorresp is not empty %}
+                    <p class="left-align">{{ 'label.processo.arquivamento.endereco'|trans }}
+                        : {{ swCgmDestinatario.tipoLogradouroCorresp }}
+                        {{ swCgmDestinatario.logradouroCorresp }},&nbsp;
+                        {{ swCgmDestinatario.numeroCorresp }}&nbsp;
+                        {{ swCgmDestinatario.complementoCorresp }}</p>
+                    <p class="left-align">{{ 'label.swLogradouro.bairro'|trans }}
+                        :&nbsp;{{ swCgmDestinatario.bairroCorresp }}</p>
+                    <p class="left-align">{{ 'label.swLogradouro.cep'|trans }}
+                        :&nbsp;{{ swCgmDestinatario.cepCorresp|cep }}</p>
+                    <p class="left-align">{{ swCgmDestinatario.fkSwMunicipio1 }}</p>
+                {% else %}
+                    <p class="left-align">{{ 'label.processo.arquivamento.endereco'|trans }}
+                        : {{ swCgmDestinatario.tipoLogradouro }}
+                        {{ swCgmDestinatario.logradouro }},&nbsp;
+                        {{ swCgmDestinatario.numero }}&nbsp;
+                        {{ swCgmDestinatario.complemento }}</p>
+                    <p class="left-align">{{ 'label.swLogradouro.bairro'|trans }}
+                        :&nbsp;{{ swCgmDestinatario.bairro }}</p>
+                    <p class="left-align">{{ 'label.swLogradouro.cep'|trans }}:&nbsp;{{ swCgmDestinatario.cep|cep }}</p>
+                    <p class="left-align">{{ swCgmDestinatario.fkSwMunicipio1 }}</p>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th class="th-rh"
+                style="text-align: right !important;">{{ 'label.processo.arquivamento.classificacaoAssunto'|trans }}</th>
+            <td class="left">
+                <p class="left-align">
+                    {{ "%03d"|format(swProcesso.fkSwAssunto.fkSwClassificacao.codClassificacao) }}
+                    .{{ "%03d"|format(swProcesso.fkSwAssunto.codAssunto) }}</p>
+                <p class="left-align">{{ swProcesso.fkSwAssunto.fkSwClassificacao.nomClassificacao }}</p>
+                <p class="left-align">{{ swProcesso.fkSwAssunto.nomAssunto }}</p>
+            </td>
+        </tr>
+        <tr>
+            <th class="th-rh"
+                style="text-align: right !important;">{{ 'label.processo.arquivamento.incluidoPor'|trans }}</th>
+            <td class="left">
+                {{ swProcesso.fkAdministracaoUsuario.fkSwCgm }}
+            </td>
+        </tr>
+        <tr>
+            <th class="th-rh"
+                style="text-align: right !important;">{{ 'label.processo.arquivamento.arquivamento'|trans }}</th>
+            <td class="left">
+                {{ swProcesso.fkSwSituacaoProcesso.nomSituacao }}
+            </td>
+        </tr>
+        <tr>
+            <th class="th-rh"
+                style="text-align: right !important;">{{ 'label.processo.arquivamento.motivoArquivamento'|trans }}</th>
+            <td class="left">
+                {{ swProcesso.fkSwProcessoArquivado.fkSwHistoricoArquivamento.nomHistorico }}
+            </td>
+        </tr>
+        <tr>
+            <th class="th-rh"
+                style="text-align: right !important;">{{ 'label.processo.arquivamento.localizacaoFisica'|trans }}</th>
+            <td class="left">
+                {{ swProcesso.fkSwProcessoArquivado.localizacao }}
+            </td>
+        </tr>
+        <tr>
+            <th class="th-rh"
+                style="text-align: right !important;">{{ 'label.processo.arquivamento.textoComplementar'|trans }}</th>
+            <td class="left">
+                {{ swProcesso.fkSwProcessoArquivado.textoComplementar }}
+            </td>
+        </tr>
+        <tr>
+            <th class="th-rh"
+                style="text-align: right !important;">{{ 'label.processo.arquivamento.arquivador'|trans }}</th>
+            <td class="left">
+                {{ swProcesso.fkSwProcessoArquivado.fkSwCgm }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

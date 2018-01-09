@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Cse\RespostaQuestao:
+    type: entity
+    table: cse.resposta_questao
+    id:
+        codQuestao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_questao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+        codResposta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_resposta
+    fields:
+        resposta:
+            type: text
+            nullable: false
+    manyToOne:
+        fkCseQuestaoCenso:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\QuestaoCenso
+            inversedBy: fkCseRespostaQuestoes
+            joinColumns:
+                cod_questao:
+                    referencedColumnName: cod_questao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkCseCidadao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            inversedBy: fkCseRespostaQuestoes
+            joinColumns:
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao

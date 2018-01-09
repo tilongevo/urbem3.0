@@ -1,0 +1,175 @@
+{% block body %}
+    {% block content %}
+        {% include 'FinanceiroBundle:Empenho/PreEmpenho:headerPdf.html.twig' with { 'dadosAutorizacao': dadosAutorizacao} %}
+        <div class="col-s12 divider">
+            <p></p>
+        </div>
+        <div class="container content">
+            <div class="row">
+                <div class="col-s6">
+                    <p>FORNECEDOR</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.cgmCredor }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>CNPJ/CPF</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.cgcCpfCredor }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>CGM</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.numCgmCredor }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>ENDEREÇO</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.logradouroCredor }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>CIDADE</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.municipioCredor }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>UF</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.ufCredor }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>ENTIDADE</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.codEntidade }} - {{ dadosAutorizacao.nomEntidade }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>ÓRGÃO</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.orgao }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>UNIDADE</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.unidade }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>DOTAÇÃO</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.dotacao }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>PAO</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.pao }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>RECURSO</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.despesa.codRecurso }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>DATA DE VALIDADE</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.dtValidadeFinal }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>DESCRIÇÃO RESUMIDA DO EMPENHO</p>
+                </div>
+                <div class="col-s6">
+                    <p>{{ dadosAutorizacao.descricao }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>Obs/Justificativa</p>
+                </div>
+                <div class="col-s6">
+                    <p></p>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-right">ITEM</th>
+                            <th class="text-right">QUANTIDADE</th>
+                            <th>UNIDADE</th>
+                            <th>ESPECIFICAÇÃO</th>
+                            <th class="text-right">VALOR UNITÁRIO</th>
+                            <th class="text-right">VALOR TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in dadosAutorizacao.itemPreEmpenho %}
+                            <tr>
+                                <td class="text-right">{{ item.numItem }}</td>
+                                <td class="text-right">{{ item.quantidade|number_format_decimal({'fraction_digits': 4}) }}</td>
+                                <td>{{ item.siglaUnidade }}</td>
+                                <td>{{ item.nomItem}}</td>
+                                <td class="text-right">{{ (item.vlTotal / item.quantidade)|number_format_decimal({'fraction_digits': 4}) }}</td>
+                                <td class="text-right">{{ item.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="5">TOTAL GERAL</td>
+                            <td class="text-right">{{ dadosAutorizacao.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</td>                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-s6">
+                    <p>Autorização anulada em {{ dadosAutorizacao.dtAnulacao }}</p>
+                </div>
+                <div class="col-s6">
+                    <p><strong>Motivo</strong></p>
+                    <p>{{ dadosAutorizacao.motivo }}</p>
+                </div>
+            </div>
+        </div>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock stylesheets %}

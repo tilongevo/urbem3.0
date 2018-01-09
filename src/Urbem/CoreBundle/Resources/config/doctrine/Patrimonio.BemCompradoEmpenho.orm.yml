@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Patrimonio\BemCompradoEmpenho:
+    type: entity
+    table: patrimonio.bem_comprado_empenho
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+    fields:
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+    manyToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkPatrimonioBemCompradoEmpenhos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioBemCompradoEmpenho
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem

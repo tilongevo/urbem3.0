@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Patrimonio\ArquivoColetora:
+    type: entity
+    table: patrimonio.arquivo_coletora
+    uniqueConstraints:
+        uk_arquivo_coletora:
+            columns:
+                - nome
+    id:
+        codigo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: patrimonio.arquivo_coletora_seq
+                allocationSize: 1
+                initialValue: 1
+            column: codigo
+    fields:
+        nome:
+            type: string
+            nullable: false
+            length: 27
+        md5sum:
+            type: string
+            nullable: false
+            length: 35
+        timestamp:
+            type: datetime
+            nullable: false
+    oneToMany:
+        fkPatrimonioArquivoColetoraDados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\ArquivoColetoraDados
+            mappedBy: fkPatrimonioArquivoColetora

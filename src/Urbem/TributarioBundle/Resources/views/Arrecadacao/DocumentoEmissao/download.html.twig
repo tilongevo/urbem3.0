@@ -1,0 +1,52 @@
+{% set id = numDocumento ~ '~' ~ exercicio %}
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="container-rh">
+
+    <div class="row col s12">
+        <div class="box-header">
+            <h2 class="box-title left-align">
+                {{ 'label.arrecadacaoDocumentoEmissao.dadosDownload'|trans }}
+            </h2>
+            <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+        </div>
+        <div class="row col s12">
+            <div class="box-header">
+                <h5 class="box-title left-align">{{ "label.arrecadacaoDocumentoEmissao.certidao" | trans }}
+                    <a href="{{ path('urbem_tributario_arrecadacao_documento_emissao_geracertidao', {id : id}) }}" data-toggle="tooltip" data-placement="bottom"
+                       title="Download" class="waves-effect waves-light btn blue darken-4 btn btn-success save"><i class="material-icons left">print</i>Download
+                    </a></h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <a class="btn-floating white-text blue darken-4" href="{{ path('urbem_tributario_arrecadacao_documento_emissao_create') }}"><i class="material-icons">arrow_back</i></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css') }}">
+    <script src="{{ asset('/bundles/sonatacore/vendor/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/string.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem-sonata.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('select:not(.select-ano)').select2();
+        });
+    </script>
+{% endblock javascripts %}

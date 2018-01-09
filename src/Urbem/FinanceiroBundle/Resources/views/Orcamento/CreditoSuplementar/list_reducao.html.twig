@@ -1,0 +1,27 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    {% if value|length > 0 %}
+        <table class="">
+            <thead>
+                <tr class="sonata-ba-list-field-header">
+                    <th class="sonata-ba-list-field-header-text text-center th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ "label.dotacaoReduzida"|trans }}</th>
+                    <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ "valor"|trans }}</th>
+                </thead>
+            <tbody>
+                {% for reducao in value %}
+                    <tr>
+                        <td class="sonata-ba-list-field sonata-ba-list-field-integer" style="text-align: right !important; background-color: #fff !important;">
+                            {{ reducao.codDespesa}}
+                        </td>
+                        <td class="sonata-ba-list-field sonata-ba-list-field-integer" style="text-align: right !important; background-color: #fff !important;">
+                            {{ reducao.valor|number_format(2, ',', '.') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        -
+    {% endif %}
+{% endblock %}

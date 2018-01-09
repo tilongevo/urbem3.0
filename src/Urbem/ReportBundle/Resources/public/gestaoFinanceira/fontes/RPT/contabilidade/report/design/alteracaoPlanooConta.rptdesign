@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">Analista: Tonismar Régis Bernardo &lt;tonismar.bernardo@cnm.org.br>
+Desenvolvedor: Henrique Boaventura &lt;henrique.boaventura@cnm.org.br></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.4.0.v201405191524 Build &lt;4.4.0.v20140606-1451></property>
+    <html-property name="description">Template para o formato A4 retrato</html-property>
+    <property name="units">in</property>
+    <text-property name="displayName">Template Urbem Retrato</text-property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">../../../../../../gestaoAdministrativa/fontes/RPT/framework/library/urbem_250.rptlibrary</property>
+            <property name="namespace">urbem_250</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="term_user" id="6666">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="exercicio" id="1151" extends="urbem_250.exercicio">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="cod_acao" id="1152" extends="urbem_250.cod_acao">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="db_conn_url" id="1154" extends="urbem_250.db_conn_url">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="entidade" id="1157" extends="urbem_250.entidade">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="cod_plano" id="1400">
+            <property name="valueType">static</property>
+            <property name="dataType">integer</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="cod_uf" id="1401">
+            <property name="valueType">static</property>
+            <property name="dataType">integer</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="postgres" id="1150"
+ extends="urbem_250.postgres">
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsContasDeletar" id="1399">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">exercicio</property>
+                    <property name="paramName">exercicio</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">exercicio_2</property>
+                    <property name="paramName">exercicio</property>
+                    <property name="dataType">string</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_plano</property>
+                    <property name="paramName">cod_plano</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">3</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_uf</property>
+                    <property name="paramName">cod_uf</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">4</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData"/>
+            <property name="dataSource">postgres</property>
+            <xml-property name="queryText"><![CDATA[   SELECT plano_conta.cod_estrutural
+        , plano_conta.exercicio     
+        , plano_conta.cod_conta     
+        , plano_conta.nom_conta
+        , plano_analitica.cod_plano
+        , plano_conta.atributo_tcepe 
+     FROM contabilidade.plano_conta                                                        
+LEFT JOIN contabilidade.plano_analitica                                                    
+       ON plano_analitica.cod_conta = plano_conta.cod_conta                                
+      AND plano_analitica.exercicio = plano_conta.exercicio                                
+    WHERE plano_conta.exercicio = ?                      
+      AND ( EXISTS (      SELECT 1 FROM contabilidade.conta_debito
+                           WHERE conta_debito.exercicio = plano_analitica.exercicio
+                             AND conta_debito.cod_plano = plano_analitica.cod_plano )
+       OR EXISTS ( SELECT 1 FROM contabilidade.conta_credito
+                           WHERE conta_credito.exercicio = plano_analitica.exercicio
+                             AND conta_credito.cod_plano = plano_analitica.cod_plano )
+       OR EXISTS ( SELECT 1 FROM contabilidade.plano_banco
+                           WHERE plano_banco.exercicio = plano_analitica.exercicio
+                             AND plano_banco.cod_plano = plano_analitica.cod_plano )
+       OR EXISTS ( SELECT 1 FROM contabilidade.configuracao_lancamento_receita
+                           WHERE configuracao_lancamento_receita.exercicio = plano_conta.exercicio
+                             AND configuracao_lancamento_receita.cod_conta = plano_conta.cod_conta )
+       OR EXISTS ( SELECT 1 FROM contabilidade.configuracao_lancamento_credito
+                           WHERE configuracao_lancamento_credito.exercicio = plano_conta.exercicio
+                             AND configuracao_lancamento_credito.cod_conta = plano_conta.cod_conta )
+       OR EXISTS ( SELECT 1 FROM contabilidade.configuracao_lancamento_debito
+                           WHERE configuracao_lancamento_debito.exercicio = plano_conta.exercicio
+                             AND configuracao_lancamento_debito.cod_conta = plano_conta.cod_conta ))
+      AND plano_conta.cod_estrutural NOT IN ( SELECT publico.fn_mascara_completa( (SELECT valor FROM administracao.configuracao WHERE cod_modulo = 9 AND exercicio = ? AND parametro = 'masc_plano_contas'), plano_conta_estrutura.codigo_estrutural)
+      					                    FROM contabilidade.plano_conta_estrutura
+                                            JOIN contabilidade.plano_conta_geral
+                                              ON plano_conta_geral.cod_plano = plano_conta_estrutura.cod_plano
+                                             AND plano_conta_geral.cod_uf    = plano_conta_estrutura.cod_uf
+                                             AND plano_conta_geral.cod_plano = ?
+                                             AND plano_conta_geral.cod_uf = ?
+                             )
+      AND plano_conta.cod_estrutural NOT LIKE '1.1.1%'
+      AND plano_conta.cod_estrutural NOT LIKE '7%'
+      AND plano_conta.cod_estrutural NOT LIKE '8%'
+ GROUP BY plano_conta.cod_estrutural
+        , plano_conta.exercicio     
+        , plano_conta.cod_conta     
+        , plano_conta.nom_conta
+        , plano_analitica.cod_plano 
+ ORDER BY plano_conta.cod_estrutural]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsContasDeletarFixo" id="6688">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">exercicio</property>
+                    <property name="paramName">exercicio</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">exercicio_2</property>
+                    <property name="paramName">exercicio</property>
+                    <property name="dataType">string</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_plano</property>
+                    <property name="paramName">cod_plano</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">3</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_uf</property>
+                    <property name="paramName">cod_uf</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">4</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData"/>
+            <property name="dataSource">postgres</property>
+            <xml-property name="queryText"><![CDATA[   SELECT plano_conta.cod_estrutural
+        , plano_conta.exercicio     
+        , plano_conta.cod_conta     
+        , plano_conta.nom_conta
+        , plano_analitica.cod_plano 
+   		, plano_conta.atributo_tcepe
+     FROM contabilidade.plano_conta                                                        
+LEFT JOIN contabilidade.plano_analitica                                                    
+       ON plano_analitica.cod_conta = plano_conta.cod_conta                                
+      AND plano_analitica.exercicio = plano_conta.exercicio                                
+    WHERE plano_conta.exercicio = ?
+      AND plano_conta.cod_estrutural NOT IN ( SELECT publico.fn_mascara_completa( (SELECT valor FROM administracao.configuracao WHERE cod_modulo = 9 AND exercicio = ? AND parametro = 'masc_plano_contas'), plano_conta_estrutura.codigo_estrutural)
+      						FROM contabilidade.plano_conta_estrutura
+                            JOIN contabilidade.plano_conta_geral
+                              ON plano_conta_geral.cod_plano = plano_conta_estrutura.cod_plano
+                             AND plano_conta_geral.cod_uf    = plano_conta_estrutura.cod_uf
+                             AND plano_conta_geral.cod_plano = ?
+                             AND plano_conta_geral.cod_uf = ?
+                             )
+      AND (plano_conta.cod_estrutural LIKE '1.1.1%'
+        OR plano_conta.cod_estrutural LIKE '7%'
+        OR plano_conta.cod_estrutural LIKE '8%')
+ GROUP BY plano_conta.cod_estrutural
+        , plano_conta.exercicio     
+        , plano_conta.cod_conta     
+        , plano_conta.nom_conta
+        , plano_analitica.cod_plano 
+ ORDER BY plano_conta.cod_estrutural]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsContasAlterarFixo" id="6710">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">exercicio</property>
+                    <property name="paramName">exercicio</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">exercicio_2</property>
+                    <property name="paramName">exercicio</property>
+                    <property name="dataType">string</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_plano</property>
+                    <property name="paramName">cod_plano</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">3</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_uf</property>
+                    <property name="paramName">cod_uf</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">4</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData"/>
+            <property name="dataSource">postgres</property>
+            <xml-property name="queryText"><![CDATA[   SELECT plano_conta.cod_estrutural
+        , plano_conta.exercicio     
+        , plano_conta.cod_conta     
+        , plano_conta.nom_conta
+        , plano_analitica.cod_plano 
+   		, plano_conta.atributo_tcepe
+     FROM contabilidade.plano_conta                                                        
+LEFT JOIN contabilidade.plano_analitica                                                    
+       ON plano_analitica.cod_conta = plano_conta.cod_conta                                
+      AND plano_analitica.exercicio = plano_conta.exercicio                                
+    WHERE plano_conta.exercicio = ?
+      AND plano_conta.cod_estrutural IN ( SELECT publico.fn_mascara_completa( (SELECT valor FROM administracao.configuracao WHERE cod_modulo = 9 AND exercicio = ? AND parametro = 'masc_plano_contas'), plano_conta_estrutura.codigo_estrutural)
+      						FROM contabilidade.plano_conta_estrutura
+                            JOIN contabilidade.plano_conta_geral
+                              ON plano_conta_geral.cod_plano = plano_conta_estrutura.cod_plano
+                             AND plano_conta_geral.cod_uf    = plano_conta_estrutura.cod_uf
+                             AND plano_conta_geral.cod_plano = ?
+                             AND plano_conta_geral.cod_uf = ?
+                             )
+      AND (plano_conta.cod_estrutural LIKE '1.1.1%'
+        OR plano_conta.cod_estrutural LIKE '7%'
+        OR plano_conta.cod_estrutural LIKE '8%')
+ GROUP BY plano_conta.cod_estrutural
+        , plano_conta.exercicio     
+        , plano_conta.cod_conta     
+        , plano_conta.nom_conta
+        , plano_analitica.cod_plano 
+ ORDER BY plano_conta.cod_estrutural]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsContasAlterar" id="1422">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">exercicio</property>
+                    <property name="paramName">exercicio</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">exercicio_2</property>
+                    <property name="paramName">exercicio</property>
+                    <property name="dataType">string</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_plano</property>
+                    <property name="paramName">cod_plano</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">3</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">cod_uf</property>
+                    <property name="paramName">cod_uf</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">4</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData"/>
+            <property name="dataSource">postgres</property>
+            <xml-property name="queryText"><![CDATA[   SELECT plano_conta.cod_estrutural
+        , plano_conta.exercicio     
+        , plano_conta.cod_conta     
+        , plano_conta.nom_conta
+        , plano_analitica.cod_plano 
+		, plano_conta.atributo_tcepe
+     FROM contabilidade.plano_conta                                                        
+LEFT JOIN contabilidade.plano_analitica                                                    
+       ON plano_analitica.cod_conta = plano_conta.cod_conta                                
+      AND plano_analitica.exercicio = plano_conta.exercicio                                
+    WHERE plano_conta.exercicio = ?                      
+      AND ( EXISTS (      SELECT 1 FROM contabilidade.conta_debito
+                           WHERE conta_debito.exercicio = plano_analitica.exercicio
+                             AND conta_debito.cod_plano = plano_analitica.cod_plano )
+       OR EXISTS ( SELECT 1 FROM contabilidade.conta_credito
+                           WHERE conta_credito.exercicio = plano_analitica.exercicio
+                             AND conta_credito.cod_plano = plano_analitica.cod_plano )
+       OR EXISTS ( SELECT 1 FROM contabilidade.plano_banco
+                           WHERE plano_banco.exercicio = plano_analitica.exercicio
+                             AND plano_banco.cod_plano = plano_analitica.cod_plano )
+       OR EXISTS ( SELECT 1 FROM contabilidade.configuracao_lancamento_receita
+                           WHERE configuracao_lancamento_receita.exercicio = plano_conta.exercicio
+                             AND configuracao_lancamento_receita.cod_conta = plano_conta.cod_conta )
+       OR EXISTS ( SELECT 1 FROM contabilidade.configuracao_lancamento_credito
+                           WHERE configuracao_lancamento_credito.exercicio = plano_conta.exercicio
+                             AND configuracao_lancamento_credito.cod_conta = plano_conta.cod_conta )
+       OR EXISTS ( SELECT 1 FROM contabilidade.configuracao_lancamento_debito
+                           WHERE configuracao_lancamento_debito.exercicio = plano_conta.exercicio
+                             AND configuracao_lancamento_debito.cod_conta = plano_conta.cod_conta ))
+      AND plano_conta.cod_estrutural IN ( SELECT publico.fn_mascara_completa( (SELECT valor FROM administracao.configuracao WHERE cod_modulo = 9 AND exercicio = ? AND parametro = 'masc_plano_contas'), plano_conta_estrutura.codigo_estrutural)
+      					                    FROM contabilidade.plano_conta_estrutura
+                                            JOIN contabilidade.plano_conta_geral
+                                              ON plano_conta_geral.cod_plano = plano_conta_estrutura.cod_plano
+                                             AND plano_conta_geral.cod_uf    = plano_conta_estrutura.cod_uf
+                                             AND plano_conta_geral.cod_plano = ?
+                                             AND plano_conta_geral.cod_uf = ?
+                             )
+      AND plano_conta.cod_estrutural NOT LIKE '1.1.1%'
+      AND plano_conta.cod_estrutural NOT LIKE '7%'
+      AND plano_conta.cod_estrutural NOT LIKE '8%'
+ GROUP BY plano_conta.cod_estrutural
+        , plano_conta.exercicio     
+        , plano_conta.cod_conta     
+        , plano_conta.nom_conta
+        , plano_analitica.cod_plano 
+ ORDER BY plano_conta.cod_estrutural]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab" id="4">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="NewStyle" id="1148">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+        </style>
+        <style name="padrão_urbem" id="1149">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">portrait</property>
+            <property name="topMargin">10mm</property>
+            <property name="leftMargin">10mm</property>
+            <property name="bottomMargin">20mm</property>
+            <property name="rightMargin">10mm</property>
+            <page-header>
+                <grid name="cabecalho" id="1158" extends="urbem_250.cabecalho_retrato">
+                    <overridden-values>
+                        <ref-entry baseId="1051" id="1051"/>
+                        <ref-entry baseId="1052" id="1052"/>
+                        <ref-entry baseId="1053" id="1053"/>
+                        <ref-entry baseId="1054" id="1054"/>
+                        <ref-entry baseId="1055" id="1055"/>
+                        <ref-entry baseId="1397" name="NewText61221" id="1397"/>
+                        <ref-entry baseId="1398" name="NewText612111" id="1398"/>
+                        <ref-entry baseId="1056" id="1056"/>
+                        <ref-entry baseId="1061" name="NewGrid" id="1061"/>
+                        <ref-entry baseId="1062" id="1062"/>
+                        <ref-entry baseId="1063" id="1063"/>
+                        <ref-entry baseId="1064" id="1064"/>
+                        <ref-entry baseId="1102" name="NewData" id="1102"/>
+                        <ref-entry baseId="1137" name="NewData6" id="1137"/>
+                        <ref-entry baseId="1065" id="1065"/>
+                        <ref-entry baseId="1066" id="1066"/>
+                        <ref-entry baseId="1103" name="NewData1" id="1103"/>
+                        <ref-entry baseId="1138" name="NewData7" id="1138"/>
+                        <ref-entry baseId="1067" id="1067"/>
+                        <ref-entry baseId="1068" id="1068"/>
+                        <ref-entry baseId="1105" name="NewData2" id="1105"/>
+                        <ref-entry baseId="1139" name="NewData8" id="1139"/>
+                        <ref-entry baseId="1069" id="1069"/>
+                        <ref-entry baseId="1070" id="1070"/>
+                        <ref-entry baseId="1106" name="NewData3" id="1106"/>
+                        <ref-entry baseId="1140" name="NewData9" id="1140"/>
+                        <ref-entry baseId="1071" id="1071"/>
+                        <ref-entry baseId="1072" id="1072"/>
+                        <ref-entry baseId="1107" name="NewData4" id="1107"/>
+                        <ref-entry baseId="1141" name="NewData10" id="1141"/>
+                        <ref-entry baseId="1073" id="1073"/>
+                        <ref-entry baseId="1074" id="1074"/>
+                        <ref-entry baseId="1108" name="NewData5" id="1108"/>
+                        <ref-entry baseId="1143" name="NewData11" id="1143"/>
+                        <ref-entry baseId="1057" id="1057"/>
+                        <ref-entry baseId="1075" name="NewGrid1" id="1075"/>
+                        <ref-entry baseId="1076" id="1076"/>
+                        <ref-entry baseId="1077" id="1077"/>
+                        <ref-entry baseId="1078" id="1078"/>
+                        <ref-entry baseId="1109" name="NewGrid3" id="1109"/>
+                        <ref-entry baseId="1110" id="1110"/>
+                        <ref-entry baseId="1111" id="1111"/>
+                        <ref-entry baseId="1112" id="1112"/>
+                        <ref-entry baseId="1113" id="1113"/>
+                        <ref-entry baseId="735" name="NewData1212" id="735"/>
+                        <ref-entry baseId="1114" id="1114"/>
+                        <ref-entry baseId="744" name="NewData1412" id="744"/>
+                        <ref-entry baseId="1079" id="1079"/>
+                        <ref-entry baseId="1080" id="1080"/>
+                        <ref-entry baseId="1115" name="NewGrid31" id="1115"/>
+                        <ref-entry baseId="1116" id="1116"/>
+                        <ref-entry baseId="1117" id="1117"/>
+                        <ref-entry baseId="1118" id="1118"/>
+                        <ref-entry baseId="1119" id="1119"/>
+                        <ref-entry baseId="747" name="NewData1312" id="747"/>
+                        <ref-entry baseId="1120" id="1120"/>
+                        <ref-entry baseId="756" name="NewData152" id="756"/>
+                        <ref-entry baseId="1081" id="1081"/>
+                        <ref-entry baseId="1082" id="1082"/>
+                        <ref-entry baseId="759" name="NewData1112" id="759"/>
+                        <ref-entry baseId="1083" id="1083"/>
+                        <ref-entry baseId="1084" id="1084"/>
+                        <ref-entry baseId="762" name="NewData162" id="762"/>
+                        <ref-entry baseId="1085" id="1085"/>
+                        <ref-entry baseId="1086" id="1086"/>
+                        <ref-entry baseId="1087" name="NewGrid2" id="1087"/>
+                        <ref-entry baseId="1088" id="1088"/>
+                        <ref-entry baseId="1089" id="1089"/>
+                        <ref-entry baseId="1090" id="1090"/>
+                        <ref-entry baseId="1091" id="1091"/>
+                        <ref-entry baseId="1092" id="1092"/>
+                        <ref-entry baseId="1093" id="1093"/>
+                        <ref-entry baseId="1094" id="1094"/>
+                        <ref-entry baseId="1095" id="1095"/>
+                        <ref-entry baseId="765" name="NewText72" id="765"/>
+                        <ref-entry baseId="1096" id="1096"/>
+                        <ref-entry baseId="767" name="NewText112" id="767"/>
+                        <ref-entry baseId="1097" id="1097"/>
+                        <ref-entry baseId="776" name="NewLabel212" id="776"/>
+                        <ref-entry baseId="1098" id="1098"/>
+                        <ref-entry baseId="778" name="NewAutoText1" id="778"/>
+                        <ref-entry baseId="1099" id="1099"/>
+                        <ref-entry baseId="1101" name="NewLabel2121" id="1101"/>
+                        <ref-entry baseId="1100" id="1100"/>
+                        <ref-entry baseId="782" name="NewAutoText" id="782"/>
+                    </overridden-values>
+                </grid>
+            </page-header>
+            <page-footer>
+                <grid name="rodape" id="1159" extends="urbem_250.rodape">
+                    <overridden-values>
+                        <ref-entry baseId="180" id="180"/>
+                        <ref-entry baseId="181" id="181"/>
+                        <ref-entry baseId="182" id="182"/>
+                        <ref-entry baseId="183" name="NewText2" id="183"/>
+                    </overridden-values>
+                </grid>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="1402">
+            <property name="dataSet">dsContasDeletarFixo</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">cod_estrutural</property>
+                    <expression name="expression">dataSetRow["cod_estrutural"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nom_conta</property>
+                    <expression name="expression">dataSetRow["nom_conta"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">tipo_conta_corrente</property>
+                    <expression name="expression">dataSetRow["atributo_tcepe"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">0</property>
+            <column id="1415">
+                <property name="width">1.5476190476190477in</property>
+            </column>
+            <column id="1416">
+                <property name="width">4.375in</property>
+            </column>
+            <column id="1417"/>
+            <header>
+                <row id="1423">
+                    <cell id="1424">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <label id="1427">
+                            <text-property name="text">Estas contas não foram DELETADAS</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="1403">
+                    <cell id="1404">
+                        <label id="1418">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Código Estrutural</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1405">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <label id="1419">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Nome Conta</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6712">
+                        <label id="6720">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Tipo Conta Corrente</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="1407">
+                    <cell id="1408">
+                        <data id="1449">
+                            <property name="resultSetColumn">cod_estrutural</property>
+                        </data>
+                    </cell>
+                    <cell id="1409">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <data id="1450">
+                            <property name="resultSetColumn">nom_conta</property>
+                        </data>
+                    </cell>
+                    <cell id="6719">
+                        <data id="6724">
+                            <property name="resultSetColumn">tipo_conta_corrente</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="1411">
+                    <cell id="1412"/>
+                    <cell id="1413"/>
+                    <cell id="1414"/>
+                </row>
+            </footer>
+        </table>
+        <table id="6689">
+            <property name="dataSet">dsContasDeletarFixo</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">cod_estrutural</property>
+                    <expression name="expression">dataSetRow["cod_estrutural"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nom_conta</property>
+                    <expression name="expression">dataSetRow["nom_conta"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">tipo_conta_corrente</property>
+                    <expression name="expression">dataSetRow["atributo_tcepe"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">0</property>
+            <column id="6707">
+                <property name="width">1.5476190476190477in</property>
+            </column>
+            <column id="6708">
+                <property name="width">4.375in</property>
+            </column>
+            <column id="6709"/>
+            <header>
+                <row id="6690">
+                    <cell id="6691">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <label id="6692">
+                            <text-property name="text">Estas contas não foram ALTERADAS</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="6693">
+                    <cell id="6694">
+                        <label id="6695">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Código Estrutural</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6696">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <label id="6697">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Nome Conta</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6713">
+                        <label id="6721">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Tipo Conta Corrente</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="6698">
+                    <cell id="6699">
+                        <data id="6700">
+                            <property name="resultSetColumn">cod_estrutural</property>
+                        </data>
+                    </cell>
+                    <cell id="6701">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <data id="6702">
+                            <property name="resultSetColumn">nom_conta</property>
+                        </data>
+                    </cell>
+                    <cell id="6718">
+                        <data id="6725">
+                            <property name="resultSetColumn">tipo_conta_corrente</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="6703">
+                    <cell id="6704"/>
+                    <cell id="6705"/>
+                    <cell id="6706"/>
+                </row>
+            </footer>
+        </table>
+        <table id="6667">
+            <property name="dataSet">dsContasDeletar</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">cod_estrutural</property>
+                    <expression name="expression">dataSetRow["cod_estrutural"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nom_conta</property>
+                    <expression name="expression">dataSetRow["nom_conta"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">tipo_conta_corrente</property>
+                    <expression name="expression">dataSetRow["atributo_tcepe"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">0</property>
+            <column id="6685">
+                <property name="width">1.5476190476190477in</property>
+            </column>
+            <column id="6686">
+                <property name="width">4.375in</property>
+            </column>
+            <column id="6687"/>
+            <header>
+                <row id="6668">
+                    <cell id="6669">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <label id="6670">
+                            <text-property name="text">Estas contas não foram DELETADAS pois possuem movimentações.</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="6671">
+                    <cell id="6672">
+                        <label id="6673">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Código Estrutural</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6674">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <label id="6675">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Nome Conta</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6714">
+                        <label id="6722">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Tipo Conta Corrente</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="6676">
+                    <cell id="6677">
+                        <data id="6678">
+                            <property name="resultSetColumn">cod_estrutural</property>
+                        </data>
+                    </cell>
+                    <cell id="6679">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <data id="6680">
+                            <property name="resultSetColumn">nom_conta</property>
+                        </data>
+                    </cell>
+                    <cell id="6717">
+                        <data id="6726">
+                            <property name="resultSetColumn">tipo_conta_corrente</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="6681">
+                    <cell id="6682"/>
+                    <cell id="6683"/>
+                    <cell id="6684"/>
+                </row>
+            </footer>
+        </table>
+        <table id="1428">
+            <property name="dataSet">dsContasAlterar</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">cod_estrutural</property>
+                    <expression name="expression">dataSetRow["cod_estrutural"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nom_conta</property>
+                    <expression name="expression">dataSetRow["nom_conta"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">tipo_conta_corrente</property>
+                    <expression name="expression">dataSetRow["atributo_tcepe"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">0</property>
+            <column id="1446">
+                <property name="width">1.5476190476190477in</property>
+            </column>
+            <column id="1447">
+                <property name="width">4.375in</property>
+            </column>
+            <column id="1448"/>
+            <header>
+                <row id="1429">
+                    <cell id="1430">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <label id="1431">
+                            <text-property name="text">Estas contas não foram ALTERADAS pois possuem movimentações.</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="1432">
+                    <cell id="1433">
+                        <label id="1434">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Código Estrutural</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1435">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <label id="1436">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Nome Conta</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6715">
+                        <label id="6723">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Tipo Conta Corrente</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="1438">
+                    <cell id="1439">
+                        <data id="1451">
+                            <property name="resultSetColumn">cod_estrutural</property>
+                        </data>
+                    </cell>
+                    <cell id="1440">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <data id="1453">
+                            <property name="resultSetColumn">nom_conta</property>
+                        </data>
+                    </cell>
+                    <cell id="6716">
+                        <data id="6727">
+                            <property name="resultSetColumn">tipo_conta_corrente</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="1442">
+                    <cell id="1443"/>
+                    <cell id="1444"/>
+                    <cell id="1445"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

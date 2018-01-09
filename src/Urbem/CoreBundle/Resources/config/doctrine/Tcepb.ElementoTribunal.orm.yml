@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Tcepb\ElementoTribunal:
+    type: entity
+    table: tcepb.elemento_tribunal
+    id:
+        estrutural:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: true
+            length: 90
+    oneToMany:
+        fkTcepbElementoDeParas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\ElementoDePara
+            mappedBy: fkTcepbElementoTribunal

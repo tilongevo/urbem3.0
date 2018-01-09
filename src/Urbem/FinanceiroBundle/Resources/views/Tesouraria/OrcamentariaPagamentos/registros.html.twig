@@ -1,0 +1,61 @@
+<table id="tableAssinatura" class="bordered highlight" style="width:100%">
+    <tr class="tr-rh">
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.empenho'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.dtEmpenho'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.notaLiquidacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.dtLiquidacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.vlPagamento'|trans }}</th>
+    </tr>
+
+    {% if field.data.ordemPagamento is not null %}
+        {% for pagamentoLiquidacao in field.data.ordemPagamento.fkEmpenhoPagamentoLiquidacoes %}
+            <tr>
+                <td>{{ field.data.empenho }}</td>
+                <td>{{ field.data.fkEmpenhoEmpenho.dtEmpenho|date('d/m/Y') }}</td>
+                <td>{{ field.data.notaLiquidacao }}</td>
+                <td>{{ field.data.dtLiquidacao|date('d/m/Y') }}</td>
+                <td>
+                    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input
+                                    type="text"
+                                    id="vlPagamento_{{ admin.getObjectKey(pagamentoLiquidacao) }}"
+                                    name="vlPagamento[{{ admin.getObjectKey(pagamentoLiquidacao) }}]"
+                                    required="required"
+                                    class="money vl-pagamento campo-sonata form-control"
+                                    value="{{ pagamentoLiquidacao.vlLiquido|number_format_decimal({'fraction_digits': 2}) }}"
+                                    {% if field.data.ordemPagamento.fkEmpenhoOrdemPagamentoRetencoes|length > 0 %}
+                                        readonly="readonly"
+                                        title="{{ 'label.orcamentariaPagamentos.opRetencoes'|trans }}"
+                                    {% endif %}
+                            />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td>{{ field.data.empenho }}</td>
+            <td>{{ field.data.fkEmpenhoEmpenho.dtEmpenho|date('d/m/Y') }}</td>
+            <td>{{ field.data.notaLiquidacao }}</td>
+            <td>{{ field.data.dtLiquidacao|date('d/m/Y') }}</td>
+            <td>
+                <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                    <div class="input-group">
+                        <span class="input-group-addon">R$</span>
+                        <input
+                                type="text"
+                                id="vlPagamento"
+                                name="vlPagamento[]"
+                                required="required"
+                                class="money campo-sonata form-control"
+                                value="{{ field.data.vlNota|number_format_decimal({'fraction_digits': 2}) }}"
+                        />
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endif %}
+</table>

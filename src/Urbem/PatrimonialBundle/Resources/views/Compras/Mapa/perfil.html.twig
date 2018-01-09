@@ -1,0 +1,174 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.mapa.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+    <div class="row">
+        <div class="col s12 profile-box">
+            <h2 class="blue-text text-darken-4 left" style="margin: 1.78rem 0 0 0">
+                <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                <span class="grey-text bold" style="padding-top: 10px; font-weight: bold">
+                    {{ mapa.codMapa }} -{{ mapa.fkComprasObjeto.descricao }}
+                </span>
+            </h2>
+            {% if anulacao is null %}
+                <a href="{{ path('urbem_patrimonial_compras_mapa_edit', { 'id': mapa.exercicio ~ '~' ~ mapa.codMapa }) }}"
+                   class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+            {% endif %}
+            <h6 class="divider grey col s12"></h6>
+
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                    {{ 'label.mapa.codTipoLicitacao'|trans }}
+                </h6>
+                <h6 class="col s12 grey-text text-darken-1">
+                    {{ mapa.fkComprasTipoLicitacao.descricao }}
+                </h6>
+            </div>
+
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                    {{ 'label.mapa.exercicio'|trans }}
+                </h6>
+                <h6 class="col s12 grey-text text-darken-1">
+                    {{ mapa.exercicio }}
+                </h6>
+            </div>
+
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                    {{ 'label.mapa.data'|trans }}
+                </h6>
+                <h6 class="col s12 grey-text text-darken-1">
+                    {{ mapa.timestamp|date('d/m/Y') }}
+                </h6>
+            </div>
+
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                    {{ 'label.almoxarifado.requisicao.status'|trans }}
+                </h6>
+                <h6 class="col s12 grey-text text-darken-1">
+                    {% if anulacao is null %}
+                        <span class="label label-success">Ativo</span>
+                    {% else %}
+                        <span class="label label-danger">Anulado</span>
+                    {% endif %}
+                </h6>
+            </div>
+            <div class="col s12">
+                {% if anulacao is null %}
+                    <div class="col s6 center" style="margin-bottom: 10px">
+                        <a class="btn btn-success btn-sm sonata-ba-action"
+                           href="{{ path('urbem_patrimonial_compras_mapa_anular_all_solicitacoes', { 'id': mapa.exercicio ~ '~' ~ mapa.codMapa }) }}">
+                            <i class="fa fa-ban left"></i>Anular Solicitações
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="col s6 center" style="margin-bottom: 10px">
+                        <a class="btn btn-success btn-sm sonata-ba-action grey">
+                            <i class="fa fa-ban left"></i>Anular Solicitações
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="col s6 center" style="margin-bottom: 10px">
+                    <a class="btn btn-success btn-sm sonata-ba-action"
+                       href="{{ path('urbem_patrimonial_compras_mapa_salvar_relatorio', { 'id': mapa.exercicio ~ '~' ~ mapa.codMapa }) }}">
+                        <i class="mdi mdi-file-document left"></i>Emitir Mapa de Compra
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col s11 servidor-table">
+                <a class="btn-flat ">
+                    <i class="fa fa-map-o left" aria-hidden="true"></i>
+                    {{ 'label.mapa.dadosSolicitacoesMapas'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                {% if anulacao is null %}
+                    <a href="{{ path('urbem_patrimonial_compras_mapa_solicitacao_create',{'id': mapa.exercicio ~ '~' ~ mapa.codMapa }) }}"
+                       class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+                {% endif %}
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.mapa.exercicio'|trans }}</th>
+                    <th class="th-rh">{{ 'label.mapa.entidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.mapa.valorTotalSolicitado'|trans }}</th>
+                    <th class="th-rh">{{ 'label.mapa.valorOutrosMapas'|trans }}</th>
+                    <th class="th-rh">{{ 'label.mapa.valorNesteMapa'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for solicitacao in solicitacoes %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ solicitacao.exercicio }}</td>
+                        <td class="td-rh">{{ solicitacao.nom_entidade }}</td>
+                        <td class="td-rh">{{ solicitacao.valor_total|number_format(2, '.', ',') }}</td>
+                        <td class="td-rh">{{ (solicitacao.total_mapas - solicitacao.total_mapa)|number_format(2, '.', ',') }}</td>
+                        <td class="td-rh">{{ solicitacao.total_mapa|number_format(2, '.', ',') }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                {% if anulacao is null %}
+                                    <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                       data-position="left"
+                                       data-delay="50"
+                                       data-tooltip="Excluir"
+                                       href="{{ path('urbem_patrimonial_compras_mapa_solicitacao_delete', { 'id': solicitacao.exercicio ~ '~' ~ mapa.codMapa ~ '~' ~ solicitacao.exercicio_solicitacao ~ '~' ~ solicitacao.cod_entidade~ '~' ~ solicitacao.cod_solicitacao}) }}">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-flat">
+                    <i class="fa fa-map-pin left" aria-hidden="true"></i>
+                    {{ 'label.mapa.itensMapa'|trans }}
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.mapa.solicitacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.mapa.item'|trans }}</th>
+                    <th class="th-rh">{{ 'label.mapa.quantidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.mapa.valorUnitario'|trans }}</th>
+                    <th class="th-rh">{{ 'label.mapa.vlTotal'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in itens %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ item.cod_solicitacao }}</td>
+                        <td class="td-rh">{{ item.nom_item }}</td>
+                        <td class="td-rh">{{ item.quantidade }}</td>
+                        <td class="td-rh">{{ item.valor_unitario }}</td>
+                        <td class="td-rh">{{ item.vl_total }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoFerias:
+    type: entity
+    table: folhapagamento.tipo_evento_ferias
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        natureza:
+            type: string
+            nullable: false
+            length: 1
+    oneToMany:
+        fkFolhapagamentoFeriasEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FeriasEvento
+            mappedBy: fkFolhapagamentoTipoEventoFerias

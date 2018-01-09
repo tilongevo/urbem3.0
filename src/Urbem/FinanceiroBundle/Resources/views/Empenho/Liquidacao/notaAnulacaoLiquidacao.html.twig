@@ -1,0 +1,79 @@
+{% block body %}
+
+    {% block content %}
+
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+        <div class="divider">
+            <p></p>
+        </div>
+        <table class="table table-bordered table-condensed" style="margin-top: 10px">
+            <tbody>
+                <tr>
+                    <th class="text-right">{{ 'credor'|trans|upper }}</th>
+                    <td class="text-left">{{ dadosEmpenho.numCgmCredor }}</td>
+                    <th class="text-right">{{ 'cgc'|trans|upper }}/{{ 'cpf'|trans|upper }}</th>
+                    <td class="text-left">{{ dadosEmpenho.cgcCpfCredor }}</td>
+                </tr>
+
+                <tr>
+                    <th class="text-right">{{ 'label.servidor.endereco'|trans|upper }}</th>
+                    <td class="text-left">{{ dadosEmpenho.logradouroCredor }}</td>
+                    <th class="text-right">{{ 'label.cidade'|trans|upper }} - {{ 'label.uf'|trans }}</th>
+                    <td class="text-left">{{ dadosEmpenho.municipioCredor }}, {{ dadosEmpenho.ufCredor }}</td>
+                </tr>
+
+                <tr>
+                    <th class="text-right">{{ 'label.preEmpenho.autorizacao'|trans|upper }}</th>
+                    <td class="text-left">{{ dadosEmpenho.autorizacao }}</td>
+                    <th class="text-right">{{ 'label.emitirEmpenhoDiversos.dtEmissao'|trans|upper }}
+                        <br /> <br /> {{ 'label.emitirEmpenhoDiversos.dtVencimento'|trans|upper }}</th>
+                    <td class="text-left">{{ dadosEmpenho.dtEmpenho|date('d/m/Y') }}
+                        <br /><br /><br /> <br /> {{ dadosEmpenho.dtVencimento|date('d/m/Y') }}</td>
+                </tr>
+
+                <tr>
+                    <th class="text-right">{{ 'label.reciboExtra.historico'|trans|upper }}</th>
+                    <td class="text-left">{{ dadosEmpenho.historico }}</td>
+                    <th class="text-right">{{ 'label.consultarEmpenho.descricaoEmpenho'|trans|upper }}</th>
+                    <td class="text-left">{{ dadosEmpenho.descricao }}</td>
+                </tr>
+            </tbody>
+        </table>
+            <table class="table table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th class="text-right">{{ 'label.itemPreEmpenho.item'|trans|upper }}</th>
+                    <th class="text-right">{{ 'label.especificacaoDestinacaoRecurso.descricao'|trans|upper }}</th>
+                    <th class="text-right">{{ 'label.consultarEmpenho.valorEmpenhado'|trans|upper }}</th>
+                    <th class="text-right">{{ 'label.liquidacaoEmpenho.valorLiquidado'|trans|upper }}</th>
+                    <th class="text-right">{{ 'label.saldoDotacao.valorAnulado'|trans|upper }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in itensAnulados %}
+                    <tr>
+                        <td class="text-right">{{ item.numItem }}</td>
+                        <td>{{ item.nomItem}}</td>
+                        <td class="text-right">{{ item.empenhado|number_format_decimal({'fraction_digits': 2}) }}</td>
+                        <td class="text-right">{{ item.liquidado|number_format_decimal({'fraction_digits': 2}) }}</td>
+                        <td class="text-right">{{ item.anulado|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                    <td class="text-right">{{ 'label.total' }}</td>
+                    <td class="text-right">{{ totalAnulado|number_format_decimal({'fraction_digits': 2}) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

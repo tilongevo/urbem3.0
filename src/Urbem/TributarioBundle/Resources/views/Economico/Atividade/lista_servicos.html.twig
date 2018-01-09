@@ -1,0 +1,30 @@
+<table class="table table-bordered js-table-lista-servicos">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'label.economicoAtividade.codEstrutural'|trans }}</th>
+            <th>{{ 'label.economicoAtividade.nome'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sonata-ba-tbody ui-sortable">
+        {% for servicoAtividade in field.data.servicoAtividades %}
+            {% set servico = servicoAtividade.getFkEconomicoServico() %}
+            <tr class="form_row campo-sonata" data-index="{{ loop.index }}">
+                <td class="control-group">
+                    {{ ++loop.index }}
+                </td>
+                <td class="control-group">
+                    {{ servico.getCodEstrutural() }}
+                    <input type="hidden" name="servicos[{{ loop.index }}][codServico]" class="js-lista-servicos-cod-servico" value="{{ servico.getCodServico() }}" readonly>
+                </td>
+                <td class="control-group">
+                    {{ servico.getNomServico() }}
+                </td>
+                <td class="control-group">
+                    <button class="js-delete-row">Remover</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

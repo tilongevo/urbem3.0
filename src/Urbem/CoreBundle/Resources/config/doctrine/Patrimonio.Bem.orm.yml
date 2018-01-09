@@ -1,0 +1,287 @@
+Urbem\CoreBundle\Entity\Patrimonio\Bem:
+    type: entity
+    table: patrimonio.bem
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\BemRepository
+    uniqueConstraints:
+        uk_bem_1:
+            columns:
+                - num_placa
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: patrimonio.cod_bem_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_bem
+    fields:
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+        codGrupo:
+            type: integer
+            nullable: false
+            column: cod_grupo
+        codEspecie:
+            type: integer
+            nullable: false
+            column: cod_especie
+        numcgm:
+            type: integer
+            nullable: false
+        descricao:
+            type: string
+            nullable: false
+            length: 700
+        detalhamento:
+            type: text
+            nullable: false
+        dtAquisicao:
+            type: date
+            nullable: false
+            column: dt_aquisicao
+        dtDepreciacao:
+            type: date
+            nullable: true
+            column: dt_depreciacao
+        dtGarantia:
+            type: date
+            nullable: true
+            column: dt_garantia
+        identificacao:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        numPlaca:
+            type: string
+            nullable: true
+            length: 20
+            column: num_placa
+        vlBem:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_bem
+        vlDepreciacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_depreciacao
+        dtIncorporacao:
+            type: date
+            nullable: true
+            column: dt_incorporacao
+        vidaUtil:
+            type: integer
+            nullable: true
+            column: vida_util
+        depreciavel:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        depreciacaoAcelerada:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: depreciacao_acelerada
+        quotaDepreciacaoAnual:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            options:
+                default: 0
+            column: quota_depreciacao_anual
+        quotaDepreciacaoAnualAcelerada:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            options:
+                default: 0
+            column: quota_depreciacao_anual_acelerada
+    manyToOne:
+        fkPatrimonioEspecie:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Especie
+            inversedBy: fkPatrimonioBens
+            joinColumns:
+                cod_especie:
+                    referencedColumnName: cod_especie
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkPatrimonioBens
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkAlmoxarifadoLancamentoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoBem
+            mappedBy: fkPatrimonioBem
+        fkContabilidadeLancamentoBaixaPatrimonios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoBaixaPatrimonio
+            mappedBy: fkPatrimonioBem
+        fkContabilidadeLancamentoBaixaPatrimonioAlienacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoBaixaPatrimonioAlienacao
+            mappedBy: fkPatrimonioBem
+        fkContabilidadeLancamentoBaixaPatrimonioDepreciacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoBaixaPatrimonioDepreciacao
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioApoliceBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\ApoliceBem
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioBemAtributoEspecies:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemAtributoEspecie
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioBemPlanoAnaliticas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemPlanoAnalitica
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioBemPlanoDepreciacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemPlanoDepreciacao
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioBemResponsaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemResponsavel
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioManutencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Manutencao
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioReavaliacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Reavaliacao
+            mappedBy: fkPatrimonioBem
+        fkTcmgoPatrimonioBemObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\PatrimonioBemObra
+            mappedBy: fkPatrimonioBem
+        fkFrotaProprios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Proprio
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioInventarioHistoricoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\InventarioHistoricoBem
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioHistoricoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\HistoricoBem
+            mappedBy: fkPatrimonioBem
+        fkPatrimonioDepreciacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Depreciacao
+            mappedBy: fkPatrimonioBem
+    oneToOne:
+        fkPatrimonioBemComprado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemComprado
+            mappedBy: fkPatrimonioBem
+            fetch: EXTRA_LAZY
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkPatrimonioBemProcesso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemProcesso
+            mappedBy: fkPatrimonioBem
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkPatrimonioBemBaixado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemBaixado
+            mappedBy: fkPatrimonioBem
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkPatrimonioBemCompradoEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemCompradoEmpenho
+            mappedBy: fkPatrimonioBem
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkPatrimonioBemMarca:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemMarca
+            mappedBy: fkPatrimonioBem
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem

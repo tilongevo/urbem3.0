@@ -1,0 +1,41 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}'
+<div class="box-login">
+    <div class="col s12 logo center"><img class="img-responsive" src="{{ asset('/bundles/core/images/logo_login.png') }}"></div>
+    <form class="blue-text text-darken-4 col s6 center" action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="field" placeholder="{{ 'security.login.username'|trans }}" />
+        <input type="password" id="password" name="_password" required="required" class="field" placeholder="{{ 'security.login.password'|trans }}"/>
+        
+        <div class="link right">
+            <a href="{{ path('fos_user_resetting_request') }}" class="left">{{ 'forgot_password'|trans }}</a>
+        </div>
+        <div class="checkbox">
+            <label for="remember_me" class="left squaredThree">
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="squaredThree"/>
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                {{ 'security.login.remember_me'|trans }}
+            </label>
+        </div>
+        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="waves-effect waves-light btn btn-login center"/>
+        {% if error %}
+            <div class="invalid">
+                <i class="material-icons left">&#xE88E;</i>
+                <p> {{ error.messageKey|trans(error.messageData, 'security') }}</p>
+            </div>
+        {% endif %}
+    </form>
+</div>
+    <div class="footer">
+        <a href="http://www.cnm.org.br/" target="_blank">
+            <img class="responsive" src="{{ asset('/bundles/core/images/logo_cnm.png') }}">
+        </a>
+        <a href="https://www.sebrae.com.br/" target="_blank">
+            <img class="responsive" src="{{ asset('/bundles/core/images/sebrae.png') }}" style="max-height: 35px; margin: 1%">
+        </a>
+    </div>
+    {% include '::partials/analyticstracking.html.twig' %}
+{% endblock fos_user_content %}

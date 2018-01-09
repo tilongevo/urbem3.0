@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Beneficio\LayoutFornecedor:
+    type: entity
+    table: beneficio.layout_fornecedor
+    id:
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        codLayout:
+            type: integer
+            nullable: false
+            column: cod_layout
+    manyToOne:
+        fkBeneficioLayoutPlanoSaude:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\LayoutPlanoSaude
+            inversedBy: fkBeneficioLayoutFornecedores
+            joinColumns:
+                cod_layout:
+                    referencedColumnName: cod_layout
+    oneToMany:
+        fkFolhapagamentoConfiguracaoBeneficioFornecedores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoBeneficioFornecedor
+            mappedBy: fkBeneficioLayoutFornecedor
+    oneToOne:
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkBeneficioLayoutFornecedor
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor

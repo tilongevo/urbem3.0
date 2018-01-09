@@ -1,0 +1,123 @@
+Urbem\CoreBundle\Entity\Tcemg\RegistroPrecos:
+    type: entity
+    table: tcemg.registro_precos
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\RegistroPrecosRepository
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numeroRegistroPrecos:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numero_registro_precos
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numcgmGerenciador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numcgm_gerenciador
+        interno:
+            type: boolean
+            generator:
+                strategy: NONE
+    fields:
+        dataAberturaRegistroPrecos:
+            type: date
+            nullable: false
+            column: data_abertura_registro_precos
+        exercicioLicitacao:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_licitacao
+        numeroProcessoLicitacao:
+            type: string
+            nullable: false
+            length: 12
+            column: numero_processo_licitacao
+        codigoModalidadeLicitacao:
+            type: integer
+            nullable: false
+            column: codigo_modalidade_licitacao
+        numeroModalidade:
+            type: integer
+            nullable: false
+            column: numero_modalidade
+        dataAtaRegistroPreco:
+            type: date
+            nullable: false
+            column: data_ata_registro_preco
+        dataAtaRegistroPrecoValidade:
+            type: date
+            nullable: false
+            column: data_ata_registro_preco_validade
+        objeto:
+            type: text
+            nullable: false
+        cgmResponsavel:
+            type: integer
+            nullable: false
+            column: cgm_responsavel
+        descontoTabela:
+            type: integer
+            nullable: false
+            column: desconto_tabela
+        processoLote:
+            type: integer
+            nullable: false
+            column: processo_lote
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcemgRegistroPrecos
+            joinColumns:
+                numcgm_gerenciador:
+                    referencedColumnName: numcgm
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkTcemgRegistroPrecos
+            joinColumns:
+                cgm_responsavel:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkTcemgLoteRegistroPrecos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\LoteRegistroPrecos
+            mappedBy: fkTcemgRegistroPrecos
+        fkTcemgRegistroPrecosLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosLicitacao
+            mappedBy: fkTcemgRegistroPrecos
+        fkTcemgEmpenhoRegistroPrecos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\EmpenhoRegistroPrecos
+            mappedBy: fkTcemgRegistroPrecos
+        fkTcemgRegistroPrecosOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosOrgao
+            mappedBy: fkTcemgRegistroPrecos

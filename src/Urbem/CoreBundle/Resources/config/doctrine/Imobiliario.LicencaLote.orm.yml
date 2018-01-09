@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Imobiliario\LicencaLote:
+    type: entity
+    table: imobiliario.licenca_lote
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields: {  }
+    manyToOne:
+        fkImobiliarioLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Licenca
+            inversedBy: fkImobiliarioLicencaLotes
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioLicencaLotes
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+    oneToMany:
+        fkImobiliarioAtributoTipoLicencaLoteValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoLicencaLoteValor
+            mappedBy: fkImobiliarioLicencaLote
+        fkImobiliarioLicencaLoteParcelamentoSolos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaLoteParcelamentoSolo
+            mappedBy: fkImobiliarioLicencaLote
+        fkImobiliarioLicencaLoteLoteamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaLoteLoteamento
+            mappedBy: fkImobiliarioLicencaLote
+    oneToOne:
+        fkImobiliarioLicencaLoteArea:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaLoteArea
+            mappedBy: fkImobiliarioLicencaLote
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_lote:
+                    referencedColumnName: cod_lote

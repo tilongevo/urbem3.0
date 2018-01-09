@@ -1,0 +1,196 @@
+Urbem\CoreBundle\Entity\Imobiliario\Imovel:
+    type: entity
+    table: imobiliario.imovel
+    repositoryClass: Urbem\CoreBundle\Repository\Imobiliario\ImovelRepository
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+    fields:
+        codSublote:
+            type: integer
+            nullable: false
+            column: cod_sublote
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        dtCadastro:
+            type: date
+            nullable: false
+            column: dt_cadastro
+        numero:
+            type: string
+            nullable: true
+            length: 10
+        complemento:
+            type: string
+            nullable: true
+            length: 50
+        cep:
+            type: string
+            nullable: false
+            length: 8
+    oneToMany:
+        fkArrecadacaoDesoneradoImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DesoneradoImovel
+            mappedBy: fkImobiliarioImovel
+        fkArrecadacaoDocumentoImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoImovel
+            mappedBy: fkImobiliarioImovel
+        fkArrecadacaoImovelVVenais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ImovelVVenal
+            mappedBy: fkImobiliarioImovel
+        fkDividaDividaImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaImovel
+            mappedBy: fkImobiliarioImovel
+        fkEconomicoDomicilioFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\DomicilioFiscal
+            mappedBy: fkImobiliarioImovel
+        fkEconomicoUsoSoloImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\UsoSoloImovel
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioAtributoImovelValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoImovelValor
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioBaixaImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BaixaImovel
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioImovelFotos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelFoto
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioExProprietarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ExProprietario
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioImovelCorrespondencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelCorrespondencia
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioImovelProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelProcesso
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioProprietarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Proprietario
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioTransferenciaImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaImovel
+            mappedBy: fkImobiliarioImovel
+        fkFiscalizacaoProcessoFiscalObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalObras
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioUnidadeAutonomas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\UnidadeAutonoma
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioLicencaImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaImovel
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioImovelLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelLote
+            mappedBy: fkImobiliarioImovel
+        fkImobiliarioMatriculaImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\MatriculaImovel
+            mappedBy: fkImobiliarioImovel
+    oneToOne:
+        fkImobiliarioImovelConfrontacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelConfrontacao
+            mappedBy: fkImobiliarioImovel
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+        fkImobiliarioImovelImobiliaria:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelImobiliaria
+            mappedBy: fkImobiliarioImovel
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+        fkImobiliarioImovelCondominio:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelCondominio
+            mappedBy: fkImobiliarioImovel
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

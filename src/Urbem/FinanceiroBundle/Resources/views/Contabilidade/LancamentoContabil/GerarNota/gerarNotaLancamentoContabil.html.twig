@@ -1,0 +1,111 @@
+{% block body %}
+    {% block content %}
+        {% include 'FinanceiroBundle:Contabilidade/LancamentoContabil:GerarNota/headerPdf.html.twig' %}
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <tbody>
+                <tr>
+                    <td class="grey bold" width="20%">{{ 'entidade'|trans }}</td>
+                    <td width="80%">{{ dadosEntidade.codEntidade ~ ' - ' ~ dadosEntidade.nomEntidade }}</td>
+                </tr>
+                <tr>
+                    <td class="grey bold">{{ 'label.lote.codLote'|trans }}</td>
+                    <td>{{ lote.codLote }}</td>
+                </tr>
+                <tr>
+                    <td class="grey bold">{{ 'label.lote.nomLote'|trans }}</td>
+                    <td>{{ lote.nomLote }}</td>
+                </tr>
+                <tr>
+                    <td class="grey bold">{{ 'label.lote.dtLote'|trans }}</td>
+                    <td>{{ lote.dtLote|date("d/m/Y") }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% if contaDebito is not empty %}
+            <table class="table table-condensed table-custom" style="margin-top: 10px">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="text-center bold grey">{{ 'label.lote.listaDebito'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="grey bold" width="50%">{{ 'label.lote.codConta'|trans }}</td>
+                        <td class="grey bold" width="40%">{{ 'label.lote.codHistorico'|trans }}</td>
+                        <td class="grey bold text-right" width="10%">{{ 'label.lote.valor'|trans }}</td>
+                    </tr>
+                    {% for debito in contaDebito %}
+                        <tr>
+                            <td>{{ debito.conta }}</td>
+                            <td>{{ debito.historico }}</td>
+                            <td class="text-right">{{ debito.valor|number_format_currency('BRL') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-right bold grey">{{ 'label.lote.valorTotal'|trans }}</td>
+                        <td class="text-right grey">{{ total.totalDebito|number_format_currency('BRL') }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        {% endif %}
+
+        {% if contaCredito is not empty %}
+            <table class="table table-condensed table-custom" style="margin-top: 10px">
+                <thead>
+                <tr>
+                    <th colspan="3" class="text-center grey">{{ 'label.lote.listaCredito'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="grey bold" width="50%">{{ 'label.lote.codConta'|trans }}</td>
+                    <td class="grey bold" width="40%">{{ 'label.lote.codHistorico'|trans }}</td>
+                    <td class="grey bold text-right" width="10%">{{ 'label.lote.valor'|trans }}</td>
+                </tr>
+                {% for debito in contaCredito %}
+                    <tr>
+                        <td>{{ debito.conta }}</td>
+                        <td>{{ debito.historico }}</td>
+                        <td class="text-right">{{ debito.valor|number_format_currency('BRL') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="2" class="text-right bold grey">{{ 'label.lote.valorTotal'|trans }}</td>
+                    <td class="text-right grey">{{ total.totalCredito|number_format_currency('BRL') }}</td>
+                </tr>
+                </tfoot>
+            </table>
+        {% endif %}
+
+        {% if assinaturas|length %}
+        <table class="table table-condensed table-custom signature" style="margin-top: 20px">
+            <thead>
+                <tr>
+                    <th class="grey text-center">{{ 'label.lote.assinaturas'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for assinatura in assinaturas %}
+                <tr>
+                    <td class="text-center">
+                        <hr class="signature-line">
+                        <p class="signature-name">{{ assinatura.fkSwCgmPessoaFisica.fkSwCgm.nomCgm }}</p>
+                        <p>{{ assinatura.cargo }}</p>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock stylesheets %}

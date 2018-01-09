@@ -1,0 +1,36 @@
+<table class="table table-bordered js-table-lista-socios">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'label.EmpresaDireitoSociedadeAdmin.codigo'|trans }}</th>
+            <th>{{ 'label.EmpresaDireitoSociedadeAdmin.nome'|trans }}</th>
+            <th>{{ 'label.EmpresaDireitoSociedadeAdmin.quota'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sonata-ba-tbody ui-sortable">
+        {% if field.data.itens|length > 0 %}
+            {% for item in field.data.itens %}
+                <tr data-index="{{ loop.index }}">
+                    <td class="control-group">
+                        {{ ++loop.index}}
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getNumcgm() }}</span>
+                        <input type="hidden" name="socios[{{ loop.index }}][numcgm]" class="js-lista-socios-numcgm" value="{{ item.getNumcgm() }}" readonly>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getFkSwCgm().getNomCgm() }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getQuotaSocio()|number_format(2, ',', '.') }}</span>
+                        <input type="hidden" name="socios[{{ loop.index }}][quotaSocio]" value="{{ item.getQuotaSocio() }}" readonly>
+                    </td>
+                    <td class="control-group">
+                        <button class="js-delete-row">Remover</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>

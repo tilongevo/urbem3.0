@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Pessoal\TipoClassificacao:
+    type: entity
+    table: pessoal.tipo_classificacao
+    uniqueConstraints:
+        uk_tipo_classificacao_1:
+            columns:
+                - descricao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalClassificacaoAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ClassificacaoAssentamento
+            mappedBy: fkPessoalTipoClassificacao

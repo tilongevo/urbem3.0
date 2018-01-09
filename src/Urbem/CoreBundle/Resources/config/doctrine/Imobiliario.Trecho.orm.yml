@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Imobiliario\Trecho:
+    type: entity
+    table: imobiliario.trecho
+    repositoryClass: Urbem\CoreBundle\Repository\Imobiliario\TrechoRepository
+    id:
+        codTrecho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_trecho
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+    fields:
+        sequencia:
+            type: integer
+            nullable: false
+        extensao:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+    manyToOne:
+        fkSwLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwLogradouro
+            inversedBy: fkImobiliarioTrechos
+            joinColumns:
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+    oneToMany:
+        fkImobiliarioBaixaTrechos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BaixaTrecho
+            mappedBy: fkImobiliarioTrecho
+        fkImobiliarioAtributoTrechoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTrechoValor
+            mappedBy: fkImobiliarioTrecho
+        fkImobiliarioConfrontacaoTrechos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConfrontacaoTrecho
+            mappedBy: fkImobiliarioTrecho
+        fkImobiliarioFaceQuadraTrechos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadraTrecho
+            mappedBy: fkImobiliarioTrecho
+        fkImobiliarioTrechoValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TrechoValorM2
+            mappedBy: fkImobiliarioTrecho
+        fkImobiliarioTrechoAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TrechoAliquota
+            mappedBy: fkImobiliarioTrecho

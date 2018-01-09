@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\SwCgaPessoaJuridica:
+    type: entity
+    table: sw_cga_pessoa_juridica
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        nomFantasia:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_fantasia
+        cnpj:
+            type: string
+            nullable: true
+            length: 14
+        inscEstadual:
+            type: string
+            nullable: false
+            length: 15
+            column: insc_estadual
+    oneToOne:
+        fkSwCga:
+            targetEntity: Urbem\CoreBundle\Entity\SwCga
+            inversedBy: fkSwCgaPessoaJuridica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp

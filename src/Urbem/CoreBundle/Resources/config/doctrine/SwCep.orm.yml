@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\SwCep:
+    type: entity
+    table: sw_cep
+    id:
+        cep:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        cepAnterior:
+            type: string
+            nullable: true
+            length: 8
+            column: cep_anterior
+    oneToMany:
+        fkTcmbaObras:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            mappedBy: fkSwCep
+        fkSwCepLogradouros:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCepLogradouro
+            mappedBy: fkSwCep

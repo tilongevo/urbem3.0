@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoValidade:
+    type: entity
+    table: pessoal.assentamento_validade
+    id:
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        dtInicial:
+            type: date
+            nullable: true
+            column: dt_inicial
+        dtFinal:
+            type: date
+            nullable: true
+            column: dt_final
+        cancelarDireito:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: cancelar_direito
+    oneToOne:
+        fkPessoalAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Assentamento
+            inversedBy: fkPessoalAssentamentoValidade
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp

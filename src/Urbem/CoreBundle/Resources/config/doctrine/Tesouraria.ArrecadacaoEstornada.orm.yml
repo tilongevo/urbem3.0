@@ -1,0 +1,138 @@
+Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornada:
+    type: entity
+    table: tesouraria.arrecadacao_estornada
+    id:
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        timestampEstornada:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_estornada
+    fields:
+        codAutenticacao:
+            type: integer
+            nullable: false
+            column: cod_autenticacao
+        dtAutenticacao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_autenticacao
+        codTerminal:
+            type: integer
+            nullable: false
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_usuario
+        observacao:
+            type: text
+            nullable: true
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codBoletim:
+            type: integer
+            nullable: false
+            column: cod_boletim
+    manyToOne:
+        fkTesourariaArrecadacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao
+            inversedBy: fkTesourariaArrecadacaoEstornadas
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+        fkTesourariaBoletim:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Boletim
+            inversedBy: fkTesourariaArrecadacaoEstornadas
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTesourariaAutenticacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Autenticacao
+            inversedBy: fkTesourariaArrecadacaoEstornadas
+            joinColumns:
+                cod_autenticacao:
+                    referencedColumnName: cod_autenticacao
+                dt_autenticacao:
+                    referencedColumnName: dt_autenticacao
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaArrecadacaoEstornadas
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario
+    oneToMany:
+        fkTesourariaArrecadacaoEstornadaOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornadaOrdemPagamentoRetencao
+            mappedBy: fkTesourariaArrecadacaoEstornada
+        fkTesourariaArrecadacaoReceitaDedutoraEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoReceitaDedutoraEstornada
+            mappedBy: fkTesourariaArrecadacaoEstornada
+        fkTesourariaConciliacaoLancamentoArrecadacaoEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoArrecadacaoEstornada
+            mappedBy: fkTesourariaArrecadacaoEstornada
+    oneToOne:
+        fkTesourariaArrecadacaoEstornadaReceita:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornadaReceita
+            mappedBy: fkTesourariaArrecadacaoEstornada
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                timestamp_estornada:
+                    referencedColumnName: timestamp_estornada

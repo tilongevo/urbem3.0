@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Stn\RiscosFiscais:
+    type: entity
+    table: stn.riscos_fiscais
+    repositoryClass: Urbem\CoreBundle\Repository\Stn\RiscosFiscaisRepository
+    id:
+        codRisco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_risco
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        codIdentificador:
+            type: integer
+            nullable: true
+            column: cod_identificador
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkStnRiscosFiscais
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkStnIdentificadorRiscoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\IdentificadorRiscoFiscal
+            inversedBy: fkStnRiscosFiscais
+            joinColumns:
+                cod_identificador:
+                    referencedColumnName: cod_identificador
+    oneToMany:
+        fkStnProvidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\Providencias
+            mappedBy: fkStnRiscosFiscais

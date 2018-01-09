@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Estagio\TipoContagemVale:
+    type: entity
+    table: estagio.tipo_contagem_vale
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkEstagioEstagiarioValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioValeTransporte
+            mappedBy: fkEstagioTipoContagemVale

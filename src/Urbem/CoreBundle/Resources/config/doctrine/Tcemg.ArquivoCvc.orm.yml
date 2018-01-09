@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Tcemg\ArquivoCvc:
+    type: entity
+    table: tcemg.arquivo_cvc
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        mes:
+            type: string
+            nullable: false
+            length: 2
+    manyToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkTcemgArquivoCvcs
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcemgArquivoCvcs
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao

@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Tcemg\ArquivoExt:
+    type: entity
+    table: tcemg.arquivo_ext
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        mes:
+            type: string
+            nullable: true
+            length: 2
+    oneToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTcemgArquivoExt
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

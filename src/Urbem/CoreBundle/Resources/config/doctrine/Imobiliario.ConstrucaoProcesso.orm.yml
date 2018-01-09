@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoProcesso:
+    type: entity
+    table: imobiliario.construcao_processo
+    id:
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+    manyToOne:
+        fkImobiliarioConstrucao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Construcao
+            inversedBy: fkImobiliarioConstrucaoProcessos
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkImobiliarioConstrucaoProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio:
+                    referencedColumnName: ano_exercicio

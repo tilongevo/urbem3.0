@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Pessoal\FormaPagamentoFerias:
+    type: entity
+    table: pessoal.forma_pagamento_ferias
+    id:
+        codForma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_forma
+    fields:
+        codigo:
+            type: string
+            nullable: false
+            length: 2
+        dias:
+            type: integer
+            nullable: false
+        abono:
+            type: integer
+            nullable: false
+    oneToMany:
+        fkPessoalFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Ferias
+            mappedBy: fkPessoalFormaPagamentoFerias
+        fkPessoalConfiguracaoFormaPagamentoFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ConfiguracaoFormaPagamentoFerias
+            mappedBy: fkPessoalFormaPagamentoFerias

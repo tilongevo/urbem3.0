@@ -1,0 +1,75 @@
+Urbem\CoreBundle\Entity\Compras\JulgamentoItem:
+    type: entity
+    table: compras.julgamento_item
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\JulgamentoItemRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        lote:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        ordem:
+            type: integer
+            nullable: false
+        justificativa:
+            type: string
+            nullable: true
+            length: 200
+    manyToOne:
+        fkComprasJulgamento:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Julgamento
+            inversedBy: fkComprasJulgamentoItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+    oneToMany:
+        fkComprasHomologacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Homologacao
+            mappedBy: fkComprasJulgamentoItem
+        fkEmpenhoItemPreEmpenhoJulgamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenhoJulgamento
+            mappedBy: fkComprasJulgamentoItem
+    oneToOne:
+        fkComprasCotacaoFornecedorItem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItem
+            inversedBy: fkComprasJulgamentoItem
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                cod_item:
+                    referencedColumnName: cod_item
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                lote:
+                    referencedColumnName: lote

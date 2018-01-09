@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\RedeSimples\ProtocoloItem:
+    type: entity
+    table: rede_simples.protocolo_item
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: rede_simples.protocolo_item_id_sq
+                allocationSize: 1
+                initialValue: 1
+            column: id
+    fields:
+        identificador:
+            type: string
+            nullable: false
+            length: 255
+        campo:
+            type: string
+            nullable: false
+            length: 255
+        tipo:
+            type: string
+            nullable: false
+            length: 20
+        valor:
+            type: text
+            nullable: true
+    manyToOne:
+        fkProtocoloRedeSimplesProtocolo:
+            targetEntity: Urbem\CoreBundle\Entity\RedeSimples\Protocolo
+            inversedBy: fkRedeSimplesProtocoloItens
+            joinColumns:
+                protocolo_id:
+                    referencedColumnName: id

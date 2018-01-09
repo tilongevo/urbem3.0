@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\ClassificacaoTratamento:
+    type: entity
+    table: cse.classificacao_tratamento
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+    fields:
+        nomClassificacao:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_classificacao
+    oneToMany:
+        fkCseTipoTratamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoTratamento
+            mappedBy: fkCseClassificacaoTratamento

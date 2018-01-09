@@ -1,0 +1,448 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Evento:
+    type: entity
+    table: folhapagamento.evento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\EventoRepository
+    indexes:
+        fki_evento_1:
+            columns:
+                - cod_verba
+    uniqueConstraints:
+        uk_evento_1:
+            columns:
+                - codigo
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: folhapagamento.cod_evento_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_evento
+    fields:
+        codigo:
+            type: string
+            nullable: false
+            length: 5
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        natureza:
+            type: string
+            nullable: false
+            length: 1
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        fixado:
+            type: string
+            nullable: false
+            length: 1
+        limiteCalculo:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: limite_calculo
+        apresentaParcela:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: apresenta_parcela
+        eventoSistema:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+            column: evento_sistema
+        sigla:
+            type: string
+            nullable: true
+            length: 5
+        apresentarContracheque:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: apresentar_contracheque
+        codVerba:
+            type: string
+            nullable: true
+            length: 10
+            column: cod_verba
+    manyToOne:
+        fkFolhapagamentoVerbaRescisoriaMte:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\VerbaRescisoriaMte
+            inversedBy: fkFolhapagamentoEventos
+            joinColumns:
+                cod_verba:
+                    referencedColumnName: cod_verba
+    oneToMany:
+        fkFolhapagamentoBeneficioEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\BeneficioEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoBasesEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\BasesEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoConfiguracaoEmpenhoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoConfiguracaoEventosDescontoExternos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventosDescontoExterno
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoConfiguracaoEventosDescontoExternos1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventosDescontoExterno
+            mappedBy: fkFolhapagamentoEvento1
+        fkFolhapagamentoConfiguracaoEventosDescontoExternos2:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventosDescontoExterno
+            mappedBy: fkFolhapagamentoEvento2
+        fkFolhapagamentoConfiguracaoEventosDescontoExternos3:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventosDescontoExterno
+            mappedBy: fkFolhapagamentoEvento3
+        fkFolhapagamentoConfiguracaoIpes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpe
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoConfiguracaoIpes1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpe
+            mappedBy: fkFolhapagamentoEvento1
+        fkFolhapagamentoDecimoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DecimoEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoEventoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoFeriasEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FeriasEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoFgtsEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FgtsEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoPrevidenciaEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoPensaoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PensaoEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoRegistroEventoDecimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoDecimo
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoRegistroEventoRescisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoRescisao
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoSequenciaCalculoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SequenciaCalculoEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoSindicatos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Sindicato
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTabelaIrrfEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoRegistroEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcemgEntidadeRemuneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcemgEntidadeRemuneracao
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoRegistroEventoComplementares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoComplementar
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcmbaEmprestimoConsignados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaEmprestimoConsignado
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcmbaGratificacaoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaGratificacaoFuncao
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcmbaPlanoSaudes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaPlanoSaude
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcmbaSalarioDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaSalarioDescontos
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcmbaSalarioFamilias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaSalarioFamilia
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcmbaSalarioHorasExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaSalarioHorasExtras
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcmbaVantagensSalariais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaVantagensSalariais
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTotaisFolhaEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TotaisFolhaEventos
+            mappedBy: fkFolhapagamentoEvento
+        fkImaCagedEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\CagedEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkImaConfiguracaoBanrisulEmprestimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanrisulEmprestimo
+            mappedBy: fkFolhapagamentoEvento
+        fkImaConfiguracaoDirfPlanos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfPlano
+            mappedBy: fkFolhapagamentoEvento
+        fkImaConfiguracaoPaseps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoPasep
+            mappedBy: fkFolhapagamentoEvento
+        fkImaConfiguracaoDirfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirf
+            mappedBy: fkFolhapagamentoEvento
+        fkImaEventoHorasExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\EventoHorasExtras
+            mappedBy: fkFolhapagamentoEvento
+        fkPessoalAssentamentoEventoProporcionais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoEventoProporcional
+            mappedBy: fkFolhapagamentoEvento
+        fkPessoalAssentamentoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkPontoExportacaoPontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ExportacaoPonto
+            mappedBy: fkFolhapagamentoEvento
+        fkTcemgTetoRemuneratorios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TetoRemuneratorio
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTabelaIrrfComprovanteRendimentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfComprovanteRendimento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoBasesEventoCriados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\BasesEventoCriado
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoRegistroEventoFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoFerias
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoSalarioFamiliaEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamiliaEvento
+            mappedBy: fkFolhapagamentoEvento
+        fkFolhapagamentoTcmbaSalarioBases:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaSalarioBase
+            mappedBy: fkFolhapagamentoEvento
+        fkImaEventoComposicaoRemuneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\EventoComposicaoRemuneracao
+            mappedBy: fkFolhapagamentoEvento
+        fkPontoDadosExportacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DadosExportacao
+            mappedBy: fkFolhapagamentoEvento
+    oneToOne:
+        fkImaConsignacaoBanrisulRemuneracao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConsignacaoBanrisulRemuneracao
+            mappedBy: fkFolhapagamentoEvento
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkPessoalArquivoCodigoVantagensDescontos:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ArquivoCodigoVantagensDescontos
+            mappedBy: fkFolhapagamentoEvento
+            joinColumns:
+                codigo:
+                    referencedColumnName: cod_vantagem_desconto
+        fkImaConsignacaoBanrisulLiquido:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConsignacaoBanrisulLiquido
+            mappedBy: fkFolhapagamentoEvento
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

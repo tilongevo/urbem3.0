@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Administracao\ArquivosDocumento:
+    type: entity
+    table: administracao.arquivos_documento
+    id:
+        codArquivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arquivo
+        sistema:
+            type: boolean
+            generator:
+                strategy: NONE
+    fields:
+        nomeArquivoSwx:
+            type: string
+            nullable: false
+            length: 100
+            column: nome_arquivo_swx
+        checksum:
+            type: text
+            nullable: false
+    oneToMany:
+        fkAdministracaoModeloArquivosDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloArquivosDocumento
+            mappedBy: fkAdministracaoArquivosDocumento

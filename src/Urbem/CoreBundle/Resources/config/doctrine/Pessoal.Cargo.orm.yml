@@ -1,0 +1,147 @@
+Urbem\CoreBundle\Entity\Pessoal\Cargo:
+    type: entity
+    table: pessoal.cargo
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\CargoRepository
+    id:
+        codCargo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.cargo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_cargo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        cargoCc:
+            type: boolean
+            nullable: false
+            column: cargo_cc
+        funcaoGratificada:
+            type: boolean
+            nullable: false
+            column: funcao_gratificada
+        codEscolaridade:
+            type: integer
+            nullable: false
+            column: cod_escolaridade
+        atribuicoes:
+            type: text
+            nullable: false
+    oneToMany:
+        fkConcursoConcursoCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\ConcursoCargo
+            mappedBy: fkPessoalCargo
+        fkFolhapagamentoConfiguracaoEventoCasoCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCasoCargo
+            mappedBy: fkPessoalCargo
+        fkFolhapagamentoTcemgEntidadeCargoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcemgEntidadeCargoServidor
+            mappedBy: fkPessoalCargo
+        fkFolhapagamentoTcemgEntidadeRequisitosCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcemgEntidadeRequisitosCargo
+            mappedBy: fkPessoalCargo
+        fkFolhapagamentoTcmbaCargoServidorTemporarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaCargoServidorTemporario
+            mappedBy: fkPessoalCargo
+        fkPessoalCargoRequisitos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CargoRequisito
+            mappedBy: fkPessoalCargo
+        fkPessoalCargoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CargoPadrao
+            mappedBy: fkPessoalCargo
+        fkPessoalCboCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CboCargo
+            mappedBy: fkPessoalCargo
+        fkPessoalContratoServidorFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorFuncao
+            mappedBy: fkPessoalCargo
+        fkPessoalLoteFeriasFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LoteFeriasFuncao
+            mappedBy: fkPessoalCargo
+        fkFolhapagamentoTcmbaCargoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaCargoServidor
+            mappedBy: fkPessoalCargo
+        fkPessoalArquivoCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ArquivoCargos
+            mappedBy: fkPessoalCargo
+        fkPessoalCargoSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CargoSubDivisao
+            mappedBy: fkPessoalCargo
+        fkPessoalContratoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            mappedBy: fkPessoalCargo
+        fkPessoalEspecialidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Especialidade
+            mappedBy: fkPessoalCargo
+    manyToOne:
+        fkSwEscolaridade:
+            targetEntity: Urbem\CoreBundle\Entity\SwEscolaridade
+            inversedBy: fkPessoalCargo
+            joinColumns:
+                cod_escolaridade:
+                    referencedColumnName: cod_escolaridade

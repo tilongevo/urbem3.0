@@ -1,0 +1,106 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+	<style>
+    	.pagination-sonata li:not(.disabled) a{
+        	color: #366da1 !important;
+    	}
+    	
+    	.pagination-sonata li.active a {
+        	color: #fff !important;
+    	}
+    	
+    	select{
+    		display: initial;
+    	}
+	</style>
+
+    <div class="container-rh">
+    	<div class="col s12 filtro-sonata z-depth-0">
+    		{{ form_start(form) }}
+            {{ form_widget(form) }}
+            
+            <div class="col s12">
+            	<div class="buscar right margin-top-button-search">
+                	<button type="submit" class="hide-on-med-and-down btn waves-effect waves-light blue-darken-4">
+                    	<i class="material-icons">search</i>
+                 	</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+    	</div>
+       
+       <div class="box-header col s12" style="margin-top: 20px">
+            <h5 class="col s12 box-title left-align show">
+                {{ 'label.elaboracaoDespesa.acaoDespesa'|trans }}
+            </h5>
+            <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+        </div>
+        
+        <table>
+            <tr class="tr-rh">
+                <th class="th-rh">{{ 'label.ppaAcao.acao'|trans }}</th>
+                <th class="th-rh">{{ 'label.ppaAcao.descricao'|trans }}</th>
+                <th class="th-rh"></th>
+            </tr>
+                {% for row in table %}
+                    <tr class="tr-rh tr-todos">
+                        <td class="td-rh">{{ row.num_acao }}</td>
+                        <td class="td-rh">{{ row.titulo }}</td>
+                        <td class="td-rh">
+                        	<i onclick="actionInsert(this)" 
+                        		data-codacao='{{row.cod_acao }}' data-ano='{{row.ano }}' 
+                        		class="material-icons btn_meta blue-text text-darken-4" style="cursor: pointer">
+                        		add
+                        	</i>
+                        </td>
+                    </tr>
+                {% endfor %}
+        </table>
+        
+        <div class="box-footer">
+        	<div class="clearfix form-inline">
+            	<div class="pull-left"></div>
+			</div>
+			<hr>
+            <div class="center">
+        		<nav aria-label="Page navigation">
+            		<ul class="pagination pagination-sonata pagination-demo" id="pagination">
+            			<li {{ (paginaAtual == 1)?'class="disabled"':'' }}>
+                        	<a href="#" data-pagina="{{ paginaAtual-1 }}" onclick="pagina(this)">
+                        		«&nbsp;Anterior
+                        	</a>
+                    	</li>
+                    	{% for i in 1..nPaginas %}
+          				<li {{ (paginaAtual == i)?'class="active"':'' }}>
+                        	<a href="#" data-pagina="{{ i }}" onclick="pagina(this)">
+                                {{ i }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <li>
+                    	<li {{ (paginaAtual == nPaginas)?'class="disabled"':'' }}>
+                            <a href="#" data-pagina="{{ paginaAtual+1 }}" onclick="pagina(this)">
+                                Próximo&nbsp;»
+                            </a>
+                    	</li>
+                    </ul>
+        		</nav>
+			</div>
+		</div>
+        
+        {{ form_start(formAct) }}
+        {{ form_widget(formAct) }}
+        {{ form_end(formAct) }}
+        
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('/bundles/financeiro/javascripts/orcamento/elaboracaoorcamento/acaoDespesa.js') }}"></script>
+{% endblock javascripts %}

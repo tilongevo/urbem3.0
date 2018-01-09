@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Arrecadacao\DocumentoImovel:
+    type: entity
+    table: arrecadacao.documento_imovel
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        numDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_documento
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkArrecadacaoDocumentoImoveis
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+        fkArrecadacaoDocumentoEmissao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoEmissao
+            inversedBy: fkArrecadacaoDocumentoImoveis
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                num_documento:
+                    referencedColumnName: num_documento
+                exercicio:
+                    referencedColumnName: exercicio

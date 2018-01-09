@@ -1,0 +1,36 @@
+<table class="table table-bordered js-table-documento-natureza">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Obrigatório</th>
+            <th>&nbsp;</th>
+        <tr>
+    </thead>
+    <tbody class="sonata-ba-tbody ui-sortable">
+        {% if field.data.documentos|length > 0 %}
+            {% for item in field.data.documentos %}
+                <tr data-index="{{ loop.index }}" class="tr-rh row-natureza-transferencia">
+                    <td class="control-group">
+                        <input name="documentoNatureza[{{ loop.index }}][nomDocumento]" type="text" class="campo-sonata form-control" value="{{ item.nomDocumento }}" required>
+                    </td>
+                    <td class="control-group js-td-select">
+                        <select name="documentoNatureza[{{ loop.index }}][obrigatorio]" class="select2-parameters js-select-obrigatorio" style="width:100%" value="" required>
+                            {% for obrigatorio in field.data.obrigatorios %}
+                                <option value="{{ obrigatorio.value }}" {% if obrigatorio.value == item.obrigatorioSelected %} selected {% endif %}> {{ obrigatorio.label|trans }} </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="control-group">
+                        <button class="js-delete-documento-natureza"><i class="fa fa-trash fa-lg" aria-hidden="true"></i> Remover</button>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        {% endif %}
+    </tbody>
+</table>
+
+<a class="white-text blue darken-4 btn btn-success save load-more js-add-documento-natureza" title="Adicionar Documento">
+    <i class="material-icons left">add_circle</i>
+    Adicionar Documento
+</a>

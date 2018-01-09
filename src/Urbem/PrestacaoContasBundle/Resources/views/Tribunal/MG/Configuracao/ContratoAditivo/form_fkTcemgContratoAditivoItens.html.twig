@@ -1,0 +1,62 @@
+{% block form_row %}
+    {% if form.vars.data %}
+        <div class="box-body no-padding">
+            <table class="table show-table">
+                <tbody>
+                    <tr class="sonata-ba-view-container">
+                        <th>Empenho</th>
+                        <td>{{ form.vars.data.fkEmpenhoEmpenho }}</td>
+                    </tr>
+
+                    <tr class="sonata-ba-view-container">
+                        <th>Descrição</th>
+                        <td>{{ form.vars.data.fkEmpenhoItemPreEmpenho.nomItem }}</td>
+                    </tr>
+
+                    <tr class="sonata-ba-view-container">
+                        <th>Quantidade Original</th>
+                        <td>{{ form.vars.data.fkEmpenhoItemPreEmpenho.quantidade }}</td>
+                    </tr>
+
+                    <tr class="sonata-ba-view-container">
+                        <th>Valor Unitário</th>
+                        <td>R$ {{ (form.vars.data.fkEmpenhoItemPreEmpenho.vlTotal/form.vars.data.fkEmpenhoItemPreEmpenho.quantidade) | number_format(2, ',', '.') }}</td>
+                    </tr>
+
+                    <tr class="sonata-ba-view-container">
+                        <th>Valor Total</th>
+                        <td>R$ {{ form.vars.data.fkEmpenhoItemPreEmpenho.vlTotal | number_format(2, ',', '.')  }}</td>
+                    </tr>
+
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ form_label(form.quantidade) }}</th>
+                        <td>
+                            {{ form_widget(form.quantidade) }}
+                            {{ form_errors(form.quantidade) }}
+                        </td>
+                    </tr>
+
+                    {% if form.valor is defined %}
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ form_label(form.valor) }}</th>
+                            <td>
+                                {{ form_widget(form.valor) }}
+
+                                {% if form.valor.option.show_error %}
+                                    {{ form_errors(form.valor) }}
+
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                    {% endif %}
+
+                <tbody>
+            </table>
+
+            {{ form_rest(form) }}
+        </div>
+
+    {% endif %}
+
+{% endblock form_row %}

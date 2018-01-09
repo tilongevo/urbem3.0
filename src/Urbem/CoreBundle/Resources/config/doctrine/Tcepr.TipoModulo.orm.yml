@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Tcepr\TipoModulo:
+    type: entity
+    table: tcepr.tipo_modulo
+    id:
+        idTipoModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: id_tipo_modulo
+    fields:
+        dsTipoModulo:
+            type: string
+            nullable: true
+            length: 25
+            column: ds_tipo_modulo
+    oneToMany:
+        fkTceprResponsavelModulos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepr\ResponsavelModulo
+            mappedBy: fkTceprTipoModulo

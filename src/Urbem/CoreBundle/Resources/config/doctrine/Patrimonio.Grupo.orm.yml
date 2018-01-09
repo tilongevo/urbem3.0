@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Patrimonio\Grupo:
+    type: entity
+    table: patrimonio.grupo
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\GrupoRepository
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+    fields:
+        nomGrupo:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_grupo
+        depreciacao:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+    manyToOne:
+        fkPatrimonioNatureza:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Natureza
+            inversedBy: fkPatrimonioGrupos
+            joinColumns:
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+    oneToMany:
+        fkPatrimonioEspecies:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Especie
+            mappedBy: fkPatrimonioGrupo
+        fkPatrimonioGrupoPlanoAnaliticas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\GrupoPlanoAnalitica
+            mappedBy: fkPatrimonioGrupo
+        fkPatrimonioGrupoPlanoDepreciacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\GrupoPlanoDepreciacao
+            mappedBy: fkPatrimonioGrupo
+    oneToOne:
+        fkTcmbaTipoBem:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoBem
+            mappedBy: fkPatrimonioGrupo
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+    lifecycleCallbacks:
+            prePersist:
+                - generatePkSequence

@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorRegimeFuncao:
+    type: entity
+    table: pessoal.contrato_servidor_regime_funcao
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorRegimeFuncaoRepository
+    id:
+        codRegime:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_regime
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalRegime:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Regime
+            inversedBy: fkPessoalContratoServidorRegimeFuncoes
+            joinColumns:
+                cod_regime:
+                    referencedColumnName: cod_regime
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorRegimeFuncoes
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

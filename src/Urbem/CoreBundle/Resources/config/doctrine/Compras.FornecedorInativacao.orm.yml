@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Compras\FornecedorInativacao:
+    type: entity
+    table: compras.fornecedor_inativacao
+    id:
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        timestampInicio:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_inicio
+    fields:
+        timestampFim:
+            type: datetime
+            nullable: true
+            column: timestamp_fim
+        motivo:
+            type: string
+            nullable: true
+            length: 200
+    manyToOne:
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkComprasFornecedorInativacoes
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor

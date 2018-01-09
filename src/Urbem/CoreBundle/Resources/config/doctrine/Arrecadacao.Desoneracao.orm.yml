@@ -1,0 +1,134 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Desoneracao:
+    type: entity
+    table: arrecadacao.desoneracao
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\DesoneracaoRepository
+    id:
+        codDesoneracao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: arrecadacao.cod_desoneracao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_desoneracao
+    fields:
+        codCredito:
+            type: integer
+            nullable: false
+            column: cod_credito
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+        codGenero:
+            type: integer
+            nullable: false
+            column: cod_genero
+        codEspecie:
+            type: integer
+            nullable: false
+            column: cod_especie
+        codTipoDesoneracao:
+            type: integer
+            nullable: false
+            column: cod_tipo_desoneracao
+        inicio:
+            type: date
+            nullable: false
+        termino:
+            type: date
+            nullable: false
+        prorrogavel:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        revogavel:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        fundamentacaoLegal:
+            type: integer
+            nullable: false
+            column: fundamentacao_legal
+        expiracao:
+            type: date
+            nullable: true
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+    manyToOne:
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkArrecadacaoDesoneracoes
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+        fkArrecadacaoTipoDesoneracao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\TipoDesoneracao
+            inversedBy: fkArrecadacaoDesoneracoes
+            joinColumns:
+                cod_tipo_desoneracao:
+                    referencedColumnName: cod_tipo_desoneracao
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkArrecadacaoDesoneracoes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkArrecadacaoDesoneracoes
+            joinColumns:
+                fundamentacao_legal:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkArrecadacaoAtributoDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoDesoneracao
+            mappedBy: fkArrecadacaoDesoneracao
+        fkArrecadacaoFundamentacaoProrrogacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FundamentacaoProrrogacao
+            mappedBy: fkArrecadacaoDesoneracao
+        fkArrecadacaoFundamentacaoRevogacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FundamentacaoRevogacao
+            mappedBy: fkArrecadacaoDesoneracao
+        fkArrecadacaoDesonerados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desonerado
+            mappedBy: fkArrecadacaoDesoneracao

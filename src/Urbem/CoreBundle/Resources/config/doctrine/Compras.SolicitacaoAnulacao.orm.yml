@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Compras\SolicitacaoAnulacao:
+    type: entity
+    table: compras.solicitacao_anulacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\SolicitacaoAnulacaoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSolicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_solicitacao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        motivo:
+            type: string
+            nullable: false
+            length: 500
+    manyToOne:
+        fkComprasSolicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Solicitacao
+            inversedBy: fkComprasSolicitacaoAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+    oneToMany:
+        fkComprasSolicitacaoItemAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItemAnulacao
+            mappedBy: fkComprasSolicitacaoAnulacao

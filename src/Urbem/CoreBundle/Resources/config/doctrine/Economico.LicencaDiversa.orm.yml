@@ -1,0 +1,102 @@
+Urbem\CoreBundle\Entity\Economico\LicencaDiversa:
+    type: entity
+    table: economico.licenca_diversa
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkEconomicoTipoLicencaDiversa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\TipoLicencaDiversa
+            inversedBy: fkEconomicoLicencaDiversas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEconomicoLicencaDiversas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkEconomicoAtributoLicencaDiversaValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoLicencaDiversaValor
+            mappedBy: fkEconomicoLicencaDiversa
+        fkEconomicoElementoLicencaDiversas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoLicencaDiversa
+            mappedBy: fkEconomicoLicencaDiversa
+    oneToOne:
+        fkEconomicoUsoSoloArea:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\UsoSoloArea
+            mappedBy: fkEconomicoLicencaDiversa
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEconomicoUsoSoloEmpresa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\UsoSoloEmpresa
+            mappedBy: fkEconomicoLicencaDiversa
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEconomicoUsoSoloImovel:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\UsoSoloImovel
+            mappedBy: fkEconomicoLicencaDiversa
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEconomicoUsoSoloLogradouro:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\UsoSoloLogradouro
+            mappedBy: fkEconomicoLicencaDiversa
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEconomicoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Licenca
+            inversedBy: fkEconomicoLicencaDiversa
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio

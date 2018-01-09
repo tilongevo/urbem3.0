@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\SwAndamentoPadrao:
+    type: entity
+    table: sw_andamento_padrao
+    id:
+        numPassagens:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_passagens
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codAssunto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assunto
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        ordem:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: text
+            nullable: false
+        numDia:
+            type: integer
+            nullable: false
+            column: num_dia
+    manyToOne:
+        fkSwAssunto:
+            targetEntity: Urbem\CoreBundle\Entity\SwAssunto
+            inversedBy: fkSwAndamentoPadroes
+            joinColumns:
+                cod_assunto:
+                    referencedColumnName: cod_assunto
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkSwAndamentoPadroes
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao

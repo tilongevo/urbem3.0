@@ -1,0 +1,19 @@
+{% set vinculos = field.data.empenhoContratos %}
+<table id="tableEmpenhoVinculados" class="bordered highlight" style="width:100%">
+    <tr class="tr-rh">
+        <th class="th-rh">{{ 'label.codigo'|trans }} {{ 'entidade'|trans }}</th>
+        <th class="th-rh">{{ 'entidade'|trans }}</th>
+        <th class="th-rh">{{ 'label.empenho'|trans }}</th>
+        <th class="th-rh"></th>
+    </tr>
+    {% for vinculo in vinculos %}
+        <tr>
+            <td style="display: none"><input name="empenhos[]" type="hidden"
+            value="{{ vinculo.fkLicitacaoContrato.fkOrcamentoEntidade.codEntidade }}__{{ vinculo.fkEmpenhoEmpenho.codEmpenho }}/{{ vinculo.exercicio }}"/></td>
+            <td>{{ vinculo.codEntidade }}</td>
+            <td>{{ vinculo.fkLicitacaoContrato.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</td>
+            <td>{{ vinculo.fkEmpenhoEmpenho.codEmpenho }}/{{ vinculo.exercicio }}</td>
+            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+        </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,31 @@
+<th{% if(is_diff|default(false)) %} class="diff"{% endif %}>{% block name %}{{ admin.trans(field.label, {}, field.translationDomain) }}{% endblock %}</th>
+<td>
+    {% block field %}
+        {% if field.options.data|length > 0 %}
+            <table class="table show-table">
+                <thead>
+                    <tr>
+                        <th>{{ 'label.imobiliarioImovel.cgm'|trans }}</th>
+                        <th>{{ 'label.imobiliarioImovel.quota'|trans }}</th>
+                        <th>{{ 'label.imobiliarioImovel.promitente'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proprietario in field.options.data  %}
+                        <tr>
+                            <td>{{ proprietario.fkSwCgm }}</td>
+                            <td>{{ proprietario.cota|number_format(0, ',', '.') }}%</td>
+                            <td>
+                                {% if proprietario.promitente %}
+                                    {{ 'label_type_yes'|trans }}
+                                {% else %}
+                                    {{ 'label_type_no'|trans }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endblock %}
+</td>

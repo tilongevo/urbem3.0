@@ -1,0 +1,118 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Reajuste:
+    type: entity
+    table: folhapagamento.reajuste
+    id:
+        codReajuste:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_reajuste
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        dtReajuste:
+            type: date
+            nullable: false
+            column: dt_reajuste
+        faixaInicial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: faixa_inicial
+        faixaFinal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: faixa_final
+        origem:
+            type: string
+            nullable: false
+            length: 1
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkFolhapagamentoReajustes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkFolhapagamentoReajusteContratoServidorSalarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteContratoServidorSalario
+            mappedBy: fkFolhapagamentoReajuste
+        fkFolhapagamentoReajustePadraoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajustePadraoPadrao
+            mappedBy: fkFolhapagamentoReajuste
+        fkFolhapagamentoReajusteRegistroEventoDecimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEventoDecimo
+            mappedBy: fkFolhapagamentoReajuste
+        fkFolhapagamentoReajusteRegistroEventoFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEventoFerias
+            mappedBy: fkFolhapagamentoReajuste
+        fkFolhapagamentoReajusteRegistroEventoRescisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEventoRescisao
+            mappedBy: fkFolhapagamentoReajuste
+        fkFolhapagamentoReajusteRegistroEventoComplementares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEventoComplementar
+            mappedBy: fkFolhapagamentoReajuste
+        fkFolhapagamentoReajusteRegistroEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEvento
+            mappedBy: fkFolhapagamentoReajuste
+    oneToOne:
+        fkFolhapagamentoReajusteExclusao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteExclusao
+            mappedBy: fkFolhapagamentoReajuste
+            joinColumns:
+                cod_reajuste:
+                    referencedColumnName: cod_reajuste
+        fkFolhapagamentoReajustePercentual:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajustePercentual
+            mappedBy: fkFolhapagamentoReajuste
+            joinColumns:
+                cod_reajuste:
+                    referencedColumnName: cod_reajuste
+        fkFolhapagamentoReajusteAbsoluto:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteAbsoluto
+            mappedBy: fkFolhapagamentoReajuste
+            joinColumns:
+                cod_reajuste:
+                    referencedColumnName: cod_reajuste

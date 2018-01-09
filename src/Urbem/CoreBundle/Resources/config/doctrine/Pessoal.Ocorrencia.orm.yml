@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Pessoal\Ocorrencia:
+    type: entity
+    table: pessoal.ocorrencia
+    id:
+        codOcorrencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.ocorrencia_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_ocorrencia
+    fields:
+        codRegimePrevidencia:
+            type: integer
+            nullable: false
+            column: cod_regime_previdencia
+        descricao:
+            type: string
+            nullable: false
+            length: 135
+        numOcorrencia:
+            type: integer
+            nullable: true
+            column: num_ocorrencia
+    manyToOne:
+        fkFolhapagamentoRegimePrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegimePrevidencia
+            inversedBy: fkPessoalOcorrencias
+            joinColumns:
+                cod_regime_previdencia:
+                    referencedColumnName: cod_regime_previdencia
+    oneToMany:
+        fkPessoalContratoServidorOcorrencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorOcorrencia
+            mappedBy: fkPessoalOcorrencia

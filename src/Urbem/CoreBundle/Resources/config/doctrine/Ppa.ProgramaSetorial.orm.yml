@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Ppa\ProgramaSetorial:
+    type: entity
+    table: ppa.programa_setorial
+    id:
+        codSetorial:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ppa.programa_setorial_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_setorial
+    fields:
+        codMacro:
+            type: integer
+            nullable: false
+            column: cod_macro
+        descricao:
+            type: string
+            nullable: false
+            length: 450
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkPpaMacroObjetivo:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\MacroObjetivo
+            inversedBy: fkPpaProgramaSetoriais
+            joinColumns:
+                cod_macro:
+                    referencedColumnName: cod_macro
+    oneToMany:
+        fkPpaProgramas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Programa
+            mappedBy: fkPpaProgramaSetorial

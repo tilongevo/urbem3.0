@@ -1,0 +1,83 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="col s12 confrontacoes">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioLote.listaConfrontacoes'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableConfrontacoesManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.imobiliarioLote.pontoCardeal'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLote.tipo'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLote.descricao'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLote.extensao'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLote.testada'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if field.data.confrontacoes|length > 0 %}
+            {% for confrontacao in field.data.confrontacoes|sort %}
+                <tr class="tr-rh row-confrontacoes">
+                    <td class="td-rh ponto-cardeal">
+                        <input type="hidden" value="{{ admin.getObjectKey(confrontacao) }}" name="confrontacoes_old[]" />
+                        {{ confrontacao.fkImobiliarioPontoCardeal }}
+                    </td>
+                    {% if confrontacao.fkImobiliarioConfrontacaoTrecho|length > 0 %}
+                        <td class="td-rh tipo {% if confrontacao.fkImobiliarioConfrontacaoTrecho.principal == true %} confrontacoes-principal {% endif %}">
+                            {{ 'label.imobiliarioLote.trecho'|trans }}
+                        </td>
+                        <td class="td-rh descricao">
+                            {{ confrontacao.fkImobiliarioConfrontacaoTrecho.fkImobiliarioTrecho }}
+                        </td>
+                    {% elseif confrontacao.fkImobiliarioConfrontacaoLote|length > 0 %}
+                        <td class="td-rh tipo">
+                            {{ 'label.imobiliarioLote.lote'|trans }}
+                            {{ 'label.imobiliarioLote.lote'|trans }}
+                        </td>
+                        <td class="td-rh descricao">
+                            {{ confrontacao.fkImobiliarioConfrontacaoLote.fkImobiliarioLote }}
+                        </td>
+                    {% elseif confrontacao.fkImobiliarioConfrontacaoDiversa|length > 0 %}
+                        <td class="td-rh tipo">
+                            {{ 'label.imobiliarioLote.outros'|trans }}
+                        </td>
+                        <td class="td-rh descricao">
+                            {{ confrontacao.fkImobiliarioConfrontacaoDiversa.descricao }}
+                        </td>
+                    {% endif %}
+                    <td class="td-rh extensao">
+                        {{ confrontacao.fkImobiliarioConfrontacaoExtensoes.current.valor|number_format_decimal({'fraction_digits': 2}) }}
+                    </td>
+                    <td class="td-rh testada">
+                        {% if confrontacao.fkImobiliarioConfrontacaoTrecho is not null %}
+                            {% if confrontacao.fkImobiliarioConfrontacaoTrecho.principal == true %}
+                                {{ 'sim'|trans }}
+                            {% else %}
+                                {{ 'nao'|trans }}
+                            {% endif %}
+
+                        {% else %}
+                            {{ 'nao'|trans }}
+                        {% endif %}
+                    </td>
+                    {% if confrontacao.fkImobiliarioConfrontacaoTrecho is not null %}
+                        {% if confrontacao.fkImobiliarioConfrontacaoTrecho.fkImobiliarioImovelConfrontacoes|length > 0 %}
+                            <td class="td-rh"><i class="material-icons grey-text text-darken-0" title="{{ 'label.imobiliarioLote.imoveisCadastrados'|trans }}">delete</i></td>
+                        {% else %}
+                            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                        {% endif %}
+                    {% else %}
+                        <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="tr-rh empty-row-confrontacoes">
+                <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

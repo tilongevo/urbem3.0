@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\SwAtributoPreEmpenho:
+    type: entity
+    table: sw_atributo_pre_empenho
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomAtributo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_atributo
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        valorPadrao:
+            type: text
+            nullable: false
+            column: valor_padrao
+    oneToMany:
+        fkSwValorAtributoPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwValorAtributoPreEmpenho
+            mappedBy: fkSwAtributoPreEmpenho

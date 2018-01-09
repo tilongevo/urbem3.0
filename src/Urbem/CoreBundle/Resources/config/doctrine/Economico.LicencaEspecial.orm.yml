@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Economico\LicencaEspecial:
+    type: entity
+    table: economico.licenca_especial
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\LicencaEspecialRepository
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        ocorrenciaAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_atividade
+        ocorrenciaLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_licenca
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    manyToOne:
+        fkEconomicoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Licenca
+            inversedBy: fkEconomicoLicencaEspeciais
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEconomicoAtividadeCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeCadastroEconomico
+            inversedBy: fkEconomicoLicencaEspeciais
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                ocorrencia_atividade:
+                    referencedColumnName: ocorrencia_atividade

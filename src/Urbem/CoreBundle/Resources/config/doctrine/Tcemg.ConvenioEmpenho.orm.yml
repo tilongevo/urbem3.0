@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Tcemg\ConvenioEmpenho:
+    type: entity
+    table: tcemg.convenio_empenho
+    uniqueConstraints:
+        uk_tcemg_convenio_empenho:
+            columns:
+                - exercicio_empenho
+                - cod_entidade
+                - cod_empenho
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        exercicioEmpenho:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_empenho
+    fields: {  }
+    manyToOne:
+        fkTcemgConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Convenio
+            inversedBy: fkTcemgConvenioEmpenhos
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcemgConvenioEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio_empenho:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

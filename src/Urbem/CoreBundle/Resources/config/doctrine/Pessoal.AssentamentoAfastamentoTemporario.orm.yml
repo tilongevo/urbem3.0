@@ -1,0 +1,65 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoAfastamentoTemporario:
+    type: entity
+    table: pessoal.assentamento_afastamento_temporario
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\AssentamentoAfastamentoTemporarioRepository
+    id:
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    oneToMany:
+        fkPessoalAssentamentoFaixaDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoFaixaDesconto
+            mappedBy: fkPessoalAssentamentoAfastamentoTemporario
+    oneToOne:
+        fkPessoalAssentamentoAfastamentoTemporarioDuracao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAfastamentoTemporarioDuracao
+            mappedBy: fkPessoalAssentamentoAfastamentoTemporario
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalAssentamentoMovSefipSaida:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoMovSefipSaida
+            mappedBy: fkPessoalAssentamentoAfastamentoTemporario
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalAssentamentoRaisAfastamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoRaisAfastamento
+            mappedBy: fkPessoalAssentamentoAfastamentoTemporario
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Assentamento
+            inversedBy: fkPessoalAssentamentoAfastamentoTemporario
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp

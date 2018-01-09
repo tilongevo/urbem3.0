@@ -1,0 +1,83 @@
+Urbem\CoreBundle\Entity\Licitacao\Participante:
+    type: entity
+    table: licitacao.participante
+    id:
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        numcgmRepresentante:
+            type: integer
+            nullable: false
+            column: numcgm_representante
+        dtInclusao:
+            type: date
+            nullable: false
+            column: dt_inclusao
+        renunciaRecurso:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+            column: renuncia_recurso
+    manyToOne:
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkLicitacaoParticipantes
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkLicitacaoParticipantes
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoParticipantes
+            joinColumns:
+                numcgm_representante:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkLicitacaoParticipanteDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteDocumentos
+            mappedBy: fkLicitacaoParticipante
+        fkLicitacaoParticipanteConsorcios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteConsorcio
+            mappedBy: fkLicitacaoParticipante

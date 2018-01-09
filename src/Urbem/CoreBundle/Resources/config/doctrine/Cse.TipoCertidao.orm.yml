@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\TipoCertidao:
+    type: entity
+    table: cse.tipo_certidao
+    id:
+        codCertidao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_certidao
+    fields:
+        nomCertidao:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_certidao
+    oneToMany:
+        fkCseCidadoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            mappedBy: fkCseTipoCertidao

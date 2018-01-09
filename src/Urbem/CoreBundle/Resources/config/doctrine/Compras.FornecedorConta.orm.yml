@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Compras\FornecedorConta:
+    type: entity
+    table: compras.fornecedor_conta
+    id:
+        numConta:
+            type: string
+            generator:
+                strategy: NONE
+            column: num_conta
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        padrao:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkComprasFornecedorContas
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkComprasFornecedorContas
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor

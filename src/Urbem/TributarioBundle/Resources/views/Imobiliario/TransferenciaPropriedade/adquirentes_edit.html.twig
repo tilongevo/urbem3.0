@@ -1,0 +1,47 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="addValor" id="addValor" value="Incluir">
+    </div>
+</div>
+<div class="col s12">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioTransferenciaPropriedade.listaAdquirentes'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table class="table table-bordered js-table-transferencia-propriedade">
+        <thead>
+            <tr>
+                <th>CGM</th>
+                <th>Nome</th>
+                <th>Quota Atual (%)</th>
+                <th>Quota Futura (%)</th>
+                <th>&nbsp;</th>
+            <tr>
+        </thead>
+        <tbody class="sonata-ba-tbody ui-sortable">
+            {% if field.data.adquirentes|length > 0 %}
+                {% for item in field.data.adquirentes %}
+                    <tr data-index="{{ loop.index }}" class="tr-rh row-transferencia-propriedade">
+                        <td class="control-group">
+                            <input type="text" name="adquirentes[{{ loop.index }}][numcgm]" class="campo-sonata form-control span-cgm" value="{{ item.cgm }}" required>
+                        </td>
+                        <td class="control-group">
+                            {{ item.nome }}
+                        </td>
+                        <td class="control-group">
+
+                        </td>
+                        <td class="control-group">
+                        <input type="text" name="adquirentes[{{ loop.index }}][cota]" class="campo-sonata form-control span-cota" value="{{ item.cotaFutura}}" required>
+                        </td>
+                        <td class="control-group">
+                            <button class="js-delete-transferencia-propriedade"><i class="fa fa-trash fa-lg" aria-hidden="true"></i> Remover</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            {% endif %}
+        </tbody>
+    </table>
+</div>

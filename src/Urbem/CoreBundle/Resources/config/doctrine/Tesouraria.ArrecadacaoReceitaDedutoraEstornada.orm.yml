@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoReceitaDedutoraEstornada:
+    type: entity
+    table: tesouraria.arrecadacao_receita_dedutora_estornada
+    id:
+        codReceitaDedutora:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita_dedutora
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        timestampDedutoraEstornada:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_dedutora_estornada
+        timestampEstornada:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_estornada
+    fields:
+        vlEstornado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_estornado
+    manyToOne:
+        fkTesourariaArrecadacaoReceitaDedutora:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoReceitaDedutora
+            inversedBy: fkTesourariaArrecadacaoReceitaDedutoraEstornadas
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                cod_receita:
+                    referencedColumnName: cod_receita
+                cod_receita_dedutora:
+                    referencedColumnName: cod_receita_dedutora
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTesourariaArrecadacaoEstornada:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornada
+            inversedBy: fkTesourariaArrecadacaoReceitaDedutoraEstornadas
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                timestamp_estornada:
+                    referencedColumnName: timestamp_estornada

@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Monetario\IndicadorEconomico:
+    type: entity
+    table: monetario.indicador_economico
+    id:
+        codIndicador:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: monetario.indicador_economico_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_indicador
+    fields:
+        abreviatura:
+            type: string
+            nullable: false
+            length: 15
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        precisao:
+            type: integer
+            nullable: false
+    oneToMany:
+        fkEconomicoAtividadeModalidadeIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeIndicador
+            mappedBy: fkMonetarioIndicadorEconomico
+        fkEconomicoCadEconModalidadeIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadEconModalidadeIndicador
+            mappedBy: fkMonetarioIndicadorEconomico
+        fkMonetarioFormulaIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\FormulaIndicador
+            mappedBy: fkMonetarioIndicadorEconomico
+        fkMonetarioValorIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ValorIndicador
+            mappedBy: fkMonetarioIndicadorEconomico
+        fkMonetarioCreditoIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoIndicador
+            mappedBy: fkMonetarioIndicadorEconomico
+        fkFiscalizacaoPenalidadeMultas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeMulta
+            mappedBy: fkMonetarioIndicadorEconomico

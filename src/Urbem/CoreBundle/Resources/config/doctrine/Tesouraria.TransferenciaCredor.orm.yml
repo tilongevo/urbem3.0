@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Tesouraria\TransferenciaCredor:
+    type: entity
+    table: tesouraria.transferencia_credor
+    id:
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTesourariaTransferenciaCredores
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkTesourariaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            inversedBy: fkTesourariaTransferenciaCredor
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo

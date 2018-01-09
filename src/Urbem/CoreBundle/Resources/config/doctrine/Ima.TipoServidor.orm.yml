@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Ima\TipoServidor:
+    type: entity
+    table: ima.tipo_servidor
+    id:
+        codTipoServidor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_servidor
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 25
+    oneToMany:
+        fkImaExportacaoTcmBaSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ExportacaoTcmBaSubDivisao
+            mappedBy: fkImaTipoServidor

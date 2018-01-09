@@ -1,0 +1,11 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field %}
+	{% set dtInicio = '-' %}
+	{% for atividade in object.getFkEconomicoAtividadeCadastroEconomicos() %}
+		{% if atividade.getFkEconomicoCadastroEconomicoModalidadeLancamentos().count() > 0  and dtInicio == '-' %}
+			{% set dtInicio = atividade.getFkEconomicoCadastroEconomicoModalidadeLancamentos.first().getDtInicio().format('d/m/Y') %}
+		{% endif %}
+	{% endfor %}
+
+	{{ dtInicio }}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="box-recovery">
+    <div class="header">
+        <h5><i class="material-icons left">email</i>{{ 'forgot_password'|trans }}</h5>
+        <h6>{{ 'enter_email'|trans }}</h6>
+    </div>
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+        <div>
+            {#<label for="username">{{ 'resetting.request.username'|trans }}</label>#}
+            <input type="text" id="username" name="username" required="required" class="field email" placeholder="{{ 'resetting.request.username'|trans }}"/>
+        </div>
+        {% if invalid_username is defined %}
+            <h6 class="center warming">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</h6>
+        {% endif %}
+        <div class="waves-effect waves-light btn btn-recovery">
+            <input type="submit" value="{{ 'resetting.request.submit'|trans }}"/>
+        </div>
+    </form>
+</div>
+<div class="footer">
+    <a href="http://www.cnm.org.br/">
+        <img class="responsive" src="{{ asset('/bundles/core/images/logo_cnm.png') }}">
+    </a>
+    <a href="http://www.sebrae.org.br/" target="_blank">
+        <img class="responsive" src="{{ asset('/bundles/core/images/sebrae.png') }}">
+    </a>
+</div>

@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Contabilidade\LancamentoDepreciacao:
+    type: entity
+    table: contabilidade.lancamento_depreciacao
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\LancamentoDepreciacaoRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        codLote:
+            type: integer
+            nullable: false
+            column: cod_lote
+        sequencia:
+            type: integer
+            nullable: false
+        codDepreciacao:
+            type: integer
+            nullable: false
+            column: cod_depreciacao
+        codBem:
+            type: integer
+            nullable: false
+            column: cod_bem
+        timestampDepreciacao:
+            type: datetime
+            nullable: false
+            column: timestamp_depreciacao
+        estorno:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkContabilidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lancamento
+            inversedBy: fkContabilidadeLancamentoDepreciacoes
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkPatrimonioDepreciacao:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Depreciacao
+            inversedBy: fkContabilidadeLancamentoDepreciacoes
+            joinColumns:
+                cod_depreciacao:
+                    referencedColumnName: cod_depreciacao
+                cod_bem:
+                    referencedColumnName: cod_bem
+                timestamp_depreciacao:
+                    referencedColumnName: timestamp

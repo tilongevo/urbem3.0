@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Folhapagamento\PadraoPadrao:
+    type: entity
+    table: folhapagamento.padrao_padrao
+    id:
+        codPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_padrao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkFolhapagamentoPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Padrao
+            inversedBy: fkFolhapagamentoPadraoPadroes
+            joinColumns:
+                cod_padrao:
+                    referencedColumnName: cod_padrao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkFolhapagamentoPadraoPadroes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkFolhapagamentoAtributoPadraoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\AtributoPadraoValor
+            mappedBy: fkFolhapagamentoPadraoPadrao
+        fkFolhapagamentoReajustePadraoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajustePadraoPadrao
+            mappedBy: fkFolhapagamentoPadraoPadrao

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoDocumentoTcm:
+    type: entity
+    table: tcmba.tipo_documento_tcm
+    id:
+        codDocumentoTcm:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento_tcm
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkTcmbaDocumentoDeParas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\DocumentoDePara
+            mappedBy: fkTcmbaTipoDocumentoTcm

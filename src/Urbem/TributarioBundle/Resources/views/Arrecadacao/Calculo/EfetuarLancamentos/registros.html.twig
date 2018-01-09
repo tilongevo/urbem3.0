@@ -1,0 +1,32 @@
+<div class="col s12 registros">
+    {% set lancamento = field_description.options.data %}
+    <table id="tableRegistrosManuais" class="bordered highlight" style="width:100%">
+        <tbody>
+            <tr class="tr-rh">
+                <th class="th-rh">{{ 'label.codigo'|trans }}</th>
+                <th class="th-rh">{{ 'label.arrecadacaoEfetuarLancamento.usuario'|trans }}</th>
+                <th class="th-rh">{{ 'label.arrecadacaoEfetuarLancamento.vencimentoParcelaUnica'|trans }}</th>
+                <th class="th-rh">{{ 'label.arrecadacaoEfetuarLancamento.totalParcelas'|trans }}</th>
+                <th class="th-rh">{{ 'label.arrecadacaoEfetuarLancamento.valorLancado'|trans }}</th>
+            </tr>
+            <tr class="tr-rh row-registro">
+                <td class="td-rh codigo">{{ lancamento.codLancamento }}</td>
+                <td class="td-rh usuario">{{ lancamento.fkArrecadacaoLancamentoCalculos.last.fkArrecadacaoCalculo.fkArrecadacaoCalculoCgns.last.fkSwCgm }}</td>
+                <td class="td-rh vencimento-primeira-parcela-unica">{{ lancamento.vencimento|date('d/m/Y') }}</td>
+                <td class="td-rh total-parcelas">{{ lancamento.totalParcelas }}</td>
+                <td class="td-rh valor-lancado">{{ lancamento.valor|number_format(2,',','.') }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s12">
+            <div class="col s8 initial">
+                <a class="btn-floating white-text blue darken-4 btn-success" href="{{ path('tributario_arrecadacao_calculo_efetuar_lancamentos_home') }}"><i class="material-icons">arrow_back</i>{</a>
+            </div>
+            <div class="col s4 right-align initial">
+                <a class="white-text blue darken-4 btn btn-success save" href="{{ path('urbem_tributario_arrecadacao_calculo_efetuar_lancamento_manual_relatorio', {'id': lancamento.codLancamento }) }}"><i class="material-icons left">description</i>Relatório</a>
+            </div>
+        </div>
+    </div>
+</div>
+

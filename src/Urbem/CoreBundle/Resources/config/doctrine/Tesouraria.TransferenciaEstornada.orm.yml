@@ -1,0 +1,146 @@
+Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornada:
+    type: entity
+    table: tesouraria.transferencia_estornada
+    id:
+        codLoteEstorno:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote_estorno
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        codAutenticacao:
+            type: integer
+            nullable: false
+            column: cod_autenticacao
+        dtAutenticacao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_autenticacao
+        codBoletim:
+            type: integer
+            nullable: false
+            column: cod_boletim
+        codHistorico:
+            type: integer
+            nullable: false
+            column: cod_historico
+        codTerminal:
+            type: integer
+            nullable: false
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_usuario
+        timestampEstornada:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_estornada
+        observacao:
+            type: text
+            nullable: true
+        valor:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkContabilidadeLote:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lote
+            inversedBy: fkTesourariaTransferenciaEstornadas
+            joinColumns:
+                cod_lote_estorno:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                tipo:
+                    referencedColumnName: tipo
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkContabilidadeHistoricoContabil:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\HistoricoContabil
+            inversedBy: fkTesourariaTransferenciaEstornadas
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTesourariaBoletim:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Boletim
+            inversedBy: fkTesourariaTransferenciaEstornadas
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTesourariaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            inversedBy: fkTesourariaTransferenciaEstornadas
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkTesourariaAutenticacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Autenticacao
+            inversedBy: fkTesourariaTransferenciaEstornadas
+            joinColumns:
+                cod_autenticacao:
+                    referencedColumnName: cod_autenticacao
+                dt_autenticacao:
+                    referencedColumnName: dt_autenticacao
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaTransferenciaEstornadas
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario
+    oneToMany:
+        fkTesourariaTransferenciaEstornadaOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornadaOrdemPagamentoRetencao
+            mappedBy: fkTesourariaTransferenciaEstornada

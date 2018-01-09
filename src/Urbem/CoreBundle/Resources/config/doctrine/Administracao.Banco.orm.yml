@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Administracao\Banco:
+    type: entity
+    table: administracao.banco
+    id:
+        codBanco:
+            type: string
+            generator:
+                strategy: NONE
+            column: cod_banco
+    fields:
+        nomBanco:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_banco
+    oneToMany:
+        fkAdministracaoAgencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Agencia
+            mappedBy: fkAdministracaoBanco

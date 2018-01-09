@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tceto\TipoDocumento:
+    type: entity
+    table: tceto.tipo_documento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkTcetoNotaLiquidacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\NotaLiquidacaoDocumento
+            mappedBy: fkTcetoTipoDocumento

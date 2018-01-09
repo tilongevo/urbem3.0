@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <div class="container-rh">
+        <div class="col s12 title-edit box-title-rh">
+            <h5>{{ 'label.evolucaoPatrimonioLiquido'|trans }}</h5>
+            <div class="divider grey title-divider"><p>1</p></div>
+        </div>
+        <div class="row">
+            <form name="frm" method="post" action="{{ path('ldo_configuracao_evolucao_divida')}}">
+                <input type="hidden" name="ppa" value="{{ ppa.codPpa }}" />
+                <input type="hidden" name="ano" value="{{ ano }}" />
+                {% if evolucaoPatrimonioLiquido is not null %}
+                    <table class="bordered highlight" style="width:100%">
+                        <tr class="tr-rh">
+                            <th class="th-rh"></th>
+                            <th class="th-rh"></th>
+                            <th class="th-rh">{{ ano - 2 }}</th>
+                            <th class="th-rh">%</th>
+                            <th class="th-rh">{{ ano - 3 }}</th>
+                            <th class="th-rh">%</th>
+                            <th class="th-rh">{{ ano - 4 }}</th>
+                            <th class="th-rh">%</th>
+                        </tr>
+                        {% for patrimonio in evolucaoPatrimonioLiquido %}
+                            <tr>
+                                <td class="td-rh">{{ loop.index }}</td>
+                                <td class="td-rh">{{ patrimonio.descricao }}</td>
+                                <td class="td-rh">{{ patrimonio.valor_1 }}</td>
+                                <td class="td-rh">{{ patrimonio.porcentagem_1 }}</td>
+                                <td class="td-rh">{{ patrimonio.valor_2 }}</td>
+                                <td class="td-rh">{{ patrimonio.porcentagem_2 }}</td>
+                                <td class="td-rh">{{ patrimonio.valor_3 }}</td>
+                                <td class="td-rh">{{ patrimonio.porcentagem_3 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                <div class="col s12 title-edit box-title-rh">
+                    <h5>{{ 'label.regimePrevidenciario'|trans }}</h5>
+                    <div class="divider grey title-divider"><p>1</p></div>
+                </div>
+                {% if evolucaoPatrimonioLiquidoRPPS is not null %}
+                    <table class="bordered highlight" style="width:100%">
+                        <tr class="tr-rh">
+                            <th class="th-rh"></th>
+                            <th class="th-rh"></th>
+                            <th class="th-rh">{{ ano - 2 }}</th>
+                            <th class="th-rh">%</th>
+                            <th class="th-rh">{{ ano - 3 }}</th>
+                            <th class="th-rh">%</th>
+                            <th class="th-rh">{{ ano - 4 }}</th>
+                            <th class="th-rh">%</th>
+                        </tr>
+                        {% for patrimonioLiquido in evolucaoPatrimonioLiquidoRPPS %}
+                            <tr>
+                                <td class="td-rh">{{ loop.index }}</td>
+                                <td class="td-rh">{{ patrimonioLiquido.descricao }}</td>
+                                <td class="td-rh">{{ patrimonioLiquido.valor_1 }}</td>
+                                <td class="td-rh">{{ patrimonioLiquido.porcentagem_1 }}</td>
+                                <td class="td-rh">{{ patrimonioLiquido.valor_2 }}</td>
+                                <td class="td-rh">{{ patrimonioLiquido.porcentagem_2 }}</td>
+                                <td class="td-rh">{{ patrimonioLiquido.valor_3 }}</td>
+                                <td class="td-rh">{{ patrimonioLiquido.porcentagem_3 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                {#<button type="submit" id="form_salvar" name="form[salvar]" class="waves-effect waves-light btn blue darken-4 btn btn-success save right" style="margin-top: 10px"><i class="material-icons left">save</i>Salvar</button>#}
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+        });
+    </script>
+{% endblock javascripts %}

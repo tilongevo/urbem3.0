@@ -1,0 +1,121 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block content %}
+<div class="container-rh">
+    <div class="row">
+        <div class="col s12 profile-box">
+            <h5 class="blue-text text-darken-4 left">
+                <i class="mdi mdi-store grey-text left"></i>{{ 'label.patrimonial.almoxarifado.implantacao.dadosImplantacao'|trans }}
+            </h5>
+
+            <h6 class="divider grey col s12"></h6>
+
+            <div class="col s3 little3-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.almoxarifado.cgmAlmoxarifado'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.lancamentoMaterial.getFkAlmoxarifadoEstoqueMaterial.getFkAlmoxarifadoAlmoxarifado.fkSwCgm.fkSwCgmPessoaJuridica }}</h6>
+            </div>
+            <div class="col s3 little3-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.itemtipodescricao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">
+                    {{ object.lancamentoMaterial.fkAlmoxarifadoCatalogoItem.codItem }} - {{ object.lancamentoMaterial.fkAlmoxarifadoCatalogoItem.fkAlmoxarifadoTipoItem.descricao }} - {{ object.lancamentoMaterial.fkAlmoxarifadoCatalogoItem.descricaoResumida }}
+                </h6>
+            </div>
+            <div class="col s3 little3-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.almoxarifado.implantacao.complemento'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.lancamentoMaterial.complemento }}</h6>
+            </div>
+            <div class="col s3 little3-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.almoxarifado.processarImplantacao.marca'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">
+                    {{ object.lancamentoMaterial.getFkAlmoxarifadoEstoqueMaterial.getFkAlmoxarifadoCatalogoItemMarca.getFkAlmoxarifadoMarca.codMarca }} - {{ object.lancamentoMaterial.getFkAlmoxarifadoEstoqueMaterial.getFkAlmoxarifadoCatalogoItemMarca.getFkAlmoxarifadoMarca.descricao|upper }}
+                </h6>
+            </div>
+            <div class="col s3 little3-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.centrocusto'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.lancamentoMaterial.getFkAlmoxarifadoEstoqueMaterial.fkAlmoxarifadoCentroCusto.descricao|upper }}</h6>
+            </div>
+            <div class="col s3 little3-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.almoxarifado.implantacao.quantidade'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.lancamentoMaterial.quantidade|number_format(4, ',', '.') }}</h6>
+            </div>
+            <div class="col s3 little3-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.almoxarifado.implantacao.valorMercado'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.lancamentoMaterial.valorMercado|number_format_currency('BRL') }}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-flat tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="fa fa-cubes left" aria-hidden="true"></i>
+                    {{ 'label.patrimonial.almoxarifado.implantacao.perecivel'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_patrimonial_almoxarifado_processar_implantacao_perecivel_create',{'id': object|objectKey }) }}"
+                   class="btn-flat tooltipped"
+                   data-position="right"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-plus-circle left"></i>
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.patrimonial.almoxarifado.implantacao.lote'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.almoxarifado.implantacao.dtFabricacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.almoxarifado.implantacao.dtValidade'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in object.almoxarifadoPerecivel %}
+                    <tr>
+                        <td class="td-rh">{{ item.lote }}</td>
+                        <td class="td-rh">{{ item.dtFabricacao|date("d/m/Y") }}</td>
+                        <td class="td-rh">{{ item.dtValidade|date("d/m/Y") }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_almoxarifado_perecivel_delete', { 'id': item|objectKey}) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock content %}

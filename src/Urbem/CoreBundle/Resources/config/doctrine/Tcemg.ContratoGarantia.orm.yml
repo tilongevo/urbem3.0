@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\ContratoGarantia:
+    type: entity
+    table: tcemg.contrato_garantia
+    id:
+        codGarantia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_garantia
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkTcemgContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            mappedBy: fkTcemgContratoGarantia

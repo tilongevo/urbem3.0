@@ -1,0 +1,224 @@
+{% for boleto in boletos %}
+
+    <table width="100%" class="table table-condensed table-custom">
+        <tr>
+            <td width="40%" class="border-top-none border-right-dashed border-bottom-dashed border-left-none" style="padding: 10px">
+                <table class="table table-condensed table-custom">
+                    <tbody>
+                    <tr>
+                        {% if logotipo %}
+                            <td colspan="4" class="border-right-none"><img src="{{ logotipo }}"></td>
+                            <td colspan="8" class="text-center">
+                                <p>{{ entidade.nom_cgm }}</p>
+                                <p>{{ 'label.exercicio'|trans }} {{ admin.getExercicio() }}</p>
+                            </td>
+                        {% else %}
+                            <td colspan="12" class="text-center">
+                                <p>{{ entidade.nom_cgm }}</p>
+                                <p>{{ 'label.exercicio'|trans }}</p>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.nossoNumero'|trans }}</p>
+                            <p>{{ (boleto|first).numeracao }}</p>
+                        </td>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.parcela'|trans }}</p>
+                            <p>{{ (boleto|first).info }}</p>
+                        </td>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.valorPrincipal'|trans }}</p>
+                            <p>{{ (boleto|first).valor }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.inscDiv'|trans }}</p>
+                            <p>{{ (contribuinte|first).cod_inscricao }}</p>
+                        </td>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.cobranca'|trans }}</p>
+                            <p>{{ cobranca }}</p>
+                        </td>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.inscricao'|trans }}</p>
+                            <p>{{ (contribuinte|first).inscricao_municipal }}</p>
+                        </td>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.multa'|trans }}</p>
+                            <p>{{ boletoModel.calculaJuroOrMultaParcelasReemissao((boleto|first).numeracao, admin.getExercicio(), (boleto|first).cod_parcela, (boleto|first).vencimento, 'm') }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9" rowspan="2" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.inscricao'|trans }}</p>
+                            <p>{{ (contribuinte|first).cod_grupo }} - {{ (contribuinte|first).descricao }}</p>
+                        </td>
+                        <td colspan="3" class="text-left border-bottom-default">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.juros'|trans }}</p>
+                            <p>{{ boletoModel.calculaJuroOrMultaParcelasReemissao((boleto|first).numeracao, admin.getExercicio(), (boleto|first).cod_parcela, (boleto|first).vencimento, 'j') }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.comissao'|trans }}</p>
+                            <p>{{ boletoModel.getValorInicial() }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9" rowspan="2" class="grey">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.vencimento'|trans }}</p>
+                            <h3 class="text-center bold">{{ (boleto|first).vencimento }}</h3>
+                        </td>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.multaI'|trans }}</p>
+                            <p>{{ boletoModel.getValorInicial() }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.reducao'|trans }}</p>
+                            <p>{{ boletoModel.getValorInicial() }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9">&nbsp;</td>
+                        <td colspan="3" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.valorTotal'|trans }}</p>
+                            <p>{{ (boleto|first).valor }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.contribuinte'|trans }}</p>
+                            <p>{{ (contribuinte|first).nom_cgm }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.endereco'|trans }}</p>
+                            <p>{{ (contribuinte|first).nom_logradouro }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12">
+                            <p><span class="text-left">{{ 'label.observacao'|trans }}</span>
+                                <span class="text-right">{{ 'label.tributarioCobrarDividaAtiva.viaContribuinte'|trans }}</span>
+                            </p>
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.leiMunicipal'|trans }}</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+
+            <td width="60%" class="border-top-none border-right-none border-bottom-dashed border-left-dashed" style="padding: 10px">
+
+                <table class="table table-condensed table-custom">
+                    <tbody>
+                    <tr>
+                        <td colspan="12" class="text-center">
+                            <p>{{ entidade.nom_cgm }}</p>
+                            <p>{{ 'label.exercicio'|trans }} {{ admin.getExercicio() }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.nossoNumero'|trans }}</p>
+                            <p>{{ (boleto|first).numeracao }}</p>
+                        </td>
+                        <td colspan="4" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.parcela'|trans }}</p>
+                            <p>{{ (boleto|first).info }}</p>
+                        </td>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.valorPrincipal'|trans }}</p>
+                            <p class="text-center">{{ (boleto|first).valor }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.inscDiv'|trans }}</p>
+                            <p class="text-left">{{ (contribuinte|first).cod_inscricao }}</p>
+                        </td>
+                        <td colspan="3" class="text-center">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.cobranca'|trans }}</p>
+                            <p class="text-left">{{ cobranca }}</p>
+                        </td>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.inscricao'|trans }}</p>
+                            <p class="text-left">{{ (contribuinte|first).inscricao_municipal }}</p>
+                        </td>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.multa'|trans }}</p>
+                            <p class="text-left">{{ boletoModel.calculaJuroOrMultaParcelasReemissao((boleto|first).numeracao, admin.getExercicio(), (boleto|first).cod_parcela, (boleto|first).vencimento, 'm') }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.tributo'|trans }}</p>
+                            <p>{{ (contribuinte|first).cod_grupo }} - {{ (contribuinte|first).descricao }}</p>
+                        </td>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.juros'|trans }}</p>
+                            <p class="text-center">{{ boletoModel.calculaJuroOrMultaParcelasReemissao((boleto|first).numeracao, admin.getExercicio(), (boleto|first).cod_parcela, (boleto|first).vencimento, 'j') }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9" rowspan="2" class="grey">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.vencimento'|trans }}</p>
+                            <h3 class="text-center bold">{{ (boleto|first).vencimento }}</h3>
+                        </td>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.comissaoCobranca'|trans }}</p>
+                            <p class="text-center">{{ boletoModel.getValorInicial() }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.multaI'|trans }}</p>
+                            <p class="text-center">{{ boletoModel.getValorInicial() }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9" rowspan="2" class="text-left">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.contribuinte'|trans }}</p>
+                            <p>{{ (contribuinte|first).nom_cgm }}</p>
+                        </td>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.reducao'|trans }}</p>
+                            <p class="text-center">{{ boletoModel.getValorInicial() }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p class="text-left">{{ 'label.tributarioCobrarDividaAtiva.carne.valorTotal'|trans }}</p>
+                            <p class="text-center">{{ (boleto|first).valor }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" class="border-none text-right">
+                            <p>{{ 'label.tributarioCobrarDividaAtiva.carne.viaPrefeitura'|trans }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" class="border-none text-center">
+                            <img src="data:image/png;base64,{{ boleto.barcode }}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+{% endfor %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

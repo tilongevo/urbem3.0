@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Almoxarifado\DoacaoEmprestimo:
+    type: entity
+    table: almoxarifado.doacao_emprestimo
+    id:
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+    fields:
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkAlmoxarifadoDoacaoEmprestimos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkAlmoxarifadoLancamentoMaterial:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial
+            inversedBy: fkAlmoxarifadoDoacaoEmprestimo
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro

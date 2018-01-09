@@ -1,0 +1,59 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th class="grey" colspan="2">Exércicio</th>
+                    <td colspan="3">{{ object.exercicio }}</td>
+                </tr><tr>
+                    <th class="grey" colspan="2">Código Solicitação</th>
+                    <td colspan="3">{{ object.codSolicitacao }}</td>
+                </tr>
+                <tr>
+                    <th class="grey" colspan="2">Código/Nome Entidade</th>
+                    <td colspan="3">{{ object.fkOrcamentoEntidade }}</td>
+                </tr>
+                <tr>
+                    <th class="grey" colspan="2">Data da Solicitação</th>
+                    <td colspan="3">{{ object.timestamp|date("d/m/Y") }}</td>
+                </tr>
+                <tr>
+                    <th class="grey" colspan="2">Registro de Preço</th>
+                    <td colspan="3">{{ registroPrecos }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+        {% if assinaturas is not empty %}
+            <h2>Assinaturas</h2>
+            <table class="table table-bordered" style="margin-top: 10px">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.usuario.nomCgm'|trans }}</th>
+                    <th class="th-rh">{{ 'label.codCargo'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for index in assinaturas %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ assinatura.nomCgm[index] }}</td>
+                        <td class="td-rh">{{ assinatura.cargo[index] }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        {% endif %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

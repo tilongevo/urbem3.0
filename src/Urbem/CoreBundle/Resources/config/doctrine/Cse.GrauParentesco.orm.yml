@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Cse\GrauParentesco:
+    type: entity
+    table: cse.grau_parentesco
+    id:
+        codGrau:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grau
+    fields:
+        nomGrau:
+            type: string
+            nullable: false
+            length: 25
+            column: nom_grau
+    oneToMany:
+        fkCseCidadoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            mappedBy: fkCseGrauParentesco
+        fkPessoalDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Dependente
+            mappedBy: fkCseGrauParentesco
+        fkPessoalPensionistas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensionista
+            mappedBy: fkCseGrauParentesco
+        fkBeneficioBeneficiarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Beneficiario
+            mappedBy: fkCseGrauParentesco

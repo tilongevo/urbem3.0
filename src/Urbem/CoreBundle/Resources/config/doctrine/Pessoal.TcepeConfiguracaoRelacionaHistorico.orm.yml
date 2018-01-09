@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Pessoal\TcepeConfiguracaoRelacionaHistorico:
+    type: entity
+    table: pessoal.tcepe_configuracao_relaciona_historico
+    id:
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codTipoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_movimentacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Assentamento
+            inversedBy: fkPessoalTcepeConfiguracaoRelacionaHistoricos
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp
+        fkTcepeTipoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoMovimentacao
+            inversedBy: fkPessoalTcepeConfiguracaoRelacionaHistoricos
+            joinColumns:
+                cod_tipo_movimentacao:
+                    referencedColumnName: cod_tipo_movimentacao

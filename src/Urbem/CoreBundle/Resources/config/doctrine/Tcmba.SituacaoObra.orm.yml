@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\SituacaoObra:
+    type: entity
+    table: tcmba.situacao_obra
+    id:
+        codSituacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_situacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkTcmbaObraAndamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ObraAndamento
+            mappedBy: fkTcmbaSituacaoObra

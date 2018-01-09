@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Cse\InstituicaoSaude:
+    type: entity
+    table: cse.instituicao_saude
+    id:
+        codInstituicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_instituicao
+    fields:
+        nomInstituicao:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_instituicao
+    oneToMany:
+        fkCsePrescricaoExames:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\PrescricaoExame
+            mappedBy: fkCseInstituicaoSaude
+        fkCsePrescricaoInternacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\PrescricaoInternacao
+            mappedBy: fkCseInstituicaoSaude

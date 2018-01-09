@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalCancelado:
+    type: entity
+    table: fiscalizacao.processo_fiscal_cancelado
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        numcgm:
+            type: integer
+            nullable: false
+        justificativa:
+            type: text
+            nullable: false
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkFiscalizacaoProcessoFiscalCancelados
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoProcessoFiscalCancelado
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo

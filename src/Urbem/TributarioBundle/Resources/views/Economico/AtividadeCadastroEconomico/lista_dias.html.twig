@@ -1,0 +1,37 @@
+<table class="table table-bordered js-table-lista-dias">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'label.economicoAtividadeCadastroEconomico.diaSemana'|trans }}</th>
+            <th>{{ 'label.economicoAtividadeCadastroEconomico.hrInicio'|trans }}</th>
+            <th>{{ 'label.economicoAtividadeCadastroEconomico.hrTermino'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sonata-ba-tbody ui-sortable">
+        {% if field.data.itens|length > 0 %}
+            {% for item in field.data.itens %}
+                <tr data-index="{{ loop.index }}">
+                    <td class="control-group">
+                        {{ ++loop.index}}
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getFkAdministracaoDiasSemana().getNomDia() }}</span>
+                        <input type="hidden" name="dias[{{ loop.index }}][diaSemana]" class="js-lista-dias-dia-semana" value="{{ item.getCodDia() }}" readonly>
+                    </td>
+                    <td class="control-group js-row-lista-dias-hr-inicio">
+                        <span>{{ item.getHrInicio().format('H:i') }}</span>
+                        <input type="hidden" name="dias[{{ loop.index }}][hrInicio]" value="{{ item.getHrInicio().format('H:i') }}" readonly>
+                    </td>
+                    <td class="control-group js-row-lista-dias-hr-termino">
+                        <span>{{ item.getHrTermino().format('H:i') }}</span>
+                        <input type="hidden" name="dias[{{ loop.index }}][hrTermino]" value="{{ item.getHrTermino().format('H:i') }}" readonly>
+                    </td>
+                    <td class="control-group">
+                        <button class="js-delete-row">Remover</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>

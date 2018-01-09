@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Tcern\Fundeb:
+    type: entity
+    table: tcern.fundeb
+    id:
+        codFundeb:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: tcern.fundeb_cod_fundeb_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_fundeb
+    fields:
+        codigo:
+            type: string
+            nullable: false
+            length: 2
+    oneToMany:
+        fkTcernFundebEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\FundebEmpenho
+            mappedBy: fkTcernFundeb

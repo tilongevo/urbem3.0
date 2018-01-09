@@ -1,0 +1,233 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <thead>
+                <tr class="grey">
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.categoria'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.prioridade'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.tipoItem'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.periodo'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.periodoInicial'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.periodoFinal'|trans|upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {% if categorias[filtro['categoria']] is defined %}
+                            {{ categorias[filtro['categoria']] }}</td>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if prioridades[filtro['prioridade']] is defined %}
+                            {{ prioridades[filtro['prioridade']] }}</td>
+                        {% else %}
+                            Todas
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if tiposItem[filtro['tipoItem']] is defined %}
+                            {{ tiposItem[filtro['tipoItem']] }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if periodos[filtro['periodo']] is defined %}
+                            {{ periodos[filtro['periodo']] }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    <td>
+                        {% if periodos[filtro['periodo']] is defined and filtro['periodo'] == periodoDefinir %}
+                            {{ filtro['periodoInicial'] }}</td>
+                        {% else %}
+                            -
+                        {% endif %}
+                    <td>
+                        {% if periodos[filtro['periodo']] is defined and filtro['periodo'] == periodoDefinir %}
+                            {{ filtro['periodoFinal'] }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+        {% set lastElement = null %}
+
+        {% for catalogoItem in catalogoItens %}
+            {% if filtro['agrupar'] == constant('AGRUPAR_ITEM', admin) %}
+                {% if catalogoItem['o_codItem'] != lastElement %}
+                    <table class="table table-condensed table-custom" style="margin-top: 10px">
+                        <thead>
+                            <tr>
+                                <td colspan="11" style="text-align:left">
+                                    <h4>
+                                        {{ '%d - %s'|format(catalogoItem['o_codItem'], catalogoItem['o_descricao']) }}
+                                    </h4>
+                                </td>
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr class="grey">
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.almoxarifado'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.catalogo'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.centroCusto'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.prioridade'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.unidadeMedida'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.tipoItem'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.ingressado'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMinimo'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.pontoPedido'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMaximo'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.qtdSaida'|trans|upper }}</th>
+                            </tr>
+                        </thead>
+                    {% set lastElement = catalogoItem['o_codItem'] %}
+                {% endif %}
+                        <td>{{ catalogoItem['acgm_nomCgm'] }}</td>
+                        <td>{{ catalogoItem['c_descricao'] }}</td>
+                        <td>{{ catalogoItem['cc_descricao'] }}</td>
+            {% endif %}
+
+            {% if filtro['agrupar'] == constant('AGRUPAR_CENTRO_CUSTO', admin) %}
+                {% if catalogoItem['cc_codCentro'] != lastElement %}
+                    <table class="table table-condensed table-custom" style="margin-top: 10px">
+                        <thead>
+                            <tr>
+                                <td colspan="11" style="text-align:left">
+                                    <h4>
+                                        {{ '%d - %s'|format(catalogoItem['cc_codCentro'], catalogoItem['cc_descricao']) }}
+                                    </h4>
+                                </td>
+                            </tr>
+                        </thead>
+                    <thead>
+                        <tr class="grey">
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.almoxarifado'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.catalogo'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.descricao'|trans|upper }}</th>
+                            {<th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.prioridade'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.unidadeMedida'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.tipoItem'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.ingressado'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMinimo'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.pontoPedido'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMaximo'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.qtdSaida'|trans|upper }}</th>
+                        </tr>
+                    </thead>
+                    {% set lastElement = catalogoItem['cc_codCentro'] %}
+                {% endif %}
+                        <td>{{ catalogoItem['acgm_nomCgm'] }}</td>
+                        <td>{{ catalogoItem['c_descricao'] }}</td>
+                        <td>{{ catalogoItem['o_descricao'] }}</td>
+            {% endif %}
+
+            {% if filtro['agrupar'] == constant('AGRUPAR_CATALOGO', admin) %}
+                {% if catalogoItem['c_codCatalogo'] != lastElement %}
+                    <table class="table table-condensed table-custom" style="margin-top: 10px">
+                        <thead>
+                        <tr>
+                            <td colspan="11" style="text-align:left">
+                                <h4>
+                                    {{ '%d - %s'|format(catalogoItem['c_codCatalogo'], catalogoItem['c_descricao']) }}
+                                </h4>
+                            </td>
+                        </tr>
+                        </thead>
+                        <thead>
+                            <tr class="grey">
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.almoxarifado'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.centroCusto'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.descricao'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.prioridade'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.unidadeMedida'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.tipoItem'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.ingressado'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMinimo'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.pontoPedido'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMaximo'|trans|upper }}</th>
+                                <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.qtdSaida'|trans|upper }}</th>
+                            </tr>
+                        </thead>
+                    {% set lastElement = catalogoItem['c_codCatalogo'] %}
+                {% endif %}
+                        <td>{{ catalogoItem['acgm_nomCgm'] }}</td>
+                        <td>{{ catalogoItem['cc_descricao'] }}</td>
+                        <td>{{ catalogoItem['o_descricao'] }}</td>
+            {% endif %}
+
+            {% if filtro['agrupar'] == constant('AGRUPAR_ALMOXARIFADO', admin) %}
+                {% if catalogoItem['a_codAlmoxarifado'] != lastElement %}
+                    <table class="table table-condensed table-custom" style="margin-top: 10px">
+                        <thead>
+                            <tr>
+                                <td colspan="11" style="text-align:left">
+                                    <h4>
+                                        {{ '%d - %s'|format(catalogoItem['a_codAlmoxarifado'], catalogoItem['acgm_nomCgm']) }}
+                                    </h4>
+                                </td>
+                            </tr>
+                        </thead>
+                    <thead>
+                        <tr class="table-condensed table-custom grey">
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.catalogo'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemAnalitico.centroCusto'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.descricao'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.prioridade'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.unidadeMedida'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.tipoItem'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.ingressado'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMinimo'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.pontoPedido'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMaximo'|trans|upper }}</th>
+                            <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.qtdSaida'|trans|upper }}</th>
+                        </tr>
+                    </thead>
+                    {% set lastElement = catalogoItem['a_codAlmoxarifado'] %}
+                {% endif %}
+
+                <td>{{ catalogoItem['c_descricao'] }}</td>
+                <td>{{ catalogoItem['cc_descricao'] }}</td>
+                <td>{{ catalogoItem['o_descricao'] }}</td>
+            {% endif %}
+                <td>
+                    {% if prioridades[catalogoItem['o_prioridade']] is defined %}
+                        {{ prioridades[catalogoItem['o_prioridade']] }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ catalogoItem['um_nomUnidade'] }}</td>
+                <td>{{ catalogoItem['ti_descricao'] }}</td>
+                <td>
+                    {% if catalogoItem['lm_codLancamento'] %}
+                        Sim
+                    {% else %}
+                        Não
+                    {% endif %}
+                </td>
+                <td>{{ catalogoItem['ce_estoqueMinimo'] }}</td>
+                <td>{{ catalogoItem['ce_pontoPedido'] }}</td>
+                <td>{{ catalogoItem['ce_estoqueMaximo'] }}</td>
+                <td>{{ admin.getQtdSaida(catalogoItem['o_codItem'], filtro['periodo'], filtro['periodoInicial'], filtro['periodoFinal']) }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+    <style>
+        table td,th{border: 0 !important; text-align:center}
+    </style>
+{% endblock %}

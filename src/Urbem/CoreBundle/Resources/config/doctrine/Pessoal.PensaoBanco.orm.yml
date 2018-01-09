@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Pessoal\PensaoBanco:
+    type: entity
+    table: pessoal.pensao_banco
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codPensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pensao
+    fields:
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        contaCorrente:
+            type: string
+            nullable: false
+            length: 12
+            column: conta_corrente
+    manyToOne:
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkPessoalPensaoBancos
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+    oneToOne:
+        fkPessoalPensao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensao
+            inversedBy: fkPessoalPensaoBanco
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp

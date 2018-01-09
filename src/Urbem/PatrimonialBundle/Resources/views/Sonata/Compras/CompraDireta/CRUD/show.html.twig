@@ -1,0 +1,187 @@
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h4 class="grey-text text-darken-1 left">
+                    <small>Compra Direta&nbsp;</small>
+                </h4>
+                <h6 class="divider grey col s12"></h6>
+                <div class="row">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codCompraDireta'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.compraDireta}}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codEntidade'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.compraDireta.fkOrcamentoEntidade}}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codProcesso'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.compraDireta.fkComprasCompraDiretaProcesso.fkSwProcesso}}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codMapa'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1"> {{ object.compraDireta.fkComprasMapa }}</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.timestamp'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.compraDireta.timestamp.format('d/m/Y H:i:s')}}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codModalidade'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1"> {{ object.compraDireta.fkComprasModalidade }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codTipoObjeto'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.compraDireta.fkComprasTipoObjeto}}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codObjeto'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1"> {{ object.compraDireta.fkComprasObjeto }}</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.dtEntregaProposta'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.compraDireta.dtEntregaProposta.format('d/m/Y')}}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.dtValidadeProposta'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1"> {{ object.compraDireta.dtValidadeProposta.format('d/m/Y') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.condicoesPagamento'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.compraDireta.condicoesPagamento}}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.prazoEntrega'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1"> {{ object.compraDireta.prazoEntrega }}</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.situacao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.status}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-flat tooltiped">
+                    <i class="mdi mdi-newspaper"></i>
+                    {{ 'label.comprasDireta.items'|trans }}
+                </a>
+            </div>
+            <table class="bordered highlight">
+                <thead>
+                <tr>
+                    <th width="3%"></th>
+                    <th width="50%">{{ 'label.itens.item'|trans }}</th>
+                    <th>{{ 'label.itens.centroCusto'|trans }}</th>
+                    <th class="right-align">{{ 'label.itens.qtde'|trans }}</th>
+                    <th class="right-align">{{ 'label.itens.valorTotal'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for mapa in object.mapaItems %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ mapa.nom_item }}</td>
+                        <td>{{ mapa.centro_custo }}</td>
+                        <td class="right-align">{{ mapa.quantidade_solicitada|number_format(4, ',', '.') }}</td>
+                        <td class="right-align">R$ {{  (mapa.vl_total - mapa.valor_anulado)|number_format(2, ',', ' ') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-flat tooltiped">
+                    <i class="mdi mdi-newspaper"></i>
+                    {{ 'label.comprasDireta.manterPublicacao.publicacoes'|trans }}
+                </a>
+            </div>
+
+            <div class="col s1">
+                {% if object.fkComprasCompraDiretaAnulacao == null %}
+                <a href="{{ path('urbem_patrimonial_compras_compra_direta_publicacoes_manter_publicacao_create', { 'cod_compra_direta': object.compraDireta.codCompraDireta~'~'~object.compraDireta.codEntidade~'~'~object.compraDireta.exercicioEntidade~'~'~object.compraDireta.codModalidade }) }}"
+                   class="btn-flat"
+                   data-tooltip="{{ "incluir"|trans }}"
+                   data-position="left"
+                   data-delay="50">
+                    <i class="mdi mdi-plus-circle left"></i>
+                </a>
+                {% endif %}
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.comprasDireta.manterPublicacao.cgmVeiculo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.comprasDireta.manterPublicacao.dataPublicacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.comprasDireta.manterPublicacao.numPublicacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.comprasDireta.manterPublicacao.observacao'|trans }}</th>
+                    <th class="th-rh">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for publicacao in object.publicacoes %}
+                    <tr>
+                        <td class="td-rh">{{ publicacao.fkLicitacaoVeiculosPublicidade.fkSwCgm.nomCgm }}</td>
+                        <td class="td-rh">{{ publicacao.dataPublicacao|date("d/m/Y") }}</td>
+                        <td class="td-rh">{{ publicacao.numPublicacao }}</td>
+                        <td class="td-rh">{{ publicacao.observacao }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a href="{{ path('urbem_patrimonial_compras_compra_direta_publicacoes_manter_publicacao_edit', { 'id': publicacao|objectKey }) }}"
+                                   class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="{{ "editar"|trans }}">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a href="{{ path('urbem_patrimonial_compras_compra_direta_publicacoes_manter_publicacao_delete', { 'id': publicacao|objectKey }) }}"
+                                   class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="{{ "editar"|trans }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="sonata-ba-form-actions well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_patrimonial_compras_compra_direta_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+                Add a comment to this line
+            </a>
+        </div>
+    </div>
+{% endblock content %}

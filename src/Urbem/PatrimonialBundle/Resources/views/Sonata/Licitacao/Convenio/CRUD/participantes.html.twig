@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a style="font-size: 16px">
+            <i class="fa fa-users"></i>
+            {{ 'label.convenioAdmin.participantes.list'|trans }}
+        </a>
+    </div>
+    <div class="col s1">
+        {% if object.fkLicitacaoConvenioAnulado is null and object.fkLicitacaoRescisaoConvenio is null %}
+            <a href="{{ path('urbem_patrimonial_licitacao_convenio_participante_create', { 'convenio':  admin.getObjectKey(object)  }) }}"
+               class="tooltipped"
+               data-toggle="tooltip" data-placement="top" title="{{ "incluir"|trans }}">
+                <i class="mdi mdi-plus-circle small right"></i>
+            </a>
+        {% endif %}
+    </div>
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'label.convenioAdmin.participantes.participante'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.participantes.codTipoParticipante'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.participantes.funcao'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.participantes.valorParticipacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.participantes.percentualParticipacao'|trans }}</th>
+        <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+        </thead>
+        <tbody>
+
+        {% for participante in object.fkLicitacaoParticipanteConvenios %}
+            <tr>
+            <td class="td-rh">{{ loop.index }}</td>
+            <td class="td-rh">{{ participante.fkLicitacaoParticipanteCertificacao.fkSwCgm.nomCgm|upper }}</td>
+            <td class="td-rh">{{ participante.fkLicitacaoTipoParticipante.descricao }}</td>
+            <td class="td-rh">{{ participante.funcao }}</td>
+            <td class="td-rh">R$ {{ participante.valorParticipacao|number_format(2, ',', '.') }}</td>
+            <td class="td-rh">{{ participante.percentualParticipacao|number_format(2, ',', '.') }}%</td>
+            <td class="td-rh">
+                {% if object.fkLicitacaoConvenioAnulado is null and object.fkLicitacaoRescisaoConvenio is null %}
+                    <div class="btn-group">
+                        <a href="{{ path('urbem_patrimonial_licitacao_convenio_participante_edit', { 'id': admin.getObjectKey(participante) }) }}"
+                           class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                           data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <a href="{{ path('urbem_patrimonial_licitacao_convenio_participante_delete', { 'id': admin.getObjectKey(participante) }) }}"
+                           class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                           data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </div>
+                {% else %}
+                    <span class="label label-danger">{{ 'label.convenioAdmin.anulado.unavalable'|trans }}</span>
+                {% endif %}
+            </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

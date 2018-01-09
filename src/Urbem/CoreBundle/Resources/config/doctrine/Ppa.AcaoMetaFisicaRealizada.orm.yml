@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Ppa\AcaoMetaFisicaRealizada:
+    type: entity
+    table: ppa.acao_meta_fisica_realizada
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        timestampAcaoDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_acao_dados
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+        exercicioRecurso:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_recurso
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        justificativa:
+            type: string
+            nullable: true
+            length: 255
+    oneToOne:
+        fkPpaAcaoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoRecurso
+            inversedBy: fkPpaAcaoMetaFisicaRealizada
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+                exercicio_recurso:
+                    referencedColumnName: exercicio_recurso
+                ano:
+                    referencedColumnName: ano

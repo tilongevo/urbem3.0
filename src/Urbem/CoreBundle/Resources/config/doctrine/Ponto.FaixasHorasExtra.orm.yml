@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Ponto\FaixasHorasExtra:
+    type: entity
+    table: ponto.faixas_horas_extra
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codFaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_faixa
+    fields:
+        percentual:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        horas:
+            type: time
+            nullable: false
+        calculoHorasExtra:
+            type: string
+            nullable: false
+            length: 1
+            column: calculo_horas_extra
+    manyToOne:
+        fkPontoConfiguracaoHorasExtras2:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoHorasExtras2
+            inversedBy: fkPontoFaixasHorasExtras
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+    oneToMany:
+        fkPontoFaixasDias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FaixasDias
+            mappedBy: fkPontoFaixasHorasExtra
+        fkPontoFormatoFaixasHorasExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoFaixasHorasExtras
+            mappedBy: fkPontoFaixasHorasExtra

@@ -1,0 +1,79 @@
+Urbem\CoreBundle\Entity\Frota\TipoVeiculo:
+    type: entity
+    table: frota.tipo_veiculo
+    repositoryClass: Urbem\CoreBundle\Repository\Frota\TipoVeiculoRepository
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: frota.tipo_veiculo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_tipo
+        placa:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        prefixo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        controlarHorasTrabalhadas:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: controlar_horas_trabalhadas
+    oneToMany:
+        fkTcmbaTipoVeiculoVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoVeiculoVinculo
+            mappedBy: fkFrotaTipoVeiculo
+        fkFrotaVeiculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            mappedBy: fkFrotaTipoVeiculo
+    oneToOne:
+        fkTcemgTipoVeiculoVinculo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoVeiculoVinculo
+            mappedBy: fkFrotaTipoVeiculo
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkTcernTipoVeiculoVinculo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\TipoVeiculoVinculo
+            mappedBy: fkFrotaTipoVeiculo
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkTcmgoTipoVeiculoVinculo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoVeiculoVinculo
+            mappedBy: fkFrotaTipoVeiculo
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

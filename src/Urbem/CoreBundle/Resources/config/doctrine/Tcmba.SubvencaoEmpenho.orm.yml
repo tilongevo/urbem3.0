@@ -1,0 +1,75 @@
+Urbem\CoreBundle\Entity\Tcmba\SubvencaoEmpenho:
+    type: entity
+    table: tcmba.subvencao_empenho
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: false
+            column: dt_termino
+        prazoAplicacao:
+            type: integer
+            nullable: false
+            column: prazo_aplicacao
+        prazoComprovacao:
+            type: integer
+            nullable: false
+            column: prazo_comprovacao
+        codNormaUtilidade:
+            type: integer
+            nullable: false
+            column: cod_norma_utilidade
+        codNormaValor:
+            type: integer
+            nullable: false
+            column: cod_norma_valor
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            nullable: false
+            column: cod_conta_corrente
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcmbaSubvencaoEmpenhos
+            joinColumns:
+                cod_norma_utilidade:
+                    referencedColumnName: cod_norma
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkTcmbaSubvencaoEmpenhos
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+        fkNormasNorma1:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcmbaSubvencaoEmpenhos1
+            joinColumns:
+                cod_norma_valor:
+                    referencedColumnName: cod_norma
+    oneToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmbaSubvencaoEmpenho
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

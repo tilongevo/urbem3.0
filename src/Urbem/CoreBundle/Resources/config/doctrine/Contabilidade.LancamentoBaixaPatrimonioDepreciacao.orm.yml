@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Contabilidade\LancamentoBaixaPatrimonioDepreciacao:
+    type: entity
+    table: contabilidade.lancamento_baixa_patrimonio_depreciacao
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        codLote:
+            type: integer
+            nullable: false
+            column: cod_lote
+        sequencia:
+            type: integer
+            nullable: false
+        codBem:
+            type: integer
+            nullable: false
+            column: cod_bem
+        estorno:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkContabilidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lancamento
+            inversedBy: fkContabilidadeLancamentoBaixaPatrimonioDepreciacoes
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkContabilidadeLancamentoBaixaPatrimonioDepreciacoes
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem

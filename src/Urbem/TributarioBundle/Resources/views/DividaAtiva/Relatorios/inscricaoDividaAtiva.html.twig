@@ -1,0 +1,39 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::DividaAtiva/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td>{{ 'label.dividaAtivaRelatorios.inscricaoDividaAtiva.inscricaoOrigem'|trans|upper }}</td>
+                <td>{{ 'label.dividaAtivaRelatorios.inscricaoDividaAtiva.exercicio'|trans|upper }}</td>
+                <td>{{ 'label.dividaAtivaRelatorios.inscricaoDividaAtiva.imposto'|trans|upper }}</td>
+                <td>{{ 'label.dividaAtivaRelatorios.inscricaoDividaAtiva.livro'|trans|upper }}</td>
+                <td>{{ 'label.dividaAtivaRelatorios.inscricaoDividaAtiva.folha'|trans|upper }}</td>
+                <td>{{ 'label.dividaAtivaRelatorios.inscricaoDividaAtiva.ida'|trans|upper }}</td>
+                <td>{{ 'label.dividaAtivaRelatorios.inscricaoDividaAtiva.valorOrigem'|trans|upper }}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for divida in dividas %}
+                <tr>
+                    <td>{{ divida.inscricao_origem }}</td>
+                    <td>{{ divida.exercicio }}</td>
+                    <td>{{ divida.imposto }}</td>
+                    <td>{{ divida.livro }}</td>
+                    <td>{{ divida.folha }}</td>
+                    <td>{{ divida.ida }}</td>
+                    <td>{{ divida.valor_origem }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

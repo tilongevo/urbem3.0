@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Licitacao\ParticipanteConvenio:
+    type: entity
+    table: licitacao.participante_convenio
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        numCertificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_certificacao
+        exercicioCertificacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_certificacao
+    fields:
+        codTipoParticipante:
+            type: integer
+            nullable: false
+            column: cod_tipo_participante
+        valorParticipacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_participacao
+        percentualParticipacao:
+            type: decimal
+            nullable: false
+            precision: 6
+            scale: 2
+            column: percentual_participacao
+        funcao:
+            type: string
+            nullable: false
+            length: 40
+    manyToOne:
+        fkLicitacaoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            inversedBy: fkLicitacaoParticipanteConvenios
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio
+        fkLicitacaoParticipanteCertificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacao
+            inversedBy: fkLicitacaoParticipanteConvenios
+            joinColumns:
+                num_certificacao:
+                    referencedColumnName: num_certificacao
+                exercicio_certificacao:
+                    referencedColumnName: exercicio
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkLicitacaoTipoParticipante:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoParticipante
+            inversedBy: fkLicitacaoParticipanteConvenios
+            joinColumns:
+                cod_tipo_participante:
+                    referencedColumnName: cod_tipo_participante

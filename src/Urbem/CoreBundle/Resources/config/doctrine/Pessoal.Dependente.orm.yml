@@ -1,0 +1,138 @@
+Urbem\CoreBundle\Entity\Pessoal\Dependente:
+    type: entity
+    table: pessoal.dependente
+    id:
+        codDependente:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.cod_dependente_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_dependente
+    fields:
+        carteiraVacinacao:
+            type: boolean
+            nullable: false
+            column: carteira_vacinacao
+        comprovanteMatricula:
+            type: boolean
+            nullable: false
+            column: comprovante_matricula
+        dtInicioSalFamilia:
+            type: date
+            nullable: true
+            column: dt_inicio_sal_familia
+        codGrau:
+            type: integer
+            nullable: true
+            column: cod_grau
+        codVinculo:
+            type: integer
+            nullable: false
+            column: cod_vinculo
+        dependenteSalFamilia:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: dependente_sal_familia
+        dependenteInvalido:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: dependente_invalido
+        numcgm:
+            type: integer
+            nullable: false
+        dependentePrev:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: dependente_prev
+    manyToOne:
+        fkCseGrauParentesco:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\GrauParentesco
+            inversedBy: fkPessoalDependentes
+            joinColumns:
+                cod_grau:
+                    referencedColumnName: cod_grau
+        fkFolhapagamentoVinculoIrrf:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\VinculoIrrf
+            inversedBy: fkPessoalDependentes
+            joinColumns:
+                cod_vinculo:
+                    referencedColumnName: cod_vinculo
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkPessoalDependentes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkFolhapagamentoEventoCalculadoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoCalculadoDependente
+            mappedBy: fkPessoalDependente
+        fkFolhapagamentoEventoDecimoCalculadoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoDecimoCalculadoDependente
+            mappedBy: fkPessoalDependente
+        fkPessoalDependenteComprovanteMatriculas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DependenteComprovanteMatricula
+            mappedBy: fkPessoalDependente
+        fkPessoalServidorDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorDependente
+            mappedBy: fkPessoalDependente
+        fkFolhapagamentoEventoRescisaoCalculadoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoRescisaoCalculadoDependente
+            mappedBy: fkPessoalDependente
+        fkFolhapagamentoEventoFeriasCalculadoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoFeriasCalculadoDependente
+            mappedBy: fkPessoalDependente
+        fkPessoalDependenteCarteiraVacinacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DependenteCarteiraVacinacao
+            mappedBy: fkPessoalDependente
+        fkFolhapagamentoEventoComplementarCalculadoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoComplementarCalculadoDependente
+            mappedBy: fkPessoalDependente
+        fkPessoalDependenteCids:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DependenteCid
+            mappedBy: fkPessoalDependente

@@ -1,0 +1,85 @@
+Urbem\CoreBundle\Entity\Economico\CadastroEconomicoModalidadeLancamento:
+    type: entity
+    table: economico.cadastro_economico_modalidade_lancamento
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        ocorrenciaAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_atividade
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+    fields:
+        dtBaixa:
+            type: date
+            nullable: true
+            column: dt_baixa
+        motivoBaixa:
+            type: text
+            nullable: true
+            column: motivo_baixa
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        percentual:
+            type: boolean
+            nullable: true
+    manyToOne:
+        fkEconomicoModalidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ModalidadeLancamento
+            inversedBy: fkEconomicoCadastroEconomicoModalidadeLancamentos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkEconomicoAtividadeCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeCadastroEconomico
+            inversedBy: fkEconomicoCadastroEconomicoModalidadeLancamentos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                ocorrencia_atividade:
+                    referencedColumnName: ocorrencia_atividade
+    oneToMany:
+        fkEconomicoCadEconModalidadeIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadEconModalidadeIndicador
+            mappedBy: fkEconomicoCadastroEconomicoModalidadeLancamento
+        fkEconomicoCadEconModalidadeMoedas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadEconModalidadeMoeda
+            mappedBy: fkEconomicoCadastroEconomicoModalidadeLancamento
+        fkEconomicoProcessoModLancInscEcons:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoModLancInscEcon
+            mappedBy: fkEconomicoCadastroEconomicoModalidadeLancamento

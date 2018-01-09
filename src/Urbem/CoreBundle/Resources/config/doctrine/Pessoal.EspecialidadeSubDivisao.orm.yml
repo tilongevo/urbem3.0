@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Pessoal\EspecialidadeSubDivisao:
+    type: entity
+    table: pessoal.especialidade_sub_divisao
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\EspecialidadeSubDivisaoRepository
+    id:
+        codEspecialidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especialidade
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        nroVagaCriada:
+            type: integer
+            nullable: false
+            column: nro_vaga_criada
+    manyToOne:
+        fkPessoalEspecialidade:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Especialidade
+            inversedBy: fkPessoalEspecialidadeSubDivisoes
+            joinColumns:
+                cod_especialidade:
+                    referencedColumnName: cod_especialidade
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkPessoalEspecialidadeSubDivisoes
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPessoalEspecialidadeSubDivisoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

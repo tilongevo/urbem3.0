@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Tceal\PublicacaoRreo:
+    type: entity
+    table: tceal.publicacao_rreo
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        dtPublicacao:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_publicacao
+    fields:
+        observacao:
+            type: string
+            nullable: true
+            length: 80
+        numPublicacao:
+            type: integer
+            nullable: true
+            column: num_publicacao
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcealPublicacaoRreos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkLicitacaoVeiculosPublicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\VeiculosPublicidade
+            inversedBy: fkTcealPublicacaoRreos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

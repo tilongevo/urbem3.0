@@ -1,0 +1,11 @@
+{% extends 'CoreBundle:Sonata/CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% set _v = [] %}
+
+    {% for property in field_description.options.data.property %}
+        {% set _v = _v|merge([attribute(object, property)]) %}
+    {% endfor %}
+
+    {{ _v|join(field_description.options.data.glue) }}
+{% endblock field %}

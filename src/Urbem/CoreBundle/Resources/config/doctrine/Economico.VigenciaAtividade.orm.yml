@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Economico\VigenciaAtividade:
+    type: entity
+    table: economico.vigencia_atividade
+    uniqueConstraints:
+        uk_vigencia_atividade_1:
+            columns:
+                - dt_inicio
+    id:
+        codVigencia:
+            type: integer
+            column: cod_vigencia
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: economico.vigencia_atividade_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_vigencia
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToMany:
+        fkEconomicoNivelAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelAtividade
+            mappedBy: fkEconomicoVigenciaAtividade

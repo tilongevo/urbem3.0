@@ -1,0 +1,286 @@
+Urbem\CoreBundle\Entity\Tesouraria\Transferencia:
+    type: entity
+    table: tesouraria.transferencia
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\TransferenciaRepository
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codAutenticacao:
+            type: integer
+            nullable: false
+            column: cod_autenticacao
+        dtAutenticacao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_autenticacao
+        codBoletim:
+            type: integer
+            nullable: false
+            column: cod_boletim
+        codHistorico:
+            type: integer
+            nullable: false
+            column: cod_historico
+        codTerminal:
+            type: integer
+            nullable: false
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_usuario
+        timestampTransferencia:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_transferencia
+        observacao:
+            type: text
+            nullable: true
+        codPlanoCredito:
+            type: integer
+            nullable: true
+            column: cod_plano_credito
+        codPlanoDebito:
+            type: integer
+            nullable: true
+            column: cod_plano_debito
+        valor:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkTesourariaBoletim:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Boletim
+            inversedBy: fkTesourariaTransferencias
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadeHistoricoContabil:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\HistoricoContabil
+            inversedBy: fkTesourariaTransferencias
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTesourariaTransferencias
+            joinColumns:
+                cod_plano_credito:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTesourariaAutenticacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Autenticacao
+            inversedBy: fkTesourariaTransferencias
+            joinColumns:
+                cod_autenticacao:
+                    referencedColumnName: cod_autenticacao
+                dt_autenticacao:
+                    referencedColumnName: dt_autenticacao
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaTransferencias
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario
+        fkTesourariaTipoTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TipoTransferencia
+            inversedBy: fkTesourariaTransferencias
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkContabilidadePlanoAnalitica1:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTesourariaTransferencias1
+            joinColumns:
+                cod_plano_debito:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkTesourariaBoletimLoteTransferenciaInconsistencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteTransferenciaInconsistencia
+            mappedBy: fkTesourariaTransferencia
+        fkTesourariaBoletimLoteTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteTransferencia
+            mappedBy: fkTesourariaTransferencia
+        fkTesourariaChequeEmissaoTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoTransferencia
+            mappedBy: fkTesourariaTransferencia
+        fkTesourariaTransferenciaOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaOrdemPagamentoRetencao
+            mappedBy: fkTesourariaTransferencia
+        fkTesourariaReciboExtraTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraTransferencia
+            mappedBy: fkTesourariaTransferencia
+        fkTesourariaTransferenciaEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornada
+            mappedBy: fkTesourariaTransferencia
+        fkTcepeTipoTransferenciaRecebidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoTransferenciaRecebida
+            mappedBy: fkTesourariaTransferencia
+        fkTcepeTipoTransferenciaConcedidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoTransferenciaConcedida
+            mappedBy: fkTesourariaTransferencia
+    oneToOne:
+        fkTcealTipoPagamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\TipoPagamento
+            mappedBy: fkTesourariaTransferencia
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkTcetoTransferenciaTipoPagamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\TransferenciaTipoPagamento
+            mappedBy: fkTesourariaTransferencia
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkTcetoTransferenciaTipoTransferencia:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\TransferenciaTipoTransferencia
+            mappedBy: fkTesourariaTransferencia
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkTesourariaTransferenciaRecurso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaRecurso
+            mappedBy: fkTesourariaTransferencia
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkTesourariaTransferenciaCredor:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaCredor
+            mappedBy: fkTesourariaTransferencia
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkContabilidadeLote:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lote
+            inversedBy: fkTesourariaTransferencia
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                tipo:
+                    referencedColumnName: tipo
+                cod_entidade:
+                    referencedColumnName: cod_entidade

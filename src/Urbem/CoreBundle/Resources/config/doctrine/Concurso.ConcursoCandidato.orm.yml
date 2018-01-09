@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Concurso\ConcursoCandidato:
+    type: entity
+    table: concurso.concurso_candidato
+    id:
+        codEdital:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_edital
+        codCandidato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_candidato
+    fields:
+        codCargo:
+            type: integer
+            nullable: false
+            column: cod_cargo
+    manyToOne:
+        fkConcursoEdital:
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\Edital
+            inversedBy: fkConcursoConcursoCandidatos
+            joinColumns:
+                cod_edital:
+                    referencedColumnName: cod_edital
+        fkConcursoConcursoCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\ConcursoCargo
+            inversedBy: fkConcursoConcursoCandidatos
+            joinColumns:
+                cod_edital:
+                    referencedColumnName: cod_edital
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+        fkConcursoCandidato:
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\Candidato
+            inversedBy: fkConcursoConcursoCandidatos
+            joinColumns:
+                cod_candidato:
+                    referencedColumnName: cod_candidato

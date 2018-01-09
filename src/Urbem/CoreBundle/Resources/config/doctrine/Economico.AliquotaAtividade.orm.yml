@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Economico\AliquotaAtividade:
+    type: entity
+    table: economico.aliquota_atividade
+    id:
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+    manyToOne:
+        fkEconomicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Atividade
+            inversedBy: fkEconomicoAliquotaAtividades
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade

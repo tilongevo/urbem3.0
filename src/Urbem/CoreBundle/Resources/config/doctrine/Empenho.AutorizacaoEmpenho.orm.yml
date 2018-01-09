@@ -1,0 +1,143 @@
+Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho:
+    type: entity
+    table: empenho.autorizacao_empenho
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\AutorizacaoEmpenhoRepository
+    id:
+        codAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autorizacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        numUnidade:
+            type: integer
+            nullable: false
+            column: num_unidade
+        numOrgao:
+            type: integer
+            nullable: false
+            column: num_orgao
+        codPreEmpenho:
+            type: integer
+            nullable: false
+            column: cod_pre_empenho
+        dtAutorizacao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_autorizacao
+        hora:
+            type: timemicrosecondpk
+            nullable: false
+        codCategoria:
+            type: integer
+            nullable: false
+            options:
+                default: '1'
+            column: cod_categoria
+    manyToOne:
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkEmpenhoAutorizacaoEmpenhos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkEmpenhoPreEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenho
+            inversedBy: fkEmpenhoAutorizacaoEmpenhos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkEmpenhoAutorizacaoEmpenhos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoCategoriaEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\CategoriaEmpenho
+            inversedBy: fkEmpenhoAutorizacaoEmpenhos
+            joinColumns:
+                cod_categoria:
+                    referencedColumnName: cod_categoria
+    oneToMany:
+        fkDiariasDiariaEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\DiariaEmpenho
+            mappedBy: fkEmpenhoAutorizacaoEmpenho
+        fkEmpenhoAutorizacaoEmpenhoAssinaturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenhoAssinatura
+            mappedBy: fkEmpenhoAutorizacaoEmpenho
+        fkEmpenhoEmpenhoAutorizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoAutorizacao
+            mappedBy: fkEmpenhoAutorizacaoEmpenho
+    oneToOne:
+        fkEmpenhoContrapartidaAutorizacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ContrapartidaAutorizacao
+            mappedBy: fkEmpenhoAutorizacaoEmpenho
+            joinColumns:
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoAutorizacaoReserva:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoReserva
+            mappedBy: fkEmpenhoAutorizacaoEmpenho
+            joinColumns:
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoAutorizacaoAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoAnulada
+            mappedBy: fkEmpenhoAutorizacaoEmpenho
+            joinColumns:
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

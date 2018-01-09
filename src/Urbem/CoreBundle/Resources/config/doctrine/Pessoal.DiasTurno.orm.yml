@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Pessoal\DiasTurno:
+    type: entity
+    table: pessoal.dias_turno
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\DiasTurnoRepository
+    id:
+        codDia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dia
+    fields:
+        nomDia:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_dia
+    oneToMany:
+        fkPessoalFaixaTurnos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\FaixaTurno
+            mappedBy: fkPessoalDiasTurno
+        fkPontoBancoHorasDias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\BancoHorasDias
+            mappedBy: fkPessoalDiasTurno
+        fkPontoFaixasDias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FaixasDias
+            mappedBy: fkPessoalDiasTurno
+        fkPontoDiasUteis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DiasUteis
+            mappedBy: fkPessoalDiasTurno

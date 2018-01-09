@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Arrecadacao\NotaAvulsaCancelada:
+    type: entity
+    table: arrecadacao.nota_avulsa_cancelada
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+        dtCancelamento:
+            type: date
+            nullable: false
+            column: dt_cancelamento
+        observacao:
+            type: text
+            nullable: false
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkArrecadacaoNotaAvulsaCanceladas
+            joinColumns:
+                numcgm_usuario:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkArrecadacaoNotaAvulsa:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\NotaAvulsa
+            inversedBy: fkArrecadacaoNotaAvulsaCancelada
+            joinColumns:
+                cod_nota:
+                    referencedColumnName: cod_nota

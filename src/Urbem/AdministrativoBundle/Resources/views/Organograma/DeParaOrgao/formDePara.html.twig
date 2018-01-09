@@ -1,0 +1,58 @@
+{% set organogramaAtual = field.data.organogramaAtual %}
+{% set organogramaNovo = field.data.organogramaNovo %}
+{% set listOrgaosOrganogramaAtual = field.data.listOrgaosOrganogramaAtual %}
+{% set listOrgaosOrganogramaNovo = field.data.listOrgaosOrganogramaNovo %}
+
+<div>
+    <div class="col s3 little-box">
+        <h5 class="col s12 blue-text text-darken-4 profile-titles">Organograma Ativo</h5>
+        <h5 class="col s12 grey-text text-darken-1">{{ organogramaAtual.implantacao|date("d/m/Y") }}</h5>
+    </div>
+    <div class="col s3 little-box">
+        <h5 class="col s12 blue-text text-darken-4 profile-titles">Novo Organograma</h5>
+        <h5 class="col s12 grey-text text-darken-1">{{ organogramaNovo.implantacao|date("d/m/Y") }}</h5>
+    </div>
+</div>
+
+<div class="row">
+    <div>
+        <table class="bordered highlight">
+            <thead>
+                <tr class="sonata-ba-list-field-header">
+                    <th class="sonata-ba-list-field-header-text">Organograma Antigo</th>
+                    <th class="sonata-ba-list-field-header-text">Novo Organograma</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for orgao in listOrgaosOrganogramaAtual %}
+            <tr>
+                <td class="sonata-ba-list-field sonata-ba-list-field-text" objectid="-1">
+                    <strong>{{ orgao.orgao }}</strong> - {{ admin.getDescricao(orgao.cod_orgao) }}
+                </td>
+                <td class="sonata-ba-list-field sonata-ba-list-field-text" style="text-align: left !important;">
+                    <select id="orgao_de_para[]" name="orgao_de_para[]" required="required" class="select2-parameters estrutura-organograma-dinamico organograma-12 organograma-nivel-1">
+                        <option value="" selected="selected">Selecione</option>
+                        {% for orgaoNovo in listOrgaosOrganogramaNovo %}
+                            <option value="{{ orgao.cod_organograma }}~{{ orgao.cod_orgao }}~{{ orgaoNovo.codOrgao }}" {% if orgao.cod_orgao_new == orgaoNovo.codOrgao %}selected="selected"{% endif %}>
+                                {{ orgaoNovo.orgao }} - {{ admin.getDescricao(orgaoNovo.codOrgao) }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".btn-floating").parent().removeClass("s8").addClass("s12");
+        {% if listOrgaosOrganogramaAtual|length > 0 %}
+            $(".btn-success").css("margin-top", "-35px");
+        {% endif %}
+    });
+</script>

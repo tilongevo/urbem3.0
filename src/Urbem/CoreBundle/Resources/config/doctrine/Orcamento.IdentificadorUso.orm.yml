@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Orcamento\IdentificadorUso:
+    type: entity
+    table: orcamento.identificador_uso
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codUso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uso
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkOrcamentoRecursoDestinacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\RecursoDestinacao
+            mappedBy: fkOrcamentoIdentificadorUso

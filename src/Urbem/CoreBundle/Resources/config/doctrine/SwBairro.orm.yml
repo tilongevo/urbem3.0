@@ -1,0 +1,77 @@
+Urbem\CoreBundle\Entity\SwBairro:
+    type: entity
+    repositoryClass: Urbem\CoreBundle\Repository\SwBairroRepository
+    table: public.sw_bairro
+    id:
+        codBairro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bairro
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+        codMunicipio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_municipio
+    fields:
+        nomBairro:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_bairro
+    manyToOne:
+        fkSwMunicipio:
+            fetch: EXTRA_LAZY
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkSwBairros
+            joinColumns:
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_uf:
+                    referencedColumnName: cod_uf
+    oneToMany:
+        fkImobiliarioBairroAliquotas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BairroAliquota
+            mappedBy: fkSwBairro
+        fkImobiliarioBairroValorM2s:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BairroValorM2
+            mappedBy: fkSwBairro
+        fkImobiliarioLoteBairros:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteBairro
+            mappedBy: fkSwBairro
+        fkTcmbaObras:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            mappedBy: fkSwBairro
+        fkSwBairroLogradouros:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwBairroLogradouro
+            mappedBy: fkSwBairro

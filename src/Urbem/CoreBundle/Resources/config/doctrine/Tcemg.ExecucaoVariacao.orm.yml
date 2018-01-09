@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Tcemg\ExecucaoVariacao:
+    type: entity
+    table: tcemg.execucao_variacao
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ExecucaoVariacaoRepository
+    id:
+        codMes:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mes
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        consAdmDir:
+            type: text
+            nullable: false
+            column: cons_adm_dir
+        consAut:
+            type: text
+            nullable: false
+            column: cons_aut
+        consFund:
+            type: text
+            nullable: false
+            column: cons_fund
+        consEmpeEstDep:
+            type: text
+            nullable: false
+            column: cons_empe_est_dep
+        consDemEnt:
+            type: text
+            nullable: false
+            column: cons_dem_ent
+    manyToOne:
+        fkAdministracaoMes:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Mes
+            inversedBy: fkTcemgExecucaoVariacoes
+            joinColumns:
+                cod_mes:
+                    referencedColumnName: cod_mes

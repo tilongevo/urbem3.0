@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ContratoServidorPeriodo:
+    type: entity
+    table: folhapagamento.contrato_servidor_periodo
+    id:
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoPeriodoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao
+            inversedBy: fkFolhapagamentoContratoServidorPeriodos
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkFolhapagamentoContratoServidorPeriodos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToMany:
+        fkFolhapagamentoRegistroEventoDecimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoDecimo
+            mappedBy: fkFolhapagamentoContratoServidorPeriodo
+        fkFolhapagamentoRegistroEventoRescisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoRescisao
+            mappedBy: fkFolhapagamentoContratoServidorPeriodo
+        fkFolhapagamentoRegistroEventoFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoFerias
+            mappedBy: fkFolhapagamentoContratoServidorPeriodo
+        fkFolhapagamentoRegistroEventoPeriodos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoPeriodo
+            mappedBy: fkFolhapagamentoContratoServidorPeriodo

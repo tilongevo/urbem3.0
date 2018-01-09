@@ -1,0 +1,114 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <thead>
+                <tr class="grey">
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.categoria'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.prioridade'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.tipoItem'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.periodo'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.periodoInicial'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.periodoFinal'|trans|upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {% if categorias[filtro['categoria']['value']] is defined %}
+                            {{ categorias[filtro['categoria']['value']] }}</td>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if prioridades[filtro['prioridade']['value']] is defined %}
+                            {{ prioridades[filtro['prioridade']['value']] }}</td>
+                        {% else %}
+                            Todas
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if tiposItem[filtro['fkAlmoxarifadoTipoItem']['value']] is defined %}
+                            {{ tiposItem[filtro['fkAlmoxarifadoTipoItem']['value']] }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if periodos[filtro['periodo']['value']] is defined %}
+                            {{ periodos[filtro['periodo']['value']] }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    <td>
+                        {% if periodos[filtro['periodo']['value']] is defined and filtro['periodo']['value'] == periodoDefinir %}
+                            {{ filtro['periodoInicial']['value'] }}</td>
+                        {% else %}
+                            -
+                        {% endif %}
+                    <td>
+                        {% if periodos[filtro['periodo']['value']] is defined and filtro['periodo']['value'] == periodoDefinir %}
+                            {{ filtro['periodoFinal']['value'] }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+        
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <thead>
+                <tr class="grey">
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.prioridade'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.descricao'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.unidadeMedida'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.tipoItem'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.ingressado'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMinimo'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.pontoPedido'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.estoqueMaximo'|trans|upper }}</th>
+                    <th>{{ 'label.almoxarifadoRelatoriosCatalogoItemSintetico.qtdSaida'|trans|upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for catalogoItem in catalogoItens %}
+                    <tr>
+                        <td>
+                            {% if prioridades[catalogoItem.getPrioridade()] is defined %}
+                                {{ prioridades[catalogoItem.getPrioridade()] }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>{{ catalogoItem.getDescricao() }}</td>
+                        <td>{{ catalogoItem.getFkAdministracaoUnidadeMedida().getNomUnidade() }}</td>
+                        <td>{{ catalogoItem.getFkAlmoxarifadoTipoItem().getDescricao() }}</td>
+                        <td>
+                            {% if admin.getCategoria(catalogoItem) %}
+                                Sim
+                            {% else %}
+                                Não
+                            {% endif %}
+                        </td>
+                        <td>{{ catalogoItem.getFkAlmoxarifadoControleEstoque().getEstoqueMinimo() }}</td>
+                        <td>{{ catalogoItem.getFkAlmoxarifadoControleEstoque().getPontoPedido() }}</td>
+                        <td>{{ catalogoItem.getFkAlmoxarifadoControleEstoque().getEstoqueMaximo() }}</td>
+                        <td>{{ admin.getQtdSaida(catalogoItem.getCodItem(), filtro['periodo'], filtro['periodoInicial'], filtro['periodoFinal']) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+    <style>
+        table td,th{border: 0 !important; text-align:center}
+    </style>
+{% endblock %}

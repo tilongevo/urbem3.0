@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TcemgEntidadeRemuneracao:
+    type: entity
+    table: folhapagamento.tcemg_entidade_remuneracao
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\TcemgEntidadeRemuneracaoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields: {  }
+    manyToOne:
+        fkTcemgTipoRemuneracao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoRemuneracao
+            inversedBy: fkFolhapagamentoTcemgEntidadeRemuneracoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoTcemgEntidadeRemuneracoes
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

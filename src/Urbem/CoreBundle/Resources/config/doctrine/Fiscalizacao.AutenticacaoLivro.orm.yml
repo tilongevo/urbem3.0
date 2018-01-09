@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\AutenticacaoLivro:
+    type: entity
+    table: fiscalizacao.autenticacao_livro
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        nrLivro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: nr_livro
+    fields:
+        periodoInicio:
+            type: date
+            nullable: false
+            column: periodo_inicio
+        periodoTermino:
+            type: date
+            nullable: false
+            column: periodo_termino
+        qtdPaginas:
+            type: integer
+            nullable: false
+            column: qtd_paginas
+        observacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkFiscalizacaoAutenticacaoLivros
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+    oneToMany:
+        fkFiscalizacaoAutenticacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutenticacaoDocumento
+            mappedBy: fkFiscalizacaoAutenticacaoLivro

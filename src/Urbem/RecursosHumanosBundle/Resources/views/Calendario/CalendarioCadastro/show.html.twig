@@ -1,0 +1,120 @@
+{% extends "base_home_cards.html.twig" %}
+
+{% block title %}{{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <h1>Calendario\CalendarioCadastro</h1>
+<style>
+	body {
+		margin: 40px 10px;
+		padding: 0;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		font-size: 14px;
+	}
+
+	#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+</style>
+	<div id='calendar'></div>
+
+    <ul>
+        <li>
+            <a href="{{ path('calendario_calendario_cadastro_index') }}">Back to the list</a>
+        </li>
+    </ul>
+    {% block modules %}
+        {% include '::partials/modules.html.twig' %}
+    {% endblock modules %}
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="{{ asset('/bundles/core/css/fullcalendar.min.css') }}"/>
+    <link type="text/css" rel='stylesheet' media='print' href="{{ asset('/bundles/core/css/fullcalendar.print.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/bundles/core/javascripts/lib/moment.min.js') }}"></script>
+    <script src="{{ asset('/bundles/core/javascripts/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('/bundles/core/javascripts/lang/pt-br.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay',
+                    lang:'pt-br',
+                },
+                defaultDate: '2016-05-12',
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: [
+                    {
+                            title: 'All Day Event',
+                            start: '2016-05-01'
+                    },
+                    {
+                            title: 'Long Event',
+                            start: '2016-05-07',
+                            end: '2016-05-10'
+                    },
+                    {
+                            id: 999,
+                            title: 'Repeating Event',
+                            start: '2016-05-09T16:00:00'
+                    },
+                    {
+                            id: 999,
+                            title: 'Repeating Event',
+                            start: '2016-05-16T16:00:00'
+                    },
+                    {
+                            title: 'Conference',
+                            start: '2016-05-11',
+                            end: '2016-05-13'
+                    },
+                    {
+                            title: 'Meeting',
+                            start: '2016-05-12T10:30:00',
+                            end: '2016-05-12T12:30:00'
+                    },
+                    {
+                            title: 'Lunch',
+                            start: '2016-05-12T12:00:00'
+                    },
+                    {
+                            title: 'Meeting',
+                            start: '2016-05-12T14:30:00'
+                    },
+                    {
+                            title: 'Happy Hour',
+                            start: '2016-05-12T17:30:00'
+                    },
+                    {
+                            title: 'Dinner',
+                            start: '2016-05-12T20:00:00'
+                    },
+                    {
+                            title: 'Birthday Party',
+                            start: '2016-05-13T07:00:00'
+                    },
+                    {
+                            title: 'Click for Google',
+                            url: 'http://google.com/',
+                            start: '2016-05-28'
+                    }
+                ]
+            });
+	});
+    </script>
+{% endblock %}

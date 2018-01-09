@@ -1,0 +1,130 @@
+Urbem\CoreBundle\Entity\Pessoal\Assentamento:
+    type: entity
+    table: pessoal.assentamento
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\AssentamentoRepository
+    id:
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        gradeEfetividade:
+            type: boolean
+            nullable: false
+            column: grade_efetividade
+        relFuncaoGratificada:
+            type: boolean
+            nullable: false
+            column: rel_funcao_gratificada
+        eventoAutomatico:
+            type: boolean
+            nullable: false
+            column: evento_automatico
+        codEsfera:
+            type: integer
+            nullable: false
+            column: cod_esfera
+        assentamentoInicio:
+            type: boolean
+            nullable: true
+            column: assentamento_inicio
+        assentamentoAutomatico:
+            type: boolean
+            nullable: false
+            column: assentamento_automatico
+        quantDiasOnusEmpregador:
+            type: integer
+            nullable: true
+            column: quant_dias_onus_empregador
+        quantDiasLicencaPremio:
+            type: integer
+            nullable: true
+            column: quant_dias_licenca_premio
+    manyToOne:
+        fkPessoalAssentamentoAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            inversedBy: fkPessoalAssentamentos
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+        fkPessoalEsferaOrigem:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\EsferaOrigem
+            inversedBy: fkPessoalAssentamentos
+            joinColumns:
+                cod_esfera:
+                    referencedColumnName: cod_esfera
+    oneToMany:
+        fkPessoalAssentamentoEventoProporcionais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoEventoProporcional
+            mappedBy: fkPessoalAssentamento
+        fkPessoalAssentamentoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoEvento
+            mappedBy: fkPessoalAssentamento
+        fkPessoalAssentamentoSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoSubDivisao
+            mappedBy: fkPessoalAssentamento
+        fkPessoalTcepeConfiguracaoRelacionaHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TcepeConfiguracaoRelacionaHistorico
+            mappedBy: fkPessoalAssentamento
+        fkPessoalAssentamentoCausaRescisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoCausaRescisao
+            mappedBy: fkPessoalAssentamento
+    oneToOne:
+        fkPessoalAssentamentoAfastamentoTemporario:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAfastamentoTemporario
+            mappedBy: fkPessoalAssentamento
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalAssentamentoVantagem:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoVantagem
+            mappedBy: fkPessoalAssentamento
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalAssentamentoValidade:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoValidade
+            mappedBy: fkPessoalAssentamento
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp

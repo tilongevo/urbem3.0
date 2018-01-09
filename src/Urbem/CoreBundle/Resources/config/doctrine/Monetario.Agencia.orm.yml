@@ -1,0 +1,144 @@
+Urbem\CoreBundle\Entity\Monetario\Agencia:
+    type: entity
+    table: monetario.agencia
+    uniqueConstraints:
+        uk_agencia_1:
+            columns:
+                - cod_banco
+                - num_agencia
+    id:
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+    fields:
+        numAgencia:
+            type: string
+            nullable: false
+            length: 10
+            column: num_agencia
+        nomAgencia:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_agencia
+        numcgmAgencia:
+            type: integer
+            nullable: false
+            column: numcgm_agencia
+        nomPessoaContato:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_pessoa_contato
+    manyToOne:
+        fkMonetarioBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Banco
+            inversedBy: fkMonetarioAgencias
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkMonetarioAgencias
+            joinColumns:
+                numcgm_agencia:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkCgmContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cgm\Conta
+            mappedBy: fkMonetarioAgencia
+        fkComprasFornecedorContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorConta
+            mappedBy: fkMonetarioAgencia
+        fkEstagioEstagiarioEstagioContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioConta
+            mappedBy: fkMonetarioAgencia
+        fkPessoalContratoPensionistaContaSalarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaContaSalario
+            mappedBy: fkMonetarioAgencia
+        fkPessoalContratoServidorContaFgts:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorContaFgts
+            mappedBy: fkMonetarioAgencia
+        fkPessoalContratoServidorContaSalarioHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorContaSalarioHistorico
+            mappedBy: fkMonetarioAgencia
+        fkPessoalPensaoBancos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensaoBanco
+            mappedBy: fkMonetarioAgencia
+        fkTesourariaTransacoesTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransacoesTransferencia
+            mappedBy: fkMonetarioAgencia
+        fkTesourariaTransacoesPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransacoesPagamento
+            mappedBy: fkMonetarioAgencia
+        fkMonetarioContaCorrentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            mappedBy: fkMonetarioAgencia
+        fkArrecadacaoLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lote
+            mappedBy: fkMonetarioAgencia
+        fkArrecadacaoPagamentoLoteManuais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoLoteManual
+            mappedBy: fkMonetarioAgencia
+        fkPessoalContratoServidorContaSalarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorContaSalario
+            mappedBy: fkMonetarioAgencia

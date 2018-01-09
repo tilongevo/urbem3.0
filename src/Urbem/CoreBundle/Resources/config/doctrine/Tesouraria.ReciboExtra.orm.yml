@@ -1,0 +1,175 @@
+Urbem\CoreBundle\Entity\Tesouraria\ReciboExtra:
+    type: entity
+    table: tesouraria.recibo_extra
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\ReciboExtraRepository
+    id:
+        codReciboExtra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recibo_extra
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        tipoRecibo:
+            type: string
+            generator:
+                strategy: NONE
+            column: tipo_recibo
+    fields:
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: true
+            column: timestamp_usuario
+        cgmUsuario:
+            type: integer
+            nullable: true
+            column: cgm_usuario
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: true
+            column: timestamp_terminal
+        codTerminal:
+            type: integer
+            nullable: true
+            column: cod_terminal
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+        historico:
+            type: text
+            nullable: true
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTesourariaReciboExtras
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTesourariaReciboExtras
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaReciboExtras
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario
+    oneToMany:
+        fkEmpenhoOrdemPagamentoReciboExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoReciboExtra
+            mappedBy: fkTesourariaReciboExtra
+        fkTesourariaReciboExtraAssinaturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraAssinatura
+            mappedBy: fkTesourariaReciboExtra
+        fkTesourariaReciboExtraTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraTransferencia
+            mappedBy: fkTesourariaReciboExtra
+        fkTesourariaChequeEmissaoReciboExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoReciboExtra
+            mappedBy: fkTesourariaReciboExtra
+    oneToOne:
+        fkTesourariaReciboExtraAnulacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraAnulacao
+            mappedBy: fkTesourariaReciboExtra
+            joinColumns:
+                cod_recibo_extra:
+                    referencedColumnName: cod_recibo_extra
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo_recibo:
+                    referencedColumnName: tipo_recibo
+        fkTesourariaReciboExtraBanco:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraBanco
+            mappedBy: fkTesourariaReciboExtra
+            joinColumns:
+                cod_recibo_extra:
+                    referencedColumnName: cod_recibo_extra
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo_recibo:
+                    referencedColumnName: tipo_recibo
+        fkTesourariaReciboExtraCredor:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraCredor
+            mappedBy: fkTesourariaReciboExtra
+            joinColumns:
+                cod_recibo_extra:
+                    referencedColumnName: cod_recibo_extra
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo_recibo:
+                    referencedColumnName: tipo_recibo
+        fkTesourariaReciboExtraRecurso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraRecurso
+            mappedBy: fkTesourariaReciboExtra
+            joinColumns:
+                cod_recibo_extra:
+                    referencedColumnName: cod_recibo_extra
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo_recibo:
+                    referencedColumnName: tipo_recibo

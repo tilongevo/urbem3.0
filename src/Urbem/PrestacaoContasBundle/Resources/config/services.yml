@@ -1,0 +1,498 @@
+imports:
+    - { resource: collectionsForm/collection_form.yml }
+
+services:
+    prefeitura.info:
+        class: Urbem\PrestacaoContasBundle\Service\Prefeitura\Info
+        arguments: ['@doctrine.orm.entity_manager']
+    transparencia.write_prefeitura_info:
+        class: Urbem\PrestacaoContasBundle\Service\WritePrefeituraInfo
+        arguments: ['%portal_transparencia_config_prefeitura_info_path%', '@filesystem']
+    transparencia.export_transparencia:
+        class: Urbem\PrestacaoContasBundle\Service\ExportTransparencia
+        arguments: ['@service_container']
+    transparencia.acoes_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\AcoesReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.balancete_despesa_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\BalanceteDespesaReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.balancete_receita_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\BalanceteReceitaReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.cargos_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\CargosReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.cedidos_adidos_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\CedidosAdidosReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.compras_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\ComprasReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.credor_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\CredorReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.empenho_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\EmpenhoReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.entidades_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\EntidadesReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.funcoes_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\FuncoesReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.item_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\ItemReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.licitacao_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\LicitacaoReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.liquidacao_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\LiquidacaoReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.orgao_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\OrgaoReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.pagamento_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\PagamentoReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.programa_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\ProgramaReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.publicacao_edital_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\PublicacaoEditalReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.recurso_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\RecursoReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.rubrica_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\RubricaReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.subfuncoes_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\SubfuncoesReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.unidades_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\UnidadesReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.estagarios_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\EstagiariosReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.remuneracao_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\RemuneracaoReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    transparencia.servidores_report:
+        class: Urbem\PrestacaoContasBundle\Service\Report\ServidoresReport
+        arguments: ['@doctrine.orm.default_entity_manager', '@filesystem']
+    prestacao_contas.plano_conta_model:
+        class: Urbem\CoreBundle\Model\Contabilidade\PlanoContaModel
+        arguments: ['@doctrine.orm.entity_manager']
+
+    transparencia.event_listener.update_info_listener:
+        class: Urbem\PrestacaoContasBundle\EventListener\UpdateInfoListener
+        arguments: ['@transparencia.write_prefeitura_info', '@doctrine.orm.default_entity_manager']
+        tags:
+            - { name: kernel.event_listener, event: configuracao_update_2, method: onUpdate }
+
+    prestacao_contas.admin.tce:
+        class: Urbem\PrestacaoContasBundle\Admin\RelatorioTceAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\PrestacaoContas\FilaRelatorio, PrestacaoContasBundle:TceAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin }
+
+    prestacao_contas.admin.stn:
+        class: Urbem\PrestacaoContasBundle\Admin\RelatorioStnAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\PrestacaoContas\FilaRelatorio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin }
+
+    prestacao_contas.admin.configuracao:
+        class: Urbem\PrestacaoContasBundle\Admin\RelatorioConfiguracaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\PrestacaoContas\FilaRelatorio, PrestacaoContasBundle:TceAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RelatorioConfiguracaoAdmin }
+
+    prestacao_contas.form.entidade:
+        class: Urbem\PrestacaoContasBundle\Form\Type\EntidadeType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_entidade }
+
+    prestacao_contas.form.entidade_assinatura:
+        class: Urbem\PrestacaoContasBundle\Form\Type\EntidadeAssinaturaType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_entidade_assinatura }
+
+    prestacao_contas.form.prestacao_contas_date_picker:
+        class: Urbem\PrestacaoContasBundle\Form\Type\DatePickerType
+        arguments: ['@sonata.core.date.moment_format_converter', '@translator']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_date_picker }
+
+    prestacao_contas.form.recurso:
+        class: Urbem\PrestacaoContasBundle\Form\Type\RecursoType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_recurso }
+
+    prestacao_contas.form.entidade_rps:
+        class: Urbem\PrestacaoContasBundle\Form\Type\EntidadeRpsType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_entidade_rps }
+
+    prestacao_contas.form.exercicio_empenho:
+        class: Urbem\PrestacaoContasBundle\Form\Type\ExercicioEmpenhoType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_exercicio_empenho }
+
+    prestacao_contas.form.ppa:
+        class: Urbem\PrestacaoContasBundle\Form\Type\PpaType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_ppa }
+
+    prestacao_contas.report.listener:
+        class: Urbem\PrestacaoContasBundle\Listener\ReportQueueListener
+        arguments: ['@doctrine.orm.entity_manager', '@zechim_queue.default_command_producer', '@security.token_storage']
+
+    prestacao_contas.form.ldo_tipo_indicadores:
+        class: Urbem\PrestacaoContasBundle\Form\Type\LdoTipoIndicadoresType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_ldo_tipo_indicadores }
+
+    prestacao_contas.twig.filarelatorio:
+        class: Urbem\PrestacaoContasBundle\Twig\FilaRelatorioExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }
+
+    prestacao_contas.service.stn.stn_factory:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\StnStrategy\StnFactory
+        arguments: ['@doctrine.orm.entity_manager', '@urbem.session.service', '@security.token_storage']
+        tags:
+            -  { name: stn.service, alias: prestacao_stn_factory }
+
+    prestacao_contas.service.tce.configuracao_factory:
+        class: Urbem\PrestacaoContasBundle\Service\TribunalStrategy\ConfiguracaoFactory
+        arguments: ['@doctrine.orm.entity_manager', '@urbem.session.service', '@security.token_storage']
+        tags:
+            -  { name: stn.service, alias: prestacao_tce_configuracao_factory }
+
+    prestacao_contas.form.rs_uniorcam:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\RS\Form\ExercicioUniorcamType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_rs_uniorcam }
+
+    prestacao_contas.form.rs_receita_carac_peculiar:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\RS\Form\ExercicioReceitaCaracPeculiarReceitaType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_rs_receita_carac_peculiar }
+
+    prestacao_contas.form.mg_orgao:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoOrgaoType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_orgao }
+
+    prestacao_contas.form.norma:
+        class: Urbem\PrestacaoContasBundle\Form\Type\NormaType
+        tags:
+           -  { name: form.type, alias: prestacao_contas_norma }
+
+    prestacao_contas.form.receita:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ReceitaType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_norma }
+
+    prestacao_contas.form.modalidade:
+        class: Urbem\PrestacaoContasBundle\Form\Type\ModalidadeType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_modalidade }
+
+    prestacao_contas.form.licitacao:
+        class: Urbem\PrestacaoContasBundle\Form\Type\LicitacaoType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_licitacao }
+
+    prestacao_contas.form.processo:
+        class: Urbem\PrestacaoContasBundle\Form\Type\ProcessoType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_processo }
+
+    prestacao_contas.form.mapa_compras:
+        class: Urbem\PrestacaoContasBundle\Form\Type\MapaComprasType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mapa_compras }
+
+    prestacao_contas.form.periodicidade:
+        class: Urbem\PrestacaoContasBundle\Form\Type\PeriodicidadeType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_periodicidade }
+
+    prestacao_contas.form.modalidade:
+        class: Urbem\PrestacaoContasBundle\Form\Type\ModalidadeType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_modalidade }
+
+    prestacao_contas.form.tipo_licitacao:
+        class: Urbem\PrestacaoContasBundle\Form\Type\TipoLicitacaoType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_tipo_licitacao }
+
+    prestacao_contas.form.criterio_julgamento:
+        class: Urbem\PrestacaoContasBundle\Form\Type\CriterioJulgamentoType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_criterio_julgamento }
+
+    prestacao_contas.form.tipo_objeto:
+        class: Urbem\PrestacaoContasBundle\Form\Type\TipoObjetoType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_tipo_objeto }
+
+    prestacao_contas.form.objeto:
+        class: Urbem\PrestacaoContasBundle\Form\Type\ObjetoType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_objeto }
+
+    prestacao_contas.form.explorer:
+      class: Urbem\PrestacaoContasBundle\Service\Form\FormExplorer
+      arguments: ["@translator"]
+
+    prestacao_contas.sw_cgm_pessoa_fisica:
+        class: Urbem\PrestacaoContasBundle\Form\Type\SwCgmPessoaFisicaType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_sw_cgm_pessoa_fisica }
+
+    prestacao_contas.mg_gestao_fiscal_medidas:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoGestaoFiscalMedidasType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_gestao_fiscal_medidas }
+
+    prestacao_contas.mg_rec_desc_extra:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoRecDescExtraType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_rec_desc_extra }
+
+    prestacao_contas.norma_reg_artigo:
+        class: Urbem\PrestacaoContasBundle\Form\Type\NormaRegArtigoType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_norma_reg_artigo }
+
+    prestacao_contas.mg_ddc_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoDDCType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_ddc_filter }
+
+    prestacao_contas.grupo_contas:
+        class: Urbem\PrestacaoContasBundle\Form\Type\GrupoContasType
+        arguments: ['@urbem.session.service', '@prestacao_contas.plano_conta_model']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_grupo_contas }
+
+    prestacao_contas.mg_nota_fiscal_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoNotaFiscalFilterType
+        arguments: ['@urbem.session.service', '@security.token_storage']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_nota_fiscal_filter }
+
+    prestacao_contas.mg_teto_remuneratorio_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfigurarTetoRemuneratorioFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_teto_remuneratorio_filter }
+
+    prestacao_contas.folha_pagamento_evento:
+        class: Urbem\PrestacaoContasBundle\Form\Type\FolhaPagamentoEventoType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_folha_pagamento_evento }
+
+    prestacao_contas.orgao:
+        class: Urbem\PrestacaoContasBundle\Form\Type\OrgaoType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_orgao }
+
+    prestacao_contas.mg_convenio_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoConvenioFilterType
+        arguments: ['@urbem.session.service', '@security.token_storage']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_convenio_filter }
+
+    prestacao_contas.mg_projecao_atuarial:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoProjecaoAtuarialType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_projecao_atuarial }
+
+    prestacao_contas.mg_contrato_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoContratoFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_contrato_filter }
+
+    prestacao_contas.sw_cgm:
+        class: Urbem\PrestacaoContasBundle\Form\Type\SwCgmType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_sw_cgm }
+
+    prestacao_contas.mg_tipo_cargo_servidor_filter:
+        class: Urbem\PrestacaoContasBundle\Form\Type\Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoTipoCargoServidorFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_tipo_cargo_servidor_filter }
+
+    prestacao_contas.mg_tipo_cargo_servidor:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\TipoCargoServidorType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_tipo_cargo_servidor }
+
+    prestacao_contas.mg_regime_subdivisao:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\RegimeSubdivisaoType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_regime_subdivisao }
+
+    prestacao_contas.mg_cargo:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\CargoType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_cargo }
+
+    prestacao_contas.mg_contrato_aditivo_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoContratoAditivoFilterType
+        arguments: ['@urbem.session.service', '@security.token_storage']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_contrato_aditivo_filter }
+
+    prestacao_contas.mg_contrato_apostila_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoContratoApostilaFilterType
+        arguments: ['@urbem.session.service', '@security.token_storage']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_contrato_apostila_filter }
+
+    prestacao_contas.mg_contrato_rescisao_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoContratoRescsisaoFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_contrato_rescisao_filter }
+
+    prestacao_contas.mg_requisito_cargo_filter:
+        class: Urbem\PrestacaoContasBundle\Form\Type\Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoRequisitoCargoFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_requisito_cargo_filter }
+
+    prestacao_contas.mg_tipo_requisito_cargo:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\TipoRequisitoCargoType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_tipo_requisito_cargo }
+
+    prestacao_contas.mg_evento:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\EventoType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_evento }
+
+    prestacao_contas.mg_tipo_remuneracao_filter:
+        class: Urbem\PrestacaoContasBundle\Form\Type\Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoTipoRemuneracaoFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_tipo_remuneracao_filter }
+
+    prestacao_contas.mg_tipo_remuneracao:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\TipoRemuneracaoType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_tipo_remuneracao }
+
+    prestacao_contas.mg_modalidade:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ModalidadeType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_modalidade }
+
+    prestacao_contas.mg_registro_precos_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\MG\Form\ConfiguracaoRegistroPrecosFilterType
+        arguments: ['@urbem.session.service', '@security.token_storage']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_registro_precos_filter }
+
+    prestacao_contas.stn_recurso_operacao_credito_mde:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\RecursoOperacaoCreditoMDEType
+        arguments: ['@urbem.session.service', '@security.token_storage']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_mg_registro_precos_filter }
+
+    prestacao_contas.stn_exercicio_parametro_anexo_13_rreo:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\ExercicioParametroAnexo13RREOType
+        arguments: ['@urbem.session.service']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_exercicio_parametro_anexo_13_rreo }
+
+    prestacao_contas.stn_identificador_risco_fiscal:
+        class: Urbem\PrestacaoContasBundle\Form\Type\Stn\IdentificadorRiscoFiscalType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_identificador_risco_fiscal }
+
+    prestacao_contas.stn_configuracao_riscos_fiscais:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\ConfiguracaoRiscosFiscaisType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_configuracao_riscos_fiscais }
+
+    prestacao_contas.stn_vincular_conta_fundeb:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\VincularContaFundebType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_vincular_conta_fundeb }
+
+    prestacao_contas.stn_tipo_vinculo_stn_receita:
+        class: Urbem\PrestacaoContasBundle\Form\Type\Stn\TipoVinculoStnReceitaType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_tipo_vinculo_stn_receita }
+
+    prestacao_contas.stn_configuracao_anexo_3_rcl:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\ConfiguracaoAnexo3RCLType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_configuracao_anexo_3_rcl }
+
+    prestacao_contas.stn_vincular_receita_saude_anexo_12:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\VincularReceitaSaudeAnexo12Type
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_vincular_receita_saude_anexo_12 }
+
+    prestacao_contas.stn_configuracao_rgf_1:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\ConfiguracaoRGF1Type
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_configuracao_rgf_1 }
+
+    prestacao_contas.pr_cadastro_secretario_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\PR\Form\CadastroSecretarioFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_pr_cadastro_secretario_filter }
+
+    prestacao_contas.pr_secretaria_orgao_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\PR\Form\SecretariaOrgaoFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_pr_secretaria_orgao_filter }
+
+    prestacao_contas.pr_responsavel_modulo_filter:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\PR\Form\ResponsavelModuloFilterType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_pr_responsavel_modulo_filter }
+
+    prestacao_contas.stn_anexos:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\AnexosType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_anexos }
+
+    prestacao_contas.stn_manter_notas_explicativas:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\STN\Form\ManterNotasExplicativasType
+        tags:
+            -  { name: form.type, alias: prestacao_contas_stn_manter_notas_explicativas }
+

@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Frota\Infracao:
+    type: entity
+    table: frota.infracao
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: frota.infracao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: id
+    fields:
+        autoInfracao:
+            type: string
+            nullable: false
+            length: 15
+            column: auto_infracao
+        dataInfracao:
+            type: date
+            nullable: false
+            column: data_infracao
+        codVeiculo:
+            type: integer
+            nullable: false
+            column: cod_veiculo
+        cgmMotorista:
+            type: integer
+            nullable: false
+            column: cgm_motorista
+        codInfracao:
+            type: integer
+            nullable: false
+            column: cod_infracao
+    manyToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaInfracoes
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkFrotaMotorista:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Motorista
+            inversedBy: fkFrotaInfracoes
+            joinColumns:
+                cgm_motorista:
+                    referencedColumnName: cgm_motorista
+        fkFrotaMotivoInfracao:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\MotivoInfracao
+            inversedBy: fkFrotaInfracoes
+            joinColumns:
+                cod_infracao:
+                    referencedColumnName: cod_infracao

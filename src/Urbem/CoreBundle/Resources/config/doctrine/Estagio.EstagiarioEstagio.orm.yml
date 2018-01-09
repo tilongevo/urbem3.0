@@ -1,0 +1,148 @@
+Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio:
+    type: entity
+    table: estagio.estagiario_estagio
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Estagio\EstagiarioEstagioRepository
+    id:
+        codEstagio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_estagio
+        cgmEstagiario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_estagiario
+        codCurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_curso
+        cgmInstituicaoEnsino:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_instituicao_ensino
+    fields:
+        codOrgao:
+            type: integer
+            nullable: false
+            column: cod_orgao
+        codGrade:
+            type: integer
+            nullable: false
+            column: cod_grade
+        vinculoEstagio:
+            type: string
+            nullable: false
+            length: 1
+            column: vinculo_estagio
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtFinal:
+            type: date
+            nullable: true
+            column: dt_final
+        dtRenovacao:
+            type: date
+            nullable: true
+            column: dt_renovacao
+        funcao:
+            type: string
+            nullable: false
+            length: 20
+        objetivos:
+            type: text
+            nullable: true
+        anoSemestre:
+            type: string
+            nullable: false
+            length: 7
+            column: ano_semestre
+        numeroEstagio:
+            type: string
+            nullable: false
+            length: 10
+            column: numero_estagio
+    manyToOne:
+        fkEstagioEstagiario:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\Estagiario
+            inversedBy: fkEstagioEstagiarioEstagios
+            joinColumns:
+                cgm_estagiario:
+                    referencedColumnName: numcgm
+        fkEstagioCursoInstituicaoEnsino:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\CursoInstituicaoEnsino
+            inversedBy: fkEstagioEstagiarioEstagios
+            joinColumns:
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cgm_instituicao_ensino:
+                    referencedColumnName: numcgm
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkEstagioEstagiarioEstagios
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkPessoalGradeHorario:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\GradeHorario
+            inversedBy: fkEstagioEstagiarioEstagios
+            joinColumns:
+                cod_grade:
+                    referencedColumnName: cod_grade
+    oneToMany:
+        fkEstagioAtributoEstagiarioEstagios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\AtributoEstagiarioEstagio
+            mappedBy: fkEstagioEstagiarioEstagio
+        fkEstagioEstagiarioEstagioBolsas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioBolsa
+            mappedBy: fkEstagioEstagiarioEstagio
+        fkEstagioEntidadeIntermediadoraEstagios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EntidadeIntermediadoraEstagio
+            mappedBy: fkEstagioEstagiarioEstagio
+    oneToOne:
+        fkEstagioEstagiarioEstagioConta:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioConta
+            mappedBy: fkEstagioEstagiarioEstagio
+            joinColumns:
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                cgm_estagiario:
+                    referencedColumnName: numcgm
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino
+        fkEstagioEstagiarioEstagioLocal:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioLocal
+            mappedBy: fkEstagioEstagiarioEstagio
+            joinColumns:
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                cgm_estagiario:
+                    referencedColumnName: numcgm
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino

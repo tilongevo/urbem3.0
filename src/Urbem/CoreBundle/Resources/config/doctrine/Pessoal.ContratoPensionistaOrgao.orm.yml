@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaOrgao:
+    type: entity
+    table: pessoal.contrato_pensionista_orgao
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalContratoPensionista:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionista
+            inversedBy: fkPessoalContratoPensionistaOrgoes
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkPessoalContratoPensionistaOrgoes
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao

@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Arrecadacao\AtributoItbiValor:
+    type: entity
+    table: arrecadacao.atributo_itbi_valor
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkArrecadacaoImovelVVenal:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ImovelVVenal
+            inversedBy: fkArrecadacaoAtributoItbiValores
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+                timestamp:
+                    referencedColumnName: timestamp
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkArrecadacaoAtributoItbiValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

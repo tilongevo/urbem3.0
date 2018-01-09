@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Imobiliario\LoteProcesso:
+    type: entity
+    table: imobiliario.lote_processo
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+    manyToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioLoteProcessos
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkImobiliarioLoteProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

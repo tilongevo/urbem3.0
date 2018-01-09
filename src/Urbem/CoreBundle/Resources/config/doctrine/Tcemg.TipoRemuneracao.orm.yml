@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoRemuneracao:
+    type: entity
+    table: tcemg.tipo_remuneracao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkFolhapagamentoTcemgEntidadeRemuneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcemgEntidadeRemuneracao
+            mappedBy: fkTcemgTipoRemuneracao

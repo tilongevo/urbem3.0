@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Imobiliario\Vigencia:
+    type: entity
+    table: imobiliario.vigencia
+    id:
+        codVigencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: imobiliario.vigencia_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_vigencia
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToMany:
+        fkImobiliarioNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Nivel
+            mappedBy: fkImobiliarioVigencia

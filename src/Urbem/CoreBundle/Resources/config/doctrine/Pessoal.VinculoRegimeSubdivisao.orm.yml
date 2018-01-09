@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Pessoal\VinculoRegimeSubdivisao:
+    type: entity
+    table: pessoal.vinculo_regime_subdivisao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+    fields:
+        codTipoRegime:
+            type: integer
+            nullable: false
+            column: cod_tipo_regime
+        codTipoVinculo:
+            type: integer
+            nullable: false
+            column: cod_tipo_vinculo
+    manyToOne:
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkPessoalVinculoRegimeSubdivisoes
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao
+        fkTcepeTipoRegimeTrabalho:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoRegimeTrabalho
+            inversedBy: fkPessoalVinculoRegimeSubdivisoes
+            joinColumns:
+                cod_tipo_regime:
+                    referencedColumnName: cod_tipo_regime
+        fkTcepeTipoVinculo:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoVinculo
+            inversedBy: fkPessoalVinculoRegimeSubdivisoes
+            joinColumns:
+                cod_tipo_vinculo:
+                    referencedColumnName: cod_tipo_vinculo

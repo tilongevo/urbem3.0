@@ -1,0 +1,96 @@
+Urbem\CoreBundle\Entity\SwPlanoConta:
+    type: entity
+    table: sw_plano_conta
+    id:
+        codNivel1:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_1
+        codNivel2:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_2
+        codNivel3:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_3
+        codNivel4:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_4
+        codNivel5:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_5
+        codNivel6:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_6
+        codNivel7:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_7
+        codNivel8:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_8
+        codNivel9:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_9
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomConta:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_conta
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+        codSistema:
+            type: integer
+            nullable: false
+            column: cod_sistema
+    manyToOne:
+        fkSwClassificacaoContabil:
+            targetEntity: Urbem\CoreBundle\Entity\SwClassificacaoContabil
+            inversedBy: fkSwPlanoContas
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwSistemaContabil:
+            targetEntity: Urbem\CoreBundle\Entity\SwSistemaContabil
+            inversedBy: fkSwPlanoContas
+            joinColumns:
+                cod_sistema:
+                    referencedColumnName: cod_sistema
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkSwGrupoPlanos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwGrupoPlano
+            mappedBy: fkSwPlanoConta

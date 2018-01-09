@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Licitacao\TipoMembro:
+    type: entity
+    table: licitacao.tipo_membro
+    id:
+        codTipoMembro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_membro
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkLicitacaoComissaoMembros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ComissaoMembros
+            mappedBy: fkLicitacaoTipoMembro

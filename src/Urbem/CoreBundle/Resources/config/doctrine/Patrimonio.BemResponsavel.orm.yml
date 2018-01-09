@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Patrimonio\BemResponsavel:
+    type: entity
+    table: patrimonio.bem_responsavel
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtFim:
+            type: date
+            nullable: true
+            column: dt_fim
+    manyToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioBemResponsaveis
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkPatrimonioBemResponsaveis
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

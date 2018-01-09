@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Ponto\DadosRelogioPontoExtras:
+    type: entity
+    table: ponto.dados_relogio_ponto_extras
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        autorizarHorasExtras:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: autorizar_horas_extras
+    manyToOne:
+        fkPontoDadosRelogioPonto:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DadosRelogioPonto
+            inversedBy: fkPontoDadosRelogioPontoExtras
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

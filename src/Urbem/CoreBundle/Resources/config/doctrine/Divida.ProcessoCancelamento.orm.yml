@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Divida\ProcessoCancelamento:
+    type: entity
+    table: divida.processo_cancelamento
+    id:
+        codInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inscricao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkDividaProcessoCancelamentos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkDividaDividaCancelada:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaCancelada
+            inversedBy: fkDividaProcessoCancelamento
+            joinColumns:
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+                exercicio:
+                    referencedColumnName: exercicio

@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Economico\ResponsavelTecnico:
+    type: entity
+    table: economico.responsavel_tecnico
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\ResponsavelTecnicoRepository
+    uniqueConstraints:
+        uk_responsavel_tecnico_1:
+            columns:
+                - cod_profissao
+                - numcgm
+                - cod_uf
+        uk_responsavel_tecnico_2:
+            columns:
+                - cod_uf
+                - num_registro
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codProfissao:
+            type: integer
+            nullable: false
+            column: cod_profissao
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        numRegistro:
+            type: string
+            nullable: true
+            length: 30
+            column: num_registro
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEconomicoResponsavelTecnicos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkCseProfissao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Profissao
+            inversedBy: fkEconomicoResponsavelTecnicos
+            joinColumns:
+                cod_profissao:
+                    referencedColumnName: cod_profissao
+        fkSwUf:
+            targetEntity: Urbem\CoreBundle\Entity\SwUf
+            inversedBy: fkEconomicoResponsavelTecnicos
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+    oneToMany:
+        fkEconomicoResponsavelEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ResponsavelEmpresa
+            mappedBy: fkEconomicoResponsavelTecnico
+        fkOrcamentoEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            mappedBy: fkEconomicoResponsavelTecnico

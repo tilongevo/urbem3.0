@@ -1,0 +1,108 @@
+Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivos:
+    type: entity
+    table: licitacao.convenio_aditivos
+    repositoryClass: Urbem\CoreBundle\Repository\Licitacao\ConvenioAditivosRepository
+    id:
+        exercicioConvenio:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_convenio
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numAditivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_aditivo
+    fields:
+        responsavelJuridico:
+            type: integer
+            nullable: false
+            column: responsavel_juridico
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        dtAssinatura:
+            type: date
+            nullable: false
+            column: dt_assinatura
+        inicioExecucao:
+            type: date
+            nullable: false
+            column: inicio_execucao
+        valorConvenio:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_convenio
+        objeto:
+            type: string
+            nullable: false
+            length: 50
+        observacao:
+            type: string
+            nullable: false
+            length: 200
+        fundamentacao:
+            type: string
+            nullable: false
+            length: 100
+        codNormaAutorizativa:
+            type: integer
+            nullable: false
+            column: cod_norma_autorizativa
+    manyToOne:
+        fkLicitacaoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            inversedBy: fkLicitacaoConvenioAditivos
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio_convenio:
+                    referencedColumnName: exercicio
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoConvenioAditivos
+            joinColumns:
+                responsavel_juridico:
+                    referencedColumnName: numcgm
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkLicitacaoConvenioAditivos
+            joinColumns:
+                cod_norma_autorizativa:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkLicitacaoConvenioAditivosPublicacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivosPublicacao
+            mappedBy: fkLicitacaoConvenioAditivos
+    oneToOne:
+        fkLicitacaoConvenioAditivosAnulacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivosAnulacao
+            mappedBy: fkLicitacaoConvenioAditivos
+            joinColumns:
+                exercicio_convenio:
+                    referencedColumnName: exercicio_convenio
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio
+                num_aditivo:
+                    referencedColumnName: num_aditivo

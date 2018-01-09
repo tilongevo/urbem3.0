@@ -1,0 +1,55 @@
+{% for ordemPagamento in ordemPagamentoDataCollection %}
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <td>Credor:</td>
+            <td colspan="3">{{ ordemPagamento.beneficiario }}</td>
+            <td>CPF/CNPJ:</td>
+            <td colspan="3">
+                {% if ordemPagamento.cgm_beneficiario %}
+                    {% if ordemPagamento.cgm_beneficiario.cnpj is not null %}
+                        {{ ordemPagamento.cgm_beneficiario.cnpj }}
+                    {% elseif ordemPagamento.cgm_beneficiario.cnpj is not null %}
+                        {{ ordemPagamento.cgm_beneficiario.npf }}
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>Banco/Agência/CC:</td>
+            <td>
+                {{ ordemPagamento.banco_agencia_conta }}
+            </td>
+        </tr>
+        <tr>
+            <td>OP:</td>
+            <td>{{ ordemPagamento.cod_ordem ~ "/" ~ ordemPagamento.exercicio }}</td>
+            <td>Empenho:</td>
+            <td>{{ ordemPagamento.nota_empenho }}</td>
+            <td>Valor Bruto:</td>
+            <td>{{ ordemPagamento.vl_nota_original|number_format(2, ',') }}</td>
+            <td>Retenções:</td>
+            <td>{{ ordemPagamento.vl_nota_anulacoes|number_format(2, ',') }}</td>
+            <td>Valor Liquido:</td>
+            <td>{{ (ordemPagamento.vl_nota_original - ordemPagamento.vl_nota_anulacoes)|number_format(2, ',') }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Observações:</td>
+            <td colspan="8">{{ ordemPagamento.observacao }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered">
+        <tr>
+            <td class="text-right">Valor Total do Credor a ser Creditado em sua {{ ultimaTransacao.codTipo }}:</td>
+            <td>{{ (ordemPagamento.vl_nota_original - ordemPagamento.vl_nota_anulacoes)|number_format(2, ',') }}</td>
+        </tr>
+    </table>
+{% endfor %}
+
+<table class="table table-bordered">
+    <tr>
+        <td class="text-right">Valor Total do Borderô:</td>
+        <td>{{ valorTotalBordero }}</td>
+    </tr>
+</table>

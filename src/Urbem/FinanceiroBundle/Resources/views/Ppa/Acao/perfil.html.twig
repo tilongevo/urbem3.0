@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container-rh">
+    <div class="col s12">
+        <div class="col s12 profile-box-processo">
+            <h4 class="col s12 blue-text text-darken-4 left">
+                <i class="mdi mdi-barcode left"></i>{{ 'label.ppaAcao.codAcao'|trans }}: {{ acao.numAcao }}
+                <a href="{{ path('urbem_financeiro_ppa_acao_edit', { 'id': admin.getObjectKey(acao) })}}" class="btn small-btn white-text blue darken-4 tooltipped right" data-position="left" data-delay="50" data-tooltip="{{ 'editar'|trans }}">
+                    <i class="material-icons">edit</i>
+                </a>
+                <a href="{{ path('urbem_financeiro_ppa_acao_delete', { 'id': admin.getObjectKey(acao) })}}" class="btn small-btn white-text blue darken-4 tooltipped right" data-position="left" data-delay="50" data-tooltip="{{ 'deletar'|trans }}">
+                    <i class="material-icons">delete</i>
+                </a>
+            </h4>
+            <h6 class="divider grey col s12"></h6>
+            <div class="col s5 little-box-without-wide">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ppaAcao.descricao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ acaoDados.descricao }}</h6>
+            </div>
+            <div class="col s2 little-box-without-wide">
+                <h6 class="col s12 left-align blue-text text-darken-4 profile-titles">{{ 'label.ppaAcao.ppa'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ acao.fkPpaPrograma.fkPpaProgramaSetorial.fkPpaMacroObjetivo.fkPpaPpa }}</h6>
+            </div>
+            <div class="col s2 little-box-without-wide">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ppaAcao.tipoAcao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ acaoDados.fkPpaTipoAcao.descricao }}</h6>
+            </div>
+            <div class="col s2 little-box-without-wide">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ppaAcao.valorAcao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ valorAcao|number_format_currency('BRL') }}</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 left" style="margin-top: 10px">
+        <a class="btn btn-success btn-sm sonata-ba-action"
+           href="{{ path('urbem_financeiro_ppa_acao_recurso_create', { 'id': admin.getObjectKey(acao) }) }}">
+            <i class="material-icons left">add</i>{{ 'label.ppaAcao.incluirRecurso'|trans }}
+        </a>
+    </div>
+    <div class="col s12 left" style="margin-top: 10px">
+        <h2 class="blue-text text-darken-4 left">{{ 'label.ppaAcao.listaAcaoRecursos'|trans }}</h2>
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.ppaAcao.recurso'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.valorPrimeiroAno'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.valorSegundoAno'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.valorTerceiroAno'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.valorQuartoAno'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.totalRecursos'|trans }}</th>
+                    <th class="th-rh">{{ 'acoes'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if recursos|length > 0 %}
+                    {% for recurso in recursos %}
+                        <tr>
+                            <td class="td-rh">{{ recurso.codFonte|e }}</td>
+                            {% for valor in recurso.valores %}
+                                <td class="td-rh">{{ valor.quantidade|e|number_format(2, ',', '.') }} x {{ valor.valor|number_format_currency('BRL') }}</td>
+                            {% endfor %}
+                            <td class="td-rh">{{ recurso.total|number_format_currency('BRL') }}</td>
+                            <td class="td-rh">
+                                <div class="btn-group">
+                                    <a href="{{ path('urbem_financeiro_ppa_acao_remover_recurso', { 'codAcao': acao.codAcao, 'codAcaoRecurso': recurso.codRecurso }) }}" data-position="bottom" data-delay="50" data-tooltip="{{ 'deletar'|trans }}" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">{{ 'label.ppaAcao.msgRecursosCadastrados'|trans }}</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

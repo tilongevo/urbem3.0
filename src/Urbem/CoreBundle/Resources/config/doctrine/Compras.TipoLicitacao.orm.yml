@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Compras\TipoLicitacao:
+    type: entity
+    table: compras.tipo_licitacao
+    id:
+        codTipoLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_licitacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 15
+    oneToMany:
+        fkLicitacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkComprasTipoLicitacao
+        fkComprasMapas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Mapa
+            mappedBy: fkComprasTipoLicitacao

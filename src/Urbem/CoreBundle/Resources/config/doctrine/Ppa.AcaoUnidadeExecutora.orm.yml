@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Ppa\AcaoUnidadeExecutora:
+    type: entity
+    table: ppa.acao_unidade_executora
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        timestampAcaoDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_acao_dados
+        exercicioUnidade:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_unidade
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields: {  }
+    manyToOne:
+        fkPpaAcaoDados:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            inversedBy: fkPpaAcaoUnidadeExecutoras
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkPpaAcaoUnidadeExecutoras
+            joinColumns:
+                exercicio_unidade:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao

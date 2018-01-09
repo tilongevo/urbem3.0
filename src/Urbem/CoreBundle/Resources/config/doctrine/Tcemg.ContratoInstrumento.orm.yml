@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\ContratoInstrumento:
+    type: entity
+    table: tcemg.contrato_instrumento
+    id:
+        codInstrumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_instrumento
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkTcemgContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            mappedBy: fkTcemgContratoInstrumento

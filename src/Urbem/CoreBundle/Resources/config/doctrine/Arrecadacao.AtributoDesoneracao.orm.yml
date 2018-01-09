@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Arrecadacao\AtributoDesoneracao:
+    type: entity
+    table: arrecadacao.atributo_desoneracao
+    id:
+        codDesoneracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_desoneracao
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkArrecadacaoDesoneracao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desoneracao
+            inversedBy: fkArrecadacaoAtributoDesoneracoes
+            joinColumns:
+                cod_desoneracao:
+                    referencedColumnName: cod_desoneracao
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkArrecadacaoAtributoDesoneracoes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+    oneToMany:
+        fkArrecadacaoAtributoDesoneracaoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoDesoneracaoValor
+            mappedBy: fkArrecadacaoAtributoDesoneracao

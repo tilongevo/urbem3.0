@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col s12 servidor-table">
+        <a style="font-size: 16px">
+            <i class="mdi mdi-newspaper"></i>
+            {{ 'label.julgamentoProposta.participantes'|trans }}
+        </a>
+    </div>
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.participante'|trans }}</th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.marca'|trans }}</th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.valorUnitario'|trans }}</th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.valorTotal'|trans }}</th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.status'|trans }}</th>
+        <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for fornecedorItem in object.cotacaoFornecedorItens %}
+            <tr>
+                <td>{{ loop.index }}º</td>
+                <td>{{ fornecedorItem.fkComprasFornecedor.fkSwCgm }}</td>
+                <td>{{ fornecedorItem.fkAlmoxarifadoCatalogoItemMarca.fkAlmoxarifadoMarca }}</td>
+                <td>R$ {{ (fornecedorItem.vlCotacao/object.quantidade)|number_format(2, ',') }}</td>
+                <td>R$ {{ fornecedorItem.vlCotacao|number_format(2, ',') }}</td>
+                <td>{% if fornecedorItem.fkComprasCotacaoFornecedorItemDesclassificacao is not null %}
+                        Desclassificado
+                    {% else %}
+                        Classificado
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="btn-group">
+                        {% if object.julgamento is null %}
+                            <a href="{{ path('urbem_patrimonial_licitacao_julgamento_proposta_cotacao_julgamento_create', {
+                                'cotacao': admin.adminRequestId,
+                                'participante': fornecedorItem.fkComprasFornecedor.cgmFornecedor
+                            }) }}"
+                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-toggle="tooltip" data-placement="top">
+                                <i class="fa fa-gavel fa-lg" aria-hidden="true"></i>
+                            </a>
+                        {% else %}
+                            <a href="{{ path('urbem_patrimonial_licitacao_julgamento_proposta_cotacao_julgamento_edit', {
+                                'id': object.julgamentoRef,
+                                'cotacao': admin.adminRequestId,
+                                'participante': fornecedorItem.fkComprasFornecedor.fkSwCgm.numcgm
+                            }) }}"
+                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-toggle="tooltip" data-placement="top">
+                                <i class="fa fa-gavel fa-lg" aria-hidden="true"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

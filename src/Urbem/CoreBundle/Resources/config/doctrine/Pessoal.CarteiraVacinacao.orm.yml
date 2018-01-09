@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Pessoal\CarteiraVacinacao:
+    type: entity
+    table: pessoal.carteira_vacinacao
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\CarteiraVacinacaoRepository
+    id:
+        codCarteira:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_carteira
+    fields:
+        dtApresentacao:
+            type: date
+            nullable: false
+            column: dt_apresentacao
+        apresentada:
+            type: boolean
+            nullable: false
+    oneToMany:
+        fkPessoalDependenteCarteiraVacinacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DependenteCarteiraVacinacao
+            mappedBy: fkPessoalCarteiraVacinacao

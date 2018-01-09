@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcepe\TipoRegimeTrabalho:
+    type: entity
+    table: tcepe.tipo_regime_trabalho
+    id:
+        codTipoRegime:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_regime
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkPessoalVinculoRegimeSubdivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\VinculoRegimeSubdivisao
+            mappedBy: fkTcepeTipoRegimeTrabalho

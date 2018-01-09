@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Ponto\Justificativa:
+    type: entity
+    table: ponto.justificativa
+    id:
+        codJustificativa:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ponto.seq_justificativa
+                allocationSize: 1
+                initialValue: 1
+            column: cod_justificativa
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        anularFaltas:
+            type: boolean
+            nullable: false
+            column: anular_faltas
+        lancarDiasTrabalho:
+            type: boolean
+            nullable: false
+            column: lancar_dias_trabalho
+    oneToMany:
+        fkPontoRelogioPontoJustificativas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\RelogioPontoJustificativa
+            mappedBy: fkPontoJustificativa
+    oneToOne:
+        fkPontoJustificativaHoras:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\JustificativaHoras
+            mappedBy: fkPontoJustificativa
+            joinColumns:
+                cod_justificativa:
+                    referencedColumnName: cod_justificativa

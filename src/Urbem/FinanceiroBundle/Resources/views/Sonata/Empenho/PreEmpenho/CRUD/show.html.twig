@@ -1,0 +1,265 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock actions %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock tab_menu %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="col s12 profile-box">
+            <div class="row">
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.preEmpenho.dadosAutorizacao'|trans }}</span>
+                </h2>
+                {% if not admin.getAutorizacaoAnulada %}
+                    <a href="{{ path('urbem_financeiro_empenho_autorizacao_edit', { 'id':  admin.objectKey(object) }) }}"
+                       class="btn white-text blue darken-4 tooltipped right"
+                       data-position="left"
+                       data-delay="50"
+                       data-tooltip="Editar"
+                       style="margin-top: 10px">
+                        <i class="material-icons" style="margin-top: 5px">edit</i>
+                    </a>
+                    <a href="{{ path('urbem_financeiro_empenho_anular_autorizacao_create', {'codPreEmpenho': object.codPreEmpenho, 'exercicio': object.exercicio }) }}"
+                       class="white-text blue darken-4 btn btn-success save right"
+                       style="margin-top: 10px; margin-right: 15px">
+                        <i class="fa fa-ban fa-lg left"></i>
+                        Anular Autorização
+                    </a>
+                {% endif %}
+                {% if app.request.get('codPreEmpenhoAnulada') is not null %}
+                    <a href="{{ path('urbem_financeiro_empenho_autorizacao_gerar_nota', {'id': admin.objectKey(object), 'codPreEmpenhoAnulada': app.request.get('codPreEmpenhoAnulada') }) }}"
+                       class="white-text blue darken-4 btn btn-success save right"
+                       style="margin-top: 10px; margin-right: 15px">
+                        <i class="fa fa-print fa-lg left"></i>
+                        Gerar Nota
+                    </a>
+                {% endif %}
+                <p class="divider grey col s12"></p>
+                <div class="row">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.autorizacao'|trans }}</h6>
+                        {% if object.fkEmpenhoAutorizacaoEmpenhos.last %}
+                            <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoAutorizacaoEmpenhos.last.codAutorizacao ~ "/" ~ object.fkEmpenhoAutorizacaoEmpenhos.last.exercicio }}</h6>
+                        {% else %}
+                            <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                        {% endif %}
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.dtAutorizacao'|trans }}</h6>
+                        {% if object.fkEmpenhoAutorizacaoEmpenhos.last %}
+                            <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoAutorizacaoEmpenhos.last.dtAutorizacao|date('d/m/Y') }}</h6>
+                        {% else %}
+                            <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                        {% endif %}
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codEntidade'|trans }}</h6>
+                        {% if object.fkEmpenhoAutorizacaoEmpenhos.last %}
+                            <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoAutorizacaoEmpenhos.last.codEntidade ~ " - "  ~ object.fkEmpenhoAutorizacaoEmpenhos.last.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</h6>
+                        {% else %}
+                            <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                        {% endif %}
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.numOrgao'|trans }}</h6>
+                        {% if object.fkEmpenhoAutorizacaoEmpenhos.last %}
+                            <h6 class="col s12 grey-text text-darken-1">
+                                {{
+                                object.fkEmpenhoAutorizacaoEmpenhos.last.fkOrcamentoUnidade.fkOrcamentoOrgao.numOrgao
+                                ~ ' - '
+                                ~ object.fkEmpenhoAutorizacaoEmpenhos.last.fkOrcamentoUnidade.fkOrcamentoOrgao.nomOrgao
+                                }}
+                            </h6>
+                        {% else %}
+                            <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.numUnidade'|trans }}</h6>
+                        {% if object.fkEmpenhoAutorizacaoEmpenhos.last %}
+                            <h6 class="col s12 grey-text text-darken-1">
+                                {{
+                                object.fkEmpenhoAutorizacaoEmpenhos.last.fkOrcamentoUnidade.numUnidade
+                                ~ " - "
+                                ~ object.fkEmpenhoAutorizacaoEmpenhos.last.fkOrcamentoUnidade.nomUnidade
+                                }}
+                            </h6>
+                        {% else %}
+                            <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                        {% endif %}
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codDespesa'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codDespesa }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codClassificacao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codClassificacao }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.pao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.cgmBeneficiario'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.cgmBeneficiario ~ " - " ~ object.fkSwCgm.nomCgm }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.numEmpenho'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.dtEmpenho'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.dtValidade'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.dtValidadeFinal|date("d/m/Y") }}</h6>
+                    </div>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.situacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">&nbsp;</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.dtAnulacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if admin.getAutorizacaoAnulada %}
+                            {{ admin.getAutorizacaoAnulada.dtAnulacao|date("d/m/Y") }}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    </h6>
+                </div>
+                <div class="col s3 little1-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.motivoAnulacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if admin.getAutorizacaoAnulada %}
+                            {{ admin.getAutorizacaoAnulada.motivo }}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    </h6>
+                </div>
+                <div class="col s3 little1-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.descricao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.descricao }}</h6>
+                </div>
+                <div class="col s3 little1-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codHistorico'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoHistorico.codHistorico ~ " - " ~ object.fkEmpenhoHistorico.nomHistorico }}</h6>
+                </div>
+                <p class="divider light-grey col s12"></p>
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.preEmpenho.atributos'|trans }}</span>
+                </h2>
+                <p class="divider grey col s12"></p>
+                  {% for atributo in admin.atributos %}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ atributo.label }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ atributo.data }}</h6>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s11 servidor-table" style="margin-top: 10px">
+                <a style="font-size: 16px">
+                    <i class="mdi mdi-newspaper"></i>
+                    {{ 'label.itemPreEmpenho.itensAutorizacao'|trans }}
+                </a>
+            </div>
+            <div class="col s1" style="margin-top: 10px">
+                {% if not admin.getAutorizacaoAnulada %}
+                    <a class="tooltipped"
+                    href="{{ path('urbem_financeiro_empenho_item_pre_empenho_create', { 'pre_empenho': object.codPreEmpenho, 'exercicio': object.exercicio }) }}"
+                    data-toggle="tooltip" data-placement="top" title="{{ "incluir"|trans }}">
+                    <i class="mdi mdi-plus-circle right small"></i>
+                    </a>
+                {% endif %}
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead>
+                    <th class="th-rh" width="10"></th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.nomItem'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.vlUnitario'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.quantidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.vlTotal'|trans }}</th>
+                    <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+                </thead>
+                <tbody>
+                    {% if admin.itemPreEmpenho|length > 0 %}
+                        {% for itemPreEmpenho in admin.itemPreEmpenho %}
+                            <tr>
+                                <td class="td-rh">{{ itemPreEmpenho.numItem }}</td>
+                                <td class="td-rh">{% if itemPreEmpenho.fkAlmoxarifadoCatalogoItem is not null %} {{ itemPreEmpenho.fkAlmoxarifadoCatalogoItem.descricao }} {% else %} {{ itemPreEmpenho.nomItem }} {% endif %}  {% if itemPreEmpenho.fkAlmoxarifadoMarca is not null %} {{ '( ' ~ 'label.itemPreEmpenho.codMarca'|trans|upper ~ ': ' ~ itemPreEmpenho.fkAlmoxarifadoMarca.codMarca ~ ' - ' ~ itemPreEmpenho.fkAlmoxarifadoMarca.descricao ~ ' )' }} {% endif %}</td>
+                                <td class="td-rh text-right">{{ itemPreEmpenho.vlUnitario|number_format_currency('BRL') }}</td>
+                                <td class="td-rh text-right">{{ itemPreEmpenho.quantidade|number_format(4, ',', '.') }}</td>
+                                <td class="td-rh text-right">{{ itemPreEmpenho.vlTotal|number_format_currency('BRL') }}</td>
+                                <td class="td-rh">
+                                  <div class="btn-group">
+                                      {% if not admin.getAutorizacaoAnulada %}
+                                      <a href="{{ path('urbem_financeiro_empenho_item_pre_empenho_edit', { 'id': admin.objectKey(itemPreEmpenho) }) }}"
+                                         class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                         data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}">
+                                          <i class="material-icons">edit</i>
+                                      </a>
+                                      <a href="{{ path('urbem_financeiro_empenho_item_pre_empenho_delete', { 'id': admin.objectKey(itemPreEmpenho) }) }}"
+                                         class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                         data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                                          <i class="material-icons">delete</i>
+                                      </a>
+                                      {% endif %}
+                                  </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    <tr>
+                        <td class="td-rh" colspan="4">{{ 'label.itemPreEmpenho.total'|trans }}</td>
+                        <td class="td-rh text-right">{{ admin.getVlTotal()|number_format_currency('BRL') }}</td>
+                        <td class="td-rh" width="100"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_financeiro_empenho_autorizacao_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

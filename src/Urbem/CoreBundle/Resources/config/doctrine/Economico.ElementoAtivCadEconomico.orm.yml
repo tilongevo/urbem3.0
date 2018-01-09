@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Economico\ElementoAtivCadEconomico:
+    type: entity
+    table: economico.elemento_ativ_cad_economico
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        ocorrenciaAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_atividade
+        codElemento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_elemento
+        ocorrenciaElemento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_elemento
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkEconomicoAtividadeCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeCadastroEconomico
+            inversedBy: fkEconomicoElementoAtivCadEconomicos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                ocorrencia_atividade:
+                    referencedColumnName: ocorrencia_atividade
+        fkEconomicoElementoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoAtividade
+            inversedBy: fkEconomicoElementoAtivCadEconomicos
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                cod_elemento:
+                    referencedColumnName: cod_elemento
+    oneToMany:
+        fkEconomicoAtributoElemCadEconomicoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoElemCadEconomicoValor
+            mappedBy: fkEconomicoElementoAtivCadEconomico
+    oneToOne:
+        fkEconomicoBaixaElemAtivCadEconomico:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaElemAtivCadEconomico
+            mappedBy: fkEconomicoElementoAtivCadEconomico
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                ocorrencia_atividade:
+                    referencedColumnName: ocorrencia_atividade
+                cod_elemento:
+                    referencedColumnName: cod_elemento
+                ocorrencia_elemento:
+                    referencedColumnName: ocorrencia_elemento

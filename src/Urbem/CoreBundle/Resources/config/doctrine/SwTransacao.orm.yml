@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\SwTransacao:
+    type: entity
+    table: sw_transacao
+    id:
+        codTransacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        anoReferencia:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_referencia
+        codHistoricoLancamento:
+            type: integer
+            nullable: false
+            column: cod_historico_lancamento
+        codHistoricoEstorno:
+            type: integer
+            nullable: false
+            column: cod_historico_estorno
+        nomTransacao:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_transacao
+    manyToOne:
+        fkSwHistoricoContabil:
+            targetEntity: Urbem\CoreBundle\Entity\SwHistoricoContabil
+            inversedBy: fkSwTransacoes
+            joinColumns:
+                cod_historico_estorno:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwHistoricoContabil1:
+            targetEntity: Urbem\CoreBundle\Entity\SwHistoricoContabil
+            inversedBy: fkSwTransacoes1
+            joinColumns:
+                cod_historico_lancamento:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkSwEntidadeTransacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwEntidadeTransacao
+            mappedBy: fkSwTransacao
+        fkSwTransacaoOperacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwTransacaoOperacao
+            mappedBy: fkSwTransacao

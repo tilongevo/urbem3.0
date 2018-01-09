@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\SwLote:
+    type: entity
+    table: sw_lote
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomLote:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_lote
+        dtLote:
+            type: date
+            nullable: false
+            column: dt_lote
+    oneToMany:
+        fkSwLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamento
+            mappedBy: fkSwLote

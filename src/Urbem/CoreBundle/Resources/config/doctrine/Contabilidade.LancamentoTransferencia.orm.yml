@@ -1,0 +1,75 @@
+Urbem\CoreBundle\Entity\Contabilidade\LancamentoTransferencia:
+    type: entity
+    table: contabilidade.lancamento_transferencia
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        estorno:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkContabilidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lancamento
+            inversedBy: fkContabilidadeLancamentoTransferencias
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkContabilidadeTipoTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\TipoTransferencia
+            inversedBy: fkContabilidadeLancamentoTransferencias
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkContabilidadeTransferenciaDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\TransferenciaDespesa
+            mappedBy: fkContabilidadeLancamentoTransferencia
+        fkContabilidadeTransferenciaReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\TransferenciaReceita
+            mappedBy: fkContabilidadeLancamentoTransferencia

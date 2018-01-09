@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Arrecadacao\CalculoGrupoCredito:
+    type: entity
+    table: arrecadacao.calculo_grupo_credito
+    id:
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+    fields:
+        codGrupo:
+            type: integer
+            nullable: false
+            column: cod_grupo
+        anoExercicio:
+            type: string
+            nullable: true
+            length: 4
+            column: ano_exercicio
+    manyToOne:
+        fkArrecadacaoGrupoCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoCredito
+            inversedBy: fkArrecadacaoCalculoGrupoCreditos
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkArrecadacaoCalculo:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Calculo
+            inversedBy: fkArrecadacaoCalculoGrupoCredito
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo

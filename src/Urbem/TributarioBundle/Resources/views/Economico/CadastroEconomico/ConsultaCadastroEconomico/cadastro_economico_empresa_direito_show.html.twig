@@ -1,0 +1,55 @@
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomico.codInscricao'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getInscricaoEconomica() }} - {{ 'label.economicoConsultaCadastroEconomico.empresaDireito'|trans }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoConsultaCadastroEconomico.nome'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getFkEconomicoCadastroEconomicoEmpresaDireito().getFkSwCgmPessoaJuridica() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoConsultaCadastroEconomico.cnpj'|trans }}</th>
+    <td class="js-cnpj">{{ admin.cadastroEconomico.getFkEconomicoCadastroEconomicoEmpresaDireito().getFkSwCgmPessoaJuridica().getCnpj() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomicoEmpresaDireito.numRegistroJunta'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getFkEconomicoCadastroEconomicoEmpresaDireito().getNumRegistroJunta() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomicoEmpresaDireito.naturezaJuridica'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getFkEconomicoCadastroEconomicoEmpresaDireito().getFkEconomicoEmpresaDireitoNaturezaJuridicas().first().getFkEconomicoNaturezaJuridica() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomicoEmpresaDireito.categoria'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getFkEconomicoCadastroEconomicoEmpresaDireito().getFkEconomicoCategoria() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomico.dtAbertura'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getDtAbertura().format('d/m/Y') }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoConsultaCadastroEconomico.dtInclusao'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getTimestamp().format('d/m/Y') }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoConsultaCadastroEconomico.situacao'|trans }}</th>
+    <td>
+	    {% set situacao = 'label.economicoConsultaCadastroEconomico.ativo'|trans %}
+
+        {% for item in object.getFkEconomicoBaixaCadastroEconomicos() %}
+            {% if item.getDtTermino() is empty %}
+                {% set situacao = 'label.economicoConsultaCadastroEconomico.baixado'|trans %}
+            {% endif %}
+        {% endfor %}
+
+        {{ situacao }}
+	</td>
+</tr>
+

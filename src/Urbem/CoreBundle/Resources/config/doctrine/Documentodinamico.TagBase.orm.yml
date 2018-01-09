@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Documentodinamico\TagBase:
+    type: entity
+    table: documentodinamico.tag_base
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+        esquema:
+            type: string
+            nullable: false
+            length: 40
+        tabela:
+            type: string
+            nullable: false
+            length: 50
+        coluna:
+            type: string
+            nullable: false
+            length: 50
+    manyToOne:
+        fkDocumentodinamicoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Documentodinamico\Documento
+            inversedBy: fkDocumentodinamicoTagBases
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkDocumentodinamicoTagBases
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo

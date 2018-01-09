@@ -1,0 +1,110 @@
+Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosOrgaoItem:
+    type: entity
+    table: tcemg.registro_precos_orgao_item
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numeroRegistroPrecos:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numero_registro_precos
+        exercicioRegistroPrecos:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_registro_precos
+        interno:
+            type: boolean
+            generator:
+                strategy: NONE
+        numcgmGerenciador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numcgm_gerenciador
+        exercicioUnidade:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_unidade
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+    manyToOne:
+        fkTcemgItemRegistroPrecos:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ItemRegistroPrecos
+            inversedBy: fkTcemgRegistroPrecosOrgaoItens
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numero_registro_precos:
+                    referencedColumnName: numero_registro_precos
+                exercicio_registro_precos:
+                    referencedColumnName: exercicio
+                cod_lote:
+                    referencedColumnName: cod_lote
+                cod_item:
+                    referencedColumnName: cod_item
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                interno:
+                    referencedColumnName: interno
+                numcgm_gerenciador:
+                    referencedColumnName: numcgm_gerenciador
+        fkTcemgRegistroPrecosOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosOrgao
+            inversedBy: fkTcemgRegistroPrecosOrgaoItens
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numero_registro_precos:
+                    referencedColumnName: numero_registro_precos
+                exercicio_registro_precos:
+                    referencedColumnName: exercicio_registro_precos
+                interno:
+                    referencedColumnName: interno
+                numcgm_gerenciador:
+                    referencedColumnName: numcgm_gerenciador
+                exercicio_unidade:
+                    referencedColumnName: exercicio_unidade
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: numcgm

@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Tesouraria\Assinatura:
+    type: entity
+    table: tesouraria.assinatura
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        cargo:
+            type: string
+            nullable: false
+            length: 50
+        numMatricula:
+            type: string
+            nullable: false
+            length: 20
+            column: num_matricula
+        situacao:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTesourariaAssinaturas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTesourariaAssinaturas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

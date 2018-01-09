@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\TipoCobertura:
+    type: entity
+    table: cse.tipo_cobertura
+    id:
+        codCobertura:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cobertura
+    fields:
+        nomCobertura:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_cobertura
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkCseTipoCobertura

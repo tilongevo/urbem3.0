@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\SwProcessoArquivado:
+    type: entity
+    table: sw_processo_arquivado
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        codHistorico:
+            type: integer
+            nullable: false
+            column: cod_historico
+        timestampArquivamento:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_arquivamento
+        textoComplementar:
+            type: text
+            nullable: true
+            column: texto_complementar
+        cgmArquivador:
+            type: integer
+            nullable: false
+            column: cgm_arquivador
+        localizacao:
+            type: string
+            nullable: true
+            length: 80
+    manyToOne:
+        fkSwHistoricoArquivamento:
+            targetEntity: Urbem\CoreBundle\Entity\SwHistoricoArquivamento
+            inversedBy: fkSwProcessoArquivados
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkSwProcessoArquivados
+            joinColumns:
+                cgm_arquivador:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkSwProcessoArquivado
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

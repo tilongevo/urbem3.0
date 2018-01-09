@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Tcmgo\ContadorTerceirizado:
+    type: entity
+    table: tcmgo.contador_terceirizado
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkTcmgoUnidadeResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\UnidadeResponsavel
+            inversedBy: fkTcmgoContadorTerceirizados
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkTcmgoContadorTerceirizados
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

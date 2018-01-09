@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Ponto\JustificativaHoras:
+    type: entity
+    table: ponto.justificativa_horas
+    id:
+        codJustificativa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_justificativa
+    fields:
+        horasFalta:
+            type: string
+            nullable: false
+            length: 6
+            column: horas_falta
+        horasAbono:
+            type: string
+            nullable: false
+            length: 6
+            column: horas_abono
+    oneToOne:
+        fkPontoJustificativa:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\Justificativa
+            inversedBy: fkPontoJustificativaHoras
+            joinColumns:
+                cod_justificativa:
+                    referencedColumnName: cod_justificativa

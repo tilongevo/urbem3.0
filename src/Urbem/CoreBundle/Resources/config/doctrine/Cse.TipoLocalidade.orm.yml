@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\TipoLocalidade:
+    type: entity
+    table: cse.tipo_localidade
+    id:
+        codLocalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_localidade
+    fields:
+        nomLocalidade:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_localidade
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkCseTipoLocalidade

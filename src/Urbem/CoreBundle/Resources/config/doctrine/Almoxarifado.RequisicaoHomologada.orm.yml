@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoHomologada:
+    type: entity
+    table: almoxarifado.requisicao_homologada
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRequisicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_requisicao
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        cgmHomologador:
+            type: integer
+            nullable: false
+            column: cgm_homologador
+        homologada:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkAlmoxarifadoRequisicao:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Requisicao
+            inversedBy: fkAlmoxarifadoRequisicaoHomologadas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_requisicao:
+                    referencedColumnName: cod_requisicao
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkAlmoxarifadoRequisicaoHomologadas
+            joinColumns:
+                cgm_homologador:
+                    referencedColumnName: numcgm

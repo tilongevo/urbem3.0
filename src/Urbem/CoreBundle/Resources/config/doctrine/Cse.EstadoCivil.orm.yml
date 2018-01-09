@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Cse\EstadoCivil:
+    type: entity
+    table: cse.estado_civil
+    id:
+        codEstado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_estado
+    fields:
+        nomEstado:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_estado
+    oneToMany:
+        fkCseCidadoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            mappedBy: fkCseEstadoCivil
+        fkPessoalServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Servidor
+            mappedBy: fkCseEstadoCivil

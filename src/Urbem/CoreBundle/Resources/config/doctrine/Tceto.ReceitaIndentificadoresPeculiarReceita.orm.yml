@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Tceto\ReceitaIndentificadoresPeculiarReceita:
+    type: entity
+    table: tceto.receita_indentificadores_peculiar_receita
+    id:
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codIdentificador:
+            type: integer
+            nullable: false
+            column: cod_identificador
+    manyToOne:
+        fkTcetoValoresIdentificadores:
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\ValoresIdentificadores
+            inversedBy: fkTcetoReceitaIndentificadoresPeculiarReceitas
+            joinColumns:
+                cod_identificador:
+                    referencedColumnName: cod_identificador
+    oneToOne:
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkTcetoReceitaIndentificadoresPeculiarReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita

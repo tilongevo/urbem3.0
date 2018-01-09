@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Fgts:
+    type: entity
+    table: folhapagamento.fgts
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\FgtsRepository
+    id:
+        codFgts:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fgts
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vigencia:
+            type: date
+            nullable: false
+    oneToMany:
+        fkFolhapagamentoFgtsEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FgtsEvento
+            mappedBy: fkFolhapagamentoFgts
+        fkFolhapagamentoFgtsCategorias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FgtsCategoria
+            mappedBy: fkFolhapagamentoFgts

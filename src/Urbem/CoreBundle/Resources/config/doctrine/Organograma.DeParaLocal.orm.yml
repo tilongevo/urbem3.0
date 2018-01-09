@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Organograma\DeParaLocal:
+    type: entity
+    table: organograma.de_para_local
+    id:
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        codUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_unidade
+        codDepartamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_departamento
+        codSetor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_setor
+        codLocal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_local
+    fields:
+        codLocalOrganograma:
+            type: integer
+            nullable: true
+            column: cod_local_organograma
+    manyToOne:
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkOrganogramaDeParaLocais
+            joinColumns:
+                cod_local_organograma:
+                    referencedColumnName: cod_local
+    oneToOne:
+        fkAdministracaoLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Local
+            inversedBy: fkOrganogramaDeParaLocal
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local
+                cod_departamento:
+                    referencedColumnName: cod_departamento
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_setor:
+                    referencedColumnName: cod_setor

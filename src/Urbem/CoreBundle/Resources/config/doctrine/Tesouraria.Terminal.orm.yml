@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Tesouraria\Terminal:
+    type: entity
+    table: tesouraria.terminal
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\TerminalRepository
+    id:
+        codTerminal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_terminal
+    fields:
+        codVerificador:
+            type: string
+            nullable: false
+            length: 32
+            column: cod_verificador
+    oneToMany:
+        fkTesourariaAberturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Abertura
+            mappedBy: fkTesourariaTerminal
+        fkTesourariaChequeImpressoraTerminais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeImpressoraTerminal
+            mappedBy: fkTesourariaTerminal
+        fkTesourariaPermissaoTerminais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\PermissaoTerminal
+            mappedBy: fkTesourariaTerminal
+        fkTesourariaUsuarioTerminais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            mappedBy: fkTesourariaTerminal
+    oneToOne:
+        fkTesourariaTerminalDesativado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TerminalDesativado
+            mappedBy: fkTesourariaTerminal
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal

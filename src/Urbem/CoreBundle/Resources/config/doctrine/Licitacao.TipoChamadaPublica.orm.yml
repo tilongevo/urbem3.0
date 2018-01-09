@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Licitacao\TipoChamadaPublica:
+    type: entity
+    table: licitacao.tipo_chamada_publica
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkLicitacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkLicitacaoTipoChamadaPublica

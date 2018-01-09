@@ -1,0 +1,101 @@
+Urbem\CoreBundle\Entity\Tcmgo\Orgao:
+    type: entity
+    table: tcmgo.orgao
+    id:
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        numcgmOrgao:
+            type: integer
+            nullable: false
+            column: numcgm_orgao
+        numcgmContador:
+            type: integer
+            nullable: false
+            column: numcgm_contador
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        crcContador:
+            type: string
+            nullable: false
+            length: 11
+            column: crc_contador
+        ufCrcContador:
+            type: string
+            nullable: false
+            length: 2
+            column: uf_crc_contador
+    manyToOne:
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkTcmgoOrgoes
+            joinColumns:
+                numcgm_orgao:
+                    referencedColumnName: numcgm
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoOrgoes
+            joinColumns:
+                numcgm_contador:
+                    referencedColumnName: numcgm
+        fkTcmgoTipoOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoOrgao
+            inversedBy: fkTcmgoOrgoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkTcmgoOrgaoPlanoBancos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\OrgaoPlanoBanco
+            mappedBy: fkTcmgoOrgao
+        fkTcmgoOrgaoGestores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\OrgaoGestor
+            mappedBy: fkTcmgoOrgao
+    oneToOne:
+        fkTcmgoOrgaoRepresentante:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\OrgaoRepresentante
+            mappedBy: fkTcmgoOrgao
+            joinColumns:
+                num_orgao:
+                    referencedColumnName: num_orgao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcmgoOrgaoControleInterno:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\OrgaoControleInterno
+            mappedBy: fkTcmgoOrgao
+            joinColumns:
+                num_orgao:
+                    referencedColumnName: num_orgao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Orgao
+            inversedBy: fkTcmgoOrgao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_orgao:
+                    referencedColumnName: num_orgao

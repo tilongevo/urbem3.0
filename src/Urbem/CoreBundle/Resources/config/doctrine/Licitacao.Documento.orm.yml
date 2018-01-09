@@ -1,0 +1,98 @@
+Urbem\CoreBundle\Entity\Licitacao\Documento:
+    type: entity
+    table: licitacao.documento
+    repositoryClass: Urbem\CoreBundle\Repository\Licitacao\DocumentoRepository
+    uniqueConstraints:
+        uk_documento_1:
+            columns:
+                - nom_documento
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: licitacao.cod_documento_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_documento
+    fields:
+        nomDocumento:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_documento
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToMany:
+        fkLicitacaoCertificacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\CertificacaoDocumentos
+            mappedBy: fkLicitacaoDocumento
+        fkLicitacaoContratoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoDocumento
+            mappedBy: fkLicitacaoDocumento
+        fkLicitacaoModalidadeDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ModalidadeDocumentos
+            mappedBy: fkLicitacaoDocumento
+        fkLicitacaoDocumentosAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\DocumentosAtributos
+            mappedBy: fkLicitacaoDocumento
+        fkTcemgDeParaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\DeParaDocumento
+            mappedBy: fkLicitacaoDocumento
+        fkTcescTipoCertidaoEsfinges:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcesc\TipoCertidaoEsfinge
+            mappedBy: fkLicitacaoDocumento
+        fkTcmbaDocumentoDeParas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\DocumentoDePara
+            mappedBy: fkLicitacaoDocumento
+        fkTcmgoDocumentoDeParas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\DocumentoDePara
+            mappedBy: fkLicitacaoDocumento
+        fkTceamTipoCertidaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoCertidaoDocumento
+            mappedBy: fkLicitacaoDocumento
+        fkLicitacaoLicitacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\LicitacaoDocumentos
+            mappedBy: fkLicitacaoDocumento

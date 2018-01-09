@@ -1,0 +1,99 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ 'label.comprasDireta.manterPublicacao.publicacoes'|trans }}
+{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h4 class="grey-text text-darken-1 left">
+                    <small>{{ 'label.comprasDireta.codEntidade'|trans }}:&nbsp;</small>
+                    {{ compraDireta.fkOrcamentoEntidade.fkSwCgm.numcgm }}
+                    -
+                    {{ compraDireta.fkOrcamentoEntidade.fkSwCgm.nomCgm }}
+                </h4>
+                <h6 class="divider grey col s12"></h6>
+                <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codCompraDireta'|trans }}</h6>
+                <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codModalidade'|trans }}</h6>
+                <h6 class="col s6 grey-text text-darken-1">{{ compraDireta }}</h6>
+                <h6 class="col s6 grey-text text-darken-1">
+                    {{ compraDireta.fkComprasModalidade.codModalidade }}
+                    -
+                    {{ compraDireta.fkComprasModalidade.descricao }}
+                </h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-flat tooltiped">
+                    <i class="mdi mdi-newspaper"></i>
+                    {{ 'label.comprasDireta.manterPublicacao.publicacoes'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_patrimonial_compras_compra_direta_publicacoes_manter_publicacao_create', { 'cod_compra_direta': compraDireta.codCompraDireta~'~'~compraDireta.codEntidade~'~'~compraDireta.exercicioEntidade~'~'~compraDireta.codModalidade }) }}"
+                   class="btn-flat"
+                   data-tooltip="{{ "incluir"|trans }}"
+                   data-position="left"
+                   data-delay="50">
+                    <i class="mdi mdi-plus-circle left"></i>
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.comprasDireta.manterPublicacao.cgmVeiculo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.comprasDireta.manterPublicacao.dataPublicacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.comprasDireta.manterPublicacao.numPublicacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.comprasDireta.manterPublicacao.observacao'|trans }}</th>
+                    <th class="th-rh">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for publicacao in publicacoes %}
+                <tr>
+                    <td class="td-rh">{{ publicacao.fkLicitacaoVeiculosPublicidade.fkSwCgm.nomCgm }}</td>
+                    <td class="td-rh">{{ publicacao.dataPublicacao|date("d/m/Y") }}</td>
+                    <td class="td-rh">{{ publicacao.numPublicacao }}</td>
+                    <td class="td-rh">{{ publicacao.observacao }}</td>
+                    <td class="td-rh">
+                        <div class="btn-group">
+                            <a href="{{ path('urbem_patrimonial_compras_compra_direta_publicacoes_manter_publicacao_edit', { 'id': publicacao.identifier }) }}"
+                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-position="left"
+                               data-delay="50"
+                               data-tooltip="{{ "editar"|trans }}">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <a href="{{ path('urbem_patrimonial_compras_compra_direta_publicacoes_manter_publicacao_delete', { 'id': publicacao.identifier }) }}"
+                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-position="left"
+                               data-delay="50"
+                               data-tooltip="{{ "editar"|trans }}">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="sonata-ba-form-actions well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_patrimonial_compras_compra_direta_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+                Add a comment to this line
+            </a>
+        </div>
+    </div>
+{% endblock content %}

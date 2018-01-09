@@ -1,0 +1,89 @@
+Urbem\CoreBundle\Entity\Ppa\ProgramaIndicadores:
+    type: entity
+    table: ppa.programa_indicadores
+    id:
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+        timestampProgramaDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_programa_dados
+        codIndicador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_indicador
+    fields:
+        codPeriodicidade:
+            type: integer
+            nullable: false
+            column: cod_periodicidade
+        codUnidade:
+            type: integer
+            nullable: false
+            column: cod_unidade
+        codGrandeza:
+            type: integer
+            nullable: false
+            column: cod_grandeza
+        indiceRecente:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: indice_recente
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        indiceDesejado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: indice_desejado
+        fonte:
+            type: string
+            nullable: false
+            length: 100
+        baseGeografica:
+            type: string
+            nullable: false
+            length: 100
+            column: base_geografica
+        formaCalculo:
+            type: string
+            nullable: false
+            length: 100
+            column: forma_calculo
+        dtIndiceRecente:
+            type: date
+            nullable: false
+            column: dt_indice_recente
+    manyToOne:
+        fkPpaProgramaDados:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaDados
+            inversedBy: fkPpaProgramaIndicadoreses
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+                timestamp_programa_dados:
+                    referencedColumnName: timestamp_programa_dados
+        fkPpaPeriodicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Periodicidade
+            inversedBy: fkPpaProgramaIndicadoreses
+            joinColumns:
+                cod_periodicidade:
+                    referencedColumnName: cod_periodicidade
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkPpaProgramaIndicadoreses
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza

@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a href="" style="font-size: 16px">
+            <i class="fa fa-box"></i>
+            {{ 'label.inventario.itens.list'|trans }}
+        </a>
+    </div>
+    <div class="col s1">
+        {% if false == object.processado %}
+        <a href="{{ path('urbem_patrimonial_almoxarifado_inventario_item_create', { 'cod_almoxarifado': admin.adminRequestId }) }}"
+           class="tooltipped"
+           data-toggle="tooltip"
+           data-placement="top"
+           title="{{ "incluir"|trans }}">
+            <i class="mdi mdi-plus-circle small right"></i>
+        </a>
+        {% endif %}
+    </div>
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'label.inventario.itens.classificacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.inventario.itens.codItem'|trans }}</th>
+        <th class="th-rh">{{ 'label.inventario.itens.codUnidade'|trans }}</th>
+        <th class="th-rh">{{ 'label.inventario.itens.codMarca'|trans }}</th>
+        <th class="th-rh">{{ 'label.inventario.itens.codCentro'|trans }}</th>
+        <th class="th-rh">{{ 'label.inventario.itens.saldo'|trans }}</th>
+        <th class="th-rh">{{ 'label.inventario.itens.qtdeApurada'|trans }}</th>
+        <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for item in object.fkAlmoxarifadoInventarioItens %}
+            <tr>
+                <td class="td-rh">{{ loop.index }}</td>
+                <td class="td-rh">{{ item.fkAlmoxarifadoCatalogoItem.fkAlmoxarifadoCatalogoClassificacao }}</td>
+                <td class="td-rh">{{ item.fkAlmoxarifadoCatalogoItem }}</td>
+                <td class="td-rh">{{ item.fkAlmoxarifadoCatalogoItem.fkAdministracaoUnidadeMedida }}</td>
+                <td class="td-rh">{{ item.fkAlmoxarifadoMarca }}</td>
+                <td class="td-rh">{{ item.fkAlmoxarifadoCentroCusto }}</td>
+                <td class="td-rh">{{ item.saldo|number_format(4, ',', '.') }}</td>
+                <td class="td-rh">{{ item.quantidade|number_format(4, ',', '.') }}</td>
+                <td class="td-rh">
+                    {% if false == object.processado %}
+                    <div class="btn-group">
+                        <a href="{{ path('urbem_patrimonial_almoxarifado_inventario_item_edit', { 'id': item|objectKey }) }}"
+                           class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                           data-toggle="tooltip" data-placement="top" title="{{ "editar"|trans }}">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <a href="{{ path('urbem_patrimonial_almoxarifado_inventario_item_delete', { 'id': item|objectKey}) }}"
+                           class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                           data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

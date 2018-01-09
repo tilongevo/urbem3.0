@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Ldo\CompensacaoRenuncia:
+    type: entity
+    table: ldo.compensacao_renuncia
+    repositoryClass: Urbem\CoreBundle\Repository\Ldo\CompensacaoRenunciaRepository
+    id:
+        codCompensacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compensacao
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        tributo:
+            type: string
+            nullable: false
+            length: 250
+        modalidade:
+            type: string
+            nullable: false
+            length: 250
+        setoresProgramas:
+            type: string
+            nullable: false
+            length: 250
+            column: setores_programas
+        valorAnoLdo:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_ano_ldo
+        valorAnoLdo1:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_ano_ldo_1
+        valorAnoLdo2:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_ano_ldo_2
+        compensacao:
+            type: string
+            nullable: false
+            length: 250
+    manyToOne:
+        fkLdoLdo:
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Ldo
+            inversedBy: fkLdoCompensacaoRenuncias
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+                ano:
+                    referencedColumnName: ano

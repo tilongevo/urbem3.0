@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorContaFgts:
+    type: entity
+    table: pessoal.contrato_servidor_conta_fgts
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        nrConta:
+            type: string
+            nullable: false
+            length: 15
+            column: nr_conta
+    manyToOne:
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkPessoalContratoServidorContaFgts
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+    oneToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorContaFgts
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Orcamento\Pao:
+    type: entity
+    table: orcamento.pao
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\PaoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numPao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_pao
+    fields:
+        nomPao:
+            type: string
+            nullable: false
+            length: 480
+            column: nom_pao
+        detalhamento:
+            type: text
+            nullable: false
+    oneToMany:
+        fkFolhapagamentoConfiguracaoEmpenhoLlaAtributoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaAtributoValor
+            mappedBy: fkOrcamentoPao
+        fkFolhapagamentoConfiguracaoEmpenhoLlaLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaLocal
+            mappedBy: fkOrcamentoPao
+        fkFolhapagamentoConfiguracaoEmpenhoLlaLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaLotacao
+            mappedBy: fkOrcamentoPao
+        fkFolhapagamentoConfiguracaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho
+            mappedBy: fkOrcamentoPao
+        fkOrcamentoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            mappedBy: fkOrcamentoPao
+    oneToOne:
+        fkOrcamentoPaoPpaAcao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\PaoPpaAcao
+            mappedBy: fkOrcamentoPao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_pao:
+                    referencedColumnName: num_pao

@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\SwClassificacao:
+    type: entity
+    table: sw_classificacao
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: sw_classificacao_cod_classificacao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_classificacao
+    fields:
+        nomClassificacao:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_classificacao
+    oneToMany:
+        fkSwAssuntos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAssunto
+            mappedBy: fkSwClassificacao

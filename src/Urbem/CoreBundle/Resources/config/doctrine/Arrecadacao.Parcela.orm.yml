@@ -1,0 +1,88 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Parcela:
+    type: entity
+    table: arrecadacao.parcela
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\ParcelaRepository
+    indexes:
+        idx_parcela_1:
+            columns:
+                - cod_lancamento
+    id:
+        codParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcela
+    fields:
+        codLancamento:
+            type: integer
+            nullable: false
+            column: cod_lancamento
+        nrParcela:
+            type: integer
+            nullable: false
+            column: nr_parcela
+        vencimento:
+            type: date
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        iDebito:
+            type: integer
+            nullable: true
+            column: i_debito
+    manyToOne:
+        fkArrecadacaoLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lancamento
+            inversedBy: fkArrecadacaoParcelas
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+    oneToMany:
+        fkArrecadacaoCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Carne
+            mappedBy: fkArrecadacaoParcela
+        fkArrecadacaoParcelaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ParcelaDocumento
+            mappedBy: fkArrecadacaoParcela
+        fkArrecadacaoParcelaReemissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ParcelaReemissao
+            mappedBy: fkArrecadacaoParcela
+        fkDividaParcelaOrigens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelaOrigem
+            mappedBy: fkArrecadacaoParcela
+        fkArrecadacaoParcelaProrrogacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ParcelaProrrogacao
+            mappedBy: fkArrecadacaoParcela
+    oneToOne:
+        fkArrecadacaoParcelaDesconto:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ParcelaDesconto
+            mappedBy: fkArrecadacaoParcela
+            joinColumns:
+                cod_parcela:
+                    referencedColumnName: cod_parcela

@@ -1,0 +1,77 @@
+<p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.totalRegistros'|trans }} :</strong> {{ imoveis|length }}</p>
+
+        <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.filtrosUtilizados'|trans }}</strong></p>
+        {% if filtros['localizacaoInicial'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.localizacaoDe'|trans }} :</strong>  {{ filtros['localizacaoInicial'] }}</p>
+        {% endif %}
+
+        {% if filtros['localizacaoFinal'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.localizacaoAte'|trans }} :</strong>  {{ filtros['localizacaoFinal'] }}</p>
+        {% endif %}
+
+        {% if filtros['loteInicial'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.loteDe'|trans }} :</strong>  {{ filtros['loteInicial'] }}</p>
+        {% endif %}
+
+        {% if filtros['loteFinal'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.loteAte'|trans }} :</strong>  {{ filtros['loteFinal'] }}</p>
+        {% endif %}
+
+        {% if filtros['inscricaoImobiliariaInicial'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.inscricaoImobiliariaDe'|trans }} :</strong>  {{ filtros['inscricaoImobiliariaInicial'] }}</p>
+        {% endif %}
+
+        {% if filtros['inscricaoImobiliariaFinal'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.inscricaoImobiliariaAte'|trans }} :</strong>  {{ filtros['inscricaoImobiliariaFinal'] }}</p>
+        {% endif %}
+
+        {% if filtros['codigoLogradouroInicial'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.codigoLogradouroDe'|trans }} :</strong>  {{ filtros['codigoLogradouroInicial'] }}</p>
+        {% endif %}
+
+        {% if filtros['codigoLogradouroFinal'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.codigoLogradouroAte'|trans }} :</strong>  {{ filtros['codigoLogradouroFinal'] }}</p>
+        {% endif %}
+		
+		{% if filtros['proprietarioInicial'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.proprietarioDe'|trans }} :</strong>  {{ filtros['proprietarioInicial'] }}</p>
+        {% endif %}
+        
+        {% if filtros['proprietarioFinal'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.proprietarioAte'|trans }} :</strong>  {{ filtros['proprietarioFinal'] }}</p>
+        {% endif %}
+		
+        {% if filtros['codigoBairroInicial'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.codigoBairroDe'|trans }} :</strong>  {{ filtros['codigoBairroInicial'] }}</p>
+        {% endif %}
+
+        {% if filtros['codigoBairroFinal'] %}
+            <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.codigoBairroAte'|trans }} :</strong>  {{ filtros['codigoBairroFinal'] }}</p>
+        {% endif %}
+
+        <p><strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.tipoRelatorio'|trans }} :</strong> {{ filtros['tipoRelatorio']|capitalize }}</p>
+
+        {% if atributosFiltroImovel is defined or atributosFiltroLoteUrbano is defined or atributosFiltroLoteRural is defined %}
+            <p>
+                <strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.atributosRelacionados'|trans }} :</strong>
+                {% if atributosFiltroImovel is defined %}
+                    {% for atributo in atributosFiltroImovel %}
+                        <br>{{ (admin.getNomeAtributoImovel(atributo.getCodAtributo())).getNomAtributo()|capitalize }}
+                    {% endfor %}
+                {% endif %}
+                {% if atributosFiltroLoteUrbano is defined %}
+                    {% for atributo in atributosFiltroLoteUrbano %}
+                        <br>{{ (admin.getNomeAtributoLoteUrbano(atributo.getCodAtributo())).getNomAtributo()|capitalize }}
+                    {% endfor %}
+                {% endif %}
+                {% if atributosFiltroLoteRural is defined %}
+                    {% for atributo in atributosFiltroLoteRural %}
+                        <br>{{ (admin.getNomeAtributoLoteRural(atributo.getCodAtributo())).getNomAtributo()|capitalize }}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        {% endif %}
+
+        <p>
+            <strong>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.ordenacao'|trans }} :</strong> {{ (admin.getOrdenacao()[filtros['ordem']])|trans }}
+        </p>

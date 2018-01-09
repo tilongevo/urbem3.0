@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="author">Diego Lemos de Souza</property>
+    <property name="comments">Copyright (c) 2006 &lt;&lt;Your Company Name here>></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.4.0.v201405191524 Build &lt;4.4.0.v20140606-1451></property>
+    <property name="units">mm</property>
+    <text-property name="displayName">Template Urbem Retrato</text-property>
+    <property name="layoutPreference">auto layout</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">../../../../../../gestaoAdministrativa/fontes/RPT/framework/library/urbem.rptlibrary</property>
+            <property name="namespace">urbem</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="term_user" id="6666">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="exercicio" id="186">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="cod_acao" id="187">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="db_conn_url" id="189">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="pAlmoxarifado" id="1175">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="pCodCatalogo" id="1178">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="pDescricao" id="1179">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="pSaldo" id="1180">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="pEstrutural" id="1181">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="imgPath" id="1207">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">http://localhost/URBEM-1.0</value>
+            </simple-property-list>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="stSql" id="6667">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Postgres" id="234" extends="urbem.postgres">
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsEtiquetas" id="931">
+            <structure name="cachedMetaData"/>
+            <method name="beforeOpen"><![CDATA[inTeste = 0;
+
+if ( params['pAlmoxarifado'] != '' ) {
+	this.queryText = this.queryText + ' AND estoque_material.cod_almoxarifado = ' +params['pAlmoxarifado'] ;
+}
+if ( params['pCodCatalogo'] != '' ){
+	this.queryText = this.queryText + ' AND catalogo_item.cod_catalogo = '+params['pCodCatalogo'];
+}
+if ( params['pDescricao'] != '' ){
+	this.queryText = this.queryText + " AND catalogo_item.descricao_resumida ilike '" + params['pDescricao'] + "'";
+}
+if ( params['pSaldo'] == 'S' ){
+	this.queryText = this.queryText + "   AND EXISTS(SELECT * FROM (                                             \n";
+	this.queryText = this.queryText + "                SELECT                                                    \n";
+	this.queryText = this.queryText + "                  lancamento_material.cod_item                            \n";
+	this.queryText = this.queryText + "                , lancamento_material.cod_almoxarifado                    \n";
+	this.queryText = this.queryText + "                , lancamento_material.cod_marca                           \n";
+	this.queryText = this.queryText + "                , lancamento_material.cod_centro                          \n";
+	this.queryText = this.queryText + "                , SUM(lancamento_material.quantidade) AS saldo_estoque    \n";
+	this.queryText = this.queryText + "                FROM                                                      \n";
+	this.queryText = this.queryText + "                    almoxarifado.lancamento_material                      \n";
+	this.queryText = this.queryText + "                GROUP BY                                                  \n";
+	this.queryText = this.queryText + "                  lancamento_material.cod_item                            \n";
+	this.queryText = this.queryText + "                , lancamento_material.cod_almoxarifado                    \n";
+	this.queryText = this.queryText + "                , lancamento_material.cod_marca                           \n";
+	this.queryText = this.queryText + "                , lancamento_material.cod_centro ) as saldo               \n";
+	this.queryText = this.queryText + " WHERE saldo.saldo_estoque > 0                                            \n";
+	this.queryText = this.queryText + "   AND saldo.cod_item          = estoque_material.cod_item                \n";
+	this.queryText = this.queryText + "   AND saldo.cod_almoxarifado  = estoque_material.cod_almoxarifado        \n";
+	this.queryText = this.queryText + "   AND saldo.cod_marca         = estoque_material.cod_marca               \n";
+	this.queryText = this.queryText + "   AND saldo.cod_centro        = estoque_material.cod_centro        )     \n";
+}
+if ( params['pEstrutural'] != '' ){
+	this.queryText = this.queryText + " and catalogo_classificacao.cod_estrutural like '" + params['pEstrutural'] + "%'";
+}
+params['stSql'] = this.queryText;
+]]></method>
+            <property name="dataSource">Postgres</property>
+            <xml-property name="queryText"><![CDATA[	 SELECT --catalogo_item_barras.codigo_barras
+    	    TRIM(catalogo_item.descricao_resumida) AS descricao_resumida
+      	  , catalogo_item.cod_item as codigo_barras
+	   FROM almoxarifado.catalogo_item
+
+ INNER JOIN almoxarifado.catalogo_item_marca
+         ON  catalogo_item.cod_item = catalogo_item_marca.cod_item 
+         
+  LEFT JOIN almoxarifado.catalogo_item_barras
+         ON catalogo_item_barras.cod_item  = catalogo_item_marca.cod_item
+        AND catalogo_item_barras.cod_marca = catalogo_item_marca.cod_marca 
+
+INNER JOIN almoxarifado.estoque_material
+        ON estoque_material.cod_item  = catalogo_item_marca.cod_item
+       AND estoque_material.cod_marca = catalogo_item_marca.cod_marca
+
+INNER JOIN almoxarifado.catalogo_classificacao
+        ON catalogo_item.cod_classificacao = catalogo_classificacao.cod_classificacao
+       AND catalogo_item.cod_catalogo      = catalogo_classificacao.cod_catalogo 
+
+  WHERE NOT catalogo_item.cod_item is null]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>1.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>codigo_barras</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>30</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>codigo_barras</design:label>
+            <design:formattingHints>
+              <design:displaySize>30</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>descricao_resumida</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>descricao_resumida</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">portrait</property>
+            <property name="topMargin">0.28in</property>
+            <property name="leftMargin">0.375in</property>
+            <property name="bottomMargin">0.208in</property>
+            <property name="rightMargin">0.312in</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="6675">
+            <column id="6676"/>
+            <column id="6677"/>
+            <row id="6678">
+                <cell id="6679">
+                    <table id="6681">
+                        <property name="dataSet">dsEtiquetas</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">descricao_resumida</property>
+                                <expression name="expression">dataSetRow["descricao_resumida"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">codigo_barras</property>
+                                <expression name="expression">dataSetRow['codigo_barras']</expression>
+                                <property name="dataType">integer</property>
+                            </structure>
+                        </list-property>
+                        <property name="repeatHeader">false</property>
+                        <property name="pageBreakInterval">8</property>
+                        <column id="6688"/>
+                        <detail>
+                            <row id="6684">
+                                <cell id="6685">
+                                    <data id="6701">
+                                        <property name="backgroundAttachment">scroll</property>
+                                        <property name="backgroundPositionX">0%</property>
+                                        <property name="backgroundPositionY">0%</property>
+                                        <property name="backgroundRepeat">repeat</property>
+                                        <property name="fontFamily">sans-serif</property>
+                                        <property name="fontSize">10px</property>
+                                        <property name="fontWeight">normal</property>
+                                        <property name="fontStyle">normal</property>
+                                        <property name="fontVariant">normal</property>
+                                        <property name="color">black</property>
+                                        <property name="textLineThrough">none</property>
+                                        <property name="textOverline">none</property>
+                                        <property name="textUnderline">none</property>
+                                        <property name="borderBottomColor">black</property>
+                                        <property name="borderBottomStyle">none</property>
+                                        <property name="borderBottomWidth">medium</property>
+                                        <property name="borderLeftColor">black</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderLeftWidth">medium</property>
+                                        <property name="borderRightColor">black</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="borderRightWidth">medium</property>
+                                        <property name="borderTopColor">black</property>
+                                        <property name="borderTopStyle">none</property>
+                                        <property name="borderTopWidth">medium</property>
+                                        <property name="marginTop">0pt</property>
+                                        <property name="marginLeft">0pt</property>
+                                        <property name="marginBottom">0pt</property>
+                                        <property name="marginRight">0pt</property>
+                                        <property name="paddingTop">1pt</property>
+                                        <property name="paddingLeft">1pt</property>
+                                        <property name="paddingBottom">1pt</property>
+                                        <property name="paddingRight">1pt</property>
+                                        <property name="textAlign">center</property>
+                                        <property name="letterSpacing">normal</property>
+                                        <property name="lineHeight">normal</property>
+                                        <property name="orphans">2</property>
+                                        <property name="textTransform">none</property>
+                                        <property name="whiteSpace">normal</property>
+                                        <property name="widows">2</property>
+                                        <property name="wordSpacing">normal</property>
+                                        <property name="display">block</property>
+                                        <property name="pageBreakAfter">auto</property>
+                                        <property name="pageBreakBefore">auto</property>
+                                        <property name="pageBreakInside">auto</property>
+                                        <property name="showIfBlank">false</property>
+                                        <property name="canShrink">false</property>
+                                        <property name="resultSetColumn">descricao_resumida</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="6697">
+                                <property name="pageBreakBefore">avoid</property>
+                                <cell id="6698">
+                                    <property name="textAlign">center</property>
+                                    <image id="6703">
+                                        <property name="source">url</property>
+                                        <expression name="uri" type="javascript">params["imgPath"]+'?numeracao=' +row["codigo_barras"]+'&amp;altura=60'</expression>
+                                    </image>
+                                </cell>
+                            </row>
+                        </detail>
+                    </table>
+                </cell>
+                <cell id="6680">
+                    <table id="6689">
+                        <property name="dataSet">dsEtiquetas</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">descricao_resumida_1</property>
+                                <expression name="expression">dataSetRow['descricao_resumida']</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">codigo_barras</property>
+                                <expression name="expression">dataSetRow['codigo_barras']</expression>
+                                <property name="dataType">integer</property>
+                            </structure>
+                        </list-property>
+                        <property name="repeatHeader">false</property>
+                        <property name="pageBreakInterval">8</property>
+                        <column id="6696"/>
+                        <detail>
+                            <row id="6692">
+                                <cell id="6693">
+                                    <data id="6705">
+                                        <property name="backgroundAttachment">scroll</property>
+                                        <property name="backgroundPositionX">0%</property>
+                                        <property name="backgroundPositionY">0%</property>
+                                        <property name="backgroundRepeat">repeat</property>
+                                        <property name="fontFamily">sans-serif</property>
+                                        <property name="fontSize">10px</property>
+                                        <property name="fontWeight">normal</property>
+                                        <property name="fontStyle">normal</property>
+                                        <property name="fontVariant">normal</property>
+                                        <property name="color">black</property>
+                                        <property name="textLineThrough">none</property>
+                                        <property name="textOverline">none</property>
+                                        <property name="textUnderline">none</property>
+                                        <property name="borderBottomColor">black</property>
+                                        <property name="borderBottomStyle">none</property>
+                                        <property name="borderBottomWidth">medium</property>
+                                        <property name="borderLeftColor">black</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderLeftWidth">medium</property>
+                                        <property name="borderRightColor">black</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="borderRightWidth">medium</property>
+                                        <property name="borderTopColor">black</property>
+                                        <property name="borderTopStyle">none</property>
+                                        <property name="borderTopWidth">medium</property>
+                                        <property name="marginTop">0pt</property>
+                                        <property name="marginLeft">0pt</property>
+                                        <property name="marginBottom">0pt</property>
+                                        <property name="marginRight">0pt</property>
+                                        <property name="paddingTop">1pt</property>
+                                        <property name="paddingLeft">1pt</property>
+                                        <property name="paddingBottom">1pt</property>
+                                        <property name="paddingRight">1pt</property>
+                                        <property name="textAlign">center</property>
+                                        <property name="letterSpacing">normal</property>
+                                        <property name="lineHeight">normal</property>
+                                        <property name="orphans">2</property>
+                                        <property name="textTransform">none</property>
+                                        <property name="whiteSpace">normal</property>
+                                        <property name="widows">2</property>
+                                        <property name="wordSpacing">normal</property>
+                                        <property name="display">block</property>
+                                        <property name="pageBreakAfter">auto</property>
+                                        <property name="pageBreakBefore">auto</property>
+                                        <property name="pageBreakInside">auto</property>
+                                        <property name="showIfBlank">false</property>
+                                        <property name="canShrink">false</property>
+                                        <property name="resultSetColumn">descricao_resumida_1</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="6699">
+                                <property name="pageBreakBefore">avoid</property>
+                                <property name="pageBreakInside">auto</property>
+                                <cell id="6700">
+                                    <property name="textAlign">center</property>
+                                    <image id="6704">
+                                        <property name="source">url</property>
+                                        <expression name="uri" type="javascript">params["imgPath"] +'?numeracao=' +row["codigo_barras"]+'&amp;altura=60'</expression>
+                                    </image>
+                                </cell>
+                            </row>
+                        </detail>
+                    </table>
+                </cell>
+            </row>
+        </grid>
+    </body>
+</report>

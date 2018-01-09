@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Licitacao\DocumentosAtributos:
+    type: entity
+    table: licitacao.documentos_atributos
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkLicitacaoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Documento
+            inversedBy: fkLicitacaoDocumentosAtributos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkLicitacaoDocumentosAtributos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+    oneToOne:
+        fkLicitacaoDocumentoAtributoValor:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\DocumentoAtributoValor
+            mappedBy: fkLicitacaoDocumentosAtributos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro

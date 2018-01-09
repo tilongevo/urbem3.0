@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornadaOrdemPagamentoRetencao:
+    type: entity
+    table: tesouraria.arrecadacao_estornada_ordem_pagamento_retencao
+    id:
+        timestampEstornada:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_estornada
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        sequencial:
+            type: integer
+            nullable: false
+            options:
+                default: '1'
+    manyToOne:
+        fkTesourariaArrecadacaoEstornada:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornada
+            inversedBy: fkTesourariaArrecadacaoEstornadaOrdemPagamentoRetencoes
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                timestamp_estornada:
+                    referencedColumnName: timestamp_estornada
+        fkEmpenhoOrdemPagamentoRetencao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoRetencao
+            inversedBy: fkTesourariaArrecadacaoEstornadaOrdemPagamentoRetencoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                cod_plano:
+                    referencedColumnName: cod_plano
+                sequencial:
+                    referencedColumnName: sequencial

@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Ponto\ConfiguracaoRelogioPonto:
+    type: entity
+    table: ponto.configuracao_relogio_ponto
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        ultimoTimestamp:
+            type: datetime
+            nullable: false
+            column: ultimo_timestamp
+    oneToMany:
+        fkPontoConfiguracaoParametrosGerais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoParametrosGerais
+            mappedBy: fkPontoConfiguracaoRelogioPonto
+        fkPontoConfiguracaoBancoHoras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoBancoHoras
+            mappedBy: fkPontoConfiguracaoRelogioPonto
+        fkPontoConfiguracaoHorasExtras2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoHorasExtras2
+            mappedBy: fkPontoConfiguracaoRelogioPonto
+    oneToOne:
+        fkPontoConfiguracaoRelogioPontoExclusao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoRelogioPontoExclusao
+            mappedBy: fkPontoConfiguracaoRelogioPonto
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

@@ -1,0 +1,301 @@
+{% block body %}
+    {% block content %}
+        {% include 'RecursosHumanosBundle:FolhaPagamento/Relatorios:cabecalho.html.twig' %}
+        <table class="table-relatorio">
+            <tbody>
+            <tr>
+                <td>Tipo de Folha: {{ tipoFolha.stFolha }}</td>
+                <td>Competência: {{ tipoFolha.dtCompetencia }}</td>
+                <td>Periodo de Movimentação: {{ tipoFolha.rsPeriodoMovimentaco }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table-relatorio">
+            <thead>
+            <tr>
+                <th class="titulo">Contrato</th>
+                <th class="titulo">Nome do Servidor</th>
+                <th class="titulo">Hrs. Mensais</th>
+                <th class="titulo">Regime Função</th>
+                <th class="titulo">Data de Admissão</th>
+            </tr>
+            <tr>
+                <th colspan="2">Locatação/Local</th>
+                <th>Banco</th>
+                <th>Padrão</th>
+                <th>Situação</th>
+            </tr>
+            <tr>
+                <th colspan="2" class="titulo">PROVENTOS</th>
+                <th colspan="2" class="titulo">DESCONTOS</th>
+                <th class="titulo">BASES/INFORMATIVOS</th>
+            </tr>
+            </thead>
+        </table>
+        <div class="page-break" style="page-break-after: always;">
+            {% for arDado in folha.contratos %}
+                <table style="page-break-inside: avoid;" class="table-relatorio">
+                    <thead>
+                    <tr class="cabecalho">
+                        <th>{{ arDado.cabecalho.registro }}</th>
+                        <th>{{ arDado.cabecalho.nom_cgm }}</th>
+                        <th>{{ arDado.cabecalho.hr_mensais }}</th>
+                        <th>{{ arDado.cabecalho.descricao_regime_funcao }}/{{ arDado.cabecalho.descricao_funcao }}</th>
+                        <th>{{ arDado.cabecalho.dt_admissao }}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">{{ arDado.cabecalho.orgao }}-{{ arDado.cabecalho.descricao_lotacao }}/{{ arDado.cabecalho.descricao_local}}</th>
+                        <th>{{ arDado.cabecalho.descricao_banco }}</th>
+                        <th>{{ arDado.cabecalho.descricao_padrao }}</th>
+                        <th>{{ arDado.cabecalho.situacao }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <!-- Proventos -->
+                            <table class="table-relatorio">
+                                <tbody>
+                                {% set totalProvento = 0 %}
+                                {% for provento in arDado.provento %}
+                                    {% set totalProvento = totalProvento + provento.valorp %}
+                                    <tr>
+                                        <td>{{ provento.codigop }}</td>
+                                        <td>{{ provento.descricaop }}</td>
+                                        <td align="center">{{ provento.quantidadep|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                        <td align="center">{{ provento.valorp|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <!-- Desconto -->
+                            <table class="table-relatorio">
+                                <tbody>
+                                {% set totalDesconto = 0 %}
+                                {% for desconto in arDado.desconto %}
+                                    {% set totalDesconto = totalDesconto + desconto.valord %}
+                                    <tr>
+                                        <td>{{ desconto.codigod }}</td>
+                                        <td>{{ desconto.descricaod }}</td>
+                                        <td align="center">{{ desconto.quantidaded|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                        <td align="center">{{ desconto.valord|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                        <td colspan="3">
+                            <!-- Base -->
+                            <table class="table-relatorio">
+                                <tbody>
+                                {% for base in arDado.base %}
+                                    <tr>
+                                        <td>{{ base.codigob }}</td>
+                                        <td>{{ base.descricaob }}</td>
+                                        <td align="center">{{ base.quantidadeb|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                        <td align="center">{{ base.valorb|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- Proventos -->
+                            <table class="table-relatorio">
+                                <tbody>
+                                <tr class="titulo">
+                                    <td colspan="3">TOTAL DE PROVENTOS</td>
+                                    <td align="right">{{ totalProvento|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <!-- Desconto -->
+                            <table class="table-relatorio">
+                                <tbody>
+                                <tr class="titulo">
+                                    <td colspan="3">TOTAL DE DESCONTOS</td>
+                                    <td align="right">{{ totalDesconto|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+                        <td>
+                            <!-- Base -->
+                            <table class="table-relatorio">
+                                <tbody>
+                                <tr class="titulo">
+                                    <td colspan="3">LÍQUIDO</td>
+                                    <td align="right">{{ (totalProvento - totalDesconto)|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            {% endfor %}
+            <table class="table-relatorio">
+                <tbody>
+                <tr>
+                    <td>Tipo de Folha: {{ tipoFolha.stFolha }}</td>
+                    <td>Competência: {{ tipoFolha.dtCompetencia }}</td>
+                    <td>Periodo de Movimentação: {{ tipoFolha.rsPeriodoMovimentaco }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- Resumo Geral -->
+            <table class="table-relatorio">
+                <thead>
+                <tr>
+                    <th colspan="3" class="cabecalho">RESUMO GERAL</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="titulo">
+                    <td>PROVENTOS</td>
+                    <td>DESCONTOS</td>
+                    <td>BASE/INFORMATIVOS</td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <table class="table-relatorio">
+                            <tbody>
+                            <tr>
+                                <td>COD</td>
+                                <td>DESCRIÇÃO</td>
+                                <td>OCORRÊNCIAS</td>
+                                <td>VALOR</td>
+                            </tr>
+                            {% set totalResumoProvento = 0 %}
+                            {% for rProvento in folha.resumoGeralProvento %}
+                                {% set totalResumoProvento = totalResumoProvento + rProvento.valorp %}
+                                <tr>
+                                    <td>{{ rProvento.codigop }}</td>
+                                    <td>{{ rProvento.descricaop }}</td>
+                                    <td align="center">{{ rProvento.ocorrenciap }}</td>
+                                    <td align="center">{{ rProvento.valorp|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                    <td valign="top">
+                        <table class="table-relatorio">
+                            <tbody>
+                            <tr>
+                                <td>COD</td>
+                                <td>DESCRIÇÃO</td>
+                                <td>OCORRÊNCIAS</td>
+                                <td>VALOR</td>
+                            </tr>
+                            {% set totalResumoDesconto = 0 %}
+                            {% for rDesconto in folha.resumoGeralDesconto %}
+                                {% set totalResumoDesconto = totalResumoDesconto + rDesconto.valord %}
+                                <tr>
+                                    <td>{{ rDesconto.codigod }}</td>
+                                    <td>{{ rDesconto.descricaod }}</td>
+                                    <td align="center">{{ rDesconto.ocorrenciad }}</td>
+                                    <td align="center">{{ rDesconto.valord|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                    <td valign="top">
+                        <table class="table-relatorio">
+                            <tbody>
+                            <tr>
+                                <td>COD</td>
+                                <td>DESCRIÇÃO</td>
+                                <td>OCORRÊNCIAS</td>
+                                <td>VALOR</td>
+                            </tr>
+                            {% for rBase in folha.resumoGeralBase %}
+                                <tr>
+                                    <td>{{ rBase.codigob }}</td>
+                                    <td>{{ rBase.descricaob }}</td>
+                                    <td align="center">{{ rBase.ocorrenciab }}</td>
+                                    <td align="center">{{ rBase.valorb|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <!-- Proventos -->
+                        <table width="100%">
+                            <tbody>
+                            <tr>
+                                <td colspan="3">TOTAL DE PROVENTOS</td>
+                                <td align="center">{{ totalResumoProvento|number_format_decimal({'fraction_digits': 2}) }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td valign="top">
+                        <!-- Desconto -->
+                        <table width="100%">
+                            <tbody>
+                            <tr>
+                                <td colspan="3">TOTAL DE DESCONTOS</td>
+                                <td align="center">{{ totalResumoDesconto|number_format_decimal({'fraction_digits': 2}) }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td valign="top">
+                        <!-- Base -->
+                        <table width="100%">
+                            <tbody>
+                            <tr>
+                                <td colspan="3">LÍQUIDO</td>
+                                <td align="center">{{ (totalResumoProvento - totalResumoDesconto)|number_format_decimal({'fraction_digits': 2}) }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="3">
+                        <!-- Proventos -->
+                        <table width="100%">
+                            <tbody>
+                            <tr>
+                                <td colspan="3">TOTAL DE SERVIDORES: {{ folha.contratos|length }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="3">
+                        <!-- Proventos -->
+                        <table width="100%">
+                            <tbody>
+                            <tr>
+                                <td colspan="3">Legenda para Desdobramentos: A - Abono D - Adiantamento de Férias F - Férias I - Adiantamento de 13°</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endblock content %}
+{% endblock body %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio-folha-pagamento.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio-folha-pagamento.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

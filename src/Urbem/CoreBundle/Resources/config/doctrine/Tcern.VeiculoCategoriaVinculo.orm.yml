@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Tcern\VeiculoCategoriaVinculo:
+    type: entity
+    table: tcern.veiculo_categoria_vinculo
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+    fields:
+        codCategoria:
+            type: integer
+            nullable: false
+            column: cod_categoria
+    manyToOne:
+        fkTcernCategoriaVeiculoTce:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\CategoriaVeiculoTce
+            inversedBy: fkTcernVeiculoCategoriaVinculos
+            joinColumns:
+                cod_categoria:
+                    referencedColumnName: cod_categoria
+    oneToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkTcernVeiculoCategoriaVinculo
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo

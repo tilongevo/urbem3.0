@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Folhapagamento\LogErroCalculo:
+    type: entity
+    table: folhapagamento.log_erro_calculo
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\LogErroCalculoRepository
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        erro:
+            type: string
+            nullable: false
+            length: 2000
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEvento
+            inversedBy: fkFolhapagamentoLogErroCalculo
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_evento:
+                    referencedColumnName: cod_evento

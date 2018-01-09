@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcepb\TipoRegimeTrabalhoTce:
+    type: entity
+    table: tcepb.tipo_regime_trabalho_tce
+    id:
+        codTipoRegimeTrabalhoTce:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_regime_trabalho_tce
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 450
+    oneToMany:
+        fkPessoalDeParaTipoRegimeTrabalhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DeParaTipoRegimeTrabalho
+            mappedBy: fkTcepbTipoRegimeTrabalhoTce

@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Arrecadacao\AtributoGrupo:
+    type: entity
+    table: arrecadacao.atributo_grupo
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkArrecadacaoAtributoGrupos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkArrecadacaoGrupoCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoCredito
+            inversedBy: fkArrecadacaoAtributoGrupos
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToMany:
+        fkArrecadacaoAtributoGrupoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoGrupoValor
+            mappedBy: fkArrecadacaoAtributoGrupo

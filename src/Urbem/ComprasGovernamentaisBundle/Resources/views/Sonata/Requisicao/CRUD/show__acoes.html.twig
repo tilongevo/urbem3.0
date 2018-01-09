@@ -1,0 +1,37 @@
+{% macro action_button(text, icon, route = null, route_params = {}, col = 's3', class = '') %}
+    <div class="col {{ col|e }} center" style="margin-bottom: 10px">
+        {% if route is null  %}
+            <a class="white-text btn btn-success save grey lighten-2 disabled">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e }}
+            </a>
+        {% else %}
+            <a class="white-text blue darken-4 btn btn-success save {{ class|e }}"
+               href="{{ path(route, route_params) }}">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e }}
+            </a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+<div class="col s12">
+    <div class="row">
+        {% if object.homologar %}
+            {{ _self.action_button('Homologar', 'check-square-o', 'urbem_compras_governamentais_requisicao_homologar', { 'id': admin.objectKey(object) }) }}
+        {% else %}
+            {{ _self.action_button('Homologar', 'check-square-o') }}
+        {% endif %}
+
+        {% if object.anular %}
+            {{ _self.action_button('Anular Requisição', 'ban', 'urbem_compras_governamentais_requisicao_anular', { 'id': admin.objectKey(object) }, 's3', 'js-btn-anular') }}
+        {% else %}
+            {{ _self.action_button('Anular Requisição', 'ban') }}
+        {% endif %}
+
+        {% if object.anularHomologacao %}
+            {{ _self.action_button('Anular Homologacão', 'ban', 'urbem_compras_governamentais_requisicao_anular_homologacao', { 'id': admin.objectKey(object) }) }}
+        {% else %}
+            {{ _self.action_button('Anular Homologacão', 'ban') }}
+        {% endif %}
+    </div>
+    <div class="row"></div>
+</div>

@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Beneficio\Custo:
+    type: entity
+    table: beneficio.custo
+    id:
+        inicioVigencia:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: inicio_vigencia
+        valeTransporteCodValeTransporte:
+            type: integer
+            generator:
+                strategy: NONE
+            column: vale_transporte_cod_vale_transporte
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 15
+            scale: 2
+    manyToOne:
+        fkBeneficioValeTransporte:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ValeTransporte
+            inversedBy: fkBeneficioCustos
+            joinColumns:
+                vale_transporte_cod_vale_transporte:
+                    referencedColumnName: cod_vale_transporte

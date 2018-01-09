@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Administracao\RestricaoIntegridade:
+    type: entity
+    table: administracao.restricao_integridade
+    id:
+        codIntegridade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_integridade
+    fields:
+        nomIntegridade:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_integridade
+        descricao:
+            type: text
+            nullable: false
+    oneToMany:
+        fkAdministracaoAtributoIntegridades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoIntegridade
+            mappedBy: fkAdministracaoRestricaoIntegridade
+        fkSwAtributoIntegridades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoIntegridade
+            mappedBy: fkAdministracaoRestricaoIntegridade

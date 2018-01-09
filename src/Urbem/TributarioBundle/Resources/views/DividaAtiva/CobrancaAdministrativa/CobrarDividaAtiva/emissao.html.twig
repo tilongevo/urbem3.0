@@ -1,0 +1,36 @@
+<hr>
+<table class="bordered highlight" style="width:100%">
+<tr class="tr-rh">
+    <td>{{ 'label.tributarioCobrarDividaAtiva.emissaoCarnes'|trans }}</td>
+    <td>
+        <input type="radio" name="emissao" value="naoEmitir" checked>{{ 'label.tributarioCobrarDividaAtiva.naoEmitir'|trans }}
+        <input type="radio" name="emissao" value="impressaoLocal">{{ 'label.tributarioCobrarDividaAtiva.impressaoLocal'|trans }}
+    </td>
+</tr>
+<tr class="tr-rh">
+    <td>{{ 'label.tributarioCobrarDividaAtiva.modelo'|trans }}</td>
+    <td>
+        {% set modelos = admin.getModelos() %}
+        <select class="form-control" name="modelo">
+            <option>{{ 'label.selecione'|trans }}</option>
+            {% for modelo in modelos %}
+                <option value="{{ modelo.cod_modelo }}">{{ modelo.nom_modelo }}</option>
+            {% endfor %}
+        </select>
+    </td>
+</tr>
+<tr class="tr-rh">
+    <td>{{ 'label.tributarioCobrarDividaAtiva.emitirDocumentoCobranca'|trans }}</td>
+
+    <td>
+        <input type="checkbox" name="emitir">
+    </td>
+</tr>
+</table>
+<br>
+<a href="{{ path('urbem_tributario_divida_ativa_cobranca_administrativa_cobrar_divida_simulacao',
+    {'codModalidade': app.request.get('modalidade'), 'dtVencimento': app.request.get('dtVencimento'), 'parcelas': app.request.get('parcelas') }) }}"
+    target="_blank" class="waves-effect waves-light btn blue darken-4 btn btn-success save" data-placement="bottom"
+    title="{{ 'label.tributarioCobrarDividaAtiva.simulacao'|trans }}">
+    <i class="fa fa-file-text fa-lg"></i>&nbsp;{{ 'label.tributarioCobrarDividaAtiva.simulacao'|trans }}
+</a>

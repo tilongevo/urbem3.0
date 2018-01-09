@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoMotivo:
+    type: entity
+    table: pessoal.assentamento_motivo
+    id:
+        codMotivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_motivo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalAssentamentoAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            mappedBy: fkPessoalAssentamentoMotivo

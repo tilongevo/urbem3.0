@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoReforma:
+    type: entity
+    table: imobiliario.construcao_reforma
+    id:
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkImobiliarioConstrucao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Construcao
+            inversedBy: fkImobiliarioConstrucaoReformas
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+    oneToOne:
+        fkImobiliarioConstrucaoReformaProcesso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoReformaProcesso
+            mappedBy: fkImobiliarioConstrucaoReforma
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+                timestamp:
+                    referencedColumnName: timestamp

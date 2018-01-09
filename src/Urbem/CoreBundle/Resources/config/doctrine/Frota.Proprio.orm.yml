@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Frota\Proprio:
+    type: entity
+    table: frota.proprio
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Frota\ProprioRepository
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codBem:
+            type: integer
+            nullable: false
+            column: cod_bem
+    manyToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkFrotaProprios
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+    oneToOne:
+        fkFrotaVeiculoPropriedade:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoPropriedade
+            inversedBy: fkFrotaProprio
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+                timestamp:
+                    referencedColumnName: timestamp

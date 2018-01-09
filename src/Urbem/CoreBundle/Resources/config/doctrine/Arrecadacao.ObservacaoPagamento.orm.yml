@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ObservacaoPagamento:
+    type: entity
+    table: arrecadacao.observacao_pagamento
+    id:
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        ocorrenciaPagamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_pagamento
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkArrecadacaoPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Pagamento
+            inversedBy: fkArrecadacaoObservacaoPagamentos
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                ocorrencia_pagamento:
+                    referencedColumnName: ocorrencia_pagamento
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+        fkArrecadacaoTipoObservacao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\TipoObservacao
+            inversedBy: fkArrecadacaoObservacaoPagamentos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

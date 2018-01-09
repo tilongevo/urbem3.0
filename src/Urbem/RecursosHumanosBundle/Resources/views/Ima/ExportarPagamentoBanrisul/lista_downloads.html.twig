@@ -1,0 +1,119 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    <div class="row">
+        <div class="box box-primary">
+            <div class="box-body">
+                <table>
+                    <tr>
+                        <td style="width:50%;text-align:right">{{ 'label.imaExportarPagamentoBanrisul.competencia'|trans }}:</td>
+                        <td>{{ competencia }}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right">{{ 'label.imaExportarPagamentoBanrisul.periodoMovimentacao'|trans }}:</td>
+                        <td>{{ '%s a %s'|format(periodoCompetencia['dt_inicial'], periodoCompetencia['dt_final'])}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="box box-primary">
+            <div class="box-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">{{ 'label.imaExportarPagamentoBanrisul.resumoRemessa'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width:50%;text-align:right">{{ 'label.imaExportarPagamentoBanrisul.competencia'|trans }}:</td>
+                            <td>{{ q['competencia'] }}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">{{ 'label.imaExportarPagamentoBanrisul.cadastro'|trans }}:</td>
+                            <td>{{ tipoCadastro }}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">{{ 'label.imaExportarPagamentoBanrisul.dtGeracaoArquivo'|trans }}:</td>
+                            <td>{{ q['dtGeracaoArquivo'] }}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">{{ 'label.imaExportarPagamentoBanrisul.dtPagamento'|trans }}:</td>
+                            <td>{{ q['dtPagamento'] }}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">{{ 'label.imaExportarPagamentoBanrisul.valoresLiquidosDe'|trans }}:</td>
+                            {% set valoresLiquidosDe = q['valoresLiquidosDe']|number_format(2, ',', '.') %}
+                            {% if q['valoresLiquidosAte'] is defined %}
+                                {% set valoresLiquidosAte = q['valoresLiquidosAte']|number_format(2, ',', '.') %}
+                                <td>{{ '%s até %s'|format(valoresLiquidosDe, valoresLiquidosAte) }}</td>
+                            {% endif %}
+
+                            {% if q['valoresLiquidosAte'] is not defined %}
+                                <td>{{ valoresLiquidosDe }}</td>
+                            {% endif %}                            
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">{{ 'label.imaExportarPagamentoBanrisul.percentualAPagar'|trans }}:</td>
+                            <td>{{ q['percentualAPagar'] }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="box box-primary">
+            <div class="box-header col s12">
+                <h2 class="col s12 box-title left-align show">
+                    {{ 'label.imaExportarPagamentoBanrisul.registros'|trans }}
+                </h2>
+            </div>
+            <div class="box-body">
+                <form class="downloadArquivo" method="POST" action="{{ admin.generateUrl('download') }}" target="downloadArquivo">
+                    <input type="hidden" name="q">
+                    <input type="hidden" name="nomeArquivo">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>{{ 'label.imaExportarPagamentoBanrisul.arquivoGerado'|trans }}</th>
+                                <th>{{ 'label.imaExportarPagamentoBanrisul.seq'|trans }}</th>
+                                <th>{{ 'label.imaExportarPagamentoBanrisul.descricao'|trans }}</th>
+                                <th>{{ 'label.imaExportarPagamentoBanrisul.qtdRegistros'|trans }}</th>
+                                <th>{{ 'label.imaExportarPagamentoBanrisul.totalArquivo'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for arquivo in arquivos %}
+                                <tr>
+                                    <td>
+                                        <a href="#" data-nome-arquivo="{{ arquivo['nomeArquivo'] }}" >{{ arquivo['nomeArquivo'] }}</a>
+                                        <div class="q" style="display:none">{{ arquivo['filtro']|json_encode() }}</div>
+                                    </td>
+                                    <td>{{ arquivo['numSequencialArquivo'] }}</td>
+                                    <td>{{ arquivo['grupoConta']['descricao'] }}</td>
+                                    <td>{{ arquivo['totalRegistros'] }}</td>
+                                    <td>{{ arquivo['totalLiquido']|number_format(2, ',', '.') }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ totalRegistros }}</td>
+                                <td>{{ totalLiquido|number_format(2, ',', '.') }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <iframe name="downloadArquivo" style="display:none"></iframe>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

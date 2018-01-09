@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Ima\ModalidadeRecolhimento:
+    type: entity
+    table: ima.modalidade_recolhimento
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        sefip:
+            type: string
+            nullable: false
+            length: 1
+    oneToMany:
+        fkImaCategoriaSefips:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\CategoriaSefip
+            mappedBy: fkImaModalidadeRecolhimento

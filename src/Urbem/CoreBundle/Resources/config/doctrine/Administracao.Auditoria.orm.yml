@@ -1,0 +1,78 @@
+Urbem\CoreBundle\Entity\Administracao\Auditoria:
+    type: entity
+    table: administracao.auditoria
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: administracao.auditoria_seq
+                allocationSize: 1
+                initialValue: 1
+            column: id
+    fields:
+        numcgm:
+            type: integer
+            nullable: true
+        codAcao:
+            type: integer
+            nullable: true
+        nomcgm:
+            type: string
+            nullable: true
+            length: 255
+        ip:
+            type: string
+            nullable: true
+            length: 255
+        rota:
+            type: string
+            nullable: true
+            length: 255
+        modulo:
+            type: string
+            nullable: true
+            length: 255
+        submodulo:
+            type: string
+            nullable: true
+            length: 255
+        entidade:
+            type: string
+            nullable: true
+            length: 255
+        timestamp:
+            type: datetime
+            nullable: true
+            column: timestamp
+        transacao:
+            type: boolean
+            default: true
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        conteudo:
+            type: text
+            nullable: true
+        objeto:
+            type: text
+            nullable: true
+        tipo:
+            type: string
+            nullable: false
+            length: 100
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkAdministracaoAuditorias
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkAdministracaoAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Acao
+            inversedBy: fkAdministracaoAuditorias
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao

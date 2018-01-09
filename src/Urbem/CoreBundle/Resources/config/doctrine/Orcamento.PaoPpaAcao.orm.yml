@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Orcamento\PaoPpaAcao:
+    type: entity
+    table: orcamento.pao_ppa_acao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numPao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_pao
+    fields:
+        codAcao:
+            type: integer
+            nullable: false
+            column: cod_acao
+    manyToOne:
+        fkPpaAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Acao
+            inversedBy: fkOrcamentoPaoPpaAcoes
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+    oneToOne:
+        fkOrcamentoPao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Pao
+            inversedBy: fkOrcamentoPaoPpaAcao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_pao:
+                    referencedColumnName: num_pao

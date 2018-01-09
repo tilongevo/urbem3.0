@@ -1,0 +1,95 @@
+Urbem\CoreBundle\Entity\Tcern\Contrato:
+    type: entity
+    table: tcern.contrato
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        exercicioContrato:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_contrato
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        exercicioProcesso:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_processo
+        bimestre:
+            type: integer
+            nullable: false
+        codContaEspecifica:
+            type: string
+            nullable: false
+            length: 50
+            column: cod_conta_especifica
+        dtEntregaRecurso:
+            type: date
+            nullable: false
+            column: dt_entrega_recurso
+        valorRepasse:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_repasse
+        valorExecutado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_executado
+        receitaAplicacaoFinanceira:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: receita_aplicacao_financeira
+        dtRecebimentoSaldo:
+            type: date
+            nullable: false
+            column: dt_recebimento_saldo
+        dtPrestacaoContas:
+            type: date
+            nullable: false
+            column: dt_prestacao_contas
+    manyToOne:
+        fkTcernConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Convenio
+            inversedBy: fkTcernContratos
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                num_convenio:
+                    referencedColumnName: num_convenio
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkTcernContratos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio_processo:
+                    referencedColumnName: ano_exercicio

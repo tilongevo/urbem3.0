@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Tceto\TipoPagamento:
+    type: entity
+    table: tceto.tipo_pagamento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkTcetoTransferenciaTipoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\TransferenciaTipoPagamento
+            mappedBy: fkTcetoTipoPagamento
+        fkTcetoPagamentoTipoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\PagamentoTipoPagamento
+            mappedBy: fkTcetoTipoPagamento

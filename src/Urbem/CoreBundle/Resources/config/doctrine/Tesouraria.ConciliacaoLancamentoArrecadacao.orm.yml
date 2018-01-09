@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoArrecadacao:
+    type: entity
+    table: tesouraria.conciliacao_lancamento_arrecadacao
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        mes:
+            type: integer
+            generator:
+                strategy: NONE
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicioConciliacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_conciliacao
+    fields: {  }
+    manyToOne:
+        fkTesourariaConciliacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Conciliacao
+            inversedBy: fkTesourariaConciliacaoLancamentoArrecadacoes
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio_conciliacao:
+                    referencedColumnName: exercicio
+                mes:
+                    referencedColumnName: mes
+        fkTesourariaArrecadacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao
+            inversedBy: fkTesourariaConciliacaoLancamentoArrecadacoes
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao

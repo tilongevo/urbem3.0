@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Folhapagamento\FaixaPagamentoSalarioFamilia:
+    type: entity
+    table: folhapagamento.faixa_pagamento_salario_familia
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\FaixaPagamentoSalarioFamiliaRepository
+    id:
+        codFaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_faixa
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codRegimePrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_regime_previdencia
+    fields:
+        vlInicial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_inicial
+        vlFinal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_final
+        vlPagamento:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_pagamento
+    manyToOne:
+        fkFolhapagamentoSalarioFamilia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamilia
+            inversedBy: fkFolhapagamentoFaixaPagamentoSalarioFamilias
+            joinColumns:
+                cod_regime_previdencia:
+                    referencedColumnName: cod_regime_previdencia
+                timestamp:
+                    referencedColumnName: timestamp

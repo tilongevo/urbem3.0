@@ -1,0 +1,144 @@
+{% block body %}
+    {% block content %}
+        {% include 'FinanceiroBundle::Tesouraria/ConciliarConta/header.html.twig' %}
+        <table class="table table-bordered" xmlns="http://www.w3.org/1999/html">
+            <thead>
+                <tr>
+                    <th class="grey">{{ 'label.conciliarConta.entidade'|trans }}</th>
+                    <td>{{ entidade.codEntidade }} - {{ entidade.fkSwCgm.nomCgm }}</td>
+                </tr>
+                <tr>
+                    <th class="grey">{{ 'label.conciliarConta.conta'|trans }}</th>
+                    <td>{{ cabecalho.nom_conta }}</td>
+                </tr>
+                <tr>
+                    <th class="grey">{{ 'label.conciliarConta.dataExtrato'|trans }}</th>
+                    <td>{{ cabecalho.dt_extrato }}</td>
+                <tr>
+                    <th class="grey">{{ 'label.conciliarConta.saldoExtrato'|trans }}</th>
+                    <td>R$ {{ cabecalho.vl_extrato|number_format(2, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <th class="grey">{{ 'label.conciliarConta.mes'|trans }}</th>
+                    <td>{{ mesExtenso }}</td>
+                </tr>
+                <tr>
+                    <th class="grey">{{ 'label.conciliarConta.saldoTesouraria'|trans }}</th>
+                    <td>R$ {{ nuSaldoTesouraria|number_format(2, '.', ',') }}</td>
+                </tr>
+            </thead>
+        </table>
+        <div class="divider">
+            <p></p>
+        </div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th class="text-center grey" colspan="3">{{ 'label.conciliarConta.movimentacaoPendente'|trans }}</th>
+                </tr>
+                <tr>
+                    <th class="text-center" colspan="3">{{ 'label.conciliarConta.entradaBanco'|trans }}</th>
+                </tr>
+                <tr>
+                    <th class="text-center">{{ 'label.conciliarConta.data'|trans }}</th>
+                    <th class="text-center">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                    <th class="text-center">{{ 'label.conciliarConta.valor'|trans }}</th>
+                </tr>
+                {% for entradaB in entradaBanco %}
+                <tr>
+                    <td>{{ entradaB.movimentacao }}</td>
+                    <td>{{ entradaB.descricao }}</td>
+                    <td>R$ {{ entradaB.valor }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th class="text-center" colspan="3">
+                        {{ 'label.conciliarConta.saidaBanco'|trans }}
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">{{ 'label.conciliarConta.data'|trans }}</th>
+                    <th class="text-center">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                    <th class="text-center">{{ 'label.conciliarConta.valor'|trans }}</th>
+                </tr>
+                {% for saidaB in saidaBanco %}
+                <tr>
+                    <td>{% if saidaB.movimentacao is defined %} {{ saidaB.movimentacao }} {% endif %}</td>
+                    <td>{{ saidaB.descricao }}</td>
+                    <td>R$ {{ saidaB.valor }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th class="text-center" colspan="3">
+                        {{ 'label.conciliarConta.entradaTesouraria'|trans }}
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">{{ 'label.conciliarConta.data'|trans }}</th>
+                    <th class="text-center">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                    <th class="text-center">{{ 'label.conciliarConta.valor'|trans }}</th>
+                </tr>
+                {# ARRAY DE ENTRADAS NÃO CONSIDERADAS PELA TESOURARIA#}
+                {% for entradaT in entradaTesouraria %}
+                    <tr>
+                        <td>{{ entradaT.movimentacao }}</td>
+                        <td>{{ entradaT.descricao }}</td>
+                        <td>R$ {{ entradaT.valor }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th class="text-center" colspan="3">
+                        {{ 'label.conciliarConta.saidaTesouraria'|trans }}
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">{{ 'label.conciliarConta.data'|trans }}</th>
+                    <th class="text-center">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                    <th class="text-center">{{ 'label.conciliarConta.valor'|trans }}</th>
+                </tr>
+                {# ARRAY DE SAÍDAS NÃO CONSIDERADAS PELA TESOURARIA#}
+                {% for saidaT in saidaTesouraria %}
+                    <tr>
+                        <td>{{ saidaT.movimentacao }}</td>
+                        <td>{{ saidaT.descricao }}</td>
+                        <td>R$ {{ saidaT.valor }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th colspan="2" class="grey">{{ 'label.conciliarConta.saldoConciliado'|trans }}</th>
+                    <td>R$ {{ nuSaldoContabilConciliado }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-condensed">
+            <tr>
+                <td colspan="3">{{ 'label.conciliarConta.assinaturas'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.conciliarConta.nome'|trans }}</th>
+                <th>{{ 'label.conciliarConta.cargo'|trans }}</th>
+                <th>{{ 'label.conciliarConta.matricula'|trans }}</th>
+            </tr>
+            {# ARRAY DE SAÍDAS NÃO CONSIDERADAS PELA TESOURARIA#}
+            {% for assinatura in assinaturas %}
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <td>{{ assinatura.fkSwCgm.nomCgm }}</td>
+                    <td>{{ assinatura.cargo }}</td>
+                    <td>{{ assinatura.numMatricula }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock content %}
+{% endblock body %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+{% endblock %}

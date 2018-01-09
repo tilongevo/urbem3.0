@@ -1,0 +1,84 @@
+{% block body %}
+
+    {% block content %}
+
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        SIMULAÇÃO DO BORDERÔ
+
+        <table class="table table-bordered" xmlns="http://www.w3.org/1999/html">
+            <tbody>
+            <tr>
+                <th class="grey" colspan="2">Dados do Borderô</th>
+            </tr>
+            <tr>
+                <td>Número do Borderô</td>
+                <td>{{ bordero.codBordero ~ "/" ~ bordero.exercicio }}</td>
+            </tr>
+            <tr>
+                <td>Data do Borderô</td>
+                <td>{{ bordero.timestampBordero|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <td>Entidade</td>
+                <td>{{ bordero.fkTesourariaBoletim.fkEntidade.numcgm.nomCgm }}</td>
+            </tr>
+            <tr>
+                <td>Tipo de Borderô</td>
+                <td>{{ ultimaTransacao.codTipo }}</td>
+            </tr>
+            <tr>
+                <td>Conta Pagadora</td>
+                <td>{{ banco.codBanco ~ " - " ~ banco.nomBanco }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Dados do Boletim</th>
+            </tr>
+            <tr>
+                <td>Número do Boletim </td>
+                <td>{{ boletim.codBoletim ~ "/" ~ boletim.exercicio }}</td>
+            </tr>
+            <tr>
+                <td>Data do Boletim</td>
+                <td>{{ boletim.dtBoletim|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">
+                    {{ "Ao Banco " ~ banco.numBanco ~ " / " ~ banco.nomBanco }}
+                </th>
+            </tr>
+            <tr>
+                <td>Agência</td>
+                <td>{{ agencia.numAgencia ~ " / " ~ agencia.nomAgencia }}</td>
+            </tr>
+            <tr>
+                <td>Conta</td>
+                <td>{{ bordero.fkConciliacaoPlanoBanco.codContaCorrente.numContaCorrente }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            Autorizamos esta agência bancária a DEBITAR o valor total deste
+            Borderô em nossa conta corrente acima especificada,
+            e CREDITAR as respectivas contas bancárias dos credores abaixo relacionados.
+        </div>
+
+        {% include 'FinanceiroBundle::Tesouraria/Bordero/pdf_notas.html.twig' %}
+
+        <div>Autorizo.</div>
+        <div>{{ uf.nomUf ~ ", " ~ "now"|date("d \\d\\e M \\d\\e Y") }}</div>
+
+    {% endblock content %}
+
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+{% endblock %}

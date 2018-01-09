@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivosAnulacao:
+    type: entity
+    table: licitacao.convenio_aditivos_anulacao
+    id:
+        exercicioConvenio:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_convenio
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numAditivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_aditivo
+    fields:
+        dtAnulacao:
+            type: date
+            nullable: false
+            column: dt_anulacao
+        motivo:
+            type: string
+            nullable: false
+            length: 200
+    oneToOne:
+        fkLicitacaoConvenioAditivos:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivos
+            inversedBy: fkLicitacaoConvenioAditivosAnulacao
+            joinColumns:
+                exercicio_convenio:
+                    referencedColumnName: exercicio_convenio
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio
+                num_aditivo:
+                    referencedColumnName: num_aditivo

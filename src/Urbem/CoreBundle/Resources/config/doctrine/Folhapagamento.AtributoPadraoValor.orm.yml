@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Folhapagamento\AtributoPadraoValor:
+    type: entity
+    table: folhapagamento.atributo_padrao_valor
+    id:
+        codPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_padrao
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        timestampPadrao:
+            type: datetimepk
+            generator:
+                strategy: NONE
+            column: timestamp_padrao
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkFolhapagamentoPadraoPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PadraoPadrao
+            inversedBy: fkFolhapagamentoAtributoPadraoValores
+            joinColumns:
+                cod_padrao:
+                    referencedColumnName: cod_padrao
+                timestamp_padrao:
+                    referencedColumnName: timestamp
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkFolhapagamentoAtributoPadraoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

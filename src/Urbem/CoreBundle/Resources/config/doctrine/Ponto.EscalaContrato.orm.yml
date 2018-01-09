@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Ponto\EscalaContrato:
+    type: entity
+    table: ponto.escala_contrato
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codEscala:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_escala
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkPontoEscalaContratos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPontoEscala:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\Escala
+            inversedBy: fkPontoEscalaContratos
+            joinColumns:
+                cod_escala:
+                    referencedColumnName: cod_escala
+    oneToOne:
+        fkPontoEscalaContratoExclusao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\EscalaContratoExclusao
+            mappedBy: fkPontoEscalaContrato
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_escala:
+                    referencedColumnName: cod_escala
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,26 @@
+<table class="bordered highlight" style="width:100%">
+<tr class="tr-rh">
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.inscricaoDivida'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.exercicioDevedor'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.inscricao'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.dadosComplementares'|trans }}</th>
+</tr>
+{% set inscricoes = field.data.inscricoesVinculadas %}
+{% if inscricoes %}
+{% for inscricao in inscricoes %}
+<tr>
+<td>{{ inscricao.cod_inscricao }}/{{ inscricao.exercicio }}</td>
+<td>{{ inscricao.exercicio_original }}</td>
+<td>{{ admin.getInscricaoMunicipal(inscricao.cod_inscricao, inscricao.exercicio) }}</td>
+{% set inscricaoAno = inscricao.cod_inscricao ~ '/' ~ inscricao.exercicio %}
+{% set complementar = admin.getComplementar(inscricaoAno)|first %}
+{% if complementar and complementar.inscricao_tipo == 'imobiliaria' %}
+<td>{{ complementar.descricao_credito }}</td>
+{% else %}
+<td>-</td>
+{% endif %}
+</tr>
+{% endfor %}
+{% endif %}
+</tr>
+</table>

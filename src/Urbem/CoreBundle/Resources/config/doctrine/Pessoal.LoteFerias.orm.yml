@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Pessoal\LoteFerias:
+    type: entity
+    table: pessoal.lote_ferias
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\LoteFeriasRepository
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        nome:
+            type: string
+            nullable: false
+            length: 200
+        mesCompetencia:
+            type: string
+            nullable: false
+            length: 2
+            column: mes_competencia
+        anoCompetencia:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_competencia
+    oneToMany:
+        fkPessoalLoteFeriasLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LoteFeriasLocal
+            mappedBy: fkPessoalLoteFerias
+        fkPessoalLoteFeriasFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LoteFeriasFuncao
+            mappedBy: fkPessoalLoteFerias
+        fkPessoalLoteFeriasLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LoteFeriasLote
+            mappedBy: fkPessoalLoteFerias
+        fkPessoalLoteFeriasOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LoteFeriasOrgao
+            mappedBy: fkPessoalLoteFerias
+        fkPessoalLoteFeriasContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LoteFeriasContrato
+            mappedBy: fkPessoalLoteFerias

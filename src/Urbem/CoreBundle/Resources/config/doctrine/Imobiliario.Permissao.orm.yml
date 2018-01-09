@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Imobiliario\Permissao:
+    type: entity
+    table: imobiliario.permissao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkImobiliarioTipoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoLicenca
+            inversedBy: fkImobiliarioPermissoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkImobiliarioPermissoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkImobiliarioLicencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Licenca
+            mappedBy: fkImobiliarioPermissao

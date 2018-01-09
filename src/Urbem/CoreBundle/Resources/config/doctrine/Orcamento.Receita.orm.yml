@@ -1,0 +1,249 @@
+Urbem\CoreBundle\Entity\Orcamento\Receita:
+    type: entity
+    table: orcamento.receita
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\ReceitaRepository
+    uniqueConstraints:
+        uk_receita_1:
+            columns:
+                - exercicio
+                - cod_conta
+                - cod_recurso
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+    fields:
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codRecurso:
+            type: integer
+            nullable: false
+            column: cod_recurso
+        dtCriacao:
+            type: date
+            nullable: true
+            column: dt_criacao
+        vlOriginal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: vl_original
+        creditoTributario:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: credito_tributario
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkOrcamentoReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkOrcamentoReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkOrcamentoContaReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaReceita
+            inversedBy: fkOrcamentoReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+    oneToMany:
+        fkContabilidadeDesdobramentoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\DesdobramentoReceita
+            mappedBy: fkOrcamentoReceita
+        fkContabilidadeDesdobramentoReceitas1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\DesdobramentoReceita
+            mappedBy: fkOrcamentoReceita1
+        fkContabilidadeLancamentoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoReceita
+            mappedBy: fkOrcamentoReceita
+        fkContabilidadeTransferenciaReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\TransferenciaReceita
+            mappedBy: fkOrcamentoReceita
+        fkEmpenhoOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoRetencao
+            mappedBy: fkOrcamentoReceita
+        fkOrcamentoReceitaCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReceitaCredito
+            mappedBy: fkOrcamentoReceita
+        fkOrcamentoReceitaCreditoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReceitaCreditoAcrescimo
+            mappedBy: fkOrcamentoReceita
+        fkOrcamentoPrevisaoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\PrevisaoReceita
+            mappedBy: fkOrcamentoReceita
+        fkStnVinculoStnReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\VinculoStnReceita
+            mappedBy: fkOrcamentoReceita
+        fkStnVinculoSaudeRreo12s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\VinculoSaudeRreo12
+            mappedBy: fkOrcamentoReceita
+        fkStnAporteRecursoRppsReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\AporteRecursoRppsReceita
+            mappedBy: fkOrcamentoReceita
+        fkTesourariaArrecadacaoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoReceita
+            mappedBy: fkOrcamentoReceita
+        fkTesourariaArrecadacaoReceitaDedutoras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoReceitaDedutora
+            mappedBy: fkOrcamentoReceita
+        fkStnContaDedutoraTributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\ContaDedutoraTributos
+            mappedBy: fkOrcamentoReceita
+        fkOrcamentoReceitaCreditoDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReceitaCreditoDesconto
+            mappedBy: fkOrcamentoReceita
+    oneToOne:
+        fkManadReceitaCaracPeculiarReceita:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Manad\ReceitaCaracPeculiarReceita
+            mappedBy: fkOrcamentoReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+        fkOrcamentoReceitaCreditoTributario:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReceitaCreditoTributario
+            mappedBy: fkOrcamentoReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+        fkTcemgReceitaIndentificadoresPeculiarReceita:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ReceitaIndentificadoresPeculiarReceita
+            mappedBy: fkOrcamentoReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+        fkTcersReceitaCaracPeculiarReceita:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\ReceitaCaracPeculiarReceita
+            mappedBy: fkOrcamentoReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+        fkTcetoReceitaIndentificadoresPeculiarReceita:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\ReceitaIndentificadoresPeculiarReceita
+            mappedBy: fkOrcamentoReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+        fkTcernReceitaTc:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ReceitaTc
+            mappedBy: fkOrcamentoReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita

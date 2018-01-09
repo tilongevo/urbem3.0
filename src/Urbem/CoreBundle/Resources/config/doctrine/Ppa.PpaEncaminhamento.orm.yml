@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Ppa\PpaEncaminhamento:
+    type: entity
+    table: ppa.ppa_encaminhamento
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codPeriodicidade:
+            type: integer
+            nullable: false
+            column: cod_periodicidade
+        dtEncaminhamento:
+            type: date
+            nullable: false
+            column: dt_encaminhamento
+        dtDevolucao:
+            type: date
+            nullable: false
+            column: dt_devolucao
+        nroProtocolo:
+            type: string
+            nullable: false
+            length: 9
+            column: nro_protocolo
+    manyToOne:
+        fkPpaPeriodicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Periodicidade
+            inversedBy: fkPpaPpaEncaminhamentos
+            joinColumns:
+                cod_periodicidade:
+                    referencedColumnName: cod_periodicidade
+    oneToOne:
+        fkPpaPpaPublicacao:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\PpaPublicacao
+            inversedBy: fkPpaPpaEncaminhamento
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+                timestamp:
+                    referencedColumnName: timestamp

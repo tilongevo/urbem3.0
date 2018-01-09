@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSubDivisaoFuncao:
+    type: entity
+    table: pessoal.contrato_servidor_sub_divisao_funcao
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorSubDivisaoFuncaoRepository
+    id:
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkPessoalContratoServidorSubDivisaoFuncoes
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorSubDivisaoFuncoes
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

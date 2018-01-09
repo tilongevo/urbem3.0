@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Tesouraria\PermissaoTerminal:
+    type: entity
+    table: tesouraria.permissao_terminal
+    id:
+        codTerminal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_terminal
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkTesourariaTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Terminal
+            inversedBy: fkTesourariaPermissaoTerminais
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTesourariaPermissaoTerminais
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

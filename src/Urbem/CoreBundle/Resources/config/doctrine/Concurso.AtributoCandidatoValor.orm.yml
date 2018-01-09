@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Concurso\AtributoCandidatoValor:
+    type: entity
+    table: concurso.atributo_candidato_valor
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codCandidato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_candidato
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        timestamp:
+            type: datetime
+            nullable: true
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkConcursoAtributoCandidatoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkConcursoCandidato:
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\Candidato
+            inversedBy: fkConcursoAtributoCandidatoValores
+            joinColumns:
+                cod_candidato:
+                    referencedColumnName: cod_candidato

@@ -1,0 +1,28 @@
+{#{% set organogramaAtual = field.data.organogramaAtual %}#}
+<div class="row">
+    <div>
+        <table class="bordered highlight">
+            <thead>
+            <tr>
+                <th width="3%"></th>
+                <th width="50%">{{ 'label.itens.item'|trans }}</th>
+                <th>{{ 'label.itens.centroCusto'|trans }}</th>
+                <th class="right-align">{{ 'label.itens.qtde'|trans }}</th>
+                <th class="right-align">{{ 'label.itens.valorTotal'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for mapa in object.mapaItems %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ mapa.fkComprasSolicitacaoItem.fkAlmoxarifadoCatalogoItem.descricao }}</td>
+                    <td>{{ mapa.fkComprasSolicitacaoItem.fkAlmoxarifadoCentroCusto.descricao }}</td>
+                    <td class="right-align">{{ mapa.quantidade|number_format(0, '', ' ') }}</td>
+                    <td class="right-align">{{ mapa.vlTotal|number_format(2, ',', ' ') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>

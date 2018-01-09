@@ -1,0 +1,36 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Imobiliario/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'label.corretagemReport.cgm'|trans }}</td>
+                    <td>{{ 'label.corretagemReport.creci'|trans }}</td>
+                    <td>{{ 'label.corretagemReport.responsavel'|trans|upper }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for corretagem in corretagens %}
+                    <tr>
+                        <td class="text_align_left ">{{ corretagem.numcgm }} - {{ corretagem.nom_cgm }}</td>
+                        <td class="text_align_left ">{{ corretagem.creci }}</td>
+                        <td class="text_align_left ">{{ corretagem.nom_cgm_resp }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p><strong>{{ 'label.corretagemReport.totalRegistros'|trans }} :</strong> {{ corretagens|length }}</p>
+        <p><strong>{{ 'label.corretagemReport.filtrosUtilizados'|trans }}</strong></p>
+        {% if params.nome is defined %} <p><strong>{{ 'label.corretagemReport.nome'|trans }} :</strong>  {{ params.nome }} {% endif %}
+        {% if params.cgmDe is defined %} <p><strong>{{ 'label.corretagemReport.cgmDe'|trans }} :</strong>  {{ params.cgmDe }} {% endif %}
+        {% if params.cgmAte is defined %} <p><strong>{{ 'label.corretagemReport.cgmAte'|trans }} :</strong>  {{ params.cgmAte }} {% endif %}
+        {% if params.ordenacao is defined %} <p><strong>{{ 'label.corretagemReport.ordenacao'|trans }} :</strong>  {{ params.ordenacao }} {% endif %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Tcemg\CronogramaExecucaoMensalDesembolso:
+    type: entity
+    table: tcemg.cronograma_execucao_mensal_desembolso
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        periodo:
+            type: integer
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        valor:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkTcemgGruposDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\GruposDespesa
+            inversedBy: fkTcemgCronogramaExecucaoMensalDesembolsos
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+        fkTcemgUniorcam:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Uniorcam
+            inversedBy: fkTcemgCronogramaExecucaoMensalDesembolsos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao

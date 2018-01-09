@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Tcers\PlanoContaEntidade:
+    type: entity
+    table: tcers.plano_conta_entidade
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+    fields:
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcersPlanoContaEntidades
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkTcersPlanoContaEntidade
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio

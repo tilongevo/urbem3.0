@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Ponto\FaixasDias:
+    type: entity
+    table: ponto.faixas_dias
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codFaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_faixa
+        codDia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dia
+    fields: {  }
+    manyToOne:
+        fkPontoFaixasHorasExtra:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FaixasHorasExtra
+            inversedBy: fkPontoFaixasDias
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_faixa:
+                    referencedColumnName: cod_faixa
+        fkPessoalDiasTurno:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DiasTurno
+            inversedBy: fkPontoFaixasDias
+            joinColumns:
+                cod_dia:
+                    referencedColumnName: cod_dia

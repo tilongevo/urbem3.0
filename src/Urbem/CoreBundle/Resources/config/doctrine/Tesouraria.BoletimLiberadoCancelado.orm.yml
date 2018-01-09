@@ -1,0 +1,82 @@
+Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberadoCancelado:
+    type: entity
+    table: tesouraria.boletim_liberado_cancelado
+    id:
+        codBoletim:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_boletim
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestampLiberado:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_liberado
+        timestampFechamento:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_fechamento
+    fields:
+        timestampCancelado:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_cancelado
+        codTerminal:
+            type: integer
+            nullable: false
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_usuario
+    manyToOne:
+        fkTesourariaBoletimFechado:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimFechado
+            inversedBy: fkTesourariaBoletimLiberadoCancelados
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_fechamento:
+                    referencedColumnName: timestamp_fechamento
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTesourariaBoletimLiberadoCancelados
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaBoletimLiberadoCancelados
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario

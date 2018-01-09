@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Tcepe\CgmAgentePolitico:
+    type: entity
+    table: tcepe.cgm_agente_politico
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codAgentePolitico:
+            type: integer
+            nullable: false
+            column: cod_agente_politico
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcepeCgmAgentePoliticos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcepeAgentePolitico:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\AgentePolitico
+            inversedBy: fkTcepeCgmAgentePoliticos
+            joinColumns:
+                cod_agente_politico:
+                    referencedColumnName: cod_agente_politico
+    oneToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkTcepeCgmAgentePolitico
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

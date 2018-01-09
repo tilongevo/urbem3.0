@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Tcepb\ElementoDePara:
+    type: entity
+    table: tcepb.elemento_de_para
+    id:
+        estrutural:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+    fields: {  }
+    manyToOne:
+        fkTcepbElementoTribunal:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\ElementoTribunal
+            inversedBy: fkTcepbElementoDeParas
+            joinColumns:
+                estrutural:
+                    referencedColumnName: estrutural
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkTcepbElementoDeParas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta

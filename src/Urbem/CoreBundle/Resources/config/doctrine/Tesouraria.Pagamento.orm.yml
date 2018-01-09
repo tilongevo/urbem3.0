@@ -1,0 +1,175 @@
+Urbem\CoreBundle\Entity\Tesouraria\Pagamento:
+    type: entity
+    table: tesouraria.pagamento
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        codAutenticacao:
+            type: integer
+            nullable: false
+            column: cod_autenticacao
+        dtAutenticacao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_autenticacao
+        codBoletim:
+            type: integer
+            nullable: false
+            column: cod_boletim
+        exercicioBoletim:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_boletim
+        codTerminal:
+            type: integer
+            nullable: false
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_usuario
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+        exercicioPlano:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_plano
+    manyToOne:
+        fkTesourariaBoletim:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Boletim
+            inversedBy: fkTesourariaPagamentos
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_boletim:
+                    referencedColumnName: exercicio
+        fkTesourariaAutenticacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Autenticacao
+            inversedBy: fkTesourariaPagamentos
+            joinColumns:
+                cod_autenticacao:
+                    referencedColumnName: cod_autenticacao
+                dt_autenticacao:
+                    referencedColumnName: dt_autenticacao
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaPagamentos
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTesourariaPagamentos
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio_plano:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkTcetoPagamentoTipoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\PagamentoTipoPagamento
+            mappedBy: fkTesourariaPagamento
+        fkTcmbaPagamentoTipoDocumentoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\PagamentoTipoDocumentoPagamento
+            mappedBy: fkTesourariaPagamento
+        fkTesourariaPagamentoEstornados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\PagamentoEstornado
+            mappedBy: fkTesourariaPagamento
+        fkTesourariaPagamentoTipoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\PagamentoTipoDocumento
+            mappedBy: fkTesourariaPagamento
+        fkTcealPagamentoTipoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\PagamentoTipoDocumento
+            mappedBy: fkTesourariaPagamento
+        fkTcemgPagamentoTipoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\PagamentoTipoDocumento
+            mappedBy: fkTesourariaPagamento
+    oneToOne:
+        fkTcepbPagamentoOrigemRecursosInterna:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\PagamentoOrigemRecursosInterna
+            mappedBy: fkTesourariaPagamento
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_nota:
+                    referencedColumnName: cod_nota
+        fkEmpenhoNotaLiquidacaoPaga:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPaga
+            inversedBy: fkTesourariaPagamento
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_nota:
+                    referencedColumnName: cod_nota
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Patrimonio\BemPlanoDepreciacao:
+    type: entity
+    table: patrimonio.bem_plano_depreciacao
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+    manyToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioBemPlanoDepreciacoes
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkPatrimonioBemPlanoDepreciacoes
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

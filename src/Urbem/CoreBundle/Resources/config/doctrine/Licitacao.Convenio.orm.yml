@@ -1,0 +1,172 @@
+Urbem\CoreBundle\Entity\Licitacao\Convenio:
+    type: entity
+    table: licitacao.convenio
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Licitacao\ConvenioRepository
+    id:
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        cgmResponsavel:
+            type: integer
+            nullable: false
+            column: cgm_responsavel
+        codObjeto:
+            type: integer
+            nullable: false
+            column: cod_objeto
+        codTipoConvenio:
+            type: integer
+            nullable: false
+            column: cod_tipo_convenio
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        observacao:
+            type: text
+            nullable: true
+        dtAssinatura:
+            type: date
+            nullable: false
+            column: dt_assinatura
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        inicioExecucao:
+            type: date
+            nullable: false
+            column: inicio_execucao
+        fundamentacao:
+            type: string
+            nullable: false
+            length: 100
+        codNormaAutorizativa:
+            type: integer
+            nullable: false
+            column: cod_norma_autorizativa
+        codUfTipoConvenio:
+            type: integer
+            nullable: false
+            column: cod_uf_tipo_convenio
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoConvenios
+            joinColumns:
+                cgm_responsavel:
+                    referencedColumnName: numcgm
+        fkComprasObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Objeto
+            inversedBy: fkLicitacaoConvenios
+            joinColumns:
+                cod_objeto:
+                    referencedColumnName: cod_objeto
+        fkLicitacaoTipoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoConvenio
+            inversedBy: fkLicitacaoConvenios
+            joinColumns:
+                cod_tipo_convenio:
+                    referencedColumnName: cod_tipo_convenio
+                cod_uf_tipo_convenio:
+                    referencedColumnName: cod_uf_tipo_convenio
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkLicitacaoConvenios
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkLicitacaoConvenios
+            joinColumns:
+                cod_norma_autorizativa:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkComprasSolicitacaoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoConvenio
+            mappedBy: fkLicitacaoConvenio
+        fkEmpenhoEmpenhoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoConvenio
+            mappedBy: fkLicitacaoConvenio
+        fkLicitacaoConvenioAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivos
+            mappedBy: fkLicitacaoConvenio
+        fkLicitacaoParticipanteConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteConvenio
+            mappedBy: fkLicitacaoConvenio
+        fkLicitacaoPublicacaoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PublicacaoConvenio
+            mappedBy: fkLicitacaoConvenio
+    oneToOne:
+        fkLicitacaoConvenioAnulado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ConvenioAnulado
+            mappedBy: fkLicitacaoConvenio
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio
+        fkLicitacaoRescisaoConvenio:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\RescisaoConvenio
+            mappedBy: fkLicitacaoConvenio
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio_convenio
+        fkTceamEsferaConvenio:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\EsferaConvenio
+            mappedBy: fkLicitacaoConvenio
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio

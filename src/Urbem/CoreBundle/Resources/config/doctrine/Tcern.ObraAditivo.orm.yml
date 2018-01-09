@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Tcern\ObraAditivo:
+    type: entity
+    table: tcern.obra_aditivo
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        obraContratoId:
+            type: integer
+            nullable: false
+            column: obra_contrato_id
+        numAditivo:
+            type: string
+            nullable: false
+            length: 10
+            column: num_aditivo
+        dtAditivo:
+            type: date
+            nullable: false
+            column: dt_aditivo
+        prazo:
+            type: string
+            nullable: false
+            length: 100
+        prazoAditado:
+            type: string
+            nullable: false
+            length: 100
+            column: prazo_aditado
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        valorAditado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_aditado
+        numArt:
+            type: integer
+            nullable: false
+            column: num_art
+        motivo:
+            type: string
+            nullable: false
+            length: 255
+    manyToOne:
+        fkTcernObraContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ObraContrato
+            inversedBy: fkTcernObraAditivos
+            joinColumns:
+                obra_contrato_id:
+                    referencedColumnName: id

@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoAnulacao:
+    type: entity
+    table: almoxarifado.requisicao_anulacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRequisicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_requisicao
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        motivo:
+            type: string
+            nullable: false
+            length: 500
+    manyToOne:
+        fkAlmoxarifadoRequisicao:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Requisicao
+            inversedBy: fkAlmoxarifadoRequisicaoAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_requisicao:
+                    referencedColumnName: cod_requisicao
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+    oneToMany:
+        fkAlmoxarifadoRequisicaoItensAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItensAnulacao
+            mappedBy: fkAlmoxarifadoRequisicaoAnulacao

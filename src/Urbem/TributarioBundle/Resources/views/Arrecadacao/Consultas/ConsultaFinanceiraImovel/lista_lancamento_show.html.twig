@@ -1,0 +1,36 @@
+<table class="bordered highlight striped">
+    <tbody>
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.lancamento'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.data'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.referencia'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.parcelas'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.cotasUnicas'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.valorCalculado'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.valorLancado'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.tipo'|trans }}</th>
+            <th class="th-rh">&nbsp;</th>
+        </tr>
+        <tr class="tr-rh">
+            {% if admin.getListaLancamentos(admin.getSubject()) %}
+                {% for listaLancamento in admin.getListaLancamentos(admin.getSubject()) %}
+                    <tr class="tr-rh striped">
+                        <td>{{ listaLancamento.cod_lancamento }}</td>
+                        <td>{{ listaLancamento.timestamp_calculo }}</td>
+                        <td>{{ listaLancamento.origem }}</td>
+                        <td>{{ listaLancamento.num_parcelas }}</td>
+                        <td>{{ listaLancamento.num_unicas }}</td>
+                        <td>{{ listaLancamento.valor_calculado|number_format('2',',','.') }}</td>
+                        <td>{{ listaLancamento.valor_lancamento|number_format('2',',','.') }}</td>
+                        <td>{{ listaLancamento.tipo_calculo }}</td>
+                        <td>
+                            <a class="btn-floating white-text blue darken-4" href="{{ path('urbem_tributario_arrecadacao_consultas_consulta_arrecadacao_show', {id : listaLancamento.cod_lancamento}) }}">
+                                <i class="material-icons">search</i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tr>
+    </tbody>
+</table>

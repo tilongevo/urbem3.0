@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaPrevidencia:
+    type: entity
+    table: pessoal.contrato_pensionista_previdencia
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codPrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_previdencia
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        boExcluido:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: bo_excluido
+    manyToOne:
+        fkPessoalContratoPensionista:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionista
+            inversedBy: fkPessoalContratoPensionistaPrevidencias
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkFolhapagamentoPrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Previdencia
+            inversedBy: fkPessoalContratoPensionistaPrevidencias
+            joinColumns:
+                cod_previdencia:
+                    referencedColumnName: cod_previdencia

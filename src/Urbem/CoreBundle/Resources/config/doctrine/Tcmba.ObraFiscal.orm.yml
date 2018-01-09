@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Tcmba\ObraFiscal:
+    type: entity
+    table: tcmba.obra_fiscal
+    id:
+        codObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_obra
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        matricula:
+            type: string
+            nullable: true
+            length: 10
+        registroProfissional:
+            type: string
+            nullable: true
+            length: 16
+            column: registro_profissional
+        dataInicio:
+            type: date
+            nullable: false
+            column: data_inicio
+        dataFinal:
+            type: date
+            nullable: false
+            column: data_final
+    manyToOne:
+        fkTcmbaObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            inversedBy: fkTcmbaObraFiscais
+            joinColumns:
+                cod_obra:
+                    referencedColumnName: cod_obra
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmbaObraFiscais
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

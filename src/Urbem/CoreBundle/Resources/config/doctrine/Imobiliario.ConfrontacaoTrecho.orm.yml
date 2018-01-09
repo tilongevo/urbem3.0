@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Imobiliario\ConfrontacaoTrecho:
+    type: entity
+    table: imobiliario.confrontacao_trecho
+    id:
+        codConfrontacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_confrontacao
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        codTrecho:
+            type: integer
+            nullable: false
+            column: cod_trecho
+        codLogradouro:
+            type: integer
+            nullable: false
+            column: cod_logradouro
+        principal:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkImobiliarioTrecho:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Trecho
+            inversedBy: fkImobiliarioConfrontacaoTrechos
+            joinColumns:
+                cod_trecho:
+                    referencedColumnName: cod_trecho
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+    oneToMany:
+        fkImobiliarioImovelConfrontacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelConfrontacao
+            mappedBy: fkImobiliarioConfrontacaoTrecho
+    oneToOne:
+        fkImobiliarioConfrontacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Confrontacao
+            inversedBy: fkImobiliarioConfrontacaoTrecho
+            joinColumns:
+                cod_confrontacao:
+                    referencedColumnName: cod_confrontacao
+                cod_lote:
+                    referencedColumnName: cod_lote

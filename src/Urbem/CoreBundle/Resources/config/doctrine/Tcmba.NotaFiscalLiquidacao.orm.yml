@@ -1,0 +1,67 @@
+Urbem\CoreBundle\Entity\Tcmba\NotaFiscalLiquidacao:
+    type: entity
+    table: tcmba.nota_fiscal_liquidacao
+    id:
+        codNotaLiquidacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota_liquidacao
+        exercicioLiquidacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_liquidacao
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        ano:
+            type: string
+            nullable: true
+            length: 4
+        nroNota:
+            type: string
+            nullable: true
+            length: 20
+            column: nro_nota
+        nroSerie:
+            type: string
+            nullable: true
+            length: 8
+            column: nro_serie
+        nroSubserie:
+            type: string
+            nullable: true
+            length: 8
+            column: nro_subserie
+        dataEmissao:
+            type: date
+            nullable: true
+            column: data_emissao
+        vlNota:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_nota
+        descricao:
+            type: text
+            nullable: true
+        codUf:
+            type: integer
+            nullable: true
+            column: cod_uf
+    oneToOne:
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkTcmbaNotaFiscalLiquidacao
+            joinColumns:
+                exercicio_liquidacao:
+                    referencedColumnName: exercicio
+                cod_nota_liquidacao:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade

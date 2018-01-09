@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeDocumento:
+    type: entity
+    table: fiscalizacao.penalidade_documento
+    id:
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+    manyToOne:
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoPenalidadeDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToOne:
+        fkFiscalizacaoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Penalidade
+            inversedBy: fkFiscalizacaoPenalidadeDocumento
+            joinColumns:
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade

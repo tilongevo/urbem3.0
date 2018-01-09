@@ -1,0 +1,152 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <div class="container-rh">
+        <div class="col s12">
+            <h4 class="blue-text text-darken-4">Registrar folha complementar</h4>
+            <div class="divider grey title-divider"><p>1</p></div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l4">
+                <table class="bordered">
+                    <thead class="thead-rh">
+                        <tr class="tr-rh"><h6 class="blue-text text-darken-4 center title-table">Período de movimentação em aberto</h6></tr>
+                    </thead>
+                    <tbody>
+                    <tr class="tr-rh">
+                        <th class="th-rh">Data Inicial</th>
+                        <td class="td-rh-folha">{{ folhaComplementar.dt_inicial }}</td>
+                    </tr>
+                    <tr class="tr-rh">
+                        <th class="th-rh">Data Final</th>
+                        <td class="td-rh-folha">{{ folhaComplementar.dt_final }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col s12 m12 l4  ">
+                <table class="bordered">
+                    <thead class="thead-rh">
+                    <tr class="tr-rh"><h6 class="blue-text text-darken-4 center title-table">Folha complementar</h6></tr>
+                    </thead>
+                    <tbody>
+                    <tr class="tr-rh">
+                        <th class="th-rh">Situação</th>
+                        <td class="td-rh-folha">{% if(folha.situacao != 'a')  %}{{ folha.situacao }}{% else %}Aberto{% endif %}</td>
+
+                    </tr>
+                    <tr class="tr-rh">
+                        <th class="th-rh">Data Abertura</th>
+                        <td class="td-rh-folha">{% if(folha.situacao != 'a')  %}{% else %}{{ folha.data|date("d/m/Y H:i:s") }}{% endif %}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col s12 m12 l4">
+                <table class="bordered">
+                    <thead class="thead-rh">
+                    <tr class="tr-rh"><h6 class="blue-text text-darken-4 center title-table">Folha Salário</h6></tr>
+                    </thead>
+                    <tbody>
+                    <tr class="tr-rh">
+                        <th class="th-rh">Situação Final</th>
+                        <td class="td-rh-folha">{% if(folhaSituacao.situacao == 'f')  %}Fechado{% else %}Aberto{% endif %}</td>
+                    </tr>
+                    <tr class="tr-rh">
+                        <th class="th-rh">{% if(folhaSituacao.situacao == 'f')  %}Fechado em{% else %}Aberto em{% endif %}</th>
+                        <td class="td-rh-folha">{{ folhaSituacao.timestamp|date("d/m/Y H:i:s") }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l6">
+                <table class="bordered striped">
+                    <thead class="thead-rh">
+                    <tr class="tr-rh"><h6 class="blue-text text-darken-4 center title-table" class="blue-text text-darken-4 center title-table">Folhas Complementares Fechadas Antes do Fechamento da Folha Salário</h6></tr>
+                    <tr class="tr-rh" class="">
+                        <th class="th-rh">Código</th>
+                        <th class="th-rh">Aberta</th>
+                        <th class="th-rh">Fechada / Situação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if folhaFechadaAnterior[0]|length > 0 %}
+                        {% for folhas in folhaFechadaAnterior[0] %}
+                            <tr class="tr-rh" class="tr-rh">
+                                <td class="td-rh-folha">{{ folhas.cod_complementar }}</td>
+                                <td class="td-rh-folha">{{ folhas.data_abertura }}</td>
+                                <td class="td-rh-folha">{{ folhas.data_fechamento }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="tr-rh" class="tr-rh">
+                            <td colspan="4" style="text-align: center;">Nenhum registro encontrado</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col s12 m12 l6">
+                <table class="bordered">
+                    <thead class="thead-rh">
+                    <tr class="tr-rh"><h6 class="blue-text text-darken-4 center title-table">Folhas Complementares Fechadas</h6></tr>
+                    <tr class="tr-rh">
+                        <th class="th-rh">Código</th>
+                        <th class="th-rh">Aberta</th>
+                        <th class="th-rh">Fechada</th>
+                        <th class="th-rh">Reabrir</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if complementarFechada[0]|length > 0 %}
+                        {% set count = complementarFechada[0]|length %}
+                        {% for folhaFechada in complementarFechada[0] %}
+                            <tr class="tr-rh">
+                                <td class="td-rh-folha">{{ folhaFechada.cod_complementar }}</td>
+                                <td class="td-rh-folha">{{ folhaFechada.data_abertura }}</td>
+                                <td class="td-rh-folha">{{ folhaFechada.data_fechamento }}</td>
+                                <td class="td-rh-folha">
+                                    {% if loop.index == count %}
+                                    <a href="{{ path('folha_pagamento_folha_complementar_reabrir_folha_complementar', { 'id': folhaFechada.id }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped"
+                                       data-position="right" data-delay="50" data-tooltip="Reabrir" data-action="{{ path('folha_pagamento_folha_complementar_reabrir_folha_complementar', { 'id': folhaFechada.id }) }}" data-token="{{ csrf_token('form') }}">
+                                        <i class="mdi mdi-folder-lock-open small"></i>
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="tr-rh">
+                            <td colspan="4" style="text-align: center;">Nenhum registro encontrado</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s8">
+                <a class="btn-floating white-text blue darken-4"
+                   href="{{ path('folha_pagamento_folha_complementar_index') }}"><i
+                            class="material-icons">arrow_back</i></a>
+            </div>
+            {% if (folha.situacao == 'a') %}
+            <div class="col s4 right-align">
+                <a href="{{ path('folha_pagamento_folha_complementar_fechar_folha_complementar', { 'id': folhaComplementar.cod_periodo_movimentacao }) }}" class="btn btn-delete-sonata blue darken-4 white-text hide-on-med-and-down tooltipped"
+                   data-position="right" data-delay="50" data-tooltip="Fechar" data-action="{{ path('folha_pagamento_folha_complementar_fechar_folha_complementar', { 'id': folhaComplementar.cod_periodo_movimentacao }) }}" data-token="{{ csrf_token('form') }}">
+                    <i class="mdi mdi-lock left"></i>Fechar
+                </a>
+            </div>
+            {% else %}
+            <div class="col s4 right-align">
+                <a href="{{ path('folha_pagamento_folha_complementar_abrir_folha_complementar', { 'id': folhaComplementar.cod_periodo_movimentacao }) }}" class="btn btn-delete-sonata blue darken-4 white-text hide-on-med-and-down tooltipped"
+                   data-position="right" data-delay="50" data-tooltip="Abrir" data-action="{{ path('folha_pagamento_folha_complementar_abrir_folha_complementar', { 'id': folhaComplementar.cod_periodo_movimentacao }) }}" data-token="{{ csrf_token('form') }}">
+                    <i class="mdi mdi-lock-open"></i>Abrir
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

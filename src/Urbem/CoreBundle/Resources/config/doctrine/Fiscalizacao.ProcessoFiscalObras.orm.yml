@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalObras:
+    type: entity
+    table: fiscalizacao.processo_fiscal_obras
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        inscricaoMunicipal:
+            type: integer
+            nullable: false
+            column: inscricao_municipal
+        codLocal:
+            type: integer
+            nullable: false
+            column: cod_local
+    manyToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkFiscalizacaoProcessoFiscalObras
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+        fkFiscalizacaoTipoLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\TipoLocal
+            inversedBy: fkFiscalizacaoProcessoFiscalObras
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local
+    oneToOne:
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoProcessoFiscalObras
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo

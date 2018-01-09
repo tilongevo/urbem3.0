@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Economico\VigenciaCnae:
+    type: entity
+    table: economico.vigencia_cnae
+    id:
+        codVigencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vigencia
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToMany:
+        fkEconomicoNivelCnaes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelCnae
+            mappedBy: fkEconomicoVigenciaCnae

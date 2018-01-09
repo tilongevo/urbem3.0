@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\TipoTratamentoAgua:
+    type: entity
+    table: cse.tipo_tratamento_agua
+    id:
+        codTratamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tratamento
+    fields:
+        nomTratamento:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_tratamento
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkCseTipoTratamentoAgua

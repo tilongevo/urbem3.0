@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Arrecadacao\GrupoVencimento:
+    type: entity
+    table: arrecadacao.grupo_vencimento
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\GrupoVencimentoRepository
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codVencimento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vencimento
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        dataVencimentoParcelaUnica:
+            type: date
+            nullable: false
+            column: data_vencimento_parcela_unica
+        limiteInicial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: limite_inicial
+        limiteFinal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: limite_final
+        utilizarUnica:
+            type: boolean
+            nullable: false
+            column: utilizar_unica
+    manyToOne:
+        fkArrecadacaoCalendarioFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CalendarioFiscal
+            cascade:
+                - persist
+            inversedBy: fkArrecadacaoGrupoVencimentos
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToMany:
+        fkArrecadacaoDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desconto
+            mappedBy: fkArrecadacaoGrupoVencimento
+        fkArrecadacaoVencimentoParcelas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\VencimentoParcela
+            mappedBy: fkArrecadacaoGrupoVencimento

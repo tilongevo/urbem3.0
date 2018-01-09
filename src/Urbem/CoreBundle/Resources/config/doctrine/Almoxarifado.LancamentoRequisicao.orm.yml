@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Almoxarifado\LancamentoRequisicao:
+    type: entity
+    table: almoxarifado.lancamento_requisicao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRequisicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_requisicao
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+    fields: {  }
+    manyToOne:
+        fkAlmoxarifadoRequisicaoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItem
+            inversedBy: fkAlmoxarifadoLancamentoRequisicoes
+            joinColumns:
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_requisicao:
+                    referencedColumnName: cod_requisicao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_centro:
+                    referencedColumnName: cod_centro
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_item:
+                    referencedColumnName: cod_item
+        fkAlmoxarifadoLancamentoMaterial:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial
+            inversedBy: fkAlmoxarifadoLancamentoRequisicoes
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro

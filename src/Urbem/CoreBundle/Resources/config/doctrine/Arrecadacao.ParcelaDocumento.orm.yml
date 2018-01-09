@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ParcelaDocumento:
+    type: entity
+    table: arrecadacao.parcela_documento
+    id:
+        codParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcela
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        numDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_documento
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codSituacao:
+            type: integer
+            nullable: false
+            column: cod_situacao
+    manyToOne:
+        fkArrecadacaoParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Parcela
+            inversedBy: fkArrecadacaoParcelaDocumentos
+            joinColumns:
+                cod_parcela:
+                    referencedColumnName: cod_parcela
+        fkArrecadacaoDocumentoEmissao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoEmissao
+            inversedBy: fkArrecadacaoParcelaDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                num_documento:
+                    referencedColumnName: num_documento
+                exercicio:
+                    referencedColumnName: exercicio
+        fkArrecadacaoSituacaoParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\SituacaoParcela
+            inversedBy: fkArrecadacaoParcelaDocumentos
+            joinColumns:
+                cod_situacao:
+                    referencedColumnName: cod_situacao

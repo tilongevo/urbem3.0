@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Ponto\ExportacaoPonto:
+    type: entity
+    table: ponto.exportacao_ponto
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        lancamento:
+            type: string
+            nullable: false
+            length: 20
+        formato:
+            type: string
+            nullable: false
+            length: 1
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkPontoExportacaoPontos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkPontoExportacaoPontos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkPontoTipoInformacao:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\TipoInformacao
+            inversedBy: fkPontoExportacaoPontos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

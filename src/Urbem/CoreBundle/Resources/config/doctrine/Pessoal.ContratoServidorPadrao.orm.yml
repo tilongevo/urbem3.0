@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorPadrao:
+    type: entity
+    table: pessoal.contrato_servidor_padrao
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorPadraoRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_padrao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorPadroes
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkFolhapagamentoPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Padrao
+            inversedBy: fkPessoalContratoServidorPadroes
+            joinColumns:
+                cod_padrao:
+                    referencedColumnName: cod_padrao

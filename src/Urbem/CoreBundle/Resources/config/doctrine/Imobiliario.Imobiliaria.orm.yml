@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Imobiliario\Imobiliaria:
+    type: entity
+    table: imobiliario.imobiliaria
+    id:
+        creci:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        responsavel:
+            type: string
+            nullable: false
+            length: 10
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkImobiliarioCorretor:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Corretor
+            inversedBy: fkImobiliarioImobiliarias
+            joinColumns:
+                responsavel:
+                    referencedColumnName: creci
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkImobiliarioImobiliarias
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkImobiliarioCorretagem:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Corretagem
+            inversedBy: fkImobiliarioImobiliaria
+            joinColumns:
+                creci:
+                    referencedColumnName: creci

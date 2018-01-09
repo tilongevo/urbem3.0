@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Imobiliario\AtributoLoteUrbanoValor:
+    type: entity
+    table: imobiliario.atributo_lote_urbano_valor
+    indexes:
+        idx_atributo_lote_valor_1:
+            columns:
+                - cod_lote
+        idx_atributo_lote_valor_2:
+            columns:
+                - cod_atributo
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkImobiliarioAtributoLoteUrbanoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkImobiliarioLoteUrbano:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteUrbano
+            inversedBy: fkImobiliarioAtributoLoteUrbanoValores
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote

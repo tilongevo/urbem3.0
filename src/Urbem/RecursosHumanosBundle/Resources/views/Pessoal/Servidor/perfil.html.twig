@@ -1,0 +1,138 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container-rh">
+    <div class="row">
+        <div class="col s2 profile-box box-img-profile">
+            <h4 class="center">
+                <img src="{{ asset(servidor.caminhoFoto) | trans }}" class="img-thumbnail" width="80" height="80">
+            </h4>
+            <h6 class="blue-text text-darken-4 profile-titles"><i class="mdi mdi-credit-card-multiple left"></i>Identificação</h6>
+            <h6 class="divider grey col s12"></h6>
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">CPF</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ servidor.numcgm.cpf }}</h6>
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">RG</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ servidor.numcgm.rg }}</h6>
+        </div>
+        <div class="col s10">
+            <div class="col s12">
+                <div class="col s10 left-align">
+                    <h4 class="grey-text text-darken-1">{{ swcgm.nomcgm }}</h4>
+                </div>
+                <div class="col s1 right-align">
+                    <a  class="col s12 btn waves-effect waves-light white-text tooltipped" href="{{ path('urbem_recursos_humanos_pessoal_servidor_edit', { 'id': servidor.codServidor })}}" data-position="bottom" data-delay="50" data-tooltip="Editar" href="#"><i class="material-icons">edit</i></a>
+                </div>
+                <div class="col s1 right-align">
+                    <a class="col s12 btn waves-effect waves-light white-text grey tooltipped" data-position="bottom" data-delay="50" data-tooltip="Excluir" href="{{ path('urbem_recursos_humanos_pessoal_servidor_delete', { 'id': servidor.codServidor })}}"><i class="material-icons">delete</i></a>
+                </div>
+            </div>
+            <h6 class="blue-text text-darken-4 profile-titles"><i class="mdi mdi-account left"></i>Dados Pessoais</h6>
+            <h6 class="divider grey col s12"></h6>
+            <h6 class="col s3 blue-text text-darken-4 profile-titles">Data de Nascimento</h6>
+            <h6 class="col s3 blue-text text-darken-4 profile-titles">Sexo</h6>
+            <h6 class="col s3 blue-text text-darken-4 profile-titles">Estado Civil</h6>
+            <h6 class="col s3 blue-text text-darken-4 profile-titles">CID</h6>
+
+            <h6 class="col s3 grey-text text-darken-1">{{ servidor.dtNascimento }}</h6>
+            <h6 class="col s3 grey-text text-darken-1">{{ servidor.numcgm.sexo }}</h6>
+            <h6 class="col s3 grey-text text-darken-1">Solteiro</h6>
+            <h6 class="col s3 grey-text text-darken-1">A014</h6>
+
+            <h6 class="blue-text text-darken-4 profile-titles"><i class="mdi mdi-phone left"></i>Contato</h6>
+            <h6 class="divider grey col s12"></h6>
+
+            <h6 class="col s3 blue-text text-darken-4 profile-titles">Fone</h6>
+            <h6 class="col s3 blue-text text-darken-4 profile-titles">Endereço</h6>
+            <h6 class="col s3 blue-text text-darken-4 profile-titles">UF</h6>
+            <h6 class="col s3 blue-text text-darken-4 profile-titles">Municipio</h6>
+
+            <h6 class="col s3 grey-text text-darken-1">(00)0000-0000</h6>
+            <h6 class="col s3 grey-text text-darken-1">Av. Abcdef Ghijkl</h6>
+            <h6 class="col s3 grey-text text-darken-1">UF</h6>
+            <h6 class="col s3 grey-text text-darken-1">municipio</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s11 servidor-table">
+            <a href="{{ path('urbem_recursos_humanos_pessoal_contrato_servidor_create', {'id': servidor.codServidor})}}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir"><i class="mdi mdi-file-document left"></i>Contrato</a>
+        </div>
+        <div class="col s1">
+            <a href="{{ path('urbem_recursos_humanos_pessoal_contrato_servidor_create', {'id': servidor.codServidor})}}" class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+        </div>
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.contrato'|trans }}</th>
+                <th class="th-rh">{{ 'label.matricula'|trans }}</th>
+                <th class="th-rh">{{ 'label.situacao'|trans }}</th>
+                <th class="th-rh">{{ 'label.dtAdmissao'|trans }}</th>
+                <th class="th-rh">{{ 'label.dtNomeacao'|trans }}</th>
+                <th class="th-rh">{{ 'label.dtPosse'|trans }}</th>
+                <th class="th-rh">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contrato in contratos %}
+                <tr>
+                    <td>{{ contrato.codContrato.registro }}</td>
+                    <td>{{ contrato.codContrato }}</td>
+                    {% if contrato.ativo == true %}
+                        <td>{{ 'sim'|trans }}</td>
+                    {% else %}
+                        <td>{{ 'nao'|trans }}</td>
+                    {% endif %}
+                    <td>{{ contrato.codContratoServidorNomeacaoPosse.dtAdmissao|date("m/d/Y") }}</td>
+                    <td>{{ contrato.codContratoServidorNomeacaoPosse.dtNomeacao|date("m/d/Y") }}</td>
+                    <td>{{ contrato.codContratoServidorNomeacaoPosse.dtPosse|date("m/d/Y") }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('urbem_recursos_humanos_pessoal_contrato_servidor_edit', { 'id': contrato.codContrato }) }}"><i class="material-icons">edit</i></a>
+                            {% if contrato.codContrato == previdencias.key[loop.index0]|format %}
+                                <a href="{{ path('urbem_recursos_humanos_pessoal_contrato_servidor_previdencia_edit',{'id': previdencias.values[loop.index0]  })}}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Previdencia"><i class="mdi mdi-nature-people left"></i></a>
+                            {% else %}
+                                <a href="{{ path('urbem_recursos_humanos_pessoal_contrato_servidor_previdencia_create',{'id':contrato.codContrato.codContrato })}}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Previdencia"><i class="mdi mdi-nature-people left grey-text"></i></a>
+                            {% endif %}
+                            <a href="{{ path('urbem_recursos_humanos_pessoal_servidor_atributo_create', { 'id': contrato.codContrato.codContrato })}}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Atributos"><i class="mdi mdi-format-list-bulleted left"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col s11 servidor-table">
+            <a href="{{ path('urbem_recursos_humanos_pessoal_dependente_create',{'id': servidor.codServidor})}}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir"><i class="fa fa-child left"></i>Dependentes</a>
+        </div>
+        <div class="col s1">
+            <a href="{{ path('urbem_recursos_humanos_pessoal_dependente_create',{'id': servidor.codServidor})}}" class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+        </div>
+        <table class="highlight bordered">
+            <thead class="thead-rh">
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">Código</th>
+                <th class="th-rh">Nome</th>
+                <th class="th-rh">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dep in dependentes %}
+                <tr>
+                    <td>{{ dep.cod_dependente }}</td>
+                    <td>{{ dep.nom_cgm}}</td>
+                    <td>
+                        <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('urbem_recursos_humanos_pessoal_dependente_edit', { 'id': dep.cod_dependente }) }}"><i class="material-icons">edit</i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

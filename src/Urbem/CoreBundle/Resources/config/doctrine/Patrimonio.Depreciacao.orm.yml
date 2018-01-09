@@ -1,0 +1,89 @@
+Urbem\CoreBundle\Entity\Patrimonio\Depreciacao:
+    type: entity
+    table: patrimonio.depreciacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\DepreciacaoRepository
+    id:
+        codDepreciacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_depreciacao
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        vlDepreciado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_depreciado
+        dtDepreciacao:
+            type: date
+            nullable: false
+            column: dt_depreciacao
+        competencia:
+            type: string
+            nullable: false
+            length: 6
+        motivo:
+            type: string
+            nullable: false
+            length: 100
+        acelerada:
+            type: boolean
+            nullable: false
+        quotaUtilizada:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: quota_utilizada
+    manyToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioDepreciacoes
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+    oneToMany:
+        fkContabilidadeLancamentoDepreciacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoDepreciacao
+            mappedBy: fkPatrimonioDepreciacao
+    oneToOne:
+        fkPatrimonioDepreciacaoAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\DepreciacaoAnulada
+            mappedBy: fkPatrimonioDepreciacao
+            joinColumns:
+                cod_depreciacao:
+                    referencedColumnName: cod_depreciacao
+                cod_bem:
+                    referencedColumnName: cod_bem
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPatrimonioDepreciacaoReavaliacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\DepreciacaoReavaliacao
+            mappedBy: fkPatrimonioDepreciacao
+            joinColumns:
+                cod_depreciacao:
+                    referencedColumnName: cod_depreciacao
+                cod_bem:
+                    referencedColumnName: cod_bem
+                timestamp:
+                    referencedColumnName: timestamp

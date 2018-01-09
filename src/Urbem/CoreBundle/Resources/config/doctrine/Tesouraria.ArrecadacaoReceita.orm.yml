@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoReceita:
+    type: entity
+    table: tesouraria.arrecadacao_receita
+    id:
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        vlArrecadacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_arrecadacao
+    manyToOne:
+        fkTesourariaArrecadacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao
+            inversedBy: fkTesourariaArrecadacaoReceitas
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkTesourariaArrecadacaoReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+    oneToMany:
+        fkTesourariaArrecadacaoEstornadaReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornadaReceita
+            mappedBy: fkTesourariaArrecadacaoReceita
+        fkTesourariaArrecadacaoReceitaDedutoras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoReceitaDedutora
+            mappedBy: fkTesourariaArrecadacaoReceita

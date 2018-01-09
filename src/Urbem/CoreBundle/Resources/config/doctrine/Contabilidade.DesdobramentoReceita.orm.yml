@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Contabilidade\DesdobramentoReceita:
+    type: entity
+    table: contabilidade.desdobramento_receita
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\DesdobramentoReceitaRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codReceitaPrincipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita_principal
+        codReceitaSecundaria:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita_secundaria
+    fields:
+        percentual:
+            type: decimal
+            nullable: true
+            precision: 4
+            scale: 2
+    manyToOne:
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkContabilidadeDesdobramentoReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita_principal:
+                    referencedColumnName: cod_receita
+        fkOrcamentoReceita1:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkContabilidadeDesdobramentoReceitas1
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita_secundaria:
+                    referencedColumnName: cod_receita

@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItensAnulacao:
+    type: entity
+    table: almoxarifado.requisicao_itens_anulacao
+    id:
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRequisicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_requisicao
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+    manyToOne:
+        fkAlmoxarifadoRequisicaoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItem
+            inversedBy: fkAlmoxarifadoRequisicaoItensAnulacoes
+            joinColumns:
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_requisicao:
+                    referencedColumnName: cod_requisicao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_centro:
+                    referencedColumnName: cod_centro
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_item:
+                    referencedColumnName: cod_item
+        fkAlmoxarifadoRequisicaoAnulacao:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoAnulacao
+            inversedBy: fkAlmoxarifadoRequisicaoItensAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_requisicao:
+                    referencedColumnName: cod_requisicao
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                timestamp:
+                    referencedColumnName: timestamp

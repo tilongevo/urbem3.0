@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Tceto\PagamentoTipoPagamento:
+    type: entity
+    table: tceto.pagamento_tipo_pagamento
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codTipoPagamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_pagamento
+    fields: {  }
+    manyToOne:
+        fkTesourariaPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Pagamento
+            inversedBy: fkTcetoPagamentoTipoPagamentos
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_nota:
+                    referencedColumnName: cod_nota
+        fkTcetoTipoPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\TipoPagamento
+            inversedBy: fkTcetoPagamentoTipoPagamentos
+            joinColumns:
+                cod_tipo_pagamento:
+                    referencedColumnName: cod_tipo

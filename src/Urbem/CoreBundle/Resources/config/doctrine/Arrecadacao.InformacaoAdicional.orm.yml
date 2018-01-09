@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Arrecadacao\InformacaoAdicional:
+    type: entity
+    table: arrecadacao.informacao_adicional
+    id:
+        codInformacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_informacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        tamanho:
+            type: integer
+            nullable: false
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+    oneToMany:
+        fkArrecadacaoInformacaoAdicionalLayoutCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\InformacaoAdicionalLayoutCarne
+            mappedBy: fkArrecadacaoInformacaoAdicional

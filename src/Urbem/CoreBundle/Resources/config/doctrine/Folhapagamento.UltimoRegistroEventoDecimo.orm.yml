@@ -1,0 +1,82 @@
+Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEventoDecimo:
+    type: entity
+    table: folhapagamento.ultimo_registro_evento_decimo
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\UltimoRegistroEventoDecimoRepository
+    id:
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields: {  }
+    oneToOne:
+        fkFolhapagamentoEventoDecimoCalculado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoDecimoCalculado
+            mappedBy: fkFolhapagamentoUltimoRegistroEventoDecimo
+            joinColumns:
+                desdobramento:
+                    referencedColumnName: desdobramento
+                timestamp:
+                    referencedColumnName: timestamp_registro
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoLogErroCalculoDecimo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\LogErroCalculoDecimo
+            mappedBy: fkFolhapagamentoUltimoRegistroEventoDecimo
+            joinColumns:
+                desdobramento:
+                    referencedColumnName: desdobramento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoRegistroEventoDecimoParcela:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoDecimoParcela
+            mappedBy: fkFolhapagamentoUltimoRegistroEventoDecimo
+            joinColumns:
+                desdobramento:
+                    referencedColumnName: desdobramento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoRegistroEventoDecimo:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoDecimo
+            inversedBy: fkFolhapagamentoUltimoRegistroEventoDecimo
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                desdobramento:
+                    referencedColumnName: desdobramento
+                cod_evento:
+                    referencedColumnName: cod_evento

@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Licitacao\TipoContrato:
+    type: entity
+    table: licitacao.tipo_contrato
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: licitacao.tipo_contrato_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_tipo
+    fields:
+        sigla:
+            type: string
+            nullable: false
+            length: 8
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        tipoTc:
+            type: integer
+            nullable: true
+            column: tipo_tc
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    oneToMany:
+        fkLicitacaoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            mappedBy: fkLicitacaoTipoContrato

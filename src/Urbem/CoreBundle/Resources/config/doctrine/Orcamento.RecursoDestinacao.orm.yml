@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Orcamento\RecursoDestinacao:
+    type: entity
+    table: orcamento.recurso_destinacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+    fields:
+        codUso:
+            type: integer
+            nullable: false
+            column: cod_uso
+        codDestinacao:
+            type: integer
+            nullable: false
+            column: cod_destinacao
+        codEspecificacao:
+            type: integer
+            nullable: false
+            column: cod_especificacao
+        codDetalhamento:
+            type: integer
+            nullable: false
+            column: cod_detalhamento
+    manyToOne:
+        fkOrcamentoDetalhamentoDestinacaoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\DetalhamentoDestinacaoRecurso
+            inversedBy: fkOrcamentoRecursoDestinacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_detalhamento:
+                    referencedColumnName: cod_detalhamento
+        fkOrcamentoIdentificadorUso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\IdentificadorUso
+            inversedBy: fkOrcamentoRecursoDestinacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_uso:
+                    referencedColumnName: cod_uso
+        fkOrcamentoEspecificacaoDestinacaoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\EspecificacaoDestinacaoRecurso
+            inversedBy: fkOrcamentoRecursoDestinacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_especificacao:
+                    referencedColumnName: cod_especificacao
+        fkOrcamentoDestinacaoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\DestinacaoRecurso
+            inversedBy: fkOrcamentoRecursoDestinacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_destinacao:
+                    referencedColumnName: cod_destinacao
+    oneToOne:
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkOrcamentoRecursoDestinacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso

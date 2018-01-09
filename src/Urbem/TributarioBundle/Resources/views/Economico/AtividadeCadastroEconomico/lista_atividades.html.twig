@@ -1,0 +1,46 @@
+<table class="table table-bordered js-table-lista-atividades">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'label.economicoAtividadeCadastroEconomico.codEstrutural'|trans }}</th>
+            <th>{{ 'label.economicoAtividadeCadastroEconomico.nomAtividade'|trans }}</th>
+            <th>{{ 'label.economicoAtividadeCadastroEconomico.dtInicio'|trans }}</th>
+            <th>{{ 'label.economicoAtividadeCadastroEconomico.dtTermino'|trans }}</th>
+            <th>{{ 'label.economicoAtividadeCadastroEconomico.atividadePrincipal'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sonata-ba-tbody ui-sortable">
+        {% if field.data.itens|length > 0 %}
+            {% for item in field.data.itens %}
+                <tr class="form_row campo-sonata" data-index="{{ loop.index }}">
+                    <td class="control-group">
+                        {{ ++loop.index}}
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getFkEconomicoAtividade().getCodEstrutural() }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getFkEconomicoAtividade().getNomAtividade() }}</span>
+                        <input type="hidden" name="atividades[{{ loop.index }}][codAtividade]" class="js-lista-atividades-cod-atividade" value="{{ item.getCodAtividade() }}" readonly>
+                    </td>
+                    <td class="control-group js-row-lista-atividades-dt-inicio">
+                        <span>{{ item.getDtInicio().format('d/m/Y') }}</span>
+                        <input type="hidden" name="atividades[{{ loop.index }}][dtInicio]" value="{{ item.getDtInicio().format('d/m/Y') }}" readonly>
+                    </td>
+                    <td class="control-group js-row-lista-atividades-dt-termino">
+                        <span>{{ item.getDtTermino() ? item.getDtTermino().format('d/m/Y') : '' }}</span>
+                        <input type="hidden" name="atividades[{{ loop.index }}][dtTermino]" value="{{ item.getDtTermino() ? item.getDtTermino().format('d/m/Y') : '' }}" readonly>
+                    </td>
+                    <td class="control-group js-row-lista-atividades-atividade-principal">
+                        <span>{{ item.getPrincipal() ? 'Sim' : 'Não' }}</span>
+                        <input type="hidden" name="atividades[{{ loop.index }}][atividadePrincipal]" class="js-lista-atividades-principal" value="{{ item.getPrincipal() }}" readonly>
+                    </td>
+                    <td class="control-group">
+                        <button class="js-delete-row">Remover</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>

@@ -1,0 +1,26 @@
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.gerarAssentamento.normas'|trans }}</th>
+    <td>
+        <table class="bordered highlight">
+            <thead>
+                <th class="sonata-ba-list-field-header-text ">{{ 'label.norma.codTipoNorma'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text ">{{ 'label.norma.nomNorma'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text ">{{ 'label.norma.dtAssinatura'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text ">{{ 'label.norma.dtPublicacao'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text ">{{ 'label.norma.dtTermino'|trans }}</th>
+            </thead>
+            <tbody>
+                {% for norma in object.fkPessoalAssentamentoGerados.last.fkPessoalAssentamentoGeradoNormas %}
+                <tr>
+                    <td>{{ norma.fkNormasNorma.fkNormasTipoNorma.nomTipoNorma }}</td>
+                    <td>{{ norma.fkNormasNorma.nomNorma }}</td>
+                    <td>{{ norma.fkNormasNorma.dtAssinatura|date('d/m/Y') }}</td>
+                    <td>{{ norma.fkNormasNorma.dtPublicacao|date('d/m/Y') }}</td>
+                    <td>{{ norma.fkNormasNorma.fkNormasNormaDataTermino.dtTermino|date('d/m/Y') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </td>
+</tr>

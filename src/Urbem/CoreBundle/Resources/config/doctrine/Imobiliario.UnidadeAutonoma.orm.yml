@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Imobiliario\UnidadeAutonoma:
+    type: entity
+    table: imobiliario.unidade_autonoma
+    indexes:
+        idx_unidade_autonoma:
+            columns:
+                - cod_construcao
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkImobiliarioUnidadeAutonomas
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+        fkImobiliarioConstrucaoEdificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoEdificacao
+            inversedBy: fkImobiliarioUnidadeAutonomas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+    oneToMany:
+        fkImobiliarioAreaUnidadeAutonomas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AreaUnidadeAutonoma
+            mappedBy: fkImobiliarioUnidadeAutonoma
+        fkImobiliarioBaixaUnidadeAutonomas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BaixaUnidadeAutonoma
+            mappedBy: fkImobiliarioUnidadeAutonoma
+        fkImobiliarioLicencaImovelUnidadeAutonomas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaImovelUnidadeAutonoma
+            mappedBy: fkImobiliarioUnidadeAutonoma
+        fkImobiliarioUnidadeDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\UnidadeDependente
+            mappedBy: fkImobiliarioUnidadeAutonoma

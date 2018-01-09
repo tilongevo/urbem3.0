@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoResponsavel:
+    type: entity
+    table: tcmba.tipo_responsavel
+    id:
+        codTipoResponsavel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_responsavel
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkTcmbaConfiguracaoRatificadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ConfiguracaoRatificador
+            mappedBy: fkTcmbaTipoResponsavel
+        fkTcmbaConfiguracaoOrdenadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ConfiguracaoOrdenador
+            mappedBy: fkTcmbaTipoResponsavel

@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeLancamento:
+    type: entity
+    table: economico.atividade_modalidade_lancamento
+    id:
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+    fields:
+        dtBaixa:
+            type: date
+            nullable: true
+            column: dt_baixa
+        motivoBaixa:
+            type: text
+            nullable: true
+            column: motivo_baixa
+        valor:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+        percentual:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkEconomicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Atividade
+            inversedBy: fkEconomicoAtividadeModalidadeLancamentos
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+        fkEconomicoModalidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ModalidadeLancamento
+            inversedBy: fkEconomicoAtividadeModalidadeLancamentos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+    oneToMany:
+        fkEconomicoAtividadeModalidadeIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeIndicador
+            mappedBy: fkEconomicoAtividadeModalidadeLancamento
+        fkEconomicoAtividadeModalidadeMoedas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeMoeda
+            mappedBy: fkEconomicoAtividadeModalidadeLancamento

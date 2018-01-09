@@ -1,0 +1,368 @@
+{% block body %}
+    {% block content %}
+        <div class="page-break" style="page-break-after: auto;">
+            {% for contrato in contratos %}
+                <table class="table-custom" xmlns="http://www.w3.org/1999/html" style="page-break-inside: avoid;">
+                    <thead>
+                    <tr>
+                        <td rowspan="1" colspan="12" class="text-center" style="border: solid 1px">
+                            <h4>{{ nomRelatorio | upper }}</h4>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td rowspan="4" STYLE="width: 1%" class="text-align-left rotacao90">{{ "Identificação do Empregador" | upper }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            01 CNPJ/CEI
+                            <br>
+                            <strong>{{ prefeitura.fkSwCgm.fkSwCgmPessoaJuridica.cnpj }}</strong>
+                        </td>
+                        <td colspan="3">
+                            02 Razão Social/Nome
+                            <br>
+                            <strong>{{ prefeitura.fkSwCgm.fkSwCgmPessoaJuridica.nomFantasia }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            03 Endereço (logradouro, n°, andar, apartamento)
+                            <br>
+                            <strong>{{ prefeitura.fkSwCgm.logradouro ~ " " ~ prefeitura.fkSwCgm.numero }}</strong>
+                        </td>
+                        <td colspan="1">
+                            04 Bairro
+                            <br>
+                            <strong>{{ prefeitura.fkSwCgm.bairro }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            05 Município
+                            <br>
+                            <strong>{{ prefeitura.fkSwCgm.fkSwMunicipio.nomMunicipio }}</strong>
+                        </td>
+                        <td>
+                            06 UF
+                            <br>
+                            <strong>{{ prefeitura.fkSwCgm.fkSwMunicipio.fkSwUf.siglaUf }}</strong>
+                        </td>
+                        <td>
+                            07 CEP
+                            <br>
+                            <strong>{{ prefeitura.fkSwCgm.cep }}</strong>
+                        </td>
+                        <td>
+                            08 CNAE
+                            <br>
+                            <strong>{{ cnae }}</strong>
+                        </td>
+                        <td>
+                            09 CNPJ/CEI Tomador/Obra
+                            <br>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table-custom" style="page-break-inside: avoid;">
+                    <tbody>
+                    <tr>
+                        <td STYLE="width: 1%" rowspan="4" colspan="1" class="text-align-left rotacao90">{{ "Identificação do Trabalhador" | upper }}</td>
+                        <td colspan="1">
+                            10 PIS - PASEP
+                            <br>
+                            <strong>{{ contrato.servidor_pis_pasep }}</strong>
+                        </td>
+                        <td colspan="3">
+                            11 Nome
+                            <br>
+                            <strong>{{ contrato.nom_cgm }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            12 Endereço (logradouro, n°, andar, apartamento)
+                            <br>
+                            <strong>{{ contrato.endereco }}</strong>
+                        </td>
+                        <td colspan="1">
+                            13 Bairro
+                            <br>
+                            <strong>{{ contrato.bairro }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            14 Município
+                            <br>
+                            <strong>{{ contrato.nom_municipio }}</strong>
+                        </td>
+                        <td>
+                            15 UF
+                            <br>
+                            <strong>{{ contrato.sigla_uf }}</strong>
+                        </td>
+                        <td>
+                            16 CEP
+                            <br>
+                            <strong>{{ contrato.cep }}</strong>
+                        </td>
+                        <td>
+                            17 Carteira de Trabalho (n°, série, UF)
+                            <br>
+                            <strong>{{ contrato.ctps }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            18 CPF
+                            <br>
+                            <strong>{{ contrato.cpf }}</strong>
+                        </td>
+                        <td colspan="1">
+                            19 Data de Nascimento
+                            <br>
+                            <strong>{{ contrato.dt_nascimento }}</strong>
+                        </td>
+                        <td colspan="2">
+                            20 Nome da Mãe
+                            <br>
+                            <strong>{{ contrato.nome_mae }}</strong>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table-custom" style="page-break-inside: avoid;">
+                    <tbody>
+                    <tr>
+                        <td STYLE="width: 1%"  rowspan="4" colspan="1" class="text-align-left rotacao90">{{ "Dados do Contrato" | upper }}</td>
+                        <td>
+                            21 Remuneração p/fins rescisórios
+                            <br>
+                            <strong>{{ contrato.salario }}</strong>
+                        </td>
+                        <td>
+                            22 Data de admissão
+                            <br>
+                            <strong>{{ contrato.dt_admissao }}</strong>
+                        </td>
+                        <td>
+                            23 Data do aviso prévio
+                            <br>
+                            <strong>{{ contrato.dt_aviso }}</strong>
+                        </td>
+                        <td>
+                            24 Data de afastamento
+                            <br>
+                            <strong>{{ contrato.dt_rescisao }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            25 Causa do afastamento
+                            <br>
+                            <strong>{{ contrato.num_causa ~ " - " ~ contrato.descricao }}</strong>
+                        </td>
+                        <td>
+                            26 Cód. afastamento
+                            <br>
+                            <strong>{{ contrato.num_sefip }}</strong>
+                        </td>
+                        <td>
+                            27 Pensão alimentícia (%)
+                            {#<strong>{{  }}</strong>#}
+                        </td>
+                        <td>
+                            28 Categoria do trabalhador
+                            <br>
+                            <strong>{{ contrato.cod_categoria }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            Lotação
+                            <br>
+                            <strong>{{ contrato.orgao ~ " - " ~ contrato.desc_orgao }}</strong>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table-custom" style="page-break-inside: avoid;">
+                    <tbody>
+                    <td STYLE="width: 1%"  rowspan="7" colspan="1" class="text-align-left rotacao90">
+                        {{ "Discriminação das verbas rescisórias" | upper }}
+                    </td>
+                    <tr class="text-align-center">
+                        <th style="border: solid 1px; text-align: center">{{ "Vencimentos (29 a 45)" | upper }}</th>
+                        <th style="border: solid 1px; text-align: center">{{ "Descontos (47 a 53)" | upper }}</th>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <table style="width: 100%;">
+                                {% for vencimentos in eventos %}
+                                    {% for vencimento in vencimentos.P %}
+                                        <tr>
+                                            <td>{{ vencimento.descricao }}</td>
+                                            <td>{{ vencimento.desdobramento_texto }}</td>
+                                            <td>{{ vencimento.quantidade }}</td>
+                                            <td>{{ vencimento.valor }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                        <td colspan="1">
+                            <table style="width: 100%;">
+                                {% for vencimentos in eventos %}
+                                    {% for vencimento in vencimentos.D %}
+                                        <tr>
+                                            <td>{{ vencimento.descricao }}</td>
+                                            <td>{{ vencimento.desdobramento_texto }}</td>
+                                            <td>{{ vencimento.quantidade }}</td>
+                                            <td>{{ vencimento.valor }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="text-align-center">
+                        <th style="border: solid 1px; text-align: center">{{ "Bases" | upper }}</th>
+                        <th style="border: solid 1px; text-align: center">{{ "Informativos" | upper }}</th>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <table style="width: 100%;">
+                                {% for vencimentos in eventos %}
+                                    {% for vencimento in vencimentos.B %}
+                                        <tr>
+                                            <td>{{ vencimento.descricao }}</td>
+                                            <td>{{ vencimento.desdobramento_texto }}</td>
+                                            <td>{{ vencimento.quantidade }}</td>
+                                            <td>{{ vencimento.valor }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                        <td colspan="1">
+                            <table style="width: 100%;">
+                                {% for vencimentos in eventos %}
+                                    {% for vencimento in vencimentos.I %}
+                                        <tr>
+                                            <td>{{ vencimento.descricao }}</td>
+                                            <td>{{ vencimento.desdobramento_texto }}</td>
+                                            <td>{{ vencimento.quantidade }}</td>
+                                            <td>{{ vencimento.valor }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>
+                                        <strong>{{ "46 Total Bruto " | upper }}</strong>
+                                    </td>
+                                    <td style="text-align: right">
+                                        <strong>{{ contrato.totalEventos|number_format_decimal({'fraction_digits': 2}) }}</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>
+                                        <strong>{{ "54 Total das Deduções " | upper }}</strong>
+                                    </td>
+                                    <td style="text-align: right">
+                                        <strong>{{ contrato.totalDescontos|number_format_decimal({'fraction_digits': 2}) }}</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>
+                                        <strong>{{ "55 Líquido a Receber " | upper }}</strong>
+                                    </td>
+                                    <td style="text-align: right">
+                                        <strong>{{ contrato.vlLiquido|number_format_decimal({'fraction_digits': 2}) }}</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table-custom" style="page-break-inside: avoid;">
+                    <tbody>
+                    <td rowspan="5" colspan="1" class="text-align-left rotacao90">{{ "Formalização da Rescisão" | upper }}</td>
+                    <tr>
+
+                        <td style="width: 50%"><strong>56 Local e data do recebimento</strong></td>
+                        <td colspan="2" style="width: 50%"><strong>57 Carimbo e assinatura do empregador ou
+                                preposto</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%"><strong>58 Assinatura do trabalhador</strong></td>
+                        <td colspan="2" style="width: 50%"><strong>59 Assinatura do responsável legal do
+                                trabalhador</strong></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>60 Homologação</strong>
+                            <p>
+                                Foi prestada, gratuitamente, assistência ao trabalhador, nos termos do art.
+                                477, parágrafo 1°, da Consolidação das Leis do Trabalho - CLT, sendo
+                                comprovado, neste ato, o efetivo pagamento das verbas rescisórias acima
+                                especificadas.
+                            </p>
+                            <br>
+                            <hr>
+                            <strong>Local e data</strong>
+                            <br>
+                            <hr>
+                            <strong>Carimbo e assinatura do assistente</strong>
+                        </td>
+                        <td>
+                            <strong>61 Digital do trabalhador</strong>
+                        </td>
+                        <td>
+                            <strong>62 Digital do responsável legal</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%"><strong>63 Identificação do orgão homologador</strong></td>
+                        <td colspan="2" style="width: 50%"><strong>64 Recepção pelo banco (data e carimbo)</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            {% endfor %}
+        </div>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+{% endblock %}

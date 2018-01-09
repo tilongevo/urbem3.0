@@ -1,0 +1,346 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h3 class="blue-text text-darken-4 left">
+                    <i class="fa fa-file-text-o grey-text left" aria-hidden="true"></i>
+                    <span style="text-transform: capitalize;">{{ 'label.patrimonial.licitacao.edital.dadosEdital'|trans }}: {{ object.numEdital }}</span>
+                </h3>
+
+                {% if object.edital.anulacao is null %}
+                    <a href="{{ path('urbem_patrimonial_licitacao_edital_edit', { 'id':  object.edital.numEdital ~'~' ~ object.edital.Exercicio  }) }}"
+                       class="serv-btn right">
+                        <i class="material-icons right">edit</i>
+                    </a>
+                {% endif %}
+
+                <h6 class="divider grey col s12"></h6>
+                <div class="row">
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.exercicio'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.edital.exercicio }}
+                    </h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.condicoesPagamento'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.edital.condicoesPagamento }}
+                    </h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.dtAprovacaoJuridico'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.edital.DtAprovacaoJuridico|date("d/m/Y") }}
+                    </h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.dtEntregaPropostas'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.edital.dtEntregaPropostas|date("d/m/Y") }}
+                        {% if object.edital.horaEntregaPropostas is not null %}
+                            ás {{ object.edital.horaEntregaPropostas }}
+                        {% endif %}
+                    </h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.dtAberturaPropostas'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.edital.dtAberturaPropostas|date("d/m/Y") }}
+                        {% if object.edital.horaAberturaPropostas is not null %}
+                            ás {{ object.edital.horaAberturaPropostas }}
+                        {% endif %}
+                    </h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.dtFinalEntregaPropostas'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.edital.dtFinalEntregaPropostas|date("d/m/Y") }}
+                        {% if object.edital.horaFinalEntregaPropostas is not null %}
+                            ás {{ object.edital.horaFinalEntregaPropostas }}
+                        {% endif %}
+                    </h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.dtValidadePropostas'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.edital.dtValidadeProposta|date("d/m/Y") }}</h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.localEntregaPropostas'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.edital.localEntregaPropostas }}</h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.localAberturaPropostas'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.edital.localAberturaPropostas }}</h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.licitacao.edital.localEntregaMaterial'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.edital.localEntregaMaterial }}</h6>
+                </div>
+                </div>
+
+                <div class="col s12">
+                    {% if object.edital.anulacao is null %}
+                        <div class="col s3 center" style="margin-bottom: 10px">
+                            {% if object.edital.passivelAnulacaoImpugnacao == true %}
+                                <a class="white-text blue darken-4 btn btn-success save"
+                                   href="{{ path('urbem_patrimonial_licitacao_anulacao_impugnacao_edital_create', { 'id': object.edital.numEdital ~'~' ~ object.edital.Exercicio}) }}"
+                                >
+                                    <i class="mdi mdi-file-document left"></i>Anular Impugnação
+                                </a>
+                            {% else %}
+                                <a class="white-text btn btn-success save grey lighten-2 disabled">
+                                    <i class="mdi mdi-file-document left"></i>Anular Impugnação
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if object.edital.anulacao is null %}
+                        <div class="col s2 center" style="margin-bottom: 10px">
+                            <a class="white-text blue darken-4 btn btn-success save"
+                               href="{{ path('patrimonio_licitacao_edital_anular', { 'id': object.edital.numEdital ~'~' ~ object.edital.Exercicio }) }}"
+                            >
+                                <i class="mdi mdi-file-document left"></i>Anular
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if object.edital.anulacao is null %}
+                        {% if object.edital.passivelSuspensao == true %}
+                            <div class="col s2 center" style="margin-bottom: 10px">
+                                <a class="white-text blue darken-4 btn btn-success save"
+                                   href="{{ path('urbem_patrimonial_licitacao_edital_suspenso_create', { 'id': object.edital.numEdital ~'~' ~ object.edital.Exercicio }) }}"
+                                >
+                                    <i class="mdi mdi-file-document left"></i>Suspender
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col s2 center" style="margin-bottom: 10px">
+                                <a class="white-text btn btn-success save grey lighten-2 disabled">
+                                    <i class="mdi mdi-file-document left"></i>Suspender
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    {% if object.edital.anulacao is null %}
+                        {% if object.edital.fkLicitacaoEditalSuspenso != null %}
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="white-text blue darken-4 btn btn-success save"
+                                   href="{{ path('urbem_patrimonial_licitacao_edital_suspenso_delete', { 'id': object.edital.numEdital ~'~' ~ object.edital.Exercicio }) }}"
+                                >
+                                    <i class="mdi mdi-file-document left"></i>Anular Suspensão
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="white-text btn btn-success save grey lighten-2 disabled">
+                                    <i class="mdi mdi-file-document left"></i>Anular Suspensão
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="col s2 center" style="margin-bottom: 10px">
+                        <a class="white-text blue darken-4 btn btn-success save" href="{{ path('urbem_patrimonial_licitacao_edital_gera_edital', { 'id': object.edital|objectKey}) }}">
+                            <i class="mdi mdi-file-document left"></i>Reemitir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip>
+                    <i class="fa fa-cubes left" aria-hidden="true"></i>
+                    {{ 'label.patrimonial.licitacao.publicacaoedital.publicacao'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                {% if object.edital.anulacao is null %}
+                    <a href="{{ path('urbem_patrimonial_licitacao_publicacao_edital_create', { 'id':  object.edital.numEdital ~'~' ~ object.edital.Exercicio}) }}"
+                       class="btn-lg"><i class="mdi mdi-plus-circle right"></i></a>
+                {% endif %}
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.publicacaoedital.veiculoPublicacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.publicacaoedital.dataPublicacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.publicacaoedital.numPublicacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.publicacaoedital.observacao'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for publicacao in object.edital.publicacoes %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ publicacao.fkLicitacaoVeiculosPublicidade.fkSwCgm }}</td>
+                        <td class="td-rh">{{ publicacao.dataPublicacao|date("d/m/Y") }}</td>
+                        <td class="td-rh">{{ publicacao.numPublicacao }}</td>
+                        <td class="td-rh">{{ publicacao.observacao }}</td>
+                        {% if object.edital.anulacao is null %}
+                            <td class="td-rh">
+                                <div class="btn-group">
+                                    <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                       data-position="left"
+                                       data-delay="50"
+                                       data-tooltip="Editar"
+                                       href="{{ path('urbem_patrimonial_licitacao_publicacao_edital_edit', { 'id': publicacao|objectKey }) }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                       data-position="right"
+                                       data-delay="50"
+                                       data-tooltip="Excluir"
+                                       href="{{ path('urbem_patrimonial_licitacao_publicacao_edital_delete', { 'id': publicacao|objectKey }) }}">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </div>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip>
+                    <i class="fa fa-cubes left" aria-hidden="true"></i>
+                    {{ 'label.patrimonial.licitacao.edital.renuncia'|trans }}
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.edital.cgmFornecedor'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.edital.renuncia'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for participante in object.edital.participantes %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ participante.fornecedor }}</td>
+                        <td class="td-rh">
+                            {% if participante.renuncia_recurso == 1 %}
+                                {% set renuncia = 1 %}
+                                <span class="label label-success">Sim</span>
+                            {% else %}
+                                {% set renuncia = 0 %}
+                                <span class="label label-danger">Não</span>
+                            {% endif %}
+                        </td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                {% if object.edital.anulacao is null %}
+                                    <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                       data-position="left"
+                                       data-delay="50"
+                                       data-tooltip="Excluir"
+                                       href="{{ path('urbem_patrimonial_licitacao_edital_participante_update',
+                                       { 'id':  object.edital.Exercicio ~'~' ~ object.edital.codEntidade ~'~' ~
+                                           object.edital.codModalidade ~'~' ~ object.edital.codLicitacao~'~' ~
+                                           participante.cgm_fornecedor~'~' ~ renuncia  }) }}">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip>
+                    <i class="fa fa-cubes left" aria-hidden="true"></i>
+                    {{ 'label.patrimonial.licitacao.impugnacao.impugnados'|trans }}
+                </a>
+            </div>
+            {% if object.edital.passivelImpugnacao == true %}
+                <div class="col s1">
+                    <a href="{{ path('urbem_patrimonial_licitacao_edital_impugnado_create', { 'id':  object.edital.numEdital ~'~' ~ object.edital.Exercicio}) }}"
+                       class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+                </div>
+            {% endif %}
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">Processo</th>
+                    <th class="th-rh">Observações</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for impugnado in object.edital.impugnados %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ impugnado.codProcesso.codProcesso ~'/'~ impugnado.codProcesso.anoExercicio }}</td>
+                        <td class="td-rh">{{ impugnado.codProcesso.observacoes }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_patrimonial_licitacao_edital_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+                Add a comment to this line
+            </a>
+        </div>
+    </div>
+{% endblock content %}

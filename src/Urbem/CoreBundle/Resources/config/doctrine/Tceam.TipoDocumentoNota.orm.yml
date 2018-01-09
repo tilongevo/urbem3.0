@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Tceam\TipoDocumentoNota:
+    type: entity
+    table: tceam.tipo_documento_nota
+    id:
+        codTipoDocumentoNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento_nota
+    fields:
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        numeroNotaFiscal:
+            type: string
+            nullable: true
+            length: 10
+            column: numero_nota_fiscal
+        numeroSerie:
+            type: string
+            nullable: true
+            length: 3
+            column: numero_serie
+        numeroSubserie:
+            type: string
+            nullable: true
+            length: 3
+            column: numero_subserie
+        data:
+            type: date
+            nullable: true
+    manyToOne:
+        fkTceamDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\Documento
+            inversedBy: fkTceamTipoDocumentoNotas
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento

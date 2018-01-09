@@ -1,0 +1,21 @@
+<th{% if(is_diff|default(false)) %} class="diff"{% endif %}>{% block name %}{{ admin.trans(field.label, {}, field.translationDomain) }}{% endblock %}</th>
+<td>
+    {% block field %}
+        {% if field.options.data|length > 0 %}
+            <table class="table show-table">
+            {% for atributo in field.options.data  %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ atributo.nomAtributo }}</th>
+                    <td>
+                        {% if atributo.valor is defined %}
+                            {% for valor in atributo.valor %}
+                                <p>{{ valor }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% endif %}
+    {% endblock %}
+</td>

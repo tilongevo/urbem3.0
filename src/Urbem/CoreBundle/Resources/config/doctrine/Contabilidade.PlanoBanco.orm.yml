@@ -1,0 +1,105 @@
+Urbem\CoreBundle\Entity\Contabilidade\PlanoBanco:
+    type: entity
+    table: contabilidade.plano_banco
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\PlanoBancoRepository
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        contaCorrente:
+            type: string
+            nullable: false
+            length: 30
+            column: conta_corrente
+        codEntidade:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: cod_entidade
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            nullable: false
+            column: cod_conta_corrente
+    manyToOne:
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkContabilidadePlanoBancos
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+    oneToMany:
+        fkTcepePlanoBancoTipoContaBancos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\PlanoBancoTipoContaBanco
+            mappedBy: fkContabilidadePlanoBanco
+        fkTcmgoOrgaoPlanoBancos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\OrgaoPlanoBanco
+            mappedBy: fkContabilidadePlanoBanco
+        fkTesourariaBorderos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Bordero
+            mappedBy: fkContabilidadePlanoBanco
+        fkTesourariaConciliacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Conciliacao
+            mappedBy: fkContabilidadePlanoBanco
+        fkTesourariaTransacoesTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransacoesTransferencia
+            mappedBy: fkContabilidadePlanoBanco
+    oneToOne:
+        fkTesourariaSaldoTesouraria:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\SaldoTesouraria
+            mappedBy: fkContabilidadePlanoBanco
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkContabilidadePlanoBanco
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

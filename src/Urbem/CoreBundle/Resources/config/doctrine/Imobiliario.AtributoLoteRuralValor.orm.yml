@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Imobiliario\AtributoLoteRuralValor:
+    type: entity
+    table: imobiliario.atributo_lote_rural_valor
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkImobiliarioAtributoLoteRuralValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkImobiliarioLoteRural:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteRural
+            inversedBy: fkImobiliarioAtributoLoteRuralValores
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote

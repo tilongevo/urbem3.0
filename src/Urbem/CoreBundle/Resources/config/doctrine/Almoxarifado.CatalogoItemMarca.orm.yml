@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItemMarca:
+    type: entity
+    table: almoxarifado.catalogo_item_marca
+    id:
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+    fields: {  }
+    manyToOne:
+        fkAlmoxarifadoMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Marca
+            inversedBy: fkAlmoxarifadoCatalogoItemMarcas
+            joinColumns:
+                cod_marca:
+                    referencedColumnName: cod_marca
+    oneToMany:
+        fkAlmoxarifadoEstoqueMateriais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial
+            mappedBy: fkAlmoxarifadoCatalogoItemMarca
+        fkComprasCotacaoFornecedorItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItem
+            mappedBy: fkAlmoxarifadoCatalogoItemMarca
+        fkComprasOrdemItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemItem
+            mappedBy: fkAlmoxarifadoCatalogoItemMarca
+        fkAlmoxarifadoLocalizacaoFisicaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LocalizacaoFisicaItem
+            mappedBy: fkAlmoxarifadoCatalogoItemMarca
+    oneToOne:
+        fkAlmoxarifadoCatalogoItemBarras:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItemBarras
+            mappedBy: fkAlmoxarifadoCatalogoItemMarca
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca

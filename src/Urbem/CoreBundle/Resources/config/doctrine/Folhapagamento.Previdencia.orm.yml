@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Previdencia:
+    type: entity
+    table: folhapagamento.previdencia
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\PrevidenciaRepository
+    id:
+        codPrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_previdencia
+    fields:
+        codVinculo:
+            type: integer
+            nullable: false
+            column: cod_vinculo
+        codRegimePrevidencia:
+            type: integer
+            nullable: false
+            column: cod_regime_previdencia
+    manyToOne:
+        fkFolhapagamentoVinculo:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Vinculo
+            inversedBy: fkFolhapagamentoPrevidencias
+            joinColumns:
+                cod_vinculo:
+                    referencedColumnName: cod_vinculo
+        fkFolhapagamentoRegimePrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegimePrevidencia
+            inversedBy: fkFolhapagamentoPrevidencias
+            joinColumns:
+                cod_regime_previdencia:
+                    referencedColumnName: cod_regime_previdencia
+    oneToMany:
+        fkFolhapagamentoPrevidenciaPrevidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaPrevidencia
+            mappedBy: fkFolhapagamentoPrevidencia
+        fkPessoalContratoPensionistaPrevidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaPrevidencia
+            mappedBy: fkFolhapagamentoPrevidencia
+        fkPessoalContratoServidorPrevidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorPrevidencia
+            mappedBy: fkFolhapagamentoPrevidencia

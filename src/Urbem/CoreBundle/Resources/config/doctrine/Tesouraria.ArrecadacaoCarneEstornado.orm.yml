@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoCarneEstornado:
+    type: entity
+    table: tesouraria.arrecadacao_carne_estornado
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+    oneToOne:
+        fkTesourariaArrecadacaoCarne:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoCarne
+            inversedBy: fkTesourariaArrecadacaoCarneEstornado
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                numeracao:
+                    referencedColumnName: numeracao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_convenio:
+                    referencedColumnName: cod_convenio

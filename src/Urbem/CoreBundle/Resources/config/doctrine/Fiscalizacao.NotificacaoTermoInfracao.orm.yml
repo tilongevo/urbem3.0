@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoTermoInfracao:
+    type: entity
+    table: fiscalizacao.notificacao_termo_infracao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        numNotificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_notificacao
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+    fields:
+        observacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkFiscalizacaoNotificacaoTermo:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoTermo
+            inversedBy: fkFiscalizacaoNotificacaoTermoInfracoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                num_notificacao:
+                    referencedColumnName: num_notificacao
+        fkFiscalizacaoInfracao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Infracao
+            inversedBy: fkFiscalizacaoNotificacaoTermoInfracoes
+            joinColumns:
+                cod_infracao:
+                    referencedColumnName: cod_infracao

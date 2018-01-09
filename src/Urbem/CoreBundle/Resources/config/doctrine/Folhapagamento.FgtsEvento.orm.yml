@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Folhapagamento\FgtsEvento:
+    type: entity
+    table: folhapagamento.fgts_evento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\FgtsEventoRepository
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codFgts:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fgts
+    fields:
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkFolhapagamentoFgts:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Fgts
+            inversedBy: fkFolhapagamentoFgtsEventos
+            joinColumns:
+                cod_fgts:
+                    referencedColumnName: cod_fgts
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoTipoEventoFgts:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoFgts
+            inversedBy: fkFolhapagamentoFgtsEventos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoFgtsEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

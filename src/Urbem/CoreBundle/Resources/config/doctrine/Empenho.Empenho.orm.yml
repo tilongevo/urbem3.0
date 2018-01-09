@@ -1,0 +1,377 @@
+Urbem\CoreBundle\Entity\Empenho\Empenho:
+    type: entity
+    table: empenho.empenho
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\EmpenhoRepository
+    uniqueConstraints:
+        uk_empenho_1:
+            columns:
+                - exercicio
+                - cod_pre_empenho
+    id:
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        codPreEmpenho:
+            type: integer
+            nullable: false
+            column: cod_pre_empenho
+        dtEmpenho:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_empenho
+        dtVencimento:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_vencimento
+        vlSaldoAnterior:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_saldo_anterior
+        hora:
+            type: timemicrosecondpk
+            nullable: false
+        codCategoria:
+            type: integer
+            nullable: false
+            options:
+                default: '1'
+            column: cod_categoria
+        restosPagar:
+            type: string
+            nullable: true
+            length: 50
+            column: restos_pagar
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            cascade:
+                - persist
+            inversedBy: fkEmpenhoEmpenhos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoCategoriaEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\CategoriaEmpenho
+            inversedBy: fkEmpenhoEmpenhos
+            joinColumns:
+                cod_categoria:
+                    referencedColumnName: cod_categoria
+    oneToMany:
+        fkComprasOrdens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Ordem
+            mappedBy: fkEmpenhoEmpenho
+        fkEmpenhoEmpenhoAutorizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoAutorizacao
+            mappedBy: fkEmpenhoEmpenho
+        fkEmpenhoEmpenhoAnulados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoAnulado
+            mappedBy: fkEmpenhoEmpenho
+        fkEmpenhoEmpenhoAssinaturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoAssinatura
+            mappedBy: fkEmpenhoEmpenho
+        fkFrotaManutencaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\ManutencaoEmpenho
+            mappedBy: fkEmpenhoEmpenho
+        fkFrotaVeiculoLocacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoLocacao
+            mappedBy: fkEmpenhoEmpenho
+        fkPatrimonioBemCompradoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemCompradoEmpenho
+            mappedBy: fkEmpenhoEmpenho
+        fkTcemgContratoAditivoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContratoAditivoItem
+            mappedBy: fkEmpenhoEmpenho
+        fkTcemgNotaFiscalEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NotaFiscalEmpenho
+            mappedBy: fkEmpenhoEmpenho
+        fkTcemgNotaFiscalEmpenhoLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NotaFiscalEmpenhoLiquidacao
+            mappedBy: fkEmpenhoEmpenho
+        fkTcernRoyaltiesEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\RoyaltiesEmpenho
+            mappedBy: fkEmpenhoEmpenho
+        fkTcernFundebEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\FundebEmpenho
+            mappedBy: fkEmpenhoEmpenho
+        fkTcetoTransferenciaTipoTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\TransferenciaTipoTransferencia
+            mappedBy: fkEmpenhoEmpenho
+        fkTcmgoEmpenhoModalidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\EmpenhoModalidade
+            mappedBy: fkEmpenhoEmpenho
+        fkTcmgoNotaFiscalEmpenhoLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\NotaFiscalEmpenhoLiquidacao
+            mappedBy: fkEmpenhoEmpenho
+        fkTcmgoObraEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ObraEmpenho
+            mappedBy: fkEmpenhoEmpenho
+        fkContabilidadeEmpenhamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Empenhamento
+            mappedBy: fkEmpenhoEmpenho
+        fkTcmgoNotaFiscalEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\NotaFiscalEmpenho
+            mappedBy: fkEmpenhoEmpenho
+        fkEmpenhoEmpenhoComplementares1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoComplementar
+            mappedBy: fkEmpenhoEmpenho1
+        fkEmpenhoNotaLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            mappedBy: fkEmpenhoEmpenho
+        fkTcemgEmpenhoRegistroPrecos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\EmpenhoRegistroPrecos
+            mappedBy: fkEmpenhoEmpenho
+    oneToOne:
+        fkEmpenhoEmpenhoContrato:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoContrato
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoEmpenhoConvenio:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoConvenio
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoPrestacaoContas:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PrestacaoContas
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTceamEmpenhoIncorporacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\EmpenhoIncorporacao
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcemgArquivoEmp:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ArquivoEmp
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcemgContratoEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContratoEmpenho
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio_empenho
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcemgConvenioEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConvenioEmpenho
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio_empenho
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcepbEmpenhoObras:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\EmpenhoObras
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio_empenho
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcmgoContratoEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ContratoEmpenho
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio_empenho
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcmgoProcessos:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Processos
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoEmpenhoComplementar:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoComplementar
+            mappedBy: fkEmpenhoEmpenho
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenho
+            cascade:
+                - persist
+                - remove
+            inversedBy: fkEmpenhoEmpenho
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho

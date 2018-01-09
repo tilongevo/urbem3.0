@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {{ form_start(form) }}
+            <div class="box-header col s12">
+                <h5 class="col s12 box-title left-align show">
+                    Dados da Função de Origem
+                </h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+            <input type="hidden" value="{{ funcao.codFuncao }}" name="cod_funcao" />
+            <div class="col s3">
+                <label for="codModulo" class="control-label required">{{ 'label.funcao.codModulo'|trans }}</label>
+                <input class="materialize-textarea input-rh" id="codModulo" name="funcao[codModulo]" value="{{ funcao.codModulo }}" disabled="disabled">
+            </div>
+            <div class="col s3">
+                <label for="codBibliotecaOrigem" class="control-label required">{{ 'label.funcao.codBiblioteca'|trans }}</label>
+                <input class="materialize-textarea input-rh" id="codBibliotecaOrigem" name="funcao[codBibliotecaOrigem]" value="{{ funcao.fkAdministracaoBiblioteca.nomBiblioteca }}" disabled="disabled">
+            </div>
+            <div class="col s3">
+                <label for="nomFuncao" class="control-label required">{{ 'label.funcao.nomFuncao'|trans }}</label>
+                <input class="materialize-textarea input-rh" id="nomFuncao" name="funcao[nomFuncao]" value="{{ funcao.nomFuncao }}" disabled="disabled">
+            </div>
+            <div class="col s3">
+                <label for="codTipoRetorno" class="control-label required">{{ 'label.funcao.codTipoRetorno'|trans }}</label>
+                <input class="materialize-textarea input-rh" id="codTipoRetorno" name="funcao[codTipoRetorno]" value="{{ funcao.fkAdministracaoTipoPrimitivo.nomTipo }}" disabled="disabled">
+            </div>
+            {% if funcaoExterna is not null %}
+                <div class="col s3">
+                    <label for="comentario_old" class="control-label required">{{ 'label.funcao.comentario'|trans }}</label>
+                    <textarea id="comentario_old" name="funcao[comentario_old]" rows="5" class=" form-control" disabled="disabled">{{ funcaoExterna.comentario }}</textarea>
+                </div>
+                <div class="col s6">
+                    <label for="corpoPl" class="control-label required">{{ 'label.funcao.corpoPl'|trans }}</label>
+                    <textarea id="corpoPl" name="funcao[corpoPl]" class= "form-control" rows="5" disabled="disabled">{{ funcaoExterna.corpoPl }}</textarea>
+                </div>
+            {% endif %}
+            <div class="box-header col s12">
+                <h5 class="col s12 box-title left-align show">
+                    Dados da Nova Função
+                </h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+
+    <div class="col s12 right-align">
+        <button type="button" class="waves-effect waves-light btn blue darken-4 btn-bold btn-submit" value="Duplicar"><i class="material-icons left">content_copy</i>Duplicar</button>
+    </div>
+    <div class="col s8 initial">
+        <a href="javascript:window.history.back();"
+           class="back btn-floating white-text blue darken-4 btn-success">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    <link rel="stylesheet" href="/bundles/sonatacore/vendor/select2/select2.css">
+    <link rel="stylesheet" href="/bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css">
+    <script src="/bundles/sonatacore/vendor/select2/select2.min.js"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/administrativo/javascripts/administracao/funcaoDuplicar.js') }}"></script>
+{% endblock %}

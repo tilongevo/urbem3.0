@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoContaDespesaItem:
+    type: entity
+    table: contabilidade.configuracao_lancamento_conta_despesa_item
+    uniqueConstraints:
+        uk_configuracao_lancamento_conta_despesa_item:
+            columns:
+                - cod_item
+                - exercicio
+    id:
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codContaDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_despesa
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkAlmoxarifadoCatalogoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            inversedBy: fkContabilidadeConfiguracaoLancamentoContaDespesaItens
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkContabilidadeConfiguracaoLancamentoContaDespesaItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta_despesa:
+                    referencedColumnName: cod_conta

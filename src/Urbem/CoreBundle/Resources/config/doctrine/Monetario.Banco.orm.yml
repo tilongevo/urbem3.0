@@ -1,0 +1,88 @@
+Urbem\CoreBundle\Entity\Monetario\Banco:
+    type: entity
+    table: monetario.banco
+    uniqueConstraints:
+        uk_banco_1:
+            columns:
+                - num_banco
+    id:
+        codBanco:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: monetario.banco_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_banco
+    fields:
+        nomBanco:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_banco
+        numBanco:
+            type: string
+            nullable: false
+            length: 10
+            column: num_banco
+    oneToMany:
+        fkFolhapagamentoTcmbaEmprestimoConsignados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaEmprestimoConsignado
+            mappedBy: fkMonetarioBanco
+        fkImaConfiguracaoConvenioBbs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBb
+            mappedBy: fkMonetarioBanco
+        fkImaConfiguracaoConvenioBanrisuis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBanrisul
+            mappedBy: fkMonetarioBanco
+        fkImaConfiguracaoConvenioBescs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBesc
+            mappedBy: fkMonetarioBanco
+        fkImaConfiguracaoConvenioHsbcs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioHsbc
+            mappedBy: fkMonetarioBanco
+        fkImaConfiguracaoHsbcBancos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoHsbcBancos
+            mappedBy: fkMonetarioBanco
+        fkMonetarioAgencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            mappedBy: fkMonetarioBanco
+    oneToOne:
+        fkTesourariaBancoChequeLayout:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BancoChequeLayout
+            mappedBy: fkMonetarioBanco
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco

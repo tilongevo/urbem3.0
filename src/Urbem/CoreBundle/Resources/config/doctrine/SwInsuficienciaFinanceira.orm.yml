@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\SwInsuficienciaFinanceira:
+    type: entity
+    table: sw_insuficiencia_financeira
+    id:
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        vlInsuficiencia:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_insuficiencia
+    oneToOne:
+        fkSwEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\SwEmpenho
+            inversedBy: fkSwInsuficienciaFinanceira
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_empenho:
+                    referencedColumnName: cod_empenho

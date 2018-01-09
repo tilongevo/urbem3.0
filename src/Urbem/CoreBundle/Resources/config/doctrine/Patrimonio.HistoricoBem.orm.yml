@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Patrimonio\HistoricoBem:
+    type: entity
+    table: patrimonio.historico_bem
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\HistoricoBemRepository
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codSituacao:
+            type: integer
+            nullable: false
+            column: cod_situacao
+        codLocal:
+            type: integer
+            nullable: false
+            column: cod_local
+        codOrgao:
+            type: integer
+            nullable: false
+            column: cod_orgao
+        descricao:
+            type: string
+            nullable: false
+            length: 500
+    manyToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioHistoricoBens
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkPatrimonioSituacaoBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\SituacaoBem
+            inversedBy: fkPatrimonioHistoricoBens
+            joinColumns:
+                cod_situacao:
+                    referencedColumnName: cod_situacao
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkPatrimonioHistoricoBens
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkPatrimonioHistoricoBens
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+    oneToMany:
+        fkPatrimonioInventarioHistoricoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\InventarioHistoricoBem
+            mappedBy: fkPatrimonioHistoricoBem

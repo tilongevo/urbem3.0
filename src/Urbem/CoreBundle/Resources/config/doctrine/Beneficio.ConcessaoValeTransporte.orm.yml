@@ -1,0 +1,90 @@
+Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporte:
+    type: entity
+    table: beneficio.concessao_vale_transporte
+    id:
+        codConcessao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_concessao
+        codMes:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mes
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codValeTransporte:
+            type: integer
+            nullable: false
+            column: cod_vale_transporte
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        quantidade:
+            type: integer
+            nullable: false
+        inicializado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkAdministracaoMes:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Mes
+            inversedBy: fkBeneficioConcessaoValeTransportes
+            joinColumns:
+                cod_mes:
+                    referencedColumnName: cod_mes
+        fkBeneficioValeTransporte:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ValeTransporte
+            inversedBy: fkBeneficioConcessaoValeTransportes
+            joinColumns:
+                cod_vale_transporte:
+                    referencedColumnName: cod_vale_transporte
+        fkBeneficioTipoConcessaoValeTransporte:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\TipoConcessaoValeTransporte
+            inversedBy: fkBeneficioConcessaoValeTransportes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkBeneficioConcessaoValeTransporteSemanais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporteSemanal
+            mappedBy: fkBeneficioConcessaoValeTransporte
+        fkBeneficioContratoServidorConcessaoValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ContratoServidorConcessaoValeTransporte
+            mappedBy: fkBeneficioConcessaoValeTransporte
+        fkBeneficioGrupoConcessaoValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\GrupoConcessaoValeTransporte
+            mappedBy: fkBeneficioConcessaoValeTransporte
+    oneToOne:
+        fkBeneficioConcessaoValeTransporteCalendario:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporteCalendario
+            mappedBy: fkBeneficioConcessaoValeTransporte
+            joinColumns:
+                cod_concessao:
+                    referencedColumnName: cod_concessao
+                cod_mes:
+                    referencedColumnName: cod_mes
+                exercicio:
+                    referencedColumnName: exercicio

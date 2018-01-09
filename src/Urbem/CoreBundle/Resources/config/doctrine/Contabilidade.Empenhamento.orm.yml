@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Contabilidade\Empenhamento:
+    type: entity
+    table: contabilidade.empenhamento
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+        exercicioEmpenho:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_empenho
+    manyToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkContabilidadeEmpenhamentos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio_empenho:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToOne:
+        fkContabilidadeLancamentoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoEmpenho
+            inversedBy: fkContabilidadeEmpenhamento
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                sequencia:
+                    referencedColumnName: sequencia
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

@@ -1,0 +1,52 @@
+{#<div class="row">#}
+    {#<div class="col s12">#}
+        {#<h3 class="blue-text text-darken-4 left"#}
+            {#style="margin: 5px">#}
+
+        {#</h3>#}
+    {#</div>#}
+{#</div>#}
+<div class="row">
+    <table id="table-rotas" class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <tr>
+            <th class="th-rh"></th>
+            <th class="th-rh"></th>
+            <th class="th-rh">{{ 'label.grupo.rota.children'|trans({ '%modulo%': rotaPai.traducaoRota|title }) }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rota in rotas %}
+            <tr>
+                <td class="td-rh" width="1">
+                    {% if rota.input.hasChildren %}
+                        <a data-toggle="collapse"
+                           data-target="#accordion-local-{{ rota.codRota }}"
+                           role="button">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                </td>
+                <td class="td-rh" width="1">
+                    <input type="checkbox"
+                           id="rota_{{ rota.descricaoRota }}"
+                           name="rota[{{ rota.descricaoRota }}]"
+                           value="{{ rota.codRota }}"
+                           parent-route="{{ rotaPai.codRota }}"/>
+                </td>
+                <td class="td-rh">
+                    <p class="text-left">{{ rota.traducaoRota }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 !important;"></td>
+                <td style="padding: 0 !important;" colspan="2">
+                    <div class="collapsing"
+                         id="accordion-local-{{ rota.codRota }}"
+                         data-route="{{ rota.codRota }}"></div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

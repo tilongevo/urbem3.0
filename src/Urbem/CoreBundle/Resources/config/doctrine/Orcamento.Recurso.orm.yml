@@ -1,0 +1,170 @@
+Urbem\CoreBundle\Entity\Orcamento\Recurso:
+    type: entity
+    table: orcamento.recurso
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\RecursoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+    fields:
+        codFonte:
+            type: string
+            nullable: false
+            length: 13
+            column: cod_fonte
+        nomRecurso:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_recurso
+    oneToMany:
+        fkContabilidadePlanoRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoRecurso
+            mappedBy: fkOrcamentoRecurso
+        fkContabilidadePlanoRecursos1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoRecurso
+            mappedBy: fkOrcamentoRecurso1
+        fkManadRecursoModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\RecursoModeloLrf
+            mappedBy: fkOrcamentoRecurso
+        fkOrcamentoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            mappedBy: fkOrcamentoRecurso
+        fkPpaAcaoRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoRecurso
+            mappedBy: fkOrcamentoRecurso
+        fkStnVinculoRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\VinculoRecurso
+            mappedBy: fkOrcamentoRecurso
+        fkTcersRecursoModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\RecursoModeloLrf
+            mappedBy: fkOrcamentoRecurso
+        fkTesourariaReciboExtraRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraRecurso
+            mappedBy: fkOrcamentoRecurso
+        fkTesourariaTransferenciaRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaRecurso
+            mappedBy: fkOrcamentoRecurso
+        fkOrcamentoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            mappedBy: fkOrcamentoRecurso
+        fkContabilidadeValorLancamentoRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ValorLancamentoRecurso
+            mappedBy: fkOrcamentoRecurso
+    oneToOne:
+        fkOrcamentoRecursoDestinacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\RecursoDestinacao
+            mappedBy: fkOrcamentoRecurso
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkOrcamentoRecursoDireto:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\RecursoDireto
+            mappedBy: fkOrcamentoRecurso
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkStnRecursoRreoAnexo14:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Stn\RecursoRreoAnexo14
+            mappedBy: fkOrcamentoRecurso
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkTcepbRecurso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\Recurso
+            mappedBy: fkOrcamentoRecurso
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkTcerjRecurso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcerj\Recurso
+            mappedBy: fkOrcamentoRecurso
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkTcepeCodigoFonteRecurso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\CodigoFonteRecurso
+            mappedBy: fkOrcamentoRecurso
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso

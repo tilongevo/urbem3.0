@@ -1,0 +1,307 @@
+{% extends 'base_home_cards.html.twig' %}
+
+{% block title %}
+    Portal do Cidadão
+{% endblock title %}
+
+{% block content %}
+    <link rel="stylesheet" href="/bundles/core/css/sonata-urbem.css">
+    <link rel="stylesheet" href="/bundles/portalservicos/css/custom.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="http://maxartkiller.in/website/rockon/rockon_blue/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+    <link href="http://maxartkiller.in/website/rockon/rockon_blue/vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="http://maxartkiller.in/website/rockon/rockon_blue/vendor/jquery-jvectormap/jquery-jvectormap-2.0.3.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="http://maxartkiller.in/website/rockon/rockon_blue/css/material_color_rockon.css"/>
+
+    <div class="container white z-depth-1 form reports">
+
+        <h4 class="blue-text text-darken-4">
+            Módulo Portal do Cidadão
+        </h4>
+
+        <div class="row dashboard_content equalize-cards">
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light text-center">
+                        <img src="{% if usuario.profilePicture is not null %} {{ profilePictureDir ~ usuario.profilePicture }} {% else %} {{ asset('/bundles/portalservicos/images/user.png') }} {% endif %}" class="img-circle img-offline img-responsive img-profile" alt="">
+                        <div class="profile-name">
+                            <p class="user-name">{{ usuario.getFkSwCgm().getNomCgm() }}</p>
+                        </div>
+                        <p><i class="fa fa-calendar"></i> Último acesso: <a href="javascript:">{{ usuario.getLastLogin().format('\\D\\i\\a d/m/Y \\à\\s H:i') }}</a></p>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Meu Perfil
+                            <i class="material-icons right">more_vert</i>
+                        </span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                        <table class="bordered ">
+                            <thead>
+                            <tr>
+                                <th colspan="2">Dados Acesso</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Username:</td>
+                                <td>{{ usuario.username }}</td>
+                            </tr>
+                            <tr>
+                                <td>E-mail:</td>
+                                <td>{{ usuario.email }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="bordered ">
+                            <thead>
+                            <tr>
+                                <th>Endereço</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><i class="fa fa-map-marker"></i> {{ usuario.fkSwCgm.logradouro|title }} N.º{{ usuario.fkSwCgm.numero }}, {{  usuario.fkSwCgm.bairro|title }} <br>{{  usuario.fkSwCgm.fkSwMunicipio.nomMunicipio }} - {{  usuario.fkSwCgm.fkSwMunicipio.fkSwUf.siglaUf }} - {{ usuario.fkSwCgm.fkSwMunicipio.fkSwUf.fkSwPais.nomPais }}- CEP {{ usuario.fkSwCgm.cep|slice(0,5) ~ '-' ~ usuario.fkSwCgm.cep|slice(5) }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <div class="row">
+                            <div class="col"><a href="{{ path('urbem_portalservicos_usuario_edit', {'id': usuario.numcgm}) }}"><i class="fa fa-edit"></i> Alterar Informações</a></div>
+                            <div class="col"><a href="{{ path('urbem_portalservicos_usuario_change_password', {'id': usuario.numcgm}) }}"><i class="fa fa-key"></i> Alterar Senha</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+            <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <a href="{{ path('urbem_portalservicos_consulta_imovel_list') }}">
+                            <div id="chart-meus-imoveis">
+                                <img src="{{ asset('/bundles/portalservicos/images/home.png') }}" alt="" style="display:none">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Meus Imóveis
+                            <i class="material-icons right">more_vert</i>
+                        </span>
+                    </div>
+                    <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                    <table class="bordered js-table-lista-imoveis">
+                        <thead>
+                            <tr>
+                                <th>Número da Inscrição</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <a href="{{ path('urbem_portalservicos_cadastro_economico_consulta_list') }}">
+                            <div id="chart-inscricao-economica">
+                                <img src="{{ asset('/bundles/portalservicos/images/percent.png') }}" alt="" style="display:none">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Inscrição Econômica
+                            <i class="material-icons right">more_vert</i>
+                        </span>
+                    </div>
+                    <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                    <table class="bordered js-table-lista-cadastro-economico">
+                        <thead>
+                            <tr>
+                                <th>Número da Inscrição</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <a href="{{ path('urbem_portalservicos_arrecadacao_consulta_iptu_list') }}">
+                            <div id="chart-divida-ativa">
+                                <img src="{{ asset('/bundles/portalservicos/images/handmoney.png') }}" alt="" style="display:none">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Dívida Ativa
+                            <i class="material-icons right">more_vert</i>
+                        </span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                        <table class="bordered js-table-lista-inscricao-divida-ativa">
+                            <thead>
+                                <tr>
+                                    <th>Número da Inscrição</th>
+                                    <th>Situação</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <a href="{{ path('urbem_portalservicos_arrecadacao_consulta_iptu_list') }}">
+                            <div id="chart-arrecadacao-iptu">
+                                <img src="{{ asset('/bundles/portalservicos/images/iptu.png') }}" alt="" style="display:none">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Arrecadação - IPTU
+                            <i class="material-icons right">more_vert</i>
+                        </span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                        <table class="bordered js-table-lista-arrecadacao-iptu">
+                            <thead>
+                                <tr>
+                                    <th>Número da Inscrição</th>
+                                    <th>Situação</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                    <a href="{{ path('urbem_portalservicos_arrecadacao_consulta_iss_list') }}">
+                        <div id="chart-arrecadacao-iss">
+                            <img src="{{ asset('/bundles/portalservicos/images/iss.png') }}" alt="" style="display:none">
+                        </div>
+                    </a>
+                </div>
+                    <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Arrecadação - ISS
+                        <i class="material-icons right">more_vert</i>
+                    </span>
+                </div>
+                    <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                    <table class="bordered js-table-lista-arrecadacao-iss">
+                        <thead>
+                            <tr>
+                                <th>Número da Inscrição</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l8">
+                <div class="card">
+                    <div class="card-content">
+                    <div id='calendar' class="calendar"></div>
+                </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <a target="_blank" href="/transparencia">
+                            <div id="transparencia" style="background: url( {{ asset('/bundles/portalservicos/images/chart0.png')}} ) no-repeat center;">
+                                <img src="{{ asset('/bundles/portalservicos/images/transparencia.png') }}">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card-content card-link">
+                    <span class="card-title activator grey-text text-darken-4">
+                        Portal da Transparência
+                    </span>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row dashboard_content">
+            <div class="col s12 m12 l12 sr-only">
+                <h4>Analytic Data</h4>
+            </div>
+
+            <div class="col s12 m12 l12">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4 ">Últimas notícias CNM</span>
+                    </div>
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <div class="panel-body">
+                            <div class="list-group data-ultimas-noticias scrollbar">
+                                {{ ultimasNoticiasCNM | raw }}
+                            </div>
+                            <div class="card-content">
+                                <span class="grey-text text-lighten-1 ">Fonte: CNM - Informações obtidas direto do portal da CNM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTables JavaScript -->
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!--sparklines js-->
+    <script type="text/javascript" src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/sparklines/jquery.sparkline.min.js"></script>
+
+    <!--Custom js-->
+    <script type="text/javascript" src="http://maxartkiller.in/website/rockon/rockon_blue/js/rockon.js"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/portalservicos/javascripts/home.js') }}"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/raphael/raphael.js"></script>
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/morrisjs/morris.min.js"></script>
+    {#<script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/morrisjs/morris-data.js"></script>#}
+
+    <!--Custom js-->
+    <script type="text/javascript" src="http://maxartkiller.in/website/rockon/rockon_blue/js/rockon.js"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="{{ asset('/bundles/core/css/fullcalendar.min.css') }}"/>
+    <link type="text/css" rel='stylesheet' media='print' href="{{ asset('/bundles/core/css/fullcalendar.print.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/bundles/core/javascripts/lib/moment.min.js') }}"></script>
+    <script src="{{ asset('/bundles/core/javascripts/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('/bundles/core/javascripts/lang/pt-br.js') }}"></script>
+    <script src="{{ asset('/bundles/recursoshumanos/javascripts/calendario/calendarioFullCalendar.js') }}"></script>
+    <script>calendario({{(calendarios|json_encode|raw)}});</script>
+{% endblock javascripts %}

@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Economico\ModalidadeLancamento:
+    type: entity
+    table: economico.modalidade_lancamento
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields:
+        nomModalidade:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_modalidade
+    oneToMany:
+        fkEconomicoAtividadeModalidadeLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeLancamento
+            mappedBy: fkEconomicoModalidadeLancamento
+        fkEconomicoCadastroEconomicoModalidadeLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoModalidadeLancamento
+            mappedBy: fkEconomicoModalidadeLancamento
+        fkArrecadacaoFaturamentoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FaturamentoServico
+            mappedBy: fkEconomicoModalidadeLancamento
+        fkFiscalizacaoFaturamentoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FaturamentoServico
+            mappedBy: fkEconomicoModalidadeLancamento

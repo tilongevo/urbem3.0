@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Economico\TipoBaixa:
+    type: entity
+    table: economico.tipo_baixa
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomBaixa:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_baixa
+    oneToMany:
+        fkEconomicoBaixaLicencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaLicenca
+            mappedBy: fkEconomicoTipoBaixa

@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Folhapagamento\DeducaoDependente:
+    type: entity
+    table: folhapagamento.deducao_dependente
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        codContrato:
+            type: integer
+            nullable: false
+            column: cod_contrato
+    manyToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkFolhapagamentoDeducaoDependentes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkFolhapagamentoPeriodoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao
+            inversedBy: fkFolhapagamentoDeducaoDependentes
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkFolhapagamentoDeducaoDependentes
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkFolhapagamentoTipoFolha:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoFolha
+            inversedBy: fkFolhapagamentoDeducaoDependentes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkFolhapagamentoDeducaoDependenteComplementar:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DeducaoDependenteComplementar
+            mappedBy: fkFolhapagamentoDeducaoDependente
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+                cod_tipo:
+                    referencedColumnName: cod_tipo

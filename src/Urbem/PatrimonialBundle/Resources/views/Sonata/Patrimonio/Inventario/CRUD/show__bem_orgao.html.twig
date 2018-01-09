@@ -1,0 +1,45 @@
+{% if admin.orgaobem is not null %}
+    <div class="row">
+        <div class="col s11 servidor-table">
+            <a style="font-size: 16px">
+                <i class="mdi mdi-file-document"></i>
+                {{ 'label.inventarioPatrimonio.bemOrgao'|trans }}
+            </a>
+        </div>
+
+        <table id="table-orgao" class="col s12 highlight bordered">
+            <thead class="thead-rh">
+                <tr>
+                    <th class="th-rh" width="5"></th>
+                    <th class="th-rh" width="1"></th>
+                    <th class="th-rh">{{ 'label.inventarioPatrimonio.orgao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.inventarioPatrimonio.total'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for orgao in admin.orgaobem %}
+                <tr>
+                    <td class="td-rh">
+                        <a data-toggle="collapse"
+                           data-target="#accordion-local-{{ orgao.cod_orgao }}-{{ admin.exercicio }}-{{ admin.idInventario }}"
+                           role="button">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td class="td-rh">{{ loop.index }}</td>
+                    <td class="td-rh">
+                        {{ orgao.cod_estrutural ~ ' - ' ~ orgao.descricao }}
+                    </td>
+                    <td class="td-rh">{{ orgao.totalBens }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 !important;"></td>
+                    <td style="padding: 0 !important;" colspan="3">
+                        <div class="collapsing" id="accordion-local-{{ orgao.cod_orgao }}-{{ admin.exercicio }}-{{ admin.idInventario }}"></div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

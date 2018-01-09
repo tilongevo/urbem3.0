@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Imobiliario\TipoCondominio:
+    type: entity
+    table: imobiliario.tipo_condominio
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_tipo
+    oneToMany:
+        fkImobiliarioCondominios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Condominio
+            mappedBy: fkImobiliarioTipoCondominio

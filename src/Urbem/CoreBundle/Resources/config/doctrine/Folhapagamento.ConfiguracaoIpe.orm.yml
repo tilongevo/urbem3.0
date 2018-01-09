@@ -1,0 +1,108 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpe:
+    type: entity
+    table: folhapagamento.configuracao_ipe
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\ConfiguracaoIpeRepository
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        vigencia:
+            type: datepk
+            generator:
+                strategy: NONE
+    fields:
+        codAtributoData:
+            type: integer
+            nullable: false
+            column: cod_atributo_data
+        codModuloData:
+            type: integer
+            nullable: false
+            column: cod_modulo_data
+        codCadastroData:
+            type: integer
+            nullable: false
+            column: cod_cadastro_data
+        codAtributoMat:
+            type: integer
+            nullable: false
+            column: cod_atributo_mat
+        codModuloMat:
+            type: integer
+            nullable: false
+            column: cod_modulo_mat
+        codCadastroMat:
+            type: integer
+            nullable: false
+            column: cod_cadastro_mat
+        codEventoAutomatico:
+            type: integer
+            nullable: false
+            column: cod_evento_automatico
+        codEventoBase:
+            type: integer
+            nullable: false
+            column: cod_evento_base
+        codigoOrgao:
+            type: integer
+            nullable: false
+            column: codigo_orgao
+        contribuicaoPat:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: contribuicao_pat
+        contibuicaoServ:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: contibuicao_serv
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkFolhapagamentoConfiguracaoIpes
+            joinColumns:
+                cod_modulo_data:
+                    referencedColumnName: cod_modulo
+                cod_cadastro_data:
+                    referencedColumnName: cod_cadastro
+                cod_atributo_data:
+                    referencedColumnName: cod_atributo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoConfiguracaoIpes
+            joinColumns:
+                cod_evento_automatico:
+                    referencedColumnName: cod_evento
+        fkAdministracaoAtributoDinamico1:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkFolhapagamentoConfiguracaoIpes1
+            joinColumns:
+                cod_modulo_mat:
+                    referencedColumnName: cod_modulo
+                cod_cadastro_mat:
+                    referencedColumnName: cod_cadastro
+                cod_atributo_mat:
+                    referencedColumnName: cod_atributo
+        fkFolhapagamentoEvento1:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoConfiguracaoIpes1
+            joinColumns:
+                cod_evento_base:
+                    referencedColumnName: cod_evento
+    oneToOne:
+        fkFolhapagamentoConfiguracaoIpePensionista:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpePensionista
+            mappedBy: fkFolhapagamentoConfiguracaoIpe
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                vigencia:
+                    referencedColumnName: vigencia

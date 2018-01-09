@@ -1,0 +1,113 @@
+Urbem\CoreBundle\Entity\Compras\OrdemItem:
+    type: entity
+    table: compras.ordem_item
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicioPreEmpenho:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_pre_empenho
+    fields:
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 4
+        vlTotal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_total
+        codMarca:
+            type: integer
+            nullable: true
+            column: cod_marca
+        codCentro:
+            type: integer
+            nullable: true
+            column: cod_centro
+        codItem:
+            type: integer
+            nullable: true
+            column: cod_item
+    manyToOne:
+        fkComprasOrdem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Ordem
+            inversedBy: fkComprasOrdemItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                tipo:
+                    referencedColumnName: tipo
+        fkEmpenhoItemPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            inversedBy: fkComprasOrdemItens
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio_pre_empenho:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item
+        fkAlmoxarifadoCatalogoItemMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItemMarca
+            inversedBy: fkComprasOrdemItens
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+        fkAlmoxarifadoCentroCusto:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto
+            inversedBy: fkComprasOrdemItens
+            joinColumns:
+                cod_centro:
+                    referencedColumnName: cod_centro
+    oneToMany:
+        fkAlmoxarifadoLancamentoOrdens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoOrdem
+            mappedBy: fkComprasOrdemItem
+        fkComprasOrdemItemAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemItemAnulacao
+            mappedBy: fkComprasOrdemItem

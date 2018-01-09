@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Administracao\FuncaoExterna:
+    type: entity
+    table: administracao.funcao_externa
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_biblioteca
+        codFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_funcao
+    fields:
+        comentario:
+            type: text
+            nullable: false
+        corpoPl:
+            type: text
+            nullable: true
+            column: corpo_pl
+        corpoLn:
+            type: text
+            nullable: true
+            column: corpo_ln
+    oneToMany:
+        fkAdministracaoFuncaoReferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\FuncaoReferencia
+            mappedBy: fkAdministracaoFuncaoExterna
+        fkAdministracaoCorpoFuncaoExternas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\CorpoFuncaoExterna
+            mappedBy: fkAdministracaoFuncaoExterna
+    oneToOne:
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkAdministracaoFuncaoExterna
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao

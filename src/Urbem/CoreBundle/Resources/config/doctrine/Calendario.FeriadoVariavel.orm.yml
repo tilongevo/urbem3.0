@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Calendario\FeriadoVariavel:
+    type: entity
+    table: calendario.feriado_variavel
+    id:
+        codFeriado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_feriado
+    fields: {  }
+    oneToMany:
+        fkCalendarioCalendarioFeriadoVariaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioFeriadoVariavel
+            mappedBy: fkCalendarioFeriadoVariavel
+    oneToOne:
+        fkCalendarioFeriado:
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\Feriado
+            inversedBy: fkCalendarioFeriadoVariavel
+            joinColumns:
+                cod_feriado:
+                    referencedColumnName: cod_feriado

@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoFolha:
+    type: entity
+    table: folhapagamento.tipo_folha
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkFolhapagamentoDeducaoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DeducaoDependente
+            mappedBy: fkFolhapagamentoTipoFolha
+        fkImaPagamento910s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\Pagamento910
+            mappedBy: fkFolhapagamentoTipoFolha
+        fkPessoalLancamentoFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LancamentoFerias
+            mappedBy: fkFolhapagamentoTipoFolha

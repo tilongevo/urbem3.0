@@ -1,0 +1,91 @@
+Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto:
+    type: entity
+    table: almoxarifado.centro_custo
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\CentroCustoRepository
+    uniqueConstraints:
+        uk_centro_custo_1:
+            columns:
+                - descricao
+    id:
+        codCentro:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: almoxarifado.cod_centro_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_centro
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+        dtVigencia:
+            type: date
+            nullable: true
+            column: dt_vigencia
+    oneToMany:
+        fkAlmoxarifadoCentroCustoEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoEntidade
+            mappedBy: fkAlmoxarifadoCentroCusto
+        fkAlmoxarifadoEstoqueMateriais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial
+            mappedBy: fkAlmoxarifadoCentroCusto
+        fkAlmoxarifadoPedidoTransferenciaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItem
+            mappedBy: fkAlmoxarifadoCentroCusto
+        fkAlmoxarifadoCentroCustoPermissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoPermissao
+            mappedBy: fkAlmoxarifadoCentroCusto
+        fkAlmoxarifadoPedidoTransferenciaItemDestinos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItemDestino
+            mappedBy: fkAlmoxarifadoCentroCusto
+        fkComprasOrdemItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemItem
+            mappedBy: fkAlmoxarifadoCentroCusto
+        fkComprasSolicitacaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItem
+            mappedBy: fkAlmoxarifadoCentroCusto
+        fkEmpenhoItemPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            mappedBy: fkAlmoxarifadoCentroCusto
+        fkSwProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            mappedBy: fkAlmoxarifadoCentroCusto

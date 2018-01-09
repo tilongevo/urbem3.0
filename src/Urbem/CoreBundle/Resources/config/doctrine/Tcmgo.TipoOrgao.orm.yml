@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmgo\TipoOrgao:
+    type: entity
+    table: tcmgo.tipo_orgao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkTcmgoOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Orgao
+            mappedBy: fkTcmgoTipoOrgao

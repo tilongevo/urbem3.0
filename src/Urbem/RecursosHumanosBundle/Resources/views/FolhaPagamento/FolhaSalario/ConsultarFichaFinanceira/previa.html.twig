@@ -1,0 +1,288 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block body %}
+    {% block content %}
+            {% include 'RecursosHumanosBundle:FolhaPagamento/FolhaSalario/ConsultarFichaFinanceira:header.html.twig' %}
+        <table class="table table-bordered" xmlns="http://www.w3.org/1999/html">
+            <thead>
+            <tr>
+                <th class="grey"> {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.fichaFinanceira'|trans }}</th>
+            </tr>
+            </thead>
+        </table>
+        <div class="divider">
+            <p></p>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="grey"> {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.competencia'|trans }}</th>
+                <td>{{ object.competencia }}</td>
+                <th class="grey"> {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.matricula'|trans }}</th>
+                <td>{{ object.matricula }}</td>
+            </tr>
+            </thead>
+        </table>
+        <div class="divider">
+            <p></p>
+        </div>
+
+
+        <div class="col s12 servidor-table">
+            <a class="btn-lg tooltipped"
+               data-position="left"
+               data-delay="50"
+               data-tooltip="Ficha Financeira">
+                <i class="fa fa-cubes left"></i>
+                {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.eventosCalculados'|trans }}
+            </a>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.evento'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.desdobramento'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.quantidade'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.proventos'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descontos'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for calculado in object.eventosCalculados %}
+                <tr>
+                    <td class="td-rh">{{ calculado.codigo }}</td>
+                    <td class="td-rh">{{ calculado.descricao }}</td>
+                    <td class="td-rh">{{ calculado.desdobramento }}</td>
+                    <td class="td-rh">{{ calculado.quantidade|number_format(2, ',', '.') }}</td>
+                    <td class="td-rh">{{ calculado.proventos|number_format(2, ',', '.') }}</td>
+                    <td class="td-rh">{{ calculado.descontos|number_format(2, ',', '.') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="divider">
+            <p></p>
+        </div>
+
+        <div class="col s12 servidor-table">
+            <a class="btn-lg tooltipped"
+               data-position="left"
+               data-delay="50"
+               data-tooltip="Ficha Financeira">
+                <i class="fa fa-cubes left"></i>
+                {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.basesCaculos'|trans }}
+            </a>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.evento'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.desdobramento'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.quantidade'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valor'|trans }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for bases in object.basesCalculos %}
+                <tr>
+                    <td class="td-rh">{{ bases.codigo }}</td>
+                    <td class="td-rh">{{ bases.descricao }}</td>
+                    <td class="td-rh">{{ bases.desdobramento }}</td>
+                    <td class="td-rh">{{ bases.quantidade|number_format(2, ',', '.') }}</td>
+                    <td class="td-rh">{{ bases.valor|number_format(2, ',', '.') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="col s12 servidor-table">
+            <a class="btn-lg tooltipped"
+               data-position="left"
+               data-delay="50"
+               data-tooltip="Ficha Financeira">
+                <i class="fa fa-cubes left"></i>
+                {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.eventosInformativos'|trans }}
+            </a>
+        </div>
+
+          <table class="table table-bordered">
+            <thead>
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.evento'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.desdobramento'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.quantidade'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valor'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for informativos in object.eventosInformativos %}
+                <tr>
+                    <td class="td-rh">{{ informativos.codigo }}</td>
+                    <td class="td-rh">{{ informativos.descricao }}</td>
+                    <td class="td-rh">{{ informativos.desdobramento }}</td>
+                    <td class="td-rh">{{ informativos.quantidade|number_format(2, ',', '.') }}</td>
+                    <td class="td-rh">{{ informativos.valor|number_format(2, ',', '.') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="col s12 servidor-table">
+            <a class="btn-lg tooltipped"
+               data-position="left"
+               data-delay="50"
+               data-tooltip="Ficha Financeira">
+                <i class="fa fa-cubes left"></i>
+                {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.totaisCalculados'|trans }}
+            </a>
+        </div>
+          <table class="table table-bordered">
+            <thead>
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.tipo'|trans }}</th>
+                <th class="th-rh"
+                    colspan="2">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valores'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for totaisCalculados in object.totaisCalculados %}
+                <tr>
+                    <td class="td-rh">{{ totaisCalculados.descricao }}</td>
+                    {% if 'proventos' in totaisCalculados|keys %}
+                        <td class="td-rh">
+                            {{ totaisCalculados.proventos }}
+                        </td>
+                        <td class="td-rh"></td>
+                    {% else %}
+                        <td class="td-rh"></td>
+                        <td class="td-rh">
+                            {{ totaisCalculados.descontos }}
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if object.codConfiguracao != 3 %}
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valoresAcumuladosMatricula'|trans }}:
+                    {{ object.processados.rotuloValoresAcumuladosBase[0].rotulo }}
+                </a>
+            </div>
+
+              <table class="table table-bordered">
+                <thead>
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.evento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.valor'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for valoresAcumuladosBase in object.processados.valoresAcumuladosBase %}
+                    <tr>
+                        <td class="td-rh">{{ valoresAcumuladosBase.codigo }}</td>
+                        <td class="td-rh">{{ valoresAcumuladosBase.descricao }}</td>
+                        <td class="td-rh">{{ valoresAcumuladosBase.valor|number_format(2, ',', '.') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if object.codConfiguracao == 1 or object.codConfiguracao == 4 %}
+                <div class="col s12 servidor-table">
+                    <a class="btn-lg tooltipped"
+                       data-position="left"
+                       data-delay="50"
+                       data-tooltip="Incluir">
+                        <i class="fa fa-cubes left"></i>
+                        {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valoresAcumuladosSalarioFamilia'|trans }}
+                        :
+                        {{ object.processados.rotuloValoresAcumuladosBaseSalarioFamilia[0].rotulo }}
+                    </a>
+                </div>
+
+                  <table class="table table-bordered">
+                    <thead>
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.evento'|trans }}</th>
+                        <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                        <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.valor'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for salarioFamilia in object.processados.valoresAcumuladosBaseSalarioFamilia %}
+                        <tr>
+                            <td class="td-rh">{{ salarioFamilia.codigo }}</td>
+                            <td class="td-rh">{{ salarioFamilia.descricao }}</td>
+                            <td class="td-rh">{{ salarioFamilia.valor|number_format(2, ',', '.') }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valoresAcumuladosMatricula'|trans }}:
+                    {{ object.processados.rotuloValoresAcumuladosDesconto[0].rotulo }}
+                </a>
+            </div>
+
+              <table class="table table-bordered">
+                <thead>
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.evento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.valor'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for acumuladoDesconto in object.processados.valoresAcumuladosDesconto %}
+                    <tr>
+                        <td class="td-rh">{{ acumuladoDesconto.codigo }}</td>
+                        <td class="td-rh">{{ acumuladoDesconto.descricao }}</td>
+                        <td class="td-rh">{{ acumuladoDesconto.valor|number_format(2, ',', '.') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+              <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td class="td-rh">(S)Folha Salário</td>
+                    <td class="td-rh">(C)Folha Complementar</td>
+                    <td class="td-rh">(F)Folha Férias</td>
+                </tr>
+                </tbody>
+            </table>
+        {% endif %}
+        <hr/>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="#" href="#" onclick="window.history.back();"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    {% endblock content %}
+{% endblock body %}

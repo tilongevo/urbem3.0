@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Normas\AtributoNormaValor:
+    type: entity
+    table: normas.atributo_norma_valor
+    id:
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codTipoNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_norma
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkNormasAtributoNormaValores
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkNormasAtributoTipoNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\AtributoTipoNorma
+            inversedBy: fkNormasAtributoNormaValores
+            joinColumns:
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_tipo_norma:
+                    referencedColumnName: cod_tipo_norma
+                cod_modulo:
+                    referencedColumnName: cod_modulo

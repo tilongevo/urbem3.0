@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Licitacao\Comissao:
+    type: entity
+    table: licitacao.comissao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Licitacao\ComissaoRepository
+    id:
+        codComissao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: licitacao.comissao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_comissao
+    fields:
+        codTipoComissao:
+            type: integer
+            nullable: false
+            column: cod_tipo_comissao
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkLicitacaoTipoComissao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoComissao
+            inversedBy: fkLicitacaoComissoes
+            joinColumns:
+                cod_tipo_comissao:
+                    referencedColumnName: cod_tipo_comissao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkLicitacaoComissoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkLicitacaoComissaoMembros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ComissaoMembros
+            mappedBy: fkLicitacaoComissao
+        fkLicitacaoComissaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ComissaoLicitacao
+            mappedBy: fkLicitacaoComissao

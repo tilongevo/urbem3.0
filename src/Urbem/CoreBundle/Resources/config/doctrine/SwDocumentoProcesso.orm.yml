@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\SwDocumentoProcesso:
+    type: entity
+    table: sw_documento_processo
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkSwDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\SwDocumento
+            inversedBy: fkSwDocumentoProcessos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkSwDocumentoProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToMany:
+        fkSwCopiaDigitais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCopiaDigital
+            mappedBy: fkSwDocumentoProcesso

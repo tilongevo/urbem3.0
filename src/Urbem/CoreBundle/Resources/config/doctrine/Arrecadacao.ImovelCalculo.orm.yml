@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ImovelCalculo:
+    type: entity
+    table: arrecadacao.imovel_calculo
+    indexes:
+        idx_imovel_calculo_1:
+            columns:
+                - inscricao_municipal
+    id:
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+    fields:
+        inscricaoMunicipal:
+            type: integer
+            nullable: false
+            column: inscricao_municipal
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkArrecadacaoImovelVVenal:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ImovelVVenal
+            inversedBy: fkArrecadacaoImovelCalculos
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+                timestamp:
+                    referencedColumnName: timestamp
+    oneToOne:
+        fkArrecadacaoCalculo:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Calculo
+            inversedBy: fkArrecadacaoImovelCalculo
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo

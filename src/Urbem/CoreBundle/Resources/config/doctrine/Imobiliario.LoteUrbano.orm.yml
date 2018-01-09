@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Imobiliario\LoteUrbano:
+    type: entity
+    table: imobiliario.lote_urbano
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields: {  }
+    oneToMany:
+        fkImobiliarioAtributoLoteUrbanoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoLoteUrbanoValor
+            mappedBy: fkImobiliarioLoteUrbano
+    oneToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioLoteUrbano
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote

@@ -1,0 +1,101 @@
+Urbem\CoreBundle\Entity\Tcmgo\DividaConsolidada:
+    type: entity
+    table: tcmgo.divida_consolidada
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+        dtFim:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_fim
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        tipoLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: tipo_lancamento
+    fields:
+        numcgm:
+            type: integer
+            nullable: true
+        nroLeiAutorizacao:
+            type: string
+            nullable: false
+            length: 7
+            column: nro_lei_autorizacao
+        dtLeiAutorizacao:
+            type: date
+            nullable: false
+            column: dt_lei_autorizacao
+        vlSaldoAnterior:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_saldo_anterior
+        vlContratacao:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_contratacao
+        vlAmortizacao:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_amortizacao
+        vlCancelamento:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_cancelamento
+        vlEncampacao:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_encampacao
+        vlAtualizacao:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_atualizacao
+        vlSaldoAtual:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_saldo_atual
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoDividaConsolidadas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkTcmgoTipoLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoLancamento
+            inversedBy: fkTcmgoDividaConsolidadas
+            joinColumns:
+                tipo_lancamento:
+                    referencedColumnName: cod_lancamento

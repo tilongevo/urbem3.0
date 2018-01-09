@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLla:
+    type: entity
+    table: folhapagamento.configuracao_empenho_lla
+    id:
+        codConfiguracaoLla:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao_lla
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vigencia:
+            type: date
+            nullable: false
+    oneToMany:
+        fkFolhapagamentoConfiguracaoEmpenhoLlaAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaAtributo
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenhoLla
+        fkFolhapagamentoConfiguracaoEmpenhoLlaLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaLocal
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenhoLla
+        fkFolhapagamentoConfiguracaoEmpenhoLlaLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaLotacao
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenhoLla

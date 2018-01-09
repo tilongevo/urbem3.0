@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausaNorma:
+    type: entity
+    table: pessoal.contrato_servidor_caso_causa_norma
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPessoalContratoServidorCasoCausaNormas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToOne:
+        fkPessoalContratoServidorCasoCausa:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausa
+            inversedBy: fkPessoalContratoServidorCasoCausaNorma
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

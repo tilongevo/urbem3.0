@@ -1,0 +1,119 @@
+Urbem\CoreBundle\Entity\Tcemg\ContratoAditivo:
+    type: entity
+    table: tcemg.contrato_aditivo
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ContratoAditivoRepository
+    id:
+        codContratoAditivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato_aditivo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        codContrato:
+            type: integer
+            nullable: false
+            column: cod_contrato
+        exercicioContrato:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_contrato
+        codEntidadeContrato:
+            type: integer
+            nullable: false
+            column: cod_entidade_contrato
+        nroAditivo:
+            type: integer
+            nullable: false
+            column: nro_aditivo
+        numOrgao:
+            type: integer
+            nullable: true
+            column: num_orgao
+        numUnidade:
+            type: integer
+            nullable: true
+            column: num_unidade
+        dataAssinatura:
+            type: date
+            nullable: false
+            column: data_assinatura
+        codTipoValor:
+            type: integer
+            nullable: false
+            column: cod_tipo_valor
+        codTipoAditivo:
+            type: integer
+            nullable: false
+            column: cod_tipo_aditivo
+        descricao:
+            type: string
+            nullable: true
+            length: 250
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        dataTermino:
+            type: date
+            nullable: true
+            column: data_termino
+        dataPublicacao:
+            type: date
+            nullable: false
+            column: data_publicacao
+        cgmPublicacao:
+            type: integer
+            nullable: false
+            column: cgm_publicacao
+    manyToOne:
+        fkTcemgContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            inversedBy: fkTcemgContratoAditivos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_entidade_contrato:
+                    referencedColumnName: cod_entidade
+                exercicio_contrato:
+                    referencedColumnName: exercicio
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcemgContratoAditivos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkTcemgContratoAditivoTipo:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContratoAditivoTipo
+            inversedBy: fkTcemgContratoAditivos
+            joinColumns:
+                cod_tipo_aditivo:
+                    referencedColumnName: cod_tipo_aditivo
+        fkLicitacaoVeiculosPublicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\VeiculosPublicidade
+            inversedBy: fkTcemgContratoAditivos
+            joinColumns:
+                cgm_publicacao:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkTcemgContratoAditivoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContratoAditivoItem
+            mappedBy: fkTcemgContratoAditivo

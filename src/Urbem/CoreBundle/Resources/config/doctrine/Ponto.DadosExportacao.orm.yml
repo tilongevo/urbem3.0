@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Ponto\DadosExportacao:
+    type: entity
+    table: ponto.dados_exportacao
+    id:
+        codFormato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_formato
+        codDado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dado
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkPontoFormatoExportacao:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoExportacao
+            inversedBy: fkPontoDadosExportacoes
+            joinColumns:
+                cod_formato:
+                    referencedColumnName: cod_formato
+        fkPontoTipoInformacao:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\TipoInformacao
+            inversedBy: fkPontoDadosExportacoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkPontoDadosExportacoes
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+    oneToMany:
+        fkPontoFormatoFaixasHorasExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoFaixasHorasExtras
+            mappedBy: fkPontoDadosExportacao
+    oneToOne:
+        fkPontoFormatoInformacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoInformacao
+            mappedBy: fkPontoDadosExportacao
+            joinColumns:
+                cod_formato:
+                    referencedColumnName: cod_formato
+                cod_dado:
+                    referencedColumnName: cod_dado

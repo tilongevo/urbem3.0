@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Arrecadacao\TipoCompensacao:
+    type: entity
+    table: arrecadacao.tipo_compensacao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkArrecadacaoCompensacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Compensacao
+            mappedBy: fkArrecadacaoTipoCompensacao

@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Contabilidade\ClassificacaoContabil:
+    type: entity
+    table: contabilidade.classificacao_contabil
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomClassificacao:
+            type: string
+            nullable: true
+            length: 80
+            column: nom_classificacao
+    oneToMany:
+        fkContabilidadePlanoContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            mappedBy: fkContabilidadeClassificacaoContabil

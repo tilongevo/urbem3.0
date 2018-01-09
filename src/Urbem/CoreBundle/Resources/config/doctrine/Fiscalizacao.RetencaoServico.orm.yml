@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoServico:
+    type: entity
+    table: fiscalizacao.retencao_servico
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        numServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_servico
+    fields:
+        codServico:
+            type: integer
+            nullable: false
+            column: cod_servico
+        valorDeclarado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_declarado
+        valorDeducao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_deducao
+        valorLancado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_lancado
+        aliquota:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkFiscalizacaoRetencaoNota:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoNota
+            inversedBy: fkFiscalizacaoRetencaoServicos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia
+                cod_nota:
+                    referencedColumnName: cod_nota
+        fkEconomicoServico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Servico
+            inversedBy: fkFiscalizacaoRetencaoServicos
+            joinColumns:
+                cod_servico:
+                    referencedColumnName: cod_servico

@@ -1,0 +1,109 @@
+Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItem:
+    type: entity
+    table: almoxarifado.requisicao_item
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\RequisicaoItemRepository
+    id:
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codRequisicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_requisicao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+    fields:
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+        quantidadeAprovada:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+            column: quantidade_aprovada
+        quantidadeRecusada:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+            column: quantidade_recusada
+        quantidadePendente:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+            column: quantidade_pendente
+        observacao:
+            type: text
+            nullable: true
+        situacao:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkAlmoxarifadoEstoqueMaterial:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial
+            inversedBy: fkAlmoxarifadoRequisicaoItens
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+        fkAlmoxarifadoRequisicao:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Requisicao
+            inversedBy: fkAlmoxarifadoRequisicaoItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_requisicao:
+                    referencedColumnName: cod_requisicao
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+    oneToMany:
+        fkAlmoxarifadoAtributoRequisicaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoRequisicaoItem
+            mappedBy: fkAlmoxarifadoRequisicaoItem
+        fkAlmoxarifadoLancamentoRequisicoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoRequisicao
+            mappedBy: fkAlmoxarifadoRequisicaoItem
+        fkAlmoxarifadoRequisicaoItensAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItensAnulacao
+            mappedBy: fkAlmoxarifadoRequisicaoItem

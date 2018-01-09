@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Pessoal\ComprovanteMatricula:
+    type: entity
+    table: pessoal.comprovante_matricula
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\ComprovanteMatriculaRepository
+    id:
+        codComprovante:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_comprovante
+    fields:
+        dtApresentacao:
+            type: date
+            nullable: false
+            column: dt_apresentacao
+        apresentada:
+            type: boolean
+            nullable: false
+    oneToMany:
+        fkPessoalDependenteComprovanteMatriculas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DependenteComprovanteMatricula
+            mappedBy: fkPessoalComprovanteMatricula

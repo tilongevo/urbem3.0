@@ -1,0 +1,127 @@
+Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia:
+    type: entity
+    table: divida.modalidade_vigencia
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vigenciaInicial:
+            type: date
+            nullable: false
+            column: vigencia_inicial
+        vigenciaFinal:
+            type: date
+            nullable: false
+            column: vigencia_final
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        codTipoModalidade:
+            type: integer
+            nullable: false
+            column: cod_tipo_modalidade
+        codFormaInscricao:
+            type: integer
+            nullable: true
+            column: cod_forma_inscricao
+    manyToOne:
+        fkDividaModalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Modalidade
+            inversedBy: fkDividaModalidadeVigencias
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkDividaModalidadeVigencias
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkDividaModalidadeVigencias
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkDividaTipoModalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\TipoModalidade
+            inversedBy: fkDividaModalidadeVigencias
+            joinColumns:
+                cod_tipo_modalidade:
+                    referencedColumnName: cod_tipo_modalidade
+        fkDividaFormaInscricao:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\FormaInscricao
+            inversedBy: fkDividaModalidadeVigencias
+            joinColumns:
+                cod_forma_inscricao:
+                    referencedColumnName: cod_forma_inscricao
+    oneToMany:
+        fkDividaModalidadeCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeCredito
+            mappedBy: fkDividaModalidadeVigencia
+        fkDividaModalidadeAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeAcrescimo
+            mappedBy: fkDividaModalidadeVigencia
+        fkDividaModalidadeReducoes:
+            orderBy: { 'timestamp': 'DESC' }
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeReducao
+            mappedBy: fkDividaModalidadeVigencia
+        fkDividaModalidadeDocumentos:
+            orderBy: { 'timestamp': 'DESC' }
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeDocumento
+            mappedBy: fkDividaModalidadeVigencia
+        fkDividaModalidadeParcelas:
+            orderBy: { 'timestamp': 'DESC' }
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeParcela
+            mappedBy: fkDividaModalidadeVigencia
+        fkDividaParcelamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Parcelamento
+            mappedBy: fkDividaModalidadeVigencia

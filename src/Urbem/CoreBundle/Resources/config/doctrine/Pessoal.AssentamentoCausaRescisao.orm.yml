@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoCausaRescisao:
+    type: entity
+    table: pessoal.assentamento_causa_rescisao
+    id:
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        codCausaRescisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_causa_rescisao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkPessoalAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Assentamento
+            inversedBy: fkPessoalAssentamentoCausaRescisoes
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalCausaRescisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaRescisao
+            inversedBy: fkPessoalAssentamentoCausaRescisoes
+            joinColumns:
+                cod_causa_rescisao:
+                    referencedColumnName: cod_causa_rescisao

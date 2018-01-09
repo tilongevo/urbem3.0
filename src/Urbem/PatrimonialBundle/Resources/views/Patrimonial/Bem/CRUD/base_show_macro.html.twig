@@ -1,0 +1,64 @@
+{% macro render_groups(admin, object, elements, groups, has_tab, no_padding = false, disable_edit, disable_delete) %}
+    <div class="row">
+        {{ block('field_row') }}
+    </div>
+{% endmacro %}
+
+{% block field_row %}
+    <div class="col s12">
+        {% if admin.exibirBotaoExcluir is defined %}
+            {% if disable_delete == false and admin.exibirBotaoExcluir == true %}
+                <div class="hide-on-med-and-down" style="float: right">
+                    <a href="{{ admin.generateObjectUrl('delete', object) }}" class="show-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-toggle="tooltip" data-placement="right" title="Apagar"><i class="material-icons">delete</i></a>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if disable_edit == false %}
+        <div class="hide-on-med-and-down" style="float: right">
+            <a href="{{ admin.generateObjectUrl('edit', object) }}" class="show-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-toggle="tooltip" data-placement="left" title="Editar"><i class="material-icons">edit</i></a>
+        </div>
+        {% endif %}
+
+    </div>
+    {% for code in groups %}
+        {% set show_group = admin.showgroups[code] %}
+        <div class="col s12 {{ show_group.class|default('') }} {{ no_padding ? 'nopadding' }}">
+            <div class="{{ show_group.box_class }}">
+                <div class="box-header col s12">
+                    <!--<div class="col s10">-->
+                        <h3 class="col s12 box-title left-align show">
+                            {% block show_title %}
+                                {{ admin.trans(show_group.name, {}, show_group.translation_domain) }}
+                            {% endblock %}
+                        </h3>
+                    <!--</div>-->
+
+                </div>
+                <div class="box-body {#table-responsive#} no-padding">
+
+                        <table class="table show-table">
+                            <tbody>
+                            {% for field_name in show_group.fields %}
+                                {% block show_field %}
+                                    <tr class="sonata-ba-view-container">
+                                        {% if elements[field_name] is defined %}
+                                            {{ elements[field_name]|render_view_element(object)}}
+                                        {% endif %}
+                                    </tr>
+                                {% endblock %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="row">
+      {% if admin.hasroute('list') and admin.isGranted('LIST') %}
+          <div class="col s8 initial">
+              <a  class="btn-floating white-text blue darken-4 btn-success" href="{{ admin.generateUrl('list') }}"><i class="material-icons">arrow_back</i>{</a>
+          </div>
+      {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Normas\Lei:
+    type: entity
+    table: normas.lei
+    id:
+        codLei:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lei
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 15
+    oneToMany:
+        fkNormasNormaDetalheAis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\NormaDetalheAl
+            mappedBy: fkNormasLei
+        fkTcetoNormaDetalhes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\NormaDetalhe
+            mappedBy: fkNormasLei

@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Pessoal\LancamentoFerias:
+    type: entity
+    table: pessoal.lancamento_ferias
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\LancamentoFeriasRepository
+    id:
+        codFerias:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ferias
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtFim:
+            type: date
+            nullable: false
+            column: dt_fim
+        dtRetorno:
+            type: date
+            nullable: false
+            column: dt_retorno
+        mesCompetencia:
+            type: string
+            nullable: false
+            length: 2
+            column: mes_competencia
+        anoCompetencia:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_competencia
+        pagar13:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: pagar_13
+    manyToOne:
+        fkFolhapagamentoTipoFolha:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoFolha
+            inversedBy: fkPessoalLancamentoFerias
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkPessoalFerias:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Ferias
+            inversedBy: fkPessoalLancamentoFerias
+            joinColumns:
+                cod_ferias:
+                    referencedColumnName: cod_ferias

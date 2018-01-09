@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\MedidasObra:
+    type: entity
+    table: tcmba.medidas_obra
+    id:
+        codMedida:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_medida
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkTcmbaObraMedicoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ObraMedicao
+            mappedBy: fkTcmbaMedidasObra

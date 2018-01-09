@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Divida\ModalidadeParcela:
+    type: entity
+    table: divida.modalidade_parcela
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        numRegra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_regra
+    fields:
+        vlrLimiteInicial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vlr_limite_inicial
+        vlrLimiteFinal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vlr_limite_final
+        qtdParcela:
+            type: integer
+            nullable: false
+            column: qtd_parcela
+        vlrMinimo:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vlr_minimo
+    manyToOne:
+        fkDividaModalidadeVigencia:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            inversedBy: fkDividaModalidadeParcelas
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Licitacao\LicitacaoAnulada:
+    type: entity
+    table: licitacao.licitacao_anulada
+    id:
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        deserta:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+        fracassada:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    oneToOne:
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkLicitacaoLicitacaoAnulada
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio

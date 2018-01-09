@@ -1,0 +1,97 @@
+Urbem\CoreBundle\Entity\Empenho\OrdemPagamento:
+    type: entity
+    table: empenho.ordem_pagamento
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\OrdemPagamentoRepository
+    id:
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+        dtVencimento:
+            type: date
+            nullable: false
+            column: dt_vencimento
+        observacao:
+            type: string
+            nullable: false
+            length: 600
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                default: M
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkEmpenhoOrdemPagamentos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToMany:
+        fkEmpenhoOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoRetencao
+            mappedBy: fkEmpenhoOrdemPagamento
+        fkEmpenhoOrdemPagamentoAnuladas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoAnulada
+            mappedBy: fkEmpenhoOrdemPagamento
+        fkEmpenhoOrdemPagamentoAssinaturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoAssinatura
+            mappedBy: fkEmpenhoOrdemPagamento
+        fkEmpenhoPagamentoLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PagamentoLiquidacao
+            mappedBy: fkEmpenhoOrdemPagamento
+        fkEmpenhoOrdemPagamentoReciboExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoReciboExtra
+            mappedBy: fkEmpenhoOrdemPagamento
+        fkTesourariaChequeEmissaoOrdemPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoOrdemPagamento
+            mappedBy: fkEmpenhoOrdemPagamento
+        fkTesourariaTransacoesPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransacoesPagamento
+            mappedBy: fkEmpenhoOrdemPagamento

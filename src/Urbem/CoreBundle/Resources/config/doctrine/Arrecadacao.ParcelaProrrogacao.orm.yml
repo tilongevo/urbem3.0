@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ParcelaProrrogacao:
+    type: entity
+    table: arrecadacao.parcela_prorrogacao
+    id:
+        codParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcela
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        vencimentoAnterior:
+            type: date
+            nullable: false
+            column: vencimento_anterior
+    manyToOne:
+        fkArrecadacaoParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Parcela
+            inversedBy: fkArrecadacaoParcelaProrrogacoes
+            joinColumns:
+                cod_parcela:
+                    referencedColumnName: cod_parcela

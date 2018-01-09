@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanparaEmpresa:
+    type: entity
+    table: ima.configuracao_banpara_empresa
+    id:
+        codEmpresa:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ima.configuracaobanparaempresa_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_empresa
+    fields:
+        codigo:
+            type: integer
+            nullable: false
+    oneToMany:
+        fkImaConfiguracaoBanparas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanpara
+            mappedBy: fkImaConfiguracaoBanparaEmpresa

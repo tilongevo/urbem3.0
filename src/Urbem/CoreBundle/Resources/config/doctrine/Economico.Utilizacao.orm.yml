@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Economico\Utilizacao:
+    type: entity
+    table: economico.utilizacao
+    id:
+        codUtilizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_utilizacao
+    fields:
+        nomUtilizacao:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_utilizacao
+    oneToMany:
+        fkEconomicoTipoLicencaDiversas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\TipoLicencaDiversa
+            mappedBy: fkEconomicoUtilizacao

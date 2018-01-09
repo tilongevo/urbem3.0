@@ -1,0 +1,102 @@
+{% for item in itens %}
+    <div class="col s12 manutencao-items">
+        <div class="box box-primary">
+            <div class="box-body">
+                <input type="hidden" id="codItem{{ item.cod_item }}" name="codItem[]" value="{{ item.cod_item }}">
+                <table class="bordered highlight">
+                    <thead>
+                        <tr>
+                            <th width="50%">{{ 'label.itens.item'|trans }}</th>
+                            <th width="10%" class="right-align">{{ 'label.itens.qtde'|trans }}</th>
+                            <th width="10%" class="right-align">{{ 'label.itens.valorRef'|trans }}</th>
+                            <th width="10%" class="right-align">{{ 'label.itens.valorCompra'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td title="{{ item.item }}">{{ item.item[:60] }}...</td>
+                            <td class="right-align">{{ item.quantidade|number_format(4, ',', '.') }}</td>
+                            <td class="right-align">
+                                {{ item.vl_referencia|number_format(2, ',', '.') }}
+                                <input type="hidden" id="item{{ item.cod_item }}_vlReferencia" name="item_vlReferencia[{{ item.cod_item }}]" value="{{ item.vl_referencia|number_format(2, '.', '') }}">
+                            </td>
+                            <td class="right-align">{{ item.vl_unitario_ultima_compra|number_format(2, ',', '.') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="form_row col s3 campo-sonata" id="sonata-ba-field-container-item{{ item.cod_item }}_data" style="display: block;">
+                    <label class=" control-label" for="item{{ item.cod_item }}_data">
+                        {{ 'label.patrimonial.licitacao.manutencaoProposta.dataValidade'|trans }} *
+                    </label>
+                    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                        <div>
+                            <div class="input-group date" id="item{{ item.cod_item }}_data">
+                                <input type="text" id="item{{ item.cod_item }}_data" name="item_data[{{ item.cod_item }}]" class="item_data sonata-medium-datecampo-sonata form-control" data-date-format="DD/MM/YYYY" style="width: 100%;"><span class="input-group-addon"><span class="fa-calendar fa"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form_row col s3 campo-sonata" id="sonata-ba-field-container-item{{ item.cod_item }}_marca" style="display: block;">
+                    <label class=" control-label" for="item{{ item.cod_item }}_marca">
+                        {{ 'label.patrimonial.licitacao.manutencaoProposta.marca'|trans }} *
+                    </label>
+                    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                        <select class="select2-parameters" id="item{{ item.cod_item }}_marca" name="item_marca[{{ item.cod_item }}]" style="width: 100%;">
+                            <option value=''> {{ 'label.selecione'|trans }} </option>
+                            {% for marca in marcas %}
+                                <option value='{{ marca.codMarca }}'> {{ marca }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form_row col s3 campo-sonata" id="sonata-ba-field-container-item{{ item.cod_item }}_vlUnit" style="display: block;">
+                    <label class=" control-label" for="item{{ item.cod_item }}_vlUnit">
+                        {{ 'label.patrimonial.licitacao.manutencaoProposta.vlUnit'|trans }} *
+                    </label>
+                    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                        <input type="text" id="item{{ item.cod_item }}_vlUnit" name="item_vlUnit[{{ item.cod_item }}]" class="campo-sonata form-control money">
+                        <input type="hidden" id="item{{ item.cod_item }}_quantidade" name="item_quantidade[{{ item.cod_item }}]" value="{{ item.quantidade }}">
+                    </div>
+                </div>
+
+                <div class="form_row col s3 campo-sonata" id="sonata-ba-field-container-item{{ item.cod_item }}_valorTotal" style="display: block;">
+                    <label class=" control-label" for="item{{ item.cod_item }}_valorTotal">
+                        {{ 'label.patrimonial.licitacao.manutencaoProposta.valorTotal'|trans }}
+                    </label>
+                    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                        <input type="text" readonly="readonly" id="item{{ item.cod_item }}_valorTotal" name="item_valorTotal[{{ item.cod_item }}]" class="campo-sonata form-control money">
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-header col s12">
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            // Carrega datepicker para os campos de data
+            $('#item{{ item.cod_item }}_data').datetimepicker({"pickTime":false,"useCurrent":true,"minDate":"1\/1\/1900","maxDate":null,"showToday":true,"language":"pt-BR","defaultDate":"","disabledDates":[],"enabledDates":[],"icons":{"time":"fa fa-clock-o","date":"fa fa-calendar","up":"fa fa-chevron-up","down":"fa fa-chevron-down"},"useStrict":false,"sideBySide":false,"daysOfWeekDisabled":[],"useSeconds":false});
+
+            // Recarrega o select2
+            $('#item{{ item.cod_item }}_marca').select2();
+
+            // Recarrega a mascara de Money
+            $('.money').mask('#.##0,00', {reverse: true});
+
+            // Calcula o total no change do vlUnit
+            $('#item{{ item.cod_item }}_vlUnit').on('change', function () {
+                let vlUnit = parseFloat( $(this).val().replace(/\./g, '').replace(/\,/g, '.') ).toFixed(2);
+                vlUnit = (vlUnit ? vlUnit : 0);
+                $('#item{{ item.cod_item }}_valorTotal').val( parseFloat( vlUnit * {{ item.quantidade }} ).toFixed(2) );
+                $('#item{{ item.cod_item }}_valorTotal').val(( ( parseFloat($('#item{{ item.cod_item }}_valorTotal').val()).toFixed(2) ).toString().replace(/\,/g, '') ).replace(/\./g, ','));
+            });
+        });
+    </script>
+{% endfor %}

@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Divida\DividaImovel:
+    type: entity
+    table: divida.divida_imovel
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inscricao
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+    fields: {  }
+    manyToOne:
+        fkDividaDividaAtiva:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAtiva
+            inversedBy: fkDividaDividaImoveis
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkDividaDividaImoveis
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

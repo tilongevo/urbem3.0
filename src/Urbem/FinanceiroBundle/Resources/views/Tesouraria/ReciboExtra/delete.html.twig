@@ -1,0 +1,48 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{#{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}#}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}{{ knp_menu_render(admin.sidemenu(action), {'currentClass' : 'active', 'template': sonata_admin.adminPool.getTemplate('tab_menu_template')}, 'twig') }}{% endblock %}
+
+{% block content %}
+    {{ breadcrumb() }}
+    <div class="sonata-ba-delete center valign-wrapper delete-box">
+        <div class="box box-danger container valign">
+            {#<div class="box-header valign">#}
+            {#<h3 class="col s12 box-title">{{ 'title_delete'|trans({}, 'SonataCoreBundle') }}</h3>#}
+            {#</div>#}
+            <div class="box-body col s12">
+                <h4 class="blue-text text-darken-4">{{ 'label.reciboExtra.mensagemAnular'|trans({'%object%': admin.toString(object)}) }}</h4>
+            </div>
+            {#{{ show_helper.render_groups(admin, object, elements, admin.showtabs.default.groups, has_tab) }}#}
+            <div class="box-footer clearfix col s12">
+                <form method="POST" action="{{ admin.generateObjectUrl('delete', object) }}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_sonata_csrf_token" value="{{ csrf_token }}">
+                    {#{{ 'delete_or'|trans({}, 'SonataCoreBundle') }}#}
+                    <div class="col s6">
+                        <a class="btn grey darken-1 btn-bold cancel" href="{{ admin.generateUrl('list') }}" {#href="{{ admin.generateObjectUrl('edit', object) }}"#}><i></i>Cancelar{#{ 'link_action_edit'|trans({}, 'SonataCoreBundle') }#}</a>
+                    </div>
+                    <div class="col s6">
+                        <button type="submit" class="btn btn-danger btn-bold"><i class="fa fa-ban"></i> {{ 'label.reciboExtra.btnAnular'|trans }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

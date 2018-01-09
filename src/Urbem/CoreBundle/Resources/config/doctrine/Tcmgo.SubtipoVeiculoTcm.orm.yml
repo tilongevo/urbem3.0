@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Tcmgo\SubtipoVeiculoTcm:
+    type: entity
+    table: tcmgo.subtipo_veiculo_tcm
+    id:
+        codTipoTcm:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_tcm
+        codSubtipoTcm:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_subtipo_tcm
+    fields:
+        nomSubtipoTcm:
+            type: string
+            nullable: true
+            length: 200
+            column: nom_subtipo_tcm
+    manyToOne:
+        fkTcmgoTipoVeiculoTcm:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoVeiculoTcm
+            inversedBy: fkTcmgoSubtipoVeiculoTcns
+            joinColumns:
+                cod_tipo_tcm:
+                    referencedColumnName: cod_tipo_tcm
+    oneToMany:
+        fkTcmgoTipoVeiculoVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoVeiculoVinculo
+            mappedBy: fkTcmgoSubtipoVeiculoTcm

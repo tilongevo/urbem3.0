@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Imobiliario\Confrontacao:
+    type: entity
+    table: imobiliario.confrontacao
+    id:
+        codConfrontacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_confrontacao
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        codPonto:
+            type: integer
+            nullable: false
+            column: cod_ponto
+    manyToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioConfrontacoes
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkImobiliarioPontoCardeal:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\PontoCardeal
+            inversedBy: fkImobiliarioConfrontacoes
+            joinColumns:
+                cod_ponto:
+                    referencedColumnName: cod_ponto
+    oneToMany:
+        fkImobiliarioConfrontacaoExtensoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConfrontacaoExtensao
+            mappedBy: fkImobiliarioConfrontacao
+    oneToOne:
+        fkImobiliarioConfrontacaoTrecho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConfrontacaoTrecho
+            mappedBy: fkImobiliarioConfrontacao
+            joinColumns:
+                cod_confrontacao:
+                    referencedColumnName: cod_confrontacao
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkImobiliarioConfrontacaoLote:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConfrontacaoLote
+            mappedBy: fkImobiliarioConfrontacao
+            joinColumns:
+                cod_confrontacao:
+                    referencedColumnName: cod_confrontacao
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkImobiliarioConfrontacaoDiversa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConfrontacaoDiversa
+            mappedBy: fkImobiliarioConfrontacao
+            joinColumns:
+                cod_confrontacao:
+                    referencedColumnName: cod_confrontacao
+                cod_lote:
+                    referencedColumnName: cod_lote

@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container-rh">
+    <div class="row title-index filtro filtro-sonata z-depth-0 filtro-rh">
+        <div class="col s3 field-filtro">
+              <label for="1" class="control-label label-rh">IRRF</label>
+            <div>
+                <input id="1" type="text" class="input-rh">
+            </div>
+        </div>
+        <div class="col s1 busca-rh">
+            <div class="buscar center">
+                <button type="submit" class="hide-on-med-and-down btn waves-effect waves-light blue-darken-4">
+                    <i class="material-icons">search</i> 
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <a class="left hide-on-med-and-down waves-effect waves-light btn blue darken-4 add-rh" href="{{ path('folha_pagamento_irrf_tabela_new') }}"><i class="material-icons left icon-rh">add</i>Incluir</a>
+    </div>
+    <div class="row">
+        <table class="bordered highlight">
+            <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">Id</th>
+                    <th class="th-rh">Codtabela</th>
+                    <th class="th-rh">timestamp</th>
+                    <th class="th-rh">Vldependente</th>
+                    <th class="th-rh">Vllimiteisencao</th>
+                    <th class="th-rh">Vigencia</th>
+                    <th class="th-rh">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for tabelaIrrf in tabelasIrrf %}
+            <tr class="sonata-ba-list-field-header">
+                <td class="td-rh"><a href="{{ path('folha_pagamento_irrf_tabela_show', { 'id': tabelaIrrf.id }) }}">{{ tabelaIrrf.id }}</a></td>
+                <td class="td-rh">{{ tabelaIrrf.codTabela }}</td>
+                <td class="td-rh">{% if tabelaIrrf.timestamp %}{{ tabelaIrrf.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td class="td-rh">{{ tabelaIrrf.vlDependente }}</td>
+                <td class="td-rh">{{ tabelaIrrf.vlLimiteIsencao }}</td>
+                <td class="td-rh">{% if tabelaIrrf.vigencia %}{{ tabelaIrrf.vigencia|date('Y-m-d') }}{% endif %}</td>
+                <td class="td-rh">
+                    <div class="btn-group">
+                        <a href="{{ path('folha_pagamento_irrf_tabela_show', { 'id': tabelaIrrf.id }) }}" data-position="left" data-delay="50" data-tooltip="Detalhe" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped" data-tooltip-id="d5c891dc-189c-f92e-efa7-e36184b2038c">
+                            <i class="fa fa-search-plus"></i>
+                        </a>
+                        <a href="{{ path('folha_pagamento_irrf_tabela_edit', { 'id': tabelaIrrf.id }) }}" data-position="bottom" data-delay="50" data-tooltip="Editar" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped" data-tooltip-id="d5c891dc-189c-f92e-efa7-e36184b2038c">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <button type="submit" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

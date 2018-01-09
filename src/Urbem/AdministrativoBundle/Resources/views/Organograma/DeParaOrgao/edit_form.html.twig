@@ -1,0 +1,118 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    {% block form %}
+        {{ sonata_block_render_event('sonata.admin.edit.form.top', { 'admin': admin, 'object': object }) }}
+
+        {% set url = admin.id(object) is not null ? 'edit' : 'create' %}
+
+        {% if not admin.hasRoute(url)%}
+            {{ "form_not_available"|trans({}, "SonataCoreBundle") }}
+        {% else %}
+            <form
+                    {% if sonata_admin.adminPool.getOption('form_type') == 'horizontal' %}class="form-horizontal"{% endif %}
+                    role="form"
+                    action="{% block sonata_form_action_url %}{{ admin.generateUrl(url, {'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}{% endblock %}"
+                    {% if form.vars.multipart %} enctype="multipart/form-data"{% endif %}
+                    method="POST"
+                    {% if not sonata_admin.adminPool.getOption('html5_validate') %}novalidate="novalidate"{% endif %}
+                    {% block sonata_form_attributes %}{% endblock %}
+            >
+                {% if form.vars.errors|length > 0 %}
+                    <div class="sonata-ba-form-error">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+
+                {% block sonata_pre_fieldsets %}
+
+                {% endblock %}
+
+                {% block sonata_post_fieldsets %}
+
+                {% endblock %}
+
+
+                <div class="col s4 field-filtro select-filtro">
+                    {{ form_label(form.codOrganogramaAtual, null, {'label_attr': {'class': 'control-label label-rh read-only'}}) }}
+                    {{ form_widget(form.codOrganogramaAtual, {'attr': {'class': 'white input-rh disable '}}) }}
+                    {{ form_errors(form.codOrganogramaAtual) }}
+                </div>
+                <div class="col s4 field-filtro select-filtro">
+                    {{ form_label(form.codOrganograma, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.codOrganograma, {'attr': {'class': 'white input-rh'}}) }}
+                    {{ form_errors(form.codOrganograma) }}
+                </div>
+                {{ form_rest(form) }}
+
+                {% block formactions %}
+                    <div class="">
+                        {% block sonata_form_actions %}
+                            {% if app.request.isxmlhttprequest %}
+                                {% if admin.id(object) is not null %}
+                                    <button type="submit" class="btn btn-success" name="btn_update"><i class="fa fa-save"></i> {{ 'btn_update'|trans({}, 'SonataCoreBundle') }}</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-success" name="btn_create"><i class="fa fa-plus-circle"></i> {{ 'btn_create'|trans({}, 'SonataCoreBundle') }}</button>
+                                {% endif %}
+                            {% else %}
+                                {% if admin.supportsPreviewMode %}
+                                    <button class="btn btn-info persist-preview" name="btn_preview" type="submit">
+                                        <i class="fa fa-eye"></i>
+                                        {{ 'btn_preview'|trans({}, 'SonataCoreBundle') }}
+                                    </button>
+                                {% endif %}
+                                {% if admin.id(object) is not null %}
+                                    {% if admin.hasroute('list') and admin.isGranted('LIST') %}
+                                        <div class="col s8 initial">
+                                            <a  class="back btn-floating white-text blue darken-4 btn-success" href="{{ admin.generateUrl('list') }}"><i class="material-icons">arrow_back</i>{</a>
+                                        </div>
+                                    {% endif %}
+                                    {% if admin.exibirBotaoExcluir is defined %}
+                                        {% if admin.exibirBotaoExcluir == true %}
+                                            {% if admin.hasroute('delete') and admin.isGranted('DELETE', object) %}
+                                                <div class="col s2 right-align deletar">
+                                                    {% if disable_delete is not defined %}
+                                                        <a class="btn waves-effect waves-light white-text grey tooltipped" data-toggle="tooltip" data-placement="left" title="Excluir" href="{{ admin.generateObjectUrl('delete', object) }}"><i class="material-icons">delete</i>{#{ 'link_delete'|trans({}, 'SonataCoreBundle') }#}</a>
+                                                    {% else %}
+                                                        {% if disable_delete == false %}
+                                                            <a class="btn waves-effect waves-light white-text grey tooltipped" data-toggle="tooltip" data-placement="left" title="Excluir" href="{{ admin.generateObjectUrl('delete', object) }}"><i class="material-icons">delete</i>{#{ 'link_delete'|trans({}, 'SonataCoreBundle') }#}</a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if admin.isAclEnabled() and admin.hasroute('acl') and admin.isGranted('MASTER', object) %}
+                                        <a class="btn btn-info" href="{{ admin.generateObjectUrl('acl', object) }}"><i class="fa fa-users"></i> {{ 'link_edit_acl'|trans({}, 'SonataCoreBundle') }}</a>
+                                    {% endif %}
+                                {% else %}
+                                    {#INICIA ROW FORM ADD#}
+                                    <div class="col s12">
+                                        <div class="col s8 initial">
+                                            {% if admin.urlReferer is defined and admin.urlReferer is not empty %}
+                                                <a class="btn-floating white-text blue darken-4 btn-success" href="{{ admin.urlReferer }}" style="margin-top: 10px"><i class="material-icons">arrow_back</i>{</a>
+                                            {% else %}
+                                                <a class="btn-floating white-text blue darken-4 btn-success" href="{{ admin.generateUrl('list') }}" style="margin-top: 10px"><i class="material-icons">arrow_back</i>{</a>
+                                            {% endif %}
+                                        </div>
+                                        {% if admin.hasroute('list') and admin.isGranted('LIST') %}
+                                            <div class="col s4 right-align initial" style="margin-top: 10px">
+                                                <button type="submit" class="white-text blue darken-4 btn btn-success save" name="btn_create_and_list"><i class="material-icons left">save</i>{{ admin.getBotaoCustomizado }}</button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {#FINALIZA ROW FORM ADD#}
+                                {% endif %}
+                            {% endif %}
+                        {% endblock sonata_form_actions %}
+                    </div>
+                {% endblock formactions %}
+            </form>
+        {% endif%}
+
+        {{ sonata_block_render_event('sonata.admin.edit.form.bottom', { 'admin': admin, 'object': object }) }}
+
+    {% endblock %}
+
+{% endblock content %}

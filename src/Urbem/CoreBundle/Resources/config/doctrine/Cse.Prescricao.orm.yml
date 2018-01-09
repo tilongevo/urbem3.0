@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Cse\Prescricao:
+    type: entity
+    table: cse.prescricao
+    id:
+        codPrescricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_prescricao
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+        periodicidade:
+            type: string
+            nullable: false
+            length: 80
+        descricao:
+            type: string
+            nullable: false
+            length: 240
+    manyToOne:
+        fkCseCidadao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            inversedBy: fkCsePrescricoes
+            joinColumns:
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao
+        fkCseTipoTratamento:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoTratamento
+            inversedBy: fkCsePrescricoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tratamento
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+    oneToMany:
+        fkCsePrescricaoExames:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\PrescricaoExame
+            mappedBy: fkCsePrescricao
+        fkCsePrescricaoInternacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\PrescricaoInternacao
+            mappedBy: fkCsePrescricao

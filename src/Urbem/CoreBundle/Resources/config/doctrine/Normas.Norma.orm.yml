@@ -1,0 +1,614 @@
+Urbem\CoreBundle\Entity\Normas\Norma:
+    type: entity
+    table: normas.norma
+    repositoryClass: Urbem\CoreBundle\Repository\Normas\NormaRepository
+    uniqueConstraints:
+        uk_norma_1:
+            columns:
+                - exercicio
+                - cod_tipo_norma
+                - num_norma
+    id:
+        codNorma:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: normas.cod_norma_seq
+                allocationSize: 100
+                initialValue: 1
+            column: cod_norma
+    fields:
+        codTipoNorma:
+            type: integer
+            nullable: false
+            column: cod_tipo_norma
+        dtPublicacao:
+            type: date
+            nullable: false
+            column: dt_publicacao
+        nomNorma:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_norma
+        descricao:
+            type: text
+            nullable: true
+        link:
+            type: string
+            nullable: false
+            length: 80
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        numNorma:
+            type: string
+            nullable: false
+            length: 30
+            column: num_norma
+        dtAssinatura:
+            type: date
+            nullable: false
+            column: dt_assinatura
+    manyToOne:
+        fkNormasTipoNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\TipoNorma
+            inversedBy: fkNormasNormas
+            joinColumns:
+                cod_tipo_norma:
+                    referencedColumnName: cod_tipo_norma
+    oneToMany:
+        fkArrecadacaoDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desoneracao
+            mappedBy: fkNormasNorma
+        fkArrecadacaoFundamentacaoProrrogacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FundamentacaoProrrogacao
+            mappedBy: fkNormasNorma
+        fkArrecadacaoFundamentacaoRevogacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FundamentacaoRevogacao
+            mappedBy: fkNormasNorma
+        fkBeneficioVigencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Vigencia
+            mappedBy: fkNormasNorma
+        fkConcursoHomologacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\Homologacao
+            mappedBy: fkNormasNorma
+        fkConcursoEditais1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\Edital
+            mappedBy: fkNormasNorma1
+        fkDiariasTipoDiarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\TipoDiaria
+            mappedBy: fkNormasNorma
+        fkDividaAutoridades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Autoridade
+            mappedBy: fkNormasNorma
+        fkDividaDividaRemissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaRemissao
+            mappedBy: fkNormasNorma
+        fkDividaModalidadeVigencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            mappedBy: fkNormasNorma
+        fkFiscalizacaoInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Infracao
+            mappedBy: fkNormasNorma
+        fkFiscalizacaoPenalidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Penalidade
+            mappedBy: fkNormasNorma
+        fkFolhapagamentoPadraoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PadraoPadrao
+            mappedBy: fkNormasNorma
+        fkImobiliarioBairroAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BairroAliquota
+            mappedBy: fkNormasNorma
+        fkImobiliarioBairroValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BairroValorM2
+            mappedBy: fkNormasNorma
+        fkImobiliarioFaceQuadraAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadraAliquota
+            mappedBy: fkNormasNorma
+        fkImobiliarioFaceQuadraValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadraValorM2
+            mappedBy: fkNormasNorma
+        fkImobiliarioLocalizacaoAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LocalizacaoAliquota
+            mappedBy: fkNormasNorma
+        fkImobiliarioLocalizacaoValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LocalizacaoValorM2
+            mappedBy: fkNormasNorma
+        fkImobiliarioTipoEdificacaoValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacaoValorM2
+            mappedBy: fkNormasNorma
+        fkImobiliarioTipoEdificacaoAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacaoAliquota
+            mappedBy: fkNormasNorma
+        fkImobiliarioTrechoValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TrechoValorM2
+            mappedBy: fkNormasNorma
+        fkImobiliarioTrechoAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TrechoAliquota
+            mappedBy: fkNormasNorma
+        fkLdoHomologacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Homologacao
+            mappedBy: fkNormasNorma
+        fkLicitacaoComissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Comissao
+            mappedBy: fkNormasNorma
+        fkLicitacaoConvenioAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivos
+            mappedBy: fkNormasNorma
+        fkLicitacaoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            mappedBy: fkNormasNorma
+        fkLicitacaoComissaoMembros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ComissaoMembros
+            mappedBy: fkNormasNorma
+        fkMonetarioAcrescimoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\AcrescimoNorma
+            mappedBy: fkNormasNorma
+        fkOrcamentoContaReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaReceita
+            mappedBy: fkNormasNorma
+        fkMonetarioCreditoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoNorma
+            mappedBy: fkNormasNorma
+        fkNormasNormaDetalheAis1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\NormaDetalheAl
+            mappedBy: fkNormasNorma1
+        fkNormasNormaTipoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\NormaTipoNorma
+            mappedBy: fkNormasNorma
+        fkOrcamentoSuplementacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Suplementacao
+            mappedBy: fkNormasNorma
+        fkOrganogramaOrganogramas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Organograma
+            mappedBy: fkNormasNorma
+        fkPessoalAdidoCedidos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AdidoCedido
+            mappedBy: fkNormasNorma
+        fkPessoalAssentamentoAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            mappedBy: fkNormasNorma
+        fkPessoalAssentamentoGeradoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoGeradoNorma
+            mappedBy: fkNormasNorma
+        fkPessoalContratoPensionistaCasoCausaNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaCasoCausaNorma
+            mappedBy: fkNormasNorma
+        fkPessoalContratoServidorCasoCausaNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausaNorma
+            mappedBy: fkNormasNorma
+        fkPessoalEspecialidadeSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\EspecialidadeSubDivisao
+            mappedBy: fkNormasNorma
+        fkPpaPpaPublicacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\PpaPublicacao
+            mappedBy: fkNormasNorma
+        fkPpaAcaoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoNorma
+            mappedBy: fkNormasNorma
+        fkPpaProgramaNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaNorma
+            mappedBy: fkNormasNorma
+        fkTcemgConfiguracaoLoas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConfiguracaoLoa
+            mappedBy: fkNormasNorma
+        fkTcemgConfiguracaoReglics:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConfiguracaoReglic
+            mappedBy: fkNormasNorma
+        fkTcemgConfiguracaoLeisPpas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConfiguracaoLeisPpa
+            mappedBy: fkNormasNorma
+        fkTcemgConfiguracaoLeisLdos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConfiguracaoLeisLdo
+            mappedBy: fkNormasNorma
+        fkTcemgNormaArtigos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NormaArtigo
+            mappedBy: fkNormasNorma
+        fkTcepeAgenteEletivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\AgenteEletivo
+            mappedBy: fkNormasNorma
+        fkTcepeDividaFundadaOperacaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\DividaFundadaOperacaoCredito
+            mappedBy: fkNormasNorma
+        fkTcernUnidadeGestoras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeGestora
+            mappedBy: fkNormasNorma
+        fkTcernUnidadeOrcamentarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeOrcamentaria
+            mappedBy: fkNormasNorma
+        fkTcetoAlteracaoLeiPpas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\AlteracaoLeiPpa
+            mappedBy: fkNormasNorma
+        fkTcetoNormaDetalhes1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\NormaDetalhe
+            mappedBy: fkNormasNorma1
+        fkTcmbaLimiteAlteracaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\LimiteAlteracaoCredito
+            mappedBy: fkNormasNorma
+        fkTcmbaSubvencaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\SubvencaoEmpenho
+            mappedBy: fkNormasNorma
+        fkTcmbaSubvencaoEmpenhos1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\SubvencaoEmpenho
+            mappedBy: fkNormasNorma1
+        fkTcmgoConfiguracaoArquivoDmres:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoArquivoDmr
+            mappedBy: fkNormasNorma
+        fkTcmgoConfiguracaoLeisLdos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoLeisLdo
+            mappedBy: fkNormasNorma
+        fkTcmgoConfiguracaoLeisPpas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoLeisPpa
+            mappedBy: fkNormasNorma
+        fkContabilidadeLoteNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LoteNorma
+            mappedBy: fkNormasNorma
+        fkDiariasDiarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\Diaria
+            mappedBy: fkNormasNorma
+        fkOrganogramaOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            mappedBy: fkNormasNorma
+        fkNormasAtributoNormaValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\AtributoNormaValor
+            mappedBy: fkNormasNorma
+        fkPessoalCargoSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CargoSubDivisao
+            mappedBy: fkNormasNorma
+        fkPessoalContratoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            mappedBy: fkNormasNorma
+        fkSwNomeLogradouros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwNomeLogradouro
+            mappedBy: fkNormasNorma
+        fkTcemgTipoRegistroPrecos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoRegistroPreco
+            mappedBy: fkNormasNorma
+        fkTcepeDividaFundadaOutraOperacaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\DividaFundadaOutraOperacaoCredito
+            mappedBy: fkNormasNorma
+        fkTcmgoConfiguracaoLoas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoLoa
+            mappedBy: fkNormasNorma
+    oneToOne:
+        fkConcursoEdital:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\Edital
+            mappedBy: fkNormasNorma
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_edital
+        fkNormasNormaDataTermino:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Normas\NormaDataTermino
+            mappedBy: fkNormasNorma
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkNormasNormaDetalheAl:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Normas\NormaDetalheAl
+            mappedBy: fkNormasNorma
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkTcemgNormaDetalhe:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NormaDetalhe
+            mappedBy: fkNormasNorma
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkTcetoNormaDetalhe:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\NormaDetalhe
+            mappedBy: fkNormasNorma
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkNormasNormaCopiaDigital:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Normas\NormaCopiaDigital
+            mappedBy: fkNormasNorma
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

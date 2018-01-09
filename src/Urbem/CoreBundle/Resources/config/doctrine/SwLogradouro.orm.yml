@@ -1,0 +1,94 @@
+Urbem\CoreBundle\Entity\SwLogradouro:
+    type: entity
+    repositoryClass: Urbem\CoreBundle\Repository\SwLogradouroRepository
+    table: public.sw_logradouro
+    id:
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+    fields:
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+    manyToOne:
+        fkSwMunicipio:
+            fetch: EXTRA_LAZY
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkSwLogradouros
+            joinColumns:
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_uf:
+                    referencedColumnName: cod_uf
+    oneToMany:
+        fkEconomicoDomicilioInformados:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\DomicilioInformado
+            mappedBy: fkSwLogradouro
+        fkEconomicoUsoSoloLogradouros:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\UsoSoloLogradouro
+            mappedBy: fkSwLogradouro
+        fkImobiliarioImovelCorrespondencias:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelCorrespondencia
+            mappedBy: fkSwLogradouro
+        fkImobiliarioTrechos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Trecho
+            mappedBy: fkSwLogradouro
+        fkOrganogramaLocais:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            mappedBy: fkSwLogradouro
+        fkSwBairroLogradouros:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwBairroLogradouro
+            mappedBy: fkSwLogradouro
+        fkSwCepLogradouros:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCepLogradouro
+            mappedBy: fkSwLogradouro
+        fkSwNomeLogradouros:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwNomeLogradouro
+            mappedBy: fkSwLogradouro

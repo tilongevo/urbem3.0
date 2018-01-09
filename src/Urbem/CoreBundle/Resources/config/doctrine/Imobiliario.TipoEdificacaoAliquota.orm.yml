@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacaoAliquota:
+    type: entity
+    table: imobiliario.tipo_edificacao_aliquota
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        aliquotaTerritorial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: aliquota_territorial
+        aliquotaPredial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: aliquota_predial
+    manyToOne:
+        fkImobiliarioTipoEdificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacao
+            inversedBy: fkImobiliarioTipoEdificacaoAliquotas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkImobiliarioTipoEdificacaoAliquotas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

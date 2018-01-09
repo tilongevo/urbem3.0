@@ -1,0 +1,76 @@
+Urbem\CoreBundle\Entity\Contabilidade\PlanoContaEstrutura:
+    type: entity
+    table: contabilidade.plano_conta_estrutura
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\PlanoContaEstruturaRepository
+    id:
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        codigoEstrutural:
+            type: string
+            generator:
+                strategy: NONE
+            column: codigo_estrutural
+    fields:
+        titulo:
+            type: string
+            nullable: false
+            length: 200
+        funcao:
+            type: text
+            nullable: true
+        naturezaSaldo:
+            type: string
+            nullable: true
+            length: 1
+            column: natureza_saldo
+        escrituracao:
+            type: string
+            nullable: false
+            length: 1
+        naturezaInformacao:
+            type: string
+            nullable: true
+            length: 1
+            column: natureza_informacao
+        indicadorSuperavit:
+            type: string
+            nullable: true
+            length: 1
+            column: indicador_superavit
+        atributoTcepe:
+            type: integer
+            nullable: true
+            column: atributo_tcepe
+        atributoTcemg:
+            type: integer
+            nullable: true
+            column: atributo_tcemg
+    manyToOne:
+        fkContabilidadePlanoContaGeral:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoContaGeral
+            inversedBy: fkContabilidadePlanoContaEstruturas
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_plano:
+                    referencedColumnName: cod_plano
+        fkTcepeTipoContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoContaCorrente
+            inversedBy: fkContabilidadePlanoContaEstruturas
+            joinColumns:
+                atributo_tcepe:
+                    referencedColumnName: cod_tipo
+        fkTcemgTipoContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoContaCorrente
+            inversedBy: fkContabilidadePlanoContaEstruturas
+            joinColumns:
+                atributo_tcemg:
+                    referencedColumnName: cod_tipo

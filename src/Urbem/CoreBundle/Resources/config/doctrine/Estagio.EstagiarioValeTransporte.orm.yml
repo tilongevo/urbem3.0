@@ -1,0 +1,76 @@
+Urbem\CoreBundle\Entity\Estagio\EstagiarioValeTransporte:
+    type: entity
+    table: estagio.estagiario_vale_transporte
+    id:
+        cgmInstituicaoEnsino:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_instituicao_ensino
+        cgmEstagiario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_estagiario
+        codCurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_curso
+        codEstagio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_estagio
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 3
+            scale: 0
+        valorUnitario:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_unitario
+        codCalendar:
+            type: integer
+            nullable: true
+            column: cod_calendar
+    manyToOne:
+        fkEstagioTipoContagemVale:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\TipoContagemVale
+            inversedBy: fkEstagioEstagiarioValeTransportes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkCalendarioCalendarioCadastro:
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioCadastro
+            inversedBy: fkEstagioEstagiarioValeTransportes
+            joinColumns:
+                cod_calendar:
+                    referencedColumnName: cod_calendar
+    oneToOne:
+        fkEstagioEstagiarioEstagioBolsa:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioBolsa
+            inversedBy: fkEstagioEstagiarioValeTransporte
+            joinColumns:
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino
+                cgm_estagiario:
+                    referencedColumnName: cgm_estagiario
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                timestamp:
+                    referencedColumnName: timestamp

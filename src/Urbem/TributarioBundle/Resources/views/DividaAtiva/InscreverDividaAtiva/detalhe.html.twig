@@ -1,0 +1,157 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    {{ form_start(form) }}
+        <div class="row">        
+            <div class="box box-primary">
+                <div class="box-header col s12">
+                    <h2 class="col s12 box-title left-align show">
+                        {{ 'label.dividaAtivaInscreverDividaAtiva.cabecalhoListaLancamentos'|trans }}
+                    </h2>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <div class="box-body">
+                    <table class="js-table-lista-dividas">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.contribuinte'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.inscricaoOrigem'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.imposto'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.parcelas'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.valorOriginal'|trans }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for divida in dividas %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ '%d - %s'|format(divida['numcgm'], divida['nom_cgm']) }}</td>
+                                    <td>{{ divida['inscricao'] }}</td>
+                                    <td>{{ divida['vinculo'] }}</td>
+                                    <td>{{ divida['nro_parcelas'] }}</td>
+                                    <td>{{ divida['valor_lancamento']|number_format(2, ',', '.') }}</td>
+                                    <td>
+                                        <input type="checkbox" class="js-divida-inscrever" name="form[dividas][{{ loop.index-1 }}][inscrever]" value="1">
+                                        <input type="hidden" name="form[dividas][{{ loop.index-1 }}][row]" value="{{ divida|json_encode }}">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            {% if dividas|length %}
+                                <tr>
+                                    <td colspan="7" style="text-align:right">
+                                        {{ 'label.dividaAtivaInscreverDividaAtiva.selecionarTodos'|trans }}
+                                        <input type="checkbox" class="js-divida-selecionar-todos" value="1">
+                                    </td>
+                                </tr>
+                            {% endif %}
+
+                            {% if not dividas|length %}
+                                <tr>
+                                    <td colspan="7" style="text-align:center">{{ 'label.dividaAtivaInscreverDividaAtiva.nenhumRegistroEncontrado'|trans }}</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="box box-primary">
+                <div class="box-header col s12">
+                    <h2 class="col s12 box-title left-align show">
+                        {{ 'label.dividaAtivaInscreverDividaAtiva.cabecalhoTotalizador'|trans }}
+                    </h2>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <div class="box-body">
+                    <table class="js-table-lista-dividas">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.numRegistros'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.valorTotal'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if dividas|length %}
+                                <tr>
+                                    <td>1</td>
+                                    <td>{{ dividas|length }}</td>
+                                    <td>R$ {{ valorTotal|number_format(2, ',', '.') }}</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="box box-primary">
+                <div class="box-header col s12">
+                    <h2 class="col s12 box-title left-align show">
+                        {{ 'label.dividaAtivaInscreverDividaAtiva.cabecalhoInscricao'|trans }}
+                    </h2>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <div class="box-body">                
+                        <div class="form_row col s3 campo-sonata-select">
+                            {{ form_label(form.autoridade, null, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_widget(form.autoridade, {'attr': {'class': 'select2-parameters'}}) }}
+                            {{ form_errors(form.autoridade) }}
+                        </div>
+                        <div class="form_row col s3 campo-sonata">
+                            {{ form_widget(form.emitirTermo, {'attr': {'class': ''}}) }}
+                            {{ form_label(form.emitirTermo, null, {'label_attr': {'class': 'control-label text'}}) }}
+                            {{ form_errors(form.emitirTermo) }}
+                        </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="box box-primary">
+                <div class="box-header col s12">
+                    <h2 class="col s12 box-title left-align show">
+                        {{ 'label.dividaAtivaInscreverDividaAtiva.cabecalhoProcesso'|trans }}
+                    </h2>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <div class="box-body">
+                    <div class="form_row col s3 campo-sonata-select">
+                        {{ form_label(form.codClassificacao, null, {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.codClassificacao, {'attr': {'class': ''}}) }}
+                        {{ form_errors(form.codClassificacao) }}
+                    </div>
+                    <div class="form_row col s3 campo-sonata-select">
+                        {{ form_label(form.codAssunto, null, {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.codAssunto, {'attr': {'class': ''}}) }}
+                        {{ form_errors(form.codAssunto) }}
+                    </div>
+                    <div class="form_row col s3 campo-sonata-select">
+                        {{ form_label(form.codProcesso, null, {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.codProcesso, {'attr': {'class': ''}}) }}
+                        {{ form_errors(form.codProcesso) }}
+                    </div>
+                    <div class="col s12 right-align" style="margin-top: 2%">
+                        <button type="submit" id="form_submit" name="form[submit]"
+                                class="white-text blue darken-4 btn btn-success save right">
+                            <i class="material-icons left">send</i>{{ 'avancar'|trans }}
+                        </button>
+                    </div>                    
+                </div>
+            </div>
+
+            {% for key, value in filtro %}
+                <input type="hidden" name="form[{{ key }}]" value="{{ value }}">
+            {% endfor %}
+            <input type="hidden" name="uniqid">
+        </div>
+    {{form_end(form) }}
+{% endblock content %}

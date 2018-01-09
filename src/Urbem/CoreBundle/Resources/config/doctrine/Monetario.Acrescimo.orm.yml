@@ -1,0 +1,92 @@
+Urbem\CoreBundle\Entity\Monetario\Acrescimo:
+    type: entity
+    table: monetario.acrescimo
+    repositoryClass: Urbem\CoreBundle\Repository\Monetario\AcrescimoRepository
+    id:
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricaoAcrescimo:
+            type: string
+            nullable: false
+            length: 80
+            column: descricao_acrescimo
+    manyToOne:
+        fkMonetarioTipoAcrescimo:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\TipoAcrescimo
+            inversedBy: fkMonetarioAcrescimos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkArrecadacaoAcrescimoGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AcrescimoGrupo
+            mappedBy: fkMonetarioAcrescimo
+        fkArrecadacaoPagamentoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoAcrescimo
+            mappedBy: fkMonetarioAcrescimo
+        fkDividaDividaAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAcrescimo
+            mappedBy: fkMonetarioAcrescimo
+        fkDividaParcelaAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelaAcrescimo
+            mappedBy: fkMonetarioAcrescimo
+        fkFiscalizacaoLevantamentoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\LevantamentoAcrescimo
+            mappedBy: fkMonetarioAcrescimo
+        fkMonetarioAcrescimoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\AcrescimoNorma
+            mappedBy: fkMonetarioAcrescimo
+        fkMonetarioValorAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ValorAcrescimo
+            mappedBy: fkMonetarioAcrescimo
+        fkMonetarioFormulaAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\FormulaAcrescimo
+            mappedBy: fkMonetarioAcrescimo
+        fkMonetarioCreditoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoAcrescimo
+            mappedBy: fkMonetarioAcrescimo

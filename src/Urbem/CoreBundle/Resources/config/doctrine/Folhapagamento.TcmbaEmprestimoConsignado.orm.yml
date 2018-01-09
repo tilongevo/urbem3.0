@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TcmbaEmprestimoConsignado:
+    type: entity
+    table: folhapagamento.tcmba_emprestimo_consignado
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields: {  }
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkFolhapagamentoTcmbaEmprestimoConsignados
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkMonetarioBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Banco
+            inversedBy: fkFolhapagamentoTcmbaEmprestimoConsignados
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoTcmbaEmprestimoConsignados
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoFaixaCorrecao:
+    type: entity
+    table: pessoal.assentamento_faixa_correcao
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\AssentamentoFaixaCorrecaoRepository
+    id:
+        codFaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_faixa
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        quantMeses:
+            type: integer
+            nullable: false
+            column: quant_meses
+        percentualCorrecao:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: percentual_correcao
+    manyToOne:
+        fkPessoalAssentamentoVantagem:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoVantagem
+            inversedBy: fkPessoalAssentamentoFaixaCorrecoes
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp

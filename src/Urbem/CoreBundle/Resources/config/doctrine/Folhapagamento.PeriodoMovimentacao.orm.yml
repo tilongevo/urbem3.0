@@ -1,0 +1,118 @@
+Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao:
+    type: entity
+    table: folhapagamento.periodo_movimentacao
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\PeriodoMovimentacaoRepository
+    id:
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: folhapagamento.periodo_movimentacao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_periodo_movimentacao
+    fields:
+        dtInicial:
+            type: date
+            nullable: false
+            column: dt_inicial
+        dtFinal:
+            type: date
+            nullable: false
+            column: dt_final
+    oneToMany:
+        fkBeneficioBeneficiarioLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\BeneficiarioLancamento
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkEstagioEstagiarioEstagioBolsas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioBolsa
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkFolhapagamentoComplementares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Complementar
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkFolhapagamentoContratoServidorPeriodos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ContratoServidorPeriodo
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkFolhapagamentoDeducaoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DeducaoDependente
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkFolhapagamentoFolhaSituacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FolhaSituacao
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkFolhapagamentoPeriodoMovimentacaoSituacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacaoSituacao
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkPessoalContratoServidorNivelPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorNivelPadrao
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkPessoalContratoServidorSalarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSalario
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkBeneficioBeneficiarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Beneficiario
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkFolhapagamentoConcessaoDecimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConcessaoDecimo
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+        fkPessoalContratoServidorSituacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSituacao
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+    oneToOne:
+        fkImaPagamento910:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\Pagamento910
+            mappedBy: fkFolhapagamentoPeriodoMovimentacao
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao

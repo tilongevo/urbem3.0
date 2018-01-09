@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorLocal:
+    type: entity
+    table: pessoal.contrato_servidor_local
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorLocalRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codLocal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_local
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorLocais
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkPessoalContratoServidorLocais
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local

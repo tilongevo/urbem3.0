@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Estagio\AtributoEstagiarioEstagio:
+    type: entity
+    table: estagio.atributo_estagiario_estagio
+    id:
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codEstagio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_estagio
+        codCurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_curso
+        cgmInstituicaoEnsino:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_instituicao_ensino
+    fields:
+        valor:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkEstagioAtributoEstagiarioEstagios
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkEstagioEstagiarioEstagio:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio
+            inversedBy: fkEstagioAtributoEstagiarioEstagios
+            joinColumns:
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                numcgm:
+                    referencedColumnName: cgm_estagiario
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino

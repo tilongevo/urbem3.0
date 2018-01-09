@@ -1,0 +1,79 @@
+Urbem\CoreBundle\Entity\Imobiliario\Localizacao:
+    type: entity
+    table: imobiliario.localizacao
+    repositoryClass: Urbem\CoreBundle\Repository\Imobiliario\LocalizacaoRepository
+    uniqueConstraints:
+        uk_localizacao_1:
+            columns:
+                - codigo_composto
+    id:
+        codLocalizacao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: imobiliario.localizacao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_localizacao
+    fields:
+        nomLocalizacao:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_localizacao
+        codigoComposto:
+            type: string
+            nullable: false
+            length: 100
+            column: codigo_composto
+    oneToMany:
+        fkImobiliarioBaixaLocalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BaixaLocalizacao
+            mappedBy: fkImobiliarioLocalizacao
+        fkImobiliarioLocalizacaoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LocalizacaoNivel
+            mappedBy: fkImobiliarioLocalizacao
+        fkImobiliarioLoteLocalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteLocalizacao
+            mappedBy: fkImobiliarioLocalizacao
+        fkImobiliarioLocalizacaoAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LocalizacaoAliquota
+            mappedBy: fkImobiliarioLocalizacao
+        fkImobiliarioLocalizacaoValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LocalizacaoValorM2
+            mappedBy: fkImobiliarioLocalizacao
+        fkImobiliarioAtributoNivelValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoNivelValor
+            mappedBy: fkImobiliarioLocalizacao
+        fkImobiliarioFaceQuadras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadra
+            mappedBy: fkImobiliarioLocalizacao

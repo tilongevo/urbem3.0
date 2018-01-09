@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Compras\TipoSocio:
+    type: entity
+    table: compras.tipo_socio
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkComprasFornecedorSocios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorSocio
+            mappedBy: fkComprasTipoSocio

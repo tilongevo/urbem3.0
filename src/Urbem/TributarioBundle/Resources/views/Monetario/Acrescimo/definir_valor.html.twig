@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="container-rh">
+        {{ form_start(form) }}
+            <input type="hidden" value="{{ acrescimo.codAcrescimo }}~{{ acrescimo.codTipo }}" name="acrescimo_id" />
+
+             <div class="row col s12">
+                 <div class="box-header">
+                     <h2 class="box-title left-align">
+                         {{ 'label.monetarioAcrescimo.dadosAcrescimo'|trans }}
+                     </h2>
+                     <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                 </div>
+                 <table class="table show-table">
+                     <tbody>
+                         <tr class="sonata-ba-view-container">
+                             <th>{{ 'label.codigo'|trans }}</th>
+                             <td>{{ acrescimo.codAcrescimo }}</td>
+                         </tr>
+                         <tr class="sonata-ba-view-container">
+                             <th>{{ 'label.monetarioAcrescimo.tipoAcrescimo'|trans }}</th>
+                             <td>{{ acrescimo.descricaoAcrescimo }}</td>
+                         </tr>
+                     </tbody>
+                 </table>
+             </div>
+            <div class="row col s12">
+                <div class="box-header">
+                    <h2 class="box-title left-align">
+                        {{ 'label.monetarioAcrescimo.dadosValor'|trans }}
+                    </h2>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                {{ form_widget(form) }}
+                <div class="col s2 right-align right">
+                    <button type="submit" name="adiciona" class="waves-effect waves-light btn blue darken-4 btn-bold" value="adiciona">
+                        <i class="mdi mdi-plus-circle left"></i>
+                        {{ 'incluir'|trans }}
+                    </button>
+                </div>
+                {#<div class="col s1 right" style="margin-top: 10px">#}
+                    {#<input class="left hide-on-med-and-down waves-effect waves-light btn blue darken-4 white-text" type="button" name="valor" id="valor" value="Incluir" style="width: 110%">#}
+                {#</div>#}
+            </div>
+
+            <div class="row col s12">
+                <div class="box-header">
+                    <h2 class="box-title left-align">
+                        {{ 'label.monetarioAcrescimo.registroValores'|trans }}
+                    </h2>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <table id="tableValores" class="bordered highlight" style="width:100%">
+                    <tr class="tr-rh">
+                        <th class="th-rh">{{ 'label.monetarioAcrescimo.vigencia'|trans }}</th>
+                        <th class="th-rh">{{ 'label.monetarioAcrescimo.valor'|trans }}</th>
+                        <th class="th-rh"></th>
+                    </tr>
+                    {% for valorAcrescimo in valoresAcrescimo %}
+                        <tr>
+                            <input name="valores[]" type="hidden" value="{{ valorAcrescimo.valor }}__{{ valorAcrescimo.inicioVigencia|date('d/m/Y')  }}" />
+                            <td class="td-rh">{{ valorAcrescimo.inicioVigencia|date('d/m/Y') }}</td>
+                            <td class="td-rh">{{ valorAcrescimo.valor }}</td>
+                            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="col s2 right-align right">
+                <button type="submit" name="definir" class="waves-effect waves-light btn blue darken-4 btn-bold" value="definir">
+                    <i class="mdi mdi-checkbox-marked-outline left"></i>
+                    {{ 'label.monetarioAcrescimo.definirValor'|trans }}
+                </button>
+            </div>
+
+        {{ form_end(form) }}
+        </div>
+{% endblock content %}
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css') }}">
+    <script src="{{ asset('/bundles/sonatacore/vendor/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/string.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem-sonata.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/tributario/javascripts/monetario/definir-valor.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('select:not(.select-ano)').select2();
+        });
+    </script>
+{% endblock javascripts %}

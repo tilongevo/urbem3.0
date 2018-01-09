@@ -1,0 +1,236 @@
+Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem:
+    type: entity
+    table: almoxarifado.catalogo_item
+    repositoryClass: Urbem\CoreBundle\Repository\Almoxarifado\CatalogoItemRepository
+    uniqueConstraints:
+        uk_catalogo_item_1:
+            columns:
+                - cod_catalogo
+                - cod_item_externo
+    id:
+        codItem:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: almoxarifado.cod_item_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_item
+    fields:
+        codCatalogo:
+            type: integer
+            nullable: false
+            column: cod_catalogo
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codUnidade:
+            type: integer
+            nullable: false
+            column: cod_unidade
+        codGrandeza:
+            type: integer
+            nullable: false
+            column: cod_grandeza
+        descricao:
+            type: string
+            nullable: false
+            length: 1500
+        descricaoResumida:
+            type: string
+            nullable: false
+            length: 150
+            column: descricao_resumida
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        codItemExterno:
+            type: string
+            nullable: true
+            length: 160
+            column: cod_item_externo
+        material:
+            type: integer
+            nullable: true
+        classe:
+            type: integer
+            nullable: true
+        descricaoIng:
+            type: string
+            nullable: true
+            length: 150
+            column: descricao_ing
+        descricaoEsp:
+            type: string
+            nullable: true
+            length: 150
+            column: descricao_esp
+        timestampInclusao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_inclusao
+        timestampAlteracao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_alteracao
+        prioridade:
+            type: string
+            nullable: false
+        divisivel:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+        codUnidadeCompra:
+            type: integer
+            nullable: true
+            column: cod_unidade_compra
+        codGrandezaCompra:
+            type: integer
+            nullable: true
+            column: cod_grandeza_compra
+        desmembravel:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+        descricaoCompletaNomeArquivo:
+            type: string
+            nullable: true
+        foto:
+            type: string
+            nullable: true
+        descricaoFoto:
+            type: string
+            nullable: true
+    manyToOne:
+        fkAlmoxarifadoCatalogoClassificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacao
+            inversedBy: fkAlmoxarifadoCatalogoItens
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+                cod_catalogo:
+                    referencedColumnName: cod_catalogo
+        fkAlmoxarifadoTipoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\TipoItem
+            inversedBy: fkAlmoxarifadoCatalogoItens
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkAlmoxarifadoCatalogoItens
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza
+        fkAdministracaoUnidadeMedidaCompra:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkAlmoxarifadoCatalogoItens
+            joinColumns:
+                cod_unidade_compra:
+                    referencedColumnName: cod_unidade
+                cod_grandeza_compra:
+                    referencedColumnName: cod_grandeza
+    oneToMany:
+        fkAlmoxarifadoAtributoCatalogoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoItem
+            mappedBy: fkAlmoxarifadoCatalogoItem
+        fkAlmoxarifadoPedidoTransferenciaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItem
+            mappedBy: fkAlmoxarifadoCatalogoItem
+        fkComprasSolicitacaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItem
+            mappedBy: fkAlmoxarifadoCatalogoItem
+        fkContabilidadeConfiguracaoLancamentoContaDespesaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoContaDespesaItem
+            mappedBy: fkAlmoxarifadoCatalogoItem
+        fkEmpenhoItemPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            mappedBy: fkAlmoxarifadoCatalogoItem
+        fkTcemgItemRegistroPrecos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ItemRegistroPrecos
+            mappedBy: fkAlmoxarifadoCatalogoItem
+        fkAlmoxarifadoLancamentoMateriais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial
+            mappedBy: fkAlmoxarifadoCatalogoItem
+        fkComprasCotacaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoItem
+            mappedBy: fkAlmoxarifadoCatalogoItem
+        fkAlmoxarifadoAtributoCatalogoClassificacaoItemValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoClassificacaoItemValor
+            mappedBy: fkAlmoxarifadoCatalogoItem
+    oneToOne:
+        fkAlmoxarifadoControleEstoque:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\ControleEstoque
+            mappedBy: fkAlmoxarifadoCatalogoItem
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+        fkTcemgArquivoItem:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ArquivoItem
+            mappedBy: fkAlmoxarifadoCatalogoItem
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+        fkFrotaItem:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Item
+            mappedBy: fkAlmoxarifadoCatalogoItem
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item

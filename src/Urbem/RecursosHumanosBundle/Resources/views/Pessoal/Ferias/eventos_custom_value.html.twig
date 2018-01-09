@@ -1,0 +1,64 @@
+{% extends 'CoreBundle:Sonata/CRUD:base_show_field.html.twig' %}
+{% set eventos = field_description.options.data['eventos'] %}
+{% set baseDesdobramento = field_description.options.data['baseDesdobramento'] %}
+
+{% block field %}
+{% if eventos %}
+    <h3>{{ 'label.ferias.eventosCadastrados'|trans }}</h3>
+    <table class="col s12 highlight bordered">
+        <thead>
+        <tr class="sonata-ba-list-field-header">
+            <th>{{ 'label.itens.codigo'|trans }}</th>
+            <th>{{ 'evento'|trans }}</th>
+            <th>{{ 'label.recursosHumanos.contratoServidorFerias.desdobramento'|trans }}</th>
+            <th>{{ 'valor'|trans }}</th>
+            <th>{{ 'label.mapa.quantidade'|trans }}</th>
+            <th>{{ 'label.recursosHumanos.contratoServidorPeriodo.automatico'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for evento in eventos %}
+                <tr>
+                    <td>{{ evento['cod_evento'] }}</td>
+                    <td>{{ evento['descricao'] }}</td>
+                    <td>{{ evento['desdobramento_texto'] }}</td>
+                    <td>{{ evento['valor'] }}</td>
+                    <td>{{ evento['quantidade'] }}</td>
+                    <td>{{ evento['automatico'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endif %}
+{% if baseDesdobramento %}
+    <h3>{{ 'label.ferias.baseCalculo'|trans }}</h3>
+    <table class="col s12 highlight bordered">
+        <thead>
+        <tr class="sonata-ba-list-field-header">
+            <th>{{ 'label.itens.codigo'|trans }}</th>
+            <th>{{ 'evento'|trans }}</th>
+            <th>{{ 'label.recursosHumanos.contratoServidorFerias.desdobramento'|trans }}</th>
+            <th>{{ 'valor'|trans }}</th>
+            <th>{{ 'label.mapa.quantidade'|trans }}</th>
+            <th>{{ 'label.recursosHumanos.contratoServidorPeriodo.automatico'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for base in baseDesdobramento %}
+
+
+            <tr>
+                <td>{{ base['cod_base'] }}</td>
+                <td>{{ base['descricao_base'] }}</td>
+                <td>{{ base['desdobramento_texto'] }}</td>
+                <td>{{ base['valor'] }}</td>
+                <td>{{ base['quantidade'] }}</td>
+                <td>{{ base['automatico'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock field %}

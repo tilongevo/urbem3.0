@@ -1,0 +1,94 @@
+Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPagaAnulada:
+    type: entity
+    table: empenho.nota_liquidacao_paga_anulada
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        timestampAnulada:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_anulada
+    fields:
+        vlAnulado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_anulado
+        observacao:
+            type: string
+            nullable: true
+            length: 200
+    manyToOne:
+        fkEmpenhoNotaLiquidacaoPaga:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPaga
+            inversedBy: fkEmpenhoNotaLiquidacaoPagaAnuladas
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_nota:
+                    referencedColumnName: cod_nota
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+    oneToMany:
+        fkContabilidadePagamentoEstornos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PagamentoEstorno
+            mappedBy: fkEmpenhoNotaLiquidacaoPagaAnulada
+    oneToOne:
+        fkEmpenhoNotaLiquidacaoPagaAnuladaAuditoria:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPagaAnuladaAuditoria
+            mappedBy: fkEmpenhoNotaLiquidacaoPagaAnulada
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                timestamp:
+                    referencedColumnName: timestamp
+                timestamp_anulada:
+                    referencedColumnName: timestamp_anulada
+        fkTesourariaPagamentoEstornado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\PagamentoEstornado
+            mappedBy: fkEmpenhoNotaLiquidacaoPagaAnulada
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                timestamp:
+                    referencedColumnName: timestamp
+                timestamp_anulada:
+                    referencedColumnName: timestamp_anulado

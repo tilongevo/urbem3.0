@@ -1,0 +1,82 @@
+Urbem\CoreBundle\Entity\Tcern\UnidadeGestora:
+    type: entity
+    table: tcern.unidade_gestora
+    uniqueConstraints:
+        uk_unidade_gestora:
+            columns:
+                - exercicio
+                - cod_institucional
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codInstitucional:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 0
+            column: cod_institucional
+        cgmUnidade:
+            type: integer
+            nullable: false
+            column: cgm_unidade
+        personalidade:
+            type: decimal
+            nullable: false
+            precision: 1
+            scale: 0
+        administracao:
+            type: decimal
+            nullable: false
+            precision: 1
+            scale: 0
+        natureza:
+            type: integer
+            nullable: false
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        situacao:
+            type: boolean
+            nullable: false
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcernUnidadeGestoras
+            joinColumns:
+                cgm_unidade:
+                    referencedColumnName: numcgm
+        fkTcernNaturezaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\NaturezaJuridica
+            inversedBy: fkTcernUnidadeGestoras
+            joinColumns:
+                natureza:
+                    referencedColumnName: cod_natureza
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcernUnidadeGestoras
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkTcernUnidadeGestoraResponsaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeGestoraResponsavel
+            mappedBy: fkTcernUnidadeGestora
+        fkTcernUnidadeOrcamentarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeOrcamentaria
+            mappedBy: fkTcernUnidadeGestora

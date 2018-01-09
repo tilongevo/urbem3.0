@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Ppa\AcaoNorma:
+    type: entity
+    table: ppa.acao_norma
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        timestampAcaoDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_acao_dados
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields: {  }
+    manyToOne:
+        fkPpaAcaoDados:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            inversedBy: fkPpaAcaoNormas
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPpaAcaoNormas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

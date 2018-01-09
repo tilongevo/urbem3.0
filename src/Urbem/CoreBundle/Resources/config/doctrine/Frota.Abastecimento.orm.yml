@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Frota\Abastecimento:
+    type: entity
+    table: frota.abastecimento
+    id:
+        ordemAbastecimento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ordem_abastecimento
+    fields:
+        codCombustivel:
+            type: integer
+            nullable: false
+            column: cod_combustivel
+        codVeiculo:
+            type: integer
+            nullable: false
+            column: cod_veiculo
+        codAbastecedora:
+            type: integer
+            nullable: false
+            column: cod_abastecedora
+        dtAbastecimento:
+            type: date
+            nullable: false
+            column: dt_abastecimento
+        kmAbastecimento:
+            type: float
+            nullable: false
+            column: km_abastecimento
+        qtLitros:
+            type: float
+            nullable: false
+            column: qt_litros
+        situacaoOrdem:
+            type: string
+            nullable: false
+            length: 1
+            column: situacao_ordem
+        valorLitro:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 3
+            column: valor_litro
+        valorTotal:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: valor_total
+    manyToOne:
+        fkFrotaCombustivel:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Combustivel
+            inversedBy: fkFrotaAbastecimentos
+            joinColumns:
+                cod_combustivel:
+                    referencedColumnName: cod_combustivel
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaAbastecimentos
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFrotaAbastecimentos
+            joinColumns:
+                cod_abastecedora:
+                    referencedColumnName: numcgm

@@ -1,0 +1,115 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoPensionista:
+    type: entity
+    table: pessoal.contrato_pensionista
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        codContratoCedente:
+            type: integer
+            nullable: false
+            column: cod_contrato_cedente
+        codDependencia:
+            type: integer
+            nullable: false
+            column: cod_dependencia
+        codPensionista:
+            type: integer
+            nullable: false
+            column: cod_pensionista
+        numBeneficio:
+            type: string
+            nullable: true
+            length: 15
+            column: num_beneficio
+        percentualPagamento:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+            column: percentual_pagamento
+        dtInicioBeneficio:
+            type: date
+            nullable: false
+            column: dt_inicio_beneficio
+        dtEncerramento:
+            type: date
+            nullable: true
+            column: dt_encerramento
+        motivoEncerramento:
+            type: string
+            nullable: true
+            length: 200
+            column: motivo_encerramento
+    manyToOne:
+        fkPessoalPensionista:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensionista
+            inversedBy: fkPessoalContratoPensionistas
+            joinColumns:
+                cod_pensionista:
+                    referencedColumnName: cod_pensionista
+                cod_contrato_cedente:
+                    referencedColumnName: cod_contrato_cedente
+        fkPessoalTipoDependencia:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TipoDependencia
+            inversedBy: fkPessoalContratoPensionistas
+            joinColumns:
+                cod_dependencia:
+                    referencedColumnName: cod_dependencia
+    oneToMany:
+        fkPessoalAtributoContratoPensionistas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AtributoContratoPensionista
+            mappedBy: fkPessoalContratoPensionista
+        fkPessoalContratoPensionistaContaSalarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaContaSalario
+            mappedBy: fkPessoalContratoPensionista
+        fkPessoalContratoPensionistaOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaOrgao
+            mappedBy: fkPessoalContratoPensionista
+        fkPessoalContratoPensionistaPrevidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaPrevidencia
+            mappedBy: fkPessoalContratoPensionista
+    oneToOne:
+        fkPessoalContratoPensionistaProcesso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaProcesso
+            mappedBy: fkPessoalContratoPensionista
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoPensionistaCasoCausa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaCasoCausa
+            mappedBy: fkPessoalContratoPensionista
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkPessoalContratoPensionista
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

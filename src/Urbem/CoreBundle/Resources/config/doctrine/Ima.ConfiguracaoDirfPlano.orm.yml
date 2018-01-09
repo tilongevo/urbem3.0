@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfPlano:
+    type: entity
+    table: ima.configuracao_dirf_plano
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        registroAns:
+            type: decimal
+            generator:
+                strategy: NONE
+            column: registro_ans
+    fields:
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkImaConfiguracaoDirf:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirf
+            inversedBy: fkImaConfiguracaoDirfPlanos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkImaConfiguracaoDirfPlanos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkImaConfiguracaoDirfPlanos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

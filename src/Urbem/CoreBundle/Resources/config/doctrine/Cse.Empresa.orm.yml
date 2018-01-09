@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Cse\Empresa:
+    type: entity
+    table: cse.empresa
+    id:
+        codEmpresa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empresa
+    fields:
+        nomEmpresa:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_empresa
+        cnpj:
+            type: string
+            nullable: false
+            length: 14
+    oneToMany:
+        fkCseQualificacaoProfissionais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\QualificacaoProfissional
+            mappedBy: fkCseEmpresa

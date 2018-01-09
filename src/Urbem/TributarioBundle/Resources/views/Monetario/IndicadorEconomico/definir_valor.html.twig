@@ -1,0 +1,97 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="container-rh">
+        {{ form_start(form) }}
+            <input type="hidden" value="{{ indicador.codIndicador }}" name="indicador_id" />
+
+             <div class="row col s12">
+                 <div class="box-header">
+                     <h2 class="box-title left-align">
+                         {{ 'label.monetarioIndicadorEconomico.dados'|trans }}
+                     </h2>
+                     <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                 </div>
+                 <table class="table show-table">
+                     <tbody>
+                         <tr class="sonata-ba-view-container">
+                             <th>{{ 'label.codigo'|trans }}</th>
+                             <td>{{ indicador.codIndicador }}</td>
+                         </tr>
+                         <tr class="sonata-ba-view-container">
+                             <th>{{ 'label.monetarioIndicadorEconomico.descricao'|trans }}</th>
+                             <td>{{ indicador.descricao }}</td>
+                         </tr>
+                     </tbody>
+                 </table>
+             </div>
+            <div class="row col s12">
+                <div class="box-header">
+                    <h2 class="box-title left-align">
+                        {{ 'label.monetarioIndicadorEconomico.dadosValor'|trans }}
+                    </h2>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <div class="col s2 right-align right">
+                    <button type="button" name="adiciona" id="adiciona" class="waves-effect waves-light btn blue darken-4 btn-bold" value="adiciona">
+                        <i class="mdi mdi-plus-circle left"></i>
+                        {{ 'incluir'|trans }}
+                    </button>
+                </div>
+                {{ form_widget(form) }}
+            </div>
+
+            <div class="row col s12">
+                <div class="box-header">
+                    <h2 class="box-title left-align">
+                        {{ 'label.monetarioAcrescimo.registroValores'|trans }}
+                    </h2>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <table id="tableValores" class="bordered highlight" style="width:100%">
+                    <tr class="tr-rh">
+                        <th class="th-rh">{{ 'label.monetarioAcrescimo.vigencia'|trans }}</th>
+                        <th class="th-rh">{{ 'label.monetarioAcrescimo.valor'|trans }}</th>
+                        <th class="th-rh"></th>
+                    </tr>
+                    {% for valorIndicador in valoresIndicador %}
+                        <tr>
+                            <input name="valores[]" type="hidden" value="{{ valorIndicador.valor }}__{{ valorIndicador.inicioVigencia|date('d/m/Y')  }}" />
+                            <td class="td-rh">{{ valorIndicador.inicioVigencia|date('d/m/Y') }}</td>
+                            <td class="td-rh">{{ valorIndicador.valor|number_format_decimal({'fraction_digits': 2}) }}</td>
+                            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+        <div class="col s2 right-align right">
+            <button type="submit" class="waves-effect waves-light btn blue darken-4 btn btn-success save" name="btn_update_and_list">
+                <i class="material-icons left">save</i>Salvar</button>
+            </button>
+        </div>
+
+        {{ form_end(form) }}
+        </div>
+{% endblock content %}
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css') }}">
+    <script src="{{ asset('/bundles/sonatacore/vendor/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/string.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem-sonata.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/tributario/javascripts/monetario/definir-valor.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('select:not(.select-ano)').select2();
+        });
+    </script>
+{% endblock javascripts %}

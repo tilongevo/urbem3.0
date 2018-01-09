@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Economico\EmpresaProfissao:
+    type: entity
+    table: economico.empresa_profissao
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: economico_empresa_profissao_seq
+                allocationSize: 1
+                initialValue: 1
+        codProfissao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_profissao
+    fields: {  }
+    manyToOne:
+        fkEconomicoResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Responsavel
+            inversedBy: fkEconomicoEmpresaProfissoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                sequencia:
+                    referencedColumnName: sequencia
+        fkCseProfissao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Profissao
+            inversedBy: fkEconomicoEmpresaProfissoes
+            joinColumns:
+                cod_profissao:
+                    referencedColumnName: cod_profissao

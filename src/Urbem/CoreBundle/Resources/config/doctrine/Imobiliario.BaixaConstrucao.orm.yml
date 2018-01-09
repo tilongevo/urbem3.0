@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Imobiliario\BaixaConstrucao:
+    type: entity
+    table: imobiliario.baixa_construcao
+    id:
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        sistema:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        justificativaTermino:
+            type: text
+            nullable: true
+            column: justificativa_termino
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    manyToOne:
+        fkImobiliarioConstrucao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Construcao
+            inversedBy: fkImobiliarioBaixaConstrucoes
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao

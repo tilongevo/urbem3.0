@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaDireito:
+    type: entity
+    table: economico.cadastro_economico_empresa_direito
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        codCategoria:
+            type: integer
+            nullable: false
+            column: cod_categoria
+        numRegistroJunta:
+            type: string
+            nullable: true
+            length: 30
+            column: num_registro_junta
+    manyToOne:
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkEconomicoCadastroEconomicoEmpresaDireitos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkEconomicoCategoria:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Categoria
+            inversedBy: fkEconomicoCadastroEconomicoEmpresaDireitos
+            joinColumns:
+                cod_categoria:
+                    referencedColumnName: cod_categoria
+    oneToMany:
+        fkEconomicoAtributoEmpresaDireitoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoEmpresaDireitoValor
+            mappedBy: fkEconomicoCadastroEconomicoEmpresaDireito
+        fkEconomicoSociedades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Sociedade
+            mappedBy: fkEconomicoCadastroEconomicoEmpresaDireito
+        fkEconomicoEmpresaDireitoNaturezaJuridicas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\EmpresaDireitoNaturezaJuridica
+            mappedBy: fkEconomicoCadastroEconomicoEmpresaDireito
+    oneToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoCadastroEconomicoEmpresaDireito
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica

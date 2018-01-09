@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Compras\OrdemAnulacao:
+    type: entity
+    table: compras.ordem_anulacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        motivo:
+            type: string
+            nullable: true
+            length: 200
+    manyToOne:
+        fkComprasOrdem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Ordem
+            inversedBy: fkComprasOrdemAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                tipo:
+                    referencedColumnName: tipo
+    oneToMany:
+        fkComprasOrdemItemAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemItemAnulacao
+            mappedBy: fkComprasOrdemAnulacao

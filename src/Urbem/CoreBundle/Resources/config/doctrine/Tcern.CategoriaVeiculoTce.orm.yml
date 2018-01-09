@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Tcern\CategoriaVeiculoTce:
+    type: entity
+    table: tcern.categoria_veiculo_tce
+    id:
+        codCategoria:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_categoria
+    fields:
+        nomCategoria:
+            type: string
+            nullable: true
+            length: 20
+            column: nom_categoria
+    oneToMany:
+        fkTcernVeiculoCategoriaVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\VeiculoCategoriaVinculo
+            mappedBy: fkTcernCategoriaVeiculoTce

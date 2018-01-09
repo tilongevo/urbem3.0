@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Tcern\FundebEmpenho:
+    type: entity
+    table: tcern.fundeb_empenho
+    id:
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codFundeb:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fundeb
+    fields: {  }
+    manyToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcernFundebEmpenhos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcernFundeb:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Fundeb
+            inversedBy: fkTcernFundebEmpenhos
+            joinColumns:
+                cod_fundeb:
+                    referencedColumnName: cod_fundeb

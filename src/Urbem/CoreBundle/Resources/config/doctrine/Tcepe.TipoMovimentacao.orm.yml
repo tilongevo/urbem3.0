@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcepe\TipoMovimentacao:
+    type: entity
+    table: tcepe.tipo_movimentacao
+    id:
+        codTipoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_movimentacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalTcepeConfiguracaoRelacionaHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TcepeConfiguracaoRelacionaHistorico
+            mappedBy: fkTcepeTipoMovimentacao

@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoGeradoNorma:
+    type: entity
+    table: pessoal.assentamento_gerado_norma
+    id:
+        codAssentamentoGerado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento_gerado
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields: {  }
+    manyToOne:
+        fkPessoalAssentamentoGerado:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoGerado
+            inversedBy: fkPessoalAssentamentoGeradoNormas
+            joinColumns:
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_assentamento_gerado:
+                    referencedColumnName: cod_assentamento_gerado
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPessoalAssentamentoGeradoNormas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

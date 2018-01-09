@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Arrecadacao\DocumentoEmpresa:
+    type: entity
+    table: arrecadacao.documento_empresa
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        numDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_documento
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkArrecadacaoDocumentoEmpresas
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkArrecadacaoDocumentoEmissao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoEmissao
+            inversedBy: fkArrecadacaoDocumentoEmpresas
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                num_documento:
+                    referencedColumnName: num_documento
+                exercicio:
+                    referencedColumnName: exercicio

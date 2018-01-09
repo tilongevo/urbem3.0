@@ -1,0 +1,716 @@
+Urbem\CoreBundle\Entity\Orcamento\Entidade:
+    type: entity
+    table: orcamento.entidade
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\EntidadeRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        codResponsavel:
+            type: integer
+            nullable: false
+            column: cod_responsavel
+        codRespTecnico:
+            type: integer
+            nullable: false
+            column: cod_resp_tecnico
+        codProfissao:
+            type: integer
+            nullable: false
+            column: cod_profissao
+        sequencia:
+            type: integer
+            nullable: true
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkOrcamentoEntidades
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkOrcamentoEntidades
+            joinColumns:
+                cod_responsavel:
+                    referencedColumnName: numcgm
+        fkEconomicoResponsavelTecnico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ResponsavelTecnico
+            inversedBy: fkOrcamentoEntidades
+            joinColumns:
+                cod_resp_tecnico:
+                    referencedColumnName: numcgm
+                sequencia:
+                    referencedColumnName: sequencia
+    oneToMany:
+        fkAdministracaoAssinaturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Assinatura
+            mappedBy: fkOrcamentoEntidade
+        fkAdministracaoConfiguracaoEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ConfiguracaoEntidade
+            mappedBy: fkOrcamentoEntidade
+        fkAdministracaoEntidadeRhs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\EntidadeRh
+            mappedBy: fkOrcamentoEntidade
+        fkAlmoxarifadoCentroCustoEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoEntidade
+            mappedBy: fkOrcamentoEntidade
+        fkComprasCompraDiretas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDireta
+            mappedBy: fkOrcamentoEntidade
+        fkComprasSolicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Solicitacao
+            mappedBy: fkOrcamentoEntidade
+        fkContabilidadeContaContabilRpNps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ContaContabilRpNp
+            mappedBy: fkOrcamentoEntidade
+        fkContabilidadeContaLancamentoRps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ContaLancamentoRp
+            mappedBy: fkOrcamentoEntidade
+        fkContabilidadeLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lote
+            mappedBy: fkOrcamentoEntidade
+        fkEmpenhoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            mappedBy: fkOrcamentoEntidade
+        fkEmpenhoDespesasFixas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\DespesasFixas
+            mappedBy: fkOrcamentoEntidade
+        fkEmpenhoOrdemPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamento
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaCargoServidorTemporarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaCargoServidorTemporario
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaEmprestimoConsignados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaEmprestimoConsignado
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaGratificacaoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaGratificacaoFuncao
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaPlanoSaudes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaPlanoSaude
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaSalarioDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaSalarioDescontos
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaSalarioFamilias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaSalarioFamilia
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaSalarioHorasExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaSalarioHorasExtras
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaVantagensSalariais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaVantagensSalariais
+            mappedBy: fkOrcamentoEntidade
+        fkLicitacaoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            mappedBy: fkOrcamentoEntidade
+        fkLicitacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkOrcamentoEntidade
+        fkManadAjusteRecursoModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\AjusteRecursoModeloLrf
+            mappedBy: fkOrcamentoEntidade
+        fkManadAjustePlanoContaModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\AjustePlanoContaModeloLrf
+            mappedBy: fkOrcamentoEntidade
+        fkManadPlanoContaEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\PlanoContaEntidade
+            mappedBy: fkOrcamentoEntidade
+        fkOrcamentoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            mappedBy: fkOrcamentoEntidade
+        fkOrcamentoUsuarioEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\UsuarioEntidade
+            mappedBy: fkOrcamentoEntidade
+        fkPatrimonioBemComprados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemComprado
+            mappedBy: fkOrcamentoEntidade
+        fkPatrimonioVeiculoUniorcans:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\VeiculoUniorcam
+            mappedBy: fkOrcamentoEntidade
+        fkStnVinculoFundebs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\VinculoFundeb
+            mappedBy: fkOrcamentoEntidade
+        fkStnRiscosFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\RiscosFiscais
+            mappedBy: fkOrcamentoEntidade
+        fkStnVinculoRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\VinculoRecurso
+            mappedBy: fkOrcamentoEntidade
+        fkStnDespesaPessoais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\DespesaPessoal
+            mappedBy: fkOrcamentoEntidade
+        fkStnRreoAnexo13s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\RreoAnexo13
+            mappedBy: fkOrcamentoEntidade
+        fkStnReceitaCorrenteLiquidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\ReceitaCorrenteLiquida
+            mappedBy: fkOrcamentoEntidade
+        fkTcealDeParaTipoCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\DeParaTipoCargo
+            mappedBy: fkOrcamentoEntidade
+        fkTcealOcorrenciaFuncionalAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\OcorrenciaFuncionalAssentamento
+            mappedBy: fkOrcamentoEntidade
+        fkTcealPublicacaoRreos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\PublicacaoRreo
+            mappedBy: fkOrcamentoEntidade
+        fkTcealPublicacaoRgfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\PublicacaoRgf
+            mappedBy: fkOrcamentoEntidade
+        fkTcemgContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            mappedBy: fkOrcamentoEntidade
+        fkTcemgContaBancarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContaBancaria
+            mappedBy: fkOrcamentoEntidade
+        fkTcemgProjecaoAtuariais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ProjecaoAtuarial
+            mappedBy: fkOrcamentoEntidade
+        fkTcemgTetoRemuneratorios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TetoRemuneratorio
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeAgenteEletivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\AgenteEletivo
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeCgmAgentePoliticos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\CgmAgentePolitico
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeConfiguracaoOrdenadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\ConfiguracaoOrdenador
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeConfiguracaoGestores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\ConfiguracaoGestor
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeDividaFundadaOperacaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\DividaFundadaOperacaoCredito
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeFonteRecursoLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\FonteRecursoLocal
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeFonteRecursoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\FonteRecursoLotacao
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeOrcamentoModalidadeDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\OrcamentoModalidadeDespesa
+            mappedBy: fkOrcamentoEntidade
+        fkTcernSubDivisaoDescricaoSiais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\SubDivisaoDescricaoSiai
+            mappedBy: fkOrcamentoEntidade
+        fkTcersPlanoContaEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\PlanoContaEntidade
+            mappedBy: fkOrcamentoEntidade
+        fkTcmbaConfiguracaoRatificadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ConfiguracaoRatificador
+            mappedBy: fkOrcamentoEntidade
+        fkTcmbaLimiteAlteracaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\LimiteAlteracaoCredito
+            mappedBy: fkOrcamentoEntidade
+        fkTcmbaObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            mappedBy: fkOrcamentoEntidade
+        fkTcmbaTermoParcerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TermoParceria
+            mappedBy: fkOrcamentoEntidade
+        fkTcmgoConfiguracaoOrgaoUnidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoOrgaoUnidade
+            mappedBy: fkOrcamentoEntidade
+        fkTcmgoResponsavelTecnicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ResponsavelTecnico
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaArrecadacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaBoletins:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Boletim
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaBorderos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Bordero
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaAssinaturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Assinatura
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaBoletimReabertos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimReaberto
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaBoletimFechados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimFechado
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaPermissaoTerminais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\PermissaoTerminal
+            mappedBy: fkOrcamentoEntidade
+        fkAdministracaoBibliotecaEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\BibliotecaEntidade
+            mappedBy: fkOrcamentoEntidade
+        fkEmpenhoAutorizacaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaReciboExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtra
+            mappedBy: fkOrcamentoEntidade
+        fkOrcamentoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            mappedBy: fkOrcamentoEntidade
+        fkTcersAjustePlanoContaModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\AjustePlanoContaModeloLrf
+            mappedBy: fkOrcamentoEntidade
+        fkTcemgConvenioPlanoBancos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConvenioPlanoBanco
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeTipoTransferenciaRecebidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoTransferenciaRecebida
+            mappedBy: fkOrcamentoEntidade
+        fkTcmbaFonteRecursoLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\FonteRecursoLocal
+            mappedBy: fkOrcamentoEntidade
+        fkTcmbaFonteRecursoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\FonteRecursoLotacao
+            mappedBy: fkOrcamentoEntidade
+        fkTcmgoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Contrato
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaDotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Dote
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaCargoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaCargoServidor
+            mappedBy: fkOrcamentoEntidade
+        fkFolhapagamentoTcmbaSalarioBases:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaSalarioBase
+            mappedBy: fkOrcamentoEntidade
+        fkTcemgNotaFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NotaFiscal
+            mappedBy: fkOrcamentoEntidade
+        fkTcemgTipoRegistroPrecos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoRegistroPreco
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeDividaFundadaOutraOperacaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\DividaFundadaOutraOperacaoCredito
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeResponsavelTecnicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\ResponsavelTecnico
+            mappedBy: fkOrcamentoEntidade
+        fkTcepeTipoTransferenciaConcedidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoTransferenciaConcedida
+            mappedBy: fkOrcamentoEntidade
+        fkTcmbaConfiguracaoOrdenadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ConfiguracaoOrdenador
+            mappedBy: fkOrcamentoEntidade
+        fkTcersAjusteRecursoModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\AjusteRecursoModeloLrf
+            mappedBy: fkOrcamentoEntidade
+        fkTesourariaBoletimLiberadoCancelados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberadoCancelado
+            mappedBy: fkOrcamentoEntidade
+        fkEmpenhoEmpenhoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoConvenio
+            mappedBy: fkOrcamentoEntidade
+    oneToOne:
+        fkOrcamentoEntidadeLogotipo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\EntidadeLogotipo
+            mappedBy: fkOrcamentoEntidade
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcemgConfiguracaoReglic:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConfiguracaoReglic
+            mappedBy: fkOrcamentoEntidade
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcemgOperacaoCreditoAro:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\OperacaoCreditoAro
+            mappedBy: fkOrcamentoEntidade
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcmgoConfiguracaoIde:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoIde
+            mappedBy: fkOrcamentoEntidade
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

@@ -1,0 +1,44 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <thead>
+                <tr>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.inscricao'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.localizacao'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.lote'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.endereco'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.cep'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.proprietario'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.situacao'|trans|upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for imovel in imoveis %}
+                        <tr>
+                            <td>{{ imovel.inscricao_municipal }}</td>
+                            <td>{{ imovel.localizacao }}</td>
+                            <td>{{ imovel.cod_lote }} - {{ imovel.tipo_lote }}</td>
+                            <td>{{ imovel.endereco }}</td>
+                            <td>{{ imovel.cep }}</td>
+                            <td>{{ imovel.proprietario_cota }}%</td>
+                            <td>{{ imovel.situacao }}</td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+
+        {% include 'TributarioBundle::Imobiliario/Relatorios/cadastroImobiliario_details.html.twig' %}
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

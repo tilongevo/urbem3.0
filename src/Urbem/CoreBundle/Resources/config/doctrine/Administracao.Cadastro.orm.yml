@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Administracao\Cadastro:
+    type: entity
+    table: administracao.cadastro
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+    fields:
+        nomCadastro:
+            type: string
+            nullable: true
+            length: 80
+            column: nom_cadastro
+        mapeamento:
+            type: string
+            nullable: true
+            length: 80
+    manyToOne:
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkAdministracaoCadastros
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+    oneToMany:
+        fkAdministracaoAtributoDinamicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            mappedBy: fkAdministracaoCadastro
+        fkNormasAtributoTipoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\AtributoTipoNorma
+            mappedBy: fkAdministracaoCadastro
+        fkNormasTipoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\TipoNorma
+            mappedBy: fkAdministracaoCadastro

@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Patrimonio\GrupoPlanoDepreciacao:
+    type: entity
+    table: patrimonio.grupo_plano_depreciacao
+    id:
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+    fields: {  }
+    manyToOne:
+        fkPatrimonioGrupo:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Grupo
+            inversedBy: fkPatrimonioGrupoPlanoDepreciacoes
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkPatrimonioGrupoPlanoDepreciacoes
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

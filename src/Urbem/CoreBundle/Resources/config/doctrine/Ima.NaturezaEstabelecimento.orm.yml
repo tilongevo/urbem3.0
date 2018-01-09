@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Ima\NaturezaEstabelecimento:
+    type: entity
+    table: ima.natureza_estabelecimento
+    id:
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+    fields:
+        exercicioVigencia:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_vigencia
+        descricao:
+            type: string
+            nullable: false
+            length: 150
+    oneToMany:
+        fkImaConfiguracaoDirfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirf
+            mappedBy: fkImaNaturezaEstabelecimento

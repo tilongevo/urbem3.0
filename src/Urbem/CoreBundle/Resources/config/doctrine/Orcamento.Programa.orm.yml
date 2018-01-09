@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Orcamento\Programa:
+    type: entity
+    table: orcamento.programa
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\ProgramaRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 480
+    oneToMany:
+        fkOrcamentoProgramaPpaProgramas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ProgramaPpaPrograma
+            mappedBy: fkOrcamentoPrograma
+        fkOrcamentoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            mappedBy: fkOrcamentoPrograma
+    oneToOne:
+        fkTcepbProgramaObjetivoMilenio:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\ProgramaObjetivoMilenio
+            mappedBy: fkOrcamentoPrograma
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_programa:
+                    referencedColumnName: cod_programa

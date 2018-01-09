@@ -1,0 +1,66 @@
+Urbem\CoreBundle\Entity\PrestacaoContas\FilaRelatorio:
+    type: entity
+    table: prestacao_contas.fila_relatorio
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: prestacao_contas.fila_relatorio_id_seq
+                allocationSize: 1
+                initialValue: 1
+            column: id
+    fields:
+        relatorio:
+            type: string
+            nullable: false
+        nome:
+            type: string
+            nullable: false
+        parametros:
+            type: json_array
+            nullable: false
+        valor:
+            type: json_array
+            nullable: false
+        resposta:
+            type: json_array
+            nullable: false
+        relatorioLog:
+            type: json_array
+            nullable: false
+            column: relatorio_log
+        classeProcessamento:
+            type: string
+            nullable: false
+            length: 130
+            column: classe_processamento
+        identificadorExterno:
+            type: string
+            nullable: false
+            length: 50
+            column: identificador_externo
+        caminhoDownload:
+            type: string
+            nullable: false
+            length: 200
+            column: caminho_download
+        status:
+            type: string
+            nullable: false
+            length: 80
+        dataCriacao:
+            type: datetimepk
+            nullable: false
+            column: data_criacao
+        dataResposta:
+            type: datetimepk
+            nullable: true
+            column: data_resposta
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            joinColumns:
+                cod_usuario:
+                    referencedColumnName: numcgm

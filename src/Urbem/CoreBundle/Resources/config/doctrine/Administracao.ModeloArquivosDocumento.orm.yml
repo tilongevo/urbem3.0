@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Administracao\ModeloArquivosDocumento:
+    type: entity
+    table: administracao.modelo_arquivos_documento
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\ModeloArquivosDocumentoRepository
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        codArquivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arquivo
+        codTipoDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento
+    fields:
+        sistema:
+            type: boolean
+            nullable: false
+        padrao:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkAdministracaoAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Acao
+            inversedBy: fkAdministracaoModeloArquivosDocumentos
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkAdministracaoModeloArquivosDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+        fkAdministracaoArquivosDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ArquivosDocumento
+            inversedBy: fkAdministracaoModeloArquivosDocumentos
+            joinColumns:
+                cod_arquivo:
+                    referencedColumnName: cod_arquivo
+                sistema:
+                    referencedColumnName: sistema

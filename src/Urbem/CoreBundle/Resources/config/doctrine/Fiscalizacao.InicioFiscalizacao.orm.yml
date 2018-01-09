@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\InicioFiscalizacao:
+    type: entity
+    table: fiscalizacao.inicio_fiscalizacao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        codFiscal:
+            type: integer
+            nullable: false
+            column: cod_fiscal
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        localEntrega:
+            type: string
+            nullable: false
+            length: 120
+            column: local_entrega
+        prazoEntrega:
+            type: date
+            nullable: false
+            column: prazo_entrega
+        observacao:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkFiscalizacaoFiscalProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalProcessoFiscal
+            inversedBy: fkFiscalizacaoInicioFiscalizacoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_fiscal:
+                    referencedColumnName: cod_fiscal
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoInicioFiscalizacoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToMany:
+        fkFiscalizacaoInicioFiscalizacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InicioFiscalizacaoDocumentos
+            mappedBy: fkFiscalizacaoInicioFiscalizacao
+        fkFiscalizacaoProrrogacaoEntregas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProrrogacaoEntrega
+            mappedBy: fkFiscalizacaoInicioFiscalizacao
+    oneToOne:
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoInicioFiscalizacao
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo

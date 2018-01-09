@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Pessoal\CargoPadrao:
+    type: entity
+    table: pessoal.cargo_padrao
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\CargoPadraoRepository
+    id:
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+        codPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_padrao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkPessoalCargoPadroes
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+        fkFolhapagamentoPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Padrao
+            inversedBy: fkPessoalCargoPadroes
+            joinColumns:
+                cod_padrao:
+                    referencedColumnName: cod_padrao

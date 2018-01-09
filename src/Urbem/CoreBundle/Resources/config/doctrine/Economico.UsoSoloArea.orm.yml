@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Economico\UsoSoloArea:
+    type: entity
+    table: economico.uso_solo_area
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        area:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    oneToOne:
+        fkEconomicoLicencaDiversa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiversa
+            inversedBy: fkEconomicoUsoSoloArea
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio

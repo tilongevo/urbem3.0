@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">Copyright (c) 2007 &lt;&lt;Your Company Name here>></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.4.0.v201405191524 Build &lt;4.4.0.v20140606-1451></property>
+    <property name="units">in</property>
+    <text-property name="displayName">Template Urbem Retrato</text-property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">../../../../../../gestaoAdministrativa/fontes/RPT/framework/library/urbem_231.rptlibrary</property>
+            <property name="namespace">urbem_231</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="term_user" id="6666">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="exercicio" id="186">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="cod_acao" id="187">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="db_conn_url" id="189">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">jdbc:postgresql://[ip]:5432/[database]</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="entidade" id="1123">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">integer</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="identificacao_descricao" id="1214">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"> </value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="identificacao_valor" id="1216">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"> </value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="exercicio_risco" id="1224">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="postgres" id="1147" extends="urbem_231.postgres">
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="prefeitura" id="1173"
+ extends="urbem_231.prefeitura"/>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsRiscoFiscal" id="1209">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">param_1</property>
+                    <property name="paramName">exercicio_risco</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">1</property>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData"/>
+            <property name="dataSource">postgres</property>
+            <xml-property name="queryText"><![CDATA[    SELECT riscos_fiscais.cod_risco::VARCHAR||riscos_fiscais.cod_entidade::VARCHAR||riscos_fiscais.exercicio AS risco_identificador
+		,  riscos_fiscais.descricao AS risco_descricao
+		,  riscos_fiscais.valor AS risco_valor 
+		,  providencias.cod_risco::VARCHAR||providencias.cod_entidade::VARCHAR||providencias.exercicio AS providencias_identificador
+		,  providencias.descricao AS providencias_descricao
+		,  providencias.valor AS providencias_valor
+      FROM stn.riscos_fiscais
+INNER JOIN stn.providencias
+		ON providencias.cod_risco    = riscos_fiscais.cod_risco
+       AND providencias.cod_entidade = riscos_fiscais.cod_entidade
+       AND providencias.exercicio    = riscos_fiscais.exercicio
+       AND riscos_fiscais.exercicio = ?
+  ORDER BY risco_identificador, providencias_identificador]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>1.0</Version>
+  <design:DataSetParameters>
+    <design:parameterDefinitions>
+      <design:inOutMode>In</design:inOutMode>
+      <design:attributes>
+        <design:identifier>
+          <design:name></design:name>
+          <design:position>1</design:position>
+        </design:identifier>
+        <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+        <design:precision>0</design:precision>
+        <design:scale>0</design:scale>
+        <design:nullability>Unknown</design:nullability>
+      </design:attributes>
+      <design:inputAttributes>
+        <design:elementAttributes>
+          <design:defaultValues>
+            <design:values>JS_EXPR</design:values>
+          </design:defaultValues>
+        </design:elementAttributes>
+      </design:inputAttributes>
+    </design:parameterDefinitions>
+  </design:DataSetParameters>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab" id="4">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="NewStyle" id="1148">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+        </style>
+        <style name="padrão_urbem" id="1149">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">portrait</property>
+            <property name="topMargin">0.3in</property>
+            <property name="leftMargin">10mm</property>
+            <property name="bottomMargin">0.21in</property>
+            <property name="rightMargin">10mm</property>
+            <page-header>
+                <grid id="1150">
+                    <property name="fontFamily">sans-serif</property>
+                    <property name="fontSize">7pt</property>
+                    <property name="width">100%</property>
+                    <column id="1151"/>
+                    <column id="1152"/>
+                    <row id="1153">
+                        <cell id="1154">
+                            <property name="colSpan">2</property>
+                            <property name="rowSpan">1</property>
+                            <data id="1174">
+                                <property name="textAlign">center</property>
+                                <property name="dataSet">prefeitura</property>
+                                <list-property name="boundDataColumns">
+                                    <structure>
+                                        <property name="name">nom_prefeitura</property>
+                                        <text-property name="displayName">nom_prefeitura</text-property>
+                                        <expression name="expression">dataSetRow["nom_prefeitura"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                </list-property>
+                                <property name="resultSetColumn">nom_prefeitura</property>
+                            </data>
+                        </cell>
+                    </row>
+                    <row id="1156">
+                        <cell id="1157">
+                            <property name="colSpan">2</property>
+                            <property name="rowSpan">1</property>
+                            <text id="1220">
+                                <property name="textAlign">center</property>
+                                <property name="contentType">auto</property>
+                                <text-property name="content"><![CDATA[LEI DE DIRETRIZES ORÇAMENTÁRIAS]]></text-property>
+                            </text>
+                        </cell>
+                    </row>
+                    <row id="1159">
+                        <cell id="1160">
+                            <property name="colSpan">2</property>
+                            <property name="rowSpan">1</property>
+                            <text id="1221">
+                                <property name="textAlign">center</property>
+                                <property name="contentType">auto</property>
+                                <text-property name="content"><![CDATA[ANEXO II - RISCOS FISCAIS]]></text-property>
+                            </text>
+                        </cell>
+                    </row>
+                    <row id="1162">
+                        <cell id="1163">
+                            <property name="colSpan">2</property>
+                            <property name="rowSpan">1</property>
+                            <text id="1222">
+                                <property name="fontWeight">bold</property>
+                                <property name="textAlign">center</property>
+                                <property name="contentType">auto</property>
+                                <text-property name="content"><![CDATA[DEMONSTRATIVO DE RISCOS FISCAIS E PROVIDÊNCIAS]]></text-property>
+                            </text>
+                        </cell>
+                    </row>
+                    <row id="1165">
+                        <cell id="1166">
+                            <property name="colSpan">2</property>
+                            <property name="rowSpan">1</property>
+                            <data id="1225">
+                                <property name="textAlign">center</property>
+                                <list-property name="boundDataColumns">
+                                    <structure>
+                                        <property name="name">exercicio_risco</property>
+                                        <text-property name="displayName">exercicio_risco</text-property>
+                                        <expression name="expression">"EXERCÍCIO DE "+params["exercicio_risco"].value</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                </list-property>
+                                <property name="resultSetColumn">exercicio_risco</property>
+                            </data>
+                        </cell>
+                    </row>
+                    <row id="1168">
+                        <cell id="1169">
+                            <text id="1171">
+                                <property name="textAlign">left</property>
+                                <property name="contentType">auto</property>
+                                <text-property name="content"><![CDATA[ARF (LRF, art 4º, § 3º)]]></text-property>
+                            </text>
+                        </cell>
+                        <cell id="1170">
+                            <text id="1172">
+                                <property name="textAlign">right</property>
+                                <property name="contentType">auto</property>
+                                <text-property name="content"><![CDATA[R$ 1,00]]></text-property>
+                            </text>
+                        </cell>
+                    </row>
+                </grid>
+            </page-header>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="1175">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">7pt</property>
+            <property name="width">100%</property>
+            <property name="dataSet">dsRiscoFiscal</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">risco_identificador</property>
+                    <expression name="expression">dataSetRow["risco_identificador"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">risco_descricao</property>
+                    <expression name="expression">dataSetRow["risco_descricao"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">risco_valor</property>
+                    <expression name="expression">dataSetRow["risco_valor"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">providencias_identificador</property>
+                    <expression name="expression">dataSetRow["providencias_identificador"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">providencias_descricao</property>
+                    <expression name="expression">dataSetRow["providencias_descricao"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">providencias_valor</property>
+                    <expression name="expression">dataSetRow["providencias_valor"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">total_providencia</property>
+                    <text-property name="displayName">total_providencia</text-property>
+                    <expression name="expression">Total.sum(dataSetRow['providencias_valor'])</expression>
+                    <property name="dataType">float</property>
+                </structure>
+            </list-property>
+            <column id="1191"/>
+            <column id="1192"/>
+            <column id="1193"/>
+            <column id="1194"/>
+            <header>
+                <row id="1176">
+                    <property name="textAlign">center</property>
+                    <cell id="1177">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="1200">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[RISCOS FISCAIS]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="1179">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="1201">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[PROVIDÊNCIAS]]></text-property>
+                        </text>
+                    </cell>
+                </row>
+                <row id="1195">
+                    <property name="textAlign">center</property>
+                    <cell id="1196">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="1202">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[Descrição]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="1197">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="1203">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[Valor]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="1198">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="1204">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[Descrição]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="1199">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="1205">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[Valor]]></text-property>
+                        </text>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="1181">
+                    <cell id="1182">
+                        <method name="onCreate"><![CDATA[if (params['identificacao_descricao'].value != this.getRowData().getColumnValue('risco_identificador')) {
+	params['identificacao_descricao'].value = this.getRowData().getColumnValue('risco_identificador');
+} else {
+	this.getStyle().color = 'white';
+}]]></method>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <data id="1210">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">risco_descricao</property>
+                        </data>
+                    </cell>
+                    <cell id="1183">
+                        <method name="onCreate"><![CDATA[if (params['identificacao_valor'].value != this.getRowData().getColumnValue('risco_identificador')) {
+	params['identificacao_valor'].value = this.getRowData().getColumnValue('risco_identificador');
+} else {
+	this.getStyle().color = 'white';
+}]]></method>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <data id="1211">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">risco_valor</property>
+                        </data>
+                    </cell>
+                    <cell id="1184">
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <data id="1212">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">providencias_descricao</property>
+                        </data>
+                    </cell>
+                    <cell id="1185">
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <data id="1213">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">providencias_valor</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="1186">
+                    <cell id="1187">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="1206">
+                            <property name="textAlign">left</property>
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[TOTAL]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="1188">
+                        <property name="backgroundColor">#E5E5E5</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="1219">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">total_providencia</property>
+                        </data>
+                    </cell>
+                    <cell id="1189">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="1208">
+                            <property name="textAlign">left</property>
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[TOTAL]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="1190">
+                        <property name="backgroundColor">#E5E5E5</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="1218">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">total_providencia</property>
+                        </data>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+        <label id="781">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">6pt</property>
+            <text-property name="text">Fonte:    URBEM - CNM Confederação Nacional de Municípios - www.cnm.org.br</text-property>
+        </label>
+    </body>
+</report>

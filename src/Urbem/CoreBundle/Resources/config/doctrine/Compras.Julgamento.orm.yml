@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Compras\Julgamento:
+    type: entity
+    table: compras.julgamento
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\JulgamentoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        observacao:
+            type: string
+            nullable: true
+            length: 200
+    oneToMany:
+        fkComprasJulgamentoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\JulgamentoItem
+            mappedBy: fkComprasJulgamento
+    oneToOne:
+        fkComprasCotacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Cotacao
+            inversedBy: fkComprasJulgamento
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao

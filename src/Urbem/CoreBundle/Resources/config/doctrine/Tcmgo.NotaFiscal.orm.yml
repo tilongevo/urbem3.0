@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Tcmgo\NotaFiscal:
+    type: entity
+    table: tcmgo.nota_fiscal
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        nroNota:
+            type: integer
+            nullable: true
+            column: nro_nota
+        nroSerie:
+            type: string
+            nullable: true
+            length: 8
+            column: nro_serie
+        aidf:
+            type: string
+            nullable: false
+            length: 15
+        dataEmissao:
+            type: date
+            nullable: false
+            column: data_emissao
+        vlNota:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_nota
+        inscricaoMunicipal:
+            type: bigint
+            nullable: true
+            column: inscricao_municipal
+        inscricaoEstadual:
+            type: bigint
+            nullable: true
+            column: inscricao_estadual
+        nroSequencial:
+            type: integer
+            nullable: false
+            column: nro_sequencial
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        chaveAcesso:
+            type: decimal
+            nullable: true
+            precision: 44
+            scale: 0
+            column: chave_acesso
+    oneToMany:
+        fkTcmgoNotaFiscalEmpenhoLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\NotaFiscalEmpenhoLiquidacao
+            mappedBy: fkTcmgoNotaFiscal
+        fkTcmgoNotaFiscalEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\NotaFiscalEmpenho
+            mappedBy: fkTcmgoNotaFiscal

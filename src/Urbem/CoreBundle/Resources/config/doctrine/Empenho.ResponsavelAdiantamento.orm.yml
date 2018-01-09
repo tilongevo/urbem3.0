@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Empenho\ResponsavelAdiantamento:
+    type: entity
+    table: empenho.responsavel_adiantamento
+    uniqueConstraints:
+        uk_responsavel_adiantamento_1:
+            columns:
+                - exercicio
+                - conta_lancamento
+                - conta_contrapartida
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        contaContrapartida:
+            type: integer
+            generator:
+                strategy: NONE
+            column: conta_contrapartida
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        contaLancamento:
+            type: integer
+            nullable: false
+            column: conta_lancamento
+        ativo:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkEmpenhoResponsavelAdiantamentos
+            joinColumns:
+                conta_lancamento:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEmpenhoContrapartidaResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ContrapartidaResponsavel
+            inversedBy: fkEmpenhoResponsavelAdiantamentos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                conta_contrapartida:
+                    referencedColumnName: conta_contrapartida
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEmpenhoResponsavelAdiantamentos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

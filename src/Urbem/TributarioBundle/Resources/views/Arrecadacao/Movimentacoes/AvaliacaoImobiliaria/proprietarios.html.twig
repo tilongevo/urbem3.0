@@ -1,0 +1,26 @@
+{% block content %}
+    {% if field.data.proprietarios|length > 0 %}
+        <div class="col s12">
+        <table class="table table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>{{ 'label.cgm'|trans }}</th>
+                    <th>{{ 'label.nome'|trans }}</th>
+                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.quotaAtual'|trans }}(%)</th>
+                </tr>
+            </thead>
+            <tbody class="sonata-ba-tbody ui-sortable">
+                {% for proprietario in field.data.proprietarios %}
+                    <tr class="tr-rh">
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ proprietario.numCgm }}</td>
+                        <td class="td-rh">{{ proprietario.getFkSwCgm }}</td>
+                        <td class="td-rh">{{ proprietario.getCota }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    {% endif %}
+{% endblock content %}

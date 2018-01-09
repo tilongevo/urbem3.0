@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Administracao\Esfera:
+    type: entity
+    table: administracao.esfera
+    id:
+        codEsfera:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_esfera
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 15
+    oneToMany:
+        fkOrcamentoRecursoDiretos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\RecursoDireto
+            mappedBy: fkAdministracaoEsfera

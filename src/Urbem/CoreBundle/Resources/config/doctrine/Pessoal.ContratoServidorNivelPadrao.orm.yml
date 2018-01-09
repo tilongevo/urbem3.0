@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorNivelPadrao:
+    type: entity
+    table: pessoal.contrato_servidor_nivel_padrao
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codNivelPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_padrao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codPeriodoMovimentacao:
+            type: integer
+            nullable: false
+            column: cod_periodo_movimentacao
+        reajuste:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorNivelPadroes
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkFolhapagamentoNivelPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\NivelPadrao
+            inversedBy: fkPessoalContratoServidorNivelPadroes
+            joinColumns:
+                cod_nivel_padrao:
+                    referencedColumnName: cod_nivel_padrao
+        fkFolhapagamentoPeriodoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao
+            inversedBy: fkPessoalContratoServidorNivelPadroes
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao

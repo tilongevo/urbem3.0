@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaRegimeRat:
+    type: entity
+    table: folhapagamento.previdencia_regime_rat
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Ima\PrevidenciaRegimeRatRepository
+    id:
+        codPrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_previdencia
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        aliquotaRat:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: aliquota_rat
+        aliquotaFap:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 4
+            column: aliquota_fap
+    oneToOne:
+        fkFolhapagamentoPrevidenciaPrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaPrevidencia
+            inversedBy: fkFolhapagamentoPrevidenciaRegimeRat
+            joinColumns:
+                cod_previdencia:
+                    referencedColumnName: cod_previdencia
+                timestamp:
+                    referencedColumnName: timestamp

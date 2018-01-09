@@ -1,0 +1,78 @@
+Urbem\CoreBundle\Entity\Folhapagamento\RegistroEvento:
+    type: entity
+    table: folhapagamento.registro_evento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\RegistroEventoRepository
+    id:
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields:
+        valor:
+            type: decimal
+            nullable: true
+            precision: 15
+            scale: 2
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 15
+            scale: 2
+        proporcional:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        automatico:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkFolhapagamentoRegistroEventoPeriodo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoPeriodo
+            inversedBy: fkFolhapagamentoRegistroEventos
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoRegistroEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+    oneToMany:
+        fkFolhapagamentoReajusteRegistroEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEvento
+            mappedBy: fkFolhapagamentoRegistroEvento
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEvento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEvento
+            mappedBy: fkFolhapagamentoRegistroEvento
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_evento:
+                    referencedColumnName: cod_evento

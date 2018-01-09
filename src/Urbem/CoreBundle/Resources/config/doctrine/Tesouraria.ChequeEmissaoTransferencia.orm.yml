@@ -1,0 +1,76 @@
+Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoTransferencia:
+    type: entity
+    table: tesouraria.cheque_emissao_transferencia
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\ChequeEmissaoTransferenciaRepository
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+        numCheque:
+            type: string
+            generator:
+                strategy: NONE
+            column: num_cheque
+        timestampEmissao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_emissao
+    fields: {  }
+    manyToOne:
+        fkTesourariaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            inversedBy: fkTesourariaChequeEmissaoTransferencias
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkTesourariaChequeEmissao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissao
+            inversedBy: fkTesourariaChequeEmissaoTransferencias
+            joinColumns:
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+                num_cheque:
+                    referencedColumnName: num_cheque
+                timestamp_emissao:
+                    referencedColumnName: timestamp_emissao

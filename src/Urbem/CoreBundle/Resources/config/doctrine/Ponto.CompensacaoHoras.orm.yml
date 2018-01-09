@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Ponto\CompensacaoHoras:
+    type: entity
+    table: ponto.compensacao_horas
+    id:
+        codCompensacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compensacao
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        dtFalta:
+            type: date
+            nullable: false
+            column: dt_falta
+        dtCompensacao:
+            type: date
+            nullable: false
+            column: dt_compensacao
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkPontoCompensacaoHoras
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToOne:
+        fkPontoCompensacaoHorasExclusao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\CompensacaoHorasExclusao
+            mappedBy: fkPontoCompensacaoHoras
+            joinColumns:
+                cod_compensacao:
+                    referencedColumnName: cod_compensacao
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    lifecycleCallbacks:
+        prePersist:
+            - generatePkSequence

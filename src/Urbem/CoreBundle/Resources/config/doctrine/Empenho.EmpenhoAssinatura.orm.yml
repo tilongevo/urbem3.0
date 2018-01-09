@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Empenho\EmpenhoAssinatura:
+    type: entity
+    table: empenho.empenho_assinatura
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\EmpenhoAssinaturaRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        numAssinatura:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_assinatura
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        cargo:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkEmpenhoEmpenhoAssinaturas
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEmpenhoEmpenhoAssinaturas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

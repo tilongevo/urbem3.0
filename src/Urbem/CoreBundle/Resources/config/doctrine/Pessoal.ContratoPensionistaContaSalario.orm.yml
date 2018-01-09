@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaContaSalario:
+    type: entity
+    table: pessoal.contrato_pensionista_conta_salario
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        nrConta:
+            type: string
+            nullable: true
+            length: 11
+            column: nr_conta
+    manyToOne:
+        fkPessoalContratoPensionista:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionista
+            inversedBy: fkPessoalContratoPensionistaContaSalarios
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkPessoalContratoPensionistaContaSalarios
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia

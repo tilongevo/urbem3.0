@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Pessoal\CargoSubDivisao:
+    type: entity
+    table: pessoal.cargo_sub_divisao
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\CargoSubDivisaoRepository
+    id:
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        nroVagaCriada:
+            type: integer
+            nullable: false
+            column: nro_vaga_criada
+    manyToOne:
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkPessoalCargoSubDivisoes
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkPessoalCargoSubDivisoes
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPessoalCargoSubDivisoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

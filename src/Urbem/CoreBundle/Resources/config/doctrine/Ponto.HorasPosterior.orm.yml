@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Ponto\HorasPosterior:
+    type: entity
+    table: ponto.horas_posterior
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        horas:
+            type: time
+            nullable: false
+    oneToOne:
+        fkPontoConfiguracaoParametrosGerais:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoParametrosGerais
+            inversedBy: fkPontoHorasPosterior
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp

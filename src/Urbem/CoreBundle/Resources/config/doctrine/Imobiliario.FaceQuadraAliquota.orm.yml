@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Imobiliario\FaceQuadraAliquota:
+    type: entity
+    table: imobiliario.face_quadra_aliquota
+    id:
+        codLocalizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_localizacao
+        codFace:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_face
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        aliquotaTerritorial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: aliquota_territorial
+        aliquotaPredial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: aliquota_predial
+    manyToOne:
+        fkImobiliarioFaceQuadra:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadra
+            inversedBy: fkImobiliarioFaceQuadraAliquotas
+            joinColumns:
+                cod_face:
+                    referencedColumnName: cod_face
+                cod_localizacao:
+                    referencedColumnName: cod_localizacao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkImobiliarioFaceQuadraAliquotas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

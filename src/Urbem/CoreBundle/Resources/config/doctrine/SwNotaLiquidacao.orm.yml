@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\SwNotaLiquidacao:
+    type: entity
+    table: sw_nota_liquidacao
+    id:
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        dtVencimento:
+            type: date
+            nullable: false
+            column: dt_vencimento
+        observacao:
+            type: string
+            nullable: false
+            length: 160
+    manyToOne:
+        fkSwEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\SwEmpenho
+            inversedBy: fkSwNotaLiquidacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+    oneToMany:
+        fkSwLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwLiquidacao
+            mappedBy: fkSwNotaLiquidacao
+        fkSwPagamentoLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwPagamentoLiquidacao
+            mappedBy: fkSwNotaLiquidacao

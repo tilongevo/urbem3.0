@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Contabilidade\PlanoContaGeral:
+    type: entity
+    table: contabilidade.plano_conta_geral
+    id:
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+    fields:
+        versao:
+            type: string
+            nullable: false
+            length: 30
+        dtVersao:
+            type: date
+            nullable: false
+            column: dt_versao
+    manyToOne:
+        fkSwUf:
+            targetEntity: Urbem\CoreBundle\Entity\SwUf
+            inversedBy: fkContabilidadePlanoContaGerais
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+    oneToMany:
+        fkContabilidadePlanoContaEstruturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoContaEstrutura
+            mappedBy: fkContabilidadePlanoContaGeral
+        fkContabilidadePlanoContaHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoContaHistorico
+            mappedBy: fkContabilidadePlanoContaGeral

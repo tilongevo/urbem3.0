@@ -1,0 +1,95 @@
+Urbem\CoreBundle\Entity\Tcemg\Convenio:
+    type: entity
+    table: tcemg.convenio
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ConvenioRepository
+    uniqueConstraints:
+        uk_tcemg_convenio:
+            columns:
+                - nro_convenio
+                - exercicio
+                - cod_entidade
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nroConvenio:
+            type: integer
+            nullable: false
+            column: nro_convenio
+        codObjeto:
+            type: integer
+            nullable: false
+            column: cod_objeto
+        dataAssinatura:
+            type: date
+            nullable: false
+            column: data_assinatura
+        dataInicio:
+            type: date
+            nullable: false
+            column: data_inicio
+        dataFinal:
+            type: date
+            nullable: false
+            column: data_final
+        vlConvenio:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_convenio
+        vlContraPartida:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_contra_partida
+    manyToOne:
+        fkComprasObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Objeto
+            inversedBy: fkTcemgConvenios
+            joinColumns:
+                cod_objeto:
+                    referencedColumnName: cod_objeto
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcemgNotaFiscais
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToMany:
+        fkTcemgConvenioAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConvenioAditivo
+            mappedBy: fkTcemgConvenio
+        fkTcemgConvenioEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConvenioEmpenho
+            mappedBy: fkTcemgConvenio
+        fkTcemgConvenioParticipantes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConvenioParticipante
+            mappedBy: fkTcemgConvenio

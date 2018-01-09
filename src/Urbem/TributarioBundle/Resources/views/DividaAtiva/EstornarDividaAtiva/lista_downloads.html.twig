@@ -1,0 +1,64 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    <div class="row">        
+        <div class="box box-primary">
+            <div class="box-header col s12">
+                <h2 class="col s12 box-title left-align show">
+                    {{ 'label.dividaAtivaEstornarDividaAtiva.cabecalhoEmissaoTermo'|trans }}
+                </h2>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+            <div class="box-body">
+                <div class="col s12">
+                    <table class="js-table-lista-downloads">
+                        <thead>
+                            <tr>
+                                <th>{{ 'label.dividaAtivaEstornarDividaAtiva.contribuinte'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaEstornarDividaAtiva.cobrancaAno'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaEstornarDividaAtiva.documento'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaEstornarDividaAtiva.emissao'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set dividaParcelamentos = dividaAtiva.getFkDividaDividaParcelamentos() %}
+                            
+                            {% for dividaParcelamento in dividaParcelamentos %}
+                                <tr>
+                                    <td>{{ dividaAtiva.getFkDividaDividaCgns().last().getFkSwCgm() }}</td>
+                                    <td>{{ '%d/%d'|format(dividaParcelamento.getNumParcelamento(), dividaAtiva.getExercicio()) }}</td>
+                                    <td>
+                                            {% for documento in dividaParcelamento.getFkDividaParcelamento().getFkDividaDocumentos() %}
+                                                {% set emissaoDocumento = documento.getFkDividaEmissaoDocumentos().last() %}
+                                                <a href="{{ path('urbem_tributario_divida_ativa_emitir_documento_download_documento', { 'id': '%d~%d~%d~%d~%d~%d'|format(emissaoDocumento.getNumParcelamento(), emissaoDocumento.getNumEmissao(), emissaoDocumento.getCodTipoDocumento(), emissaoDocumento.getCodDocumento(), emissaoDocumento.getNumDocumento(), emissaoDocumento.getExercicio()) }) }}">
+                                                    {{ documento.getFkAdministracaoModeloDocumento().getNomeDocumento() }}
+                                                </a>
+                                                <br>
+                                            {% endfor %}
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}    
+
+                            {% if not dividaParcelamentos|length %}
+                                <tr>
+                                    <td colspan="4" style="text-align:center">{{ 'label.dividaAtivaEstornarDividaAtiva.nenhumRegistroEncontrado'|trans }}</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col s12">
+                    <div class="col s8 left-align">
+                       <a class="back btn-floating white-text blue darken-4 btn-success" href="javascript: window.location.replace('{{ admin.generateUrl('create') }}');">
+                        <i class="material-icons">arrow_back</i>
+                       </a>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

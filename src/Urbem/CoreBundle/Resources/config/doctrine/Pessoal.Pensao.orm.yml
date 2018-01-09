@@ -1,0 +1,118 @@
+Urbem\CoreBundle\Entity\Pessoal\Pensao:
+    type: entity
+    table: pessoal.pensao
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\PensaoRepository
+    id:
+        codPensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pensao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codDependente:
+            type: integer
+            nullable: false
+            column: cod_dependente
+        codServidor:
+            type: integer
+            nullable: false
+            column: cod_servidor
+        tipoPensao:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_pensao
+        dtInclusao:
+            type: date
+            nullable: false
+            column: dt_inclusao
+        dtLimite:
+            type: date
+            nullable: true
+            column: dt_limite
+        percentual:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+        observacao:
+            type: string
+            nullable: true
+            length: 200
+    manyToOne:
+        fkPessoalServidorDependente:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorDependente
+            inversedBy: fkPessoalPensoes
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor
+                cod_dependente:
+                    referencedColumnName: cod_dependente
+    oneToMany:
+        fkPessoalPensaoIncidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensaoIncidencia
+            mappedBy: fkPessoalPensao
+    oneToOne:
+        fkPessoalPensaoExcluida:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensaoExcluida
+            mappedBy: fkPessoalPensao
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalPensaoBanco:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensaoBanco
+            mappedBy: fkPessoalPensao
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalPensaoFuncao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensaoFuncao
+            mappedBy: fkPessoalPensao
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalResponsavelLegal:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ResponsavelLegal
+            mappedBy: fkPessoalPensao
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalPensaoValor:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensaoValor
+            mappedBy: fkPessoalPensao
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Estagio\CursoInstituicaoEnsino:
+    type: entity
+    table: estagio.curso_instituicao_ensino
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Estagio\CursoInstituicaoEnsinoRepository
+    id:
+        codCurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_curso
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        vlBolsa:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_bolsa
+    manyToOne:
+        fkEstagioCurso:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\Curso
+            inversedBy: fkEstagioCursoInstituicaoEnsinos
+            joinColumns:
+                cod_curso:
+                    referencedColumnName: cod_curso
+        fkEstagioInstituicaoEnsino:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\InstituicaoEnsino
+            inversedBy: fkEstagioCursoInstituicaoEnsinos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkEstagioEstagiarioEstagios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio
+            mappedBy: fkEstagioCursoInstituicaoEnsino
+    oneToOne:
+        fkEstagioCursoInstituicaoEnsinoMes:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\CursoInstituicaoEnsinoMes
+            mappedBy: fkEstagioCursoInstituicaoEnsino
+            joinColumns:
+                cod_curso:
+                    referencedColumnName: cod_curso
+                numcgm:
+                    referencedColumnName: numcgm

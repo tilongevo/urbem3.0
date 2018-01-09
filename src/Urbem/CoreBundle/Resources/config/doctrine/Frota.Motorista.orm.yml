@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Frota\Motorista:
+    type: entity
+    table: frota.motorista
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Frota\MotoristaRepository
+    id:
+        cgmMotorista:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_motorista
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+    oneToMany:
+        fkFrotaInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Infracao
+            mappedBy: fkFrotaMotorista
+        fkFrotaUtilizacaoRetornos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\UtilizacaoRetorno
+            mappedBy: fkFrotaMotorista
+        fkFrotaUtilizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Utilizacao
+            mappedBy: fkFrotaMotorista
+        fkFrotaMotoristaVeiculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\MotoristaVeiculo
+            mappedBy: fkFrotaMotorista
+    oneToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFrotaMotorista
+            joinColumns:
+                cgm_motorista:
+                    referencedColumnName: numcgm

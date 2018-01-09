@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSindicato:
+    type: entity
+    table: pessoal.contrato_servidor_sindicato
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorSindicatoRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        numcgmSindicato:
+            type: integer
+            nullable: false
+            column: numcgm_sindicato
+    manyToOne:
+        fkFolhapagamentoSindicato:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Sindicato
+            inversedBy: fkPessoalContratoServidorSindicatos
+            joinColumns:
+                numcgm_sindicato:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorSindicato
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

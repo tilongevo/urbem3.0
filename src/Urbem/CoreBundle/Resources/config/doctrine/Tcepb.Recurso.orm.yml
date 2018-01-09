@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Tcepb\Recurso:
+    type: entity
+    table: tcepb.recurso
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkTcepbTipoOrigemRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoOrigemRecurso
+            inversedBy: fkTcepbRecursos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkTcepbRecurso
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso

@@ -1,0 +1,51 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td class=" text_align_center font_weight_bold" width="10%">{{ 'label.codigo'|trans|upper }}</td>
+                    <td class=" text_align_center font_weight_bold" width="35%">{{ 'label.arrecadacaoEfetuarLancamento.usuario'|trans|upper }}</td>
+                    <td class=" text_align_center font_weight_bold" width="10%">{{ 'label.arrecadacaoEfetuarLancamento.inscricao'|trans|upper }}</td>
+                    <td class=" text_align_center font_weight_bold" width="15%">{{ 'label.arrecadacaoEfetuarLancamento.numeracao'|trans|upper }}</td>
+                    <td class=" text_align_center font_weight_bold" width="10%">{{ 'label.arrecadacaoEfetuarLancamento.parcela'|trans|upper }}</td>
+                    <td class=" text_align_center font_weight_bold" width="10%">{{ 'label.arrecadacaoEfetuarLancamento.vencimento'|trans|upper }}</td>
+                    <td class=" text_align_center font_weight_bold" width="10%">{{ 'label.arrecadacaoEfetuarLancamento.valor'|trans|upper }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% set first = true %}
+                {% for parcela in lancamento.fkArrecadacaoParcelas|sort %}
+                    {% if first %}
+                        <tr>
+                            <td class="text_align_left">{{ lancamento.codLancamento }}</td>
+                            <td class="text_align_left">{{ lancamento.fkArrecadacaoLancamentoCalculos.last.fkArrecadacaoCalculo.fkArrecadacaoCalculoCgns.last.fkSwCgm }}</td>
+                            <td class="text_align_center">{% if lancamento.fkArrecadacaoLancamentoCalculos.last.fkArrecadacaoCalculo.fkArrecadacaoCadastroEconomicoCalculo is not null %} {{ lancamento.fkArrecadacaoLancamentoCalculos.last.fkArrecadacaoCalculo.fkArrecadacaoCadastroEconomicoCalculo.inscricaoEconomica }} {% else %} 0 {% endif %}</td>
+                            <td class="text_align_justify">{{ parcela.fkArrecadacaoCarnes.last.numeracao }}</td>
+                            <td class="text_align_center">{% if parcela.nrParcela != 0 %} {{ parcela.nrParcela ~ '/' ~ lancamento.totalParcelas }} {% else %} {{ parcela.nrParcela }} {% endif %}</td>
+                            <td class="text_align_center">{{ parcela.vencimento|date('d/m/Y') }}</td>
+                            <td class="text_align_right">R${% if parcela.fkArrecadacaoParcelaDesconto is not null %} {{ parcela.fkArrecadacaoParcelaDesconto.valor|number_format(2, ',', '.') }} {% else %} {{ parcela.valor|number_format(2, ',', '.') }} {% endif %}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td class="text_align_left"></td>
+                            <td class="text_align_left"></td>
+                            <td class="text_align_center"></td>
+                            <td class="text_align_justify">{{ parcela.fkArrecadacaoCarnes.last.numeracao }}</td>
+                            <td class="text_align_center">{% if parcela.nrParcela != 0 %} {{ parcela.nrParcela ~ '/' ~ lancamento.totalParcelas }} {% else %} {{ parcela.nrParcela }} {% endif %}</td>
+                            <td class="text_align_center">{{ parcela.vencimento|date('d/m/Y') }}</td>
+                            <td class="text_align_right">R${% if parcela.fkArrecadacaoParcelaDesconto is not null %} {{ parcela.fkArrecadacaoParcelaDesconto.valor|number_format(2, ',', '.') }} {% else %} {{ parcela.valor|number_format(2, ',', '.') }} {% endif %}</td>
+                        </tr>
+                    {% endif %}
+                    {% set first = false %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

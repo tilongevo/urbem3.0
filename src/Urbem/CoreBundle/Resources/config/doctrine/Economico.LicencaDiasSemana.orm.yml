@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Economico\LicencaDiasSemana:
+    type: entity
+    table: economico.licenca_dias_semana
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dia
+    fields:
+        hrInicio:
+            type: time
+            nullable: false
+            column: hr_inicio
+        hrTermino:
+            type: time
+            nullable: false
+            column: hr_termino
+    manyToOne:
+        fkEconomicoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Licenca
+            inversedBy: fkEconomicoLicencaDiasSemanas
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkAdministracaoDiasSemana:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\DiasSemana
+            inversedBy: fkEconomicoLicencaDiasSemanas
+            joinColumns:
+                cod_dia:
+                    referencedColumnName: cod_dia

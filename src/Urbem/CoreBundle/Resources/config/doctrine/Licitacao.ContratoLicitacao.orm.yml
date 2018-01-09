@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Licitacao\ContratoLicitacao:
+    type: entity
+    table: licitacao.contrato_licitacao
+    id:
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codLicitacao:
+            type: integer
+            nullable: false
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+        exercicioLicitacao:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_licitacao
+    manyToOne:
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkLicitacaoContratoLicitacoes
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_licitacao:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkLicitacaoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            inversedBy: fkLicitacaoContratoLicitacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato

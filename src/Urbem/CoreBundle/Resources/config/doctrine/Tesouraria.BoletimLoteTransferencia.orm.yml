@@ -1,0 +1,67 @@
+Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteTransferencia:
+    type: entity
+    table: tesouraria.boletim_lote_transferencia
+    id:
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codLoteArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote_arrecadacao
+    fields: {  }
+    manyToOne:
+        fkTesourariaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            inversedBy: fkTesourariaBoletimLoteTransferencias
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkArrecadacaoLote:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lote
+            inversedBy: fkTesourariaBoletimLoteTransferencias
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_lote_arrecadacao:
+                    referencedColumnName: cod_lote
+    oneToOne:
+        fkTesourariaBoletimLoteTransferenciaEstornada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteTransferenciaEstornada
+            mappedBy: fkTesourariaBoletimLoteTransferencia
+            joinColumns:
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_lote:
+                    referencedColumnName: cod_lote
+                cod_lote_arrecadacao:
+                    referencedColumnName: cod_lote_arrecadacao

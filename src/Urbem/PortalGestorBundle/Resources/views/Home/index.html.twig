@@ -1,0 +1,784 @@
+{% extends "base_home_cards.html.twig" %}
+
+{% block title %}
+    Portal do Gestor
+{% endblock title %}
+
+{% block content %}
+    <link rel="stylesheet" href="/bundles/core/css/sonata-urbem.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="http://maxartkiller.in/website/rockon/rockon_blue/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+    <link href="http://maxartkiller.in/website/rockon/rockon_blue/vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="http://maxartkiller.in/website/rockon/rockon_blue/vendor/jquery-jvectormap/jquery-jvectormap-2.0.3.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="http://maxartkiller.in/website/rockon/rockon_blue/css/material_color_rockon.css"/>
+
+    <style type="text/css">
+        .dashboard_content {
+            padding: 20px !important;
+        }
+
+        .dashboard_content .icons-color {
+            color: #366DA1 !important;
+        }
+
+        .dashboard_content .card .card-content {
+            padding: 20px !important;
+            border-radius: 0 0 2px 2px !important;
+        }
+
+        .dashboard_content .home_cards_icon {
+            margin-top: 0px !important;
+            font-size: 30px !important;
+        }
+
+        .dashboard_content .blockcolored .card .card-content .card-title {
+            line-height: 34px !important;
+            margin-top: 10px !important;
+            font-weight: 500 !important;
+            font-size: 34px !important;
+        }
+
+        .dashboard_content .card .card-content p {
+            line-height: 20px;
+            margin: 10px 0 0 0;
+        }
+
+        .dashboard_content .card .card-reveal {
+            padding: 20px !important;
+            position: absolute;
+            background-color: #fff !important;
+            width: 100%;
+            overflow-y: auto !important;
+            left: 0;
+            top: 100%;
+            height: 100%;
+            z-index: 3;
+            display: none;
+        }
+
+        .dashboard_content .card .card-title {
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .dashboard_content p {
+            color: #333;
+            font-size: 14px;
+            line-height: 20px;
+            display: block;
+            -webkit-margin-before: 1em;
+            -webkit-margin-after: 1em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+        }
+
+        .dashboard_content .material-icons {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .dashboard_content p.large {
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .dashboard_content p.large i {
+            vertical-align: middle;
+        }
+
+        .dashboard_content .card .card-image {
+            position: relative;
+            width: 100%;
+        }
+
+        .dashboard_content .waves-block {
+            display: block;
+        }
+
+        /* Notifications Panel */
+        .dashboard_content .panel-body {
+            padding: 15px;
+        }
+
+        /* Morris Chart Panel */
+        .dashboard_content .morris-hover.morris-default-style {
+            padding: 6px;
+            color: #222222;
+            background: rgb(255, 255, 255);
+            border: solid 2px rgba(230, 230, 230, 0);
+            font-size: 12px;
+            text-align: center;
+            line-height: 14px;
+            border-radius: 3px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard_content .morris-hover.morris-default-style {
+            border-radius: 10px;
+            padding: 6px;
+            color: #666;
+            background: rgba(255, 255, 255, 0.8);
+            border: solid 2px rgba(230, 230, 230, 0.8);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .dashboard_content .morris-hover {
+            position: absolute;
+            z-index: 1000;
+        }
+
+        /* Data IBGE Panel */
+        .dashboard_content .list-group.data-ibge *, *:before, *:after {
+            box-sizing: inherit;
+            margin-right: auto;
+        }
+
+        .dashboard_content .list-group.data-ibge ul {
+            width: 100%;
+            display: flex;
+        }
+
+        .dashboard_content .list-group.data-ibge li {
+            border-bottom: 1px solid #d0d0d0;
+            padding: 8px 5px;
+            display: inline-flex;
+            margin-right: 25px;
+            width: 47%;
+            font-weight: bolder;
+            font-size: 18px;
+        }
+
+        .dashboard_content .list-group.data-ibge li b {
+            font-weight: normal;
+            color: #888;
+            font-size: 14px;
+
+        }
+
+        /* Last News Panel */
+        .dashboard_content .list-group.data-ultimas-noticias *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .dashboard_content .list-group.data-ultimas-noticias section.outras_noticias {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            overflow-y: auto;
+            max-height: 440px;
+        }
+
+        .dashboard_content .list-group.data-ultimas-noticias div.item_noticia {
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 25%;
+        }
+
+        .dashboard_content .card .card-image img {
+            width: 195px;
+            height: 117px;
+        }
+
+        .dashboard_content .card .card-image figure {
+            width: 195px;
+            height: 117px;
+            margin: 0px;
+        }
+
+        .dashboard_content .card .card-image figure img:first-of-type + img {
+            display: none;
+        }
+
+        .dashboard_content .list-group.data-ultimas-noticias nav.compartilheListaNoticia {
+            display: none;
+        }
+
+        .dashboard_content .max-dimension {
+            max-height: 600px;
+            height: 600px;
+        }
+
+        /* dataTables Panels */
+        .dashboard_content #tableListCargos_wrapper div.dataTables_scrollHeadInner,
+        .dashboard_content #tableListCargos_wrapper .dataTables_scrollHeadInner table {
+            width: 100% !important;
+        }
+
+        .dashboard_content #tableListCargos_wrapper div.dataTables_scrollBody {
+            max-height: 280px !important;
+        }
+
+        .dashboard_content #tableListCargos_wrapper div#tableListCargos_info.dataTables_info {
+            width: 350px !important;
+        }
+
+        .dashboard_content #tableListUniorcam_wrapper div.dataTables_scrollHeadInner,
+        .dashboard_content #tableListUniorcam_wrapper .dataTables_scrollHeadInner table {
+            width: 100% !important;
+        }
+
+        .dashboard_content #tableListUniorcam_wrapper div.dataTables_scrollBody {
+            max-height: 180px !important;
+        }
+
+        .dashboard_content #tableListUniorcam_wrapper div#tableListCargos_info.dataTables_info {
+            width: 350px !important;
+        }
+
+        /* Balon over chart */
+        .dashboard_content #morrisdetails-item.morris-hover.morris-default-style {
+            position: static !important;
+            bottom: 0px;
+            right: 0px;
+            margin: 13px;
+            float: none !important;
+        }
+
+        /* Custom scrollbar */
+        div::-webkit-scrollbar-track,
+        section::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 3px rgba(90, 90, 90, 0.0);
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.01);
+        }
+
+        div::-webkit-scrollbar,
+        section::-webkit-scrollbar {
+            width: 6px;
+            background-color: transparent;
+        }
+
+        div::-webkit-scrollbar-thumb,
+        section::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 6px rgba(90, 90, 90, 0.0);
+            border-radius: 5px;
+            background-color: #ccc;
+        }
+    </style>
+
+    <div class="container white z-depth-1 form reports">
+
+        <h4 class="blue-text text-darken-4">
+            Módulo Portal do Gestor
+        </h4>
+
+        <div class="row dashboard_content">
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <div id="morris-bar-chart" style="position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                            <div class="morris-hover morris-default-style" style="left: 418.096px; top: 147px; display: none;">
+                                <div class="morris-hover-row-label">2012</div>
+                                <div class="morris-hover-point" style="color: #dddddd">
+                                    Series A:
+                                    100
+                                </div>
+                                <div class="morris-hover-point" style="color: #68bcff">
+                                    Series B:
+                                    90
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4"><span class="percentual-receita">0%</span>
+                            <i class="material-icons right">more_vert</i>
+                        </span>
+                        <p class="atualizacao-receita">-</p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                        <table class="bordered ">
+                            <thead>
+                            <tr>
+                                <th data-field="id"></th>
+                                <th data-field="price"></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list-situacao-receita">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <div id="morris-donut-chart"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">
+                            <span class="total-servidores">0</span> servidores<i class="material-icons right">more_vert</i>
+                        </span>
+                        <p class="atualizacao-servidores">-</p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                        <table class="bordered ">
+                            <thead>
+                            <tr>
+                                <th data-field="id">Situação</th>
+                                <th data-field="price">Total</th>
+                            </tr>
+                            </thead>
+                            <tbody class="list-situacao-servidores">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <div id="morris-line-chart"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Remuneração<i class="material-icons right">more_vert</i></span>
+                        <p class="atualizacao-remuneracao">-</p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span>
+                        <table class="bordered ">
+                            <thead>
+                            <tr>
+                                <th data-field="id"></th>
+                                <th data-field="price"></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list-situacao-remuneracao">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row dashboard_content">
+            <div class="col s12  sr-only">
+                <h4>Analytic Data</h4>
+            </div>
+            <div class="col s12 m12 l12">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="min-height: 300px;">
+                        <div id="morris-donut-chart-cargos"></div>
+                        <div id="morrisdetails-item" class="morris-hover morris-default-style" style="position:static; float: left;">
+                            <div class="morris-hover-row-label">2010 Q4</div>
+                            <div class="morris-hover-criado">this is a test</div>
+                            <div class="morris-hover-ocupado">this is a test</div>
+                            <div class="morris-hover-disponivel">this is a test</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">
+                            <span class="total-cargos">0</span> cargos disponíveis<i class="material-icons right">more_vert</i>
+                        </span>
+                        <p class="atualizacao-cargos">-</p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span> <br>
+                        <table class="table table-striped nowrap display" id="tableListCargos" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th class="sonata-ba-list-field-header"></th>
+                                <th class="sonata-ba-list-field-header">Descrição</th>
+                                <th class="sonata-ba-list-field-header">Lei</th>
+                                <th class="sonata-ba-list-field-header">Vigência</th>
+                                <th class="sonata-ba-list-field-header">Vagas criadas</th>
+                                <th class="sonata-ba-list-field-header">Vagas ocupadas</th>
+                                <th class="sonata-ba-list-field-header">Vagas disponíveis</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row dashboard_content">
+            <div class="col s12 m12 l12 sr-only">
+                <h4>Analytic Data</h4>
+            </div>
+            <div class="col s12 m12 l12">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Despesas por órgão<i class="material-icons right">more_vert</i></span>
+                    </div>
+
+                    <div class="card-image waves-effect waves-block waves-light" style="min-height: 300px;">
+                        <div id="morris-donut-chart-despesas"></div>
+                    </div>
+
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Detalhes<i class="material-icons right">close</i></span> <br>
+                        <table class="table table-striped nowrap display" id="tableListUniorcam" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th class="sonata-ba-list-field-header"></th>
+                                <th class="sonata-ba-list-field-header">Descrição da conta</th>
+                                <th class="sonata-ba-list-field-header">Dotação Inicial (R$)</th>
+                                <th class="sonata-ba-list-field-header">Empenhado (R$)</th>
+                                <th class="sonata-ba-list-field-header">Liquidado (R$)</th>
+                                <th class="sonata-ba-list-field-header">Pago (R$)</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row dashboard_content">
+            <div class="col s12 m12 l12">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <div class="panel-body">
+                            <div class="list-group data-ibge">
+                                <ul>
+                                    {{ dadosIBGE | raw }}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="grey-text text-lighten-1 ">Fonte: IBGE - Informações obtidas direto do portal do IBGE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row dashboard_content">
+            <div class="col s12 m12 l12 sr-only">
+                <h4>Analytic Data</h4>
+            </div>
+
+            <div class="col s12 m12 l12">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4 ">Últimas notícias CNM</span>
+                    </div>
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <div class="panel-body">
+                            <div class="list-group data-ultimas-noticias scrollbar">
+                                {{ ultimasNoticiasCNM | raw }}
+                            </div>
+                            <div class="card-content">
+                                <span class="grey-text text-lighten-1 ">Fonte: CNM - Informações obtidas direto do portal da CNM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--sparklines js-->
+    <script type="text/javascript" src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/sparklines/jquery.sparkline.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/raphael/raphael.js"></script>
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/morrisjs/morris.min.js"></script>
+    {#<script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/morrisjs/morris-data.js"></script>#}
+
+    <!-- jvectormap JavaScript -->
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/jquery-jvectormap/jquery-jvectormap.js"></script>
+    <script src="http://maxartkiller.in/website/rockon/rockon_blue/vendor/jquery-jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+    <!--Custome js-->
+    <script type="text/javascript" src="http://maxartkiller.in/website/rockon/rockon_blue/js/rockon.js"></script>
+
+    <!--index init js-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function renderTableList(data, listClassToColumns, tableName) {
+                var table = $("#" + tableName).DataTable();
+
+                table.destroy();
+                var table = $("#" + tableName).DataTable({
+                    data: data,
+                    deferRender: true,
+                    scrollY: 400,
+                    pageLength: 50,
+                    ordering: false,
+                    scrollCollapse: true,
+                    scroller: false,
+                    searching: false,
+                    paging: false,
+                    autoWidth: false,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Portuguese-Brasil.json"
+                    },
+                    drawCallback: function () { // this gets rid of duplicate headers
+                        $('.dataTables_scrollBody thead tr').css({display: 'none'});
+
+                        UrbemSonata.DataTablesSetDimensionToHeaderAndBodyCell(tableName, listClassToColumns);
+                    },
+                    initComplete: function (settings, json) {
+                        $('.dataTables_scrollBody thead tr').css({display: 'none'});
+                    }
+                });
+            }
+
+            $.get('/transparencia/report/despesas-orgao', function (data) {
+                if (data == null)
+                    return;
+
+                var dadosDespesas = JSON.parse(data);
+
+                var data = [];
+                var contador = 1;
+                var chartDespesa = [];
+                if (dadosDespesas.items) {
+                    for (var i = 0; i < dadosDespesas.items.length; i++) {
+                        data.push(
+                            [
+                                contador,
+                                dadosDespesas.items[i].value,
+                                dadosDespesas.items[i].dotacao_inicial,
+                                dadosDespesas.items[i].empenhado,
+                                dadosDespesas.items[i].liquidado,
+                                dadosDespesas.items[i].pago,
+                            ]
+                        );
+
+                        var alias = dadosDespesas.items[i].value.substring(0, 5) + "...";
+                        var dotacaoInicial = dadosDespesas.items[i].dotacao_inicial.replace(/\./g, '').replace(/\,/g, '.');
+                        var empenhado = dadosDespesas.items[i].empenhado.replace(/\./g, '').replace(/\,/g, '.');
+                        var liquidado = dadosDespesas.items[i].liquidado.replace(/\./g, '').replace(/\,/g, '.');
+                        var pago = dadosDespesas.items[i].pago.replace(/\./g, '').replace(/\,/g, '.');
+
+                        chartDespesa.push({
+                            alias: alias,
+                            y: dadosDespesas.items[i].value,
+                            a: dotacaoInicial,
+                            b: empenhado,
+                            c: liquidado,
+                            d: pago
+
+                        });
+                        contador++;
+                    }
+                }
+
+                var listClassToColumns = [
+                    "dt-cell-1",
+                    "dt-cell-3",
+                    "dt-cell-2",
+                    "dt-cell-2",
+                    "dt-cell-2",
+                    "dt-cell-2"
+                ];
+
+                renderTableList(data, listClassToColumns, "tableListUniorcam");
+
+                Morris.Bar({
+                    element: 'morris-donut-chart-despesas',
+                    data: chartDespesa,
+                    hoverCallback: function (index, options, content) {
+                        var row = options.data[index];
+                        var newContent = content.replace(row.alias, row.y);
+                        return (newContent);
+                    },
+                    xLabelAngle: 60,
+                    resize: true, hideHover: 'auto',
+                    xkey: 'alias',
+                    ykeys: ['a', 'b', 'c', 'd'],
+                    labels: ['Dotação inicial', 'Empenhado', 'Liquidado', 'Pago'],
+                    barColors: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                    fillOpacity: 0.2
+                });
+            });
+
+            $.get('/transparencia/report/receitas-mes', function (data) {
+                if (data == null)
+                    return;
+
+                var data = JSON.parse(data);
+                var receitaOrcada = data.totais.receita_orcada.replace(/\./g, '').replace(/\,/g, '.');
+                var receitaRealizada = data.totais.receita_realizado.replace(/\./g, '').replace(/\,/g, '.');
+                var porcentagem = parseFloat(data.totais.percentual.replace(/\,/g, '.'));
+                var exercicio = parseInt(data.exercicio);
+
+                Morris.Bar({
+                    element: 'morris-bar-chart',
+                    data: [
+                        {y: exercicio, a: receitaOrcada, b: receitaRealizada}
+                    ],
+                    resize: true,
+                    hideHover: 'auto',
+                    xkey: 'y',
+                    ykeys: ['a', 'b'],
+                    labels: ['Receita orçada', 'Receita realizada'],
+                    barColors: [getRandomColor(), getRandomColor()],
+                    fillOpacity: 0.2
+                });
+
+                $(".percentual-receita").html(porcentagem.toFixed(4) + "% receita realizada");
+                $(".list-situacao-receita").append('<tr><td>Total orçado R$</td><td>' + data.totais.receita_orcada + '</td></tr>');
+                $(".list-situacao-receita").append('<tr><td>Total realizado R$</td><td>' + data.totais.receita_realizado + '</td></tr>');
+                $(".atualizacao-receita").html("Atualizado em " + data.atualizacao);
+            });
+
+            $.get('/transparencia/report/servidores', function (data) {
+                if (data == null)
+                    return;
+
+                var data = JSON.parse(data);
+                var totalServidores = 0;
+                var servidores = [];
+                var colors = [];
+                $.each(data.items, function (title, total) {
+                    totalServidores += total;
+                    servidores.push({"label": (title == '' ? 'Não informado' : title), "value": total});
+                    colors.push(getRandomColor());
+
+                    $(".list-situacao-servidores").append('<tr><td>' + (title == '' ? 'Não informado' : title) + '</td><td>' + total + '</td></tr>');
+                });
+
+                Morris.Donut({
+                    element: 'morris-donut-chart',
+                    data: servidores,
+                    resize: true,
+                    hideHover: 'auto',
+                    colors: colors
+                });
+
+
+                $(".total-servidores").html(totalServidores);
+                $(".atualizacao-servidores").html("Atualizado em " + data.atualizacao);
+            });
+
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            $.get('/transparencia/report/remuneracao', function (data) {
+                if (data == null)
+                    return;
+
+                var data = JSON.parse(data);
+                var remuneracaoBruta = data.bruto.replace(/\./g, '').replace(/\,/g, '.');
+                var remuneracaoLiquida = data.liquido.replace(/\./g, '').replace(/\,/g, '.');
+                var exercicio = parseInt(data.exercicio);
+
+                Morris.Bar({
+                    element: 'morris-line-chart',
+                    data: [
+                        {y: data.mes_ano, a: remuneracaoBruta, b: remuneracaoLiquida}
+                    ],
+                    resize: true,
+                    hideHover: 'auto',
+                    xkey: 'y',
+                    ykeys: ['a', 'b'],
+                    labels: ['Remuneração bruta', 'Remuneração líquida'],
+                    barColors: [getRandomColor(), getRandomColor()],
+                    fillOpacity: 0.2
+                });
+
+                $(".list-situacao-remuneracao").append('<tr><td>Bruto R$</td><td>' + remuneracaoBruta + '</td></tr>');
+                $(".list-situacao-remuneracao").append('<tr><td>Líquido R$</td><td>' + remuneracaoLiquida + '</td></tr>');
+                $(".atualizacao-remuneracao").html("Atualizado em " + data.atualizacao);
+            });
+
+            $.get('/transparencia/report/cargo', function (data) {
+                if (data == null)
+                    return;
+
+                var dadosCargos = JSON.parse(data);
+
+                var data = [];
+                var cargos = [];
+                var colors = [];
+                var contador = 1;
+                if (dadosCargos.items) {
+                    $.each(dadosCargos.items, function (index, cargoDetalhe) {
+                        data.push(
+                            [
+                                contador,
+                                cargoDetalhe.cargo,
+                                cargoDetalhe.lei,
+                                cargoDetalhe.vigencia,
+                                cargoDetalhe.vagas_criadas,
+                                cargoDetalhe.vagas_ocupadas,
+                                cargoDetalhe.vagas_disponiveis
+                            ]
+                        );
+
+                        cargos.push({
+                            "label": (cargoDetalhe.cargo == '' ? 'Não informado' : cargoDetalhe.cargo),
+                            "value": cargoDetalhe.vagas_disponiveis,
+                            "criado": cargoDetalhe.vagas_criadas,
+                            "ocupado": cargoDetalhe.vagas_ocupadas,
+                            "disponivel": cargoDetalhe.vagas_disponiveis
+                        });
+                        colors.push(getRandomColor());
+                        contador++;
+                    });
+                }
+
+                var listClassToColumns = [
+                    "dt-cell-1",
+                    "dt-cell-4",
+                    "dt-cell-2",
+                    "dt-cell-2",
+                    "dt-cell-1",
+                    "dt-cell-1",
+                    "dt-cell-1"
+                ];
+
+                renderTableList(data, listClassToColumns, "tableListCargos");
+
+                var donut = Morris.Donut({
+                    element: 'morris-donut-chart-cargos',
+                    data: cargos,
+                    resize: true, hideHover: 'auto',
+                    colors: colors
+                });
+
+                var primeiroItem = {label: "", value: 0, criado: 0, ocupado: 0, disponivel: 0};
+                for (i = 0; i < donut.segments.length; i++) {
+                    if (donut.data[i].value > primeiroItem.value) {
+                        primeiroItem = donut.data[i];
+                    }
+                    donut.segments[i].handlers['hover'].push(function (i) {
+                        addLegendaCargos(donut.data[i]);
+                    });
+                }
+
+                addLegendaCargos(primeiroItem);
+                $(".total-cargos").html(contador - 1);
+                $(".atualizacao-cargos").html("Atualizado em " + dadosCargos.atualizacao);
+            });
+
+            function addLegendaCargos(obj) {
+                $('#morrisdetails-item .morris-hover-row-label').text(obj.label);
+                $('#morrisdetails-item .morris-hover-criado').text(obj.criado + " vagas criadas");
+                $('#morrisdetails-item .morris-hover-ocupado').text(obj.ocupado + " vagas ocupadas");
+                $('#morrisdetails-item .morris-hover-disponivel').text(obj.value + " vagas disponíveis");
+            }
+        });
+    </script>
+{% endblock %}

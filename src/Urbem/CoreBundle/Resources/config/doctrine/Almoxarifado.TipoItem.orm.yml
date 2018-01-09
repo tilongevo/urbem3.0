@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Almoxarifado\TipoItem:
+    type: entity
+    table: almoxarifado.tipo_item
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        alias:
+            type: string
+            nullable: false
+            unique: true
+    oneToMany:
+        fkAlmoxarifadoCatalogoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            mappedBy: fkAlmoxarifadoTipoItem

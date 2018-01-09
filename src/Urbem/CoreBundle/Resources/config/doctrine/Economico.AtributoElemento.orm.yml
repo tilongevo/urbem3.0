@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Economico\AtributoElemento:
+    type: entity
+    table: economico.atributo_elemento
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codElemento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_elemento
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkEconomicoAtributoElementos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkEconomicoElemento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Elemento
+            inversedBy: fkEconomicoAtributoElementos
+            joinColumns:
+                cod_elemento:
+                    referencedColumnName: cod_elemento
+    oneToMany:
+        fkEconomicoAtributoElemCadEconomicoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoElemCadEconomicoValor
+            mappedBy: fkEconomicoAtributoElemento
+        fkEconomicoAtributoElemLicenDiversaValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoElemLicenDiversaValor
+            mappedBy: fkEconomicoAtributoElemento

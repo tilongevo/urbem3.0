@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Complementar:
+    type: entity
+    table: folhapagamento.complementar
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\ComplementarRepository
+    id:
+        codComplementar:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_complementar
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoPeriodoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao
+            inversedBy: fkFolhapagamentoComplementares
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+    oneToMany:
+        fkFolhapagamentoComplementarSituacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ComplementarSituacao
+            mappedBy: fkFolhapagamentoComplementar
+        fkFolhapagamentoDeducaoDependenteComplementares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DeducaoDependenteComplementar
+            mappedBy: fkFolhapagamentoComplementar
+        fkFolhapagamentoContratoServidorComplementares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ContratoServidorComplementar
+            mappedBy: fkFolhapagamentoComplementar

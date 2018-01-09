@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Compras\NotaFiscalFornecedorOrdem:
+    type: entity
+    table: compras.nota_fiscal_fornecedor_ordem
+    id:
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codOrdem:
+            type: integer
+            nullable: false
+            column: cod_ordem
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+    manyToOne:
+        fkComprasOrdem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Ordem
+            inversedBy: fkComprasNotaFiscalFornecedorOrdens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                tipo:
+                    referencedColumnName: tipo
+    oneToOne:
+        fkComprasNotaFiscalFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\NotaFiscalFornecedor
+            inversedBy: fkComprasNotaFiscalFornecedorOrdem
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                cod_nota:
+                    referencedColumnName: cod_nota

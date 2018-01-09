@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Tcepb\ProgramaObjetivoMilenio:
+    type: entity
+    table: tcepb.programa_objetivo_milenio
+    id:
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipoObjetivo:
+            type: integer
+            nullable: false
+            column: cod_tipo_objetivo
+    manyToOne:
+        fkTcepbTipoObjetivoMilenio:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoObjetivoMilenio
+            inversedBy: fkTcepbProgramaObjetivoMilenios
+            joinColumns:
+                cod_tipo_objetivo:
+                    referencedColumnName: cod_tipo_objetivo
+    oneToOne:
+        fkOrcamentoPrograma:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Programa
+            inversedBy: fkTcepbProgramaObjetivoMilenio
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_programa:
+                    referencedColumnName: cod_programa

@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Economico\ElementoLicencaDiversa:
+    type: entity
+    table: economico.elemento_licenca_diversa
+    id:
+        codElemento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_elemento
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkEconomicoElementoTipoLicencaDiversa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoTipoLicencaDiversa
+            inversedBy: fkEconomicoElementoLicencaDiversas
+            joinColumns:
+                cod_elemento:
+                    referencedColumnName: cod_elemento
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkEconomicoLicencaDiversa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiversa
+            inversedBy: fkEconomicoElementoLicencaDiversas
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkEconomicoAtributoElemLicenDiversaValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoElemLicenDiversaValor
+            mappedBy: fkEconomicoElementoLicencaDiversa

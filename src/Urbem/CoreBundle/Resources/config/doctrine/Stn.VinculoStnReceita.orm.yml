@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Stn\VinculoStnReceita:
+    type: entity
+    table: stn.vinculo_stn_receita
+    repositoryClass: Urbem\CoreBundle\Repository\Stn\VinculoStnReceitaRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields: {  }
+    manyToOne:
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkStnVinculoStnReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+        fkStnTipoVinculoStnReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\TipoVinculoStnReceita
+            inversedBy: fkStnVinculoStnReceitas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

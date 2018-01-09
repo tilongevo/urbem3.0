@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Pessoal\ArquivoCargos:
+    type: entity
+    table: pessoal.arquivo_cargos
+    id:
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+        codTipoCargoTce:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_cargo_tce
+    fields:
+        periodo:
+            type: string
+            nullable: false
+    manyToOne:
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkPessoalArquivoCargos
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+        fkTcepbTipoCargoTce:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoCargoTce
+            inversedBy: fkPessoalArquivoCargos
+            joinColumns:
+                cod_tipo_cargo_tce:
+                    referencedColumnName: cod_tipo_cargo_tce

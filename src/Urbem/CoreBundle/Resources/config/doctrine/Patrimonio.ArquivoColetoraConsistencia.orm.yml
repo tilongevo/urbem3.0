@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Patrimonio\ArquivoColetoraConsistencia:
+    type: entity
+    table: patrimonio.arquivo_coletora_consistencia
+    id:
+        codigo:
+            type: integer
+            generator:
+                strategy: NONE
+        numPlaca:
+            type: string
+            generator:
+                strategy: NONE
+            column: num_placa
+    fields:
+        status:
+            type: string
+            nullable: false
+            length: 35
+        orientacao:
+            type: string
+            nullable: true
+            length: 70
+    oneToOne:
+        fkPatrimonioArquivoColetoraDados:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\ArquivoColetoraDados
+            inversedBy: fkPatrimonioArquivoColetoraConsistencia
+            joinColumns:
+                codigo:
+                    referencedColumnName: codigo
+                num_placa:
+                    referencedColumnName: num_placa

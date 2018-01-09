@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Economico\DomicilioInformado:
+    type: entity
+    table: economico.domicilio_informado
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codLogradouro:
+            type: integer
+            nullable: false
+            column: cod_logradouro
+        codBairro:
+            type: integer
+            nullable: false
+            column: cod_bairro
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        cep:
+            type: string
+            nullable: false
+            length: 8
+        numero:
+            type: string
+            nullable: false
+            length: 6
+        complemento:
+            type: string
+            nullable: true
+            length: 160
+        caixaPostal:
+            type: string
+            nullable: true
+            length: 6
+            column: caixa_postal
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoDomicilioInformados
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkSwLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwLogradouro
+            inversedBy: fkEconomicoDomicilioInformados
+            joinColumns:
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+        fkSwBairroLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwBairroLogradouro
+            inversedBy: fkEconomicoDomicilioInformados
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_bairro:
+                    referencedColumnName: cod_bairro
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+    oneToMany:
+        fkEconomicoProcessoDomicilioInformados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoDomicilioInformado
+            mappedBy: fkEconomicoDomicilioInformado

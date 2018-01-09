@@ -1,0 +1,112 @@
+<tr class="sonata-ba-view-container">
+	<tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.inscricaoEconomica'|trans }}</th>
+	    <td>{{ admin.object.getInscricaoEconomica() }}</td>
+	</tr>
+</tr>
+
+<tr class="sonata-ba-view-container">
+	<tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.nome'|trans }}</th>
+	    <td>
+	    	{% if admin.object.getFkEconomicoCadastroEconomicoEmpresaFato() %}
+			    {% set cgm = admin.object.getFkEconomicoCadastroEconomicoEmpresaFato().getFkSwCgmPessoaFisica().getFkSwCgm() %}
+			{% elseif admin.object.getFkEconomicoCadastroEconomicoAutonomo() %}
+			    {% set cgm = admin.object.getFkEconomicoCadastroEconomicoAutonomo().getFkSwCgmPessoaFisica().getFkSwCgm() %}
+			{% elseif admin.object.getFkEconomicoCadastroEconomicoEmpresaDireito() %}
+				{% set cgm = admin.object.getFkEconomicoCadastroEconomicoEmpresaDireito().getFkSwCgmPessoaJuridica().getFkSwCgm() %}
+			{% endif %}
+
+			{{ cgm.getNomCgm() }}
+	    </td>
+	</tr>
+</tr>
+
+<tr class="sonata-ba-view-container">
+	<tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.dtInicio'|trans }}</th>
+	    <td>
+	    	{% set dtInicio = '-' %}
+			{% for atividade in admin.object.getFkEconomicoAtividadeCadastroEconomicos() %}
+				{% if atividade.getFkEconomicoCadastroEconomicoModalidadeLancamentos().count() > 0  and dtInicio == '-' %}
+					{% set dtInicio = atividade.getFkEconomicoCadastroEconomicoModalidadeLancamentos.first().getDtInicio().format('d/m/Y') %}
+				{% endif %}
+			{% endfor %}
+
+			{{ dtInicio }}
+	    </td>
+	</tr>
+</tr>
+
+<tr class="sonata-ba-view-container">
+	<tr class="sonata-ba-view-container">
+	    <th colspan="2" style="text-align:center !important;border:0 !important">{{ 'label.economicoCadastroEconomicoModalidadeLancamento.atividades'|trans }}</th>
+	</tr>
+</tr>
+
+{% for atividade in admin.object.getFkEconomicoAtividadeCadastroEconomicos() %}
+	{% for modalidadeLancamento in atividade.getFkEconomicoCadastroEconomicoModalidadeLancamentos() %}
+		<tr class="sonata-ba-view-container">
+			<tr class="sonata-ba-view-container">
+			    <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.codigo'|trans }}</th>
+			    <td>{{ atividade.getFkEconomicoAtividade().getCodEstrutural() }}</td>
+			</tr>
+		</tr>
+
+		<tr class="sonata-ba-view-container">
+			<tr class="sonata-ba-view-container">
+			    <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.descricao'|trans }}</th>
+			    <td>{{ atividade.getFkEconomicoAtividade().getNomAtividade() }}</td>
+			</tr>
+		</tr>
+
+		<tr class="sonata-ba-view-container">
+			<tr class="sonata-ba-view-container">
+			    <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.modalidade'|trans }}</th>
+			    <td>{{ modalidadeLancamento.getFkEconomicoModalidadeLancamento().getNomModalidade() }}</td>
+			</tr>
+		</tr>
+
+		<tr class="sonata-ba-view-container">
+			<tr class="sonata-ba-view-container">
+			    <th>{{ 'label.economicoAtividadeModalidadeLancamento.tipoValor'|trans }}</th>
+			    <td>
+			    	{% if modalidadeLancamento.getFkEconomicoCadEconModalidadeMoedas().count() %}
+			    		{{ admin.tipoValor['moeda'] }}
+			    	{% elseif modalidadeLancamento.getFkEconomicoCadEconModalidadeIndicadores().count() %}
+			    		{{ admin.tipoValor['indicador_economico'] }}
+			    	{% else %}
+			    		{{ admin.tipoValor['percentual'] }}
+			    	{% endif %}
+			    </td>
+			</tr>
+		</tr>
+
+		<tr class="sonata-ba-view-container">
+			<tr class="sonata-ba-view-container">
+			    <th>{{ 'label.economicoAtividadeModalidadeLancamento.valor'|trans }}</th>
+			    <td>{{ modalidadeLancamento.getValor()|number_format(2, ',', '.') }}</td>
+			</tr>
+		</tr>
+
+		{% if modalidadeLancamento.getFkEconomicoCadEconModalidadeMoedas().count() %}
+			<tr class="sonata-ba-view-container">
+				<th>{{ 'label.economicoAtividadeModalidadeLancamento.moeda'|trans }}</th>
+			    <td>{{ modalidadeLancamento.getFkEconomicoCadEconModalidadeMoedas().first().getFkMonetarioMoeda() }}</td>
+			</tr>
+		{% endif %}
+
+		{% if modalidadeLancamento.getFkEconomicoCadEconModalidadeIndicadores().count() %}
+			<tr class="sonata-ba-view-container">
+				<th>{{ 'label.economicoAtividadeModalidadeLancamento.indicadorEconomico'|trans }}</th>
+			    <td>{{ modalidadeLancamento.getFkEconomicoCadEconModalidadeIndicadores().first().getFkMonetarioIndicadorEconomico() }}</td>
+			</tr>
+		{% endif %}
+
+		<tr class="sonata-ba-view-container">
+			<tr class="sonata-ba-view-container">
+			    <th colspan="2" style="text-align:center !important;border:0 !important"></th>
+			</tr>
+		</tr>
+	{% endfor %}
+{% endfor %}

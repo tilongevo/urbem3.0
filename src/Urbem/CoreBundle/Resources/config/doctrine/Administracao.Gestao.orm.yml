@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Administracao\Gestao:
+    type: entity
+    table: administracao.gestao
+    id:
+        codGestao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_gestao
+    fields:
+        nomGestao:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_gestao
+        nomDiretorio:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_diretorio
+        ordem:
+            type: integer
+            nullable: false
+        versao:
+            type: string
+            nullable: false
+            length: 30
+        versaoDb:
+            type: integer
+            nullable: false
+            column: versao_db
+    oneToMany:
+        fkAdministracaoHistoricoVersoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\HistoricoVersao
+            mappedBy: fkAdministracaoGestao
+        fkAdministracaoModulos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            mappedBy: fkAdministracaoGestao

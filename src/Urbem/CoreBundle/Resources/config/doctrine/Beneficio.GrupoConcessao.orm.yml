@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Beneficio\GrupoConcessao:
+    type: entity
+    table: beneficio.grupo_concessao
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkBeneficioContratoServidorGrupoConcessaoValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ContratoServidorGrupoConcessaoValeTransporte
+            mappedBy: fkBeneficioGrupoConcessao
+        fkBeneficioGrupoConcessaoValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\GrupoConcessaoValeTransporte
+            mappedBy: fkBeneficioGrupoConcessao

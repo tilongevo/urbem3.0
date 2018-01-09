@@ -1,0 +1,135 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@Core/Sonata/standard_layout.html.twig' %}
+
+{% block content %}
+<div class="container-rh">
+    <div class="row">
+        <div class="col s12 profile-box">
+            <h2 class="blue-text text-darken-4 left" style="margin-top: 10px;">
+                <i class="fa fa-user" style="padding: 2px 10px;" aria-hidden="true"></i>
+                <span style="padding-top: 10px;" class="grey-text bold">
+                        {{ object.fkSwCgm.nomCgm }}
+                    </span>
+            </h2>
+
+            <a href="{{ path('urbem_portalservicos_usuario_edit', { 'id': admin.id(object) }) }}"
+               class="serv-btn right">
+                <i class="material-icons right">edit</i>
+            </a>
+
+            <p class="divider grey col s12"></p>
+
+            <div class="row">
+                {% if object.profilePic is not null %}
+                <div class="col s2">
+                    <div class="row">
+                        <div class="col s12">
+                            <img src="{{ asset(object.profilePic) }}"
+                                 alt="{{ 'label.usuario.profilePic'|trans }}"
+                                 class="little-box"
+                                 style="width: 100% !important; padding-left: 0 !important; padding-right: 0 !important;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col s10">
+                    {% else %}
+                    <div class="col s12">
+                        {% endif %}
+                        <div class="col s3 little-box">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                                {{ 'label.usuario.numcgm'|trans }}
+                            </h6>
+                            <h6 class="col s13 grey-text text-darken-1">
+                                {{ object.numcgm }}
+                            </h6>
+                        </div>
+                        <div class="col s3 little-box">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                                {{ 'label.swCgmPessoaFisica.cpf'|trans }}
+                            </h6>
+                            <h6 class="col s13 grey-text text-darken-1">
+                                {{ object.fkSwCgm.fkSwCgmPessoaFisica.cpf|cpf }}
+                            </h6>
+                        </div>
+                        <div class="col s3 little-box">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                                {{ 'label.swCgmPessoaFisica.rg'|trans }}
+                            </h6>
+                            <h6 class="col s13 grey-text text-darken-1">
+                                {{ object.fkSwCgm.fkSwCgmPessoaFisica.rg|rg }}
+                            </h6>
+                        </div>
+                        <div class="col s3 little-box">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                                {{ 'label.swCgmPessoaFisica.orgaoEmissor'|trans }}
+                            </h6>
+                            <h6 class="col s13 grey-text text-darken-1">
+                                {{ object.fkSwCgm.fkSwCgmPessoaFisica.orgaoEmissor|upper }}
+                            </h6>
+                        </div>
+                        <div class="col s3 little-box">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                                {{ 'label.swCgmPessoaFisica.dtEmissaoRg'|trans }}
+                            </h6>
+                            <h6 class="col s13 grey-text text-darken-1">
+                                {{ object.fkSwCgm.fkSwCgmPessoaFisica.dtEmissaoRg|date('d/m/Y') }}
+                            </h6>
+                        </div>
+                        <div class="col s3 little-box">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                                {{ 'label.swCgmPessoaFisica.numCnh'|trans }}
+                            </h6>
+                            <h6 class="col s13 grey-text text-darken-1">
+                                {{ object.fkSwCgm.fkSwCgmPessoaFisica.numCnh is not empty ?: 'label.naoInformado'|trans }}
+                            </h6>
+                        </div>
+                        <div class="col s3 little-box">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                                {{ 'label.swCategoriaHabilitacao.nomCategoria'|trans }}
+                            </h6>
+                            <h6 class="col s13 grey-text text-darken-1">
+                                {{ object.fkSwCgm.fkSwCgmPessoaFisica.numCnh is not empty ? object.fkSwCgm.fkSwCgmPessoaFisica.fkSwCategoriaHabilitacao.nomCategoria : 'label.naoInformado'|trans }}
+                            </h6>
+                        </div>
+                        <div class="col s3 little-box">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                                {{ 'label.swCgmPessoaFisica.dtValidadeCnh'|trans }}
+                            </h6>
+                            <h6 class="col s13 grey-text text-darken-1">
+                                {{ object.fkSwCgm.fkSwCgmPessoaFisica.numCnh is not empty ? object.fkSwCgm.fkSwCgmPessoaFisica.dtValidadeCnh|date('d/m/Y') : 'label.naoInformado'|trans }}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include '@Administrativo/Sonata/Administracao/Usuario/CRUD/show__endereco.html.twig' %}
+
+            {% include '@Administrativo/Sonata/Administracao/Usuario/CRUD/show__endereco_corresp.html.twig' %}
+
+            {% include '@Administrativo/Sonata/Administracao/Usuario/CRUD/show__dados_contato.html.twig' %}
+
+            {% include '@Administrativo/Sonata/Administracao/Usuario/CRUD/show__informacoes_adicionais.html.twig' %}
+
+            <div class="sonata-ba-form-actions well well-small form-actions row">
+                <div class="col s8 initial">
+                    <a href="{{ path('home-portalservicos') }}"
+                       class="back btn-floating white-text blue darken-4 btn-success">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

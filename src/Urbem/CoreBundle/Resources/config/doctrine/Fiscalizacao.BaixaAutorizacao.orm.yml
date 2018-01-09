@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\BaixaAutorizacao:
+    type: entity
+    table: fiscalizacao.baixa_autorizacao
+    id:
+        codBaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_baixa
+    fields:
+        codAutorizacao:
+            type: integer
+            nullable: false
+            column: cod_autorizacao
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+        observacao:
+            type: text
+            nullable: true
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkFiscalizacaoAutorizacaoNotas:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutorizacaoNotas
+            inversedBy: fkFiscalizacaoBaixaAutorizacoes
+            joinColumns:
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFiscalizacaoBaixaAutorizacoes
+            joinColumns:
+                numcgm_usuario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkFiscalizacaoBaixaNotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\BaixaNotas
+            mappedBy: fkFiscalizacaoBaixaAutorizacao
+        fkFiscalizacaoBaixaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\BaixaDocumento
+            mappedBy: fkFiscalizacaoBaixaAutorizacao

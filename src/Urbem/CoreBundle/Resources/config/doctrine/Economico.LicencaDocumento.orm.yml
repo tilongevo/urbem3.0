@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Economico\LicencaDocumento:
+    type: entity
+    table: economico.licenca_documento
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        codTipoDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numAlvara:
+            type: integer
+            nullable: false
+            column: num_alvara
+    manyToOne:
+        fkEconomicoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Licenca
+            inversedBy: fkEconomicoLicencaDocumentos
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkEconomicoLicencaDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento

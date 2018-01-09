@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoFiscalizacao:
+    type: entity
+    table: fiscalizacao.notificacao_fiscalizacao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        codFiscal:
+            type: integer
+            nullable: false
+            column: cod_fiscal
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        dtNotificacao:
+            type: date
+            nullable: false
+            column: dt_notificacao
+        observacao:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+        numNotificacao:
+            type: integer
+            nullable: false
+            column: num_notificacao
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+    manyToOne:
+        fkFiscalizacaoFiscalProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalProcessoFiscal
+            inversedBy: fkFiscalizacaoNotificacaoFiscalizacoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_fiscal:
+                    referencedColumnName: cod_fiscal
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoNotificacaoFiscalizacoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToMany:
+        fkFiscalizacaoNotificacaoInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoInfracao
+            mappedBy: fkFiscalizacaoNotificacaoFiscalizacao
+    oneToOne:
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoNotificacaoFiscalizacao
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo

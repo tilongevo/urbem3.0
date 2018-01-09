@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Folhapagamento\AtributoPrevidenciaValor:
+    type: entity
+    table: folhapagamento.atributo_previdencia_valor
+    id:
+        codPrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_previdencia
+        timestampPrevidencia:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_previdencia
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkFolhapagamentoPrevidenciaPrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaPrevidencia
+            inversedBy: fkFolhapagamentoAtributoPrevidenciaValores
+            joinColumns:
+                cod_previdencia:
+                    referencedColumnName: cod_previdencia
+                timestamp_previdencia:
+                    referencedColumnName: timestamp
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkFolhapagamentoAtributoPrevidenciaValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Pessoal\MovSefipSaida:
+    type: entity
+    table: pessoal.mov_sefip_saida
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\MovSefipSaidaRepository
+    id:
+        codSefipSaida:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sefip_saida
+    fields: {  }
+    oneToMany:
+        fkPessoalAssentamentoMovSefipSaidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoMovSefipSaida
+            mappedBy: fkPessoalMovSefipSaida
+        fkPessoalCausaRescisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaRescisao
+            mappedBy: fkPessoalMovSefipSaida
+        fkPessoalMovSefipSaidaCategorias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipSaidaCategoria
+            mappedBy: fkPessoalMovSefipSaida
+    oneToOne:
+        fkPessoalMovSefipSaidaMovSefipRetorno:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipSaidaMovSefipRetorno
+            mappedBy: fkPessoalMovSefipSaida
+            joinColumns:
+                cod_sefip_saida:
+                    referencedColumnName: cod_sefip_saida
+        fkPessoalSefip:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Sefip
+            inversedBy: fkPessoalMovSefipSaida
+            joinColumns:
+                cod_sefip_saida:
+                    referencedColumnName: cod_sefip

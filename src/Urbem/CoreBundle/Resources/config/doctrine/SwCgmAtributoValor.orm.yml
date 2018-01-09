@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\SwCgmAtributoValor:
+    type: entity
+    table: sw_cgm_atributo_valor
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkSwCgmAtributoValores
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkSwAtributoCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoCgm
+            inversedBy: fkSwCgmAtributoValores
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo

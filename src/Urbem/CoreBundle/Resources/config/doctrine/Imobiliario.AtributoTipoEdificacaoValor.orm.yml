@@ -1,0 +1,69 @@
+Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoEdificacaoValor:
+    type: entity
+    table: imobiliario.atributo_tipo_edificacao_valor
+    indexes:
+        idx_atributo_tipo_edificacao_valor_1:
+            columns:
+                - cod_construcao
+        idx_atributo_tipo_edificacao_valor_2:
+            columns:
+                - cod_atributo
+        idx_atributo_tipo_edificacao_valor_3:
+            columns:
+                - cod_tipo
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkImobiliarioAtributoTipoEdificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoEdificacao
+            inversedBy: fkImobiliarioAtributoTipoEdificacaoValores
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+        fkImobiliarioConstrucaoEdificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoEdificacao
+            inversedBy: fkImobiliarioAtributoTipoEdificacaoValores
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_construcao:
+                    referencedColumnName: cod_construcao

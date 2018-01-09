@@ -1,0 +1,62 @@
+{% if field.options.data.itens is not null %}
+    <div class="row">
+        <div class="col s11 servidor-table">
+            <a class="btn-flat tooltipped"
+               href="#"
+               data-position="left"
+               data-delay="50"
+               data-tooltip="Incluir"
+               id="incluirManutencaoItem">
+                <i class="mdi mdi-file-document"></i>
+                {{ 'label.frotaManutencaoItem.manutencaoItem'|trans }}
+            </a>
+        </div>
+
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+            <th class="th-rh" width="10"></th>
+            <th class="th-rh">{{ 'label.entradaDiversos.codItem'|trans }}</th>
+            <th class="th-rh">{{ 'label.entradaDiversos.unidade'|trans }}</th>
+            <th class="th-rh">{{ 'label.entradaDiversos.quantidade'|trans }}</th>
+            <th class="th-rh">{{ 'label.entradaDiversos.quantidadeEstorno'|trans }}</th>
+            <th class="th-rh">{{ 'label.saidaEstorno.saldoEstornar'|trans }}</th>
+            <th class="th-rh">{{ 'label.entradaDiversos.valorUnit'|trans }}</th>
+            <th class="th-rh">{{ 'label.entradaDiversos.valorMercado'|trans }}</th>
+            <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+            </thead>
+            <tbody>
+            {% for item in field.options.data.itens %}
+                <tr>
+                    <td class="td-rh">{{ loop.index }}</td>
+                    <td class="td-rh">{{ item.cod_item ~ ' - ' ~ item.descricao_resumida }}
+                    <td class="td-rh">{{ item.nom_unidade }}
+                    <td class="td-rh">{{ item.quantidade|number_format(4, ',', '.') }}
+                    <td class="td-rh">{{ (item.saldo_lancamento*-1)|number_format(4, ',', '.') }}
+                    <td class="td-rh">{{ (item.saldo_lancamento+item.quantidade)|number_format(4, ',', '.') }}
+                    <td class="td-rh">{{ item.valor_unitario|number_format(2, ',', '.') }}
+                    <td class="td-rh">{{ item.valor|number_format(2, ',', '.') }}
+                    <td class="td-rh">
+                        <div class="btn-group">
+                            <a href="{{ path('urbem_patrimonial_almoxarifado_lancamento_material_create', { 'id': object.exercicioLancamento ~ '~' ~ object.numLancamento ~ '~' ~ object.codNatureza ~ '~' ~ object.tipoNatureza, 'codItem': item.cod_item.codItem }) }}"
+                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}"
+                               id="manutencaoItem">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        </div>
+    </div>
+{% endif %}

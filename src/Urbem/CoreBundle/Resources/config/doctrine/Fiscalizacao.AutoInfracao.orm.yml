@@ -1,0 +1,102 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\AutoInfracao:
+    type: entity
+    table: fiscalizacao.auto_infracao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        codAutoFiscalizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_auto_fiscalizacao
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        observacao:
+            type: text
+            nullable: false
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+    manyToOne:
+        fkFiscalizacaoAutoFiscalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutoFiscalizacao
+            inversedBy: fkFiscalizacaoAutoInfracoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_auto_fiscalizacao:
+                    referencedColumnName: cod_auto_fiscalizacao
+        fkFiscalizacaoInfracaoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoPenalidade
+            inversedBy: fkFiscalizacaoAutoInfracoes
+            joinColumns:
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+                timestamp:
+                    referencedColumnName: timestamp
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoAutoInfracoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToOne:
+        fkFiscalizacaoAutoInfracaoMulta:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutoInfracaoMulta
+            mappedBy: fkFiscalizacaoAutoInfracao
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_auto_fiscalizacao:
+                    referencedColumnName: cod_auto_fiscalizacao
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFiscalizacaoAutoInfracaoOutros:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutoInfracaoOutros
+            mappedBy: fkFiscalizacaoAutoInfracao
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_auto_fiscalizacao:
+                    referencedColumnName: cod_auto_fiscalizacao
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+                timestamp:
+                    referencedColumnName: timestamp

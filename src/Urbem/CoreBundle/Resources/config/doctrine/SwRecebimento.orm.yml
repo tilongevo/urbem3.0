@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\SwRecebimento:
+    type: entity
+    table: sw_recebimento
+    id:
+        codAndamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_andamento
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToOne:
+        fkSwAssinaturaDigital:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwAssinaturaDigital
+            mappedBy: fkSwRecebimento
+            joinColumns:
+                cod_andamento:
+                    referencedColumnName: cod_andamento
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwReciboImpresso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwReciboImpresso
+            mappedBy: fkSwRecebimento
+            joinColumns:
+                cod_andamento:
+                    referencedColumnName: cod_andamento
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwAndamento:
+            targetEntity: Urbem\CoreBundle\Entity\SwAndamento
+            inversedBy: fkSwRecebimento
+            joinColumns:
+                cod_andamento:
+                    referencedColumnName: cod_andamento
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

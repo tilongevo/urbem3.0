@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Monetario\ValorAcrescimo:
+    type: entity
+    table: monetario.valor_acrescimo
+    id:
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        inicioVigencia:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: inicio_vigencia
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 6
+    manyToOne:
+        fkMonetarioAcrescimo:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Acrescimo
+            inversedBy: fkMonetarioValorAcrescimos
+            joinColumns:
+                cod_acrescimo:
+                    referencedColumnName: cod_acrescimo
+                cod_tipo:
+                    referencedColumnName: cod_tipo

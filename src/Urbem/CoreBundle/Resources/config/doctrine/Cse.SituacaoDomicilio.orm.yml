@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\SituacaoDomicilio:
+    type: entity
+    table: cse.situacao_domicilio
+    id:
+        codSituacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_situacao
+    fields:
+        nomSituacao:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_situacao
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkCseSituacaoDomicilio

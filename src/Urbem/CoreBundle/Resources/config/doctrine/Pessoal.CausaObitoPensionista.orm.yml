@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Pessoal\CausaObitoPensionista:
+    type: entity
+    table: pessoal.causa_obito_pensionista
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        numCertidaoObito:
+            type: string
+            nullable: false
+            length: 10
+            column: num_certidao_obito
+        causaMortis:
+            type: string
+            nullable: false
+            length: 200
+            column: causa_mortis
+    oneToOne:
+        fkPessoalContratoPensionistaCasoCausa:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaCasoCausa
+            inversedBy: fkPessoalCausaObitoPensionista
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

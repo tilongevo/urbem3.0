@@ -1,0 +1,34 @@
+<div class="col s12 edificacoes">
+    <table id="tableEdificacoesManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.codigo'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLote.tipoEdificacao'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLote.inscricoesImobiliarias'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLote.selecionar'|trans }}</th>
+        </tr>
+        {% if field.data.edificacoes|length > 0 %}
+            {% for imovelLote in field.data.edificacoes|sort %}
+                <tr class="tr-rh row-edificacao">
+                    <td class="td-rh codigo">
+                        {{ imovelLote.inscricaoMunicipal }}
+                    </td>
+                    <td class="td-rh tipo-edificacao">
+                        {% if imovelLote.fkImobiliarioImovel.fkImobiliarioUnidadeAutonomas|length > 0 %}
+                            {{ imovelLote.fkImobiliarioImovel.fkImobiliarioUnidadeAutonomas.last.fkImobiliarioConstrucaoEdificacao.fkImobiliarioTipoEdificacao }}
+                        {% endif %}
+                    </td>
+                    <td class="td-rh inscricao-municipal">
+                        {{ imovelLote.inscricaoMunicipal }}
+                    </td>
+                    <td class="td-rh selecionar">
+                        <input type="checkbox" name="edificacoes[]" value="{{ imovelLote.inscricaoMunicipal }}" checked>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="tr-rh empty-row-confrontacoes">
+                <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

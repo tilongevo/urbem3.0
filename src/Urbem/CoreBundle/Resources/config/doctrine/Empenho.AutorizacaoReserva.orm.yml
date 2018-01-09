@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Empenho\AutorizacaoReserva:
+    type: entity
+    table: empenho.autorizacao_reserva
+    uniqueConstraints:
+        uk_autorizacao_reserva_1:
+            columns:
+                - cod_reserva
+                - exercicio
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autorizacao
+    fields:
+        codReserva:
+            type: integer
+            nullable: false
+            column: cod_reserva
+    oneToOne:
+        fkEmpenhoAutorizacaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho
+            inversedBy: fkEmpenhoAutorizacaoReserva
+            joinColumns:
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoReservaSaldos:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReservaSaldos
+            inversedBy: fkEmpenhoAutorizacaoReserva
+            joinColumns:
+                cod_reserva:
+                    referencedColumnName: cod_reserva
+                exercicio:
+                    referencedColumnName: exercicio

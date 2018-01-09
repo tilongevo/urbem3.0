@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornadaOrdemPagamentoRetencao:
+    type: entity
+    table: tesouraria.transferencia_estornada_ordem_pagamento_retencao
+    id:
+        codLoteEstorno:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote_estorno
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+    fields:
+        sequencial:
+            type: integer
+            nullable: false
+            options:
+                default: '1'
+    manyToOne:
+        fkTesourariaTransferenciaEstornada:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornada
+            inversedBy: fkTesourariaTransferenciaEstornadaOrdemPagamentoRetencoes
+            joinColumns:
+                cod_lote_estorno:
+                    referencedColumnName: cod_lote_estorno
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkEmpenhoOrdemPagamentoRetencao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoRetencao
+            inversedBy: fkTesourariaTransferenciaEstornadaOrdemPagamentoRetencoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                cod_plano:
+                    referencedColumnName: cod_plano
+                sequencial:
+                    referencedColumnName: sequencial

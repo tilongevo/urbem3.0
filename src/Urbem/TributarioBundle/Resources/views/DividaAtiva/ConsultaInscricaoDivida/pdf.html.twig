@@ -1,0 +1,75 @@
+{% block body %}
+    {% block content %}
+         {% include 'TributarioBundle::DividaAtiva/ConsultaInscricaoDivida/header.html.twig' %}
+        <h4>{{ 'label.dividaAtivaConsultaInscricao.lancamentos.cabecalhoLista'|trans|upper }}</h4>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.lancamentos.exercicio' | trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.lancamentos.creditoGrupo'| trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.lancamentos.parcelas'| trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.lancamentos.valorLancado'| trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.lancamentos.valorAtualizado'| trans|upper }}</th>
+            </tr>
+            </thead>
+            </tbody>
+        </table>
+        <h4>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.cabecalhoLista'|trans|upper }}</h4>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.cobranca' | trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.modalidade' | trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.data' | trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.usuario' | trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.parcelas' | trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.situacao' | trans|upper }}</th>
+                <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.valor' | trans|upper }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cobranca in infoInscricaoDivida.cobrancas %}
+            <tr>
+                <td>{{ cobranca.numero_parcelamento }}</td>
+                <td>{{ cobranca.cod_modalidade ~' - '~ cobranca.descricao_modalidade }}</td>
+                <td>{{ cobranca.dt_parcelamento }}</small></td>
+                <td>{{ cobranca.numcgm_usuario ~' - '~ cobranca.nomcgm_usuario }}</td>
+                <td>{{ cobranca.qtd_parcelas }}</td>
+                <td>{{ cobranca.situacao }}</td>
+                <td>{{ cobranca.valor_parcelamento|number_format(2, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <h4>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.cabecalhoLista'|trans|upper }}</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.numeracao'|trans|upper }}</th>
+                            <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.numeracaoMigrada'|trans|upper }}</th>
+                            <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.parcela'|trans|upper }}</th>
+                            <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.valor'|trans|upper }}</th>
+                            <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.vencimento'|trans|upper }}</th>
+                            <th>{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.situacao'|trans|upper }}</th>
+                        </tr>
+                        {% for parcela in infoInscricaoDivida.parcelasDivida %}
+                        <tr>
+                            <td>{{ parcela.numeracao ~ ' / ' ~ parcela.exercicio }}</td>
+                            <td>{{ parcela.numeracao_migracao~'/'~parcela.prefixo }}</td>
+                            <td>{{ parcela.info_parcela }}</td>
+                            <td>{{ parcela.vlr_parcela|number_format(2, ',', '.') }}</td>
+                            <td>{{ parcela.vencimento }}</td>
+                            <td>{{ parcela.situacao }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock stylesheets %}

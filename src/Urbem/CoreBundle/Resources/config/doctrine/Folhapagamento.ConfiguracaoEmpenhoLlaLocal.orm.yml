@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaLocal:
+    type: entity
+    table: folhapagamento.configuracao_empenho_lla_local
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\ConfiguracaoEmpenhoLlaLocalRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLocal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_local
+        codConfiguracaoLla:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao_lla
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numPao:
+            type: integer
+            nullable: false
+            column: num_pao
+    manyToOne:
+        fkOrcamentoPao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Pao
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoLlaLocais
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_pao:
+                    referencedColumnName: num_pao
+        fkFolhapagamentoConfiguracaoEmpenhoLla:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLla
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoLlaLocais
+            joinColumns:
+                cod_configuracao_lla:
+                    referencedColumnName: cod_configuracao_lla
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoLlaLocais
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local

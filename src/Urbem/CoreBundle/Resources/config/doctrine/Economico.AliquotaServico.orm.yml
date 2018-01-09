@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Economico\AliquotaServico:
+    type: entity
+    table: economico.aliquota_servico
+    id:
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+    manyToOne:
+        fkEconomicoServico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Servico
+            inversedBy: fkEconomicoAliquotaServicos
+            joinColumns:
+                cod_servico:
+                    referencedColumnName: cod_servico

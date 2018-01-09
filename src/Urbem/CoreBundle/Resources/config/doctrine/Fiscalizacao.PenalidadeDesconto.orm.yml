@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeDesconto:
+    type: entity
+    table: fiscalizacao.penalidade_desconto
+    id:
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+        codDesconto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_desconto
+    fields:
+        prazo:
+            type: integer
+            nullable: false
+        desconto:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkFiscalizacaoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Penalidade
+            inversedBy: fkFiscalizacaoPenalidadeDescontos
+            joinColumns:
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade

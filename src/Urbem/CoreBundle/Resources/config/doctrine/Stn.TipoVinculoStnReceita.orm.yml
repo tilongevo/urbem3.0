@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Stn\TipoVinculoStnReceita:
+    type: entity
+    table: stn.tipo_vinculo_stn_receita
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkStnVinculoStnReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\VinculoStnReceita
+            mappedBy: fkStnTipoVinculoStnReceita

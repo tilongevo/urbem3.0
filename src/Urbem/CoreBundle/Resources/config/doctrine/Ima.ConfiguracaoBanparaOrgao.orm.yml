@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanparaOrgao:
+    type: entity
+    table: ima.configuracao_banpara_orgao
+    id:
+        codEmpresa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empresa
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        numOrgaoBanpara:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao_banpara
+    fields: {  }
+    manyToOne:
+        fkImaConfiguracaoBanpara:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanpara
+            inversedBy: fkImaConfiguracaoBanparaOrgoes
+            joinColumns:
+                cod_empresa:
+                    referencedColumnName: cod_empresa
+                num_orgao_banpara:
+                    referencedColumnName: num_orgao_banpara
+                timestamp:
+                    referencedColumnName: timestamp
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkImaConfiguracaoBanparaOrgoes
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao

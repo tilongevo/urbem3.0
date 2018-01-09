@@ -1,0 +1,35 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Economico/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'label.economicoRelatorioContadores.contador'|trans|upper }}</td>
+                    <td>{{ 'label.economicoRelatorioContadores.registro'|trans|upper }}</td>
+                    <td>{{ 'label.economicoRelatorioContadores.endereco'|trans|upper }}</td>
+                    <td>{{ 'label.economicoRelatorioContadores.telefone'|trans|upper }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for itensContador in contadores %}
+                    <tr>
+                        <td style="text-align:left">{{ itensContador.contador }}</td>
+                        <td>{{ itensContador.num_registro }}</td>
+                        <td style="text-align:left">{{ itensContador.endereco }}</td>
+                        <td style="text-align:left">{{ itensContador.fone_comercial }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+    <style>
+        table td,th{border: 0 !important; text-align:center}
+    </style>
+{% endblock %}

@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Ponto\RelogioPontoJustificativa:
+    type: entity
+    table: ponto.relogio_ponto_justificativa
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codJustificativa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_justificativa
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        periodoInicio:
+            type: date
+            nullable: false
+            column: periodo_inicio
+        periodoTermino:
+            type: date
+            nullable: false
+            column: periodo_termino
+        horasFalta:
+            type: time
+            nullable: false
+            column: horas_falta
+        horasAbonar:
+            type: time
+            nullable: false
+            column: horas_abonar
+        observacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkPontoDadosRelogioPonto:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DadosRelogioPonto
+            inversedBy: fkPontoRelogioPontoJustificativas
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPontoJustificativa:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\Justificativa
+            inversedBy: fkPontoRelogioPontoJustificativas
+            joinColumns:
+                cod_justificativa:
+                    referencedColumnName: cod_justificativa
+    oneToOne:
+        fkPontoRelogioPontoJustificativaExclusao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\RelogioPontoJustificativaExclusao
+            mappedBy: fkPontoRelogioPontoJustificativa
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_justificativa:
+                    referencedColumnName: cod_justificativa
+                sequencia:
+                    referencedColumnName: sequencia

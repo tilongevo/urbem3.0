@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Beneficio\BeneficioCadastro:
+    type: entity
+    table: beneficio.beneficio_cadastro
+    id:
+        codBeneficio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_beneficio
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkFolhapagamentoTipoEventoBeneficios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoBeneficio
+            mappedBy: fkBeneficioBeneficioCadastro

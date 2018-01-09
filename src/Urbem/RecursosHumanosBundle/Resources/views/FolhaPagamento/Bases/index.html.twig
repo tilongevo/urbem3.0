@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container-rh">
+  <div class="row title-index filtro filtro-sonata z-depth-0 filtro-rh">
+        <div class="col s3 field-filtro">
+            <label for="filter_numPlaca_value" class="control-label label-rh">Bases</label>
+            <div>
+              <input id="1" type="text" class="input-rh" >
+            </div>
+        </div>
+        <div class="col s1 busca-rh buscar center">
+            <button type="submit" class="hide-on-med-and-down btn waves-effect waves-light blue-darken-4">
+                <i class="material-icons">search</i> 
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <a class="left hide-on-med-and-down waves-effect waves-light btn blue darken-4 add-rh" href="{{ path('folha_pagamento_bases_new') }}"><i class="material-icons left icon-rh">add</i>Incluir</a>
+    </div>
+
+
+  <div class="row">
+    <table class="bordered highlight">
+        <thead class="thead-rh">
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">Codbase</th>
+                <th class="th-rh">Nombase</th>
+                <th class="th-rh">Tipobase</th>
+                <th class="th-rh">Apresentacaovalor</th>
+                <th class="th-rh">Insercaoautomatica</th>
+                <th class="th-rh">Codmodulo</th>
+                <th class="th-rh">Codbiblioteca</th>
+                <th class="th-rh">Codfuncao</th>
+                <th class="th-rh">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for base in bases %}
+            <tr>
+                <td class="td-rh"><a href="{{ path('folha_pagamento_bases_show', { 'id': base.codBase }) }}">{{ base.codBase }}</a></td>
+                <td class="td-rh">{{ base.nomBase }}</td>
+                <td class="td-rh">{{ base.tipoBase }}</td>
+                <td class="td-rh">{% if base.apresentacaoValor %}Yes{% else %}No{% endif %}</td>
+                <td class="td-rh">{% if base.insercaoAutomatica %}Yes{% else %}No{% endif %}</td>
+                <td class="td-rh">{{ base.codModulo }}</td>
+                <td class="td-rh">{{ base.codBiblioteca }}</td>
+                <td class="td-rh">{{ base.codFuncao }}</td>
+                <td class="td-rh">
+                  <div class="btn-group">
+                      <a href="{{ path('folha_pagamento_bases_show', { 'id': base.codBase }) }}" data-position="left" data-delay="50" data-tooltip="Detalhe" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped">
+                          <i class="fa fa-search-plus"></i>
+                      </a>
+                      <a href="{{ path('folha_pagamento_bases_edit', { 'id': base.codBase }) }}" data-position="bottom" data-delay="50" data-tooltip="Editar" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped">
+                          <i class="material-icons">edit</i>
+                      </a>
+                      <button type="submit" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir">
+                          <i class="material-icons">delete</i>
+                      </button>
+                  </div>
+                </td>
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <div class="center">
+        {{ knp_pagination_render(bases) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

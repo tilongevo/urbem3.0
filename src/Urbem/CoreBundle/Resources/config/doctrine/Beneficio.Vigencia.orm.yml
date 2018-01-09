@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Beneficio\Vigencia:
+    type: entity
+    table: beneficio.vigencia
+    repositoryClass: Urbem\CoreBundle\Repository\Beneficio\VigenciaRepository
+    id:
+        codVigencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: beneficio.cod_vigencia_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_vigencia
+    fields:
+        vigencia:
+            type: date
+            nullable: true
+        tipo:
+            type: string
+            nullable: true
+            length: 1
+        codNorma:
+            type: integer
+            nullable: true
+            column: cod_norma
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkBeneficioVigencias
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkBeneficioFaixaDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\FaixaDesconto
+            mappedBy: fkBeneficioVigencia

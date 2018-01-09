@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Pessoal\GradeHorario:
+    type: entity
+    table: pessoal.grade_horario
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\GradeHorarioRepository
+    id:
+        codGrade:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.grade_horario_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_grade
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalFaixaTurnos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            orderBy: { 'codDia': 'ASC' }
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\FaixaTurno
+            mappedBy: fkPessoalGradeHorario
+        fkEstagioEstagiarioEstagios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio
+            mappedBy: fkPessoalGradeHorario
+        fkPessoalContratoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            mappedBy: fkPessoalGradeHorario

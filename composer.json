@@ -1,0 +1,106 @@
+{
+    "name": "symfony/framework-standard-edition",
+    "license": "MIT",
+    "type": "project",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-4": { "": "src/", "Context\\": "features/" },
+        "files": [ "src/Urbem/CoreBundle/Helper/DumpQuery.php" ],
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ],
+        "exclude-from-classmap": [
+            "src/Urbem/ProjectBaseBundle/Resources/public/api-lgv",
+            "src/Urbem/CoreBundle/Customize/Doctrine"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": { "Tests\\": "tests/" }
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/symfony": "3.0.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "sensio/distribution-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "symfony/assetic-bundle": "~2",
+        "whiteoctober/breadcrumbs-bundle": "^1.2",
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "fzaninotto/faker": "^1.6",
+        "sonata-project/admin-bundle": "3.20.1",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "friendsofsymfony/user-bundle": "^2.0",
+        "sonata-project/intl-bundle": "^2.2",
+        "knplabs/knp-snappy-bundle": "^1.4",
+        "h4cc/wkhtmltopdf-amd64": "^0.12.3",
+        "behat/behat": "^3.2",
+        "behat/mink-extension": "^2.2",
+        "behat/mink-goutte-driver": "^1.2",
+        "behat/mink-selenium2-driver": "^1.3",
+        "behat/mink-browserkit-driver": "^1.3",
+        "behat/mink": "^1.7",
+        "behat/symfony2-extension": "^2.1",
+        "instaclick/php-webdriver": "^1.4",
+        "codeitnowin/barcode": "^1.0",
+        "swiftmailer/swiftmailer": "^5.4",
+        "aws/aws-sdk-php": "^3.29",
+        "mbence/opentbs-bundle": "^1.9",
+        "zech86/queue": "dev-master",
+        "graylog2/gelf-php": "^1.5"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "^3.0",
+        "phpunit/phpunit": "4.*",
+        "fiunchinho/phpunit-randomizer": "dev-master",
+        "phpmd/phpmd": "^2.2",
+        "squizlabs/php_codesniffer": "2.*",
+        "doctrine/migrations": "^1.4",
+        "doctrine/doctrine-migrations-bundle": "*",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Urbem\\CoreBundle\\Composer\\ScriptHandler::fixDoctrineLoadCollection",
+            "Urbem\\CoreBundle\\Composer\\ScriptHandler::fixSonataListAction",
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "post-update-cmd": [
+            "Urbem\\CoreBundle\\Composer\\ScriptHandler::fixDoctrineLoadCollection",
+            "Urbem\\CoreBundle\\Composer\\ScriptHandler::fixSonataListAction",
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ]
+    },
+    "config": {
+        "platform": {
+            "php": "5.5.9"
+        }
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "app/config/common/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    }
+}

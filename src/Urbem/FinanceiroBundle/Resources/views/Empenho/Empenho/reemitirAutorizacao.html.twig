@@ -1,0 +1,160 @@
+{% block body %}
+    {% block content %}
+        {% include 'FinanceiroBundle:Empenho/Empenho:headerPdf.html.twig' %}
+
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="4">FORNECEDOR</th>
+                <th colspan="2">CGC/CPF</th>
+                <th colspan="2">CGM</th>
+            </tr>
+            <tr>
+                <td colspan="4">{{ dadosEmpenho.fornecedor }}</td>
+                <td colspan="2">{{ dadosEmpenho.cpfCnpj }}</td>
+                <td colspan="2">{{ dadosEmpenho.numcgm }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="4">ENDEREÇO</th>
+                <th colspan="2">FONE</th>
+                <th colspan="2">CIDADE</th>
+                <th colspan="2">UF</th>
+            </tr>
+            <tr>
+                <td colspan="4">{{ dadosEmpenho.endereco }}</td>
+                <td colspan="2">{{ dadosEmpenho.telefone }}</td>
+                <td colspan="2">{{ dadosEmpenho.cidade }}</td>
+                <td colspan="2">{{ dadosEmpenho.uf }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="4">ENTIDADE</th>
+            </tr>
+            <tr>
+                <td colspan="4">{{ dadosEmpenho.nomEntidade }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">ÓRGÃO</th>
+                <td colspan="2">{{ dadosEmpenho.orgao }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">UNIDADE</th>
+                <td colspan="2">{{ dadosEmpenho.unidade }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">DOTAÇÃO</th>
+                <td colspan="2">{{ dadosEmpenho.dotacao }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">PAO</th>
+                <td colspan="2">{{ dadosEmpenho.pao }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">RECURSO</th>
+                <td colspan="2">{{ dadosEmpenho.recurso }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">DATA DE VALIDADE</th>
+                <td colspan="2">{{ dadosEmpenho.validade }}</td>
+            </tr>
+            <tr>
+                <th colspan="4">DESCRIÇÃO RESUMIDA DO EMPENHO</th>
+            </tr>
+            <tr>
+                <td colspan="4">{{ dadosEmpenho.descricao }}</td>
+            </tr>
+            <tr>
+                <th colspan="4">OBS/JUSTIFICATIVA</th>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th class="text-right">ITEM</th>
+                <th class="text-right">QUANTIDADE</th>
+                <th>UNIDADE</th>
+                <th>ESPECIFICAÇÃO</th>
+                <th class="text-right">VALOR UNITÁRIO</th>
+                <th class="text-right">VALOR TOTAL</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in dadosEmpenho.itens %}
+                <tr>
+                    <td class="text-right">{{ item.numItem }}</td>
+                    <td class="text-right">{{ item.quantidade|number_format_decimal({'fraction_digits': 4}) }}</td>
+                    <td>{{ item.nomUnidade }}</td>
+                    <td>{{ item.nomItem}}</td>
+                    <td class="text-right">{{ (item.valorUnitario / item.quantidade)|number_format_decimal({'fraction_digits': 4}) }}</td>
+                    <td class="text-right">{{ item.valorTotal|number_format_decimal({'fraction_digits': 2}) }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4">TOTAL GERAL:</td>
+                <td colspan="2" class="text-right">{{ dadosEmpenho.totalGeral|number_format_decimal({'fraction_digits': 2}) }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        {% for assinatura in dadosEmpenho.assinaturas %}
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>AUTORIZO</th>
+                    <td>
+                        <p>{{ dadosEmpenho.nomEntidade }}, {{ dadosEmpenho.dtEmpenhoLiteral }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        {% if assinatura is defined %}
+                            <br/><br/><br/>
+                            <hr style="width: 50%"/>
+                            <p>
+                                {{ assinatura.fkSwCgm.nomCgm }}<br/>
+                                <span class="bold">
+                                        {{ assinatura.cargo }}
+                                    </span>
+                            </p>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>AUTORIZO A DESPESA</th>
+                    <td>
+                        <p>{{ dadosEmpenho.nomEntidade }}, {{ dadosEmpenho.dtEmpenhoLiteral }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <br/><br/><br/>
+                        <hr style="width: 50%"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        {% endfor %}
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock stylesheets %}

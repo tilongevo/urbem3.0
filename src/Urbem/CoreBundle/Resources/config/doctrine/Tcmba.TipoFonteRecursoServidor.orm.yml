@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoFonteRecursoServidor:
+    type: entity
+    table: tcmba.tipo_fonte_recurso_servidor
+    id:
+        codTipoFonte:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_fonte
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkTcmbaFonteRecursoLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\FonteRecursoLocal
+            mappedBy: fkTcmbaTipoFonteRecursoServidor
+        fkTcmbaFonteRecursoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\FonteRecursoLotacao
+            mappedBy: fkTcmbaTipoFonteRecursoServidor

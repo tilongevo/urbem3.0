@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Administracao\Departamento:
+    type: entity
+    table: administracao.departamento
+    id:
+        codDepartamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_departamento
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_unidade
+    fields:
+        usuarioResponsavel:
+            type: integer
+            nullable: false
+            column: usuario_responsavel
+        nomDepartamento:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_departamento
+    manyToOne:
+        fkAdministracaoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Unidade
+            inversedBy: fkAdministracaoDepartamentos
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkAdministracaoDepartamentos
+            joinColumns:
+                usuario_responsavel:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkAdministracaoSetores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Setor
+            mappedBy: fkAdministracaoDepartamento

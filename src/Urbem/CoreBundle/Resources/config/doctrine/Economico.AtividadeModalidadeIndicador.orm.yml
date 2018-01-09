@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeIndicador:
+    type: entity
+    table: economico.atividade_modalidade_indicador
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+        codIndicador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_indicador
+    fields: {  }
+    manyToOne:
+        fkEconomicoAtividadeModalidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeLancamento
+            inversedBy: fkEconomicoAtividadeModalidadeIndicadores
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                dt_inicio:
+                    referencedColumnName: dt_inicio
+        fkMonetarioIndicadorEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\IndicadorEconomico
+            inversedBy: fkEconomicoAtividadeModalidadeIndicadores
+            joinColumns:
+                cod_indicador:
+                    referencedColumnName: cod_indicador

@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Frota\VeiculoBaixado:
+    type: entity
+    table: frota.veiculo_baixado
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+    fields:
+        dtBaixa:
+            type: date
+            nullable: false
+            column: dt_baixa
+        motivo:
+            type: text
+            nullable: false
+        codTipoBaixa:
+            type: integer
+            nullable: false
+            options:
+                default: '99'
+            column: cod_tipo_baixa
+    manyToOne:
+        fkFrotaTipoBaixa:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\TipoBaixa
+            inversedBy: fkFrotaVeiculoBaixados
+            joinColumns:
+                cod_tipo_baixa:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaVeiculoBaixado
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo

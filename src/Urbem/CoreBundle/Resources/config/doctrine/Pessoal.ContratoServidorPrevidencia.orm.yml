@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorPrevidencia:
+    type: entity
+    table: pessoal.contrato_servidor_previdencia
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorPrevidenciaRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codPrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_previdencia
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        boExcluido:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: bo_excluido
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorPrevidencias
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkFolhapagamentoPrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Previdencia
+            inversedBy: fkPessoalContratoServidorPrevidencias
+            joinColumns:
+                cod_previdencia:
+                    referencedColumnName: cod_previdencia

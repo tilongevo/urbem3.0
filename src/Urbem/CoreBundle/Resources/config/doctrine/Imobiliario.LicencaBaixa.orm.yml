@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Imobiliario\LicencaBaixa:
+    type: entity
+    table: imobiliario.licenca_baixa
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+        motivo:
+            type: text
+            nullable: false
+    manyToOne:
+        fkImobiliarioLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Licenca
+            inversedBy: fkImobiliarioLicencaBaixas
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkImobiliarioTipoBaixa:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoBaixa
+            inversedBy: fkImobiliarioLicencaBaixas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

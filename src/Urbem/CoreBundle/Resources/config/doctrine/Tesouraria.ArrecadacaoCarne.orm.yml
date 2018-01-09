@@ -1,0 +1,65 @@
+Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoCarne:
+    type: entity
+    table: tesouraria.arrecadacao_carne
+    id:
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields: {  }
+    manyToOne:
+        fkTesourariaArrecadacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao
+            inversedBy: fkTesourariaArrecadacaoCarnes
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+        fkArrecadacaoCarne:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Carne
+            inversedBy: fkTesourariaArrecadacaoCarnes
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+    oneToOne:
+        fkTesourariaArrecadacaoCarneEstornado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoCarneEstornado
+            mappedBy: fkTesourariaArrecadacaoCarne
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                numeracao:
+                    referencedColumnName: numeracao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_convenio:
+                    referencedColumnName: cod_convenio

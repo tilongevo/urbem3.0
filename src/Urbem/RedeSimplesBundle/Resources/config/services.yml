@@ -1,0 +1,18 @@
+services:
+    rede_simples.admin.protocolo:
+        class: Urbem\RedeSimplesBundle\Admin\ProtocoloAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\RedeSimples\Protocolo, RedeSimplesBundle:Protocolo]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Protocolo }
+        calls:
+          - [ setTemplates, [{show: RedeSimplesBundle:Sonata\Protocolo\CRUD:show.html.twig}]]
+
+    rede_simples.protocolo.model:
+        class: Urbem\RedeSimplesBundle\Model\ProtocoloModel
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    rede_simples.twig.protocolo:
+        class: Urbem\RedeSimplesBundle\Twig\ProtocoloExtension
+        arguments: ["@rede_simples.protocolo.model"]
+        tags:
+            - { name: twig.extension }

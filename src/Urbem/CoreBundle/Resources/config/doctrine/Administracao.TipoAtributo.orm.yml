@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Administracao\TipoAtributo:
+    type: entity
+    table: administracao.tipo_atributo
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 20
+            column: nom_tipo
+        descricao:
+            type: text
+            nullable: false
+    oneToMany:
+        fkAdministracaoAtributoDinamicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            mappedBy: fkAdministracaoTipoAtributo
+        fkSwAtributoDinamicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoDinamico
+            mappedBy: fkAdministracaoTipoAtributo

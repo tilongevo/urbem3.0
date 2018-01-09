@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a style="font-size: 16px">
+            <i class="mdi mdi-newspaper"></i>
+            {{ 'Especializações Cadastradas' }}
+        </a>
+    </div>
+    <div class="col s1">
+        <a class="tooltipped"
+           href="{{ path("urbem_recursos_humanos_pessoal_cargo_especialidade_create", {codCargo:object.codCargo}) }}"
+           data-toggle="tooltip" data-placement="top" title="{{ "incluir"|trans }}">
+            <i class="mdi mdi-plus-circle right small"></i>
+        </a>
+    </div>
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'Descrição' }}</th>
+        <th class="th-rh" width="100">{{ 'Padrão' }}</th>
+        <th class="th-rh" width="250">{{ 'CBO' }}</th>
+        <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for especialidade in object.fkPessoalEspecialidades %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td class="td-rh">{{ especialidade.descricao }}</td>
+                <td class="td-rh">{{ especialidade.fkPessoalEspecialidadePadroes.last.fkFolhapagamentoPadrao.descricao() }}</td>
+                <td class="td-rh">{{ especialidade.fkPessoalCboEspecialidades.last.fkPessoalCbo.descricao() }}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{{ path('urbem_recursos_humanos_pessoal_cargo_especialidade_edit', { 'id': admin.getObjectKey(especialidade) }) }}"
+                           class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                           data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <a href="{{ path('urbem_recursos_humanos_pessoal_cargo_especialidade_delete', { 'id': admin.getObjectKey(especialidade) }) }}"
+                           class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                           data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

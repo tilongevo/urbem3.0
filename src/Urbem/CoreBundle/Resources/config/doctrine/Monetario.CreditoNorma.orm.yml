@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Monetario\CreditoNorma:
+    type: entity
+    table: monetario.credito_norma
+    id:
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields:
+        dtInicioVigencia:
+            type: date
+            nullable: false
+            column: dt_inicio_vigencia
+    manyToOne:
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkMonetarioCreditoNormas
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkMonetarioCreditoNormas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

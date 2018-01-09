@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\SwLiquidacao:
+    type: entity
+    table: sw_liquidacao
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+        codNota:
+            type: integer
+            nullable: false
+            column: cod_nota
+    manyToOne:
+        fkSwNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\SwNotaLiquidacao
+            inversedBy: fkSwLiquidacoes
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+    oneToOne:
+        fkSwLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamento
+            inversedBy: fkSwLiquidacao
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio

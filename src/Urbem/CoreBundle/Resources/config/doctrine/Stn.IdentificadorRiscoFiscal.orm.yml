@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Stn\IdentificadorRiscoFiscal:
+    type: entity
+    table: stn.identificador_risco_fiscal
+    id:
+        codIdentificador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_identificador
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkStnRiscosFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\RiscosFiscais
+            mappedBy: fkStnIdentificadorRiscoFiscal

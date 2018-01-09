@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Arrecadacao\PagamentoDiferencaCompensacao:
+    type: entity
+    table: arrecadacao.pagamento_diferenca_compensacao
+    id:
+        codCompensacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compensacao
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        ocorrenciaPagamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_pagamento
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+    fields: {  }
+    manyToOne:
+        fkArrecadacaoCompensacao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Compensacao
+            inversedBy: fkArrecadacaoPagamentoDiferencaCompensacoes
+            joinColumns:
+                cod_compensacao:
+                    referencedColumnName: cod_compensacao
+        fkArrecadacaoPagamentoDiferenca:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoDiferenca
+            inversedBy: fkArrecadacaoPagamentoDiferencaCompensacoes
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+                ocorrencia_pagamento:
+                    referencedColumnName: ocorrencia_pagamento
+                cod_calculo:
+                    referencedColumnName: cod_calculo

@@ -1,0 +1,98 @@
+Urbem\CoreBundle\Entity\Almoxarifado\InventarioItens:
+    type: entity
+    table: almoxarifado.inventario_itens
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\InventarioItensRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codInventario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inventario
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+    fields:
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 4
+        justificativa:
+            type: string
+            nullable: true
+            length: 160
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+    manyToOne:
+        fkAlmoxarifadoInventario:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Inventario
+            inversedBy: fkAlmoxarifadoInventarioItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_inventario:
+                    referencedColumnName: cod_inventario
+        fkAlmoxarifadoEstoqueMaterial:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial
+            inversedBy: fkAlmoxarifadoInventarioItens
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+    oneToMany:
+        fkAlmoxarifadoAtributoInventarioItemValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoInventarioItemValor
+            mappedBy: fkAlmoxarifadoInventarioItens
+    oneToOne:
+        fkAlmoxarifadoLancamentoInventarioItens:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoInventarioItens
+            mappedBy: fkAlmoxarifadoInventarioItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_inventario:
+                    referencedColumnName: cod_inventario
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_centro:
+                    referencedColumnName: cod_centro

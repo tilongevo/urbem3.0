@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Frota\UtilizacaoRetorno:
+    type: entity
+    table: frota.utilizacao_retorno
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+        dtSaida:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_saida
+        hrSaida:
+            type: timepk
+            generator:
+                strategy: NONE
+            column: hr_saida
+    fields:
+        cgmMotorista:
+            type: integer
+            nullable: false
+            column: cgm_motorista
+        dtRetorno:
+            type: date
+            nullable: false
+            column: dt_retorno
+        hrRetorno:
+            type: time
+            nullable: false
+            column: hr_retorno
+        kmRetorno:
+            type: float
+            nullable: false
+            column: km_retorno
+        observacao:
+            type: text
+            nullable: true
+        viradaOdometro:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: virada_odometro
+        qtdeHorasTrabalhadas:
+            type: decimal
+            nullable: false
+            precision: 6
+            scale: 2
+            options:
+                default: 0
+            column: qtde_horas_trabalhadas
+    manyToOne:
+        fkFrotaMotorista:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Motorista
+            inversedBy: fkFrotaUtilizacaoRetornos
+            joinColumns:
+                cgm_motorista:
+                    referencedColumnName: cgm_motorista
+    oneToOne:
+        fkFrotaUtilizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Utilizacao
+            inversedBy: fkFrotaUtilizacaoRetorno
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+                dt_saida:
+                    referencedColumnName: dt_saida
+                hr_saida:
+                    referencedColumnName: hr_saida

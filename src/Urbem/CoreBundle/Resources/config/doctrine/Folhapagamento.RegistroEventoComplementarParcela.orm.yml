@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoComplementarParcela:
+    type: entity
+    table: folhapagamento.registro_evento_complementar_parcela
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        parcela:
+            type: integer
+            nullable: false
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEventoComplementar:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEventoComplementar
+            inversedBy: fkFolhapagamentoRegistroEventoComplementarParcela
+            joinColumns:
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

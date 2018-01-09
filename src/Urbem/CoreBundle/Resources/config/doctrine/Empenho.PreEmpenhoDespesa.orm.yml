@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Empenho\PreEmpenhoDespesa:
+    type: entity
+    table: empenho.pre_empenho_despesa
+    id:
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+        codDespesa:
+            type: integer
+            nullable: false
+            column: cod_despesa
+    manyToOne:
+        fkOrcamentoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            inversedBy: fkEmpenhoPreEmpenhoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_despesa:
+                    referencedColumnName: cod_despesa
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkEmpenhoPreEmpenhoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+    oneToOne:
+        fkEmpenhoPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenho
+            inversedBy: fkEmpenhoPreEmpenhoDespesa
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho

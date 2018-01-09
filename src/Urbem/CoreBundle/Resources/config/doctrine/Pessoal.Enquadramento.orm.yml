@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Pessoal\Enquadramento:
+    type: entity
+    table: pessoal.enquadramento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\EnquadramentoRepository
+    id:
+        codEnquadramento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_enquadramento
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        reajuste:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalClassificacaoEnquadramentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ClassificacaoEnquadramento
+            mappedBy: fkPessoalEnquadramento

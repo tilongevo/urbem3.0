@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\TipoLocal:
+    type: entity
+    table: fiscalizacao.tipo_local
+    id:
+        codLocal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_local
+    fields:
+        nomLocal:
+            type: string
+            nullable: false
+            length: 25
+            column: nom_local
+    oneToMany:
+        fkFiscalizacaoProcessoFiscalObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalObras
+            mappedBy: fkFiscalizacaoTipoLocal

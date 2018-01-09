@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Folhapagamento\LogErroCalculoComplementar:
+    type: entity
+    table: folhapagamento.log_erro_calculo_complementar
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        erro:
+            type: string
+            nullable: true
+            length: 2000
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEventoComplementar:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEventoComplementar
+            inversedBy: fkFolhapagamentoLogErroCalculoComplementar
+            joinColumns:
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

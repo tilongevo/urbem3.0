@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Arrecadacao\TipoSuspensao:
+    type: entity
+    table: arrecadacao.tipo_suspensao
+    id:
+        codTipoSuspensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_suspensao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        emitir:
+            type: boolean
+            nullable: false
+    oneToMany:
+        fkArrecadacaoSuspensoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Suspensao
+            mappedBy: fkArrecadacaoTipoSuspensao

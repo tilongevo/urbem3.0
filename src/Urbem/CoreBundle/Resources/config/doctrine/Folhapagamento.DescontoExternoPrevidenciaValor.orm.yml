@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoPrevidenciaValor:
+    type: entity
+    table: folhapagamento.desconto_externo_previdencia_valor
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        timestampValor:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_valor
+    fields:
+        valorPrevidencia:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_previdencia
+    manyToOne:
+        fkFolhapagamentoDescontoExternoPrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoPrevidencia
+            inversedBy: fkFolhapagamentoDescontoExternoPrevidenciaValores
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp

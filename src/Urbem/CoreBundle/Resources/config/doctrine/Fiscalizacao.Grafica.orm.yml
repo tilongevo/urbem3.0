@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\Grafica:
+    type: entity
+    table: fiscalizacao.grafica
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+    oneToMany:
+        fkFiscalizacaoAutorizacaoNotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutorizacaoNotas
+            mappedBy: fkFiscalizacaoGrafica
+    oneToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFiscalizacaoGrafica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

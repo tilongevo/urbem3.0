@@ -1,0 +1,117 @@
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block content %}
+<div class="container-rh">
+    <div class="row">
+        <div class="col s12 profile-box">
+            <h4 class="grey-text text-darken-1 left">{{ 'InstituicaoEnsino'|trans }}</h4>
+            <h6 class="divider grey col s12"></h6>
+            <div class="row">
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.estagio.instituicao_ensino'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkSwCgmPessoaJuridica}}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.cnpj'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkSwCgmPessoaJuridica.cnpj}}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.endereco'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkSwCgmPessoaJuridica.fkSwCgm.logradouro}}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.bairro'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1"> {{ object.fkSwCgmPessoaJuridica.fkSwCgm.bairro }}</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.municipio'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkSwCgmPessoaJuridica.fkSwCgm.fkSwMunicipio}}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.telefone'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1"> {{ object.fkSwCgmPessoaJuridica.fkSwCgm.foneResidencial }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s11 servidor-table">
+            <a class="btn-flat tooltiped">
+                <i class="mdi mdi-newspaper"></i>
+               {{ 'label.estagio.cursoAreaConhecimento'|trans }}
+            </a>
+        </div>
+        <div class="col s1">
+            <a href="{{ path('urbem_recursos_humanos_estagio_curso_instituicao_ensino_create', { 'id': object|objectKey }) }}"
+               class="btn-flat"
+               data-tooltip="{{ "incluir"|trans }}"
+               data-position="left"
+               data-delay="50">
+                <i class="mdi mdi-plus-circle left"></i>
+            </a>
+        </div>
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.estagio.codCurso'|trans }}</th>
+                <th class="th-rh">{{ 'label.estagio.curso'|trans }}</th>
+                <th class="th-rh">{{ 'label.estagio.valor_bolsa'|trans }}</th>
+                <th class="th-rh">{{ 'label.estagio.mes_avaliacao'|trans }}</th>
+                <th class="th-rh">{{ 'acoes'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for curso in object.cursos %}
+                <tr>
+                    <td class="td-rh">{{ curso.fkEstagioCurso.codCurso }}</td>
+                    <td class="td-rh">{{ curso.fkEstagioCurso.nomCurso}}</td>
+                    <td class="td-rh">{{ curso.vlBolsa|number_format(2,',','.') }}</td>
+                    <td class="td-rh">
+                        {% if curso.fkEstagioCursoInstituicaoEnsinoMes %}
+                            {{ curso.fkEstagioCursoInstituicaoEnsinoMes.fkAdministracaoMes }}
+                        {% else %}
+                            --
+                        {% endif %}
+                    </td>
+                    <td class="td-rh">
+                        <div class="btn-group">
+                            <a href="{{ path('urbem_recursos_humanos_estagio_curso_instituicao_ensino_edit', { 'id': curso|objectKey }) }}"
+                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-position="left"
+                               data-delay="50"
+                               data-tooltip="{{ "editar"|trans }}">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_recursos_humanos_estagio_instituicao_ensino_list') }}" class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        </div>
+    </div>
+
+{% endblock content %}

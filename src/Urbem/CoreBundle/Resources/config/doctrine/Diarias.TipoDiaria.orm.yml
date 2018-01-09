@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Diarias\TipoDiaria:
+    type: entity
+    table: diarias.tipo_diaria
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Diarias\TipoDiariaRepository
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 50
+            column: nom_tipo
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkDiariasTipoDiarias
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkDiariasDiarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\Diaria
+            mappedBy: fkDiariasTipoDiaria
+    oneToOne:
+        fkDiariasTipoDiariaDespesa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\TipoDiariaDespesa
+            mappedBy: fkDiariasTipoDiaria
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Ponto\FatorMultiplicacao:
+    type: entity
+    table: ponto.fator_multiplicacao
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        fator:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    oneToOne:
+        fkPontoConfiguracaoParametrosGerais:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoParametrosGerais
+            inversedBy: fkPontoFatorMultiplicacao
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp

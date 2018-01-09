@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Beneficio\FaixaDesconto:
+    type: entity
+    table: beneficio.faixa_desconto
+    repositoryClass: Urbem\CoreBundle\Repository\Beneficio\FaixaDescontoRepository 
+    id:
+        codFaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_faixa
+        codVigencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vigencia
+    fields:
+        vlInicial:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_inicial
+        vlFinal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_final
+        percentualDesconto:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+            column: percentual_desconto
+    manyToOne:
+        fkBeneficioVigencia:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Vigencia
+            inversedBy: fkBeneficioFaixaDescontos
+            joinColumns:
+                cod_vigencia:
+                    referencedColumnName: cod_vigencia

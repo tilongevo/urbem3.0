@@ -1,0 +1,241 @@
+Urbem\CoreBundle\Entity\Orcamento\Despesa:
+    type: entity
+    table: orcamento.despesa
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\DespesaRepository
+    uniqueConstraints:
+        uk_despesa_1:
+            columns:
+                - exercicio
+                - cod_programa
+                - cod_conta
+                - num_pao
+                - num_orgao
+                - num_unidade
+                - cod_recurso
+                - cod_funcao
+                - cod_subfuncao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa
+    fields:
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codPrograma:
+            type: integer
+            nullable: false
+            column: cod_programa
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+        numPao:
+            type: integer
+            nullable: false
+            column: num_pao
+        numOrgao:
+            type: integer
+            nullable: false
+            column: num_orgao
+        numUnidade:
+            type: integer
+            nullable: false
+            column: num_unidade
+        codRecurso:
+            type: integer
+            nullable: false
+            column: cod_recurso
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        codSubfuncao:
+            type: integer
+            nullable: false
+            column: cod_subfuncao
+        vlOriginal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: vl_original
+        dtCriacao:
+            type: date
+            nullable: true
+            column: dt_criacao
+    manyToOne:
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkOrcamentoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkOrcamentoPao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Pao
+            inversedBy: fkOrcamentoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_pao:
+                    referencedColumnName: num_pao
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkOrcamentoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoPrograma:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Programa
+            inversedBy: fkOrcamentoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_programa:
+                    referencedColumnName: cod_programa
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkOrcamentoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+        fkOrcamentoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Funcao
+            inversedBy: fkOrcamentoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+        fkOrcamentoSubfuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Subfuncao
+            inversedBy: fkOrcamentoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_subfuncao:
+                    referencedColumnName: cod_subfuncao
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkOrcamentoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+    oneToMany:
+        fkAlmoxarifadoCentroCustoDotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoDotacao
+            mappedBy: fkOrcamentoDespesa
+        fkEmpenhoDespesasFixas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\DespesasFixas
+            mappedBy: fkOrcamentoDespesa
+        fkEmpenhoPreEmpenhoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenhoDespesa
+            mappedBy: fkOrcamentoDespesa
+        fkOrcamentoDespesaCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\DespesaCredito
+            mappedBy: fkOrcamentoDespesa
+        fkOrcamentoPrevisaoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\PrevisaoDespesa
+            mappedBy: fkOrcamentoDespesa
+        fkOrcamentoSuplementacaoSuplementadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\SuplementacaoSuplementada
+            mappedBy: fkOrcamentoDespesa
+        fkOrcamentoSuplementacaoReducoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\SuplementacaoReducao
+            mappedBy: fkOrcamentoDespesa
+        fkTcepbOrcamentoModalidadeDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\OrcamentoModalidadeDespesa
+            mappedBy: fkOrcamentoDespesa
+        fkTcepeOrcamentoModalidadeDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\OrcamentoModalidadeDespesa
+            mappedBy: fkOrcamentoDespesa
+        fkFolhapagamentoConfiguracaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho
+            mappedBy: fkOrcamentoDespesa
+        fkComprasSolicitacaoItemDotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItemDotacao
+            mappedBy: fkOrcamentoDespesa
+        fkOrcamentoDespesaAcoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\DespesaAcao
+            mappedBy: fkOrcamentoDespesa
+        fkOrcamentoReservaSaldos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReservaSaldos
+            mappedBy: fkOrcamentoDespesa
+        fkTcmbaTermoParceriaDotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TermoParceriaDotacao
+            mappedBy: fkOrcamentoDespesa

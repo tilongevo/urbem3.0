@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Frota\TipoItem:
+    type: entity
+    table: frota.tipo_item
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: true
+            length: 40
+    oneToMany:
+        fkFrotaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Item
+            mappedBy: fkFrotaTipoItem

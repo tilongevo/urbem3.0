@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Contabilidade\ContaDebito:
+    type: entity
+    table: contabilidade.conta_debito
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipoValor:
+            type: string
+            generator:
+                strategy: NONE
+            column: tipo_valor
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+    manyToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkContabilidadeContaDebitos
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkContabilidadeValorLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ValorLancamento
+            inversedBy: fkContabilidadeContaDebito
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                sequencia:
+                    referencedColumnName: sequencia
+                exercicio:
+                    referencedColumnName: exercicio
+                tipo_valor:
+                    referencedColumnName: tipo_valor
+                cod_entidade:
+                    referencedColumnName: cod_entidade

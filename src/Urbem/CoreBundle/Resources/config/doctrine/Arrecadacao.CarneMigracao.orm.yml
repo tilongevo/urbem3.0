@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Arrecadacao\CarneMigracao:
+    type: entity
+    table: arrecadacao.carne_migracao
+    id:
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        prefixo:
+            type: string
+            nullable: true
+            length: 10
+        numeracaoMigracao:
+            type: string
+            nullable: false
+            length: 25
+            column: numeracao_migracao
+    oneToOne:
+        fkArrecadacaoCarne:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Carne
+            inversedBy: fkArrecadacaoCarneMigracao
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                cod_convenio:
+                    referencedColumnName: cod_convenio

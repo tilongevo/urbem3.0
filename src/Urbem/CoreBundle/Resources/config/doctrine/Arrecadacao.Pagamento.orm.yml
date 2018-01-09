@@ -1,0 +1,130 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Pagamento:
+    type: entity
+    table: arrecadacao.pagamento
+    id:
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        ocorrenciaPagamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_pagamento
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        dataPagamento:
+            type: date
+            nullable: false
+            column: data_pagamento
+        inconsistente:
+            type: boolean
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        observacao:
+            type: text
+            nullable: true
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        dataBaixa:
+            type: date
+            nullable: false
+            column: data_baixa
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkArrecadacaoCarne:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Carne
+            inversedBy: fkArrecadacaoPagamentos
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+        fkArrecadacaoTipoPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\TipoPagamento
+            inversedBy: fkArrecadacaoPagamentos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkArrecadacaoPagamentos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkArrecadacaoObservacaoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ObservacaoPagamento
+            mappedBy: fkArrecadacaoPagamento
+        fkArrecadacaoPagamentoCompensacaoPagas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoCompensacaoPagas
+            mappedBy: fkArrecadacaoPagamento
+        fkArrecadacaoPagamentoLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoLote
+            mappedBy: fkArrecadacaoPagamento
+        fkArrecadacaoPagamentoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoAcrescimo
+            mappedBy: fkArrecadacaoPagamento
+        fkArrecadacaoPagamentoCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoCalculo
+            mappedBy: fkArrecadacaoPagamento
+        fkArrecadacaoPagamentoDiferencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoDiferenca
+            mappedBy: fkArrecadacaoPagamento
+        fkArrecadacaoPagamentoCompensacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoCompensacao
+            mappedBy: fkArrecadacaoPagamento
+        fkArrecadacaoPagamentoLoteManuais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoLoteManual
+            mappedBy: fkArrecadacaoPagamento
+        fkArrecadacaoProcessoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ProcessoPagamento
+            mappedBy: fkArrecadacaoPagamento

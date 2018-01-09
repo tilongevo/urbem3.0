@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBb:
+    type: entity
+    table: ima.configuracao_convenio_bb
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+    fields:
+        codConvenioBanco:
+            type: string
+            nullable: false
+            length: 20
+            column: cod_convenio_banco
+    manyToOne:
+        fkMonetarioBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Banco
+            inversedBy: fkImaConfiguracaoConvenioBbs
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+    oneToMany:
+        fkImaConfiguracaoBbContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBbConta
+            mappedBy: fkImaConfiguracaoConvenioBb

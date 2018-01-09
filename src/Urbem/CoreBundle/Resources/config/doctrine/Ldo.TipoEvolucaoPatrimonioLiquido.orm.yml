@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Ldo\TipoEvolucaoPatrimonioLiquido:
+    type: entity
+    table: ldo.tipo_evolucao_patrimonio_liquido
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        rpps:
+            type: boolean
+            generator:
+                strategy: NONE
+    fields:
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 30
+            column: cod_estrutural
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkLdoConfiguracaoEvolucaoPatrimonioLiquidos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\ConfiguracaoEvolucaoPatrimonioLiquido
+            mappedBy: fkLdoTipoEvolucaoPatrimonioLiquido

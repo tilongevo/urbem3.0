@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\SwAtributoCgm:
+    type: entity
+    table: sw_atributo_cgm
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: public.sw_atributo_cgm_seq
+                allocationSize: 100
+                initialValue: 1
+            column: cod_atributo
+    fields:
+        nomAtributo:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_atributo
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        valorPadrao:
+            type: text
+            nullable: false
+            column: valor_padrao
+    oneToMany:
+        fkSwCgaAtributoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaAtributoValor
+            mappedBy: fkSwAtributoCgm
+        fkSwCgmAtributoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmAtributoValor
+            mappedBy: fkSwAtributoCgm

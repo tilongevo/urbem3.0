@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Calendario\DiaCompensado:
+    type: entity
+    table: calendario.dia_compensado
+    id:
+        codFeriado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_feriado
+    fields: {  }
+    oneToMany:
+        fkCalendarioCalendarioDiaCompensados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioDiaCompensado
+            mappedBy: fkCalendarioDiaCompensado
+    oneToOne:
+        fkCalendarioFeriado:
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\Feriado
+            inversedBy: fkCalendarioDiaCompensado
+            joinColumns:
+                cod_feriado:
+                    referencedColumnName: cod_feriado

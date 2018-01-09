@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoPensao:
+    type: entity
+    table: folhapagamento.tipo_evento_pensao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkFolhapagamentoPensaoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PensaoEvento
+            mappedBy: fkFolhapagamentoTipoEventoPensao

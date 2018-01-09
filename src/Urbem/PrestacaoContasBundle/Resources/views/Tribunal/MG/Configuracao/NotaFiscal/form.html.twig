@@ -1,0 +1,340 @@
+<form id="form">
+    <div class="box-body no-padding">
+        <table class="table show-table">
+            <tbody>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.fkTcemgTipoNotaFiscal) }}</th>
+                    <td>
+                        {{ form_widget(form.fkTcemgTipoNotaFiscal) }}
+                        {{ form_errors(form.fkTcemgTipoNotaFiscal) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.fkOrcamentoEntidade) }}</th>
+                    <td>
+                        {{ form_widget(form.fkOrcamentoEntidade) }}
+                        {{ form_errors(form.fkOrcamentoEntidade) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.inscricaoMunicipal) }}</th>
+                    <td>
+                        {{ form_widget(form.inscricaoMunicipal) }}
+                        {{ form_errors(form.inscricaoMunicipal) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.inscricaoEstadual) }}</th>
+                    <td>
+                        {{ form_widget(form.inscricaoEstadual) }}
+                        {{ form_errors(form.inscricaoEstadual) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.aidf) }}</th>
+                    <td>
+                        {{ form_widget(form.aidf) }}
+                        {{ form_errors(form.aidf) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.dataEmissao) }}</th>
+                    <td>
+                        {{ form_widget(form.dataEmissao) }}
+                        {{ form_errors(form.dataEmissao) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.nroNota) }}</th>
+                    <td>
+                        {{ form_widget(form.nroNota) }}
+                        {{ form_errors(form.nroNota) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.nroSerie) }}</th>
+                    <td>
+                        {{ form_widget(form.nroSerie) }}
+                        {{ form_errors(form.nroSerie) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.chaveAcesso) }}</th>
+                    <td>
+                        {{ form_widget(form.chaveAcesso) }}
+                        {{ form_errors(form.chaveAcesso) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.chaveAcessoMunicipal) }}</th>
+                    <td>
+                        {{ form_widget(form.chaveAcessoMunicipal) }}
+                        {{ form_errors(form.chaveAcessoMunicipal) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.vlTotal) }}</th>
+                    <td>
+                        {{ form_widget(form.vlTotal) }}
+                        {{ form_errors(form.vlTotal) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.vlDesconto) }}</th>
+                    <td>
+                        {{ form_widget(form.vlDesconto) }}
+                        {{ form_errors(form.vlDesconto) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.vlTotalLiquido) }}</th>
+                    <td>
+                        {{ form_widget(form.vlTotalLiquido) }}
+                        {{ form_errors(form.vlTotalLiquido) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>
+                        Empenhos
+                    </th>
+                    <td>
+                        <a href="#" id="add-item" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Incluir">
+                            <i class="material-icons">add_circle</i>
+                        </a>
+
+                        {% form_theme form.fkTcemgNotaFiscalEmpenhoLiquidacoes 'PrestacaoContasBundle::Tribunal/MG/Configuracao/NotaFiscal/form_empenho.html.twig' %}
+                        {{ form_widget(form.fkTcemgNotaFiscalEmpenhoLiquidacoes) }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <input type="hidden" name="key" value="{{ key }}" />
+
+    <div class="sonata-ba-collapsed-fields custom-form">
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s12">
+                <div class="col s12 right-align initial">
+                    <button type="submit" class="white-text blue darken-4 btn btn-success save" name="save_update"><i class="material-icons left">input</i>Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+    .custom-form .select2-container {height: 34px !important;}
+</style>
+
+<script>
+    $('select.form-control').select2();
+    $('#form').submit( function(e){
+        e.preventDefault();
+    });
+
+    $('#configuracao_nota_fiscal_fkTcemgTipoNotaFiscal').change(function() {
+        $nroNota = $("#configuracao_nota_fiscal_nroNota").parent().parent();
+        $nroSerie = $("#configuracao_nota_fiscal_nroSerie").parent().parent();
+        $chaveAcesso = $("#configuracao_nota_fiscal_chaveAcesso").parent().parent();
+        $chaveAcessoMunicipal = $("#configuracao_nota_fiscal_chaveAcessoMunicipal").parent().parent();
+
+        switch ($(this).val()) {
+            case 1:
+                $chaveAcesso.show();
+                $nroNota.show();
+                $nroSerie.show();
+
+                break;
+
+            case 2:
+                $chaveAcessoMunicipal.show();
+                $nroNota.show();
+                $nroSerie.show();
+
+                break;
+
+            case 3:
+                $nroNota.show();
+                $nroSerie.show();
+
+                break;
+
+            case 4:
+                $chaveAcesso.show();
+
+                break;
+
+            default:
+                $chaveAcesso.hide();
+                $nroNota.hide();
+                $nroSerie.hide();
+                $chaveAcessoMunicipal.hide();
+
+                break;
+        }
+    });
+
+    function Parent() {
+        this.holder = null;
+        this.childTemplate = null;
+        this.choiceBag = [];
+        this.choiceBagIndex = -1;
+    }
+
+    Parent.prototype = {
+        constructor: Parent
+    };
+
+    Parent.prototype.load = function() {
+        var that = this;
+
+        this.holder.find('table').each(function(i) {
+            index = $(this).find('select').attr('id').replace(/[^\d.]/g, '');
+            that.choiceBagIndex = index > that.choiceBagIndex ? index : that.choiceBagIndex;
+
+            var item = new Child(that);
+            item.setIndex(index);
+
+            that.addChoice(item, i);
+        });
+    };
+
+    Parent.prototype.createEmptyChild = function() {
+        this.choiceBagIndex = this.choiceBagIndex + 1;
+
+        template = this.childTemplate.replace(/__name__/g, this.choiceBagIndex);
+
+        this.holder.append(template);
+
+        referenceIndex = this.holder.children().length - 1;
+
+        var item = new Child(this);
+        item.setIndex(this.choiceBagIndex);
+
+        this.addChoice(item, referenceIndex);
+    };
+
+    Parent.prototype.removeItem = function(item) {
+        item.getReference().remove();
+
+        delete this.choiceBag[item.getIndex()];
+
+        var c = 0;
+
+        for(var i = this.choiceBag.length - 1; i >= 0; i--) {
+            if (typeof this.choiceBag[i] !== 'undefined') {
+                c++;
+            }
+        }
+
+        if (c === 0) {
+            $('#_message').show();
+        }
+    };
+
+    Parent.prototype.addChoice = function(item, referenceIndex) {
+        item.bind(referenceIndex);
+
+        this.choiceBag[item.getIndex()] = item;
+
+        $('select.form-control').select2();
+    };
+
+    function Child(field) {
+        this.field = field;
+        this.index = null;
+        this.reference = null;
+    }
+
+    Child.prototype = {
+        constructor: Child,
+
+        setIndex: function(index) {
+            this.index = index;
+        },
+
+        getIndex: function() {
+            return this.index;
+        },
+
+        getReference: function() {
+            return this.reference;
+        }
+    };
+
+    Child.prototype.bind = function(referenceIndex) {
+        this.reference = this.field.holder.find("table:eq(" + referenceIndex + ")").parent();
+
+        var that = this;
+
+        // remove button
+        this.reference.find("tr:eq(-1) a").click(function() {
+            that.field.removeItem(that);
+        });
+    };
+
+    var item = new Parent();
+    item.holder = $('#configuracao_nota_fiscal_fkTcemgNotaFiscalEmpenhoLiquidacoes');
+    item.childTemplate = $('#configuracao_nota_fiscal_fkTcemgNotaFiscalEmpenhoLiquidacoes').attr('data-prototype');
+    item.load();
+
+    $('#add-item').click(function(e) {
+        item.createEmptyChild();
+        $('#_message').hide();
+        return false;
+    });
+
+    item.holder.on('change', '.select-empenho', function() {
+        var $selectLiquidicao = $(this).parent().parent().parent().find('.select-liquidacao');
+        console.log($(this).parent());
+        console.log($(this).parent().parent());
+        console.log($(this).parent().parent().parent());
+        console.log($selectLiquidicao);
+        var modal = $.urbemModal();
+
+        data = [];
+        data.push({name: 'empenho', value: $(this).val()});
+        data.push({name: 'action', value: 'LoadNotaLiquidicaoByEmpenho'});
+
+        modal.disableBackdrop().showCloseButton().setTitle('Aguarde').setBody('Carregando Notas de Liquidação').open();
+
+        $.get(UrlServiceProviderTCE, data)
+            .success(function (data) {
+                modal.close().remove();
+
+                if ('undefined' === typeof data['notas_liquidacao']) {
+                    return;
+                }
+
+                $selectLiquidicao.prop("disabled", false);
+
+                var opts = "";
+
+                for (i in data.notas_liquidacao) {
+                    opts += "<option value='" + data['notas_liquidacao'][i]['value'] + "'>" + data['notas_liquidacao'][i]['text'] + "</option>";
+                }
+
+                $selectLiquidicao.append(opts);
+                $selectLiquidicao.select2();
+
+            })
+            .error(function (data) {
+                modal.close().remove();
+            });
+
+    });
+</script>

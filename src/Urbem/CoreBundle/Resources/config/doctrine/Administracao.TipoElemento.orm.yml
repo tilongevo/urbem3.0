@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Administracao\TipoElemento:
+    type: entity
+    table: administracao.tipo_elemento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 20
+            column: nom_tipo
+    oneToMany:
+        fkAdministracaoElementos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Elemento
+            mappedBy: fkAdministracaoTipoElemento

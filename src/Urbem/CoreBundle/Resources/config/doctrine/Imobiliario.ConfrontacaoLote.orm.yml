@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Imobiliario\ConfrontacaoLote:
+    type: entity
+    table: imobiliario.confrontacao_lote
+    id:
+        codConfrontacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_confrontacao
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        codLoteConfrontacao:
+            type: integer
+            nullable: false
+            column: cod_lote_confrontacao
+    manyToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioConfrontacaoLotes
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+    oneToOne:
+        fkImobiliarioConfrontacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Confrontacao
+            inversedBy: fkImobiliarioConfrontacaoLote
+            joinColumns:
+                cod_confrontacao:
+                    referencedColumnName: cod_confrontacao
+                cod_lote:
+                    referencedColumnName: cod_lote

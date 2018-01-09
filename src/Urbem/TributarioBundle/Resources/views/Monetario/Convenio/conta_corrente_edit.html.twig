@@ -1,0 +1,51 @@
+<table class="table table-bordered js-table-conta-corrente {% if field.data.itens|length == 0 %} hidden {% endif %}">
+    <thead>
+        <tr>
+            <th>Excluir</th>
+            <th>Banco</th>
+            <th>Agência</th>
+            <th>Conta-Corrente</th>
+            <th>Variação</th>
+        </tr>
+    </thead>
+    <tbody class="sonata-ba-tbody ui-sortable">
+        {% if field.data.itens|length > 0 %}
+            {% for item in field.data.itens %}
+                <tr data-index="{{ loop.index }}">
+                    <td class="control-group">
+                        <button class="js-delete-conta-corrente">Remover</button>
+                    </td>
+                    <td class="control-group">
+                        <select name="contaCorrentes[{{ loop.index }}][codBanco]" class="select2-parameters js-select-banco" style="width:100%" value="" required>
+                            {% for banco in field.data.bancos %}
+                                <option value="{{ banco.codBanco }}" {% if item.contaCorrenteConvenio.codBanco == banco.codBanco %} selected {% endif %}>{{ banco.numBanco }} - {{ banco.nomBanco }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="control-group">
+                        <select name="contaCorrentes[{{ loop.index }}][codAgencia]" class="select2-parameters js-select-agencia" style="width:100%" value="" required>
+                            {% for agencia in item.agencias %}
+                                <option value="{{ agencia.codAgencia }}" {% if item.contaCorrenteConvenio.codAgencia == agencia.codAgencia %} selected {% endif %}>{{ agencia.numAgencia }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="control-group">
+                        <select name="contaCorrentes[{{ loop.index }}][codContaCorrente]" class="select2-parameters js-select-conta-corrente" style="width:100%" value="" required>
+                            {% for contaCorrente in item.contaCorrentes %}
+                                <option value="{{ contaCorrente.codContaCorrente }}" {% if item.contaCorrenteConvenio.codContaCorrente == contaCorrente.codContaCorrente %} selected {% endif %}>{{ contaCorrente.numContaCorrente }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="control-group">
+                        <input name="contaCorrentes[{{ loop.index }}][variacao]" type="number" class="campo-sonata form-control" min="0" max="2147483647" value="{{ item.contaCorrenteConvenio.variacao }}">
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
+
+<a class="white-text blue darken-4 btn btn-success save load-more js-add-conta-corrente" title="Adicionar Conta-Corrente">
+    <i class="material-icons left">add_circle</i>
+    Adicionar Conta-Corrente
+</a>

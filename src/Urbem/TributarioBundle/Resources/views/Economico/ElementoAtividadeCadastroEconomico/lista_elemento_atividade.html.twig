@@ -1,0 +1,36 @@
+<table class="table table-bordered js-table-lista-elemento-atividade">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'label.ElementoAtividadeCadastroEconomicoAdmin.atividade'|trans }}</th>
+            <th>{{ 'label.ElementoAtividadeCadastroEconomicoAdmin.elemento'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sonata-ba-tbody ui-sortable">
+        {% if field.data.itens|length > 0 %}
+            {% set index = 0 %}
+            {% for item in field.data.itens %}
+                {% for atividadeElemento in item.getFkEconomicoElementoAtivCadEconomicos() %}
+                    {% set index = index + 1 %}
+                    <tr class="form_row campo-sonata" data-index="{{ index }}" data-signature="{{ atividadeElemento.getFkEconomicoElementoAtividade().getCodElemento() }}-{{ item.getCodAtividade() }}">
+                        <td class="control-group">
+                            {{ index }}
+                        </td>
+                        <td class="control-group">
+                            <span>{{ '%s - %s'|format(item.getFkEconomicoAtividade().getCodEstrutural(), item.getFkEconomicoAtividade().getNomAtividade()) }}</span>
+                            <input type="hidden" name="elementoAtividade[{{ index }}][codAtividade]" class="js-lista-elemento-atividade-cod-atividade" value="{{ item.getCodAtividade() }}" readonly>
+                        </td>
+                        <td class="control-group js-row-lista-atividades-dt-inicio">
+                            <span>{{ atividadeElemento.getFkEconomicoElementoAtividade().getFkEconomicoElemento().getNomElemento() }}</span>
+                            <input type="hidden" name="elementoAtividade[{{ index }}][codElemento]" value="{{ atividadeElemento.getFkEconomicoElementoAtividade().getCodElemento() }}" readonly>
+                        </td>
+                        <td class="control-group">
+                            <button class="js-delete-row">Remover</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>

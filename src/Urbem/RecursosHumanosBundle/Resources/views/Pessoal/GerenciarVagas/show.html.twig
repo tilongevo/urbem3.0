@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="col s10 title-show">
+        <h5>#</h5>
+    </div>
+    <div class="col s2">
+        <div class="hide-on-med-and-down col l9 right-align">
+            <a class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('pessoal_gerenciar_vagas_edit', { 'id': vaga.id }) }}"><i class="material-icons">edit</i></a>
+        </div>
+        <div class="hide-on-med-and-down col l3 right-align">
+            {{ form_start(delete_form) }}
+            <button class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir" value="Delete" type="submit" name="action"><i class="material-icons">delete</i></button>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+    <div class="row">
+        <table class="striped bordered show-table">
+            <tbody>
+                <tr>
+                    <th class="right">Id</th>
+                    <td>{{ vaga.id }}</td>
+                </tr>
+                <tr>
+                    <th class="right">Timestamp</th>
+                    <td>{% if vaga.timestamp %}{{ vaga.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th class="right">Nrovagacriada</th>
+                    <td>{{ vaga.nroVagaCriada }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s12">
+        <a  class="btn-floating white-text blue darken-4" href="{{ path('pessoal_gerenciar_vagas_index') }}"><i class="material-icons">arrow_back</i></a>
+    </div>
+</div>
+{% endblock %}

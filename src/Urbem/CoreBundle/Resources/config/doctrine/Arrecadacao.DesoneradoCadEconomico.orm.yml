@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Arrecadacao\DesoneradoCadEconomico:
+    type: entity
+    table: arrecadacao.desonerado_cad_economico
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codDesoneracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_desoneracao
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkArrecadacaoDesonerado:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desonerado
+            inversedBy: fkArrecadacaoDesoneradoCadEconomicos
+            joinColumns:
+                cod_desoneracao:
+                    referencedColumnName: cod_desoneracao
+                numcgm:
+                    referencedColumnName: numcgm
+                ocorrencia:
+                    referencedColumnName: ocorrencia
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkArrecadacaoDesoneradoCadEconomicos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica

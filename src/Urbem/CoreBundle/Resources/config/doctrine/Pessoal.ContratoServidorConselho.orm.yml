@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorConselho:
+    type: entity
+    table: pessoal.contrato_servidor_conselho
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        codConselho:
+            type: integer
+            nullable: false
+            column: cod_conselho
+        dtValidade:
+            type: date
+            nullable: false
+            column: dt_validade
+        nrConselho:
+            type: string
+            nullable: false
+            length: 14
+            column: nr_conselho
+    manyToOne:
+        fkPessoalConselho:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Conselho
+            inversedBy: fkPessoalContratoServidorConselhos
+            joinColumns:
+                cod_conselho:
+                    referencedColumnName: cod_conselho
+    oneToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorConselho
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

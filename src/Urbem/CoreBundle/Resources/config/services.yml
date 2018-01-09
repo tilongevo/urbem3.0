@@ -1,0 +1,251 @@
+services:
+    core.audit.listener:
+        class: Urbem\CoreBundle\Listener\AuditListener
+        tags:
+            - { name: doctrine.event_subscriber }
+        arguments:    ['@service_container', '%audit_log_enabled%']
+
+    urbem_storage:
+      class: Urbem\CoreBundle\Services\Server\AmazonS3Service
+      arguments:
+        - "%amazon_bucket%" # Name of Bucket
+        - credentials:
+            key:     "%amazon_key%"
+            secret:  "%amazon_secret%"
+            region:  "%amazon_region%"    # Region of Bucket
+            version: "%amazon_version%"      # API Version
+
+    kernel.listener.exception_listener:
+        class: Urbem\CoreBundle\Listener\ExceptionListener
+        arguments: ['@templating', '@kernel', '@service_container']
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    urbem.listerner.before_controller:
+        class: Urbem\CoreBundle\Listener\BeforeControllerListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    urbem.service.thundera.logger:
+        class: Urbem\CoreBundle\Services\ThunderaLoggerService
+        arguments: ['@service_container', '@prefeitura.info', '@security.token_storage', '@router', '@request_stack']
+
+    urbem.twig.path_integration:
+        arguments: ['service_container']
+        class: Urbem\CoreBundle\Twig\PathIntegrationExtension
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.analyticstracking:
+        arguments: ['@service_container']
+        class: Urbem\CoreBundle\Twig\AnalyticsTrackingExtension
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.module_extension:
+        arguments: ['@service_container']
+        class: Urbem\CoreBundle\Twig\ModuleExtension
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.number_converter:
+        class: Urbem\CoreBundle\Twig\NumberConverterExtension
+        tags:
+            - { name: twig.extension }
+
+    urbem.file.twig.extension:
+        class: Urbem\CoreBundle\Twig\FileExtension
+        tags:
+            - { name: twig.extension }
+
+    sonata.admin.orm.filter.type.string:
+        class: Urbem\CoreBundle\Filter\CaseInsensitiveStringFilter
+        tags:
+            - { name: sonata.admin.filter.type, alias: doctrine_orm_string }
+
+    urbem.twig.boletim.status:
+        class: Urbem\CoreBundle\Twig\BoletimStatus
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.terminal.status:
+        class: Urbem\CoreBundle\Twig\TerminalStatus
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: twig.extension }
+
+    app.admin.twig.urbem_version:
+        class: Urbem\CoreBundle\Twig\VersionExtension
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: twig.extension }
+
+    urbem.coreBundle.form.type.customField:
+        class: Urbem\CoreBundle\Form\Type\CustomFieldType
+        tags:
+            - { name: form.type, alias: customField }
+
+    urbem.twig.form.elements:
+        class: Urbem\CoreBundle\Twig\FormElementsExtension
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.cheque.banco:
+        class: Urbem\CoreBundle\Twig\ChequeBanco
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.cheque.agencia:
+        class: Urbem\CoreBundle\Twig\ChequeAgencia
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.exercicio:
+        class: Urbem\CoreBundle\Twig\ExercicioExtension
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.cheque.emitido:
+        class: Urbem\CoreBundle\Twig\ChequeEmitido
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: twig.extension }
+
+    urbem.twig.cheque.tipo.emissao:
+          class: Urbem\CoreBundle\Twig\ChequeTipoEmissao
+          arguments:
+              - "@doctrine.orm.default_entity_manager"
+          tags:
+              - { name: twig.extension }
+
+    urbem.coreBundle.tesouraria.cheque:
+        class: Urbem\CoreBundle\Services\Financeiro\Tesouraria\Cheque\ChequeService
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+
+    core.many.to.many.form.type:
+        class: Urbem\CoreBundle\Form\Type\ManyToManyType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: manytomany }
+
+    core.auto.complete.form.type:
+        class: Urbem\CoreBundle\Form\Type\AutoCompleteType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: autocomplete }
+
+    core.many.to.many.auto.complete.form.type:
+         class: Urbem\CoreBundle\Form\Type\ManyToManyAutoCompleteType
+         arguments: ["@doctrine.orm.entity_manager"]
+         tags:
+             - { name: form.type, alias: manytomanyautocomplete }
+
+    core.date.pk.picker:
+         class: Urbem\CoreBundle\Form\Type\DatePKPickerType
+         arguments: ["@sonata.core.date.moment_format_converter", "@translator"]
+         tags:
+             - { name: form.type, alias: datepkpicker }
+
+    core.date.pk:
+         class: Urbem\CoreBundle\Form\Type\DatePKType
+         tags:
+             - { name: form.type, alias: datepk }
+
+    urbem.twig.cheque.valor.descontado:
+          class: Urbem\CoreBundle\Twig\ChequeValorDescontado
+          arguments:
+              - "@urbem.coreBundle.tesouraria.cheque"
+          tags:
+              - { name: twig.extension }
+
+    breadcrumb.helper:
+        class: Urbem\CoreBundle\Helper\BreadCrumbsHelper
+        arguments:
+            - "@service_container"
+
+    objectkey.helper:
+        class: Urbem\CoreBundle\Helper\ObjectKeyHelper
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    urbem.objectkey:
+        class: Urbem\CoreBundle\Twig\ObjectKey
+        arguments:
+            - "@objectkey.helper"
+        tags:
+            - { name: twig.extension }
+
+    admin.composite.filter:
+        class: Urbem\CoreBundle\Admin\Filter\CompositeFilter
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: sonata.admin.filter.type, alias: composite_filter }
+
+    twig.card.extension:
+        class: Urbem\CoreBundle\Twig\CardExtension
+        arguments: ["@router", "@translator"]
+        tags:
+            - { name: twig.extension }
+
+    urbem.session.service:
+        class: Urbem\CoreBundle\Services\SessionService
+        arguments:
+            - "@service_container"
+
+    urbem.entidade:
+        class: Urbem\CoreBundle\Services\Orcamento\EntidadeService
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@urbem.session.service"
+
+    urbem.configuracao:
+            class: Urbem\CoreBundle\Services\Administracao\ConfiguracaoService
+            arguments:
+                - "@doctrine.orm.entity_manager"
+                - "@urbem.session.service"
+    urbem.route.access:
+        class: Urbem\CoreBundle\Services\RouteAccessService
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@security.token_storage"
+            - "@request_stack"
+
+    core.security.interactive_login_listener:
+        class: Urbem\CoreBundle\Listener\UrbemAuthenticationListener
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }
+        arguments:
+            - "@service_container"
+
+    urbem.helper.loadfile:
+        class: Urbem\CoreBundle\Helper\LoadFileHelper
+        arguments:
+            - '%uploadroot%'
+
+    urbem.nbsp.twig.extension:
+        class: Urbem\CoreBundle\Twig\NbspExtension
+        tags:
+            - { name: twig.extension }
+
+    core.login_success_handler:
+        class: Urbem\CoreBundle\Handler\LoginSuccessHandler
+        arguments: ["@router", '@security.authorization_checker']
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+
+    urbem.core.form.type.yesno:
+        class: Urbem\CoreBundle\Form\Type\YesNoType
+        tags:
+            - { name: form.type, alias: yesno }

@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Folhapagamento\EventoConfiguracaoEvento:
+    type: entity
+    table: folhapagamento.evento_configuracao_evento
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoEventoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoEvento
+            inversedBy: fkFolhapagamentoEventoConfiguracaoEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoConfiguracaoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEvento
+            inversedBy: fkFolhapagamentoEventoConfiguracaoEventos
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+    oneToMany:
+        fkFolhapagamentoConfiguracaoEventoCasos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCaso
+            mappedBy: fkFolhapagamentoEventoConfiguracaoEvento
+    oneToOne:
+        fkFolhapagamentoConfiguracaoEventoDespesa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoDespesa
+            mappedBy: fkFolhapagamentoEventoConfiguracaoEvento
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

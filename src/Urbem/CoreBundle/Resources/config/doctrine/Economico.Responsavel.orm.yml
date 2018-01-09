@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Economico\Responsavel:
+    type: entity
+    table: economico.responsavel
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEconomicoResponsaveis
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkEconomicoEmpresaProfissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\EmpresaProfissao
+            mappedBy: fkEconomicoResponsavel
+        fkEconomicoCadastroEconRespContabiis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconRespContabil
+            mappedBy: fkEconomicoResponsavel
+        fkEconomicoCadastroEconRespTecnicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconRespTecnico
+            mappedBy: fkEconomicoResponsavel
+        fkEconomicoResponsavelEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ResponsavelEmpresa
+            mappedBy: fkEconomicoResponsavel
+        fkImobiliarioLicencaResponsavelTecnicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaResponsavelTecnico
+            mappedBy: fkEconomicoResponsavel

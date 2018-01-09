@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Economico\UsoSoloLogradouro:
+    type: entity
+    table: economico.uso_solo_logradouro
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codLogradouro:
+            type: integer
+            nullable: false
+            column: cod_logradouro
+    manyToOne:
+        fkSwLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwLogradouro
+            inversedBy: fkEconomicoUsoSoloLogradouros
+            joinColumns:
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+    oneToOne:
+        fkEconomicoLicencaDiversa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiversa
+            inversedBy: fkEconomicoUsoSoloLogradouro
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio

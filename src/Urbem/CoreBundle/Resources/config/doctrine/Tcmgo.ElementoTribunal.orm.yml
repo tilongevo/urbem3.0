@@ -1,0 +1,21 @@
+Urbem\CoreBundle\Entity\Tcmgo\ElementoTribunal:
+    type: entity
+    table: tcmgo.elemento_tribunal
+    id:
+        estrutural:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+    oneToMany:
+        fkTcmgoElementoDeParas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ElementoDePara
+            mappedBy: fkTcmgoElementoTribunal

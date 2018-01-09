@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Administracao\HistoricoVersao:
+    type: entity
+    table: administracao.historico_versao
+    id:
+        codGestao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_gestao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        versao:
+            type: string
+            nullable: false
+            length: 30
+        versaoDb:
+            type: integer
+            nullable: false
+            column: versao_db
+    manyToOne:
+        fkAdministracaoGestao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Gestao
+            inversedBy: fkAdministracaoHistoricoVersoes
+            joinColumns:
+                cod_gestao:
+                    referencedColumnName: cod_gestao

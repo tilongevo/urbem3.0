@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Economico\ProcessoEmpDireitoNatJuridica:
+    type: entity
+    table: economico.processo_emp_direito_nat_juridica
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        timestampProc:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_proc
+    fields: {  }
+    manyToOne:
+        fkEconomicoEmpresaDireitoNaturezaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\EmpresaDireitoNaturezaJuridica
+            inversedBy: fkEconomicoProcessoEmpDireitoNatJuridicas
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkEconomicoProcessoEmpDireitoNatJuridicas
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

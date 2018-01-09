@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Almoxarifado\PermissaoAlmoxarifados:
+    type: entity
+    table: almoxarifado.permissao_almoxarifados
+    id:
+        cgmAlmoxarife:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_almoxarife
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+    fields:
+        padrao:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkAlmoxarifadoAlmoxarife:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarife
+            inversedBy: fkAlmoxarifadoPermissaoAlmoxarifados
+            joinColumns:
+                cgm_almoxarife:
+                    referencedColumnName: cgm_almoxarife
+        fkAlmoxarifadoAlmoxarifado:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado
+            inversedBy: fkAlmoxarifadoPermissaoAlmoxarifados
+            joinColumns:
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado

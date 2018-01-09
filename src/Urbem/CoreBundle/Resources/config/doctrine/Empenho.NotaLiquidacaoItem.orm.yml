@@ -1,0 +1,69 @@
+Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoItem:
+    type: entity
+    table: empenho.nota_liquidacao_item
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+        exercicioItem:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_item
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        vlTotal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_total
+    manyToOne:
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkEmpenhoNotaLiquidacaoItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoItemPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            inversedBy: fkEmpenhoNotaLiquidacaoItens
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio_item:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item
+    oneToMany:
+        fkEmpenhoNotaLiquidacaoItemAnulados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoItemAnulado
+            mappedBy: fkEmpenhoNotaLiquidacaoItem

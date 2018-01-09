@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Normas\CopiaDigital:
+    type: entity
+    table: normas.copia_digital
+    id:
+        codCopia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_copia
+    fields:
+        arquivo:
+            type: string
+            nullable: true
+            length: 80
+    oneToMany:
+        fkNormasNormaCopiaDigitais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\NormaCopiaDigital
+            mappedBy: fkNormasCopiaDigital

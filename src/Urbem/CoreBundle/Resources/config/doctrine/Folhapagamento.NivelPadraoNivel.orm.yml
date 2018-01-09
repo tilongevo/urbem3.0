@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Folhapagamento\NivelPadraoNivel:
+    type: entity
+    table: folhapagamento.nivel_padrao_nivel
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\NivelPadraoNivelRepository
+    id:
+        codNivelPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_padrao
+        codPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_padrao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        percentual:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+        qtdmeses:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkFolhapagamentoNivelPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\NivelPadrao
+            inversedBy: fkFolhapagamentoNivelPadraoNiveis
+            joinColumns:
+                cod_nivel_padrao:
+                    referencedColumnName: cod_nivel_padrao
+        fkFolhapagamentoPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Padrao
+            inversedBy: fkFolhapagamentoNivelPadraoNiveis
+            joinColumns:
+                cod_padrao:
+                    referencedColumnName: cod_padrao

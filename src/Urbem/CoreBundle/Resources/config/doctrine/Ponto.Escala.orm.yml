@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Ponto\Escala:
+    type: entity
+    table: ponto.escala
+    id:
+        codEscala:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ponto.seq_escala
+                allocationSize: 1
+                initialValue: 1
+            column: cod_escala
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        ultimoTimestamp:
+            type: datetime
+            nullable: false
+            column: ultimo_timestamp
+    oneToMany:
+        fkPontoEscalaTurnos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\EscalaTurno
+            mappedBy: fkPontoEscala
+        fkPontoEscalaContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\EscalaContrato
+            mappedBy: fkPontoEscala
+    oneToOne:
+        fkPontoEscalaExclusao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\EscalaExclusao
+            mappedBy: fkPontoEscala
+            joinColumns:
+                cod_escala:
+                    referencedColumnName: cod_escala

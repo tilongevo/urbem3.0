@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Imobiliario\ImovelCorrespondencia:
+    type: entity
+    table: imobiliario.imovel_correspondencia
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+        codBairro:
+            type: integer
+            nullable: false
+            column: cod_bairro
+        codLogradouro:
+            type: integer
+            nullable: false
+            column: cod_logradouro
+        cep:
+            type: string
+            nullable: false
+            length: 8
+        numero:
+            type: string
+            nullable: false
+            length: 6
+        complemento:
+            type: string
+            nullable: false
+            length: 160
+        caixaPostal:
+            type: string
+            nullable: true
+            length: 6
+            column: caixa_postal
+    manyToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkImobiliarioImovelCorrespondencias
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+        fkSwBairroLogradouro:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\SwBairroLogradouro
+            inversedBy: fkImobiliarioImovelCorrespondencias
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_bairro:
+                    referencedColumnName: cod_bairro
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+        fkSwLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwLogradouro
+            inversedBy: fkImobiliarioImovelCorrespondencias
+            joinColumns:
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro

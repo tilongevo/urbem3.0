@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Ima\MotivosRejeicaoConsignacaoEmprestimoBanrisul:
+    type: entity
+    table: ima.motivos_rejeicao_consignacao_emprestimo_banrisul
+    id:
+        codMotivoRejeicao:
+            type: string
+            generator:
+                strategy: NONE
+            column: cod_motivo_rejeicao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    oneToMany:
+        fkImaConsignacaoEmprestimoBanrisulErros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConsignacaoEmprestimoBanrisulErro
+            mappedBy: fkImaMotivosRejeicaoConsignacaoEmprestimoBanrisul

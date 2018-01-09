@@ -1,0 +1,47 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="col s12 adquirentes">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioTransferenciaPropriedade.listaAdquirentes'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableAdquirentesManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.imobiliarioImovel.cgm'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioImovel.nome'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioTransferenciaPropriedade.quotaAtual'|trans }} (%)</th>
+            <th class="th-rh">{{ 'label.imobiliarioTransferenciaPropriedade.quotaFutura'|trans }} (%)</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        <tr class="tr-rh row-modelo-adquirente" style="display:none;">
+            <td class="td-rh cgm">
+                <input type="hidden" class="imput-adquirente" name="adquirente[]" />
+                <input type="hidden" class="imput-adquirente-quota" name="adquirente_quotas[]" />
+            </td>
+            <td class="td-rh nome"></td>
+            <td class="td-rh quota-atual"></td>
+            <td class="td-rh quota-futura"></td>
+            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+        </tr>
+        {% for adquirente in field.data.adquirentes|sort %}
+            <tr class="tr-rh row-adquirente" id="adquirente-{{ adquirente.fkSwCgm.numcgm }}">
+                <td class="td-rh cgm">
+                    <input type="hidden" value="{{ adquirente.fkSwCgm.numcgm }}" class="imput-adquirente" name="adquirente[]" />
+                    <input type="hidden" value="{{ adquirente.cota|number_format(0, ',', '.') }}" class="imput-adquirente-quota" name="adquirente_quotas[]" />
+                    {{ adquirente.fkSwCgm.numcgm }}
+                </td>
+                <td class="td-rh nome">{{ adquirente.fkSwCgm.nomCgm }}</td>
+                <td class="td-rh quota-atual"></td>
+                <td class="td-rh quota-futura">{{ adquirente.cota|number_format(2, '.', ',') }}</td>
+                <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+            </tr>
+        {% endfor %}
+        <tr class="tr-rh empty-row-adquirentes">
+            <td colspan="5">{{ 'listagemVazia'|trans }}</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Patrimonio\BemComprado:
+    type: entity
+    table: patrimonio.bem_comprado
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+    fields:
+        codEmpenho:
+            type: integer
+            nullable: true
+            column: cod_empenho
+        exercicio:
+            type: string
+            nullable: true
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: true
+            column: cod_entidade
+        notaFiscal:
+            type: string
+            nullable: true
+            length: 30
+            column: nota_fiscal
+        numOrgao:
+            type: integer
+            nullable: true
+            column: num_orgao
+        numUnidade:
+            type: integer
+            nullable: true
+            column: num_unidade
+        dataNotaFiscal:
+            type: date
+            nullable: true
+            column: data_nota_fiscal
+        caminhoNf:
+            type: string
+            nullable: true
+            length: 100
+            column: caminho_nf
+    manyToOne:
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkPatrimonioBemComprados
+            fetch: EXTRA_LAZY
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkPatrimonioBemComprados
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToOne:
+        fkTcealBemCompradoTipoDocumentoFiscal:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\BemCompradoTipoDocumentoFiscal
+            mappedBy: fkPatrimonioBemComprado
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioBemComprado
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem

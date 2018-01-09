@@ -1,0 +1,92 @@
+Urbem\CoreBundle\Entity\Tcern\ContratoAditivo:
+    type: entity
+    table: tcern.contrato_aditivo
+    id:
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numContratoAditivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato_aditivo
+        exercicioAditivo:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_aditivo
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        exercicioProcesso:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_processo
+        bimestre:
+            type: integer
+            nullable: false
+        codObjeto:
+            type: integer
+            nullable: false
+            column: cod_objeto
+        valorAditivo:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_aditivo
+        dtInicioVigencia:
+            type: date
+            nullable: false
+            column: dt_inicio_vigencia
+        dtTerminoVigencia:
+            type: date
+            nullable: false
+            column: dt_termino_vigencia
+        dtAssinatura:
+            type: date
+            nullable: false
+            column: dt_assinatura
+        dtPublicacao:
+            type: date
+            nullable: false
+            column: dt_publicacao
+    manyToOne:
+        fkTcernConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Convenio
+            inversedBy: fkTcernContratoAditivos
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                num_convenio:
+                    referencedColumnName: num_convenio
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkTcernContratoAditivos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio_processo:
+                    referencedColumnName: ano_exercicio
+        fkComprasObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Objeto
+            inversedBy: fkTcernContratoAditivos
+            joinColumns:
+                cod_objeto:
+                    referencedColumnName: cod_objeto

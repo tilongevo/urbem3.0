@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Pessoal\AdidoCedidoExcluido:
+    type: entity
+    table: pessoal.adido_cedido_excluido
+    id:
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestampCedidoAdido:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_cedido_adido
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToOne:
+        fkPessoalAdidoCedido:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AdidoCedido
+            inversedBy: fkPessoalAdidoCedidoExcluido
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_norma:
+                    referencedColumnName: cod_norma
+                timestamp_cedido_adido:
+                    referencedColumnName: timestamp

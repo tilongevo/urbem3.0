@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoBescConta:
+    type: entity
+    table: ima.configuracao_besc_conta
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 60
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkImaConfiguracaoConvenioBesc:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBesc
+            inversedBy: fkImaConfiguracaoBescContas
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+                cod_banco:
+                    referencedColumnName: cod_banco
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkImaConfiguracaoBescContas
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+    oneToMany:
+        fkImaConfiguracaoBescLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBescLocal
+            mappedBy: fkImaConfiguracaoBescConta
+        fkImaConfiguracaoBescOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBescOrgao
+            mappedBy: fkImaConfiguracaoBescConta

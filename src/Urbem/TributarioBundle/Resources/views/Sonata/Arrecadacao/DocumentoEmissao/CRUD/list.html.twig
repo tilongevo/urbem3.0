@@ -1,0 +1,79 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+{% block list_table %}
+    <div>
+        {% if admin.datagrid.results|length > 0 %}
+            <table class="bordered highlight">
+                {% block table_header %}
+                    <thead>
+                    <tr><h2>{{ 'label.arrecadacaoDocumentoEmissao.tituloLista'|trans }}</h2></tr>
+                        <hr>
+                        <tr class="sonata-ba-list-field-header">
+                            {% for field_description in admin.list.elements %}
+                                {% set sortable = false %}
+                                {% spaceless %}
+                                    <th class="sonata-ba-list-field-header-{{ field_description.type}} {% if sortable %} sonata-ba-list-field-header-order-{{ sort_by|lower }} {{ sort_active_class }}{% endif %}{% if field_description.options.header_class is defined %} {{ field_description.options.header_class }}{% endif %}"{% if field_description.options.header_style is defined %} style="{{ field_description.options.header_style }}"{% endif %}>
+                                        {% if sortable %}<a href="{{ admin.generateUrl('list', sort_parameters) }}">{% endif %}
+                                            {{ admin.trans(field_description.label, {}, field_description.translationDomain) }}
+                                            {% if sortable %}</a>{% endif %}
+                                    </th>
+                                {% endspaceless %}
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                {% endblock %}
+                {% block table_body %}
+                    <tbody>
+                    {% include admin.getTemplate('outer_list_rows_list') %}
+                    </tbody>
+                {% endblock %}
+            </table>
+            <br>
+            <div class="row">
+                <div class="col s6">
+                    <a class="btn-floating white-text blue darken-4" href="{{ path('urbem_tributario_arrecadacao_documento_emissao_create') }}"><i class="material-icons">arrow_back</i></a>
+                </div>
+            </div>
+        {% else %}
+            <h2>{{ 'label.arrecadacaoDocumentoEmissao.tituloLista'|trans }}</h2>
+            <hr>
+            <div class="info-box">
+                <div class="info-box-content">
+                        <span class="info-box-text grey-text">
+                            {% if admin.exibirMensagemFiltro == true %}
+                                <h4 class="blue-text text-darken-4">
+                                    <i class="material-icons">warning</i>
+                                    Utilize os filtros acima para gerar a lista.
+                                </h4>
+                            {% else %}
+                                <h4>
+                                    <i class="material-icons">warning</i>
+                                    {{ 'label.arrecadacaoDocumentoEmissao.naoEncontrado'|trans({}, 'messages') }}
+                                </h4>
+                                <br>
+                            {% endif %}
+                        </span>
+                    <div class="divider">
+                        <p></p>
+                    </div>
+                </div><!-- /.info-box-content -->
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <a class="btn-floating white-text blue darken-4" href="{{ path('urbem_tributario_arrecadacao_documento_emissao_create') }}"><i class="material-icons">arrow_back</i></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+

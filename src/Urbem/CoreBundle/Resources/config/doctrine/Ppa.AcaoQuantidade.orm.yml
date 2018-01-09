@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Ppa\AcaoQuantidade:
+    type: entity
+    table: ppa.acao_quantidade
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        timestampAcaoDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_acao_dados
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+        exercicioRecurso:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_recurso
+    fields:
+        valor:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    oneToOne:
+        fkLdoAcaoValidada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\AcaoValidada
+            mappedBy: fkPpaAcaoQuantidade
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+                ano:
+                    referencedColumnName: ano
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+                exercicio_recurso:
+                    referencedColumnName: exercicio_recurso
+        fkPpaAcaoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoRecurso
+            inversedBy: fkPpaAcaoQuantidade
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+                exercicio_recurso:
+                    referencedColumnName: exercicio_recurso
+                ano:
+                    referencedColumnName: ano

@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Frota\Escola:
+    type: entity
+    table: frota.escola
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    oneToMany:
+        fkFrotaTransporteEscolares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\TransporteEscolar
+            mappedBy: fkFrotaEscola
+    oneToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFrotaEscola
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

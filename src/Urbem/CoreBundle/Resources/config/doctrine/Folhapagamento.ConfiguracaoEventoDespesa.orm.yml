@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoDespesa:
+    type: entity
+    table: folhapagamento.configuracao_evento_despesa
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+    manyToOne:
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkFolhapagamentoConfiguracaoEventoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+    oneToOne:
+        fkFolhapagamentoEventoConfiguracaoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoConfiguracaoEvento
+            inversedBy: fkFolhapagamentoConfiguracaoEventoDespesa
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Estagio\Curso:
+    type: entity
+    table: estagio.curso
+    id:
+        codCurso:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: estagio.curso_cod_curso_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_curso
+    fields:
+        codGrau:
+            type: integer
+            nullable: false
+            column: cod_grau
+        codAreaConhecimento:
+            type: integer
+            nullable: false
+            column: cod_area_conhecimento
+        nomCurso:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_curso
+    manyToOne:
+        fkEstagioGrau:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\Grau
+            inversedBy: fkEstagioCursos
+            joinColumns:
+                cod_grau:
+                    referencedColumnName: cod_grau
+        fkEstagioAreaConhecimento:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\AreaConhecimento
+            inversedBy: fkEstagioCursos
+            joinColumns:
+                cod_area_conhecimento:
+                    referencedColumnName: cod_area_conhecimento
+    oneToMany:
+        fkEstagioCursoInstituicaoEnsinos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\CursoInstituicaoEnsino
+            mappedBy: fkEstagioCurso

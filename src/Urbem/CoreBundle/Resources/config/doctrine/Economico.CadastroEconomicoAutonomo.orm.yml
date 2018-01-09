@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Economico\CadastroEconomicoAutonomo:
+    type: entity
+    table: economico.cadastro_economico_autonomo
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkEconomicoCadastroEconomicoAutonomos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkEconomicoAtributoCadEconAutonomoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoCadEconAutonomoValor
+            mappedBy: fkEconomicoCadastroEconomicoAutonomo
+    oneToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoCadastroEconomicoAutonomo
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica

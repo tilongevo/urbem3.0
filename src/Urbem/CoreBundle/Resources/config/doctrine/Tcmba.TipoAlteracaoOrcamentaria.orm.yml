@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoAlteracaoOrcamentaria:
+    type: entity
+    table: tcmba.tipo_alteracao_orcamentaria
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkTcmbaLimiteAlteracaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\LimiteAlteracaoCredito
+            mappedBy: fkTcmbaTipoAlteracaoOrcamentaria

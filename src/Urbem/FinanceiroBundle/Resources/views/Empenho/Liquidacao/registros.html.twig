@@ -1,0 +1,29 @@
+
+<table class="bordered highlight" style="width:100%">
+    <div class="box-header">
+        <h2 class="box-title left-align">
+            {{ 'label.itensEmpenho'|trans }}
+        </h2>
+    </div>
+    <tr class="tr-rh">
+        <th class="th-rh"></th>
+        <th class="th-rh">{{ 'label.descricao'|trans }}</th>
+        <th class="th-rh">{{ 'label.empenhado'|trans }}</th>
+        <th class="th-rh">{{ 'label.liquidado'|trans }}</th>
+    </tr>
+    {% for item in field.options.data.itens %}
+        <tr>
+            <td class="td-rh">{{ loop.index }}</td>
+            <td class="td-rh">{{ item.nom_item }}</td>
+            <td class="td-rh">{{ item.vl_total|number_format(2, ',', '.') }}</td>
+            <td class="td-rh">{{ (item.vl_liquidado-item.vl_liquidado_anulado)|number_format(2, ',', '.') }}</td>
+            </tr>
+    {% endfor %}
+</table>
+<div class="sonata-ba-form-actions well well-small form-actions row">
+    <div class="col s12">
+        <div class="col s12 right-align initial">
+            <a class="white-text blue darken-4 btn btn-success save" href="{{ path('urbem_financeiro_empenho_liquidar_empenho_reemitir_liquidacao', {'id': field.admin.adminRequestId }) }}"><i class="material-icons left">description</i>Relatório</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Divida\Parcela:
+    type: entity
+    table: divida.parcela
+    id:
+        numParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcelamento
+        numParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcela
+    fields:
+        vlrParcela:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vlr_parcela
+        dtVencimentoParcela:
+            type: date
+            nullable: false
+            column: dt_vencimento_parcela
+        paga:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        cancelada:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkDividaParcelamento:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Parcelamento
+            inversedBy: fkDividaParcelas
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento
+    oneToMany:
+        fkDividaDocumentoParcelas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DocumentoParcela
+            mappedBy: fkDividaParcela
+        fkDividaParcelaAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelaAcrescimo
+            mappedBy: fkDividaParcela
+        fkDividaParcelaCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelaCalculo
+            mappedBy: fkDividaParcela
+        fkDividaParcelaReducoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelaReducao
+            mappedBy: fkDividaParcela

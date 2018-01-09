@@ -1,0 +1,17 @@
+{% if field.data.imovel.fkImobiliarioImovelFotos|length > 0 %}
+    <div class="row col-md-12">
+        {% for imovelFoto in field.data.imovel.fkImobiliarioImovelFotos|sort %}
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="{{ asset(admin.getPictureDownloadDir ~ imovelFoto.foto) }}" target="_blank">
+                        <img src="{{ asset(admin.getPictureShowDir ~ imovelFoto.foto) }}" alt="{{ imovelFoto.descricao }}" style="width:100%">
+                        <div class="caption">
+                            <p>{{ imovelFoto.descricao }}</p>
+                            <p><input type="checkbox" value="{{ imovelFoto.codFoto }}" name="remover[]"> {{ 'label.imobiliarioImovelFoto.removerFoto'|trans }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

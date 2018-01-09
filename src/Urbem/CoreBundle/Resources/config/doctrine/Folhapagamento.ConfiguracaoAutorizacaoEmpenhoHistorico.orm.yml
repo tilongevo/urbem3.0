@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenhoHistorico:
+    type: entity
+    table: folhapagamento.configuracao_autorizacao_empenho_historico
+    id:
+        codConfiguracaoAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao_autorizacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codHistorico:
+            type: integer
+            nullable: false
+            column: cod_historico
+    manyToOne:
+        fkEmpenhoHistorico:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Historico
+            inversedBy: fkFolhapagamentoConfiguracaoAutorizacaoEmpenhoHistoricos
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkFolhapagamentoConfiguracaoAutorizacaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenho
+            inversedBy: fkFolhapagamentoConfiguracaoAutorizacaoEmpenhoHistorico
+            joinColumns:
+                cod_configuracao_autorizacao:
+                    referencedColumnName: cod_configuracao_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

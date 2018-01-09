@@ -1,0 +1,91 @@
+{% macro render_profile_picture(picture, css, style) %}
+    {% set profilePicturePath = profilePic.realpath ~ '/' ~ picture %}
+
+    {% if file_exists(profilePicturePath) and picture is not null %}
+        <img src="{{ asset('/show/administrativo/usuarios/' ~ app.user.profilePicture) }}"
+             alt="foto do usuário"
+             class="{{ css }}"
+             style="{{ style }}">
+    {% else %}
+        <img src="{{ asset('/bundles/core/images/avatar-li.png') }}"
+             class="{{ css }}"
+             style="{{ style }}">
+    {% endif %}
+
+{% endmacro %}
+
+<!-- Trigger/Open The Modal -->
+<button id="myBtn" class="btn-large user right hide-on-med-and-down" data-activates="userBox">
+    <h6 class="avatar-img left img-circle">
+        {{ _self.render_profile_picture(app.user.profilePicture) }}
+    </h6>
+    <h6 class="grey-text left">
+        <b>{{ app.user }}</b>
+    </h6>
+</button>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <p>
+    <div class="close1"></div>
+    <div class="profile right hide-on-med-and-down" id="userBox">
+        <div class="setaProfile"></div>
+        <div class="col s12 names">
+            <div class="col s4 left-align">
+                {% if is_granted('ROLE_MUNICIPE') and is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+                    <a href="{{ path('urbem_portalservicos_usuario_show', { 'id': app.user|objectKey }) }}" class="black-text brand-logo">
+                        {{ _self.render_profile_picture(app.user.profilePicture, "marg-img img-responsive img-circle", "width:115px; height:85px;") }}
+                    </a>
+                {% elseif is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('urbem_administrativo_administracao_usuarios_show', { 'id': app.user|objectKey }) }}" class="black-text brand-logo">
+                        {{ _self.render_profile_picture(app.user.profilePicture, "marg-img img-responsive img-circle", "width:115px; height:85px;") }}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col s8 right-align">
+                {% if is_granted('ROLE_MUNICIPE') and is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+                    <a href="{{ path('urbem_portalservicos_usuario_edit', { 'id': app.user|objectKey }) }}">
+                        <h6 class="">{{ app.user.getFkSwCgm.getNomCgm }}</h6>
+                    </a>
+                    <h6 class="">
+                        <a href="{{ path('urbem_portalservicos_usuario_change_password', { 'id': app.user|objectKey }) }}">Alterar Senha</a>
+                    </h6>
+                {% elseif is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('urbem_administrativo_administracao_usuarios_edit', { 'id': app.user|objectKey }) }}">
+                        <h6 class="">{{ app.user.getFkSwCgm.getNomCgm }}</h6>
+                    </a>
+                    <h6 class="">
+                        <a href="{{ path('urbem_administrativo_administracao_usuarios_change_password', { 'id': app.user|objectKey }) }}">Alterar Senha</a>
+                    </h6>
+                {% endif %}
+
+                <a href="#">
+                    <h6 class="">{{ app.user.getEmail }}</h6>
+                </a>
+                <a href="{{ path('fos_user_security_logout') }}"
+                   class="out waves-effect btn right-align">
+                    <i class="material-icons left" aria-hidden="true">exit_to_app</i>
+                    Sair
+                </a>
+            </div>
+        </div>
+    </div>
+    </p>
+</div>
+
+<script>
+    var modal = document.getElementById('myModal');
+    var btn = document.getElementById("myBtn");
+    var span3 = document.getElementsByClassName("close1")[0];
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+    span3.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

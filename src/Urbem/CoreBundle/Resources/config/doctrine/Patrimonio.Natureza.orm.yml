@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Patrimonio\Natureza:
+    type: entity
+    table: patrimonio.natureza
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\NaturezaRepository
+    id:
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+    fields:
+        nomNatureza:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_natureza
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkPatrimonioTipoNatureza:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\TipoNatureza
+            inversedBy: fkPatrimonioNaturezas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: codigo
+    oneToMany:
+        fkTcmgoBalancoApbaaaaNaturezas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\BalancoApbaaaaNatureza
+            mappedBy: fkPatrimonioNatureza
+        fkPatrimonioGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Grupo
+            mappedBy: fkPatrimonioNatureza

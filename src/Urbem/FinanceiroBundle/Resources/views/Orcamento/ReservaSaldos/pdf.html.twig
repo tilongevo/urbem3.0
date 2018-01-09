@@ -1,0 +1,49 @@
+{% block body %}
+    {% block content %}
+        {% include 'FinanceiroBundle::Orcamento/ReservaSaldos/header.html.twig' %}
+        <table class="table table-bordered">
+            <tr>
+                <th class="grey"> {{ 'label.reservaSaldos.codReserva'|trans }} </th>
+                <td>{{ object.codReserva ~ '/' ~ object.exercicio }}</td>
+            </tr>
+            <tr>
+                <th class="grey">{{ 'label.reservaSaldos.codEntidade'|trans }}</th>
+                <td>{{ entidade.codEntidade ~ ' - ' ~ entidade.fkSwCgm.nomCgm }}</td>
+            </tr>
+            <tr>
+                <th class="grey">{{ 'label.reservaSaldos.dotacaoOrcamentaria'|trans }}</th>
+                <td>{{ object.fkOrcamentoDespesa.codDespesa ~ ' - ' ~ object.fkOrcamentoDespesa.fkOrcamentoContaDespesa.descricao }}</td>
+            </tr>
+            <tr>
+                <th class="grey">{{ 'label.reservaSaldos.orgaoUnidade'|trans }}</th>
+                <td>{{ object.fkOrcamentoDespesa.fkOrcamentoUnidade.fkOrcamentoOrgao.numOrgao ~ '/' ~ object.fkOrcamentoDespesa.fkOrcamentoUnidade.fkOrcamentoOrgao.nomOrgao }}</td>
+            </tr>
+            <tr>
+                <th class="grey">{{ 'label.reservaSaldos.unidadeOrcamentaria'|trans }}</th>
+                <td>{{ object.fkOrcamentoDespesa.fkOrcamentoUnidade.numUnidade ~ '/' ~ object.fkOrcamentoDespesa.fkOrcamentoUnidade.nomUnidade }}</td>
+            </tr>
+            <tr>
+                <th class="grey">{{ 'label.reservaSaldos.motivo'|trans }}</th>
+                <td>{{ object.motivo }}</td>
+            </tr>
+            <tr>
+                <th class="grey">{{ 'label.reservaSaldos.saldoDotacao'|trans }}</th>
+                <td>{{ object.vlReserva|number_format_currency('BRL') }}</td>
+            </tr>
+            <tr>
+                <th class="grey">{{ 'label.reservaSaldos.efetuadaEm'|trans }}</th>
+                <td>{{ object.dtValidadeInicial|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th class="grey">{{ 'label.reservaSaldos.dtValidadeFinal'|trans }}</th>
+                <td>{{ object.dtValidadeFinal|date('d/m/Y') }}</td>
+            </tr>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

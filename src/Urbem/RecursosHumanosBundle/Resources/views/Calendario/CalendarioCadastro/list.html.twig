@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container-rh">
+    <div class="row title-index filtro filtro-sonata z-depth-0 filtro-rh">
+        <div class="col s3 field-filtro">
+            <label for="f1" class="control-label label-rh">Descrição</label>
+            <div>
+              <input id="1" type="text" class="input-rh">
+            </div>
+        </div>
+        <div class="col s1 busca-rh buscar center">
+            <button type="submit" class="hide-on-med-and-down btn waves-effect waves-light blue-darken-4">
+                <i class="material-icons">search</i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <a class="left hide-on-med-and-down waves-effect waves-light btn blue darken-4 add-rh" href="{{ path('calendario_calendario_cadastro_new') }}"><i class="material-icons left icon-rh">add</i>Incluir</a>
+    </div>
+    <div class="row">
+        <table class="bordered highlight">
+            <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.descricao'|trans }}</th>
+                    <th class="th-rh">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for calendario in calendariosCadastrados %}
+                <tr>
+                    <td class="td-rh center">
+                        {{ calendario.descricao }}
+                    </td>
+                    <td class="td-rh">
+                        <div class="btn-group">
+                            <a  class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped"data-position="right" data-delay="50" data-tooltip="Editar" href="{{ path('calendario_calendario_cadastro_edit', { 'id': calendario.codCalendar }) }}">
+                                <i class="material-icons">edit</i>
+                            </a>
+
+                            <a  class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped"data-position="right" data-delay="50" data-tooltip="Excluir" href="{{ path('calendario_calendario_cadastro_delete', { 'id': calendario.codCalendar }) }}">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="center">
+            {{ knp_pagination_render(calendariosCadastrados) }}
+        </div>
+    </div>
+</div>
+  {% block javascript %}
+      {{ parent() }}
+
+      <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem.js') }}"></script>
+  {% endblock javascript %}
+{% endblock content %}

@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Patrimonio\BemProcesso:
+    type: entity
+    table: patrimonio.bem_processo
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+    fields:
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkPatrimonioBemProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioBemProcesso
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem

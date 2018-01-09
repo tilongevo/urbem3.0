@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoTermo:
+    type: entity
+    table: fiscalizacao.notificacao_termo
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        numNotificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_notificacao
+    fields:
+        codFiscal:
+            type: integer
+            nullable: false
+            column: cod_fiscal
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        dtNotificacao:
+            type: date
+            nullable: false
+            column: dt_notificacao
+        observacao:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkFiscalizacaoFiscalProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalProcessoFiscal
+            inversedBy: fkFiscalizacaoNotificacaoTermos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_fiscal:
+                    referencedColumnName: cod_fiscal
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoNotificacaoTermos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoNotificacaoTermos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToMany:
+        fkFiscalizacaoNotificacaoTermoInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoTermoInfracao
+            mappedBy: fkFiscalizacaoNotificacaoTermo
+    lifecycleCallbacks:
+        prePersist:
+            - generatePkSequence

@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConcessaoDecimo:
+    type: entity
+    table: folhapagamento.concessao_decimo
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\ConcessaoDecimoRepository
+    id:
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        folhaSalario:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: folha_salario
+    manyToOne:
+        fkFolhapagamentoPeriodoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao
+            inversedBy: fkFolhapagamentoConcessaoDecimos
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkFolhapagamentoConcessaoDecimos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToOne:
+        fkFolhapagamentoConfiguracaoAdiantamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAdiantamento
+            mappedBy: fkFolhapagamentoConcessaoDecimo
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                desdobramento:
+                    referencedColumnName: desdobramento

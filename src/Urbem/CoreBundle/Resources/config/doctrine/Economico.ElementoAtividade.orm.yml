@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Economico\ElementoAtividade:
+    type: entity
+    table: economico.elemento_atividade
+    id:
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        codElemento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_elemento
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkEconomicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Atividade
+            inversedBy: fkEconomicoElementoAtividades
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+        fkEconomicoElemento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Elemento
+            inversedBy: fkEconomicoElementoAtividades
+            joinColumns:
+                cod_elemento:
+                    referencedColumnName: cod_elemento
+    oneToMany:
+        fkEconomicoElementoAtivCadEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoAtivCadEconomico
+            mappedBy: fkEconomicoElementoAtividade

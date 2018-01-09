@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Ponto\HorasDescontoDsr:
+    type: entity
+    table: ponto.horas_desconto_dsr
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        horas:
+            type: time
+            nullable: false
+    oneToOne:
+        fkPontoConfiguracaoParametrosGerais:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoParametrosGerais
+            inversedBy: fkPontoHorasDescontoDsr
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp

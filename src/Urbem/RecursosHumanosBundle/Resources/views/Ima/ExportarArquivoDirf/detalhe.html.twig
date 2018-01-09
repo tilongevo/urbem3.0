@@ -1,0 +1,44 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left" style="margin: 1.78rem 0 0 0">
+                    <i class="fa fa-file fa-lg" aria-hidden="true"></i>
+                    <span class="grey-text bold" style="padding-top: 10px; font-weight: bold">
+                    Arquivo DIRF
+                </span>
+                </h2>
+
+                <h6 class="divider grey col s12"></h6>
+				
+				{% if file is defined %}
+					<div class="col s6 initial">
+                        <a href="{{ path('urbem_recursos_humanos_informacoes_configuracao_dirf_download', {'file':file}) }}"
+                           class="btn white-text blue darken-4 btn-success">
+                            <i class="material-icons">receipt</i>
+                            Download
+                        </a>
+                	</div>
+				{% elseif errConfigDirf is defined %}
+					<div class="col s6 initial">
+                        {{ 'label.exportarDirf.errConfig'|trans|replace({'%ano%': errConfigDirf}) }}
+                	</div>
+				{% endif %}
+
+            </div>
+
+            <div class="sonata-ba-form-actions well well-small form-actions row">
+                <div class="col s8 initial">
+                    <a href="{{ path('urbem_recursos_humanos_informacoes_configuracao_dirf_create') }}"
+                       class="back btn-floating white-text blue darken-4 btn-success">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Ima\ExportacaoTcmBa:
+    type: entity
+    table: ima.exportacao_tcm_ba
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        codEntidade:
+            type: string
+            nullable: false
+            length: 1
+            column: cod_entidade
+        numEntidade:
+            type: integer
+            nullable: false
+            column: num_entidade
+    oneToMany:
+        fkImaExportacaoTcmBaSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ExportacaoTcmBaSubDivisao
+            mappedBy: fkImaExportacaoTcmBa

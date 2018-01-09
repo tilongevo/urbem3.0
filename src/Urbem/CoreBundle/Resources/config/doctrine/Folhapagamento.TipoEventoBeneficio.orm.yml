@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoBeneficio:
+    type: entity
+    table: folhapagamento.tipo_evento_beneficio
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        codBeneficio:
+            type: integer
+            nullable: false
+            column: cod_beneficio
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkBeneficioBeneficioCadastro:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\BeneficioCadastro
+            inversedBy: fkFolhapagamentoTipoEventoBeneficios
+            joinColumns:
+                cod_beneficio:
+                    referencedColumnName: cod_beneficio
+    oneToMany:
+        fkFolhapagamentoBeneficioEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\BeneficioEvento
+            mappedBy: fkFolhapagamentoTipoEventoBeneficio

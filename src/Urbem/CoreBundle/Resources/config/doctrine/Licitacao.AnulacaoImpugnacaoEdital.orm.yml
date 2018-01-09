@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Licitacao\AnulacaoImpugnacaoEdital:
+    type: entity
+    table: licitacao.anulacao_impugnacao_edital
+    id:
+        numEdital:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_edital
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        exercicioProcesso:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_processo
+    fields:
+        parecerJuridico:
+            type: text
+            nullable: false
+            column: parecer_juridico
+    oneToOne:
+        fkLicitacaoEditalImpugnado:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\EditalImpugnado
+            inversedBy: fkLicitacaoAnulacaoImpugnacaoEdital
+            joinColumns:
+                num_edital:
+                    referencedColumnName: num_edital
+                exercicio:
+                    referencedColumnName: exercicio
+                exercicio_processo:
+                    referencedColumnName: exercicio_processo
+                cod_processo:
+                    referencedColumnName: cod_processo

@@ -1,0 +1,83 @@
+Urbem\CoreBundle\Entity\Ima\ConsignacaoEmprestimoBanrisul:
+    type: entity
+    table: ima.consignacao_emprestimo_banrisul
+    id:
+        numLinha:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_linha
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+    fields:
+        oa:
+            type: integer
+            nullable: true
+        matricula:
+            type: integer
+            nullable: true
+        cpf:
+            type: string
+            nullable: true
+            length: 15
+        nomFuncionario:
+            type: string
+            nullable: true
+            length: 35
+            column: nom_funcionario
+        codCanal:
+            type: integer
+            nullable: true
+            column: cod_canal
+        nroContrato:
+            type: string
+            nullable: true
+            length: 20
+            column: nro_contrato
+        prestacao:
+            type: string
+            nullable: true
+            length: 7
+        valConsignar:
+            type: integer
+            nullable: true
+            column: val_consignar
+        valConsignado:
+            type: integer
+            nullable: true
+            column: val_consignado
+        filler:
+            type: string
+            nullable: true
+            length: 200
+        codContrato:
+            type: integer
+            nullable: true
+            column: cod_contrato
+        origemPagamento:
+            type: string
+            nullable: true
+            length: 1
+            column: origem_pagamento
+    manyToOne:
+        fkImaConsignacaoEmprestimoBanrisulConfiguracao:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConsignacaoEmprestimoBanrisulConfiguracao
+            inversedBy: fkImaConsignacaoEmprestimoBanrisuis
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+    oneToOne:
+        fkImaConsignacaoEmprestimoBanrisulErro:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConsignacaoEmprestimoBanrisulErro
+            mappedBy: fkImaConsignacaoEmprestimoBanrisul
+            joinColumns:
+                num_linha:
+                    referencedColumnName: num_linha
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao

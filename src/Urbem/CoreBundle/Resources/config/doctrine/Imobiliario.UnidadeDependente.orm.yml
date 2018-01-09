@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Imobiliario\UnidadeDependente:
+    type: entity
+    table: imobiliario.unidade_dependente
+    indexes:
+        idx_unidade_dependente:
+            columns:
+                - cod_construcao_dependente
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        codConstrucaoDependente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao_dependente
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkImobiliarioUnidadeAutonoma:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\UnidadeAutonoma
+            inversedBy: fkImobiliarioUnidadeDependentes
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+        fkImobiliarioConstrucao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Construcao
+            inversedBy: fkImobiliarioUnidadeDependentes
+            joinColumns:
+                cod_construcao_dependente:
+                    referencedColumnName: cod_construcao
+    oneToMany:
+        fkImobiliarioAreaUnidadeDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AreaUnidadeDependente
+            mappedBy: fkImobiliarioUnidadeDependente
+        fkImobiliarioBaixaUnidadeDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BaixaUnidadeDependente
+            mappedBy: fkImobiliarioUnidadeDependente
+        fkImobiliarioLicencaImovelUnidadeDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaImovelUnidadeDependente
+            mappedBy: fkImobiliarioUnidadeDependente

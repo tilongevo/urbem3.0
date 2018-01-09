@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Orcamento\RecursoDireto:
+    type: entity
+    table: orcamento.recurso_direto
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\RecursoDiretoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+    fields:
+        nomRecurso:
+            type: string
+            nullable: false
+            length: 160
+            column: nom_recurso
+        finalidade:
+            type: string
+            nullable: false
+            length: 160
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                default: V
+        codFonte:
+            type: integer
+            nullable: false
+            column: cod_fonte
+        codigoTc:
+            type: integer
+            nullable: true
+            column: codigo_tc
+        codTipoEsfera:
+            type: integer
+            nullable: true
+            column: cod_tipo_esfera
+    manyToOne:
+        fkOrcamentoFonteRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\FonteRecurso
+            inversedBy: fkOrcamentoRecursoDiretos
+            joinColumns:
+                cod_fonte:
+                    referencedColumnName: cod_fonte
+        fkAdministracaoEsfera:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Esfera
+            inversedBy: fkOrcamentoRecursoDiretos
+            joinColumns:
+                cod_tipo_esfera:
+                    referencedColumnName: cod_esfera
+    oneToOne:
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkOrcamentoRecursoDireto
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso

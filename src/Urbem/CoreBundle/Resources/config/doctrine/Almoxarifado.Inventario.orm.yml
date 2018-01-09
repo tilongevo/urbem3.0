@@ -1,0 +1,69 @@
+Urbem\CoreBundle\Entity\Almoxarifado\Inventario:
+    type: entity
+    table: almoxarifado.inventario
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\InventarioRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codInventario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inventario
+    fields:
+        dtInventario:
+            type: date
+            nullable: true
+            column: dt_inventario
+        observacao:
+            type: string
+            nullable: true
+            length: 160
+        processado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkAlmoxarifadoAlmoxarifado:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado
+            inversedBy: fkAlmoxarifadoInventarios
+            joinColumns:
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+    oneToMany:
+        fkAlmoxarifadoCatalogoClassificacaoBloqueios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacaoBloqueio
+            mappedBy: fkAlmoxarifadoInventario
+        fkAlmoxarifadoInventarioItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\InventarioItens
+            mappedBy: fkAlmoxarifadoInventario
+    oneToOne:
+        fkAlmoxarifadoInventarioAnulacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\InventarioAnulacao
+            mappedBy: fkAlmoxarifadoInventario
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_inventario:
+                    referencedColumnName: cod_inventario

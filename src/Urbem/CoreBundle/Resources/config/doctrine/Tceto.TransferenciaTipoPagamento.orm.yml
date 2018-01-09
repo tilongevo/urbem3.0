@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Tceto\TransferenciaTipoPagamento:
+    type: entity
+    table: tceto.transferencia_tipo_pagamento
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkTcetoTipoPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\TipoPagamento
+            inversedBy: fkTcetoTransferenciaTipoPagamentos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkTesourariaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            inversedBy: fkTcetoTransferenciaTipoPagamento
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo

@@ -1,0 +1,148 @@
+Urbem\CoreBundle\Entity\SwLancamento:
+    type: entity
+    table: sw_lancamento
+    id:
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codHistorico:
+            type: integer
+            nullable: false
+            column: cod_historico
+        complemento:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkSwLote:
+            targetEntity: Urbem\CoreBundle\Entity\SwLote
+            inversedBy: fkSwLancamentos
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                tipo:
+                    referencedColumnName: tipo
+        fkSwHistoricoContabil:
+            targetEntity: Urbem\CoreBundle\Entity\SwHistoricoContabil
+            inversedBy: fkSwLancamentos
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkSwValorLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwValorLancamento
+            mappedBy: fkSwLancamento
+    oneToOne:
+        fkSwEmpenhamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwEmpenhamento
+            mappedBy: fkSwLancamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwLancamentoReceita:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamentoReceita
+            mappedBy: fkSwLancamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwLancamentoEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamentoEmpenho
+            mappedBy: fkSwLancamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwLancamentoTransferencia:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamentoTransferencia
+            mappedBy: fkSwLancamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwLiquidacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwLiquidacao
+            mappedBy: fkSwLancamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwPagamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwPagamento
+            mappedBy: fkSwLancamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio

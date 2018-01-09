@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Licitacao\PublicacaoAta:
+    type: entity
+    table: licitacao.publicacao_ata
+    uniqueConstraints:
+        uk_publicacao_ata_1:
+            columns:
+                - ata_id
+                - numcgm
+                - dt_publicacao
+    id:
+        id:
+            type: integer
+            generator:
+                strategy:  SEQUENCE
+            sequenceGenerator:
+                sequenceName: licitacao.publicacao_ata_seq
+                allocationSize: 1
+                initialValue: 1
+    fields:
+        ataId:
+            type: integer
+            nullable: false
+            column: ata_id
+        numcgm:
+            type: integer
+            nullable: false
+        dtPublicacao:
+            type: date
+            nullable: false
+            column: dt_publicacao
+        observacao:
+            type: string
+            nullable: false
+            length: 80
+        numPublicacao:
+            type: integer
+            nullable: true
+            column: num_publicacao
+    manyToOne:
+        fkLicitacaoAta:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Ata
+            inversedBy: fkLicitacaoPublicacaoAtas
+            joinColumns:
+                ata_id:
+                    referencedColumnName: id
+        fkLicitacaoVeiculosPublicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\VeiculosPublicidade
+            inversedBy: fkLicitacaoPublicacaoAtas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

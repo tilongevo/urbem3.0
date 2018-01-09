@@ -1,0 +1,69 @@
+Urbem\CoreBundle\Entity\Almoxarifado\AtributoRequisicaoItem:
+    type: entity
+    table: almoxarifado.atributo_requisicao_item
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codRequisicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_requisicao
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        codSequencial:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sequencial
+    fields:
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+    manyToOne:
+        fkAlmoxarifadoRequisicaoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItem
+            inversedBy: fkAlmoxarifadoAtributoRequisicaoItens
+            joinColumns:
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_requisicao:
+                    referencedColumnName: cod_requisicao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_centro:
+                    referencedColumnName: cod_centro
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_item:
+                    referencedColumnName: cod_item
+    oneToMany:
+        fkAlmoxarifadoAtributoRequisicaoItemValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoRequisicaoItemValor
+            mappedBy: fkAlmoxarifadoAtributoRequisicaoItem

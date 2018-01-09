@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Ppa\PpaPublicacao:
+    type: entity
+    table: ppa.ppa_publicacao
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numcgmVeiculo:
+            type: integer
+            nullable: false
+            column: numcgm_veiculo
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+    manyToOne:
+        fkPpaPpa:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Ppa
+            inversedBy: fkPpaPpaPublicacoes
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+        fkLicitacaoVeiculosPublicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\VeiculosPublicidade
+            inversedBy: fkPpaPpaPublicacoes
+            joinColumns:
+                numcgm_veiculo:
+                    referencedColumnName: numcgm
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPpaPpaPublicacoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToOne:
+        fkPpaPpaEncaminhamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\PpaEncaminhamento
+            mappedBy: fkPpaPpaPublicacao
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+                timestamp:
+                    referencedColumnName: timestamp

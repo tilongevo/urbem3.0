@@ -1,0 +1,124 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-bordered table-custom" style="margin-top: 10px">
+            <thead>
+                <tr>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.inscricao'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.endereco'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.cadastroImobiliario.proprietario'|trans|upper }}</th>
+                        {% for attr in atributosFiltroImovel %}
+                            <th>{{ attr.getNomAtributo()|upper }}</th>
+                        {% endfor %}
+                        {% for attr in atributosFiltroLoteUrbano %}
+                            <th>{{ attr.getNomAtributo()|upper }}</th>
+                        {% endfor %}
+                        {% for attr in atributosFiltroLoteRural %}
+                            <th>{{ attr.getNomAtributo()|upper }}</th>
+                        {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                    {% for imovel in imoveis %}
+                        <tr>
+                            <td>{{ imovel.inscricao_municipal }}</td>
+                            <td>{{ imovel.endereco }}</td>
+                            <td>{{ imovel.proprietario_cota }}</td>
+
+                            {% set atributosImovel = admin.getAtributosByImovel(imovel.inscricao_municipal) %}
+                            {% for atributoFiltro in atributosFiltroImovel %}
+                                {% set atributoFiltroId = '%d~%d~%d'|format(atributoFiltro.getCodModulo(), atributoFiltro.getCodCadastro(), atributoFiltro.getCodAtributo()) %}
+								{% set currentTd = '' %}
+                                {% for atributoImovelId, atributoImovel in atributosImovel %}
+                                    {% if atributoImovelId == atributoFiltroId %}
+                                        {% if atributoImovel['cod_tipo'] in [3, 4] %}
+                                            {% set atributoImovelValores = atributoImovel['valor_padrao']|split(',') %}
+                                            {% set atributoImovelValorLabel = atributoImovel['valor_padrao_desc']|split('[][][]') %}
+
+                                            {% if atributoImovel['valor'] in atributoImovelValores %}
+                                                {% for atributoImovelValorIndex, atributoImovelValor in atributoImovelValores %}
+                                                    {% if atributoImovelValor == atributoImovel['valor'] %}
+                                                        {%  set currentTd = atributoImovelValorLabel[atributoImovelValorIndex] %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {%  set currentTd = '' %}
+                                            {% endif %}
+                                        {% else %}
+                                            {%  set currentTd = atributoImovel.valor %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <td>{{ currentTd }}</td>
+                            {% endfor %}
+                            
+                            {% set atributosLoteUrbano = admin.getAtributosByLoteUrbano(imovel.cod_lote) %}
+                            {% for atributoFiltro in atributosFiltroLoteUrbano %}
+                                {% set atributoFiltroId = '%d~%d~%d'|format(atributoFiltro.getCodModulo(), atributoFiltro.getCodCadastro(), atributoFiltro.getCodAtributo()) %}
+								{% set currentTd = '' %}
+                                {% for atributoLoteId, atributoLote in atributosLoteUrbano %}
+                                    {% if atributoLoteId == atributoFiltroId %}
+                                        {% if atributoLote['cod_tipo'] in [3, 4] %}
+                                            {% set atributoLotelValores = atributoLote['valor_padrao']|split(',') %}
+                                            {% set atributoLoteValorLabel = atributoLote['valor_padrao_desc']|split('[][][]') %}
+
+                                            {% if atributoLote['valor'] in atributoLoteValores %}
+                                                {% for atributoLoteValorIndex, atributoLoteValor in atributoLoteValores %}
+                                                    {% if atributoLoteValor == atributoLote['valor'] %}
+                                                        {% set currentTd = atributoLoteValorLabel[atributoLoteValorIndex] %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% set currentTd = '' %}
+                                            {% endif %}
+                                        {% else %}
+                                            {% set currentTd = atributoLote.valor %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <td>{{ currentTd }}</td>
+                            {% endfor %}
+                            
+                            {% set atributosLoteRural = admin.getAtributosByLoteRural(imovel.cod_lote) %}
+                            {% for atributoFiltro in atributosFiltroLoteRural %}
+                                {% set atributoFiltroId = '%d~%d~%d'|format(atributoFiltro.getCodModulo(), atributoFiltro.getCodCadastro(), atributoFiltro.getCodAtributo()) %}
+								{% set currentTd = '' %}
+                                {% for atributoLoteId, atributoLote in atributosLoteRural %}
+                                    {% if atributoLoteId == atributoFiltroId %}
+                                        {% if atributoLote['cod_tipo'] in [3, 4] %}
+                                            {% set atributoLotelValores = atributoLote['valor_padrao']|split(',') %}
+                                            {% set atributoLoteValorLabel = atributoLote['valor_padrao_desc']|split('[][][]') %}
+
+                                            {% if atributoLote['valor'] in atributoLoteValores %}
+                                                {% for atributoLoteValorIndex, atributoLoteValor in atributoLoteValores %}
+                                                    {% if atributoLoteValor == atributoLote['valor'] %}
+                                                        {% set currentTd = atributoLoteValorLabel[atributoLoteValorIndex] %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% set currentTd = '' %}
+                                            {% endif %}
+                                        {% else %}
+                                            {% set currentTd = atributoLote.valor %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <td>{{ currentTd }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+
+        {% include 'TributarioBundle::Imobiliario/Relatorios/cadastroImobiliario_details.html.twig' %}
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

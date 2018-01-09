@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Normas\NormaCopiaDigital:
+    type: entity
+    table: normas.norma_copia_digital
+    id:
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields:
+        codCopia:
+            type: integer
+            nullable: false
+            column: cod_copia
+    manyToOne:
+        fkNormasCopiaDigital:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\CopiaDigital
+            inversedBy: fkNormasNormaCopiaDigitais
+            joinColumns:
+                cod_copia:
+                    referencedColumnName: cod_copia
+    oneToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkNormasNormaCopiaDigital
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

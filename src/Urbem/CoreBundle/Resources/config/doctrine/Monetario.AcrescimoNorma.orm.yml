@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Monetario\AcrescimoNorma:
+    type: entity
+    table: monetario.acrescimo_norma
+    id:
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+    manyToOne:
+        fkMonetarioAcrescimo:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Acrescimo
+            inversedBy: fkMonetarioAcrescimoNormas
+            joinColumns:
+                cod_acrescimo:
+                    referencedColumnName: cod_acrescimo
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkMonetarioAcrescimoNormas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

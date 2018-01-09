@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoFaixaDesconto:
+    type: entity
+    table: pessoal.assentamento_faixa_desconto
+    id:
+        codFaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_faixa
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        valorInicial:
+            type: integer
+            nullable: false
+            column: valor_inicial
+        valorFinal:
+            type: integer
+            nullable: false
+            column: valor_final
+        percentualDesconto:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: percentual_desconto
+    manyToOne:
+        fkPessoalAssentamentoAfastamentoTemporario:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAfastamentoTemporario
+            inversedBy: fkPessoalAssentamentoFaixaDescontos
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp

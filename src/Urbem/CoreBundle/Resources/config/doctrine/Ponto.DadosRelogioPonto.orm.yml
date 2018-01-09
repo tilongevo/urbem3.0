@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Ponto\DadosRelogioPonto:
+    type: entity
+    table: ponto.dados_relogio_ponto
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields: {  }
+    oneToMany:
+        fkPontoDadosRelogioPontoExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DadosRelogioPontoExtras
+            mappedBy: fkPontoDadosRelogioPonto
+        fkPontoRelogioPontoDias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\RelogioPontoDias
+            mappedBy: fkPontoDadosRelogioPonto
+        fkPontoRelogioPontoJustificativas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\RelogioPontoJustificativa
+            mappedBy: fkPontoDadosRelogioPonto
+    oneToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkPontoDadosRelogioPonto
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

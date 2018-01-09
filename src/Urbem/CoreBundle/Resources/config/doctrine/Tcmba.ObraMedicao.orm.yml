@@ -1,0 +1,88 @@
+Urbem\CoreBundle\Entity\Tcmba\ObraMedicao:
+    type: entity
+    table: tcmba.obra_medicao
+    id:
+        codObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_obra
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codMedicao:
+            type: bigint
+            generator:
+                strategy: NONE
+            column: cod_medicao
+    fields:
+        codMedida:
+            type: integer
+            nullable: false
+            column: cod_medida
+        dataInicio:
+            type: date
+            nullable: false
+            column: data_inicio
+        dataFinal:
+            type: date
+            nullable: false
+            column: data_final
+        vlMedicao:
+            type: decimal
+            nullable: false
+            precision: 16
+            scale: 2
+            column: vl_medicao
+        nroNotaFiscal:
+            type: string
+            nullable: false
+            length: 20
+            column: nro_nota_fiscal
+        dataNotaFiscal:
+            type: date
+            nullable: false
+            column: data_nota_fiscal
+        numcgm:
+            type: integer
+            nullable: false
+        dataMedicao:
+            type: date
+            nullable: false
+            column: data_medicao
+    manyToOne:
+        fkTcmbaObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            inversedBy: fkTcmbaObraMedicoes
+            joinColumns:
+                cod_obra:
+                    referencedColumnName: cod_obra
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkTcmbaMedidasObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\MedidasObra
+            inversedBy: fkTcmbaObraMedicoes
+            joinColumns:
+                cod_medida:
+                    referencedColumnName: cod_medida
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkTcmbaObraMedicoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

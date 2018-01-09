@@ -1,0 +1,66 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Bases:
+    type: entity
+    table: folhapagamento.bases
+    id:
+        codBase:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            column: cod_base
+    fields:
+        nomBase:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_base
+        tipoBase:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_base
+        apresentacaoValor:
+            type: boolean
+            nullable: false
+            column: apresentacao_valor
+        insercaoAutomatica:
+            type: boolean
+            nullable: false
+            column: insercao_automatica
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+    manyToOne:
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkFolhapagamentoBaseses
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+    oneToMany:
+        fkFolhapagamentoBasesEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\BasesEvento
+            mappedBy: fkFolhapagamentoBases
+        fkFolhapagamentoBasesEventoCriados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\BasesEventoCriado
+            mappedBy: fkFolhapagamentoBases

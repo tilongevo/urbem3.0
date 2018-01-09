@@ -1,0 +1,44 @@
+{% block body %}
+    {% block content %}
+    <div style="margin-top:3cm;margin-right:2cm;margin-bottom:3cm;margin-left:2cm;font: 12pt/0.75cm Arial">
+      <div style="width:100%">
+        PREFEITURA MUNICIPAL DE MARIANA PIMENTEL<br>
+        {% if uf is not empty %}
+          {{ uf.getNomUf() }}<br>
+        {% endif %}
+        {% if secretaria is not empty %}
+          {{ secretaria.getValor() }}
+        {% endif %}
+      </div>
+
+      <div style="width:100%;margin-top:2cm">
+        <p style="text-align:center"><strong><u>CERTIDÃO</u></strong></p>
+      </div>
+
+      {% if object.getFkEconomicoCadastroEconomico().getFkEconomicoCadastroEconomicoEmpresaFato() %}
+        {% include 'TributarioBundle::Economico/BaixaCadastroEconomico/empresa_fato_content_pdf.html.twig' with {'object': object, 'atividadesEmpresaFato': atividadesEmpresaFato} %}
+      {% elseif object.getFkEconomicoCadastroEconomico().getFkEconomicoCadastroEconomicoEmpresaDireito() %}
+        {% include 'TributarioBundle::Economico/BaixaCadastroEconomico/empresa_direito_content_pdf.html.twig' with {'object': object} %}
+      {% elseif object.getFkEconomicoCadastroEconomico().getFkEconomicoCadastroEconomicoAutonomo() %}
+        {% include 'TributarioBundle::Economico/BaixaCadastroEconomico/autonomo_content_pdf.html.twig' with {'object': object} %}
+      {% endif %}
+
+      <div style="width:100%;margin-top:4cm">
+        <p style="text-align:center">MARIANA PIMENTEL{% if uf is not empty %}({{uf.getSiglaUf()|upper}}){% endif %}, {{ dataAtual }}.
+      </div>
+
+      <div style="width:100%;margin-top:4cm">
+        <p style="width:50%;float:left;text-align:center">
+          {% if responsavel1 is not empty %}
+            {{ responsavel1.getValor()|replace({'\r\n': '<br>', '\n': '<br>', '\r': '<br>'})|raw }}
+          {% endif %}
+        </p>
+        <p style="width:50%;float:right;text-align:center">
+          {% if responsavel2 is not empty %}
+            {{ responsavel2.getValor()|replace({'\r\n': '<br>', '\n': '<br>', '\r': '<br>'})|raw }}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+    {% endblock content %}
+{% endblock body %}

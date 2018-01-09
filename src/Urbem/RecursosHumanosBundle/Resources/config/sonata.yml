@@ -1,0 +1,1311 @@
+sonata_core:
+    flashmessage:
+        error:
+            types:
+                - { type: data_aplicacao_invalida, domain: RecursosHumanosBundle }
+                - { type: porcentagem_invalida, domain: RecursosHumanosBundle }
+                - { type: edital_ja_cadastrado, domain: RecursosHumanosBundle}
+
+services:
+    recursos_humanos.admin.vale_transporte:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\ValeTransporteAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Beneficio\ValeTransporte, RecursosHumanosBundle:Beneficio\ValeTransporteAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ValeTransporte }
+
+    recursos_humanos.admin.linha:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\LinhaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\Linha, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Linha }
+
+    recursos_humanos.admin.cargo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Cargo\CargoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Cargo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Cargo }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:GerenciamentoCargo\Cargo\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.itinerario:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\ItinerarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\Itinerario, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Itinerario }
+
+    recursos_humanos.admin.concessao_vale_transporte:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\ConcessaoValeTransporteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporte, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConcessaoValeTransporte }
+
+    recursos_humanos.admin.concessao_vale_transporte_calendario:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\ConcessaoValeTransporteCalendarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporteCalendario, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConcessaoValeTransporteCalendario }
+
+    recursos_humanos.admin.contrato_servidor_concessao_vale_transporte:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\ContratoServidorConcessaoValeTransporteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\ContratoServidorConcessaoValeTransporte, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidorConcessaoValeTransporte }
+
+    recursos_humanos.admin.grupo_concessao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\GrupoConcessaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\GrupoConcessao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: GrupoConcessao }
+
+    recursos_humanos.admin.grupo_concessao_vale_transporte:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\GrupoConcessaoValeTransporteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\GrupoConcessaoValeTransporte, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: GrupoConcessaoValeTransporte }
+
+    recursos_humanos.admin.beneficiario:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\BeneficiarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\Beneficiario, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Beneficiario }
+
+    recursos_humanos.admin.periodo_movimentacao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\PeriodoMovimentacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao, RecursosHumanosBundle:FolhaPagamento\PeriodoMovimentacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Período Movimentação }
+
+    recursos_humanos.admin.layout_fornecedor:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\LayoutFornecedorAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\LayoutFornecedor, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: LayoutFornecedor }
+
+    recursos_humanos.admin.custo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\CustoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\Custo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Custo }
+
+    recursos_humanos.admin.cbo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\CboAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Cbo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CBO }
+
+    recursos_humanos.admin.requisito:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\RequisitoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Requisito, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Requisito }
+
+    recursos_humanos.admin.grau:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\GrauAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\Grau, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Grau }
+
+    recursos_humanos.admin.area_conhecimento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\AreaConhecimentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\AreaConhecimento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AreaConhecimento }
+
+    recursos_humanos.admin.contrato_servidor:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ContratoServidorAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ContratoServidor, RecursosHumanosBundle:Pessoal\ContratoServidorAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidor }
+
+    recursos_humanos.admin.contrato_servidor_conselho:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ContratoServidorConselhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ContratoServidorConselho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidorConselho }
+
+    recursos_humanos.admin.contrato_servidor_sindicato:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ContratoServidorSindicatoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSindicato, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidorSindicato }
+
+    recursos_humanos.admin.cid:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\CidAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Cid, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Cadastro Internacional de Doenças }
+
+    recursos_humanos.admin.conselho:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ConselhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Conselho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Conselho }
+
+    recursos_humanos.admin.servidor:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Pessoal\Servidor, RecursosHumanosBundle:Pessoal\ServidorAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Servidor }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\Pessoal\Servidor\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.regime:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Cargo\RegimeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Regime, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Regime }
+
+    recursos_humanos.admin.causa_rescisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\CausaRescisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\CausaRescisao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CausaRescisao }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Pessoal\Rescisao\CausaRescisao\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.servidor_pis_pasep:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorPisPasepAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ServidorPisPasep, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ServidorPisPasep }
+
+    recursos_humanos.admin.servidor_reservista:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorReservistaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ServidorReservista, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ServidorReservista }
+
+    recursos_humanos.admin.ctps:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\CtpsAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Ctps, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Ctps }
+
+    recursos_humanos.admin.servidor_cid:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorCidAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ServidorCid, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ServidorCid }
+
+    recursos_humanos.admin.servidor_conjuge:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorConjugeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ServidorConjuge, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ServidorConjuge }
+
+    recursos_humanos.admin.pensao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\PensaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Pensao, RecursosHumanosBundle:Pessoal\PensaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Pensao }
+
+    recursos_humanos.admin.tipo_admissao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\TipoAdmissaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\TipoAdmissao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TipoAdmissao }
+
+    recursos_humanos.admin.vinculo_empregaticio:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\VinculoEmpregaticioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\VinculoEmpregaticio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: VinculoEmpregaticio }
+
+    recursos_humanos.admin.categoria:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\CategoriaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Categoria, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Categoria }
+
+    recursos_humanos.admin.vinculo_irrf:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\VinculoIrrfAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\VinculoIrrf, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: VinculoIrrf }
+
+    recursos_humanos.admin.vinculo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\VinculoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\Vinculo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Vinculo }
+
+    recursos_humanos.admin.regime_previdencia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegimePrevidenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegimePrevidencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RegimePrevidencia }
+
+    recursos_humanos.admin.previdencia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\PrevidenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\Previdencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Previdencia }
+
+    recursos_humanos.admin.previdencia_previdencia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\PrevidenciaPrevidenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaPrevidencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PrevidenciaPrevidencia }
+
+
+    recursos_humanos.admin.comprovante_matricula:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ComprovanteMatriculaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ComprovanteMatricula, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ComprovanteMatricula }
+
+    recursos_humanos.admin.carteira_vacinacao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\CarteiraVacinacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\CarteiraVacinacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CarteiraVacinacao }
+
+    recursos_humanos.admin.classificacao_assentamento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\ClassificacaoAssentamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ClassificacaoAssentamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ClassificacaoAssentamento }
+
+    recursos_humanos.admin.assentamento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Assentamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AssentamentoAssentamento }
+
+    recursos_humanos.admin.padrao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\PadraoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\Padrao, RecursosHumanosBundle:FolhaPagamento\PadraoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Padrao }
+
+    recursos_humanos.admin.assentamento_assentamento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoAssentamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AssentamentoAssentamento }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Pessoal\AssentamentoAssentamento\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.assentamento_sub_divisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoSubDivisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoSubDivisao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AssentamentoSubDivisao }
+
+    recursos_humanos.admin.assentamento_validade:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoValidadeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoValidade, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AssentamentoValidade }
+
+    recursos_humanos.admin.assentamento_afastamento_temporario:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoAfastamentoTemporarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoAfastamentoTemporario, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AssentamentoAfastamentoTemporario }
+
+    recursos_humanos.admin.assentamento_afastamento_permanente:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoAfastamentoPermanenteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoAfastamentoTemporario, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AssentamentoAfastamentoTemporario }
+
+    recursos_humanos.admin.assentamento_vantagem:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoVantagemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoVantagem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AssentamentoVantagem }
+
+    recursos_humanos.admin.entidade_intermediadora:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\EntidadeIntermediadoraAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\EntidadeIntermediadora, RecursosHumanosBundle:Estagio\EntidadeIntermediadoraAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EntidadeIntermediadora }
+
+    recursos_humanos.admin.ocorrencia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\OcorrenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Ocorrencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Classificação dos Agentes Nocivos }
+
+    recursos_humanos.admin.tipo_diaria:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Diarias\TipoDiariaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Diarias\TipoDiaria, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TipoDiaria }
+
+    recursos_humanos.admin.contrato_servidor_previdencia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ContratoServidorPrevidenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ContratoServidorPrevidencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidorPrevidencia }
+
+    recursos_humanos.admin.pensao_banco:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\PensaoBancoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\PensaoBanco, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PensaoBanco }
+
+    recursos_humanos.admin.responsavel_legal:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ResponsavelLegalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ResponsavelLegal, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ResponsavelLegal }
+
+    recursos_humanos.admin.sindicato:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\SindicatoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\Sindicato, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Sindicato }
+
+    recursos_humanos.admin.pensao_valor:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\PensaoValorAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\PensaoValor, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PensaoValor }
+
+    recursos_humanos.admin.rh_servidor_atributo_dinamico:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\RHServidorAtributoDinamicoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Administracao\AtributoDinamico, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Atributos }
+
+    recursos_humanos.admin.instituicao_ensino:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\InstituicaoEnsinoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\InstituicaoEnsino, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: InstituicaoEnsino }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\Estagio\InstituicaoEnsino\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.pensionista:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\PensionistaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Pensionista, RecursosHumanosBundle:Pessoal\PensionistaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Pensionista }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\Pessoal\Pensionista\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.configuracao_ipe:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoIpeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpe, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoIpe }
+    recursos_humanos.admin.vigencia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\VigenciaAdmin
+        class: Urbem\RecursosHumanosBundle\Admin\VigenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\Vigencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Faixa de Desconto }
+
+    recursos_humanos.admin.faixa_desconto:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\FaixaDescontoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\FaixaDesconto, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FaixaDesconto }
+
+    recursos_humanos.admin.folha_pagamento.faixa_desconto:
+            class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FaixaDescontoAdmin
+            arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FaixaDesconto, SonataAdminBundle:CRUD]
+            tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FaixaDesconto }
+
+    recursos_humanos.admin.configuracao_eventos_desconto_externo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoEventosDescontoExternoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventosDescontoExterno, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoEventosDescontoExterno }
+
+    recursos_humanos.admin.pensao_funcao_padrao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\PensaoFuncaoPadraoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\PensaoFuncaoPadrao, RecursosHumanosBundle:FolhaPagamento\PensaoFuncaoPadraoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configurar Cálculo da Pensão Alimentícia }
+
+    recursos_humanos.admin.curso_instituicao_ensino_mes:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\CursoInstituicaoEnsinoMesAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\CursoInstituicaoEnsinoMes, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CursoInstituicaoEnsinoMes }
+
+    recursos_humanos.admin.curso_instituicao_ensino:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\CursoInstituicaoEnsinoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\CursoInstituicaoEnsino, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CursoInstituicaoEnsino }
+
+    recursos_humanos.admin.assentamento_sefip:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoSefipAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Sefip, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Movimentação da SEFIP }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Pessoal\Assentamento\Sefip\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.mov_sefip_saida:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\MovSefipSaidaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\MovSefipSaidaCategoria, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: MovSefipSaida }
+
+    recursos_humanos.admin.sequencia_calculo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\SequenciaCalculoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\SequenciaCalculo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Sequência de Cálculo }
+
+    recursos_humanos.admin.configuracao_convenio_besc:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Informacoes\ConfiguracaoConvenioBescAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoBescConta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoConvenioBesc }
+
+    recursos_humanos.admin.configuracao_empenho:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração de Autorização de Empenho }
+
+    recursos_humanos.admin.configuracao_autorizacao_empenho:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoAutorizacaoEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoAutorizacaoEmpenho }
+
+    recursos_humanos.admin.config_empenho:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfigEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfigEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração de Autorização de Empenho }
+
+    recursos_humanos.admin.configuracao_empenho_lla_lotacao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoEmpenhoLlaLotacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaLotacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoEmpenhoLlaLotacao }
+
+    recursos_humanos.admin.configuracao_totais_folha:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoTotaisFolhaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoTotaisFolha, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração Totais Folha }
+
+    recursos_humanos.admin.totais_folha_eventos:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\TotaisFolhaEventosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\TotaisFolhaEventos, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TotaisFolhaEventos }
+
+    recursos_humanos.admin.configuracao_rais:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConfiguracaoRaisAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoRais, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoRais }
+
+    recursos_humanos.admin.configuracao_empenho_evento_lotacao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoEmpenhoEventoLotacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração Autorização Empenho Eventos Lotação}
+
+    recursos_humanos.admin.configuracao_empenho_evento_local:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoEmpenhoEventoLocalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração Autorização Empenho Eventos Local }
+
+    recursos_humanos.admin.configuracao_empenho_evento_atributo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoEmpenhoEventoAtributoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração Autorização Empenho Eventos Atributos }
+
+    recursos_humanos.admin.configuracao_besc_conta:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Informacoes\ConfiguracaoBescContaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoBescConta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoBescConta }
+
+    recursos_humanos.admin.configuracao_empenho_lla_local:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoEmpenhoLlaLocalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaLocal, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoEmpenhoLlaLocal }
+
+    recursos_humanos.admin.configuracao_empenho_lla_atributo_valor:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoEmpenhoLlaAtributoValorAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaAtributoValor, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoEmpenhoLlaAtributoValor }
+
+    recursos_humanos.admin.eventos_contrato_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\EventosContratoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\EventosContratoReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EventosContratoReport }
+
+    recursos_humanos.admin.ficha_financeira_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FichaFinanceiraReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FichaFinanceiraReport }
+
+    recursos_humanos.admin.desconto_externo_irrf:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\DescontoExternoIrrfAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoIrrf, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: DescontoExternoIrrf }
+
+    recursos_humanos.admin.emitir_aviso_ferias_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\EmitirAvisoFeriasReportAdmin
+        #arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\EmitirAvisoFeriasReport, SonataAdminBundle:CRUD]
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FeriasEvento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório Emitir Aviso de Férias }
+
+    recursos_humanos.admin.eventos_contrato_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\EventosContratoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\EventosContratoReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EventosContratoReport }
+
+    recursos_humanos.admin.ficha_financeira_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FichaFinanceiraReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FichaFinanceiraReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FichaFinanceiraReport }
+
+    recursos_humanos.admin.desconto_externo_irrf:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\DescontoExternoIrrfAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoIrrf, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: DescontoExternoIrrf }
+
+    recursos_humanos.admin.eventos_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\EventosReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\EventosReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EventosReport }
+
+    recursos_humanos.admin.configuracao_convenio_bb:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Informacoes\ConfiguracaoConvenioBbAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBb, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoConvenioBb }
+
+    recursos_humanos.admin.folha_analitica_sintetica_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FolhaAnaliticaSinteticaReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FolhaAnaliticaSinteticaReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FolhaAnaliticaSinteticaReport }
+
+    recursos_humanos.admin.configuracao_hsbc_conta:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConfiguracaoHsbcContaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoHsbcConta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoHsbcConta }
+
+    recursos_humanos.admin.configuracao_caixa_conta:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConfiguracaoCaixaContaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioCaixaEconomicaFederal, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoHsbcConta }
+
+    recursos_humanos.admin.configuracao_bradesco_conta:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConfiguracaoConvenioBradescoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBradesco, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoHsbcConta }
+
+    recursos_humanos.admin.configuracao_bb_conta:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Informacoes\ConfiguracaoBbContaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoBbConta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoBbConta }
+
+    recursos_humanos.admin.configuracao_convenio_banrisul:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Informacoes\ConfiguracaoConvenioBanrisulAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBanrisul, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoConvenioBanrisul }
+
+    recursos_humanos.admin.configuracao_banrisul_conta:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Informacoes\ConfiguracaoBanrisulContaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanrisulConta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoBanrisulConta }
+
+    recursos_humanos.admin.valor_diversos:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ValorDiversosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ValorDiversos, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ValorDiversos }
+
+    recursos_humanos.admin.cargo_sub_divisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Cargo\CargoSubDivisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\CargoSubDivisao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CargoSubDivisao }
+
+    recursos_humanos.admin.especialidade:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Cargo\EspecialidadeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Especialidade, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Especialidade }
+
+    recursos_humanos.admin.especialidade_sub_divisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Cargo\EspecialidadeSubDivisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\EspecialidadeSubDivisao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EspecialidadeSubDivisao }
+
+    recursos_humanos.admin.recibo_ferias_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ReciboFeriasReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Recibo de Férias }
+
+    recursos_humanos.admin.edital:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Concurso\EditalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Concurso\Edital, RecursosHumanosBundle:Concurso\EditalAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Edital }
+
+    recursos_humanos.admin.condicao_assentamento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\CondicaoAssentamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\CondicaoAssentamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CondicaoAssentamento }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\Pessoal\Assentamento\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.assentamento_vinculado:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoVinculadoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoVinculado, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AssentamentoVinculado }
+
+    recursos_humanos.admin.configuracao_bb:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConfiguracaoBbAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoBbConta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoBanpara }
+
+    recursos_humanos.admin.configuracao_banpara:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConfiguracaoBanparaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanpara, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoBanpara }
+
+    recursos_humanos.admin.configuracao_banrisul:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConfiguracaoBanrisulAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanrisulConta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoBanrisul }
+
+    recursos_humanos.admin.bases:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\BasesAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\Bases, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Bases }
+
+    recursos_humanos.admin.salario_familia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\SalarioFamiliaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamilia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SalarioFamilia }
+
+    recursos_humanos.admin.faixa_pagamento_salario_familia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FaixaPagamentoSalarioFamiliaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FaixaPagamentoSalarioFamilia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FaixaPagamentoSalarioFamilia }
+
+    recursos_humanos.admin.feriado:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Calendario\FeriadoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Calendario\Feriado, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Feriado }
+
+    recursos_humanos.admin.sub_divisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Cargo\SubDivisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\SubDivisao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SubDivisao }
+
+    rh.aposentadoria.admin.local:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\AposentadoriaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Aposentadoria, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Local }
+
+    recursos_humanos.admin.grade_horario:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\GradeHorarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\GradeHorario, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: GradeHorario }
+
+    recursos_humanos.admin.faixa_turno:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\FaixaTurnoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\FaixaTurno, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FaixaTurno }
+
+    recursos_humanos.admin.curso:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\CursoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\Curso, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Curso }
+
+    recursos_humanos.admin.desconto_externo_previdencia:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\DescontoExternoPrevidenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoPrevidencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: DescontoExternoPrevidencia }
+
+    recursos_humanos.admin.calendario_cadastro:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Calendario\CalendarioCadastroAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Calendario\CalendarioCadastro, RecursosHumanosBundle:Calendario\CalendarioCadastroAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CalendarioCadastro }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\Calendario\CalendarioCadastro:show.html.twig]]
+
+    recursos_humanos.admin.reajustes_salariais_report:
+            class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ReajustesSalariaisReportAdmin
+            arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ReajustesSalariaisReport, SonataAdminBundle:CRUD]
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: admin, label: Reajustes Salariais }
+
+    recursos_humanos.admin.decimo_evento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\DecimoEventoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\DecimoEvento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: DecimoEvento }
+
+    recursos_humanos.admin.layout_plano_saude:
+            class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\LayoutPlanoSaudeAdmin
+            arguments: [~, Urbem\CoreBundle\Entity\Beneficio\LayoutPlanoSaude, SonataAdminBundle:CRUD]
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração Plano Saude }
+
+    recursos_humanos.admin.nivel_padrao_nivel:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\NivelPadraoNivelAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\NivelPadraoNivel, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NivelPadraoNivel }
+
+    recursos_humanos.admin.assentamento_gerado_contrato_servidor:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoGeradoContratoServidorAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoGeradoContratoServidor, RecursosHumanosBundle:Pessoal\AssentamentoGeradoContratoServidorAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Geração do Assentamento }
+
+    recursos_humanos.admin.assentamento_gerado_excluido:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\Assentamento\AssentamentoGeradoExcluidoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AssentamentoGeradoExcluido, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Motivo da Exclusão }
+
+    recursos_humanos.admin.servidor_ctps:
+            class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorCtpsAdmin
+            arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ServidorCtps, SonataAdminBundle:CRUD]
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: admin, label: Ctps }
+
+    recursos_humanos.admin.ferias_evento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FeriasEventoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FeriasEvento, RecursosHumanosBundle:FolhaPagamento\FeriasEventoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configurar Férias }
+
+    recursos_humanos.admin.fgts:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FgtsAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\Fgts, SonataAdminBundle:CRUD]
+
+    recursos_humanos.admin.cargo_especialidade:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Cargo\CargoEspecialidadeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Especialidade, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Especialidade }
+
+    recursos_humanos.admin.cargo_padrao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Cargo\CargoPadraoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\CargoPadrao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CargoPadrao }
+
+    recursos_humanos.admin.configuracao_beneficio:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoBeneficioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoBeneficio, RecursosHumanosBundle:FolhaPagamento\ConfiguracaoBeneficioAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConfiguracaoBeneficio }
+
+    recursos_humanos.admin.beneficio_evento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\BeneficioEventoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\BeneficioEvento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: BeneficioEvento }
+
+    recursos_humanos.admin.ferias_evento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FeriasEventoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FeriasEvento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração do Cálculo de Férias }
+
+    recursos_humanos.admin.folha_pagamento_configuracao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FolhaPagamentoConfiguracaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Administracao\Configuracao, RecursosHumanosBundle:FolhaPagamento\FolhaPagamentoConfiguracaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Dados para Configuração }
+    recursos_humanos.admin.configuracao_contracheque:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoContrachequeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoContracheque, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração Contracheque }
+
+    recursos_humanos.admin.configuracao_calculo_decimo_terceiro:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConfiguracaoCalculoDecimoTerceiroAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Administracao\Configuracao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuracao }
+
+    recursos_humanos.admin.servidor_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Servidor, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidor }
+
+    recursos_humanos.admin.servidores_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidoresReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Servidor, RecursosHumanosBundle:Pessoal\ServidoresReportAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório Servidores }
+
+    recursos_humanos.admin.evento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\EventoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\Evento, RecursosHumanosBundle:FolhaPagamento\EventoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Evento }
+
+    recursos_humanos.admin.tabela_irrf:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\TabelaIrrfAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrf, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tabela Irrf }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\Folhapagamento\Tabelairrf\CRUD:show.html.twig]]
+    recursos_humanos.admin.folha_situacao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FolhaSituacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FolhaSituacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Folha Situação }
+
+    recursos_humanos.admin.tabela_irrf_cid:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\TabelaIrrfCidAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfCid, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CIDs Isentas de IRRF }
+
+    recursos_humanos.admin.contrato_servidor_periodo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ContratoServidorPeriodoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ContratoServidorPeriodo, RecursosHumanosBundle:FolhaPagamento\ContratoServidorPeriodoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Registrar Evento por Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ContratoServidorPeriodo\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.registro_evento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegistroEventoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEvento, RecursosHumanosBundle:FolhaPagamento\RegistroEventoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RegistroEvento }
+
+    recursos_humanos.admin.calculo_salario:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\CalculoSalarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\CalculoSalarioAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+          - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\CalculoSalario\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.consultar_ficha_financeira:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConsultarFichaFinanceiraAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\ConsultarFichaFinanceiraAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ConsultarFichaFinanceira\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.complementar:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ComplementarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\Complementar, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Complementar }
+
+    recursos_humanos.admin.tabela_irrf_comprovante_rendimento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\TabelaIrrfComprovanteRendimentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfComprovanteRendimento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Comprovante de Rendimentos }
+
+    recursos_humanos.admin.faixa_desconto_irrf:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FaixaDescontoIrrfAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\FaixaDescontoIrrf, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Dados das Faixas de Desconto }
+    recursos_humanos.admin.dependente:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\DependenteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Dependente, RecursosHumanosBundle:Pessoal\DependenteAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Dependente }
+
+    recursos_humanos.admin.contrato_servidor_complementar:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ContratoServidorComplementarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\ContratoServidorComplementarAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Evento na Complementar por Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ContratoServidorComplementar\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.registro_evento_complementar:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegistroEventoComplementarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoComplementar, RecursosHumanosBundle:FolhaPagamento\RegistroEventoComplementarAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Registro Evento Complementar }
+
+    recursos_humanos.admin.contrato_servidor_periodo_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ContratoServidorPeriodoFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ContratoServidorPeriodo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidorPeriodo }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ContratoServidorPeriodoFerias\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.registro_evento_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegistroEventoFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoFerias, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Registro Evento Férias }
+
+    recursos_humanos.admin.contrato_servidor_periodo_decimo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ContratoServidorPeriodoDecimoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\ContratoServidorPeriodo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidorPeriodo }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ContratoServidorPeriodoDecimo\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.registro_evento_decimo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegistroEventoDecimoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoDecimo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Registro Evento Décimo }
+
+    recursos_humanos.admin.contrato_servidor_periodo_rescisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ContratoServidorPeriodoRescisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ContratoServidor, RecursosHumanosBundle:FolhaPagamento\ContratoServidorPeriodoRescisaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ContratoServidorPeriodo }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ContratoServidorPeriodoRescisao\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.registro_evento_rescisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegistroEventoRescisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoRescisao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Registro Evento Rescisão }
+
+    recursos_humanos.admin.servidor_documento_digital:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorDocumentoDigitalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ServidorDocumentoDigital, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ServidorDocumentoDigital }
+
+    recursos_humanos.admin.adido_cedido:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\AdidoCedidoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\AdidoCedido, RecursosHumanosBundle:Pessoal\AdidoCedidoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Adidos e Cedidos }
+
+    recursos_humanos.admin.calculo_complementar:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\CalculoComplementarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\CalculoComplementarAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\CalculoSalario\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.calculo_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\CalculoFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\CalculoFeriasAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\CalculoFerias\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.calculo_rescisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\CalculoRescisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\CalculoRescisaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\CalculoRescisao\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.caso_causa:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\CasoCausaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\CasoCausa, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CasoCausa }
+
+    recursos_humanos.admin.calculo_decimo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\CalculoDecimoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\CalculoDecimoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\CalculoDecimo\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.contrato_servidor_caso_causa:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ContratoServidorCasoCausaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausa, RecursosHumanosBundle:Pessoal\ContratoServidorCasoCausaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Rescisão de Contrato }
+
+    recursos_humanos.admin.conceder_decimo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConcederDecimoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\ConcederDecimoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\CalculoDecimo\CRUD:concederDecimoShow.html.twig]]
+
+    recursos_humanos.admin.diaria:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Diarias\DiariaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Diarias\Diaria, RecursosHumanosBundle:Diarias\DiariaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Diaria }
+        calls:
+            - [ setTemplates, [show: RecursosHumanosBundle:Sonata\Diarias\Diaria\CRUD:show__action_recibo.html.twig]]
+
+    recursos_humanos.admin.consignacao_banrisul_remuneracao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConsignacaoBanrisulRemuneracaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\ConsignacaoBanrisulRemuneracao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Consignação Banrisul }
+
+    recursos_humanos.admin.consulta_registros_evento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConsultaRegistrosEventoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:ConsultaRegistrosEventoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ConsultaRegistroEvento\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.consulta_registros_evento_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConsultaRegistrosEventoFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoFerias, RecursosHumanosBundle:FolhaPagamento\ConsultaRegistrosEventoFeriasAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Consulta Registros de Eventos de Férias }
+
+    recursos_humanos.admin.estagiario:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\EstagiarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\Estagiario, RecursosHumanosBundle:Estagio\EstagiarioAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Estagiario }
+        calls:
+            - [ setTemplates, [show: RecursosHumanosBundle:Sonata\Estagio\Estagiario\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.estagiario_estagio:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Estagio\EstagiarioEstagioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio, RecursosHumanosBundle:Estagio\EstagiarioEstagioAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EstagiarioEstagio }
+
+    recursos_humanos.admin.general_filter:
+        class: Urbem\CoreBundle\Resources\config\Sonata\Filter\Pessoal\GeneralFilterAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+
+    recursos_humanos.admin.registro_evento_periodo_matricula:
+        class:  Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegistroEventoPeriodoMatriculaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoPeriodo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RegistroEventoPeriodo }
+
+    recursos_humanos.admin.conceder_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ConcederFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\VwConcederFerias, RecursosHumanosBundle:Pessoal\ConcederFeriasAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: VwConcederFerias }
+
+    recursos_humanos.admin.emitir_aviso_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\EmitirAvisoFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Emitir Aviso de Férias }
+
+    recursos_humanos.admin.registro_evento_periodo_evento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegistroEventoPeriodoEventoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoPeriodo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RegistroEventoPeriodo }
+
+    recursos_humanos.admin.registro_evento_periodo_importar:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RegistroEventoPeriodoImportarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoPeriodo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RegistroEventoPeriodo }
+
+    recursos_humanos.admin.cargo_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\CargoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Parâmetros para Emissão }
+
+    recursos_humanos.admin.servidor_dependente:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\ServidorDependenteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\ServidorDependente, RecursosHumanosBundle:Pessoal\ServidorDependenteAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ServidorDependente }
+
+    recursos_humanos.admin.beneficiario_lancamento:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Beneficio\BeneficiarioLancamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Beneficio\BeneficiarioLancamento, RecursosHumanosBundle:Beneficio\BeneficiarioLancamentoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Dados dos Arquivos }
+
+    recursos_humanos.admin.folha_analitica_sintetica_report_admin:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\FolhaAnaliticaSinteticaReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:FolhaPagamento\FolhaAnaliticaSinteticaReportAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SonataReport }
+
+    recursos_humanos.admin.contra_cheque_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ContraChequeReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:FolhaPagamento\ContraChequeReportAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Parâmetros para Emissão }
+
+    recursos_humanos.admin.customizavel_eventos_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\CustomizavelEventosReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Parâmetros para Emissão }
+
+    recursos_humanos.admin.contribuicao_previdenciaria_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ContribuicaoPrevidenciariaReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Parâmetros para Emissão }
+
+    recursos_humanos.admin.exportar_arquivo_ipers:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ExportarArquivoIpersAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:Ima\ExportarArquivoIpersAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SonataReport }
+
+    recursos_humanos.admin.termo_rescisao_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\TermoRescisaoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:FolhaPagamento\TermoRescisaoReportAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SonataReport }
+
+    recursos_humanos.admin.configuracao_sefip:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ConfiguracaoSefipAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ima\CategoriaSefip, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuração Sefip }
+
+    recursos_humanos.admin.termo_rescisao_report:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\TermoRescisaoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:FolhaPagamento\TermoRescisaoReportAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SonataReport }
+
+    recursos_humanos.admin.exportar_arquivo_sefip:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ExportarArquivoSefipAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:Ima\ExportarArquivoSefipAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SonataReport }
+
+    core.admin.vw_rescisao_contrato_servidor:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\RescisaoContratoServidorAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\VwRescisaoContratoServidor, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: VwRescisaoContratoServidor }
+
+    recursos_humanos.admin.exportar_remessa_bb:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ExportarRemessaBBAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:Ima\ExportarRemessaBBAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SonataReport }
+
+    recursos_humanos.admin.vw_consultar_cancelar_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Pessoal\VwConsultarCancelarFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\VwConsultarCancelarFerias, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: VwConsultarCancelarFerias }
+
+    recursos_humanos.admin.cancelar_decimo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\CancelarDecimoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\CancelarDecimoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+
+    recursos_humanos.admin.consultar_ficha_financeira_ferias:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConsultarFichaFinanceiraFeriasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\ConsultarFichaFinanceiraAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ConsultarFichaFinanceira\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.consultar_ficha_financeira_decimo:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConsultarFichaFinanceiraDecimoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\ConsultarFichaFinanceiraAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ConsultarFichaFinanceira\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.consultar_ficha_financeira_rescisao:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConsultarFichaFinanceiraRescisaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\ConsultarFichaFinanceiraAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ConsultarFichaFinanceira\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.consultar_ficha_financeira_salario:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\ConsultarFichaFinanceiraSalarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Pessoal\Contrato, RecursosHumanosBundle:FolhaPagamento\ConsultarFichaFinanceiraAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplate, [show, RecursosHumanosBundle:Sonata\FolhaPagamento\ConsultarFichaFinanceira\CRUD:show.html.twig]]
+
+    recursos_humanos.admin.ima_exportar_pagamento_banrisul:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ExportarPagamentoBanrisulAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:Ima\ExportarPagamentoBanrisulAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Exportar Pagamentos - Banrisul }
+
+    recursos_humanos.admin.ima_exportar_pagamento_caixa:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ExportarPagamentoCaixaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:Ima\ExportarPagamentoCaixaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Exportar Pagamentos - Caixa Econômica Federal }
+
+    recursos_humanos.admin.relatorio_pensao_judicial.relatorio:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\FolhaPagamento\RelatorioBancarioPensaoJudicialAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:FolhaPagamento\RelatorioBancarioPensaoJudicialAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RelatorioBancarioPensaoJudicial }
+
+    recursos_humanos.admin.exportar_arquivo_dirf:
+        class: Urbem\RecursosHumanosBundle\Resources\config\Sonata\Ima\ExportarArquivoDirfAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, RecursosHumanosBundle:Ima\ExportarArquivoDirfAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: DIRF }

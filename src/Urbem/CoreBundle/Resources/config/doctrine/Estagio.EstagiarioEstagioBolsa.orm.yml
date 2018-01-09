@@ -1,0 +1,108 @@
+Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioBolsa:
+    type: entity
+    table: estagio.estagiario_estagio_bolsa
+    id:
+        cgmInstituicaoEnsino:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_instituicao_ensino
+        cgmEstagiario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_estagiario
+        codCurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_curso
+        codEstagio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_estagio
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vlBolsa:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_bolsa
+        faltas:
+            type: integer
+            nullable: true
+        codPeriodoMovimentacao:
+            type: integer
+            nullable: false
+            column: cod_periodo_movimentacao
+        valeRefeicao:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: vale_refeicao
+        valeTransporte:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: vale_transporte
+    manyToOne:
+        fkEstagioEstagiarioEstagio:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio
+            inversedBy: fkEstagioEstagiarioEstagioBolsas
+            joinColumns:
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                cgm_estagiario:
+                    referencedColumnName: cgm_estagiario
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino
+        fkFolhapagamentoPeriodoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao
+            inversedBy: fkEstagioEstagiarioEstagioBolsas
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+    oneToOne:
+        fkEstagioEstagiarioValeTransporte:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioValeTransporte
+            mappedBy: fkEstagioEstagiarioEstagioBolsa
+            joinColumns:
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino
+                cgm_estagiario:
+                    referencedColumnName: cgm_estagiario
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                timestamp:
+                    referencedColumnName: timestamp
+        fkEstagioEstagiarioValeRefeicao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioValeRefeicao
+            mappedBy: fkEstagioEstagiarioEstagioBolsa
+            joinColumns:
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino
+                cgm_estagiario:
+                    referencedColumnName: cgm_estagiario
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                timestamp:
+                    referencedColumnName: timestamp

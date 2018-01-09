@@ -1,0 +1,62 @@
+imports:
+    - { resource: ../common/config.yml }
+
+#framework:
+#    validation:
+#        cache: validator.mapping.cache.doctrine.apc
+#    serializer:
+#        cache: serializer.mapping.cache.apc
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+        console:
+            type:  console
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_pgsql
+        host:     "%database_homolog_host%"
+        port:     "%database_homolog_port%"
+        dbname:   "%database_homolog_name%"
+        user:     "%database_homolog_user%"
+        password: "%database_homolog_password%"
+        charset:  UTF8
+        mapping_types:
+            point: string
+            enum: string
+            bit: integer
+            hstore: string
+            oid: string
+        types:
+            datetimeid:
+                class: Urbem\CoreBundle\Types\DateTimeIdType
+                commented: true
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        dql:
+          string_functions:
+            unaccent: Urbem\CoreBundle\Customize\Doctrine\DQL\UnaccentString

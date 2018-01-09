@@ -1,0 +1,33 @@
+{% for modulo in menuModules %}
+    {% set classStyle = " grey-text" %}
+    {% set urlAction = "#@" %}
+    {% set target = "" %}
+
+    {% if modulo['route'] is not empty %}
+        {% set classStyle = " blue-text text-darken-4" %}
+        {% set urlAction = path(modulo['route']) %}
+
+        {% if modulo['target'] is defined and modulo['target'] is not empty %}
+            {% set target = modulo['target'] %}
+        {% endif %}
+    {% endif %}
+
+    <li>
+        <a href="{{ urlAction }}" class="btn-floating white" target="{{ target }}">
+            <i aria-hidden="true" class="material-icons md-48 {{ classStyle }}">{{ modulo['icon'] }}</i>
+        </a>
+        <a href="{{ urlAction }}" target="{{ target }}">
+            <br><span class="text {{ classStyle }}">{{ modulo['title'] | trans }}</span>
+        </a>
+    </li>
+{% endfor %}
+
+{#Módulo de configuração é nativo para o projeto :)#}
+<li>
+    <a href="{{ path('configuracao_homepage') }}" class="btn-floating white">
+        <i aria-hidden="true" class="material-icons blue-text text-darken-4">settings</i>
+    </a>
+    <a href="{{ path('configuracao_homepage') }}">
+        <br><span class="text">{{ 'configuracao.titulo_menu' | trans }}</span>
+    </a>
+</li>

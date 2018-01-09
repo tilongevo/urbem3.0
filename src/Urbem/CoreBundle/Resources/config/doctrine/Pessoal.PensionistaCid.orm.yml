@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Pessoal\PensionistaCid:
+    type: entity
+    table: pessoal.pensionista_cid
+    id:
+        codPensionista:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pensionista
+        codContratoCedente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato_cedente
+    fields:
+        codCid:
+            type: integer
+            nullable: false
+            column: cod_cid
+        dataLaudo:
+            type: date
+            nullable: true
+            column: data_laudo
+    manyToOne:
+        fkPessoalCid:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cid
+            inversedBy: fkPessoalPensionistaCids
+            joinColumns:
+                cod_cid:
+                    referencedColumnName: cod_cid
+    oneToOne:
+        fkPessoalPensionista:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensionista
+            inversedBy: fkPessoalPensionistaCid
+            joinColumns:
+                cod_pensionista:
+                    referencedColumnName: cod_pensionista
+                cod_contrato_cedente:
+                    referencedColumnName: cod_contrato_cedente

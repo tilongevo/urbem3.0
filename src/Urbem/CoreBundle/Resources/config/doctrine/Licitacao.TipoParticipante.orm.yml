@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Licitacao\TipoParticipante:
+    type: entity
+    table: licitacao.tipo_participante
+    id:
+        codTipoParticipante:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_participante
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 15
+    oneToMany:
+        fkLicitacaoParticipanteConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteConvenio
+            mappedBy: fkLicitacaoTipoParticipante
+        fkTcemgConvenioParticipantes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConvenioParticipante
+            mappedBy: fkLicitacaoTipoParticipante

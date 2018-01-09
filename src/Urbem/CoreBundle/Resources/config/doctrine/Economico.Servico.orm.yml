@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Economico\Servico:
+    type: entity
+    table: economico.servico
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\ServicoRepository
+    id:
+        codServico:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: economico.servico_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_servico
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        nomServico:
+            type: string
+            nullable: false
+            length: 240
+            column: nom_servico
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 160
+            column: cod_estrutural
+    oneToMany:
+        fkEconomicoAliquotaServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AliquotaServico
+            mappedBy: fkEconomicoServico
+        fkEconomicoNivelServicoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelServicoValor
+            mappedBy: fkEconomicoServico
+        fkFiscalizacaoRetencaoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoServico
+            mappedBy: fkEconomicoServico
+        fkArrecadacaoRetencaoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\RetencaoServico
+            mappedBy: fkEconomicoServico
+        fkEconomicoServicoAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ServicoAtividade
+            mappedBy: fkEconomicoServico

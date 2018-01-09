@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Divida\DividaAcrescimo:
+    type: entity
+    table: divida.divida_acrescimo
+    id:
+        codInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inscricao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkDividaDividaAtiva:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAtiva
+            inversedBy: fkDividaDividaAcrescimos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+        fkMonetarioAcrescimo:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Acrescimo
+            inversedBy: fkDividaDividaAcrescimos
+            joinColumns:
+                cod_acrescimo:
+                    referencedColumnName: cod_acrescimo
+                cod_tipo:
+                    referencedColumnName: cod_tipo

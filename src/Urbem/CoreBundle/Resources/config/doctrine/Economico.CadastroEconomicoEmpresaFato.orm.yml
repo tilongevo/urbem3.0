@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaFato:
+    type: entity
+    table: economico.cadastro_economico_empresa_fato
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkEconomicoCadastroEconomicoEmpresaFatos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkEconomicoAtributoEmpresaFatoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoEmpresaFatoValor
+            mappedBy: fkEconomicoCadastroEconomicoEmpresaFato
+    oneToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoCadastroEconomicoEmpresaFato
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica

@@ -1,0 +1,36 @@
+{% if wo_breadcrumbs()|length %}
+    {% set breadcrumbHome = breadcrumbs|first %}
+    {%- spaceless -%}
+        <nav class="row blue darken-4 secnav map-nav"
+             style="box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important; ">
+            <div class="col s12 m12 l10 left-align">
+                <nav class="nav-wrapper breadcrum">
+                    <div class="nav-wrapper">
+                        <div class="col s12">
+                            <a href="{{ breadcrumbHome.url }}" class="breadcrumb"><i class="material-icons white-text">home</i></a>
+                            {% for b in breadcrumbs %}
+                                {% if b.url and not loop.last %}
+                                    <a href="{{ b.url }}" class="breadcrumb">
+                                {% else %}
+                                    <span class="breadcrumb">
+                                {% endif %}
+
+                                {{- b.text | trans(b.translationParameters, translation_domain, locale) -}}
+
+                                {% if b.url and not loop.last %}
+                                    </a>
+                                {% else %}
+                                    </span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            {#<div class="col s2">#}
+            {#<input class="search">#}
+            {#<button type="submit">Go</button>#}
+            {#</div>#}
+        </nav>
+    {%- endspaceless -%}
+{% endif %}

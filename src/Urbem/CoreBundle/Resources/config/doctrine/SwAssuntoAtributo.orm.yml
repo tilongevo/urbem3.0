@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\SwAssuntoAtributo:
+    type: entity
+    table: sw_assunto_atributo
+    repositoryClass: Urbem\CoreBundle\Repository\SwAssuntoAtributoRepository
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codAssunto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assunto
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+    fields: {  }
+    manyToOne:
+        fkSwAtributoProtocolo:
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoProtocolo
+            inversedBy: fkSwAssuntoAtributos
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkSwAssunto:
+            targetEntity: Urbem\CoreBundle\Entity\SwAssunto
+            inversedBy: fkSwAssuntoAtributos
+            joinColumns:
+                cod_assunto:
+                    referencedColumnName: cod_assunto
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+    oneToMany:
+        fkSwAssuntoAtributoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAssuntoAtributoValor
+            mappedBy: fkSwAssuntoAtributo

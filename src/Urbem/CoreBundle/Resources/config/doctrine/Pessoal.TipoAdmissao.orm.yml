@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Pessoal\TipoAdmissao:
+    type: entity
+    table: pessoal.tipo_admissao
+    id:
+        codTipoAdmissao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            column: cod_tipo_admissao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    oneToMany:
+        fkPessoalTipoAdmissaoCageds:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TipoAdmissaoCaged
+            mappedBy: fkPessoalTipoAdmissao
+        fkPessoalContratoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            mappedBy: fkPessoalTipoAdmissao

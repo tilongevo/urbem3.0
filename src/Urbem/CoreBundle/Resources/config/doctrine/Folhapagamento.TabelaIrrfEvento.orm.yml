@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfEvento:
+    type: entity
+    table: folhapagamento.tabela_irrf_evento
+    id:
+        codTabela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tabela
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkFolhapagamentoTabelaIrrf:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrf
+            inversedBy: fkFolhapagamentoTabelaIrrfEventos
+            joinColumns:
+                cod_tabela:
+                    referencedColumnName: cod_tabela
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoTipoEventoIrrf:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoIrrf
+            inversedBy: fkFolhapagamentoTabelaIrrfEventos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoTabelaIrrfEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

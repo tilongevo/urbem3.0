@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporteCalendario:
+    type: entity
+    table: beneficio.concessao_vale_transporte_calendario
+    id:
+        codMes:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mes
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConcessao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_concessao
+    fields:
+        codCalendario:
+            type: integer
+            nullable: false
+            column: cod_calendario
+    manyToOne:
+        fkCalendarioCalendarioCadastro:
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioCadastro
+            inversedBy: fkBeneficioConcessaoValeTransporteCalendarios
+            joinColumns:
+                cod_calendario:
+                    referencedColumnName: cod_calendar
+    oneToOne:
+        fkBeneficioConcessaoValeTransporte:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporte
+            inversedBy: fkBeneficioConcessaoValeTransporteCalendario
+            joinColumns:
+                cod_concessao:
+                    referencedColumnName: cod_concessao
+                cod_mes:
+                    referencedColumnName: cod_mes
+                exercicio:
+                    referencedColumnName: exercicio

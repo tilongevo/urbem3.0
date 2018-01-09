@@ -1,0 +1,271 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Economico/Relatorios/header.html.twig' %}
+
+        <h2>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.cabecalhoLote'|trans }}</h2>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.arrecadacaoConsultaLote.codLote'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoConsultaLote.dataLote'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoConsultaLote.dataBaixa'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.registros'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoConsultaLote.banco'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoConsultaLote.agencia'|trans|upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set loteInfo = loteInfo|first %}
+                <tr>
+                    <td>{{ loteInfo['cod_lote'] }}</td>
+                    <td>{{ loteInfo['data_lote'] }}</td>
+                    <td>{{ loteInfo['data_baixa'] }}</td>
+                    <td>{{ loteInfo['registros'] }}</td>
+                    <td>{{ '%s - %s'|format(loteInfo['num_banco'], loteInfo['nom_banco']) }}</td>
+                    <td>{{ '%s - %s'|format(loteInfo['num_agencia'], loteInfo['nom_agencia']) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        {% for grupoCredito, pagamentos in pagamentosCredito %}
+            {% set valor, juros, multa, diferenca, correcao, total = 0, 0, 0, 0, 0, 0 %}
+            <h2>{{ grupoCredito }}</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.codigo'|trans|upper }}</th>
+                        <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.credito'|trans|upper }}</th>
+                        <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.valor'|trans|upper }}</th>
+                        <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.juros'|trans|upper }}</th>
+                        <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.multa'|trans|upper }}</th>
+                        <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.diff'|trans|upper }}</th>
+                        <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.correcao'|trans|upper }}</th>
+                        <th>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.total'|trans|upper }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pagamento in pagamentos %}
+                        {% set valor = valor + pagamento['valor_pago_calculo'] %}
+                        {% set juros = juros + pagamento['juros'] %}
+                        {% set multa = multa + pagamento['multa'] %}
+                        {% set diferenca = diferenca + pagamento['diferenca'] %}
+                        {% set correcao = correcao + pagamento['correcao'] %}
+                        {% set total = total + pagamento['valor_pago_normal'] %}
+                        <tr>
+                            <td>{{ pagamento['origem'] }}</td>
+                            <td>{{ pagamento['descricao_credito'] }}</td>
+                            <td>{{ pagamento['valor_pago_calculo']|number_format(2, ',', '.') }}</td>
+                            <td>{{ pagamento['juros']|number_format(2, ',', '.') }}</td>
+                            <td>{{ pagamento['multa']|number_format(2, ',', '.') }}</td>
+                            <td>{{ pagamento['diferenca']|number_format(2, ',', '.') }}</td>
+                            <td>{{ pagamento['correcao']|number_format(2, ',', '.') }}</td>
+                            <td>{{ pagamento['valor_pago_normal']|number_format(2, ',', '.') }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <th colspan="2" style="text-align:center">
+                            <big>
+                                {{ 'label.arrecadacaoConsultaLote.relatorioBaixa.totalNormal'|trans }}
+                            </big>
+                        </th>
+                        <th>
+                            <big>
+                                {{ valor|number_format(2, ',', '.') }}
+                            </big>
+                        </th>
+                        <th>
+                            <big>
+                                {{ juros|number_format(2, ',', '.') }}
+                            </big>
+                        </th>
+                        <th>
+                            <big>
+                                {{ multa|number_format(2, ',', '.') }}
+                            </big>
+                        </th>
+                        <th>
+                            <big>
+                                {{ diferenca|number_format(2, ',', '.') }}
+                            </big>
+                        </th>
+                        <th>
+                            <big>
+                                {{ correcao|number_format(2, ',', '.') }}
+                            </big>
+                        </th>
+                        <th>
+                            <big>
+                                {{ total|number_format(2, ',', '.') }}
+                            </big>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <th colspan="6" style="text-align:right">
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.totalCreditoGrupo'|trans }}:</strong>
+                            </h5>
+                        </th>
+                        <td colspan="2" style="text-align:center">
+                            <h5>
+                                <strong>{{ total|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+        {% endfor %}
+
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.valor'|trans|title }}</strong>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.juros'|trans|title }}</strong>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.multa'|trans|title }}</strong>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.diff'|trans|title }}</strong>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.correcao'|trans|title }}</strong>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.total'|trans|title }}</strong>
+                            </h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set valor, juros, multa, diferenca, correcao, total = 0, 0, 0, 0, 0, 0 %}
+                    {% for pagamento in pagamentos %}
+                        {% set valor = valor + pagamento['valor_pago_calculo'] %}
+                        {% set juros = juros + pagamento['juros'] %}
+                        {% set multa = multa + pagamento['multa'] %}
+                        {% set diferenca = diferenca + pagamento['diferenca'] %}
+                        {% set correcao = correcao + pagamento['correcao'] %}
+                        {% set total = total + pagamento['valor_pago_normal'] %}
+                    {% endfor %}
+                    <tr>
+                        <th style="text-align:center">
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.totaisRelatorio'|trans|title }}:</strong>
+                            </h5>
+                        </th>
+                        <td>
+                            <h5>
+                                <strong>{{ valor|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                <strong>{{ juros|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                <strong>{{ multa|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                <strong>{{ diferenca|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                <strong>{{ correcao|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                <strong>{{ total|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                    </tr>
+
+                    {% set totalInconsistencia = 0 %}
+                    {% for inconsistencia in inconsistencias%}
+                        {% if inconsistencia['valor'] is defined %}
+                            {% set totalInconsistencia = totalInconsistencia + inconsistencia['valor'] %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th colspan="5" style="text-align:right">
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.totalInconsistente'|trans|title }}:</strong>
+                            </h5>
+                        </th>
+                        <td colspan="2"  style="text-align:center">
+                            <h5>
+                                <strong>{{ totalInconsistencia|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                    </tr>
+
+                    {% set totalInconsistenciaSemVinculo = 0 %}
+                    {% for inconsistencia in inconsistenciasSemVinculo%}
+                        {% if inconsistencia['valor'] is defined %}
+                            {% set totalInconsistenciaSemVinculo = totalInconsistenciaSemVinculo + inconsistencia['valor'] %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th colspan="5" style="text-align:right">
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.totalInconsistenteSemVinculo'|trans|title }}:</strong>
+                            </h5>
+                        </th>
+                        <td colspan="2"  style="text-align:center">
+                            <h5>
+                                <strong>{{ totalInconsistenciaSemVinculo|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="5" style="text-align:right">
+                            <h5>
+                                <strong>{{ 'label.arrecadacaoConsultaLote.relatorioBaixa.totalGeral'|trans|title }}:</strong>
+                            </h5>
+                        </th>
+                        <td colspan="2"  style="text-align:center">
+                            <h5>
+                                <strong>{{ total|number_format(2, ',', '.') }}</strong>
+                            </h5>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+    <style>
+        table td,th{border: 0 !important; text-align:center}
+    </style>
+{% endblock %}

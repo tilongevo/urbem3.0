@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Empenho\AtributoEmpenhoValor:
+    type: entity
+    table: empenho.atributo_empenho_valor
+    id:
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: text
+            nullable: true
+    manyToOne:
+        fkEmpenhoPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenho
+            inversedBy: fkEmpenhoAtributoEmpenhoValores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkEmpenhoAtributoEmpenhoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

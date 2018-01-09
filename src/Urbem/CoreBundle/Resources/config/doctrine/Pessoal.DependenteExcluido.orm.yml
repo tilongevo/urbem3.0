@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Pessoal\DependenteExcluido:
+    type: entity
+    table: pessoal.dependente_excluido
+    id:
+        codDependente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dependente
+        codServidor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servidor
+    fields:
+        dataExclusao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: data_exclusao
+    oneToOne:
+        fkPessoalServidorDependente:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorDependente
+            inversedBy: fkPessoalDependenteExcluido
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor
+                cod_dependente:
+                    referencedColumnName: cod_dependente

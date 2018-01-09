@@ -1,0 +1,52 @@
+{% set grupoVencimentos = field.data.grupoVencimentos %}
+
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="addGrupoVencimento" id="addGrupoVencimento" value="Incluir">
+    </div>
+</div>
+<div class="col s12">
+    <h3 class="col s10 box-title left-align show">{{ 'label.calendarioFiscal.listaGruposVencimentos'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableGrupoVencimentos" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.codigo'|trans }}</th>
+            <th class="th-rh">{{ 'label.calendarioFiscal.dtVencimento'|trans }}</th>
+            <th class="th-rh">{{ 'label.descricao'|trans }}</th>
+            <th class="th-rh">{{ 'label.calendarioFiscal.limiteInicial'|trans }}</th>
+            <th class="th-rh">{{ 'label.calendarioFiscal.limiteFinal'|trans }}</th>
+            <th class="th-rh">{{ 'label.calendarioFiscal.utilizarCotaUnica'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if grupoVencimentos|length > 0 %}
+            {% for grupoVencimento in grupoVencimentos %}
+                {% set value = grupoVencimento.utilizarUnica ~ '__' ~ grupoVencimento.descricao ~ '__' ~
+                    grupoVencimento.dataVencimentoParcelaUnica|date('d/m/Y') ~ '__' ~ grupoVencimento.limiteInicial ~ '__' ~
+                    grupoVencimento.limiteFinal %}
+                <tr class="tr-rh">
+                    <td style="display: none"><input name="grupoVencimentos[]" type="hidden" value="{{ value }}" /></td>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ grupoVencimento.dataVencimentoParcelaUnica|date('d/m/Y') }}</td>
+                    <td>{{ grupoVencimento.descricao }}</td>
+                    <td>{{ grupoVencimento.limiteInicial }}</td>
+                    <td>{{ grupoVencimento.limiteFinal }}</td>
+                    <td>
+                        {% if grupoVencimento.utilizarUnica == true %}
+                            {{ 'label_type_yes'|trans }}
+                        {% else %}
+                            {{ 'label_type_no'|trans }}
+                        {% endif %}
+                    </td>
+                    <td class="remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="tr-rh empty">
+                <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfInss:
+    type: entity
+    table: ima.configuracao_dirf_inss
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+    fields: {  }
+    manyToOne:
+        fkImaConfiguracaoDirf:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirf
+            inversedBy: fkImaConfiguracaoDirfInss
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkImaConfiguracaoDirfInss
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio

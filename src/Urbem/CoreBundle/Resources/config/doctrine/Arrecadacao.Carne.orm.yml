@@ -1,0 +1,116 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Carne:
+    type: entity
+    table: arrecadacao.carne
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\CarneRepository
+    indexes:
+        idx_carne_1:
+            columns:
+                - cod_parcela
+    id:
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        codParcela:
+            type: integer
+            nullable: false
+            column: cod_parcela
+        codCarteira:
+            type: integer
+            nullable: true
+            column: cod_carteira
+        impresso:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+        iLancto:
+            type: integer
+            nullable: true
+            column: i_lancto
+        iDebito:
+            type: integer
+            nullable: true
+            column: i_debito
+    manyToOne:
+        fkArrecadacaoParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Parcela
+            inversedBy: fkArrecadacaoCarnes
+            joinColumns:
+                cod_parcela:
+                    referencedColumnName: cod_parcela
+        fkMonetarioConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Convenio
+            inversedBy: fkArrecadacaoCarnes
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+        fkMonetarioCarteira:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Carteira
+            inversedBy: fkArrecadacaoCarnes
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+                cod_carteira:
+                    referencedColumnName: cod_carteira
+    oneToMany:
+        fkArrecadacaoCarneLimites:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CarneLimite
+            mappedBy: fkArrecadacaoCarne
+        fkArrecadacaoCarneConsolidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CarneConsolidacao
+            mappedBy: fkArrecadacaoCarne
+        fkArrecadacaoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Pagamento
+            mappedBy: fkArrecadacaoCarne
+        fkTesourariaArrecadacaoCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoCarne
+            mappedBy: fkArrecadacaoCarne
+        fkArrecadacaoCarneDevolucoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CarneDevolucao
+            mappedBy: fkArrecadacaoCarne
+    oneToOne:
+        fkArrecadacaoCarneMigracao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CarneMigracao
+            mappedBy: fkArrecadacaoCarne
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                cod_convenio:
+                    referencedColumnName: cod_convenio

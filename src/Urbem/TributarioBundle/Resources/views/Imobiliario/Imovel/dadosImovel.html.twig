@@ -1,0 +1,39 @@
+{% block content %}
+
+    {% if field.data.imovel is not null %}
+
+        <table class="table show-table">
+            <tbody>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioImovel.localizacao'|trans }}</th>
+                <td>{{ field.data.imovel.localizacao }}</td>
+
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioImovel.lote'|trans }}</th>
+                <td>{{ field.data.imovel.lote }}</td>
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioImovel.bairro'|trans }}</th>
+                <td>{{ field.data.imovel.bairro }}</td>
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioImovel.numInscricao'|trans }}</th>
+                <td>{{ field.data.imovel.inscricaoMunicipal }}</td>
+            </tr>
+            {% if field.data.imovel.fkImobiliarioBaixaImoveis|length > 0 %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioImovelBaixa.dtBaixa'|trans }}</th>
+                    <td>{{ field.data.imovel.fkImobiliarioBaixaImoveis.last.dtInicio|date('d/m/Y') }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioImovelBaixa.motivoBaixa'|trans }}</th>
+                    <td>{{ field.data.imovel.fkImobiliarioBaixaImoveis.last.justificativa }}</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock content %}

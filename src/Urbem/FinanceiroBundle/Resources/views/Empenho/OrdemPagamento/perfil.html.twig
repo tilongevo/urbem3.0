@@ -1,0 +1,293 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+
+        {% include 'FinanceiroBundle::Empenho/OrdemPagamento/detalhe.html.twig' %}
+
+        {% if notaLiquidacaoPagas|length > 0 %}
+            <div class="col s12">
+                <div class="col s11 servidor-table">
+                    <h6><i class="mdi mdi-file-tree left"></i>{{ 'label.ordemPagamento.contasPagadoras'|trans }}</h6>
+                </div>
+                <table class="col s12 highlight bordered">
+                    <thead class="thead-rh">
+                        <tr class="sonata-ba-list-field-header">
+                            <th class="th-rh">{{ 'label.ordemPagamento.conta'|trans }}</th>
+                            <th class="th-rh">{{ 'label.ordemPagamento.recurso'|trans }}</th>
+                            <th class="th-rh">{{ 'label.ordemPagamento.vlPago'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for notaLiquidacaoPaga in notaLiquidacaoPagas %}
+                        <tr>
+                            <td class="td-rh">{{ notaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoContaPagadora.codPlano ~ ' - ' ~ notaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoContaPagadora.fkContabilidadePlanoAnalitica.fkContabilidadePlanoConta.nomConta }}</td>
+                            <td class="td-rh">{{ notaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoContaPagadora.fkContabilidadePlanoAnalitica.fkContabilidadePlanoRecurso.fkOrcamentoRecurso.codRecurso ~ ' - ' ~ notaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoContaPagadora.fkContabilidadePlanoAnalitica.fkContabilidadePlanoRecurso.fkOrcamentoRecurso.nomRecurso }}</td>
+                            <td class="td-rh">{{ notaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoPaga.vlPago|number_format_currency('BRL') }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        <div class="col s12">
+            <div class="col s11 servidor-table">
+                {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') and ordemPagamento.fkEmpenhoOrdemPagamentoRetencoes|length == 0 and ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length == 0  %}
+                    <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_pagamento_liquidacao_create', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade }) }}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir">
+                        <i class="mdi mdi-file-tree left"></i>
+                        {{ 'label.ordemPagamento.itens'|trans }}
+                    </a>
+                {% else %}
+                    <h6><i class="mdi mdi-file-tree left"></i>{{ 'label.ordemPagamento.itens'|trans }}</h6>
+                {% endif %}
+            </div>
+            {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') and ordemPagamento.fkEmpenhoOrdemPagamentoRetencoes|length == 0 and ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length == 0 %}
+                <div class="col s1 servidor-table right">
+                    <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_pagamento_liquidacao_create', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade }) }}" class="btn-flat"><i class="mdi mdi-plus-circle"></i></a>
+                </div>
+            {% endif %}
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.ordemPagamento.empenho'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.dtEmpenho'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.liquidacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.dtLiquidacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.vlPagamento'|trans }}</th>
+                    {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') and ordemPagamento.fkEmpenhoPagamentoLiquidacoes|length > 1 %}
+                        <th class="th-rh">Ações</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% if ordemPagamento.fkEmpenhoPagamentoLiquidacoes|length > 0 %}
+                    {% for pagamentoLiquidacao in ordemPagamento.fkEmpenhoPagamentoLiquidacoes %}
+                        <tr>
+                            <td class="td-rh">{{ pagamentoLiquidacao.fkEmpenhoNotaLiquidacao.codEmpenho ~ '/' ~ pagamentoLiquidacao.fkEmpenhoNotaLiquidacao.exercicioEmpenho }}</td>
+                            <td class="td-rh">{{ pagamentoLiquidacao.fkEmpenhoNotaLiquidacao.fkEmpenhoEmpenho.dtEmpenho|date("d/m/Y") }}</td>
+                            <td class="td-rh">{{ pagamentoLiquidacao.fkEmpenhoNotaLiquidacao.codNota ~ '/' ~ pagamentoLiquidacao.fkEmpenhoNotaLiquidacao.exercicio }}</td>
+                            <td class="td-rh">{{ pagamentoLiquidacao.fkEmpenhoNotaLiquidacao.dtLiquidacao|date("d/m/Y") }}</td>
+                            <td class="td-rh">{{ pagamentoLiquidacao.vlPagamento|number_format_currency('BRL') }}</td>
+                            {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') and ordemPagamento.fkEmpenhoPagamentoLiquidacoes|length > 1 %}
+                                <td class="td-rh">
+                                    <div class="btn-group">
+                                        <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right" data-position="left" data-delay="50" data-tooltip="Excluir" href="{{ path('urbem_financeiro_empenho_ordem_pagamento_pagamento_liquidacao_delete', { 'id': admin.getObjectKey(pagamentoLiquidacao) }) }}">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </div>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="6">{{ 'label.ordemPagamento.listagemVazia'|trans }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col s6">
+            <div class="col s11 servidor-table">
+                {% if ordemPagamento.fkEmpenhoPagamentoLiquidacoes|length <= 1 and ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length == 0 and ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                    <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_retencao_create', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade }) }}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir">
+                        <i class="mdi mdi-file-tree left"></i>
+                        {{ 'label.ordemPagamento.retencoesOrcamentarias'|trans }}
+                    </a>
+                {% else %}
+                    <h6><i class="mdi mdi-file-tree left"></i>{{ 'label.ordemPagamento.retencoesOrcamentarias'|trans }}</h6>
+                {% endif %}
+            </div>
+            {% if ordemPagamento.fkEmpenhoPagamentoLiquidacoes|length <= 1 and ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length == 0 and ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                <div class="col s1 servidor-table right">
+                    <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_retencao_create', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade }) }}" class="btn-flat"><i class="mdi mdi-plus-circle"></i></a>
+                </div>
+            {% endif %}
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.ordemPagamento.codReceita'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.vlRetencao'|trans }}</th>
+                    {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                        <th class="th-rh">Ações</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% if tipoRetencao.orcamentaria > 0 %}
+                    {% for retencao in ordemPagamento.fkEmpenhoOrdemPagamentoRetencoes %}
+                        {% if retencao.codReceita is not null %}
+                            <tr>
+                                <td class="td-rh">{{ retencao.codReceita ~ ' - ' ~ retencao.fkOrcamentoReceita.fkOrcamentoContaReceita.descricao }}</td>
+                                <td class="td-rh">{{ retencao.vlRetencao|number_format_currency('BRL') }}</td>
+                                {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                                    <td class="td-rh">
+                                        <div class="btn-group">
+                                            <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right" data-position="left" data-delay="50" data-tooltip="Excluir" href="{{ path('urbem_financeiro_empenho_ordem_pagamento_retencao_delete', { 'id': admin.getObjectKey(retencao) }) }}">
+                                                <i class="material-icons">delete</i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3">{{ 'label.ordemPagamento.listagemVazia'|trans }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col s6">
+            <div class="col s11 servidor-table">
+                {% if ordemPagamento.fkEmpenhoPagamentoLiquidacoes|length <= 1 and ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length == 0 and ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                    <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_retencao_create', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade }) }}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir">
+                        <i class="mdi mdi-file-tree left"></i>
+                        {{ 'label.ordemPagamento.retencoesExtraOrcamentarias'|trans }}
+                    </a>
+                {% else %}
+                    <h6><i class="mdi mdi-file-tree left"></i>{{ 'label.ordemPagamento.retencoesExtraOrcamentarias'|trans }}</h6>
+                {% endif %}
+            </div>
+            {% if ordemPagamento.fkEmpenhoPagamentoLiquidacoes|length <= 1 and ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length == 0 and ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                <div class="col s1 servidor-table right">
+                    <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_retencao_create', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade }) }}" class="btn-flat"><i class="mdi mdi-plus-circle"></i></a>
+                </div>
+            {% endif %}
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.ordemPagamento.codPlano'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.vlRetencao'|trans }}</th>
+                    {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                        <th class="th-rh">Ações</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% if tipoRetencao.extraOrcamentaria > 0 %}
+                    {% for retencao in ordemPagamento.fkEmpenhoOrdemPagamentoRetencoes %}
+                        {% if retencao.codReceita is null %}
+                            <tr>
+                                <td class="td-rh">{{ retencao.codPlano ~ ' - ' ~ retencao.fkContabilidadePlanoAnalitica.fkContabilidadePlanoConta.nomConta }}</td>
+                                <td class="td-rh">{{ retencao.vlRetencao|number_format_currency('BRL') }}</td>
+                                {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                                    <td class="td-rh">
+                                        <div class="btn-group">
+                                            <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right" data-position="left" data-delay="50" data-tooltip="Excluir" href="{{ path('urbem_financeiro_empenho_ordem_pagamento_retencao_delete', { 'id': admin.getObjectKey(retencao) }) }}">
+                                                <i class="material-icons">delete</i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3">{{ 'label.ordemPagamento.listagemVazia'|trans }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col s12">
+            <div class="col s11 servidor-table">
+                {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') and ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length == 0 %}
+                    <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_assinatura_create', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade }) }}" class="btn-flat tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir">
+                        <i class="mdi mdi-account left"></i>
+                        {{ 'label.ordemPagamento.assinaturas'|trans }}
+                    </a>
+                {% else %}
+                    <h6><i class="mdi mdi-account left"></i>{{ 'label.ordemPagamento.assinaturas'|trans }}</h6>
+                {% endif %}
+            </div>
+            {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') and ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length == 0 %}
+                <div class="col s1 servidor-table right">
+                    <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_assinatura_create', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade }) }}" class="btn-flat"><i class="mdi mdi-plus-circle"></i></a>
+                </div>
+            {% endif %}
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.ordemPagamento.nome'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.cargo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.papel'|trans }}</th>
+                    {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                        <th class="th-rh">Ações</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% if ordemPagamento.fkEmpenhoOrdemPagamentoAssinaturas|length > 0 %}
+                    {% for assinatura in ordemPagamento.fkEmpenhoOrdemPagamentoAssinaturas %}
+                        <tr>
+                            <td class="td-rh">{{ assinatura.fkSwCgm.nomCgm }}</td>
+                            <td class="td-rh">{{ assinatura.cargo }}</td>
+                            {% if assinatura.numAssinatura == 1 %}
+                                <td class="td-rh">Visto</td>
+                            {% elseif assinatura.numAssinatura == 2 %}
+                                <td class="td-rh">Operador da Despesa</td>
+                            {% elseif assinatura.numAssinatura == 3 %}
+                                <td class="td-rh">Tesoureiro</td>
+                            {% endif %}
+                            {% if ordemPagamento.getStatus == constant('Urbem\\FinanceiroBundle\\Resources\\config\\Sonata\\Empenho\\OrdemPagamentoAdmin::A_PAGAR') %}
+                                <td class="td-rh">
+                                    <div class="btn-group">
+                                        <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right" data-position="left" data-delay="50" data-tooltip="Excluir" href="{{ path('urbem_financeiro_empenho_ordem_pagamento_assinatura_delete', { 'id': assinatura.exercicio ~ '~' ~ assinatura.codEntidade  ~ '~' ~ assinatura.codOrdem ~ '~' ~ assinatura.numAssinatura }) }}">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </div>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="6">{{ 'label.ordemPagamento.listagemVazia'|trans }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas|length > 0 %}
+            <div class="col s12">
+                <div class="col s11 servidor-table">
+                    <h6>
+                        <i class="mdi mdi-file-document left"></i>
+                        {{ 'label.ordemPagamento.reemitir'|trans }}
+                    </h6>
+                </div>
+                <table class="col s12 highlight bordered">
+                    <thead class="thead-rh">
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="th-rh">{{ 'label.ordemPagamento.dtAnulacao'|trans }}</th>
+                        <th class="th-rh">{{ 'label.ordemPagamento.valor'|trans }}</th>
+                        <th class="th-rh">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for anulada in ordemPagamento.fkEmpenhoOrdemPagamentoAnuladas %}
+                            <tr>
+                                <td class="td-rh">{{ anulada.timestamp|date('d/m/Y') }}</td>
+                                <td class="td-rh">{{ anulada.getVlAnulacao|number_format_currency('BRL') }}</td>
+                                <td class="td-rh">
+                                    <div class="btn-group">
+                                        <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right" target="_blank" data-position="left" data-delay="50" data-tooltip="Reemitir" href="{{ path('urbem_financeiro_empenho_ordem_pagamento_reemitir', { 'codOrdem': anulada.codOrdem, 'exercicio': anulada.exercicio, 'codEntidade': anulada.codEntidade, 'timestamp': anulada.timestamp }) }}">
+                                            <i class="material-icons">print</i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Almoxarifado\LocalizacaoFisica:
+    type: entity
+    table: almoxarifado.localizacao_fisica
+    uniqueConstraints:
+        uk_localizacao_fisica:
+            columns:
+                - cod_almoxarifado
+                - localizacao
+    id:
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codLocalizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_localizacao
+    fields:
+        localizacao:
+            type: string
+            nullable: false
+            length: 30
+    manyToOne:
+        fkAlmoxarifadoAlmoxarifado:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado
+            inversedBy: fkAlmoxarifadoLocalizacaoFisicas
+            joinColumns:
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+    oneToMany:
+        fkAlmoxarifadoLocalizacaoFisicaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LocalizacaoFisicaItem
+            mappedBy: fkAlmoxarifadoLocalizacaoFisica
+    lifecycleCallbacks:
+        prePersist:
+            - generatePkSequence

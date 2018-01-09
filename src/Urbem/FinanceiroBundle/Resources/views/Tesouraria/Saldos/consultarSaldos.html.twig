@@ -1,0 +1,89 @@
+{% block style %}
+    <style>
+        .select2-drop
+        .select2-display-none
+        .select2-with-searchbox
+        .select2-drop-active .x {
+            left: 776.406px !important;
+            width: 390px !important;
+        }
+        .select2-drop-active .x {
+            border-color: #fff !important;
+        }
+        .select2-container .select2-choice .x, .select2-container .select2-choices .x, .select2-container .select2-choices .select2-search-field input {
+            background-color: transparent !important;
+            border-color: transparent !important;
+        }
+    </style>
+{% endblock %}
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+<div class="sonata-ba-show col s12">
+    <div class="sonata-ba-view">
+        <div class="row">
+            <h4 class="col s10 box-title left-align ">{{ 'label.tesouraria.saldos.consultarSaldos'|trans }}</h4>
+            <div class="divider grey lighten-1  title-divider"></div>
+            {{ form_start(form) }}
+                <div class="col s4 field-filtro select-filtro">
+                    {{ form_label(form.entidade, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.entidade, {'attr': {'class': 'white input-rh browser-default'}}) }}
+                    {{ form_errors(form.entidade) }}
+                </div>
+                <div class="col s4 field-filtro select-filtro">
+                    {{ form_label(form.codPlano, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.codPlano, {'attr': {'class': 'white input-rh browser-default'}}) }}
+                    {{ form_errors(form.codPlano) }}
+                </div>
+                <div class="col s4 sonata-ba-field sonata-ba-field-standard-natural">
+                    {{ form_label(form.dtSaldo, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    <div class="input-group date datepicker" id="teste">
+                        {{ form_widget(form.dtSaldo, {'attr': {'class': 'our-datepicker sonata-medium-datecampo-sonata form-control input-rh datepicker', 'name': 'teste'}}) }}
+                        <span class="input-group-addon">
+                            <span class="fa-calendar fa"></span>
+                        </span>
+                    </div>
+                    {{ form_errors(form.dtSaldo) }}
+                </div>
+                <div class="col s12 right-align" style="margin-top: 2%">
+                    <button type="submit" id="form_submit" name="form[submit]"
+                            class="white-text blue darken-4 btn btn-success save right">
+                        <i class="material-icons left">search</i>Consultar
+                    </button>
+                    {#{{ form_row(form.submit) }}#}
+                </div>
+            {{form_end(form) }}
+        </div>
+
+        {% if consultaRetorno is defined %}
+            <div class="row">
+                <div class="divider grey lighten-1  title-divider"></div>
+                <table id="tableContaCaixa" class="bordered highlight" style="width:100%">
+                    <tr class="tr-rh">
+                        <th class="th-rh">{{ 'label.entidades' |trans }}</th>
+                        {% if consultaRetorno.conta  is defined %}
+                            <th class="th-rh">{{ 'label.lote.codConta' |trans }}</th>
+                        {% endif %}
+                        <th class="th-rh">{{ 'label.tesouraria.saldos.dataSaldo' |trans }}</th>
+                        <th class="th-rh">{{ 'label.tesouraria.saldos.saldo' |trans }}</th>
+                    </tr>
+                    <tr>
+                        <td class="td-rh">{{ consultaRetorno.entidade }}</td>
+                        {% if consultaRetorno.conta  is defined %}
+                            <td class="td-rh">{{ consultaRetorno.conta }}</td>
+                        {% endif %}
+                        <td class="td-rh">{{ consultaRetorno.dataSaldo }}</td>
+                        <td class="td-rh">{{ consultaRetorno.saldo }}</td>
+                    </tr>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/bundles/financeiro/javascripts/tesouraria/consultarSaldos/consultarSaldos.js') }}" >
+{% endblock javascripts %}

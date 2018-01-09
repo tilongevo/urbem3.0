@@ -1,0 +1,24 @@
+Urbem\CoreBundle\Entity\Tcemg\ConsideracaoArquivo:
+    type: entity
+    table: tcemg.consideracao_arquivo
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ConsideracaoArquivoRepository
+    id:
+        codArquivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arquivo
+    fields:
+        nomArquivo:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_arquivo
+    oneToMany:
+        fkTcemgConsideracaoArquivoDescricoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConsideracaoArquivoDescricao
+            mappedBy: fkTcemgConsideracaoArquivo

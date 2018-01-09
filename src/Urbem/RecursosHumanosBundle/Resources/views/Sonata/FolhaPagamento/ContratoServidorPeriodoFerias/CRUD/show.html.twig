@@ -1,0 +1,134 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">{{ 'label.recursosHumanos.contratoServidorFerias.matricula'|trans }}
+                        - {{ object.matricula }}</span>
+                </h2>
+
+                <p class="divider grey col s12"></p>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.contratoServidorFerias.competencia'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.competencia }}</h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.contratoServidorFerias.periodoMovimentacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.periodo }}</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.contratoServidorFerias.evento'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_recursos_humanos_folha_pagamento_registro_evento_ferias_create',{'id': object|objectKey }) }}"
+                   class="btn-lg"><i class="mdi mdi-plus-circle "></i></a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">#</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorFerias.codigo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorFerias.evento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorFerias.desdobramento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorFerias.valor'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorFerias.quantidade'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for fixo in object.eventosFixos %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ fixo.codigo }}</td>
+                        <td class="td-rh">{{ fixo.descricao }}</td>
+                        <td class="td-rh">{{ fixo.desdobramento_texto}}</td>
+                        <td class="td-rh">{{ fixo.valor|number_format(2, ',', '.') }}</td>
+                        <td class="td-rh">{{ fixo.quantidade|number_format(2, ',', '.') }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Alterar"
+                                   href="{{ path('urbem_recursos_humanos_folha_pagamento_registro_evento_ferias_edit', { 'id': fixo.cod_registro~'~'~fixo.timestamp~'~'~fixo.cod_evento~'~'~fixo.desdobramento }) }}">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_recursos_humanos_folha_pagamento_registro_evento_ferias_delete', { 'id': fixo.cod_registro~'~'~fixo.timestamp~'~'~fixo.cod_evento~'~'~fixo.desdobramento }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if object.apresentaAbaBase %}
+            <div class="row">
+                <div class="col s12 servidor-table">
+                    <a class="btn-lg tooltipped"
+                       data-position="left"
+                       data-delay="50"
+                       data-tooltip="Incluir">
+                        <i class="fa fa-cubes left"></i>
+                        {{ 'label.recursosHumanos.contratoServidorFerias.eventosBasesCadastrados'|trans }}
+                    </a>
+                </div>
+
+                <table class="col s12 highlight bordered">
+                    <thead class="thead-rh">
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="th-rh">#</th>
+                        <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorFerias.codigo'|trans }}</th>
+                        <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorFerias.evento'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for base in object.eventosBases %}
+                        <tr>
+                            <td class="td-rh">{{ loop.index }}</td>
+                            <td class="td-rh">{{ base.codigo }}</td>
+                            <td class="td-rh">{{ base.descricao }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock show %}

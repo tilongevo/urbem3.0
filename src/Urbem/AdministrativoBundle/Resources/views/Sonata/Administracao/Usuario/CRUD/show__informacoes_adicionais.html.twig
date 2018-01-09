@@ -1,0 +1,72 @@
+<div class=" ">
+    <div class="box box-primary">
+        <div class="box-header col s12">
+            <h3 class="col s10 box-title left-align show">
+                {{ 'label.informacoes_acesso'|trans }}
+            </h3>
+        </div>
+        <div class="box-body  no-padding">
+            <table class="table show-table">
+                <tbody>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.usuario.username'|trans }}</th>
+                    <td>{{ object.username }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.usuario.email'|trans }}</th>
+                    <td>{{ object.email }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.usuario.lastLogin'|trans }}</th>
+                    <td>{{ object.lastLogin|date('d/m/Y') }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.usuario.expired'|trans }}</th>
+                    <td>{% if object.expiresAt is null or "now"|date < object.expiresAt|date %}
+                            {{ 'nao'|trans }}
+                        {% else %}
+                            {{ 'sim'|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.usuario.expiresAt'|trans }}</th>
+                    <td>{% if object.expiresAt is not null %}
+                            {{ object.expiresAt|date('d/m/Y') }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.usuario.credentialsExpired'|trans }}</th>
+                    <td>{% if object.credentialsExpireAt is null or "now"|date < object.credentialsExpireAt|date %}
+                            {{ 'nao'|trans }}
+                        {% else %}
+                            {{ 'sim'|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.usuario.credentialsExpireAt'|trans }}</th>
+                    <td>{% if object.credentialsExpireAt is not null %}
+                            {{ object.credentialsExpireAt|date('d/m/Y') }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.usuario.dtCadastro'|trans }}</th>
+                    <td>{{ object.dtCadastro|date('d/m/Y') }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'status'|trans }}</th>
+                    <td>{{ object.status == 'A' ? 'label.ativo'|trans : 'label.inativo'|trans }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

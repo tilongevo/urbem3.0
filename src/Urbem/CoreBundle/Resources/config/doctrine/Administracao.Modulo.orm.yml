@@ -1,0 +1,140 @@
+Urbem\CoreBundle\Entity\Administracao\Modulo:
+    type: entity
+    table: administracao.modulo
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\ModuloRepository
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        codResponsavel:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: cod_responsavel
+        nomModulo:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_modulo
+        nomDiretorio:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_diretorio
+        ordem:
+            type: integer
+            nullable: false
+        codGestao:
+            type: integer
+            nullable: true
+            column: cod_gestao
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkAdministracaoModulos
+            joinColumns:
+                cod_responsavel:
+                    referencedColumnName: numcgm
+        fkAdministracaoGestao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Gestao
+            inversedBy: fkAdministracaoModulos
+            joinColumns:
+                cod_gestao:
+                    referencedColumnName: cod_gestao
+    oneToMany:
+        fkAdministracaoConfiguracaoEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ConfiguracaoEntidade
+            mappedBy: fkAdministracaoModulo
+        fkAdministracaoCadastros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Cadastro
+            mappedBy: fkAdministracaoModulo
+        fkAdministracaoBibliotecas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Biblioteca
+            mappedBy: fkAdministracaoModulo
+        fkAdministracaoConfiguracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Configuracao
+            mappedBy: fkAdministracaoModulo
+        fkAdministracaoRelatorios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Relatorio
+            mappedBy: fkAdministracaoModulo
+        fkArrecadacaoModeloCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ModeloCarne
+            mappedBy: fkAdministracaoModulo
+        fkDocumentodinamicoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Documentodinamico\Documento
+            mappedBy: fkAdministracaoModulo
+        fkDocumentodinamicoTagBases:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Documentodinamico\TagBase
+            mappedBy: fkAdministracaoModulo
+        fkSwAtributoDinamicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoDinamico
+            mappedBy: fkAdministracaoModulo
+        fkAdministracaoAssinaturaModulos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AssinaturaModulo
+            mappedBy: fkAdministracaoModulo
+        fkAdministracaoFuncionalidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcionalidade
+            mappedBy: fkAdministracaoModulo
+    oneToOne:
+        fkArrecadacaoArrecadacaoModulos:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ArrecadacaoModulos
+            mappedBy: fkAdministracaoModulo
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo

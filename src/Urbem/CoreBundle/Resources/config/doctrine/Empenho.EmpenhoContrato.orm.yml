@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Empenho\EmpenhoContrato:
+    type: entity
+    table: empenho.empenho_contrato
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+    fields:
+        numContrato:
+            type: integer
+            nullable: false
+            column: num_contrato
+        exercicioContrato:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_contrato
+    manyToOne:
+        fkLicitacaoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            inversedBy: fkEmpenhoEmpenhoContratos
+            joinColumns:
+                exercicio_contrato:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato
+    oneToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkEmpenhoEmpenhoContrato
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

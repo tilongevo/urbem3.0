@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Arrecadacao\LoteInconsistencia:
+    type: entity
+    table: arrecadacao.lote_inconsistencia
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        numeracao:
+            type: string
+            nullable: false
+            length: 17
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        dataPagamento:
+            type: date
+            nullable: false
+            column: data_pagamento
+    manyToOne:
+        fkArrecadacaoLote:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lote
+            inversedBy: fkArrecadacaoLoteInconsistencias
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_lote:
+                    referencedColumnName: cod_lote

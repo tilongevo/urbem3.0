@@ -1,0 +1,411 @@
+Urbem\CoreBundle\Entity\Administracao\AtributoDinamico:
+    type: entity
+    table: administracao.atributo_dinamico
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\AtributoDinamicoRepository
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        naoNulo:
+            type: boolean
+            nullable: true
+            column: nao_nulo
+        nomAtributo:
+            type: string
+            nullable: true
+            length: 80
+            column: nom_atributo
+        valorPadrao:
+            type: text
+            nullable: true
+            column: valor_padrao
+        ajuda:
+            type: string
+            nullable: true
+            length: 80
+        mascara:
+            type: string
+            nullable: true
+            length: 40
+        ativo:
+            type: boolean
+            nullable: true
+        interno:
+            type: boolean
+            nullable: true
+        indexavel:
+            type: boolean
+            nullable: true
+        codAtributoAnterior:
+            type: text
+            nullable: true
+            column: cod_atributo_anterior
+    manyToOne:
+        fkAdministracaoCadastro:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Cadastro
+            inversedBy: fkAdministracaoAtributoDinamicos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+        fkAdministracaoTipoAtributo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\TipoAtributo
+            inversedBy: fkAdministracaoAtributoDinamicos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkAlmoxarifadoAtributoRequisicaoItemValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoRequisicaoItemValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkAdministracaoAtributoValorPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoValorPadrao
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkAdministracaoAtributoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoFuncao
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkAdministracaoAtributoIntegridades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoIntegridade
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkAlmoxarifadoAtributoCatalogoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoItem
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkAlmoxarifadoAtributoCatalogoClassificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoClassificacao
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkArrecadacaoAtributoCalendarioValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoCalendarioValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkArrecadacaoAtributoDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoDesoneracao
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkArrecadacaoAtributoGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoGrupo
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkArrecadacaoAtributoItbiValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoItbiValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkArrecadacaoVariaveisLayoutCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\VariaveisLayoutCarne
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkConcursoAtributoCandidatoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\AtributoCandidatoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkConcursoAtributoConcursoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\AtributoConcursoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkEconomicoAtributoElementos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoElemento
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkEconomicoAtributoEmpresaDireitoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoEmpresaDireitoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkEconomicoAtributoTipoLicencaDiversas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoTipoLicencaDiversa
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkEmpenhoAtributoEmpenhoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AtributoEmpenhoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkEmpenhoAtributoLiquidacaoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AtributoLiquidacaoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkEstagioAtributoEstagiarioEstagios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\AtributoEstagiarioEstagio
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkFolhapagamentoAtributoEventoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\AtributoEventoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkFolhapagamentoAtributoPadraoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\AtributoPadraoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkFolhapagamentoAtributoPrevidenciaValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\AtributoPrevidenciaValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkFolhapagamentoConfiguracaoEmpenhoAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoAtributo
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkFolhapagamentoConfiguracaoEmpenhoLlaAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaAtributo
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkFolhapagamentoConfiguracaoIpes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpe
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkFolhapagamentoConfiguracaoIpes1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpe
+            mappedBy: fkAdministracaoAtributoDinamico1
+        fkFolhapagamentoConfiguracaoIpePensionistas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpePensionista
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkFolhapagamentoConfiguracaoIpePensionistas1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpePensionista
+            mappedBy: fkAdministracaoAtributoDinamico1
+        fkImobiliarioAtributoCondominioValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoCondominioValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoFaceQuadraValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoFaceQuadraValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoImovelValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoImovelValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoLoteRuralValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoLoteRuralValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoLoteUrbanoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoLoteUrbanoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoTipoEdificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoEdificacao
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoTipoLicencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoLicenca
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoTrechoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTrechoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkLicitacaoDocumentosAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\DocumentosAtributos
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkNormasAtributoTipoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\AtributoTipoNorma
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkPatrimonioEspecieAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\EspecieAtributo
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkPessoalAtributoContratoPensionistas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AtributoContratoPensionista
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkPessoalAtributoCargoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AtributoCargoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkPessoalAtributoContratoServidorValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AtributoContratoServidorValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkArrecadacaoAtributoCadEconFaturamentoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoCadEconFaturamentoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkArrecadacaoAtributoImovelVVenalValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoImovelVVenalValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkEconomicoAtributoCadEconAutonomoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoCadEconAutonomoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkEconomicoAtributoEmpresaFatoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoEmpresaFatoValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoConstrucaoOutrosValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoConstrucaoOutrosValor
+            mappedBy: fkAdministracaoAtributoDinamico
+        fkImobiliarioAtributoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoNivel
+            mappedBy: fkAdministracaoAtributoDinamico

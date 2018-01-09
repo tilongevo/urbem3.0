@@ -1,0 +1,11 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field%}
+	{% if object.getFkEconomicoCadastroEconomicoEmpresaFato() %}
+	    {% set cgm = object.getFkEconomicoCadastroEconomicoEmpresaFato().getFkSwCgmPessoaFisica().getFkSwCgm() %}
+	{% elseif object.getFkEconomicoCadastroEconomicoAutonomo() %}
+	    {% set cgm = object.getFkEconomicoCadastroEconomicoAutonomo().getFkSwCgmPessoaFisica().getFkSwCgm() %}
+	{% elseif object.getFkEconomicoCadastroEconomicoEmpresaDireito() %}
+		{% set cgm = object.getFkEconomicoCadastroEconomicoEmpresaDireito().getFkSwCgmPessoaJuridica().getFkSwCgm() %}
+	{% endif %}
+	{{ cgm.getNomCgm() }}
+{% endblock %}

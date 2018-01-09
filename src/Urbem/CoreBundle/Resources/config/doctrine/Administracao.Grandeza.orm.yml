@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Administracao\Grandeza:
+    type: entity
+    table: administracao.grandeza
+    id:
+        codGrandeza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grandeza
+    fields:
+        nomGrandeza:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_grandeza
+    oneToMany:
+        fkAdministracaoUnidadeMedidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            mappedBy: fkAdministracaoGrandeza

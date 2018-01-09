@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Licitacao\ParticipanteConsorcio:
+    type: entity
+    table: licitacao.participante_consorcio
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkLicitacaoParticipante:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Participante
+            inversedBy: fkLicitacaoParticipanteConsorcios
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoParticipanteConsorcios
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

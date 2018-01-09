@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Imobiliario\TransferenciaCancelamento:
+    type: entity
+    table: imobiliario.transferencia_cancelamento
+    id:
+        codTransferencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transferencia
+    fields:
+        dtCancelamento:
+            type: date
+            nullable: false
+            column: dt_cancelamento
+        motivo:
+            type: string
+            nullable: false
+            length: 500
+    oneToOne:
+        fkImobiliarioTransferenciaImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaImovel
+            inversedBy: fkImobiliarioTransferenciaCancelamento
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia

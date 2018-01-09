@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Documentodinamico\Documento:
+    type: entity
+    table: documentodinamico.documento
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+    fields:
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        nomDocumento:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_documento
+        margemEsq:
+            type: integer
+            nullable: false
+            column: margem_esq
+        margemDir:
+            type: integer
+            nullable: false
+            column: margem_dir
+        margemSup:
+            type: integer
+            nullable: false
+            column: margem_sup
+        fonte:
+            type: string
+            nullable: false
+            length: 1
+        tamanhoFonte:
+            type: integer
+            nullable: false
+            column: tamanho_fonte
+        alturaLinha:
+            type: integer
+            nullable: false
+            column: altura_linha
+        comprimentoLinha:
+            type: integer
+            nullable: false
+            column: comprimento_linha
+        titulo:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkDocumentodinamicoDocumentos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+    oneToMany:
+        fkDocumentodinamicoTagBases:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Documentodinamico\TagBase
+            mappedBy: fkDocumentodinamicoDocumento
+        fkDocumentodinamicoDocumentoBlocoTextos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Documentodinamico\DocumentoBlocoTexto
+            mappedBy: fkDocumentodinamicoDocumento

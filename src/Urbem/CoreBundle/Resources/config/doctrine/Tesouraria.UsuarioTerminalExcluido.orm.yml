@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminalExcluido:
+    type: entity
+    table: tesouraria.usuario_terminal_excluido
+    id:
+        codTerminal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_usuario
+    fields:
+        timestampExcluido:
+            type: datetimemicrosecondpk
+            nullable: true
+            column: timestamp_excluido
+    oneToOne:
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaUsuarioTerminalExcluido
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario

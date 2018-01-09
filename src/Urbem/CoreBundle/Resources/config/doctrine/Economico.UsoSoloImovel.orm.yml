@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Economico\UsoSoloImovel:
+    type: entity
+    table: economico.uso_solo_imovel
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        inscricaoMunicipal:
+            type: integer
+            nullable: false
+            column: inscricao_municipal
+    manyToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkEconomicoUsoSoloImoveis
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+    oneToOne:
+        fkEconomicoLicencaDiversa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiversa
+            inversedBy: fkEconomicoUsoSoloImovel
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio

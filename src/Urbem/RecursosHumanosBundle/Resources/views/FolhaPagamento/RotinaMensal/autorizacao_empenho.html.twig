@@ -1,0 +1,131 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+    <form name="autorizacao-empenho" action="post">
+    <div class="input-field col s12 m4 l4">
+        <p for="origem">Origem</p>
+            <p>
+            <input type="radio" name="origem" value="f" id="f">
+            <label for="f">Folha de Pagamento</label>
+            </p>
+            <p>
+            <input type="radio" name="origem" value="p" id="p">
+            <label for="p">Previdência</label>
+            </p>
+            <p>
+            <input type="radio" name="origem" value="g" id="g">
+            <label for="g">FGTS</label>
+            </p>
+            <p>
+            <input type="radio" name="origem" value="d" id="d">
+            <label for="d">Diárias</label>
+            </p>
+    </div>
+
+    <div class="input-field col s12 m4 l4">
+        <p for="dadoscadastro">Dados Cadastro</p>
+            <p>
+            <input type="radio" name="dadoscadastro" value="a" id="a">
+            <label for="a">Ativos</label>
+            </p>
+            <p>
+            <input type="radio" name="dadoscadastro" value="x" id="x">
+            <label for="x">Aposentados</label>
+            </p>
+            <p>
+            <input type="radio" name="dadoscadastro" value="v" id="v">
+            <label for="v">Pensionistas</label>
+            </p>
+            <p>
+            <input type="radio" name="dadoscadastro" value="h" id="h">
+            <label for="h">Rescindidos</label>
+            </p>
+    </div>
+
+    <div class="input-field col s12 m4 l4">
+        <p for="dadosvalores">Origem dos Valores</p>
+            <p>
+            <input type="radio" name="dadosvalores" value="u" id="u">
+            <label for="u">Folha Pagamento</label>
+            </p>
+            <p>
+            <input type="radio" name="dadosvalores" value="w" id="w">
+            <label for="w">Previdência</label>
+            </p>
+            <p>
+            <input type="radio" name="dadosvalores" value="i" id="i">
+            <label for="i">FGTS</label>
+            </p>
+            <p>
+            <input type="radio" name="dadosvalores" value="q" id="q">
+            <label for="q">Diárias</label>
+            </p>
+    </div>
+
+    <div class="input-field col s12 m12 l12">
+        <div class="section"></div>
+    </div>
+
+    <div class="input-field col s12 m6 l6">
+        <select name="competencia">
+            <option value="">Selecione</option>
+            {% for mes in meses %}
+                <option value="{{ mes.codMes }}">{{ mes.descricao }}</option>
+            {% endfor %}
+        </select>
+            <label for="competencia">Competência</label>
+    </div>
+
+    <div class="input-field col s12 m6 l6">
+      <select name="tipocalculo">
+          <option value="">Selecione</option>
+          {% for tipocalculo in tiposcalculo %}
+              <option value="{{ tipocalculo.codConfiguracao }}">{{ tipocalculo.descricao }}</option>
+          {% endfor %}
+      </select>
+      <label for="tipocalculo">Tipo de Cálculo</label>
+    </div>
+
+    <div class="input-field col s12 m6 l6">
+        <select name="matricula">
+                <option value="">Selecione</option>
+                <option value="contrato">Matrícula</option>
+                <option value="cgm_contrato">CGM/Matrícula</option>
+                <option value="lotacao">Lotação</option>
+                <option value="local">Local</option>
+                <option value="atributo_servidor">Atributo Dinâmico Servidor</option>
+                <option value="atributo_pensionista">Atributo Dinâmico Pensionista</option>
+                <option value="geral">Geral</option>
+            </select>
+        <label for="matricula">Matrícula</label>
+    </div>
+
+    <div class="input-field col s12 m6 l6">
+        <select name="dadosautorizacao">
+            <option value="">Selecione</option>
+        </select>
+        <label for="dadosautorizacao">Dados de Autorização</label>
+    </div>
+
+    <div class="input-field col s12 m12 l12">
+        <p>Incluir Assinaturas</p>
+            <input type="checkbox" name="assinaturas" id="assinaturas">
+            <label for="assinaturas">Incluir Assinaturas</label>
+    </div>
+
+    <div class="input-field col s12 m10 l12">
+        <button type="submit" class="waves-effect waves-light btn blue darken-4 right" value="Gerar Lista">Gerar Lista</button>
+    </div>
+</form>
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Tcemg\ConvenioParticipante:
+    type: entity
+    table: tcemg.convenio_participante
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        cgmParticipante:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_participante
+    fields:
+        vlConcedido:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_concedido
+        percentual:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+        codTipoParticipante:
+            type: integer
+            nullable: false
+            column: cod_tipo_participante
+        esfera:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                default: Federal
+    manyToOne:
+        fkTcemgConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Convenio
+            inversedBy: fkTcemgConvenioParticipantes
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkTcemgConvenioParticipantes
+            joinColumns:
+                cgm_participante:
+                    referencedColumnName: cgm_fornecedor
+        fkLicitacaoTipoParticipante:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoParticipante
+            inversedBy: fkTcemgConvenioParticipantes
+            joinColumns:
+                cod_tipo_participante:
+                    referencedColumnName: cod_tipo_participante

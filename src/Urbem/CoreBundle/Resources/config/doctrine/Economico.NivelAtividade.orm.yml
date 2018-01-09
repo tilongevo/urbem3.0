@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Economico\NivelAtividade:
+    type: entity
+    table: economico.nivel_atividade
+    id:
+        codNivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel
+        codVigencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vigencia
+    fields:
+        nomNivel:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_nivel
+        mascara:
+            type: string
+            nullable: false
+            length: 10
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkEconomicoVigenciaAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\VigenciaAtividade
+            inversedBy: fkEconomicoNivelAtividades
+            joinColumns:
+                cod_vigencia:
+                    referencedColumnName: cod_vigencia
+    oneToMany:
+        fkEconomicoAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Atividade
+            mappedBy: fkEconomicoNivelAtividade
+        fkEconomicoNivelAtividadeValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelAtividadeValor
+            mappedBy: fkEconomicoNivelAtividade

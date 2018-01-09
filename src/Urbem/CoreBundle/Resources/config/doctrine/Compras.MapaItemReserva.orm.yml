@@ -1,0 +1,98 @@
+Urbem\CoreBundle\Entity\Compras\MapaItemReserva:
+    type: entity
+    table: compras.mapa_item_reserva
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\MapaItemReservaRepository
+    id:
+        exercicioMapa:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_mapa
+        codMapa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mapa
+        exercicioSolicitacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_solicitacao
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSolicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_solicitacao
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        lote:
+            type: integer
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        codDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa
+    fields:
+        exercicioReserva:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_reserva
+        codReserva:
+            type: integer
+            nullable: false
+            column: cod_reserva
+    manyToOne:
+        fkOrcamentoReservaSaldos:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReservaSaldos
+            inversedBy: fkComprasMapaItemReservas
+            joinColumns:
+                cod_reserva:
+                    referencedColumnName: cod_reserva
+                exercicio_reserva:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkComprasMapaItemDotacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaItemDotacao
+            inversedBy: fkComprasMapaItemReserva
+            joinColumns:
+                exercicio_mapa:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa
+                exercicio_solicitacao:
+                    referencedColumnName: exercicio_solicitacao
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+                cod_centro:
+                    referencedColumnName: cod_centro
+                cod_item:
+                    referencedColumnName: cod_item
+                lote:
+                    referencedColumnName: lote
+                cod_conta:
+                    referencedColumnName: cod_conta
+                cod_despesa:
+                    referencedColumnName: cod_despesa

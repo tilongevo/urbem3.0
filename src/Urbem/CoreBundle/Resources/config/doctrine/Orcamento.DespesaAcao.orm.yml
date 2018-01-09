@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Orcamento\DespesaAcao:
+    type: entity
+    table: orcamento.despesa_acao
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        exercicioDespesa:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_despesa
+        codDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa
+    fields: {  }
+    manyToOne:
+        fkPpaAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Acao
+            inversedBy: fkOrcamentoDespesaAcoes
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+        fkOrcamentoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            inversedBy: fkOrcamentoDespesaAcoes
+            joinColumns:
+                exercicio_despesa:
+                    referencedColumnName: exercicio
+                cod_despesa:
+                    referencedColumnName: cod_despesa

@@ -1,0 +1,66 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeMulta:
+    type: entity
+    table: fiscalizacao.penalidade_multa
+    id:
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+    fields:
+        codIndicador:
+            type: integer
+            nullable: false
+            column: cod_indicador
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        codUnidade:
+            type: integer
+            nullable: false
+            column: cod_unidade
+        codGrandeza:
+            type: integer
+            nullable: false
+            column: cod_grandeza
+    manyToOne:
+        fkMonetarioIndicadorEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\IndicadorEconomico
+            inversedBy: fkFiscalizacaoPenalidadeMultas
+            joinColumns:
+                cod_indicador:
+                    referencedColumnName: cod_indicador
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkFiscalizacaoPenalidadeMultas
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkFiscalizacaoPenalidadeMultas
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza
+    oneToOne:
+        fkFiscalizacaoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Penalidade
+            inversedBy: fkFiscalizacaoPenalidadeMulta
+            joinColumns:
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade

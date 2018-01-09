@@ -1,0 +1,98 @@
+<div class="sonata-ba-show col s12" xmlns="http://www.w3.org/1999/html">
+    <div class="sonata-ba-view">
+        {% if admin.dataCustom.listaEntidades|length > 0 %}
+            <div class="row">
+                <h3 class="col s10 box-title left-align show">{{ 'label.listaEntidades'|trans }}</h3>
+                <div class="divider grey lighten-1  title-divider"></div>
+                <table class="bordered highlight" style="width:100%">
+                    <tr class="tr-rh">
+                        <th class="th-rh">{{ 'entidade'|trans }}</th>
+                        <th class="th-rh">{{ 'label.dtFixaAutorizacao'|trans }}</th>
+                        <th class="th-rh">{{ 'label.dtFixaEmpenho'|trans }}</th>
+                        <th class="th-rh">{{ 'label.dtFixaLiquidacao'|trans }}</th>
+                    </tr>
+
+                    {% set i = 3 %}
+                    {% for entidadeData in admin.dataCustom.listaEntidades %}
+                        {% if i is divisible by(3) %}
+                            <tr>
+                            <td class="td-rh">{{ entidadeData.cod_entidade }} - {{ entidadeData.nom_cgm }}</td>
+                        {% endif %}
+                        <td class="td-rh">
+                            <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                <div class="input-group date">
+                                    <input type="text" class="our-datepicker sonata-medium-datecampo-sonata form-control input-rh" data-date-format="DD/MM/YYYY" id="{{ entidadeData.parametro }}_{{ entidadeData.cod_entidade }}"
+                                       name="{{ entidadeData.parametro }}_{{ entidadeData.cod_entidade }}"
+                                       value="{{ entidadeData.valor }}" />
+                                    <span class="input-group-addon">
+                                        <span class="fa-calendar fa"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+
+                        {% set i = i + 1 %}
+                        {% if i is divisible by(3) %}
+                            </tr>
+                        {% endif %}
+
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <h3 class="col s10 box-title left-align show">{{ 'label.contaCaixa'|trans }}</h3>
+            <div class="divider grey lighten-1  title-divider"></div>
+            <input type="hidden" id="exercicio" name="exercicio" value="{{ admin.dataCustom.exercicio }}" />
+            <div class="col s6">
+                <select id="entidades" name="entidades" class="select2-parameters">
+                    <option>{{ 'label.selecione'|trans }}</option>
+                    {% for key,value in admin.dataCustom.entidades %}
+                        <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col s6">
+                <select id="contas" name="contas" class="select2-parameters" disabled="disabled">
+                    <option>Selecione</option>
+                </select>
+            </div>
+            <div class="col s1 right" style="margin-top: 10px">
+                <span class="icon-input">
+                    <i class="material-icons">add_circle</i>
+                </span>
+                <input class="white-text blue darken-4 btn btn-success save col s12"
+                       type="button" name="conta" id="conta" value="Incluir" style="width: 110%">
+            </div>
+        </div>
+
+        <div class="row">
+            <h3 class="col s10 box-title left-align show">Conta Caixa das Entidades</h3>
+            <div class="divider grey lighten-1  title-divider"></div>
+            <table id="tableContaCaixa" class="bordered highlight" style="width:100%">
+                <tr class="tr-rh">
+                    <th class="th-rh">Código Entidade</th>
+                    <th class="th-rh">Conta Caixa</th>
+                    <th class="th-rh">Nome</th>
+                    <th class="th-rh">Ação</th>
+                </tr>
+                {% for configuracaoEntidade in admin.dataCustom.configuracoes %}
+                    <tr>
+                        <td style="display: none"><input name="conta[]" type="hidden" value="{{ configuracaoEntidade.codEntidade }}_{{ configuracaoEntidade.codContaCaixa }}"/></td>
+                        <td class="td-rh">{{ configuracaoEntidade.codEntidade }}</td>
+                        <td class="td-rh">{{ configuracaoEntidade.codContaCaixa }}</td>
+                        <td class="td-rh">{{ configuracaoEntidade.nomeConta }}</td>
+                        <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    jQuery(function ($) {
+        $('.our-datepicker').datetimepicker({"pickTime":false,"useCurrent":true,"minDate":"1\/1\/1900","maxDate":null,"showToday":true,"language":"pt_BR","defaultDate":"","disabledDates":[],"enabledDates":[],"icons":{"time":"fa fa-clock-o","date":"fa fa-calendar","up":"fa fa-chevron-up","down":"fa fa-chevron-down"},"useStrict":false,"sideBySide":false,"daysOfWeekDisabled":[],"useSeconds":false});
+    });
+</script>

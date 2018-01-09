@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Tcemg\NormaArtigo:
+    type: entity
+    table: tcemg.norma_artigo
+    id:
+        codArtigo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_artigo
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        numArtigo:
+            type: integer
+            nullable: false
+            column: num_artigo
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcemgNormaArtigos
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

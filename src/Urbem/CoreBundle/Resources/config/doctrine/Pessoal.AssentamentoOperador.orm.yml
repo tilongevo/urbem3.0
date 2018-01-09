@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoOperador:
+    type: entity
+    table: pessoal.assentamento_operador
+    uniqueConstraints:
+        uk_assentamento_operador_1:
+            columns:
+                - descricao
+    id:
+        codOperador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_operador
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalAssentamentoAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            mappedBy: fkPessoalAssentamentoOperador

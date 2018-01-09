@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaCasoCausa:
+    type: entity
+    table: pessoal.contrato_pensionista_caso_causa
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoPensionistaCasoCausaRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        dtRescisao:
+            type: date
+            nullable: false
+            column: dt_rescisao
+        timestamp:
+            type: datetime
+            nullable: false
+        codCasoCausa:
+            type: integer
+            nullable: false
+            column: cod_caso_causa
+        incFolhaSalario:
+            type: boolean
+            nullable: true
+            column: inc_folha_salario
+        incFolhaDecimo:
+            type: boolean
+            nullable: true
+            column: inc_folha_decimo
+    manyToOne:
+        fkPessoalCasoCausa:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CasoCausa
+            inversedBy: fkPessoalContratoPensionistaCasoCausas
+            joinColumns:
+                cod_caso_causa:
+                    referencedColumnName: cod_caso_causa
+    oneToOne:
+        fkPessoalCausaObitoPensionista:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaObitoPensionista
+            mappedBy: fkPessoalContratoPensionistaCasoCausa
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoPensionistaCasoCausaNorma:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaCasoCausaNorma
+            mappedBy: fkPessoalContratoPensionistaCasoCausa
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoPensionista:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionista
+            inversedBy: fkPessoalContratoPensionistaCasoCausa
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

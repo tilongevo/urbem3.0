@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Ima\CodigoDirf:
+    type: entity
+    table: ima.codigo_dirf
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDirf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dirf
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 250
+    oneToMany:
+        fkImaConfiguracaoDirfPrestadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfPrestador
+            mappedBy: fkImaCodigoDirf

@@ -1,0 +1,65 @@
+Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoArrecadacaoEstornada:
+    type: entity
+    table: tesouraria.conciliacao_lancamento_arrecadacao_estornada
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        mes:
+            type: integer
+            generator:
+                strategy: NONE
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        timestampEstornada:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_estornada
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicioConciliacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_conciliacao
+    fields: {  }
+    manyToOne:
+        fkTesourariaArrecadacaoEstornada:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornada
+            inversedBy: fkTesourariaConciliacaoLancamentoArrecadacaoEstornadas
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                timestamp_estornada:
+                    referencedColumnName: timestamp_estornada
+        fkTesourariaConciliacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Conciliacao
+            inversedBy: fkTesourariaConciliacaoLancamentoArrecadacaoEstornadas
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio_conciliacao:
+                    referencedColumnName: exercicio
+                mes:
+                    referencedColumnName: mes

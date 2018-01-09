@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Protocolo\ProcessoHistorico:
+    type: entity
+    table: protocolo.processo_historico
+    id:
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+        codAssunto:
+            type: integer
+            nullable: false
+            column: cod_assunto
+        observacoes:
+            type: text
+            nullable: false
+        resumoAssunto:
+            type: string
+            nullable: false
+            length: 80
+            column: resumo_assunto
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkProtocoloProcessoHistoricos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwAssunto:
+            targetEntity: Urbem\CoreBundle\Entity\SwAssunto
+            inversedBy: fkProtocoloProcessoHistoricos
+            joinColumns:
+                cod_assunto:
+                    referencedColumnName: cod_assunto
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao

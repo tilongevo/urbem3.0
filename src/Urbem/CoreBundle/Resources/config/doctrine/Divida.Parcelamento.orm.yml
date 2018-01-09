@@ -1,0 +1,98 @@
+Urbem\CoreBundle\Entity\Divida\Parcelamento:
+    type: entity
+    table: divida.parcelamento
+    repositoryClass: Urbem\CoreBundle\Repository\Tributario\Divida\ParcelamentoRepository
+    indexes:
+        ix_parcelamento_1:
+            columns:
+                - numero_parcelamento
+                - exercicio
+    id:
+        numParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcelamento
+    fields:
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+        timestampModalidade:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_modalidade
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        numeroParcelamento:
+            type: integer
+            nullable: false
+            column: numero_parcelamento
+        judicial:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkDividaParcelamentos
+            joinColumns:
+                numcgm_usuario:
+                    referencedColumnName: numcgm
+        fkDividaModalidadeVigencia:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            inversedBy: fkDividaParcelamentos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                timestamp_modalidade:
+                    referencedColumnName: timestamp
+    oneToMany:
+        fkDividaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Documento
+            mappedBy: fkDividaParcelamento
+        fkDividaParcelaOrigens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelaOrigem
+            mappedBy: fkDividaParcelamento
+        fkDividaDividaParcelamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaParcelamento
+            mappedBy: fkDividaParcelamento
+        fkDividaParcelas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Parcela
+            mappedBy: fkDividaParcelamento
+    oneToOne:
+        fkDividaParcelamentoCancelamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelamentoCancelamento
+            mappedBy: fkDividaParcelamento
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento

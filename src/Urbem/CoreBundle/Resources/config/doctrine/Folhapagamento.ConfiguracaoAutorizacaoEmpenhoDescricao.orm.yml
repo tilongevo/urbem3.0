@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenhoDescricao:
+    type: entity
+    table: folhapagamento.configuracao_autorizacao_empenho_descricao
+    id:
+        codConfiguracaoAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao_autorizacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+    oneToOne:
+        fkFolhapagamentoConfiguracaoAutorizacaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenho
+            inversedBy: fkFolhapagamentoConfiguracaoAutorizacaoEmpenhoDescricao
+            joinColumns:
+                cod_configuracao_autorizacao:
+                    referencedColumnName: cod_configuracao_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

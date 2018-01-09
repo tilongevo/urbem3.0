@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Contabilidade\PlanoContaHistorico:
+    type: entity
+    table: contabilidade.plano_conta_historico
+    id:
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+    manyToOne:
+        fkContabilidadePlanoContaGeral:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoContaGeral
+            inversedBy: fkContabilidadePlanoContaHistoricos
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_plano:
+                    referencedColumnName: cod_plano

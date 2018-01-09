@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Administracao\Impressora:
+    type: entity
+    table: administracao.impressora
+    id:
+        codImpressora:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_impressora
+    fields:
+        nomImpressora:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_impressora
+        codOrgao:
+            type: integer
+            nullable: false
+            column: cod_orgao
+        codLocal:
+            type: integer
+            nullable: false
+            column: cod_local
+        filaImpressao:
+            type: string
+            nullable: false
+            length: 15
+            column: fila_impressao
+    manyToOne:
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkAdministracaoImpressoras
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkAdministracaoImpressoras
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local
+    oneToMany:
+        fkTesourariaChequeImpressoraTerminais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeImpressoraTerminal
+            mappedBy: fkAdministracaoImpressora
+        fkAdministracaoUsuarioImpressoras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UsuarioImpressora
+            mappedBy: fkAdministracaoImpressora

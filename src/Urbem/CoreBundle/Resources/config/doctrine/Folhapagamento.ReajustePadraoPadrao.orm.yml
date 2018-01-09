@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ReajustePadraoPadrao:
+    type: entity
+    table: folhapagamento.reajuste_padrao_padrao
+    id:
+        codReajuste:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_reajuste
+        codPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_padrao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoReajuste:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Reajuste
+            inversedBy: fkFolhapagamentoReajustePadraoPadroes
+            joinColumns:
+                cod_reajuste:
+                    referencedColumnName: cod_reajuste
+        fkFolhapagamentoPadraoPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PadraoPadrao
+            inversedBy: fkFolhapagamentoReajustePadraoPadroes
+            joinColumns:
+                cod_padrao:
+                    referencedColumnName: cod_padrao
+                timestamp:
+                    referencedColumnName: timestamp

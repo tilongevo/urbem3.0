@@ -1,0 +1,69 @@
+Urbem\CoreBundle\Entity\Economico\CnaeFiscal:
+    type: entity
+    table: economico.cnae_fiscal
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\CnaeFiscalRepository
+    id:
+        codCnae:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cnae
+    fields:
+        nomAtividade:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_atividade
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        codVigencia:
+            type: integer
+            nullable: false
+            column: cod_vigencia
+        codNivel:
+            type: integer
+            nullable: false
+            column: cod_nivel
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 160
+            column: cod_estrutural
+        risco:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                default: 'N'
+    manyToOne:
+        fkEconomicoNivelCnae:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelCnae
+            inversedBy: fkEconomicoCnaeFiscais
+            joinColumns:
+                cod_nivel:
+                    referencedColumnName: cod_nivel
+                cod_vigencia:
+                    referencedColumnName: cod_vigencia
+    oneToMany:
+        fkEconomicoNivelCnaeValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelCnaeValor
+            mappedBy: fkEconomicoCnaeFiscal
+        fkImaConfiguracaoCageds:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoCaged
+            mappedBy: fkEconomicoCnaeFiscal
+        fkEconomicoAtividadeCnaeFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeCnaeFiscal
+            mappedBy: fkEconomicoCnaeFiscal

@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Licitacao\MembroExcluido:
+    type: entity
+    table: licitacao.membro_excluido
+    id:
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codComissao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_comissao
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+    oneToOne:
+        fkLicitacaoComissaoMembros:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ComissaoMembros
+            inversedBy: fkLicitacaoMembroExcluido
+            joinColumns:
+                cod_comissao:
+                    referencedColumnName: cod_comissao
+                numcgm:
+                    referencedColumnName: numcgm
+                cod_norma:
+                    referencedColumnName: cod_norma

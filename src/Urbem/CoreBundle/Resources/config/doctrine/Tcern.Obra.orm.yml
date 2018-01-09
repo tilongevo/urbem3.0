@@ -1,0 +1,101 @@
+Urbem\CoreBundle\Entity\Tcern\Obra:
+    type: entity
+    table: tcern.obra
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_obra
+    fields:
+        obra:
+            type: string
+            nullable: false
+            length: 150
+        objetivo:
+            type: string
+            nullable: false
+            length: 50
+        localizacao:
+            type: string
+            nullable: false
+            length: 50
+        codCidade:
+            type: integer
+            nullable: false
+            column: cod_cidade
+        codRecurso1:
+            type: integer
+            nullable: true
+            column: cod_recurso_1
+        codRecurso2:
+            type: integer
+            nullable: true
+            column: cod_recurso_2
+        codRecurso3:
+            type: integer
+            nullable: true
+            column: cod_recurso_3
+        valorRecurso1:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_recurso_1
+        valorRecurso2:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_recurso_2
+        valorRecurso3:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_recurso_3
+        valorOrcamentoBase:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_orcamento_base
+        projetoExistente:
+            type: string
+            nullable: false
+            length: 255
+            column: projeto_existente
+        observacao:
+            type: string
+            nullable: false
+            length: 100
+        latitude:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        longitude:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        rdc:
+            type: integer
+            nullable: false
+    oneToMany:
+        fkTcernObraContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ObraContrato
+            mappedBy: fkTcernObra

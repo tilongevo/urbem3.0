@@ -1,0 +1,46 @@
+{% set creditoGrupos = field.data.creditoGrupos %}
+
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="addCreditoGrupo" id="addCreditoGrupo" value="Incluir">
+    </div>
+</div>
+<div class="col s12">
+    <h3 class="col s10 box-title left-align show">{{ 'label.grupoCredito.listaCreditos'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableGrupoCreditos" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.codigo'|trans }}</th>
+            <th class="th-rh">{{ 'label.descricao'|trans }}</th>
+            <th class="th-rh">{{ 'label.grupoCredito.ordem'|trans }}</th>
+            <th class="th-rh">{{ 'label.grupoCredito.descontos'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if creditoGrupos|length > 0 %}
+            {% for creditoGrupo in creditoGrupos %}
+                <tr class="tr-rh row-grupo-credito">
+                    {% set codigoComposto = creditoGrupo.codCredito ~ '.' ~ creditoGrupo.codGenero ~ '.' ~ creditoGrupo.codEspecie ~ '.' ~ creditoGrupo.codNatureza %}
+                    <td style="display: none"><input name="creditos[]" type="hidden" value="{{ creditoGrupo.fkMonetarioCredito.descricaoCredito ~ '__' ~codigoComposto ~ '__' ~ creditoGrupo.codCredito ~ '__' ~ creditoGrupo.ordem ~ '__' ~ creditoGrupo.desconto}}" /></td>
+                    <td>{{ codigoComposto }}</td>
+                    <td>{{ creditoGrupo.fkMonetarioCredito.descricaoCredito }}</td>
+                    <td>{{ creditoGrupo.ordem }}</td>
+                    <td>
+                        {% if creditoGrupo.desconto == true %}
+                            {{ 'label_type_yes'|trans }}
+                        {% else %}
+                            {{ 'label_type_no'|trans }}
+                        {% endif %}
+                    </td>
+                    <td class="remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="tr-rh empty-row-grupo-credito">
+                <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

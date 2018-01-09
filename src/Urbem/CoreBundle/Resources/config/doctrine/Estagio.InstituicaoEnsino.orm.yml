@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Estagio\InstituicaoEnsino:
+    type: entity
+    table: estagio.instituicao_ensino
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    oneToMany:
+        fkEstagioCursoInstituicaoEnsinos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\CursoInstituicaoEnsino
+            mappedBy: fkEstagioInstituicaoEnsino
+        fkEstagioInstituicaoEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\InstituicaoEntidade
+            mappedBy: fkEstagioInstituicaoEnsino
+    oneToOne:
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkEstagioInstituicaoEnsino
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\AutoInfracaoOutros:
+    type: entity
+    table: fiscalizacao.auto_infracao_outros
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        codAutoFiscalizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_auto_fiscalizacao
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        dtOcorrencia:
+            type: date
+            nullable: false
+            column: dt_ocorrencia
+        observacao:
+            type: text
+            nullable: true
+    oneToOne:
+        fkFiscalizacaoAutoInfracao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutoInfracao
+            inversedBy: fkFiscalizacaoAutoInfracaoOutros
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_auto_fiscalizacao:
+                    referencedColumnName: cod_auto_fiscalizacao
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+                timestamp:
+                    referencedColumnName: timestamp

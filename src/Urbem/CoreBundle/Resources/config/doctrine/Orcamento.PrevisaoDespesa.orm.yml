@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Orcamento\PrevisaoDespesa:
+    type: entity
+    table: orcamento.previsao_despesa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa
+        periodo:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        vlPrevisto:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_previsto
+    manyToOne:
+        fkOrcamentoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            inversedBy: fkOrcamentoPrevisaoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_despesa:
+                    referencedColumnName: cod_despesa
+        fkOrcamentoPrevisaoOrcamentaria:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\PrevisaoOrcamentaria
+            inversedBy: fkOrcamentoPrevisaoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio

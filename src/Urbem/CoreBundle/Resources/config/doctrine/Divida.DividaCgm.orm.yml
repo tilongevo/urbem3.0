@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Divida\DividaCgm:
+    type: entity
+    table: divida.divida_cgm
+    id:
+        codInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inscricao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkDividaDividaAtiva:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAtiva
+            inversedBy: fkDividaDividaCgns
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkDividaDividaCgns
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

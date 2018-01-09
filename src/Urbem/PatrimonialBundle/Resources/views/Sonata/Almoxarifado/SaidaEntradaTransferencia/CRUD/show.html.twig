@@ -1,0 +1,90 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">
+                        <small>{{ 'label.saidaTransferencia.transferencia'|trans }}:</small>
+                        {{ object.codTransferencia ~ '/' ~ object.exercicio }}
+                    </span>
+                </h2>
+                <div class="divider grey col s12"></div>
+                <div class="col s4 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.saidaTransferencia.almoxarifadoOrigem'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkAlmoxarifadoAlmoxarifado }}
+                    </h6>
+                </div>
+                <div class="col s4 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.saidaTransferencia.almoxarifadoDestino'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkAlmoxarifadoAlmoxarifado1 }}
+                    </h6>
+                </div>
+                <div class="col s4 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.saidaTransferencia.observacao'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.observacao }}
+                    </h6>
+                </div>
+                <div class="divider grey col s12"></div>
+                <div class="col s2 center" style="margin-bottom: 10px">
+                    <a class="btn btn-success btn-sm sonata-ba-action"
+                       href="{{ path('urbem_patrimonial_almoxarifado_saida_transferencia_processar', {
+                           'id': admin.adminRequestId,
+                           'tipoNatureza': admin.tipoNatureza
+                       })}}">
+                        <i class="fa fa-arrow-circle-right left"></i>Processar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% include 'PatrimonialBundle:Sonata/Almoxarifado/SaidaEntradaTransferencia/CRUD:show__item.html.twig' %}
+
+        <hr/>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_patrimonial_almoxarifado_saida_transferencia_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+{% endblock show %}

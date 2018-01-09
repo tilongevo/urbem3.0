@@ -1,0 +1,83 @@
+Urbem\CoreBundle\Entity\Compras\Ordem:
+    type: entity
+    table: compras.ordem
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\OrdemRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        exercicioEmpenho:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_empenho
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+        observacao:
+            type: string
+            nullable: false
+            length: 200
+        numcgmEntrega:
+            type: integer
+            nullable: true
+            column: numcgm_entrega
+    manyToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkComprasOrdens
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio_empenho:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkComprasOrdens
+            joinColumns:
+                numcgm_entrega:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkComprasNotaFiscalFornecedorOrdens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\NotaFiscalFornecedorOrdem
+            mappedBy: fkComprasOrdem
+        fkComprasOrdemItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemItem
+            mappedBy: fkComprasOrdem
+        fkComprasOrdemAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemAnulacao
+            mappedBy: fkComprasOrdem

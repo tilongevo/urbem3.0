@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Ppa\Programa:
+    type: entity
+    table: ppa.programa
+    repositoryClass: Urbem\CoreBundle\Repository\Ppa\ProgramaRepository
+    id:
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+    fields:
+        codSetorial:
+            type: integer
+            nullable: false
+            column: cod_setorial
+        ultimoTimestampProgramaDados:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: ultimo_timestamp_programa_dados
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        numPrograma:
+            type: integer
+            nullable: false
+            column: num_programa
+    manyToOne:
+        fkPpaProgramaSetorial:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaSetorial
+            inversedBy: fkPpaProgramas
+            joinColumns:
+                cod_setorial:
+                    referencedColumnName: cod_setorial
+    oneToMany:
+        fkOrcamentoProgramaPpaProgramas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ProgramaPpaPrograma
+            mappedBy: fkPpaPrograma
+        fkPpaAcoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Acao
+            mappedBy: fkPpaPrograma
+        fkTcemgRegistrosArquivoProgramas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistrosArquivoPrograma
+            mappedBy: fkPpaPrograma
+        fkTcemgRegistrosArquivoInclusaoProgramas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistrosArquivoInclusaoPrograma
+            mappedBy: fkPpaPrograma
+        fkPpaProgramaDados:
+            orderBy: { 'timestampProgramaDados': 'DESC' }
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaDados
+            mappedBy: fkPpaPrograma

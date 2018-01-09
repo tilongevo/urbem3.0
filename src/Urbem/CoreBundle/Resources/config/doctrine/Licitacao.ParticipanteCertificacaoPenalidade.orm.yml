@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacaoPenalidade:
+    type: entity
+    table: licitacao.participante_certificacao_penalidade
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numCertificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_certificacao
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+    manyToOne:
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkLicitacaoParticipanteCertificacaoPenalidades
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToMany:
+        fkLicitacaoPenalidadesCertificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PenalidadesCertificacao
+            mappedBy: fkLicitacaoParticipanteCertificacaoPenalidade
+    oneToOne:
+        fkLicitacaoParticipanteCertificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacao
+            inversedBy: fkLicitacaoParticipanteCertificacaoPenalidade
+            joinColumns:
+                num_certificacao:
+                    referencedColumnName: num_certificacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor

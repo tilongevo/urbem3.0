@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Imobiliario\TipoBaixa:
+    type: entity
+    table: imobiliario.tipo_baixa
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 100
+            column: nom_tipo
+    oneToMany:
+        fkImobiliarioLicencaBaixas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaBaixa
+            mappedBy: fkImobiliarioTipoBaixa

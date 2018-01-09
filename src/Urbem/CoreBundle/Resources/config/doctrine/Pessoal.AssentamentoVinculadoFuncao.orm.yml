@@ -1,0 +1,77 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoVinculadoFuncao:
+    type: entity
+    table: pessoal.assentamento_vinculado_funcao
+    id:
+        codCondicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_condicao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        codAssentamentoAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento_assentamento
+    fields:
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        condicao:
+            type: string
+            nullable: false
+            length: 1
+        diasIncidencia:
+            type: integer
+            nullable: false
+            column: dias_incidencia
+        diasProtelarAverbar:
+            type: integer
+            nullable: false
+            column: dias_protelar_averbar
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+    manyToOne:
+        fkPessoalAssentamentoVinculado:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoVinculado
+            inversedBy: fkPessoalAssentamentoVinculadoFuncoes
+            joinColumns:
+                cod_condicao:
+                    referencedColumnName: cod_condicao
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                cod_assentamento_assentamento:
+                    referencedColumnName: cod_assentamento_assentamento
+                timestamp:
+                    referencedColumnName: timestamp
+                condicao:
+                    referencedColumnName: condicao
+                dias_incidencia:
+                    referencedColumnName: dias_incidencia
+                dias_protelar_averbar:
+                    referencedColumnName: dias_protelar_averbar
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkPessoalAssentamentoVinculadoFuncoes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao

@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Ponto\TipoInformacao:
+    type: entity
+    table: ponto.tipo_informacao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkPontoExportacaoPontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ExportacaoPonto
+            mappedBy: fkPontoTipoInformacao
+        fkPontoDadosExportacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DadosExportacao
+            mappedBy: fkPontoTipoInformacao

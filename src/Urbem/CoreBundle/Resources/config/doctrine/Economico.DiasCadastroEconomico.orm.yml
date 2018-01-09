@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Economico\DiasCadastroEconomico:
+    type: entity
+    table: economico.dias_cadastro_economico
+    id:
+        codDia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dia
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        hrInicio:
+            type: time
+            nullable: false
+            column: hr_inicio
+        hrTermino:
+            type: time
+            nullable: false
+            column: hr_termino
+    manyToOne:
+        fkAdministracaoDiasSemana:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\DiasSemana
+            inversedBy: fkEconomicoDiasCadastroEconomicos
+            joinColumns:
+                cod_dia:
+                    referencedColumnName: cod_dia
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoDiasCadastroEconomicos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+    oneToMany:
+        fkEconomicoProcessoDiasCadEcons:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoDiasCadEcon
+            mappedBy: fkEconomicoDiasCadastroEconomico

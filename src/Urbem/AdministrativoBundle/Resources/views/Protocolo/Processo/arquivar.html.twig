@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {% include 'AdministrativoBundle::Protocolo/Processo/detalhe.html.twig' %}
+
+        {{ form_start(form) }}
+            <input type="hidden" value="{{ processo.codProcesso }}" name="processo" />
+            <input type="hidden" value="{{ processo.anoExercicio }}" name="exercicio" />
+
+            <div class="col s4">
+                {{ form_label(form.codSituacao, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                {{ form_widget(form.codSituacao, {'attr': {'class': 'input-rh'}}) }}
+                {{ form_errors(form.codSituacao) }}
+            </div>
+            <div class="col s4">
+                {{ form_label(form.codHistorico, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                {{ form_widget(form.codHistorico, {'attr': {'class': 'input-rh'}}) }}
+                {{ form_errors(form.codHistorico) }}
+            </div>
+            <div class="col s4">
+                {{ form_label(form.localizacao, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                {{ form_widget(form.localizacao, {'attr': {'class': 'input-rh'}}) }}
+                {{ form_errors(form.localizacao) }}
+            </div>
+            <div class="col s12">
+                {{ form_label(form.textoComplementar, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                {{ form_widget(form.textoComplementar, {'attr': {'class': 'input-rh'}}) }}
+                {{ form_errors(form.textoComplementar) }}
+            </div>
+
+            <div class="col s12 right-align" style="margin-top: 10px">
+              <a class="left btn grey darken-1 btn-bold cancel left" href="/administrativo/protocolo/processo/perfil?id={{ processo.codProcesso }}"><i class="fa fa-ban left"></i>Cancelar</a>
+                <button type="submit" class="waves-effect waves-light btn blue darken-4" value="Arquivar"><i class="mdi mdi-folder-outline left"></i>Arquivar Processo</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}

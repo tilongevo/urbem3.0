@@ -1,0 +1,27 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+{% block field %}
+    <table class="highlight bordered">
+        <thead class="thead-rh">
+        <tr>
+            <th style="text-align: center !important;">{{ 'cgm'|trans }}
+            <th style="text-align: center !important;">{{ 'label.patrimonial.licitacao.dadosDesignacaoComissao'|trans }}</th>
+            <th style="text-align: center !important;">{{ 'label.patrimonial.licitacao.tipoMembro'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if admin.data.fkLicitacaoComissaoMembros is not empty %}
+            {% for membros in admin.data.fkLicitacaoComissaoMembros %}
+                <tr>
+                    <td class="td-rh">{{ membros.fkSwCgm }}</td>
+                    <td class="td-rh" style="text-align: center">{{ membros.fkNormasNorma.fkNormasNormaDataTermino }}</td>
+                    <td class="td-rh">{{ membros.fkLicitacaoTipoMembro.descricao }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td class="td-rh" colspan="3">Não existe itens cadastrados</td>eeeeee
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

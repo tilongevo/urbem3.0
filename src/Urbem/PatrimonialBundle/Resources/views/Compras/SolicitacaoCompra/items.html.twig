@@ -1,0 +1,43 @@
+{% for cod_item, form in formCollection %}
+    {% for field in form %}
+        {% set formIndex = cod_item %}
+
+        {% if field.vars.name == 'saldoDotacao_' ~ formIndex %}
+            {% set reservaDeSaldo = form['reservaSaldo_' ~ formIndex].vars.value %}
+        {% endif %}
+
+        {% if field.vars.label != null %}
+            {% set fieldClass = field.vars.attr.class is defined ? field.vars.attr.class ~ 'campo-sonata form-control' : 'campo-sonata form-control' %}
+
+            {% if field.vars.name matches '/^descricaoResumida_/' %}<div class="row">{% endif %}
+
+            <div class="form_row col s3 campo-sonata{{ reservaDeSaldo is defined and registroDePrecos == false ? reservaDeSaldo < 0 ? ' has-error' }}">
+                {{ form_label(field, null, {'label_attr': {'class': 'control-label'}}) }}
+                <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                    {{ form_widget(field, {'attr': {'class': fieldClass}, 'full_name': field.vars.name}) }}
+                </div>
+
+                {% if reservaDeSaldo is defined and reservaDeSaldo < 0 and registroDePrecos == false %}
+                    <div class="help-block sonata-ba-field-error-messages">
+                            <span class="close-help-block">
+                                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                            </span>
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-exclamation-circle"></i>&nbsp;
+                                Valor Total do Item é Superior ao Saldo da Dotação!
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if field.vars.name matches '/^saldoDotacao_/' %}</div>{% endif %}
+
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+<script>
+    $('.close-help-block').click(function () {
+        $('.sonata-ba-field-error-messages').hide();
+    });
+</script>

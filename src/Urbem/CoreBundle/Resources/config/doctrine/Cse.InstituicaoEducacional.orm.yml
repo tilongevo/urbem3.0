@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\InstituicaoEducacional:
+    type: entity
+    table: cse.instituicao_educacional
+    id:
+        codInstituicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_instituicao
+    fields:
+        nomInstituicao:
+            type: string
+            nullable: false
+            length: 160
+            column: nom_instituicao
+    oneToMany:
+        fkCseQualificacaoEscolares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\QualificacaoEscolar
+            mappedBy: fkCseInstituicaoEducacional

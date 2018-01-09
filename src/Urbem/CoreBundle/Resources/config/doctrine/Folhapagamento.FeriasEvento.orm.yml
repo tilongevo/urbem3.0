@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Folhapagamento\FeriasEvento:
+    type: entity
+    table: folhapagamento.ferias_evento
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\FeriasEventoRepository
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoTipoEventoFerias:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoFerias
+            inversedBy: fkFolhapagamentoFeriasEventos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoFeriasEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

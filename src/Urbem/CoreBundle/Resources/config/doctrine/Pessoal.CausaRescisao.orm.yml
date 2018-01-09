@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Pessoal\CausaRescisao:
+    type: entity
+    table: pessoal.causa_rescisao
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\CausaRescisaoRepository
+    id:
+        codCausaRescisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_causa_rescisao
+    fields:
+        codSefipSaida:
+            type: integer
+            nullable: false
+            column: cod_sefip_saida
+        numCausa:
+            type: integer
+            nullable: false
+            column: num_causa
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+        codCausaAfastamento:
+            type: string
+            nullable: false
+            length: 10
+            column: cod_causa_afastamento
+    manyToOne:
+        fkPessoalMovSefipSaida:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipSaida
+            inversedBy: fkPessoalCausaRescisoes
+            joinColumns:
+                cod_sefip_saida:
+                    referencedColumnName: cod_sefip_saida
+        fkPessoalCausaAfastamentoMte:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaAfastamentoMte
+            inversedBy: fkPessoalCausaRescisoes
+            joinColumns:
+                cod_causa_afastamento:
+                    referencedColumnName: cod_causa_afastamento
+    oneToMany:
+        fkPessoalCausaRescisaoCageds:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaRescisaoCaged
+            mappedBy: fkPessoalCausaRescisao
+        fkPessoalCasoCausas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CasoCausa
+            mappedBy: fkPessoalCausaRescisao
+        fkPessoalAssentamentoCausaRescisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoCausaRescisao
+            mappedBy: fkPessoalCausaRescisao

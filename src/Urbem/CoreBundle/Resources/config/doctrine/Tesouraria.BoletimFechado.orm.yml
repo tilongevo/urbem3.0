@@ -1,0 +1,102 @@
+Urbem\CoreBundle\Entity\Tesouraria\BoletimFechado:
+    type: entity
+    table: tesouraria.boletim_fechado
+    id:
+        codBoletim:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_boletim
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestampFechamento:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_fechamento
+    fields:
+        codTerminal:
+            type: integer
+            nullable: false
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_usuario
+    manyToOne:
+        fkTesourariaBoletim:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Boletim
+            inversedBy: fkTesourariaBoletimFechados
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTesourariaBoletimFechados
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaBoletimFechados
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario
+    oneToMany:
+        fkTesourariaBoletimLiberados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberado
+            mappedBy: fkTesourariaBoletimFechado
+        fkTesourariaBoletimLiberadoCancelados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberadoCancelado
+            mappedBy: fkTesourariaBoletimFechado
+    oneToOne:
+        fkTesourariaBoletimReaberto:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimReaberto
+            mappedBy: fkTesourariaBoletimFechado
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_fechamento:
+                    referencedColumnName: timestamp_fechamento

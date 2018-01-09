@@ -1,0 +1,53 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% set suspensao = admin.getSuspensao(object) %}
+
+{% if not suspensao %}
+	<a href="{{ admin.generateObjectUrl('edit', object) }}" data-toggle="tooltip" data-placement="bottom" title="Editar" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list">
+        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+    </a>
+
+    {% if attribute(object, 'codTipo') is defined %}
+    	<a href="{{ path('urbem_tributario_economico_elemento_licenca_diversa_alterar', { 'id': '%s~%s'|format(object.getCodLicenca(), object.getExercicio()) }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoElementoLicencaDiversa.alterar.alterar'|trans }}">
+		    <i class="fa fa-archive fa-lg"></i>
+		</a>
+    {% endif %}
+
+	<a href="{{ path('urbem_tributario_economico_baixa_licenca_baixar', { 'codLicenca': object.getCodLicenca(), 'exercicio': object.getExercicio() }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoBaixaLicenca.baixar.baixarLicenca'|trans }}">
+	    <i class="fa fa-arrow-down fa-lg"></i>
+	</a>
+
+	<a href="{{ path('urbem_tributario_economico_baixa_licenca_suspender', { 'codLicenca': object.getCodLicenca(), 'exercicio': object.getExercicio() }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoBaixaLicenca.suspender.suspenderLicenca'|trans }}">
+	    <i class="fa fa-lock fa-lg"></i>
+	</a>
+
+	<a href="{{ path('urbem_tributario_economico_baixa_licenca_cassar', { 'codLicenca': object.getCodLicenca(), 'exercicio': object.getExercicio() }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoBaixaLicenca.cassar.cassarLicenca'|trans }}">
+	    <i class="fa fa-gavel fa-lg"></i>
+	</a>
+
+	<a href="{{ admin.generateObjectUrl('imprimir', object) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-placement="bottom" title="Emitir Licença">
+	    <i class="fa fa-print fa-lg"></i>
+	</a>
+
+{% else %}
+	<a href="#" data-toggle="tooltip" data-placement="bottom" title="Editar" class="grey-text z-depth-0 hide-on-med-and-down tooltipped btn-list">
+        <i class="fa fa-pencil fa-lg grey-text" aria-hidden="true"></i>
+    </a>
+
+    <a href="{{ path('urbem_tributario_economico_baixa_licenca_cancelar_suspensao', { 'id': '%s~%s~%s'|format(suspensao.getCodLicenca(), suspensao.getExercicio(), suspensao.getDtInicio()) }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoBaixaLicenca.cancelarSuspensao.cancelarSuspensao'|trans }}">
+	    <i class="fa fa-unlock fa-lg"></i>
+	</a>
+
+    <a href="#" class="grey-text z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="Emitir Licença">
+    	<i class="fa fa-print fa-lg"></i>
+    </a>
+{% endif %}

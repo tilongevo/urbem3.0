@@ -1,0 +1,81 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\AutorizacaoNotas:
+    type: entity
+    table: fiscalizacao.autorizacao_notas
+    id:
+        codAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autorizacao
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        inscricaoEconomica:
+            type: integer
+            nullable: false
+            column: inscricao_economica
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+        serie:
+            type: string
+            nullable: false
+            length: 10
+        qtdTaloes:
+            type: integer
+            nullable: false
+            column: qtd_taloes
+        notaInicial:
+            type: integer
+            nullable: false
+            column: nota_inicial
+        notaFinal:
+            type: integer
+            nullable: false
+            column: nota_final
+        qtdVias:
+            type: integer
+            nullable: false
+            column: qtd_vias
+        observacao:
+            type: text
+            nullable: true
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkFiscalizacaoGrafica:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Grafica
+            inversedBy: fkFiscalizacaoAutorizacaoNotas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkFiscalizacaoAutorizacaoNotas
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFiscalizacaoAutorizacaoNotas
+            joinColumns:
+                numcgm_usuario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkFiscalizacaoBaixaAutorizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\BaixaAutorizacao
+            mappedBy: fkFiscalizacaoAutorizacaoNotas
+        fkFiscalizacaoAutorizacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutorizacaoDocumento
+            mappedBy: fkFiscalizacaoAutorizacaoNotas

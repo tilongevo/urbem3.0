@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Stn\Providencias:
+    type: entity
+    table: stn.providencias
+    id:
+        codProvidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_providencia
+        codRisco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_risco
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 450
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkStnRiscosFiscais:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\RiscosFiscais
+            inversedBy: fkStnProvidencias
+            joinColumns:
+                cod_risco:
+                    referencedColumnName: cod_risco
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio

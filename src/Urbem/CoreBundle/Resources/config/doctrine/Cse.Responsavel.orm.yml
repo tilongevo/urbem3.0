@@ -1,0 +1,119 @@
+Urbem\CoreBundle\Entity\Cse\Responsavel:
+    type: entity
+    table: cse.responsavel
+    id:
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+        codDomicilio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_domicilio
+        dtInclusao:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inclusao
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        vlAluguel:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_aluguel
+        vlPrestacaoHabitacional:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_prestacao_habitacional
+        vlAlimentacao:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_alimentacao
+        vlAgua:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_agua
+        vlLuz:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_luz
+        vlTransporte:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_transporte
+        vlRemedio:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_remedio
+        vlGas:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_gas
+        vlDespesasDiversas:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0
+            column: vl_despesas_diversas
+        numDependentes:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: num_dependentes
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkCseResponsaveis
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkCseCidadaoDomicilio:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\CidadaoDomicilio
+            inversedBy: fkCseResponsavel
+            joinColumns:
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao
+                cod_domicilio:
+                    referencedColumnName: cod_domicilio
+                dt_inclusao:
+                    referencedColumnName: dt_inclusao

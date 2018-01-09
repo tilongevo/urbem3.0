@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Tcmgo\Combustivel:
+    type: entity
+    table: tcmgo.combustivel
+    id:
+        codCombustivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_combustivel
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    manyToOne:
+        fkTcmgoTipoCombustivel:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoCombustivel
+            inversedBy: fkTcmgoCombustiveis
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkTcmgoCombustivelVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\CombustivelVinculo
+            mappedBy: fkTcmgoCombustivel

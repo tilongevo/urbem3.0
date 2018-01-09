@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoFuncaoObra:
+    type: entity
+    table: tcmba.tipo_funcao_obra
+    id:
+        codFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_funcao
+    fields:
+        nroFuncao:
+            type: string
+            nullable: false
+            length: 5
+            column: nro_funcao
+        descricao:
+            type: string
+            nullable: false
+            length: 90
+    oneToMany:
+        fkTcmbaObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            mappedBy: fkTcmbaTipoFuncaoObra

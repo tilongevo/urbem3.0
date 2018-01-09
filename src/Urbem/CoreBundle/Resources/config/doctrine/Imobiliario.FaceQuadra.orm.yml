@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Imobiliario\FaceQuadra:
+    type: entity
+    table: imobiliario.face_quadra
+    id:
+        codFace:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_face
+        codLocalizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_localizacao
+    fields: {  }
+    manyToOne:
+        fkImobiliarioLocalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Localizacao
+            inversedBy: fkImobiliarioFaceQuadras
+            joinColumns:
+                cod_localizacao:
+                    referencedColumnName: cod_localizacao
+    oneToMany:
+        fkImobiliarioAtributoFaceQuadraValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoFaceQuadraValor
+            mappedBy: fkImobiliarioFaceQuadra
+        fkImobiliarioBaixaFaceQuadras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\BaixaFaceQuadra
+            mappedBy: fkImobiliarioFaceQuadra
+        fkImobiliarioFaceQuadraTrechos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadraTrecho
+            mappedBy: fkImobiliarioFaceQuadra
+        fkImobiliarioFaceQuadraAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadraAliquota
+            mappedBy: fkImobiliarioFaceQuadra
+        fkImobiliarioFaceQuadraValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadraValorM2
+            mappedBy: fkImobiliarioFaceQuadra

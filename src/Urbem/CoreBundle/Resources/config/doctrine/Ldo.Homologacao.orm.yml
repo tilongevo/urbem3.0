@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Ldo\Homologacao:
+    type: entity
+    table: ldo.homologacao
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        numcgmVeiculo:
+            type: integer
+            nullable: false
+            column: numcgm_veiculo
+        codPeriodicidade:
+            type: integer
+            nullable: false
+            column: cod_periodicidade
+        dtEncaminhamento:
+            type: date
+            nullable: false
+            column: dt_encaminhamento
+        dtDevolucao:
+            type: date
+            nullable: false
+            column: dt_devolucao
+        nroProtocolo:
+            type: string
+            nullable: false
+            length: 9
+            column: nro_protocolo
+    manyToOne:
+        fkLdoLdo:
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Ldo
+            inversedBy: fkLdoHomologacoes
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+                ano:
+                    referencedColumnName: ano
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkLdoHomologacoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkLicitacaoVeiculosPublicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\VeiculosPublicidade
+            inversedBy: fkLdoHomologacoes
+            joinColumns:
+                numcgm_veiculo:
+                    referencedColumnName: numcgm
+        fkPpaPeriodicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Periodicidade
+            inversedBy: fkLdoHomologacoes
+            joinColumns:
+                cod_periodicidade:
+                    referencedColumnName: cod_periodicidade

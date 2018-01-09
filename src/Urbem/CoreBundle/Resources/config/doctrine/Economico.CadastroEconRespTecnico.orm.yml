@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Economico\CadastroEconRespTecnico:
+    type: entity
+    table: economico.cadastro_econ_resp_tecnico
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoCadastroEconRespTecnicos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkEconomicoResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Responsavel
+            inversedBy: fkEconomicoCadastroEconRespTecnicos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                sequencia:
+                    referencedColumnName: sequencia

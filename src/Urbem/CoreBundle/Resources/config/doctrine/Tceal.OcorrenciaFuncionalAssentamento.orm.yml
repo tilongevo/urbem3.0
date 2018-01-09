@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Tceal\OcorrenciaFuncionalAssentamento:
+    type: entity
+    table: tceal.ocorrencia_funcional_assentamento
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codOcorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ocorrencia
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+    fields: {  }
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcealOcorrenciaFuncionalAssentamentos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcealOcorrenciaFuncional:
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\OcorrenciaFuncional
+            inversedBy: fkTcealOcorrenciaFuncionalAssentamentos
+            joinColumns:
+                cod_ocorrencia:
+                    referencedColumnName: cod_ocorrencia
+                exercicio:
+                    referencedColumnName: exercicio
+        fkPessoalAssentamentoAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            inversedBy: fkTcealOcorrenciaFuncionalAssentamentos
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento

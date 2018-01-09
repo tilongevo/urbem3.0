@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Tceto\PlanoAnaliticaClassificacao:
+    type: entity
+    table: tceto.plano_analitica_classificacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+    fields:
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+    manyToOne:
+        fkTcetoClassificacaoReceitaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\ClassificacaoReceitaDespesa
+            inversedBy: fkTcetoPlanoAnaliticaClassificacoes
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+    oneToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTcetoPlanoAnaliticaClassificacao
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

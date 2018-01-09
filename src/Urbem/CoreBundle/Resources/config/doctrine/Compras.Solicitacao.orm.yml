@@ -1,0 +1,143 @@
+Urbem\CoreBundle\Entity\Compras\Solicitacao:
+    type: entity
+    table: compras.solicitacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\SolicitacaoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSolicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_solicitacao
+    fields:
+        codAlmoxarifado:
+            type: integer
+            nullable: false
+            column: cod_almoxarifado
+        cgmSolicitante:
+            type: integer
+            nullable: false
+            column: cgm_solicitante
+        cgmRequisitante:
+            type: integer
+            nullable: false
+            column: cgm_requisitante
+        codObjeto:
+            type: integer
+            nullable: false
+            column: cod_objeto
+        observacao:
+            type: text
+            nullable: true
+        prazoEntrega:
+            type: integer
+            nullable: true
+            column: prazo_entrega
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+        registroPrecos:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: registro_precos
+        status:
+          type: integer
+          nulllable: false
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkComprasSolicitacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkAlmoxarifadoAlmoxarifado:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado
+            inversedBy: fkComprasSolicitacoes
+            joinColumns:
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkComprasSolicitacoes
+            joinColumns:
+                cgm_solicitante:
+                    referencedColumnName: numcgm
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkComprasSolicitacoes
+            joinColumns:
+                cgm_requisitante:
+                    referencedColumnName: numcgm
+        fkComprasObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Objeto
+            inversedBy: fkComprasSolicitacoes
+            joinColumns:
+                cod_objeto:
+                    referencedColumnName: cod_objeto
+    oneToMany:
+        fkComprasSolicitacaoAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoAnulacao
+            mappedBy: fkComprasSolicitacao
+        fkComprasSolicitacaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItem
+            mappedBy: fkComprasSolicitacao
+    oneToOne:
+        fkComprasSolicitacaoHomologada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoHomologada
+            mappedBy: fkComprasSolicitacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+        fkComprasSolicitacaoEntrega:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoEntrega
+            mappedBy: fkComprasSolicitacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+        fkComprasSolicitacaoConvenio:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoConvenio
+            mappedBy: fkComprasSolicitacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao

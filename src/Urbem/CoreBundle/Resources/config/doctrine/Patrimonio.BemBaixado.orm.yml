@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Patrimonio\BemBaixado:
+    type: entity
+    table: patrimonio.bem_baixado
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+    fields:
+        dtBaixa:
+            type: date
+            nullable: false
+            column: dt_baixa
+        motivo:
+            type: text
+            nullable: false
+        tipoBaixa:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: tipo_baixa
+    manyToOne:
+        fkPatrimonioTipoBaixa:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\TipoBaixa
+            inversedBy: fkPatrimonioBemBaixados
+            joinColumns:
+                tipo_baixa:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioBemBaixado
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem

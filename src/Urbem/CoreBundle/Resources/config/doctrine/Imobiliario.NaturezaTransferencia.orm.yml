@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Imobiliario\NaturezaTransferencia:
+    type: entity
+    table: imobiliario.natureza_transferencia
+    id:
+        codNatureza:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: imobiliario.natureza_transferencia_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_natureza
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        automatica:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    oneToMany:
+        fkImobiliarioDocumentoNaturezas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\DocumentoNatureza
+            mappedBy: fkImobiliarioNaturezaTransferencia
+        fkImobiliarioTransferenciaImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaImovel
+            mappedBy: fkImobiliarioNaturezaTransferencia

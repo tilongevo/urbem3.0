@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Frota\Combustivel:
+    type: entity
+    table: frota.combustivel
+    id:
+        codCombustivel:
+          type: integer
+          generator:
+              strategy: SEQUENCE
+          sequenceGenerator:
+              sequenceName: frota.combustivel_seq
+              allocationSize: 1
+              initialValue: 1
+          column: cod_combustivel
+    fields:
+        nomCombustivel:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_combustivel
+    oneToMany:
+        fkFrotaCombustivelItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\CombustivelItem
+            mappedBy: fkFrotaCombustivel
+        fkFrotaVeiculoCombustiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoCombustivel
+            mappedBy: fkFrotaCombustivel
+        fkTcmbaTipoCombustivelVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoCombustivelVinculo
+            mappedBy: fkFrotaCombustivel
+        fkFrotaAbastecimentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Abastecimento
+            mappedBy: fkFrotaCombustivel

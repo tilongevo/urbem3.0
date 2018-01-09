@@ -1,0 +1,91 @@
+Urbem\CoreBundle\Entity\Compras\Mapa:
+    type: entity
+    table: compras.mapa
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\MapaRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codMapa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mapa
+    fields:
+        codObjeto:
+            type: integer
+            nullable: false
+            column: cod_objeto
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        codTipoLicitacao:
+            type: integer
+            nullable: false
+            column: cod_tipo_licitacao
+    manyToOne:
+        fkComprasObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Objeto
+            inversedBy: fkComprasMapas
+            joinColumns:
+                cod_objeto:
+                    referencedColumnName: cod_objeto
+        fkComprasTipoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\TipoLicitacao
+            inversedBy: fkComprasMapas
+            joinColumns:
+                cod_tipo_licitacao:
+                    referencedColumnName: cod_tipo_licitacao
+    oneToMany:
+        fkComprasCompraDiretas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDireta
+            mappedBy: fkComprasMapa
+        fkComprasMapaCotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaCotacao
+            mappedBy: fkComprasMapa
+        fkComprasMapaSolicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaSolicitacao
+            mappedBy: fkComprasMapa
+        fkLicitacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkComprasMapa
+    oneToOne:
+        fkComprasMapaModalidade:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaModalidade
+            mappedBy: fkComprasMapa
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa
+        fkTceamConfiguracaoArquivoLicitacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\ConfiguracaoArquivoLicitacao
+            mappedBy: fkComprasMapa
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa

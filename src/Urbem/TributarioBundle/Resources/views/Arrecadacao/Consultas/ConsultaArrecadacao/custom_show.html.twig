@@ -1,0 +1,195 @@
+{% set inscricao = null %}
+<div class="col s12">
+    <div class="box-body  no-padding">
+        <table class="table show-table">
+            <tbody>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.arrecadacaoConsulta.contribuinte'|trans }}</th>
+                    <td>
+                        {% if admin.getContribuinte(object) %}
+                            {{ admin.getContribuinte(object) }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="hide">{{ admin.getInscricao(object) }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{% if admin.getTipoInscricao() %} {{ admin.getTipoInscricao() }} {% else %} {{ 'label.arrecadacaoConsulta.label.outros'|trans }} {% endif %}</th>
+                    <td>
+                        {% if admin.getEnderecoValue() %}
+                            {% set inscricao = admin.getInscricao(object) %}
+                            {{ inscricao }} - {{ admin.getEnderecoValue() }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+{% if (inscricao|length > 0) and (admin.getTipoInscricao() != 'Inscrição Econômica') and ((admin.getArrecadacaoByInscricao(inscricao)).cod_modulo == 12 or (admin.getArrecadacaoByInscricao(inscricao)).origem == 'I.T.B.I.') %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.arrecadacaoConsulta.valorVenalTotal'|trans }}</th>
+                    <td>
+                        {% if admin.getUltimoVenal(inscricao, object) %}
+                            R$ {{ admin.getUltimoVenal(inscricao, object)|number_format(2, ',', '.') }} - {{ (admin.getArrecadacaoByInscricao(inscricao)).tipo_venal }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.arrecadacaoConsulta.situacaoImovel'|trans }}</th>
+                    <td>
+                        {% if admin.getSituacaoImovel(inscricao) %}
+                            {{ admin.getSituacaoImovel(inscricao) }}
+                        {% endif %}
+                    </td>
+                </tr>
+{% endif %}
+                <tr class="sonata-ba-view-container">
+                    <th>
+                        {% if (admin.getArrecadacaoByInscricao(inscricao)).cod_grupo %}
+                            {{ 'label.arrecadacaoConsulta.grupoCreditos'|trans }}
+                        {% else %}
+                            {{ 'label.arrecadacaoConsulta.label.credito'|trans }}
+                        {% endif %}
+                    </th>
+                    <td>
+                        {% if admin.getOrigemCobranca(object) %}
+                            {% if admin.getOrigemCobranca(object) is iterable %}
+                                {% for cobranca in admin.getOrigemCobranca(object) %}
+                                    {{ cobranca }}<br>
+                                {% endfor %}
+                            {% else %}
+                                {{ admin.getOrigemCobranca(object) }}
+                            {% endif %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.arrecadacaoConsulta.label.tipoCalculo'|trans }}</th>
+                    <td>
+                        {% if admin.getTipoCalculo(object) %}
+                            {{ 'label.arrecadacaoConsulta.calculado'|trans }}
+                        {% else %}
+                            {{ 'label.arrecadacaoConsulta.lancamentoManual'|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.arrecadacaoConsulta.label.competencia'|trans }}</th>
+                    <td>
+                        {% if admin.getCompetencia(inscricao) %}
+                            {{ admin.getCompetencia(inscricao) }}
+                        {% else %}
+                            {{ 'label.arrecadacaoConsulta.competenciaNaoInformada'|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col s12">
+    <h3 class="col s10 box-title left-align show">{{ 'label.arrecadacaoConsulta.listaCreditos'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+        <table id="tableValores" class="bordered highlight" style="width:100%">
+            <tbody>
+            {% if admin.getListaCreditos(object) %}
+                <tr class="tr-rh">
+                    <th class="th-rh">&nbsp;</th>
+                    <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.codigo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.exercicio'|trans }}</th>
+                    <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.valorCalculado'|trans }}</th>
+                    <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.valorLancado'|trans }}</th>
+                </tr>
+            {% set total = 0 %}
+            {% for key,credito in admin.getListaCreditos(object) %}
+                <tr class="tr-rh">
+                    <td class="tr-rh">{{ key+1 }}</td>
+                    <td class="tr-rh">{{ credito.codigo_composto }}</td>
+                    <td class="tr-rh">{{ credito.descricao_credito }}</td>
+                    <td class="tr-rh">{{ credito.exercicio }}</td>
+                    <td class="tr-rh">{{ credito.valor_calculado|number_format(2, ',') }}</td>
+                    <td class="tr-rh">{{ credito.valor|number_format(2, ',') }}</td>
+                    {% set total = total + credito.valor_calculado %}
+                </tr>
+            {% endfor %}
+            {% if admin.getListaCreditos(object) %}
+                <tr class="tr-rh">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="right">{{ 'label.total'|trans }}</td>
+                    <td>{{ total|number_format(2, ',') }}</td>
+                </tr>
+            {% endif %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col s12">
+        <h3 class="col s10 box-title left-align show">{{ 'label.arrecadacaoConsulta.listaParcelas'|trans }}</h3>
+        <div class="divider grey lighten-1  title-divider"></div>
+        <table class="table table-bordered" style="width:100%">
+            <tbody>
+                {% if admin.getListaCreditos(object) %}
+                    <tr class="tr-rh">
+                        <th class="th-rh">&nbsp;</th>
+                        <th class="th-rh">&nbsp;</th>
+                        <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.numeracao'|trans }}</th>
+                        <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.parcela'|trans }}</th>
+                        <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.valor'|trans }}</th>
+                        <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.vencimento'|trans }}</th>
+                        <th class="th-rh">{{ 'label.arrecadacaoConsulta.label.situacaoAtual'|trans }}</th>
+                    </tr>
+                    {% for key,parcela in admin.getListaParcelas(object) %}
+                        <tr class="tr-rh">
+                            <td class="js-toggle">
+                                <a href="#" data-detalhe="{{ object.codLancamento }},{{ parcela['numeracao'] }},{{ parcela.cod_parcela }},{{ parcela.ocorrencia_pagamento }}">
+                                <i class="fa fa-caret-square-o-up" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td>{{ key+1 }}</td>
+                            <td>{{ parcela['numeracao'] }}/{{ parcela['exercicio'] }}</td>
+                            <td>{{ parcela['info_parcela'] }}</td>
+                            <td>{{ parcela['valor']|number_format(2, ',') }}</td>
+                            <td>{{ parcela['vencimento'] }}</td>
+                            <td>{{ parcela['situacao_resumida'] }}</td>
+                        </tr>
+
+                        <tr class="tr-rh">
+                            <td colspan="7">
+
+                                <div class="loading hide">
+                                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+
+                                <div class="toggleDiv col s12"></div>
+
+                                <div class="loading2 hide">
+                                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+    <h5 class="">
+        <a href="{{ admin.generateObjectUrl('relatorio_create', object) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-placement="bottom" title="{{ 'label.arrecadacaoConsulta.relatorio'|trans }}">
+            <i class="material-icons" style="">print</i>
+        </a>
+    </h5>
+</div>

@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoContaDespesa:
+    type: entity
+    table: folhapagamento.configuracao_empenho_conta_despesa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+    manyToOne:
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoContaDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+    oneToOne:
+        fkFolhapagamentoConfiguracaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoContaDespesa
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                exercicio:
+                    referencedColumnName: exercicio
+                sequencia:
+                    referencedColumnName: sequencia
+                timestamp:
+                    referencedColumnName: timestamp

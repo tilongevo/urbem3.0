@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Economico\ProcessoDiasCadEcon:
+    type: entity
+    table: economico.processo_dias_cad_econ
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        codDia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dia
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        timestampProc:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_proc
+    fields: {  }
+    manyToOne:
+        fkEconomicoDiasCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\DiasCadastroEconomico
+            inversedBy: fkEconomicoProcessoDiasCadEcons
+            joinColumns:
+                cod_dia:
+                    referencedColumnName: cod_dia
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkEconomicoProcessoDiasCadEcons
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

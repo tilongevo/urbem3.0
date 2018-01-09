@@ -1,0 +1,77 @@
+Urbem\CoreBundle\Entity\Monetario\Convenio:
+    type: entity
+    table: monetario.convenio
+    uniqueConstraints:
+        uk_convenio:
+            columns:
+                - num_convenio
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: monetario.convenio_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_convenio
+    fields:
+        numConvenio:
+            type: integer
+            nullable: false
+            column: num_convenio
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        taxaBancaria:
+            type: string
+            nullable: true
+            length: 20
+            column: taxa_bancaria
+        cedente:
+            type: decimal
+            nullable: true
+            precision: 20
+            scale: 0
+    manyToOne:
+        fkMonetarioTipoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\TipoConvenio
+            inversedBy: fkMonetarioConvenios
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkArrecadacaoCarnes:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Carne
+            mappedBy: fkMonetarioConvenio
+        fkMonetarioContaCorrenteConvenios:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrenteConvenio
+            mappedBy: fkMonetarioConvenio
+        fkMonetarioCreditos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            mappedBy: fkMonetarioConvenio
+        fkMonetarioCarteiras:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Carteira
+            mappedBy: fkMonetarioConvenio
+    oneToOne:
+        fkMonetarioConvenioFichaCompensacao:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ConvenioFichaCompensacao
+            mappedBy: fkMonetarioConvenio
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio

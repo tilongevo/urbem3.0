@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoNotaFiscal:
+    type: entity
+    table: tcemg.tipo_nota_fiscal
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 60
+    oneToMany:
+        fkTcemgNotaFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NotaFiscal
+            mappedBy: fkTcemgTipoNotaFiscal

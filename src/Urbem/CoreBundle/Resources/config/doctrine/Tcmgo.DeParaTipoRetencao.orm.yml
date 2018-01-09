@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Tcmgo\DeParaTipoRetencao:
+    type: entity
+    table: tcmgo.de_para_tipo_retencao
+    id:
+        exercicioTipo:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_tipo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+    fields: {  }
+    manyToOne:
+        fkTcmgoTipoRetencao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoRetencao
+            inversedBy: fkTcmgoDeParaTipoRetencoes
+            joinColumns:
+                exercicio_tipo:
+                    referencedColumnName: exercicio
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTcmgoDeParaTipoRetencoes
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

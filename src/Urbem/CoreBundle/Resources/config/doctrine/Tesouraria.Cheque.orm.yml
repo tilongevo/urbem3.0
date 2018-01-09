@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Tesouraria\Cheque:
+    type: entity
+    table: tesouraria.cheque
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\ChequeRepository
+    id:
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+        numCheque:
+            type: string
+            generator:
+                strategy: NONE
+            column: num_cheque
+    fields:
+        dataEntrada:
+            type: date
+            nullable: false
+            column: data_entrada
+    manyToOne:
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkTesourariaCheques
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+    oneToMany:
+        fkTesourariaChequeEmissaoAnuladas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoAnulada
+            mappedBy: fkTesourariaCheque
+        fkTesourariaChequeEmissaoBaixas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoBaixa
+            mappedBy: fkTesourariaCheque
+        fkTesourariaChequeEmissaoBaixaAnuladas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoBaixaAnulada
+            mappedBy: fkTesourariaCheque
+        fkTesourariaChequeEmissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissao
+            mappedBy: fkTesourariaCheque

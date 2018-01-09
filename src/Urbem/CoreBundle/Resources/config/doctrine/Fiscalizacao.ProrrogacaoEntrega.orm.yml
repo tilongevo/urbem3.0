@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ProrrogacaoEntrega:
+    type: entity
+    table: fiscalizacao.prorrogacao_entrega
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        dtProrrogacao:
+            type: date
+            nullable: false
+            column: dt_prorrogacao
+    manyToOne:
+        fkFiscalizacaoInicioFiscalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InicioFiscalizacao
+            inversedBy: fkFiscalizacaoProrrogacaoEntregas
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo

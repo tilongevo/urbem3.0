@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Tcern\Royalties:
+    type: entity
+    table: tcern.royalties
+    id:
+        codRoyalties:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: tcern.royalties_cod_royalties_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_royalties
+    fields:
+        codigo:
+            type: string
+            nullable: false
+            length: 2
+    oneToMany:
+        fkTcernRoyaltiesEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\RoyaltiesEmpenho
+            mappedBy: fkTcernRoyalties

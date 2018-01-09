@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Ponto\ArredondarTempo:
+    type: entity
+    table: ponto.arredondar_tempo
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        horaEntrada1:
+            type: time
+            nullable: false
+            column: hora_entrada1
+        horaSaida1:
+            type: time
+            nullable: false
+            column: hora_saida1
+        horaEntrada2:
+            type: time
+            nullable: false
+            column: hora_entrada2
+        horaSaida2:
+            type: time
+            nullable: false
+            column: hora_saida2
+    oneToOne:
+        fkPontoConfiguracaoParametrosGerais:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoParametrosGerais
+            inversedBy: fkPontoArredondarTempo
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp

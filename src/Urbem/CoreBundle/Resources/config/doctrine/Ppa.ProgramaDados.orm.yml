@@ -1,0 +1,112 @@
+Urbem\CoreBundle\Entity\Ppa\ProgramaDados:
+    type: entity
+    table: ppa.programa_dados
+    id:
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+        timestampProgramaDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_programa_dados
+    fields:
+        codTipoPrograma:
+            type: integer
+            nullable: false
+            column: cod_tipo_programa
+        identificacao:
+            type: string
+            nullable: false
+            length: 280
+        diagnostico:
+            type: string
+            nullable: false
+            length: 480
+        objetivo:
+            type: string
+            nullable: false
+            length: 480
+        diretriz:
+            type: string
+            nullable: false
+            length: 480
+        continuo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        publicoAlvo:
+            type: string
+            nullable: true
+            length: 480
+            column: publico_alvo
+        justificativa:
+            type: string
+            nullable: false
+            length: 480
+        exercicioUnidade:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_unidade
+        numUnidade:
+            type: integer
+            nullable: false
+            column: num_unidade
+        numOrgao:
+            type: integer
+            nullable: false
+            column: num_orgao
+    manyToOne:
+        fkPpaPrograma:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Programa
+            inversedBy: fkPpaProgramaDados
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+        fkPpaTipoPrograma:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\TipoPrograma
+            inversedBy: fkPpaProgramaDados
+            joinColumns:
+                cod_tipo_programa:
+                    referencedColumnName: cod_tipo_programa
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkPpaProgramaDados
+            joinColumns:
+                exercicio_unidade:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+    oneToMany:
+        fkPpaProgramaNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaNorma
+            mappedBy: fkPpaProgramaDados
+        fkPpaProgramaIndicadoreses:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaIndicadores
+            mappedBy: fkPpaProgramaDados
+    oneToOne:
+        fkPpaProgramaTemporarioVigencia:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaTemporarioVigencia
+            mappedBy: fkPpaProgramaDados
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+                timestamp_programa_dados:
+                    referencedColumnName: timestamp_programa_dados

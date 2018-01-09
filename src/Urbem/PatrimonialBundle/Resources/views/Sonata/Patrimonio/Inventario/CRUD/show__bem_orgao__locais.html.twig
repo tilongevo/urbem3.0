@@ -1,0 +1,37 @@
+<table class="col s12 highlight bordered">
+    <thead class="thead-rh">
+        <tr>
+            <th class="th-rh" colspan="4">
+                {{ 'label.inventarioHistoricoBem.orgao.titulo'|trans }}
+            </th>
+        </tr>
+        <tr>
+            <th class="th-rh" width="5"></th>
+            <th class="th-rh" width="1"></th>
+            <th class="th-rh">{{ 'label.inventarioHistoricoBem.orgao.local'|trans }}</th>
+            <th class="th-rh">{{ 'label.inventarioPatrimonio.total'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for local in locais %}
+        <tr>
+            <td class="td-rh">
+                <a data-toggle="collapse"
+                   data-target="#accordion-historico-bem-{{ local.cod_orgao }}-{{ local.cod_local }}"
+                   role="button">
+                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                </a>
+            </td>
+            <td class="td-rh">{{ loop.index }}</td>
+            <td class="td-rh">{{ local.descricao }}</td>
+            <td class="td-rh">{{ local.total }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 0 !important;"></td>
+            <td style="padding: 0 !important;" colspan="3">
+                <div class="collapsing" id="accordion-historico-bem-{{ local.cod_orgao }}-{{ local.cod_local }}"></div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

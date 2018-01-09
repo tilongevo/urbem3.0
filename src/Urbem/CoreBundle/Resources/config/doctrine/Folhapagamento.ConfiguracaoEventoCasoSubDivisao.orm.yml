@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCasoSubDivisao:
+    type: entity
+    table: folhapagamento.configuracao_evento_caso_sub_divisao
+    id:
+        codCaso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_caso
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoConfiguracaoEventoCaso:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCaso
+            inversedBy: fkFolhapagamentoConfiguracaoEventoCasoSubDivisoes
+            joinColumns:
+                cod_caso:
+                    referencedColumnName: cod_caso
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkFolhapagamentoConfiguracaoEventoCasoSubDivisoes
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao

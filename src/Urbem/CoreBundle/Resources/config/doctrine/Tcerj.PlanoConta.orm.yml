@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Tcerj\PlanoConta:
+    type: entity
+    table: tcerj.plano_conta
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+    fields:
+        codSequencial:
+            type: integer
+            nullable: false
+            column: cod_sequencial
+    oneToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkTcerjPlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio

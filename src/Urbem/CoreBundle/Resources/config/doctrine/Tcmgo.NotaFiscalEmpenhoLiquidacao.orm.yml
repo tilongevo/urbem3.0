@@ -1,0 +1,67 @@
+Urbem\CoreBundle\Entity\Tcmgo\NotaFiscalEmpenhoLiquidacao:
+    type: entity
+    table: tcmgo.nota_fiscal_empenho_liquidacao
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        codNotaLiquidacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota_liquidacao
+        exercicioLiquidacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_liquidacao
+    fields:
+        vlAssociado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_associado
+    manyToOne:
+        fkTcmgoNotaFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\NotaFiscal
+            inversedBy: fkTcmgoNotaFiscalEmpenhoLiquidacoes
+            joinColumns:
+                cod_nota:
+                    referencedColumnName: cod_nota
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcmgoNotaFiscalEmpenhoLiquidacoes
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkTcmgoNotaFiscalEmpenhoLiquidacoes
+            joinColumns:
+                exercicio_liquidacao:
+                    referencedColumnName: exercicio
+                cod_nota_liquidacao:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade

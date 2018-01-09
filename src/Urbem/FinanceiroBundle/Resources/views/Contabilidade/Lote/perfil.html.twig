@@ -1,0 +1,145 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {% include 'FinanceiroBundle::Contabilidade/Lote/detalhe.html.twig' %}
+
+        <div class="col s12">
+            <div class="col s11 servidor-table">
+                <i class="mdi mdi-file-tree left"></i>
+                {{ 'label.lote.dadosLancamentoDebito'|trans }}
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="th-rh">#</th>
+                        <th class="th-rh">{{ 'label.lote.codConta'|trans }}</th>
+                        <th class="th-rh">{{ 'label.lote.codHistorico'|trans }}</th>
+                        <th class="th-rh">{{ 'label.lote.valor'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for lancamento in lote.fkContabilidadeLancamentos %}
+                    {% for valorLancamento in lancamento.fkContabilidadeValorLancamentos %}
+                        {% if valorLancamento.fkContabilidadeContaDebito is not null %}
+                            <tr>
+                                <td class="td-rh">{{ lancamento.sequencia }}</td>
+                                <td class="td-rh">{{ valorLancamento.fkContabilidadeContaDebito.fkContabilidadePlanoAnalitica }}</td>
+                                <td class="td-rh">{{ lancamento.fkContabilidadeHistoricoContabil }}</td>
+                                <td class="td-rh">{{ valorLancamento.vlLancamento|number_format_currency('BRL') }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% if lote.getTotaisDebito == 0.00 %}
+                    <tr><td colspan="5"><center>{{ 'listagemVazia'|trans }}</center></td></tr>
+                {% endif %}
+                <tbody>
+            </table>
+        </div>
+
+        <div class="col s12">
+            <div class="col s11 servidor-table">
+                <i class="mdi mdi-file-tree left"></i>
+                {{ 'label.lote.dadosLancamentoCredito'|trans }}
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">#</th>
+                    <th class="th-rh">{{ 'label.lote.codConta'|trans }}</th>
+                    <th class="th-rh">{{ 'label.lote.codHistorico'|trans }}</th>
+                    <th class="th-rh">{{ 'label.lote.valor'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for lancamento in lote.fkContabilidadeLancamentos %}
+                    {% for valorLancamento in lancamento.fkContabilidadeValorLancamentos %}
+                        {% if valorLancamento.fkContabilidadeContaCredito is not null %}
+                            <tr>
+                                <td class="td-rh">{{ lancamento.sequencia }}</td>
+                                <td class="td-rh">{{ valorLancamento.fkContabilidadeContaCredito.fkContabilidadePlanoAnalitica }}</td>
+                                <td class="td-rh">{{ lancamento.fkContabilidadeHistoricoContabil }}</td>
+                                <td class="td-rh">{{ valorLancamento.vlLancamento|number_format_currency('BRL') }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% if lote.getTotaisCredito == 0.00 %}
+                    <tr><td colspan="5"><center>{{ 'listagemVazia'|trans }}</center></td></tr>
+                {% endif %}
+                <tbody>
+            </table>
+        </div>
+
+        {% if lote.fkContabilidadeLancamentos|length > 0 %}
+        <form method="post" target="_blank" action="{{ path('urbem_financeiro_contabilidade_lote_gerar_nota', { 'id': admin.getObjectKey(lote) }) }}">
+            <div class="col s12">
+                <div>
+                    <label class="required">
+                        {{ 'label.lote.incluirAssinaturas'|trans }}
+                    </label>
+                    <div>
+                        <ul class="list-unstyled">
+                            <li>
+                                <label class="required">
+                                    <input type="radio" id="lote_incluirAssinaturas_1" name="incluirAssinaturas" required="required" value="1">
+                                    <span>{{ 'label_type_yes'|trans }}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="required">
+                                    <input type="radio" id="lote_incluirAssinaturas_0" name="incluirAssinaturas" required="required" value="0" checked="checked">
+                                    <span>{{ 'label_type_no'|trans }}</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 lote-assinaturas">
+                <div class="col s11 servidor-table">
+                    <h6><i class="mdi mdi-file-tree left"></i>{{ 'label.lote.assinaturas'|trans }}</h6>
+                </div>
+                <table class="col s12 highlight bordered">
+                    <thead class="thead-rh">
+                        <tr class="sonata-ba-list-field-header">
+                            <th class="th-rh">{{ 'label.lote.nome'|trans }}</th>
+                            <th class="th-rh">{{ 'label.lote.cargo'|trans }}</th>
+                            <th class="th-rh"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if (assinaturas|length) %}
+                            {% for assinatura in assinaturas %}
+                                <tr>
+                                    <td class="td-rh">{{ assinatura.fkSwCgmPessoaFisica.fkSwCgm.nomCgm }}</td>
+                                    <td class="td-rh">{{ assinatura.cargo }}</td>
+                                    <td class="td-rh"><label><input type="checkbox" name="assinaturas[]" value="{{ admin.getObjectKey(assinatura) }}"></label></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td class="td-rh" colspan="3">{{ 'listagemVazia'|trans }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col s12" style="margin-top: 30px">
+                <div class="col s12 right-align">
+                    <button type="submit" name="form[acao]" value="gerar-nota" class="small-btn right btn blue darken-4"><i class="fa fa-print left"></i>Gerar Nota</button>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+{% endblock content %}

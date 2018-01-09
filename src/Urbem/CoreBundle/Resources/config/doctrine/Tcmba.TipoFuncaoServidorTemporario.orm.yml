@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoFuncaoServidorTemporario:
+    type: entity
+    table: tcmba.tipo_funcao_servidor_temporario
+    id:
+        codTipoFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_funcao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkFolhapagamentoTcmbaCargoServidorTemporarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaCargoServidorTemporario
+            mappedBy: fkTcmbaTipoFuncaoServidorTemporario

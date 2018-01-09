@@ -1,0 +1,115 @@
+Urbem\CoreBundle\Entity\Beneficio\Beneficiario:
+    type: entity
+    table: beneficio.beneficiario
+    repositoryClass: Urbem\CoreBundle\Repository\Beneficio\BeneficiarioRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codTipoConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_convenio
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codigoUsuario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: codigo_usuario
+    fields:
+        cgmBeneficiario:
+            type: integer
+            nullable: false
+            column: cgm_beneficiario
+        grauParentesco:
+            type: integer
+            nullable: false
+            column: grau_parentesco
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtFim:
+            type: date
+            nullable: true
+            column: dt_fim
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        timestampExcluido:
+            type: datetime
+            nullable: true
+            column: timestamp_excluido
+        codPeriodoMovimentacao:
+            type: integer
+            nullable: false
+            column: cod_periodo_movimentacao
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkBeneficioBeneficiarios
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkBeneficioBeneficiarios
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkBeneficioModalidadeConvenioMedico:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ModalidadeConvenioMedico
+            inversedBy: fkBeneficioBeneficiarios
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkBeneficioTipoConvenioMedico:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\TipoConvenioMedico
+            inversedBy: fkBeneficioBeneficiarios
+            joinColumns:
+                cod_tipo_convenio:
+                    referencedColumnName: cod_tipo_convenio
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkBeneficioBeneficiarios
+            joinColumns:
+                cgm_beneficiario:
+                    referencedColumnName: numcgm
+        fkCseGrauParentesco:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\GrauParentesco
+            inversedBy: fkBeneficioBeneficiarios
+            joinColumns:
+                grau_parentesco:
+                    referencedColumnName: cod_grau
+        fkFolhapagamentoPeriodoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao
+            inversedBy: fkBeneficioBeneficiarios
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+    oneToMany:
+        fkBeneficioBeneficiarioLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\BeneficiarioLancamento
+            mappedBy: fkBeneficioBeneficiario

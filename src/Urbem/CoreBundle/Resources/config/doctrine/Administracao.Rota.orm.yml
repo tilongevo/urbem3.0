@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Administracao\Rota:
+    type: entity
+    table: administracao.rota
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\RotaRepository
+    indexes:
+        cod_rota_idx:
+            columns:
+                - cod_rota
+        descricao_rota_idx:
+            columns:
+                - descricao_rota
+    id:
+        codRota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_rota
+    fields:
+        descricaoRota:
+            type: string
+            nullable: false
+            length: 255
+            column: descricao_rota
+        traducaoRota:
+            type: string
+            nullable: false
+            length: 255
+            column: traducao_rota
+        rotaSuperior:
+            type: string
+            nullable: true
+            length: 255
+            column: rota_superior
+        relatorio:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    oneToMany:
+        fkAdministracaoGrupoPermissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\GrupoPermissao
+            mappedBy: fkAdministracaoRota

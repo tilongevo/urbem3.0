@@ -1,0 +1,34 @@
+<table class="bordered highlight col s6">
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.entidade'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{{ field.data.fkEmpenhoEmpenho.fkOrcamentoEntidade }}</td>
+    </tr>
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.ordemPagamento'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{{ field.data.ordemPagamento }}</td>
+    </tr>
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.dtEmissao'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{% if field.data.ordemPagamento is not null %} {{ field.data.ordemPagamento.dtEmissao|date('d/m/Y') }} {% endif %}</td>
+    </tr>
+</table>
+<table class="bordered highlight col s6">
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.credor'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{{ field.data.credor }}</td>
+    </tr>
+    <tr style="text-align: left">
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.vlPagamento'|trans }}</th>
+        <td class="td-rh" style="text-align: left">
+            {% if field.data.vlNota > 0 %}
+                {{ field.data.vlNota|number_format_currency('BRL') }}
+            {% else %}
+                {{ field.data.vlOrdemPagamento|number_format_currency('BRL') }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaPagamentos.recursoDespesa'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{{ field.data.recursoDespesa }}</td>
+    </tr>
+</table>

@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Tceto\AcaoIdentificadorAcao:
+    type: entity
+    table: tceto.acao_identificador_acao
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+    fields:
+        codIdentificador:
+            type: integer
+            nullable: false
+            column: cod_identificador
+    manyToOne:
+        fkTcetoIdentificadorAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\IdentificadorAcao
+            inversedBy: fkTcetoAcaoIdentificadorAcoes
+            joinColumns:
+                cod_identificador:
+                    referencedColumnName: cod_identificador
+    oneToOne:
+        fkPpaAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Acao
+            inversedBy: fkTcetoAcaoIdentificadorAcao
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao

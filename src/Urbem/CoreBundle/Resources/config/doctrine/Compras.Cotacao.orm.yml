@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Compras\Cotacao:
+    type: entity
+    table: compras.cotacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\CotacaoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToMany:
+        fkComprasMapaCotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaCotacao
+            mappedBy: fkComprasCotacao
+        fkComprasCotacaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoItem
+            mappedBy: fkComprasCotacao
+    oneToOne:
+        fkComprasCotacaoAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoAnulada
+            mappedBy: fkComprasCotacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+        fkComprasJulgamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Julgamento
+            mappedBy: fkComprasCotacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao

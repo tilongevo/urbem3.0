@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Beneficio\Linha:
+    type: entity
+    table: beneficio.linha
+    id:
+        codLinha:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: beneficio.linha_cod_linha_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_linha
+    fields:
+        descricao:
+            type: string
+            nullable: true
+            length: 80
+    oneToMany:
+        fkBeneficioItinerarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Itinerario
+            mappedBy: fkBeneficioLinha
+        fkBeneficioItinerarios1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Itinerario
+            mappedBy: fkBeneficioLinha1

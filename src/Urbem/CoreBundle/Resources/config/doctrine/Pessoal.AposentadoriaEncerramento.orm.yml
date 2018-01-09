@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Pessoal\AposentadoriaEncerramento:
+    type: entity
+    table: pessoal.aposentadoria_encerramento
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        motivo:
+            type: string
+            nullable: false
+            length: 160
+        dtEncerramento:
+            type: date
+            nullable: false
+            column: dt_encerramento
+    oneToOne:
+        fkPessoalAposentadoria:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Aposentadoria
+            inversedBy: fkPessoalAposentadoriaEncerramento
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\ContratoTipoProcesso:
+    type: entity
+    table: tcemg.contrato_tipo_processo
+    id:
+        codTipoProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_processo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkTcemgContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            mappedBy: fkTcemgContratoTipoProcesso

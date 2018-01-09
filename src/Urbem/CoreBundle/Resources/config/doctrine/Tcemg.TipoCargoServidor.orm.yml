@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoCargoServidor:
+    type: entity
+    table: tcemg.tipo_cargo_servidor
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkFolhapagamentoTcemgEntidadeCargoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcemgEntidadeCargoServidor
+            mappedBy: fkTcemgTipoCargoServidor

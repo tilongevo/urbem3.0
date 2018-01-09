@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraAssinatura:
+    type: entity
+    table: tesouraria.recibo_extra_assinatura
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        tipoRecibo:
+            type: string
+            generator:
+                strategy: NONE
+            column: tipo_recibo
+        codReciboExtra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recibo_extra
+        numAssinatura:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_assinatura
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        cargo:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkTesourariaReciboExtra:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtra
+            inversedBy: fkTesourariaReciboExtraAssinaturas
+            joinColumns:
+                cod_recibo_extra:
+                    referencedColumnName: cod_recibo_extra
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo_recibo:
+                    referencedColumnName: tipo_recibo
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTesourariaReciboExtraAssinaturas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

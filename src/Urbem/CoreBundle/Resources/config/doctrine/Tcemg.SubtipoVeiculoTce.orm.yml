@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Tcemg\SubtipoVeiculoTce:
+    type: entity
+    table: tcemg.subtipo_veiculo_tce
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\SubtipoVeiculoTceRepository
+    id:
+        codTipoTce:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_tce
+        codSubtipoTce:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_subtipo_tce
+    fields:
+        nomSubtipoTce:
+            type: string
+            nullable: true
+            length: 200
+            column: nom_subtipo_tce
+    manyToOne:
+        fkTcemgTipoVeiculoTce:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoVeiculoTce
+            inversedBy: fkTcemgSubtipoVeiculoTces
+            joinColumns:
+                cod_tipo_tce:
+                    referencedColumnName: cod_tipo_tce
+    oneToMany:
+        fkTcemgTipoVeiculoVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoVeiculoVinculo
+            mappedBy: fkTcemgSubtipoVeiculoTce

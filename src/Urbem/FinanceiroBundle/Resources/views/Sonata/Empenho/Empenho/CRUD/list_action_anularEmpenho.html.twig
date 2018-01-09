@@ -1,0 +1,21 @@
+{% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
+    {% if admin.verificaEmpenhoAnulado(object) == false %}
+        <a href="#" class="grey-text btn-list">
+            <i class="fa fa-ban fa-lg grey-text" aria-hidden="true"></i>
+        </a>
+        <a href="{{ path('urbem_financeiro_empenho_anular_empenho_reemitir_anulacao_empenho', { 'codPreEmpenho': object.codPreEmpenho, 'exercicio': object.exercicio }) }}"
+           data-toggle="tooltip" data-placement="bottom" title="PDF empenho {{ object.codEmpenho ~ "/" ~ object.exercicio }}"
+           class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list">
+            <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
+        </a>
+    {% else %}
+        <a href="{{ admin.generateObjectUrl('edit', object) }}" data-toggle="tooltip" data-placement="bottom" title="Anular empenho {{ object.codEmpenho ~ "/" ~ object.exercicio }}"
+           class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list">
+            <i class="fa fa-ban fa-lg" aria-hidden="true"></i>
+        </a>
+        <a href="#" class="grey-text btn-list">
+            <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
+        </a>
+    {% endif %}
+{% endif %}
+  

@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\SwSistemaContabil:
+    type: entity
+    table: sw_sistema_contabil
+    id:
+        codSistema:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sistema
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomSistema:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_sistema
+    oneToMany:
+        fkSwPlanoContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwPlanoConta
+            mappedBy: fkSwSistemaContabil

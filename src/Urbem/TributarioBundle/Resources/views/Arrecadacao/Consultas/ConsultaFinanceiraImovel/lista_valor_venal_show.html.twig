@@ -1,0 +1,26 @@
+<table class="bordered highlight striped">
+    <tbody>
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.exercicio'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.data'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.venalTerritorial'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.venalPredial'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.venalTotal'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.tipo'|trans }}</th>
+        </tr>
+        <tr class="tr-rh">
+            {% if admin.getListaValorVenal(admin.getSubject()) %}
+                {% for listaVenal in admin.getListaValorVenal(admin.getSubject()) %}
+                    <tr class="tr-rh striped">
+                        <td>{{ listaVenal.exercicio }}</td>
+                        <td>{{ listaVenal.data }}</td>
+                        <td>{{ listaVenal.venal_territorial|number_format(2,',','.') }}</td>
+                        <td>{{ listaVenal.venal_predial|number_format(2,',','.') }}</td>
+                        <td>{{ listaVenal.venal_total|number_format(2,',','.') }}</td>
+                        <td>{{ listaVenal.tipo }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tr>
+    </tbody>
+</table>

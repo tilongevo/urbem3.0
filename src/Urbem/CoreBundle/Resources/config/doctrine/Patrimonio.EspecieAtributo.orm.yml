@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Patrimonio\EspecieAtributo:
+    type: entity
+    table: patrimonio.especie_atributo
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\EspecieAtributoRepository
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkPatrimonioEspecieAtributos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkPatrimonioEspecie:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Especie
+            inversedBy: fkPatrimonioEspecieAtributos
+            joinColumns:
+                cod_especie:
+                    referencedColumnName: cod_especie
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+    oneToMany:
+        fkPatrimonioBemAtributoEspecies:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemAtributoEspecie
+            mappedBy: fkPatrimonioEspecieAtributo

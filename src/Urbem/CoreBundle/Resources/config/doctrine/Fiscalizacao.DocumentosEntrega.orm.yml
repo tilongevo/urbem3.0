@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\DocumentosEntrega:
+    type: entity
+    table: fiscalizacao.documentos_entrega
+    id:
+        situacao:
+            type: string
+            generator:
+                strategy: NONE
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        codFiscal:
+            type: integer
+            nullable: false
+            column: cod_fiscal
+        observacao:
+            type: text
+            nullable: true
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkFiscalizacaoInicioFiscalizacaoDocumentos:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InicioFiscalizacaoDocumentos
+            inversedBy: fkFiscalizacaoDocumentosEntregas
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkFiscalizacaoFiscalProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalProcessoFiscal
+            inversedBy: fkFiscalizacaoDocumentosEntregas
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_fiscal:
+                    referencedColumnName: cod_fiscal

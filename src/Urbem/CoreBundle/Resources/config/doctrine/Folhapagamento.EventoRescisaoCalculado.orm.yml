@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Folhapagamento\EventoRescisaoCalculado:
+    type: entity
+    table: folhapagamento.evento_rescisao_calculado
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\EventoRescisaoCalculadoRepository
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+        timestampRegistro:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_registro
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 15
+            scale: 2
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 15
+            scale: 2
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToMany:
+        fkFolhapagamentoEventoRescisaoCalculadoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoRescisaoCalculadoDependente
+            mappedBy: fkFolhapagamentoEventoRescisaoCalculado
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEventoRescisao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEventoRescisao
+            inversedBy: fkFolhapagamentoEventoRescisaoCalculado
+            joinColumns:
+                desdobramento:
+                    referencedColumnName: desdobramento
+                timestamp_registro:
+                    referencedColumnName: timestamp
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento

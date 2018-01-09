@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Monetario\FormulaIndicador:
+    type: entity
+    table: monetario.formula_indicador
+    id:
+        codIndicador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_indicador
+        inicioVigencia:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: inicio_vigencia
+    fields:
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+    manyToOne:
+        fkMonetarioIndicadorEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\IndicadorEconomico
+            inversedBy: fkMonetarioFormulaIndicadores
+            joinColumns:
+                cod_indicador:
+                    referencedColumnName: cod_indicador
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkMonetarioFormulaIndicadores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao

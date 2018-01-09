@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Arrecadacao\InformacaoAdicionalLayoutCarne:
+    type: entity
+    table: arrecadacao.informacao_adicional_layout_carne
+    id:
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+        codInformacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_informacao
+    fields:
+        ordem:
+            type: integer
+            nullable: false
+        posicaoInicial:
+            type: integer
+            nullable: false
+            column: posicao_inicial
+        largura:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkArrecadacaoModeloCarne:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ModeloCarne
+            inversedBy: fkArrecadacaoInformacaoAdicionalLayoutCarnes
+            joinColumns:
+                cod_modelo:
+                    referencedColumnName: cod_modelo
+        fkArrecadacaoInformacaoAdicional:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\InformacaoAdicional
+            inversedBy: fkArrecadacaoInformacaoAdicionalLayoutCarnes
+            joinColumns:
+                cod_informacao:
+                    referencedColumnName: cod_informacao

@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Imobiliario\AreaLote:
+    type: entity
+    table: imobiliario.area_lote
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codGrandeza:
+            type: integer
+            nullable: false
+            column: cod_grandeza
+        codUnidade:
+            type: integer
+            nullable: false
+            column: cod_unidade
+        areaReal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: area_real
+    manyToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioAreaLotes
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkImobiliarioAreaLotes
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza

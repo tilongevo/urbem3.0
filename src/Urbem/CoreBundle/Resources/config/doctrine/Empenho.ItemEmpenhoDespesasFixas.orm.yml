@@ -1,0 +1,65 @@
+Urbem\CoreBundle\Entity\Empenho\ItemEmpenhoDespesasFixas:
+    type: entity
+    table: empenho.item_empenho_despesas_fixas
+    id:
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa
+        codDespesaFixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa_fixa
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        consumo:
+            type: string
+            nullable: true
+            length: 20
+        dtDocumento:
+            type: date
+            nullable: true
+            column: dt_documento
+    manyToOne:
+        fkEmpenhoItemPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            inversedBy: fkEmpenhoItemEmpenhoDespesasFixas
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item
+        fkEmpenhoDespesasFixas:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\DespesasFixas
+            inversedBy: fkEmpenhoItemEmpenhoDespesasFixas
+            joinColumns:
+                cod_despesa_fixa:
+                    referencedColumnName: cod_despesa_fixa
+                cod_despesa:
+                    referencedColumnName: cod_despesa
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

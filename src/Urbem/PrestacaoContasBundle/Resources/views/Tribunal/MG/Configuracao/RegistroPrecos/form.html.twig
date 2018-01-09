@@ -1,0 +1,344 @@
+<form id="form" method="post">
+    <div class="box-body no-padding">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#tab_1" data-toggle="tab">Detalhamento</a>
+                </li>
+
+                <li>
+                    <a href="#tab_2" data-toggle="tab">Orgãos</a>
+                </li>
+
+                <li>
+                    <a href="#tab_3" data-toggle="tab">Itens</a>
+                </li>
+
+                <li>
+                    <a href="#tab_4" data-toggle="tab">Quantitativos por Orgão</a>
+                </li>
+
+                <li>
+                    <a href="#tab_5" data-toggle="tab">Empenhos</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="box-body container-fluid">
+                        {% include 'PrestacaoContasBundle::Tribunal/MG/Configuracao/RegistroPrecos/form_detalhamento.html.twig' with {'show_error': true} %}
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_2">
+                    <div class="box-body container-fluid">
+                        {% include 'PrestacaoContasBundle::Tribunal/MG/Configuracao/RegistroPrecos/form_orgaos.html.twig' with {'show_error': true} %}
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_3">
+                    <div class="box-body container-fluid">
+                        <div class="sonata-ba-collapsed-fields">
+                            {% include 'PrestacaoContasBundle::Tribunal/MG/Configuracao/RegistroPrecos/form_itens.html.twig' with {'show_error': true} %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_4">
+                    <div class="box-body container-fluid">
+                        <div class="sonata-ba-collapsed-fields">
+                            {% include 'PrestacaoContasBundle::Tribunal/MG/Configuracao/RegistroPrecos/form_quantitativos.html.twig' with {'show_error': true} %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_5">
+                    <div class="box-body container-fluid">
+                        <div class="sonata-ba-collapsed-fields">
+                            {% include 'PrestacaoContasBundle::Tribunal/MG/Configuracao/RegistroPrecos/form_empenhos.html.twig' with {'show_error': true} %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <input type="hidden" name="key" value="{{ key }}" />
+
+    <div class="sonata-ba-collapsed-fields custom-form">
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s12">
+                <div class="col s12 right-align initial">
+                    <button type="submit" class="white-text blue darken-4 btn btn-success save" name="save_update"><i class="material-icons left">input</i>Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+    .custom-form .select2-container {height: 34px !important;}
+</style>
+
+<script>
+    $('select.form-control').select2();
+    $('#form').submit( function(e){
+        e.preventDefault();
+    });
+
+    function Parent() {
+        this.holder = null;
+        this.childTemplate = null;
+        this.choiceBag = [];
+        this.choiceBagIndex = -1;
+    }
+
+    Parent.prototype = {
+       constructor: Parent
+    };
+
+    Parent.prototype.load = function() {
+        var that = this;
+
+        this.holder.find('table').each(function(i) {
+            el = $(this).find('select');
+            el = el.length ? el : $(this).find('input');
+
+            index = el.attr('id').replace(/[^\d.]/g, '');
+            that.choiceBagIndex = index > that.choiceBagIndex ? index : that.choiceBagIndex;
+
+            var item = new Child(that);
+            item.setIndex(index);
+
+            that.addChoice(item, i);
+        });
+    };
+
+    Parent.prototype.createEmptyChild = function() {
+        this.choiceBagIndex = this.choiceBagIndex + 1;
+
+        template = this.childTemplate.replace(/__name__/g, this.choiceBagIndex);
+
+        this.holder.append(template);
+
+        referenceIndex = this.holder.children().length - 1;
+
+        var item = new Child(this);
+        item.setIndex(this.choiceBagIndex);
+
+        this.addChoice(item, referenceIndex);
+
+        $('select.select2-parameters').select2();
+
+    };
+
+    Parent.prototype.removeItem = function(item) {
+        item.getReference().remove();
+
+        delete this.choiceBag[item.getIndex()];
+
+        var c = 0;
+
+        for(var i = this.choiceBag.length - 1; i >= 0; i--) {
+            if (typeof this.choiceBag[i] !== 'undefined') {
+               c++;
+            }
+        }
+    };
+
+    Parent.prototype.addChoice = function(item, referenceIndex) {
+        item.bind(referenceIndex);
+
+        this.choiceBag[item.getIndex()] = item;
+
+        $('select.form-control').select2();
+    };
+
+    function Child(field) {
+        this.field = field;
+        this.index = null;
+        this.reference = null;
+    }
+
+    Child.prototype = {
+       constructor: Child,
+
+        setIndex: function(index) {
+            this.index = index;
+        },
+
+        getIndex: function() {
+            return this.index;
+        },
+
+        getReference: function() {
+            return this.reference;
+        }
+    };
+
+    Child.prototype.bind = function(referenceIndex) {
+        this.reference = this.field.holder.find("table:eq(" + referenceIndex + ")");
+
+        var that = this;
+
+        // remove button
+        this.reference.find("tr:eq(-1) a").click(function() {
+            that.field.removeItem(that);
+        });
+    };
+
+    var fkTcemgRegistroPrecosOrgoes = new Parent();
+    fkTcemgRegistroPrecosOrgoes.holder = $('#registro_precos_fkTcemgRegistroPrecosOrgoes');
+    fkTcemgRegistroPrecosOrgoes.childTemplate = $('#registro_precos_fkTcemgRegistroPrecosOrgoes').attr('data-prototype');
+    fkTcemgRegistroPrecosOrgoes.load();
+
+    $('#add-item_fkTcemgRegistroPrecosOrgoes').click(function(e) {
+        fkTcemgRegistroPrecosOrgoes.createEmptyChild();
+        return false;
+    });
+
+    var fkTcemgRegistroPrecosOrgaoItens = new Parent();
+    fkTcemgRegistroPrecosOrgaoItens.holder = $('#registro_precos_fkTcemgRegistroPrecosOrgaoItens');
+    fkTcemgRegistroPrecosOrgaoItens.childTemplate = $('#registro_precos_fkTcemgRegistroPrecosOrgaoItens').attr('data-prototype');
+    fkTcemgRegistroPrecosOrgaoItens.load();
+
+    $('#add-item_fkTcemgRegistroPrecosOrgaoItens').click(function(e) {
+        fkTcemgRegistroPrecosOrgaoItens.createEmptyChild();
+        $('.update-registro-orgao').trigger('change');
+        return false;
+    });
+
+    var fkTcemgEmpenhoRegistroPrecos = new Parent();
+    fkTcemgEmpenhoRegistroPrecos.holder = $('#registro_precos_fkTcemgEmpenhoRegistroPrecos');
+    fkTcemgEmpenhoRegistroPrecos.childTemplate = $('#registro_precos_fkTcemgEmpenhoRegistroPrecos').attr('data-prototype');
+    fkTcemgEmpenhoRegistroPrecos.load();
+
+    $('#add-item_fkTcemgEmpenhoRegistroPrecos').click(function(e) {
+        fkTcemgEmpenhoRegistroPrecos.createEmptyChild();
+        return false;
+    });
+
+    var fkTcemgItemRegistroPrecos = new Parent();
+    fkTcemgItemRegistroPrecos.holder = $('#registro_precos_fkTcemgLoteRegistroPrecos_0_fkTcemgItemRegistroPrecos');
+    fkTcemgItemRegistroPrecos.childTemplate = $('#registro_precos_fkTcemgLoteRegistroPrecos_0_fkTcemgItemRegistroPrecos').attr('data-prototype');
+    fkTcemgItemRegistroPrecos.load();
+
+    $('#add-item_fkTcemgItemRegistroPrecos').click(function(e) {
+        fkTcemgItemRegistroPrecos.createEmptyChild();
+        $('.update-registro-orgao').trigger('change');
+        return false;
+    });
+
+    $('body').on('change', '.update-registro-orgao', function() {
+        var orgaos = [];
+        var itens = [];
+
+        var codEntidade = $('select.RegistroPrecosType_fkOrcamentoEntidade').val().split('~');
+            codEntidade = 2 === codEntidade.length ? codEntidade[1] : '';
+
+        var numeroRegistroPrecos = $('.RegistroPrecosType_numeroRegistroPrecos').val();
+        var exercicioRegistroPrecos = '{{ exercicio }}';
+        var exercicio = '{{ exercicio }}';
+        var interno = $('select.RegistroPrecosType_interno').val();
+        var numcgmGerenciador = $('input.RegistroPrecosType_fkSwCgm').val();
+
+        $('#registro_precos_fkTcemgRegistroPrecosOrgoes table').each(function() {
+            var unidade = $(this).find('.RegistroPrecosOrgaoType_fkOrcamentoUnidade').select2('data');
+
+            var exercicioUnidade = '';
+            var numUnidade = '';
+            var numOrgao = '';
+
+            if ('object' === typeof unidade && null !== unidade) {
+                unidade = unidade.id.split('~');
+
+                exercicioUnidade = unidade[0];
+                numUnidade = unidade[1];
+                numOrgao = unidade[2];
+            }
+
+            var key = [
+                codEntidade,
+                numeroRegistroPrecos,
+                exercicioRegistroPrecos,
+                interno,
+                numcgmGerenciador,
+                exercicioUnidade,
+                numUnidade,
+                numOrgao
+            ].join('~');
+
+            var unidade = $(this).find('.RegistroPrecosOrgaoType_fkOrcamentoUnidade').select2('data');
+
+            if (unidade) {
+                unidade = unidade.label;
+            } else {
+                unidade = 'Unidade não Informada';
+            }
+
+            var orgao = $(this).find('.RegistroPrecosOrgaoType_numOrgao').children(':selected');
+            if (orgao) {
+                orgao = orgao.text();
+
+            } else {
+                orgao = 'Orgão não Informado';
+            }
+
+            var text = orgao + ' (' + unidade + ')';
+
+            orgaos.push({'value': key, 'text': text});
+        });
+
+        $('.append-registo-preco-orgao option').remove();
+
+        $(orgaos).each(function(index, value) {
+            var orgao = new Option(value.text, value.value, false);
+            $('select.append-registo-preco-orgao').append(orgao);
+        });
+
+        $('#registro_precos_fkTcemgLoteRegistroPrecos_0_fkTcemgItemRegistroPrecos table').each(function() {
+            var codLote = $('.LoteRegistroPrecosType_codLote').val();
+            var cgmFornecedor = $(this).find('input.ItemRegistroPrecosType_fkSwCgm').val();
+            var codItem = $('input.ItemRegistroPrecosType_fkAlmoxarifadoCatalogoItem').val();
+
+            var key = [
+                codEntidade,
+                numeroRegistroPrecos,
+                exercicio,
+                codLote,
+                codItem,
+                cgmFornecedor,
+                interno,
+                numcgmGerenciador
+            ].join('~');
+
+            var item = $(this).find('.ItemRegistroPrecosType_fkAlmoxarifadoCatalogoItem').select2('data');
+            if (item) {
+                item = item.label;
+            } else {
+                item = 'Item não Informado';
+            }
+
+            var fkSwCgm = $(this).find('.ItemRegistroPrecosType_fkSwCgm').select2('data');
+            if (fkSwCgm) {
+                fkSwCgm = fkSwCgm.label;
+            } else {
+                fkSwCgm = 'Fornecedor não Informado';
+            }
+
+            var text = item + ' (' + fkSwCgm + ')';
+
+            itens.push({'value': key, 'text': text});
+        });
+
+        $('.append-item-registro-preco option').remove();
+
+        $(itens).each(function(index, value) {
+            var item = new Option(value.text, value.value, false);
+            $('select.append-item-registro-preco').append(item);
+        });
+    });
+
+    $('.update-registro-orgao').trigger('change');
+</script>

@@ -1,0 +1,28 @@
+{% block content %}
+
+    {% if field.data.lote is not null %}
+
+        <table class="table show-table">
+            <tbody>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.loteOrigem'|trans }}</th>
+                <td>{{ field.data.lote }}</td>
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.tipoLote'|trans }}</th>
+                {% if field.data.lote.fkImobiliarioLoteUrbano is not null %}
+                    <td>{{ 'label.imobiliarioLote.urbano.modulo'|trans }}</td>
+                {% else %}
+                    <td>{{ 'label.imobiliarioLote.rural.modulo'|trans }}</td>
+                {% endif %}
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.bairroOrigem'|trans }}</th>
+                <td>{{ field.data.lote.fkImobiliarioLoteBairros.last.fkSwBairro }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock content %}

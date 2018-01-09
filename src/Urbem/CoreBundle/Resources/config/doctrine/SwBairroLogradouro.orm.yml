@@ -1,0 +1,85 @@
+Urbem\CoreBundle\Entity\SwBairroLogradouro:
+    type: entity
+    table: sw_bairro_logradouro
+    id:
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+        codMunicipio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_municipio
+        codBairro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bairro
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+    fields: {  }
+    manyToOne:
+        fkSwBairro:
+            targetEntity: Urbem\CoreBundle\Entity\SwBairro
+            inversedBy: fkSwBairroLogradouros
+            joinColumns:
+                cod_bairro:
+                    referencedColumnName: cod_bairro
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+        fkSwLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwLogradouro
+            inversedBy: fkSwBairroLogradouros
+            joinColumns:
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+    oneToMany:
+        fkEconomicoDomicilioInformados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\DomicilioInformado
+            mappedBy: fkSwBairroLogradouro
+        fkImobiliarioImovelCorrespondencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelCorrespondencia
+            mappedBy: fkSwBairroLogradouro
+        fkSwCgmLogradouroCorrespondencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmLogradouroCorrespondencia
+            mappedBy: fkSwBairroLogradouro
+        fkSwCgaLogradouroCorrespondencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaLogradouroCorrespondencia
+            mappedBy: fkSwBairroLogradouro
+        fkSwCgmLogradouros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmLogradouro
+            mappedBy: fkSwBairroLogradouro
+        fkSwCgaLogradouros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaLogradouro
+            mappedBy: fkSwBairroLogradouro

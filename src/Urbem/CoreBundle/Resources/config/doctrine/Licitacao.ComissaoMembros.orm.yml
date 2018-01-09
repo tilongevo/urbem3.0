@@ -1,0 +1,86 @@
+Urbem\CoreBundle\Entity\Licitacao\ComissaoMembros:
+    type: entity
+    table: licitacao.comissao_membros
+    id:
+        codComissao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_comissao
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields:
+        codTipoMembro:
+            type: integer
+            nullable: false
+            column: cod_tipo_membro
+        cargo:
+            type: string
+            nullable: false
+            length: 50
+        naturezaCargo:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: natureza_cargo
+    manyToOne:
+        fkLicitacaoComissao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Comissao
+            inversedBy: fkLicitacaoComissaoMembros
+            joinColumns:
+                cod_comissao:
+                    referencedColumnName: cod_comissao
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoComissaoMembros
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkLicitacaoComissaoMembros
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkLicitacaoTipoMembro:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoMembro
+            inversedBy: fkLicitacaoComissaoMembros
+            joinColumns:
+                cod_tipo_membro:
+                    referencedColumnName: cod_tipo_membro
+        fkLicitacaoNaturezaCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\NaturezaCargo
+            inversedBy: fkLicitacaoComissaoMembros
+            joinColumns:
+                natureza_cargo:
+                    referencedColumnName: codigo
+    oneToMany:
+        fkLicitacaoComissaoLicitacaoMembros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ComissaoLicitacaoMembros
+            mappedBy: fkLicitacaoComissaoMembros
+    oneToOne:
+        fkLicitacaoMembroExcluido:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\MembroExcluido
+            mappedBy: fkLicitacaoComissaoMembros
+            joinColumns:
+                cod_comissao:
+                    referencedColumnName: cod_comissao
+                numcgm:
+                    referencedColumnName: numcgm
+                cod_norma:
+                    referencedColumnName: cod_norma

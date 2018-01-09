@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Arrecadacao\VencimentoParcela:
+    type: entity
+    table: arrecadacao.vencimento_parcela
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\VencimentoParcelaRepository
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codVencimento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vencimento
+        codParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcela
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        dataVencimento:
+            type: date
+            nullable: false
+            column: data_vencimento
+        valor:
+            type: float
+            nullable: true
+        percentual:
+            type: boolean
+            nullable: true
+        dataVencimentoDesconto:
+            type: date
+            nullable: true
+            column: data_vencimento_desconto
+    manyToOne:
+        fkArrecadacaoGrupoVencimento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoVencimento
+            inversedBy: fkArrecadacaoVencimentoParcelas
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                cod_vencimento:
+                    referencedColumnName: cod_vencimento
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

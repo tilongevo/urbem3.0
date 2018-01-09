@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TcemgEntidadeRequisitosCargo:
+    type: entity
+    table: folhapagamento.tcemg_entidade_requisitos_cargo
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\TcemgEntidadeRequisitosCargoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+    fields: {  }
+    manyToOne:
+        fkTcemgTipoRequisitosCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoRequisitosCargo
+            inversedBy: fkFolhapagamentoTcemgEntidadeRequisitosCargos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkFolhapagamentoTcemgEntidadeRequisitosCargos
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo

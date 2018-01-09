@@ -1,0 +1,162 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Calculo:
+    type: entity
+    table: arrecadacao.calculo
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\CalculoRepository
+    id:
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+    fields:
+        codCredito:
+            type: integer
+            nullable: false
+            column: cod_credito
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+        codGenero:
+            type: integer
+            nullable: false
+            column: cod_genero
+        codEspecie:
+            type: integer
+            nullable: false
+            column: cod_especie
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        nroParcelas:
+            type: integer
+            nullable: false
+            column: nro_parcelas
+        ativo:
+            type: boolean
+            nullable: false
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        calculado:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        iLancto:
+            type: integer
+            nullable: true
+            column: i_lancto
+        iImovel:
+            type: string
+            nullable: true
+            column: i_imovel
+        simulado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkArrecadacaoCalculos
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+    oneToMany:
+        fkArrecadacaoAtributoGrupoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoGrupoValor
+            mappedBy: fkArrecadacaoCalculo
+        fkArrecadacaoLancamentoCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoCalculo
+            mappedBy: fkArrecadacaoCalculo
+        fkArrecadacaoLogCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LogCalculo
+            mappedBy: fkArrecadacaoCalculo
+        fkArrecadacaoPagamentoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoAcrescimo
+            mappedBy: fkArrecadacaoCalculo
+        fkArrecadacaoPagamentoCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoCalculo
+            mappedBy: fkArrecadacaoCalculo
+        fkArrecadacaoPagamentoDiferencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoDiferenca
+            mappedBy: fkArrecadacaoCalculo
+        fkDividaParcelaCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelaCalculo
+            mappedBy: fkArrecadacaoCalculo
+        fkArrecadacaoCalculoCgns:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CalculoCgm
+            mappedBy: fkArrecadacaoCalculo
+    oneToOne:
+        fkArrecadacaoCalculoGrupoCredito:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CalculoGrupoCredito
+            mappedBy: fkArrecadacaoCalculo
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo
+        fkArrecadacaoCadastroEconomicoCalculo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoCalculo
+            mappedBy: fkArrecadacaoCalculo
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo
+        fkArrecadacaoImovelCalculo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ImovelCalculo
+            mappedBy: fkArrecadacaoCalculo
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo

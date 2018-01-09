@@ -1,0 +1,58 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">{{ 'label.recursosHumanos.contratoServidorPeriodo.matricula'|trans }}
+                        - {{ object.matricula }}</span>
+                </h2>
+
+                <p class="divider grey col s12"></p>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.contratoServidorPeriodo.competencia'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.competencia }}</h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.contratoServidorPeriodo.periodoMovimentacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.periodo }}</h6>
+                </div>
+
+                <div class="col s6" style="margin-top: 4%;">
+                    <a class="btn sonata-ba-action right"
+                       href="{{ path('urbem_recursos_humanos_folha_pagamento_consulta_ficha_financeira_gerar_previa', { 'id': object.codContrato }) }}">
+                        <i class="fa fa-bars left help-icon-btn"></i>Prévia
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% include 'RecursosHumanosBundle:Sonata/FolhaPagamento/ContratoServidorPeriodo/CRUD:show_eventos_fixos.html.twig' %}
+
+        {% include 'RecursosHumanosBundle:Sonata/FolhaPagamento/ContratoServidorPeriodo/CRUD:show_eventos_proporcionais.html.twig' %}
+
+        {% include 'RecursosHumanosBundle:Sonata/FolhaPagamento/ContratoServidorPeriodo/CRUD:show_eventos_variaveis.html.twig' %}
+
+        {% if object.apresentaAbaBase %}
+            {% include 'RecursosHumanosBundle:Sonata/FolhaPagamento/ContratoServidorPeriodo/CRUD:show_eventos_bases.html.twig' %}
+        {% endif %}
+
+    </div>
+{% endblock show %}

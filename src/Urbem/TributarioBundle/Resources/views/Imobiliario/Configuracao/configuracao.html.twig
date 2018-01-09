@@ -1,0 +1,102 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="sonata-ba-show col s12">
+    <div class="sonata-ba-view">
+        <div class="row">
+            <h5 class="col s10 box-title left-align ">{{ 'label.configuracaoImobiliaria.dados'|trans }}</h5>
+            <div class="divider grey lighten-1  title-divider"></div>
+            {{ form_start(form) }}
+                <div class="col s3">
+                    {{ form_label(form.codigo_localizacao, null, {'label_attr': {'class': 'label-rh required'}}) }}
+                    {{ form_widget(form.codigo_localizacao, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.codigo_localizacao) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.mascara_lote, null, {'label_attr': {'class': 'label-rh'}}) }}
+                    {{ form_widget(form.mascara_lote, {'attr': {'class': 'input-rh white browser-default'}}) }}
+                    {{ form_errors(form.mascara_lote) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.numero_inscricao, null, {'label_attr': {'class': 'label-rh'}}) }}
+                    {{ form_widget(form.numero_inscricao, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.numero_inscricao) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.mascara_inscricao, null, {'label_attr': {'class': 'label-rh'}}) }}
+                    {{ form_widget(form.mascara_inscricao,{'attr': {'class': 'input-rh white browser-default'}}) }}
+                    {{ form_errors(form.mascara_inscricao) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.ordem_entrega, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.ordem_entrega, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.ordem_entrega) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.navegacao_automatica, null, {'label_attr': {'class': 'label-rh'}}) }}
+                    {{ form_widget(form.navegacao_automatica, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.navegacao_automatica) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.valor_md, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.valor_md, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.valor_md) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.aliquotas, null, {'label_attr': {'class': '  '}}) }}
+                    {{ form_widget(form.aliquotas, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.aliquotas) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.atrib_lote_urbano, null, {'label_attr': {'class': '  '}}) }}
+                    {{ form_widget(form.atrib_lote_urbano, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.atrib_lote_urbano) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.atrib_lote_rural, null, {'label_attr': {'class': '  '}}) }}
+                    {{ form_widget(form.atrib_lote_rural, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.atrib_lote_rural) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(form.atrib_imovel, null, {'label_attr': {'class': '  '}}) }}
+                    {{ form_widget(form.atrib_imovel, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.atrib_imovel) }}
+                </div>
+                <div class="col s3" style="margin-bottom: 6px">
+                    {{ form_label(form.atrib_edificacao, null, {'label_attr': {'class': '  '}}) }}
+                    {{ form_widget(form.atrib_edificacao, {'attr': {'class': 'form-control white basic-multiple select2-parameters'}}) }}
+                    {{ form_errors(form.atrib_edificacao) }}
+                </div>
+                <div class="col s12">
+                    <div class="col s6 add space">
+                        <a class="btn-floating white-text blue darken-4 btn-success" href="{{ path('tributario_imobiliario_configuracao_home') }}"><i class="material-icons">arrow_back</i></a>
+                    </div>
+                    <div class="col s6 right-align">
+                        <button type="submit" id="form_submit" name="form[submit]"
+                                class="white-text blue darken-4 btn btn-success save right">
+                            <i class="material-icons left">save</i>{{ 'label.configuracaoImobiliaria.salvar'|trans }}
+                        </button>
+                    </div>
+                </div>
+            <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            {{form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css') }}">
+    <script src="{{ asset('/bundles/sonatacore/vendor/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/string.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem-sonata.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/tributario/javascripts/imobiliario/configuracao.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('select:not(.select-ano)').select2();
+        });
+    </script>
+{% endblock javascripts %}

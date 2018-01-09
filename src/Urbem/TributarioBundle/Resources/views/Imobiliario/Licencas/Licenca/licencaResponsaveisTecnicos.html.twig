@@ -1,0 +1,45 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="col s12 responsaveis-tecnicos">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioLicenca.listaResponsaveisTecnicos'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableResponsaveisTecnicosManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.codigo'|trans }}</th>
+            <th class="th-rh">{{ 'label.nome'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLicenca.registro'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLicenca.profissao'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        <tr class="tr-rh row-modelo-responsaveis-tecnicos" style="display:none;">
+            <td class="td-rh codigo">
+                <input type="hidden" class="input-responsavel-tecnico" name="responsaveis-tecnicos[]" />
+            </td>
+            <td class="td-rh nome"></td>
+            <td class="td-rh registro"></td>
+            <td class="td-rh profissao"></td>
+            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+        </tr>
+        {% for licencaResponsavelTecnico in field.data.licencaResponsaveisTecnicos|sort %}
+            <tr class="tr-rh row-responsaveis-tecnicos" id="responsavel-tecnico-{{ licencaResponsavelTecnico.numcgm ~ '-' ~ licencaResponsavelTecnico.sequencia }}">
+                <td class="td-rh codigo">
+                    <input type="hidden" value="{{ admin.getObjectKey(licencaResponsavelTecnico) }}" class="input-responsavel-tecnico" name="responsaveis-tecnicos-old[]" />
+                    {{ licencaResponsavelTecnico.numcgm }}
+                </td>
+                <td class="td-rh nome">{{ licencaResponsavelTecnico.fkEconomicoResponsavel.fkSwCgm.nomCgm }}</td>
+                <td class="td-rh registro">{{ licencaResponsavelTecnico.fkEconomicoResponsavel.fkSwCgm.fkEconomicoResponsavelTecnicos.last.numRegistro }}</td>
+                <td class="td-rh profissao">{{ licencaResponsavelTecnico.fkEconomicoResponsavel.fkSwCgm.fkEconomicoResponsavelTecnicos.last.fkCseProfissao.nomProfissao }}</td>
+                <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+            </tr>
+        {% endfor %}
+        <tr class="tr-rh empty-row-responsaveis-tecnicos">
+            <td colspan="5">{{ 'listagemVazia'|trans }}</td>
+        </tr>
+    </table>
+</div>

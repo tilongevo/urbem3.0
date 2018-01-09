@@ -1,0 +1,76 @@
+Urbem\CoreBundle\Entity\Economico\AtividadeCadastroEconomico:
+    type: entity
+    table: economico.atividade_cadastro_economico
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\AtividadeCadastroEconomicoRepository
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        ocorrenciaAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_atividade
+    fields:
+        principal:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoAtividadeCadastroEconomicos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkEconomicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Atividade
+            inversedBy: fkEconomicoAtividadeCadastroEconomicos
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+    oneToMany:
+        fkEconomicoCadastroEconomicoModalidadeLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoModalidadeLancamento
+            mappedBy: fkEconomicoAtividadeCadastroEconomico
+        fkEconomicoLicencaAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaAtividade
+            mappedBy: fkEconomicoAtividadeCadastroEconomico
+        fkEconomicoLicencaEspeciais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaEspecial
+            mappedBy: fkEconomicoAtividadeCadastroEconomico
+        fkEconomicoElementoAtivCadEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoAtivCadEconomico
+            mappedBy: fkEconomicoAtividadeCadastroEconomico

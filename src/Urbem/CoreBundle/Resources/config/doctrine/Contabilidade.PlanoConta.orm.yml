@@ -1,0 +1,335 @@
+Urbem\CoreBundle\Entity\Contabilidade\PlanoConta:
+    type: entity
+    table: contabilidade.plano_conta
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\PlanoContaRepository
+    uniqueConstraints:
+        uk_plano_conta_1:
+            columns:
+                - cod_estrutural
+                - indicador_superavit
+                - exercicio
+    id:
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomConta:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_conta
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+        codSistema:
+            type: integer
+            nullable: false
+            column: cod_sistema
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 160
+            column: cod_estrutural
+        escrituracao:
+            type: string
+            nullable: true
+            length: 9
+        naturezaSaldo:
+            type: string
+            nullable: true
+            length: 7
+            column: natureza_saldo
+        indicadorSuperavit:
+            type: string
+            nullable: true
+            length: 12
+            column: indicador_superavit
+        funcao:
+            type: text
+            nullable: true
+        atributoTcepe:
+            type: integer
+            nullable: true
+            column: atributo_tcepe
+        atributoTcemg:
+            type: integer
+            nullable: true
+            column: atributo_tcemg
+        escrituracaoPcasp:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                default: 'N'
+            column: escrituracao_pcasp
+        obrigatorioTcmgo:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: obrigatorio_tcmgo
+    manyToOne:
+        fkContabilidadeClassificacaoContabil:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ClassificacaoContabil
+            inversedBy: fkContabilidadePlanoContas
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadeSistemaContabil:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\SistemaContabil
+            inversedBy: fkContabilidadePlanoContas
+            joinColumns:
+                cod_sistema:
+                    referencedColumnName: cod_sistema
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcepeTipoContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoContaCorrente
+            inversedBy: fkContabilidadePlanoContas
+            joinColumns:
+                atributo_tcepe:
+                    referencedColumnName: cod_tipo
+        fkTcemgTipoContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoContaCorrente
+            inversedBy: fkContabilidadePlanoContas
+            joinColumns:
+                atributo_tcemg:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkContabilidadeConfiguracaoLancamentoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoCredito
+            mappedBy: fkContabilidadePlanoConta
+        fkContabilidadeConfiguracaoLancamentoDebitos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoDebito
+            mappedBy: fkContabilidadePlanoConta
+        fkContabilidadeConfiguracaoLancamentoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoReceita
+            mappedBy: fkContabilidadePlanoConta
+        fkManadPlanoContaModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\PlanoContaModeloLrf
+            mappedBy: fkContabilidadePlanoConta
+        fkOrcamentoReceitaCreditoTributarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReceitaCreditoTributario
+            mappedBy: fkContabilidadePlanoConta
+        fkTcersPlanoContaModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\PlanoContaModeloLrf
+            mappedBy: fkContabilidadePlanoConta
+        fkTcmgoArquivoPcts:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ArquivoPct
+            mappedBy: fkContabilidadePlanoConta
+        fkTcmgoVinculoPlanoContasTcmgos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\VinculoPlanoContasTcmgo
+            mappedBy: fkContabilidadePlanoConta
+        fkContabilidadeClassificacaoPlanos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ClassificacaoPlano
+            mappedBy: fkContabilidadePlanoConta
+    oneToOne:
+        fkContabilidadeContaContabilRpNp:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ContaContabilRpNp
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadePlanoAnalitica:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadePlanoContaEncerrada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoContaEncerrada
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkImaConfiguracaoDirfIrrfPlanoConta:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfIrrfPlanoConta
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkManadPlanoContaEntidade:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Manad\PlanoContaEntidade
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcemgContaBancaria:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContaBancaria
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcerjPlanoConta:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcerj\PlanoConta
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcersRdExtra:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\RdExtra
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcersPlanoContaEntidade:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\PlanoContaEntidade
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcmgoBalancoBlpaaaa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\BalancoBlpaaaa
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcmgoBalancoPfraaaa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\BalancoPfraaaa
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadeConfiguracaoContasExtras:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoContasExtras
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcepbPlanoContaTipoTransferencia:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\PlanoContaTipoTransferencia
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkImaConfiguracaoDirfInss:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfInss
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkManadRdExtra:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Manad\RdExtra
+            mappedBy: fkContabilidadePlanoConta
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio

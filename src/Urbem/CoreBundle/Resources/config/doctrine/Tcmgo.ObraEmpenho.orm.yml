@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Tcmgo\ObraEmpenho:
+    type: entity
+    table: tcmgo.obra_empenho
+    id:
+        anoObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ano_obra
+        codObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_obra
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkTcmgoObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Obra
+            inversedBy: fkTcmgoObraEmpenhos
+            joinColumns:
+                cod_obra:
+                    referencedColumnName: cod_obra
+                ano_obra:
+                    referencedColumnName: ano_obra
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcmgoObraEmpenhos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

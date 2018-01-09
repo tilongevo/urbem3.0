@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Estagio\EstagiarioValeRefeicao:
+    type: entity
+    table: estagio.estagiario_vale_refeicao
+    id:
+        cgmInstituicaoEnsino:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_instituicao_ensino
+        cgmEstagiario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_estagiario
+        codCurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_curso
+        codEstagio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_estagio
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        quantidade:
+            type: integer
+            nullable: false
+        vlVale:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_vale
+        vlDesconto:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_desconto
+    oneToOne:
+        fkEstagioEstagiarioEstagioBolsa:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagioBolsa
+            inversedBy: fkEstagioEstagiarioValeRefeicao
+            joinColumns:
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino
+                cgm_estagiario:
+                    referencedColumnName: cgm_estagiario
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeMoeda:
+    type: entity
+    table: economico.atividade_modalidade_moeda
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+        codMoeda:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_moeda
+    fields: {  }
+    manyToOne:
+        fkEconomicoAtividadeModalidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeLancamento
+            inversedBy: fkEconomicoAtividadeModalidadeMoedas
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                dt_inicio:
+                    referencedColumnName: dt_inicio
+        fkMonetarioMoeda:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Moeda
+            inversedBy: fkEconomicoAtividadeModalidadeMoedas
+            joinColumns:
+                cod_moeda:
+                    referencedColumnName: cod_moeda

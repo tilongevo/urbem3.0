@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Orcamento\DespesaCredito:
+    type: entity
+    table: orcamento.despesa_credito
+    id:
+        codDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkOrcamentoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            inversedBy: fkOrcamentoDespesaCreditos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_despesa:
+                    referencedColumnName: cod_despesa
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkOrcamentoDespesaCreditos
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie

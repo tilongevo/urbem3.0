@@ -1,0 +1,181 @@
+Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal:
+    type: entity
+    table: tesouraria.usuario_terminal
+    id:
+        codTerminal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_usuario
+    fields:
+        responsavel:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+    manyToOne:
+        fkTesourariaTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Terminal
+            inversedBy: fkTesourariaUsuarioTerminais
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTesourariaUsuarioTerminais
+            joinColumns:
+                cgm_usuario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkTesourariaArrecadacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaAberturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Abertura
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaBoletins:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Boletim
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaBorderos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Bordero
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaBoletimReabertos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimReaberto
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaBoletimLiberados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberado
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaBoletimFechados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimFechado
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaPagamentoEstornados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\PagamentoEstornado
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaFechamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Fechamento
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaTransferenciaEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornada
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaReciboExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtra
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Pagamento
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaArrecadacaoEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornada
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaDotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Dote
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaBoletimLiberadoCancelados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberadoCancelado
+            mappedBy: fkTesourariaUsuarioTerminal
+        fkTesourariaDoteProcessados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\DoteProcessado
+            mappedBy: fkTesourariaUsuarioTerminal
+    oneToOne:
+        fkTesourariaUsuarioTerminalExcluido:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminalExcluido
+            mappedBy: fkTesourariaUsuarioTerminal
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario

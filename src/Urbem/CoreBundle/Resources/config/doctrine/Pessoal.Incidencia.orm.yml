@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\Incidencia:
+    type: entity
+    table: pessoal.incidencia
+    id:
+        codIncidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_incidencia
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalPensaoIncidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensaoIncidencia
+            mappedBy: fkPessoalIncidencia

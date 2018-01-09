@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Tcemg\TetoRemuneratorio:
+    type: entity
+    table: tcemg.teto_remuneratorio
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        vigencia:
+            type: datepk
+            generator:
+                strategy: NONE
+    fields:
+        teto:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        justificativa:
+            type: string
+            nullable: true
+            length: 100
+        codEvento:
+            type: integer
+            nullable: true
+            column: cod_evento
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcemgTetoRemuneratorios
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkTcemgTetoRemuneratorios
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+    oneToOne:
+        fkTcemgTetoRemuneratorioControle:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TetoRemuneratorioControle
+            mappedBy: fkTcemgTetoRemuneratorio
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                vigencia:
+                    referencedColumnName: vigencia

@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\SwEscolaridade:
+    type: entity
+    table: sw_escolaridade
+    id:
+        codEscolaridade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_escolaridade
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 25
+    oneToMany:
+        fkSwCgaPessoaFisicas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaPessoaFisica
+            mappedBy: fkSwEscolaridade
+        fkSwCgmPessoaFisicas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            mappedBy: fkSwEscolaridade
+        fkPessoalCargo:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            mappedBy: fkSwEscolaridade

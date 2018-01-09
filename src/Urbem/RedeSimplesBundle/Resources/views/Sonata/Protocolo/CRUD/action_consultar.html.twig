@@ -1,0 +1,33 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% if object.protocolo is empty %}
+    <a href="{{ path('rede_simples_protocolo_enviar', {'protocolo': object.id }) }}">
+        <button type="button"
+                style="position: relative; top: 25px;float: right;"
+                data-action="{{ path('rede_simples_protocolo_enviar', {'protocolo': object.id }) }}"
+                class="white-text blue darken-4 btn save btn-rh btn-rh-salve"
+                name="btn_sincronizar_server">
+            <i class="glyphicon glyphicon-refresh left"></i>
+            Sincronizar dados
+        </button>
+    </a>
+{% endif %}
+
+{% if protocoloCanCheckStatus(object) %}
+    <a href="{{ path('rede_simples_protocolo_consultar', {protocolo: object.id})}}"
+       class="btn-list blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped"
+       data-toggle="tooltip"
+       data-placement="bottom"
+       title="{{ 'rede_simples.consultar'|trans }}" style="float: right; margin-top: 25px;">
+        <i class="fa fa-undo fa-lg" aria-hidden="true"></i>
+    </a>
+{% endif %}
+

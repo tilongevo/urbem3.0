@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Tcepb\RelacaoContaCorrenteFontePagadora:
+    type: entity
+    table: tcepb.relacao_conta_corrente_fonte_pagadora
+    id:
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkTcepbRelacaoContaCorrenteFontePagadoras
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+        fkTcepbTipoOrigemRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoOrigemRecurso
+            inversedBy: fkTcepbRelacaoContaCorrenteFontePagadoras
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                exercicio:
+                    referencedColumnName: exercicio

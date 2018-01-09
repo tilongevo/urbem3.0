@@ -1,0 +1,75 @@
+Urbem\CoreBundle\Entity\SwAssunto:
+    type: entity
+    table: sw_assunto
+    id:
+        codAssunto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assunto
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+    fields:
+        nomAssunto:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_assunto
+        confidencial:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkSwClassificacao:
+            targetEntity: Urbem\CoreBundle\Entity\SwClassificacao
+            inversedBy: fkSwAssuntos
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+    oneToMany:
+        fkProtocoloAssuntoAcoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Protocolo\AssuntoAcao
+            mappedBy: fkSwAssunto
+        fkProtocoloProcessoHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Protocolo\ProcessoHistorico
+            mappedBy: fkSwAssunto
+        fkSwDocumentoAssuntos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwDocumentoAssunto
+            mappedBy: fkSwAssunto
+        fkSwProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            mappedBy: fkSwAssunto
+        fkSwAndamentoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAndamentoPadrao
+            mappedBy: fkSwAssunto
+        fkSwAssuntoAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAssuntoAtributo
+            mappedBy: fkSwAssunto

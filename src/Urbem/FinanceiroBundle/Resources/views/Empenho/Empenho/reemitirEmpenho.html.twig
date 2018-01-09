@@ -1,0 +1,159 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <tbody>
+            <tr>
+                <td colspan="12" class="grey">
+                    <p>{{ 'entidade'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.codEntidade }} - {{ dadosEmpenho.nomEntidade }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="border-right-none border-bottom-none">
+                    <p>{{ 'orgao'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.orgao }}</p>
+                </td>
+                <td colspan="5" class="border-bottom-none">
+                    <p>{{ 'unidade'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.unidade }}</p>
+                </td>
+                <td colspan="2" rowspan="2">
+                    <p>{{ 'Type'|trans|upper }}</p>
+                    <p class="text-transform-none">{{ dadosEmpenho.tipoEmpenho }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10">
+                    <p>{{ 'label.dotacao'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.dotacao }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" class="border-right-none border-bottom-none border-top-none">
+                    <p>{{ 'credor'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.cgmCredor }}</p>
+                </td>
+                <td colspan="3" class="border-right-none border-bottom-none border-top-none">
+                    <p>{{ 'cgc'|trans|upper }}/{{ 'cpf'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.cgcCpfCredor }}</p>
+                </td>
+                <td colspan="3" class="border-bottom-none border-top-none">
+                    <p>{{ 'cgm'|trans }}</p>
+                    <p>{{ dadosEmpenho.numCgmCredor }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" class="border-right-none">
+                    <p>{{ 'label.servidor.endereco'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.logradouroCredor }}</p>
+                </td>
+                <td colspan="2" class="border-right-none">
+                    <p>{{ 'label.servidor.fone'|trans|upper }}</p>
+                    <p></p>
+                </td>
+                <td colspan="2" class="border-right-none">
+                    <p>{{ 'label.cidade'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.municipioCredor }}</p>
+                </td>
+                <td colspan="2">
+                    <p>{{ 'label.uf'|trans }}</p>
+                    <p>{{ dadosEmpenho.ufCredor }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" class="border-top-none">
+                    <p>{{ 'label.preEmpenho.autorizacao'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.autorizacao }}</p>
+                </td>
+                <td colspan="4" class="border-top-none">
+                    <p>{{ 'label.emitirEmpenhoDiversos.dtEmissao'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.dtEmpenho|date('d/m/Y') }}</p>
+                </td>
+                <td colspan="4" class="border-top-none">
+                    <p>{{ 'label.emitirEmpenhoDiversos.dtVencimento'|trans|upper }}:</p>
+                    <p>{{ dadosEmpenho.dtVencimento|date('d/m/Y') }}</p>
+                </td>
+            </tr>
+            <tr class="text-right">
+                <td colspan="3">
+                    <p>{{ 'label.consultarEmpenho.valorOrcado'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.vlOrcado|number_format_decimal({'fraction_digits': 2}) }}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{ 'label.consultarEmpenho.saldoAnterior'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.setVlSaldoAnterior|number_format_decimal({'fraction_digits': 2}) }}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{ 'label.consultarEmpenho.valorEmpenho'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{ 'label.consultarEmpenho.saldoAtual'|trans|upper }}</p>
+                    <p>{{ dadosEmpenho.saldoAtual|number_format_decimal({'fraction_digits': 2}) }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12" class="border-top-none">
+                    <p>{{ 'label.reciboExtra.historico'|trans|upper }}</p>
+                    <p class="text-transform-none">{{ dadosEmpenho.historico }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <p>{{ 'label.consultarEmpenho.descricaoEmpenho'|trans|upper }}</p>
+                    <p class="text-transform-none">{{ dadosEmpenho.descricao }}</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-condensed table-custom" style="margin-top: 20px">
+            <tbody>
+            {% for atributo in dadosEmpenho.AtributoEmpenhoValor %}
+                <tr>
+                    <td class="text-right bold" width="30%">{{ atributo.label }}</td>
+                    <td class="text-left" width="70%">{{ atributo.value }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table table-condensed table-custom" style="margin-top: 20px">
+            <thead>
+            <tr>
+                <th colspan="1" class="grey text-right">{{ 'label.itemPreEmpenho.codItem'|trans|upper }}</th>
+                <th colspan="1" class="grey text-right">{{ 'label.itemPreEmpenho.quantidade'|trans|upper }}</th>
+                <th colspan="1" class="grey text-left">{{ 'label.itemPreEmpenho.codUnidade'|trans|upper }}</th>
+                <th colspan="6" class="grey text-left">{{ 'label.especificacaoDestinacaoRecurso.descricao'|trans|upper }}</th>
+                <th colspan="2" class="grey text-right">{{ 'label.itemPreEmpenho.vlUnitario'|trans|upper }}</th>
+                <th colspan="1" class="grey text-right">{{ 'label.itemPreEmpenho.vlTotal'|trans|upper }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in dadosEmpenho.itemPreEmpenho %}
+                <tr>
+                    <td colspan="1" class="text-right">{{ item.numItem }}</td>
+                    <td colspan="1" class="text-right">{{ item.quantidade|number_format_decimal({'fraction_digits': 4}) }}</td>
+                    <td colspan="1" class="text-left">{{ item.siglaUnidade }}</td>
+                    <td colspan="6" class="text-left">{{ item.nomItem}}</td>
+                    <td colspan="2" class="text-right">{{ (item.vlTotal / item.quantidade)|number_format_decimal({'fraction_digits': 4}) }}</td>
+                    <td colspan="1" class="text-right">{{ item.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="11">{{ 'label.reservaSaldos.codRecurso'|trans|upper }}: {{ dadosEmpenho.despesa.codRecurso }} PAO: {{ dadosEmpenho.pao }}</td>
+                <td colspan="1" class="grey text-right">{{ dadosEmpenho.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        {% include 'CoreBundle::Relatorio/signature.html.twig' %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

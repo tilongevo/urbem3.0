@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Monetario\TipoAcrescimo:
+    type: entity
+    table: monetario.tipo_acrescimo
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: true
+            length: 20
+            column: nom_tipo
+    oneToMany:
+        fkMonetarioAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Acrescimo
+            mappedBy: fkMonetarioTipoAcrescimo

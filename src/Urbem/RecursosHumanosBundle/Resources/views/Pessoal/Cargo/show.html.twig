@@ -1,0 +1,77 @@
+{% extends "::base.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s10">
+            <h4 class="blue-text text-darken-4">{{ 'label.cargo.modulo'|trans }}</h4>
+        </div>
+        <div class="hide-on-med-and-down col l1 right-align">
+            <a class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('pessoal_cargo_edit', { 'id': cargo.codCargo }) }}"><i class="material-icons">edit</i></a>
+        </div>
+        <div class="hide-on-med-and-down col l1 left-align">
+            {{ form_start(delete_form) }}
+            <button class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir" value="Delete" type="submit" name="action"><i class="material-icons">delete</i></button>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+    <div class="row">
+        <table class="bordered striped">
+            <tbody>
+                <tr>
+                    <th>{{ 'label.descricao'|trans }}:</h6><p>{{ cargo.descricao }}</th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <th>Categoria Norma:</th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <th> Norma:</th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <th>{{ 'label.cargo.atribuicoes'|trans }}:</th>
+                    <td>{{ cargo.atribuicoes }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'label.cargo.informacoes_complementares'|trans }}:</th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <th>Cargo com especialidades:</th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <th>{{ 'label.cargo.cargoCc'|trans }}:</th>
+                    <td>{% if cargo.cargoCc %}{{ 'sim'|trans }}{% else %}{{ 'nao'|trans }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'label.cargo.funcaoGratificada'|trans }}:</th>
+                    <td>{% if cargo.funcaoGratificada %}{{ 'sim'|trans }}{% else %}{{ 'nao'|trans }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'label.cargo.codRequisito'|trans }}</th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <th>{{ 'label.cargo.descricao_requisitos'|trans }}:</th>
+                    <td>{% for requisito in cargo.codRequisito %}{{ requisito.descricao }}{% endfor %}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'label.cargo.padrao'|trans }}:</th>
+                    <td>{{ padrao ? padrao.codPadrao.codPadrao }} - {{ padrao ? padrao.codPadrao.descricao }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'label.cargo.cbo'|trans }}:</th>
+                    <td>{{ cbo ? cbo.codCbo.descricao }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <a  class="btn-floating white-text blue darken-4" href="{{ path('pessoal_cargo_index') }}"><i class="material-icons">arrow_back</i></a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

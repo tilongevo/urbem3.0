@@ -1,0 +1,6 @@
+{% set empresaFato = object.getFkEconomicoCadastroEconomico().getFkEconomicoCadastroEconomicoEmpresaFato() %}
+{% set atividade = empresaFato.getFkEconomicoAtributoEmpresaFatoValores().first() %}
+
+<div style="width:100%;text-align:justify;text-indent:2.5cm;margin-top:1cm">
+  Certificamos, para os devidos fins e efeitos legais que bem aprouver a parte interessada que de conformidade com levantamento efetuado pela Divisão de Tributação desta Prefeitura, a firma {{ empresaFato.getFkSwCgmPessoaFisica().getFkSwCgm().getNomCgm()|upper }}{% if atividade is not empty %} inscrita no Cadastro Fiscal do Município como {{ atividadesEmpresaFato[atividade.getValor()] }}{% endif %}, requereu e obteve a baixa de sua inscrição em {{ object.getDtInicio().format('d/m/Y') }}{% if processo is not empty %}, conforme requerimento Nº {{ '%d/%d'|format(processo.getCodProcesso(), processo.getAnoExercicio()) }} {% endif %}.
+</div>

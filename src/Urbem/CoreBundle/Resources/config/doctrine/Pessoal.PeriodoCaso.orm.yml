@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Pessoal\PeriodoCaso:
+    type: entity
+    table: pessoal.periodo_caso
+    id:
+        codPeriodo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo
+    fields:
+        codGrupoPeriodo:
+            type: integer
+            nullable: false
+            column: cod_grupo_periodo
+        periodoInicial:
+            type: integer
+            nullable: false
+            column: periodo_inicial
+        periodoFinal:
+            type: integer
+            nullable: false
+            column: periodo_final
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkPessoalGrupoPeriodo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\GrupoPeriodo
+            inversedBy: fkPessoalPeriodoCasos
+            joinColumns:
+                cod_grupo_periodo:
+                    referencedColumnName: cod_grupo_periodo
+    oneToMany:
+        fkPessoalCasoCausas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CasoCausa
+            mappedBy: fkPessoalPeriodoCaso

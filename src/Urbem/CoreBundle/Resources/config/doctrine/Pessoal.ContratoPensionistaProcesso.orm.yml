@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaProcesso:
+    type: entity
+    table: pessoal.contrato_pensionista_processo
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkPessoalContratoPensionistaProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkPessoalContratoPensionista:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionista
+            inversedBy: fkPessoalContratoPensionistaProcesso
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Tcemg\NormaDetalhe:
+    type: entity
+    table: tcemg.norma_detalhe
+    id:
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields:
+        tipoLeiOrigemDecreto:
+            type: integer
+            nullable: true
+            column: tipo_lei_origem_decreto
+        tipoLeiAlteracaoOrcamentaria:
+            type: integer
+            nullable: true
+            column: tipo_lei_alteracao_orcamentaria
+    manyToOne:
+        fkTcemgTipoLeiOrigemDecreto:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoLeiOrigemDecreto
+            inversedBy: fkTcemgNormaDetalhes
+            joinColumns:
+                tipo_lei_origem_decreto:
+                    referencedColumnName: cod_tipo_lei
+        fkTcemgTipoLeiAlteracaoOrcamentaria:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoLeiAlteracaoOrcamentaria
+            inversedBy: fkTcemgNormaDetalhes
+            joinColumns:
+                tipo_lei_alteracao_orcamentaria:
+                    referencedColumnName: cod_tipo_lei
+    oneToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcemgNormaDetalhe
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

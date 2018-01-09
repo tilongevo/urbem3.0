@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Administracao\Biblioteca:
+    type: entity
+    table: administracao.biblioteca
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_biblioteca
+    fields:
+        nomBiblioteca:
+            type: string
+            nullable: false
+            length: 70
+            column: nom_biblioteca
+    manyToOne:
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkAdministracaoBibliotecas
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+    oneToMany:
+        fkAdministracaoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            mappedBy: fkAdministracaoBiblioteca
+    oneToOne:
+        fkAdministracaoBibliotecaEntidade:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\BibliotecaEntidade
+            mappedBy: fkAdministracaoBiblioteca
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca

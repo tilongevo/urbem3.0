@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoContaPagadora:
+    type: entity
+    table: empenho.nota_liquidacao_conta_pagadora
+    id:
+        exercicioLiquidacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_liquidacao
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+    manyToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkEmpenhoNotaLiquidacaoContaPagadoras
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkEmpenhoNotaLiquidacaoPaga:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPaga
+            inversedBy: fkEmpenhoNotaLiquidacaoContaPagadora
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_nota:
+                    referencedColumnName: cod_nota
+                exercicio_liquidacao:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

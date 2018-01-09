@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Licitacao\PublicacaoEdital:
+    type: entity
+    table: licitacao.publicacao_edital
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        dataPublicacao:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: data_publicacao
+        numEdital:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_edital
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        observacao:
+            type: string
+            nullable: true
+            length: 80
+        numPublicacao:
+            type: integer
+            nullable: true
+            column: num_publicacao
+    manyToOne:
+        fkLicitacaoVeiculosPublicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\VeiculosPublicidade
+            inversedBy: fkLicitacaoPublicacaoEditais
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkLicitacaoEdital:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Edital
+            inversedBy: fkLicitacaoPublicacaoEditais
+            joinColumns:
+                num_edital:
+                    referencedColumnName: num_edital
+                exercicio:
+                    referencedColumnName: exercicio

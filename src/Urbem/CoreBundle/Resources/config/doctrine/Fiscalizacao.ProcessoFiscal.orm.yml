@@ -1,0 +1,170 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal:
+    type: entity
+    table: fiscalizacao.processo_fiscal
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        codProcessoProtocolo:
+            type: integer
+            nullable: true
+            column: cod_processo_protocolo
+        anoExercicio:
+            type: string
+            nullable: true
+            length: 4
+            column: ano_exercicio
+        numcgm:
+            type: integer
+            nullable: false
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+        periodoInicio:
+            type: date
+            nullable: false
+            column: periodo_inicio
+        periodoTermino:
+            type: date
+            nullable: false
+            column: periodo_termino
+        previsaoInicio:
+            type: date
+            nullable: false
+            column: previsao_inicio
+        previsaoTermino:
+            type: date
+            nullable: false
+            column: previsao_termino
+        observacao:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkFiscalizacaoProcessoFiscais
+            joinColumns:
+                cod_processo_protocolo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkFiscalizacaoProcessoFiscais
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkFiscalizacaoTipoFiscalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\TipoFiscalizacao
+            inversedBy: fkFiscalizacaoProcessoFiscais
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFiscalizacaoNaturezaFiscalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NaturezaFiscalizacao
+            inversedBy: fkFiscalizacaoProcessoFiscais
+            joinColumns:
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+    oneToMany:
+        fkFiscalizacaoAutoFiscalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutoFiscalizacao
+            mappedBy: fkFiscalizacaoProcessoFiscal
+        fkFiscalizacaoNotificacaoTermos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoTermo
+            mappedBy: fkFiscalizacaoProcessoFiscal
+        fkFiscalizacaoProcessoFiscalCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalCredito
+            mappedBy: fkFiscalizacaoProcessoFiscal
+        fkFiscalizacaoProcessoFiscalGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalGrupo
+            mappedBy: fkFiscalizacaoProcessoFiscal
+        fkFiscalizacaoFiscalProcessoFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalProcessoFiscal
+            mappedBy: fkFiscalizacaoProcessoFiscal
+    oneToOne:
+        fkFiscalizacaoInicioFiscalizacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InicioFiscalizacao
+            mappedBy: fkFiscalizacaoProcessoFiscal
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkFiscalizacaoProcessoFiscalCancelado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalCancelado
+            mappedBy: fkFiscalizacaoProcessoFiscal
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkFiscalizacaoProcessoFiscalEmpresa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalEmpresa
+            mappedBy: fkFiscalizacaoProcessoFiscal
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkFiscalizacaoTerminoFiscalizacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\TerminoFiscalizacao
+            mappedBy: fkFiscalizacaoProcessoFiscal
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkFiscalizacaoProcessoFiscalObras:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalObras
+            mappedBy: fkFiscalizacaoProcessoFiscal
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkFiscalizacaoNotificacaoFiscalizacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoFiscalizacao
+            mappedBy: fkFiscalizacaoProcessoFiscal
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo

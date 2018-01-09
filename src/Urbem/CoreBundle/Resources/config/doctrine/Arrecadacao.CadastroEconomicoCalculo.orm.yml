@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoCalculo:
+    type: entity
+    table: arrecadacao.cadastro_economico_calculo
+    id:
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        inscricaoEconomica:
+            type: integer
+            nullable: false
+            column: inscricao_economica
+    manyToOne:
+        fkArrecadacaoCadastroEconomicoFaturamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoFaturamento
+            inversedBy: fkArrecadacaoCadastroEconomicoCalculos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+    oneToOne:
+        fkArrecadacaoCalculo:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Calculo
+            inversedBy: fkArrecadacaoCadastroEconomicoCalculo
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo

@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Monetario\Carteira:
+    type: entity
+    table: monetario.carteira
+    uniqueConstraints:
+        uk_carteira_1:
+            columns:
+                - cod_convenio
+                - num_carteira
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codCarteira:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_carteira
+    fields:
+        numCarteira:
+            type: integer
+            nullable: false
+            column: num_carteira
+        variacao:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkMonetarioConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Convenio
+            inversedBy: fkMonetarioCarteiras
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+    oneToMany:
+        fkArrecadacaoCarnes:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Carne
+            mappedBy: fkMonetarioCarteira
+        fkMonetarioCreditoCarteiras:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoCarteira
+            mappedBy: fkMonetarioCarteira

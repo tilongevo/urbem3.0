@@ -1,0 +1,127 @@
+Urbem\CoreBundle\Entity\Monetario\ContaCorrente:
+    type: entity
+    table: monetario.conta_corrente
+    uniqueConstraints:
+        uk_conta_corrente_1:
+            columns:
+                - cod_banco
+                - cod_agencia
+                - num_conta_corrente
+    id:
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+    fields:
+        numContaCorrente:
+            type: string
+            nullable: false
+            length: 20
+            column: num_conta_corrente
+        dataCriacao:
+            type: date
+            nullable: false
+            column: data_criacao
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkMonetarioContaCorrentes
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+        fkMonetarioTipoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\TipoConta
+            inversedBy: fkMonetarioContaCorrentes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkContabilidadePlanoBancos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoBanco
+            mappedBy: fkMonetarioContaCorrente
+        fkImaConfiguracaoBanrisulContas:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanrisulConta
+            mappedBy: fkMonetarioContaCorrente
+        fkImaConfiguracaoConvenioCaixaEconomicaFederais:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioCaixaEconomicaFederal
+            mappedBy: fkMonetarioContaCorrente
+        fkImaConfiguracaoConvenioBradescos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBradesco
+            mappedBy: fkMonetarioContaCorrente
+        fkImaConfiguracaoPaseps:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoPasep
+            mappedBy: fkMonetarioContaCorrente
+        fkMonetarioContaCorrenteConvenios:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrenteConvenio
+            mappedBy: fkMonetarioContaCorrente
+        fkTcepbRelacaoContaCorrenteFontePagadoras:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\RelacaoContaCorrenteFontePagadora
+            mappedBy: fkMonetarioContaCorrente
+        fkTcmbaSubvencaoEmpenhos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\SubvencaoEmpenho
+            mappedBy: fkMonetarioContaCorrente
+        fkTesourariaCheques:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Cheque
+            mappedBy: fkMonetarioContaCorrente
+        fkImaConfiguracaoBescContas:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBescConta
+            mappedBy: fkMonetarioContaCorrente
+        fkImaConfiguracaoBbContas:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBbConta
+            mappedBy: fkMonetarioContaCorrente
+        fkImaConfiguracaoHsbcContas:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoHsbcConta
+            mappedBy: fkMonetarioContaCorrente

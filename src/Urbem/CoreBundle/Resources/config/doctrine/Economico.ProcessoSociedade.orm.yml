@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Economico\ProcessoSociedade:
+    type: entity
+    table: economico.processo_sociedade
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        timestampProc:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_proc
+    fields: {  }
+    manyToOne:
+        fkEconomicoSociedade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Sociedade
+            inversedBy: fkEconomicoProcessoSociedades
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkEconomicoProcessoSociedades
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

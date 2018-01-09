@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Tcers\ReceitaCaracPeculiarReceita:
+    type: entity
+    table: tcers.receita_carac_peculiar_receita
+    repositoryClass: Urbem\CoreBundle\Repository\Tcers\ReceitaCaracPeculiarReceitaRepository
+    id:
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codCaracteristica:
+            type: integer
+            nullable: false
+            column: cod_caracteristica
+    manyToOne:
+        fkTcersCaracPeculiarReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\CaracPeculiarReceita
+            inversedBy: fkTcersReceitaCaracPeculiarReceitas
+            joinColumns:
+                cod_caracteristica:
+                    referencedColumnName: cod_caracteristica
+    oneToOne:
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkTcersReceitaCaracPeculiarReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita

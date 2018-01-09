@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Orcamento\ProgramaPpaPrograma:
+    type: entity
+    table: orcamento.programa_ppa_programa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+        codProgramaPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa_ppa
+    fields: {  }
+    manyToOne:
+        fkOrcamentoPrograma:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Programa
+            inversedBy: fkOrcamentoProgramaPpaProgramas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_programa:
+                    referencedColumnName: cod_programa
+        fkPpaPrograma:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Programa
+            inversedBy: fkOrcamentoProgramaPpaProgramas
+            joinColumns:
+                cod_programa_ppa:
+                    referencedColumnName: cod_programa

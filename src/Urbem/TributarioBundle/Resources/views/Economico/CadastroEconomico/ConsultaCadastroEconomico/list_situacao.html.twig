@@ -1,0 +1,12 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field%}
+	{% set situacao = 'label.economicoConsultaCadastroEconomico.ativo'|trans %}
+
+	{% for item in object.getFkEconomicoBaixaCadastroEconomicos() %}
+		{% if item.getDtTermino is empty %}
+	    	{% set situacao = 'label.economicoConsultaCadastroEconomico.baixado'|trans %}
+		{% endif %}
+	{% endfor %}
+
+	{{ situacao }}
+{% endblock %}

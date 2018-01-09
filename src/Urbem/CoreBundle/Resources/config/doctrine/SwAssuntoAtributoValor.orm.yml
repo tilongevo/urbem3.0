@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\SwAssuntoAtributoValor:
+    type: entity
+    table: sw_assunto_atributo_valor
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codAssunto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assunto
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkSwAssuntoAtributo:
+            targetEntity: Urbem\CoreBundle\Entity\SwAssuntoAtributo
+            inversedBy: fkSwAssuntoAtributoValores
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_assunto:
+                    referencedColumnName: cod_assunto
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkSwAssuntoAtributoValores
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio:
+                    referencedColumnName: ano_exercicio

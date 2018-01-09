@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Arrecadacao\AtributoCadEconFaturamentoValor:
+    type: entity
+    table: arrecadacao.atributo_cad_econ_faturamento_valor
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkArrecadacaoAtributoCadEconFaturamentoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkArrecadacaoCadastroEconomicoFaturamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoFaturamento
+            inversedBy: fkArrecadacaoAtributoCadEconFaturamentoValores
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp

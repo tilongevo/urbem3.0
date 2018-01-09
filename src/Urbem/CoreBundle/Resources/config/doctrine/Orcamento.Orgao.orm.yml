@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Orcamento\Orgao:
+    type: entity
+    table: orcamento.orgao
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\OrgaoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        nomOrgao:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_orgao
+        usuarioResponsavel:
+            type: integer
+            nullable: false
+            column: usuario_responsavel
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkOrcamentoOrgoes
+            joinColumns:
+                usuario_responsavel:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkOrcamentoUnidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            mappedBy: fkOrcamentoOrgao
+        fkPessoalDeParaLotacaoOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DeParaLotacaoOrgao
+            mappedBy: fkOrcamentoOrgao
+        fkTcemgContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            mappedBy: fkOrcamentoOrgao
+        fkTcmgoProjecaoAtuariais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ProjecaoAtuarial
+            mappedBy: fkOrcamentoOrgao
+    oneToOne:
+        fkTcmgoOrgao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Orgao
+            mappedBy: fkOrcamentoOrgao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_orgao:
+                    referencedColumnName: num_orgao

@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Arrecadacao\TomadorEmpresa:
+    type: entity
+    table: arrecadacao.tomador_empresa
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        inscricaoEconomica:
+            type: integer
+            nullable: false
+            column: inscricao_economica
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkArrecadacaoTomadorEmpresas
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+    oneToOne:
+        fkArrecadacaoNotaAvulsa:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\NotaAvulsa
+            inversedBy: fkArrecadacaoTomadorEmpresa
+            joinColumns:
+                cod_nota:
+                    referencedColumnName: cod_nota

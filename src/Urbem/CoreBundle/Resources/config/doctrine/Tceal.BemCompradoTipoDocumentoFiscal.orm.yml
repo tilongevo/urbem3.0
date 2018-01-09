@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Tceal\BemCompradoTipoDocumentoFiscal:
+    type: entity
+    table: tceal.bem_comprado_tipo_documento_fiscal
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+    fields:
+        codTipoDocumentoFiscal:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento_fiscal
+    manyToOne:
+        fkTcealTipoDocumentoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\TipoDocumentoFiscal
+            inversedBy: fkTcealBemCompradoTipoDocumentoFiscais
+            joinColumns:
+                cod_tipo_documento_fiscal:
+                    referencedColumnName: cod_tipo_documento_fiscal
+    oneToOne:
+        fkPatrimonioBemComprado:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemComprado
+            inversedBy: fkTcealBemCompradoTipoDocumentoFiscal
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem

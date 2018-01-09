@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Compras\RegimeExecucaoObras:
+    type: entity
+    table: compras.regime_execucao_obras
+    id:
+        codRegime:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_regime
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkLicitacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkComprasRegimeExecucaoObras

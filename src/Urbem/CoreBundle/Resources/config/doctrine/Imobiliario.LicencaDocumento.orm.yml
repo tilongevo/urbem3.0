@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Imobiliario\LicencaDocumento:
+    type: entity
+    table: imobiliario.licenca_documento
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        numDocumento:
+            type: integer
+            nullable: false
+            column: num_documento
+    manyToOne:
+        fkImobiliarioLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Licenca
+            inversedBy: fkImobiliarioLicencaDocumentos
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkImobiliarioLicencaDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToOne:
+        fkImobiliarioEmissaoDocumento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\EmissaoDocumento
+            mappedBy: fkImobiliarioLicencaDocumento
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Divida\FormaInscricao:
+    type: entity
+    table: divida.forma_inscricao
+    id:
+        codFormaInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_forma_inscricao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkDividaModalidadeVigencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            mappedBy: fkDividaFormaInscricao

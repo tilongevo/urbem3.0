@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# MOCK DE INSTRUCOES USADAS NO EC2 E INTEGRACAO COM NOSSA API DE DADOS
+# Opcoes disponiveis
+optionsAvailable=(--help --ami-id --instance-id --instance-type --availability-zone --public-ipv4 --security-groups)
+
+function listHelper()
+{
+	echo "-a/--ami-id               The AMI ID used to launch this instance"
+	echo "-i/--instance-id          The ID of this instance"
+	echo "-t/--instance-type        The type of instance to launch. For more information, see Instance Types."
+	echo "-z/--availability-zone    The availability zone in which the instance launched. Same as placement"
+	echo "-v/--public-ipv4          NATted public IP Address"
+	echo "-s/--security-groups      Names of the security groups the instance is launched in. Only available if supplied at instance launch time"
+}
+
+function getInstanceId()
+{
+	echo "mock-ec2-instance-id@12345678910"
+	exit 1
+}
+
+function getInstanceType()
+{
+	echo "mock-ec2-instance-type@12345678910"
+}
+
+function getAvailabilityZone()
+{
+	echo "mock-ec2-available-zone@12345678910"
+}
+
+function getPublicIpv4()
+{
+	echo "10.0.0.1"
+}
+
+function getSecurityGroup()
+{
+	echo "mock-ec2-security-group@12345678910"
+}
+
+invalidParameters() {
+	if [ "$exists" == "0" ]; then
+		echo "Parameter invalid"
+		exit 1
+	fi
+}
+
+array_contains () {
+    local seeking=$1; shift
+    local in=1
+    for element; do
+        if [[ $element == $seeking ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
+}
+
+# Checa parametros
+if [ "$#" -ne 1 ]; then
+    echo "Argurmentos invalidos, utilize '--help' para saber o que deve usar"
+    exit 1
+fi
+
+exists=0
+for i in $*; do 
+	if array_contains $i "${optionsAvailable[@]}"; then
+		case $i in
+			'--help') exists=1; listHelper ;;
+			'--instance-id') exists=1; getInstanceId ;;
+			'--instance-type') exists=1; getInstanceType ;;
+			'--availability-zone') exists=1; getAvailabilityZone ;;
+			'--public-ipv4') exists=1; getPublicIpv4 ;;
+			'--security-groups') exists=1; getSecurityGroup ;;
+		esac
+   	fi
+done
+
+# Verifica se passou parametros validos
+invalidParameters $exists

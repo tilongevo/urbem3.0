@@ -1,0 +1,21 @@
+{% set fieldInForm = 0 %}
+<div class="sonata-ba-collapsed-fields">
+    {% for f in form %}
+        {% if 'token' not in form_label(f) %}
+            <div class="form_row col s3 campo-sonata">
+                {{ form_label(f) }}
+                <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                    {{ form_widget(f) }}
+                </div>
+            </div>
+
+            {% set fieldInForm = fieldInForm + 1 %}
+        {% endif %}
+    {% endfor %}
+
+    {% if fieldInForm == 0 %}
+        <div class="form_row col s12 campo-sonata">
+            {{ 'swProcesso.nenhumAtributo'|trans({}, 'flashes') }}
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Tceam\ConfiguracaoArquivoLicitacao:
+    type: entity
+    table: tceam.configuracao_arquivo_licitacao
+    id:
+        codMapa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mapa
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        diarioOficial:
+            type: integer
+            nullable: true
+            column: diario_oficial
+        arquivoTexto:
+            type: string
+            nullable: true
+            length: 50
+            column: arquivo_texto
+        dtPublicacaoHomologacao:
+            type: date
+            nullable: true
+            column: dt_publicacao_homologacao
+    oneToOne:
+        fkComprasMapa:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Mapa
+            inversedBy: fkTceamConfiguracaoArquivoLicitacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa

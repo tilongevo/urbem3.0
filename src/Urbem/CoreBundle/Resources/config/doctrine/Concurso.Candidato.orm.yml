@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Concurso\Candidato:
+    type: entity
+    table: concurso.candidato
+    id:
+        codCandidato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_candidato
+    fields:
+        classificacao:
+            type: integer
+            nullable: true
+        numcgm:
+            type: integer
+            nullable: false
+        notaProva:
+            type: decimal
+            nullable: true
+            precision: 10
+            scale: 2
+            column: nota_prova
+        notaTitulacao:
+            type: decimal
+            nullable: true
+            precision: 10
+            scale: 2
+            column: nota_titulacao
+        reclassificado:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+    manyToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkConcursoCandidatos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkConcursoAtributoCandidatoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\AtributoCandidatoValor
+            mappedBy: fkConcursoCandidato
+        fkConcursoConcursoCandidatos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\ConcursoCandidato
+            mappedBy: fkConcursoCandidato

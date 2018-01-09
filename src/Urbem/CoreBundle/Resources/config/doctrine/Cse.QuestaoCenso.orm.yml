@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Cse\QuestaoCenso:
+    type: entity
+    table: cse.questao_censo
+    id:
+        codQuestao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_questao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomQuestao:
+            type: string
+            nullable: false
+            length: 160
+            column: nom_questao
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        valorPadrao:
+            type: text
+            nullable: false
+            column: valor_padrao
+        ordem:
+            type: integer
+            nullable: false
+    oneToMany:
+        fkCseRespostaCensos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\RespostaCenso
+            mappedBy: fkCseQuestaoCenso
+        fkCseRespostaQuestoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\RespostaQuestao
+            mappedBy: fkCseQuestaoCenso

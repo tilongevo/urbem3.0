@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporteDiario:
+    type: entity
+    table: beneficio.concessao_vale_transporte_diario
+    id:
+        codConcessao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_concessao
+        dtDia:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_dia
+        codMes:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mes
+        codDia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dia
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        obrigatorio:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        quantidade:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkBeneficioConcessaoValeTransporteSemanal:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporteSemanal
+            inversedBy: fkBeneficioConcessaoValeTransporteDiarios
+            joinColumns:
+                cod_dia:
+                    referencedColumnName: cod_dia
+                cod_mes:
+                    referencedColumnName: cod_mes
+                cod_concessao:
+                    referencedColumnName: cod_concessao
+                exercicio:
+                    referencedColumnName: exercicio

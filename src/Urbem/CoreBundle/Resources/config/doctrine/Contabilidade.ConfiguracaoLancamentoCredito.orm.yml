@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoCredito:
+    type: entity
+    table: contabilidade.configuracao_lancamento_credito
+    id:
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codContaDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_despesa
+        estorno:
+            type: boolean
+            generator:
+                strategy: NONE
+    fields:
+        tipo:
+            type: string
+            nullable: false
+            length: 20
+        rpps:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkContabilidadeConfiguracaoLancamentoCreditos
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkContabilidadeConfiguracaoLancamentoCreditos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta_despesa:
+                    referencedColumnName: cod_conta

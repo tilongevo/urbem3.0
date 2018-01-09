@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Contabilidade\LancamentoEmpenhoAnulado:
+    type: entity
+    table: contabilidade.lancamento_empenho_anulado
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\LancamentoEmpenhoAnuladoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicioAnulacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_anulacao
+        codEmpenhoAnulacao:
+            type: integer
+            generator:
+              strategy: NONE
+              column: cod_empenho_anulacao
+        timestampAnulacao:
+            type: datetimemicrosecondpk
+            generator:
+              strategy: NONE
+              column: timestamp_anulacao
+    fields: { }
+    oneToOne:
+        fkContabilidadeLancamentoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoEmpenho
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                sequencia:
+                    referencedColumnName: sequencia
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoEmpenhoAnulado:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoAnulado
+            joinColumns:
+                exercicio_anulacao:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_empenho_anulacao:
+                    referencedColumnName: cod_empenho
+                timestamp_anulacao:
+                    referencedColumnName: timestamp

@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Calendario\Feriado:
+    type: entity
+    table: calendario.feriado
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Calendario\FeriadoRepository
+    id:
+        codFeriado:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: calendario.feriado_cod_feriado_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_feriado
+    fields:
+        dtFeriado:
+            type: date
+            nullable: false
+            column: dt_feriado
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        tipoferiado:
+            type: string
+            nullable: false
+            length: 1
+        abrangencia:
+            type: string
+            nullable: false
+            length: 1
+    oneToOne:
+        fkCalendarioDiaCompensado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\DiaCompensado
+            mappedBy: fkCalendarioFeriado
+            joinColumns:
+                cod_feriado:
+                    referencedColumnName: cod_feriado
+        fkCalendarioPontoFacultativo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\PontoFacultativo
+            mappedBy: fkCalendarioFeriado
+            joinColumns:
+                cod_feriado:
+                    referencedColumnName: cod_feriado
+        fkCalendarioFeriadoVariavel:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\FeriadoVariavel
+            mappedBy: fkCalendarioFeriado
+            joinColumns:
+                cod_feriado:
+                    referencedColumnName: cod_feriado

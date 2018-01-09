@@ -1,0 +1,88 @@
+Urbem\CoreBundle\Entity\Compras\NotaFiscalFornecedor:
+    type: entity
+    table: compras.nota_fiscal_fornecedor
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\NotaFiscalFornecedorRepository
+    id:
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        tipoNatureza:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_natureza
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+        numLancamento:
+            type: integer
+            nullable: false
+            column: num_lancamento
+        exercicioLancamento:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_lancamento
+        numSerie:
+            type: string
+            nullable: false
+            length: 9
+            column: num_serie
+        numNota:
+            type: integer
+            nullable: false
+            column: num_nota
+        dtNota:
+            type: date
+            nullable: true
+            column: dt_nota
+        observacao:
+            type: string
+            nullable: true
+            length: 200
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                default: C
+    manyToOne:
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkComprasNotaFiscalFornecedores
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkAlmoxarifadoNaturezaLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\NaturezaLancamento
+            inversedBy: fkComprasNotaFiscalFornecedores
+            joinColumns:
+                exercicio_lancamento:
+                    referencedColumnName: exercicio_lancamento
+                num_lancamento:
+                    referencedColumnName: num_lancamento
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                tipo_natureza:
+                    referencedColumnName: tipo_natureza
+    oneToOne:
+        fkComprasNotaFiscalFornecedorOrdem:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\NotaFiscalFornecedorOrdem
+            mappedBy: fkComprasNotaFiscalFornecedor
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                cod_nota:
+                    referencedColumnName: cod_nota

@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Divida\DividaRemissao:
+    type: entity
+    table: divida.divida_remissao
+    id:
+        codInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inscricao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        numcgm:
+            type: integer
+            nullable: false
+        dtRemissao:
+            type: date
+            nullable: false
+            column: dt_remissao
+        observacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkDividaDividaRemissoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkDividaDividaRemissoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkDividaRemissaoProcesso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\RemissaoProcesso
+            mappedBy: fkDividaDividaRemissao
+            joinColumns:
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkDividaDividaAtiva:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAtiva
+            inversedBy: fkDividaDividaRemissao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao

@@ -1,0 +1,74 @@
+{% macro render_groups(admin, form, groups, has_tab) %}
+    <div class="row">
+        {% for code in groups if admin.formgroups[code] is defined %}
+            {% set form_group = admin.formgroups[code] %}
+            <div class="{{ form_group.class|default('') }}">
+                <div class="{{ form_group.box_class }}">
+
+                    {% if form_group.name == "label.funcao.dadosFuncao" %}
+                        <p class="tab-title-form">{{ admin.trans(form_group.name, {}, form_group.translation_domain) }}</p>
+                    {% endif %}
+                    {% if form_group.name == "label.funcao.corpoFuncao" %}
+                        <p class="tab-title-form">{{ admin.trans(form_group.name, {}, form_group.translation_domain) }}</p>
+                    {% endif %}
+                    {% if form_group.name == "label.funcao.dadosVariavel" %}
+                        <p class="tab-title-form">{{ admin.trans(form_group.name, {}, form_group.translation_domain) }}</p>
+                    {% endif %}
+                    {% if form_group.name == "label.funcao.atributos" %}
+                        <p class="tab-title-form">{{ admin.trans(form_group.name, {}, form_group.translation_domain) }}</p>
+                    {% endif %}
+
+                    {% if  admin.baseRouteName == "urbem_financeiro_ppa_acao_recurso" and _key > 1 %}
+                        {% set title = admin.trans(form_group.name, {}, form_group.translation_domain) %}
+                        <div class="box-header col s12">
+                            <p></p>
+                        </div>
+                    {% elseif admin.baseRouteName == "urbem_financeiro_tesouraria_pagamento_bordero" and _key > 3 %}
+                        {% set title = admin.trans(form_group.name, {}, form_group.translation_domain) %}
+                        <div class="box-header col s12">
+                            <p></p>
+                        </div>
+                    {% else %}
+                        {% set title = admin.trans(form_group.name, {}, form_group.translation_domain) %}
+                        <div class="box-header col s12">
+                            <h3 class="col s12 box-title left-align show">
+                                {{ admin.trans(form_group.name, {}, form_group.translation_domain) }}
+                            </h3>
+                            {% if title is not empty %}
+                                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                <div class="box-body">
+                    <div class="sonata-ba-collapsed-fields">
+                        {% if form_group.description %}
+                            <p>{{ form_group.description|raw }}</p>
+                        {% endif %}
+                        {% for field_name in form_group.fields if admin.formfielddescriptions[field_name] is defined %}
+
+                            {% if form[field_name] is defined and admin.formfielddescriptions[field_name].type == "customField"%}
+                                {% set classCustom = "" %}
+                                {% if form[field_name].vars.attr is defined and form[field_name].vars.attr.class %}
+                                    {% set classCustom = form[field_name].vars.attr.class %}
+                                {% endif %}
+                                <div class="{{ classCustom }}">
+                                    {% include form[field_name].vars.template with {'form': form, 'field': form[field_name].vars, 'fieldParent':form[field_name].parent } %}
+                                </div>
+                            {% elseif form[field_name] is defined %}
+                                {% if admin.formfielddescriptions[field_name].type == "sonata_type_collection" %}
+                                    {{ form_row(form[field_name], { 'label': false }) }}
+                                {% else %}
+                                    {{ form_row(form[field_name]) }}
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            <em>{{ 'message_form_group_empty'|trans({}, 'SonataCoreBundle') }}</em>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endmacro %}

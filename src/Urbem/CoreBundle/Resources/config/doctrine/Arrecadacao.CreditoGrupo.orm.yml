@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Arrecadacao\CreditoGrupo:
+    type: entity
+    table: arrecadacao.credito_grupo
+    id:
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        desconto:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+        ordem:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkArrecadacaoCreditoGrupos
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+        fkArrecadacaoGrupoCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoCredito
+            inversedBy: fkArrecadacaoCreditoGrupos
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

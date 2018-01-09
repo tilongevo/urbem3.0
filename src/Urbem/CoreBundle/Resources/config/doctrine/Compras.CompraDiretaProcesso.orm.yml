@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Compras\CompraDiretaProcesso:
+    type: entity
+    table: compras.compra_direta_processo
+    id:
+        codCompraDireta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compra_direta
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicioEntidade:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_entidade
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields:
+        exercicioProcesso:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_processo
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkComprasCompraDiretaProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio_processo:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkComprasCompraDireta:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDireta
+            inversedBy: fkComprasCompraDiretaProcesso
+            joinColumns:
+                cod_compra_direta:
+                    referencedColumnName: cod_compra_direta
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_entidade:
+                    referencedColumnName: exercicio_entidade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade

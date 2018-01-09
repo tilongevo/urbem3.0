@@ -1,0 +1,49 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+{% set codSefip = '' %}
+{% set codSefipRetorno = null %}
+{% set movSefipSaidaMovSefipRetorno = null %}
+
+{% if object.fkPessoalMovSefipRetorno|length > 0 %}
+    {% set codSefipRetorno = object.fkPessoalMovSefipRetorno.codSefipRetorno %}
+{% endif %}
+
+{% if object.fkPessoalMovSefipSaida != null %}
+    {% set movSefipSaidaMovSefipRetorno = object.fkPessoalMovSefipSaida.fkPessoalMovSefipSaidaMovSefipRetorno %}
+{% endif %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    {#<i class="fa fa-retweet left grey-text medium" aria-hidden="true"></i>#}
+                    <span style="padding-top: 10px">{{ 'label.movimentacaoSefip'|trans }}:</span><span class="grey-text bold" style="padding-top: 10px; font-weight: bold">{#{{ object.numConvenio ~ "/" ~ object.exercicio }}#}</span>
+                </h2>
+                <a href="{{ path('urbem_recursos_humanos_pessoal_assentamento_sefip_edit', { 'id': object.codSefip }) }}" class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.codigoSefip'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.numSefip }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.causaRescisao.descricao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.descricao }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.repetirMensalmente'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.repetirMensal ? 'Sim' : 'Nao' }}</h6>
+                </div>
+            </div>
+        </div>
+        {% if codSefipRetorno == null %}
+            {% if movSefipSaidaMovSefipRetorno == null   %}
+                {% include 'RecursosHumanosBundle:Pessoal/Assentamento/Sefip/CRUD:assentamentoSefip.html.twig' %}
+            {% endif %}
+        {% endif %}
+        </table>
+
+    </div>
+
+{% endblock show %}

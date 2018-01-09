@@ -1,0 +1,77 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ServicoComRetencao:
+    type: entity
+    table: fiscalizacao.servico_com_retencao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+        codMunicipio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_municipio
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        valorRetido:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_retido
+    manyToOne:
+        fkFiscalizacaoFaturamentoServico:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FaturamentoServico
+            inversedBy: fkFiscalizacaoServicoComRetencoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia
+                cod_servico:
+                    referencedColumnName: cod_servico
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                ocorrencia:
+                    referencedColumnName: ocorrencia
+        fkSwMunicipio:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkFiscalizacaoServicoComRetencoes
+            joinColumns:
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_uf:
+                    referencedColumnName: cod_uf
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFiscalizacaoServicoComRetencoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

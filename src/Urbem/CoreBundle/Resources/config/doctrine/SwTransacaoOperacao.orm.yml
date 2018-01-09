@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\SwTransacaoOperacao:
+    type: entity
+    table: sw_transacao_operacao
+    id:
+        codOperacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_operacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTransacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transacao
+    fields: {  }
+    manyToOne:
+        fkSwOperacaoAutomatica:
+            targetEntity: Urbem\CoreBundle\Entity\SwOperacaoAutomatica
+            inversedBy: fkSwTransacaoOperacoes
+            joinColumns:
+                cod_operacao:
+                    referencedColumnName: cod_operacao
+        fkSwTransacao:
+            targetEntity: Urbem\CoreBundle\Entity\SwTransacao
+            inversedBy: fkSwTransacaoOperacoes
+            joinColumns:
+                cod_transacao:
+                    referencedColumnName: cod_transacao
+                exercicio:
+                    referencedColumnName: exercicio

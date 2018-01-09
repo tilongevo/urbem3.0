@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Imobiliario\TipoParcelamento:
+    type: entity
+    table: imobiliario.tipo_parcelamento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_tipo
+    oneToMany:
+        fkImobiliarioParcelamentoSolos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ParcelamentoSolo
+            mappedBy: fkImobiliarioTipoParcelamento

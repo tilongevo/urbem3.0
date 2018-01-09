@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteArrecadacaoEstornado:
+    type: entity
+    table: tesouraria.boletim_lote_arrecadacao_estornado
+    id:
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codBoletim:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_boletim
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        timestampAnulacao:
+            type: datetime
+            nullable: false
+            column: timestamp_anulacao
+    oneToOne:
+        fkTesourariaBoletimLoteArrecadacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteArrecadacao
+            inversedBy: fkTesourariaBoletimLoteArrecadacaoEstornado
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_lote:
+                    referencedColumnName: cod_lote
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao

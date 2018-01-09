@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Licitacao\PenalidadesCertificacao:
+    type: entity
+    table: licitacao.penalidades_certificacao
+    id:
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+        numCertificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_certificacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        valor:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+        dtPublicacao:
+            type: date
+            nullable: false
+            column: dt_publicacao
+        dtValidade:
+            type: date
+            nullable: false
+            column: dt_validade
+        observacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkLicitacaoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Penalidade
+            inversedBy: fkLicitacaoPenalidadesCertificacoes
+            joinColumns:
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+        fkLicitacaoParticipanteCertificacaoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacaoPenalidade
+            inversedBy: fkLicitacaoPenalidadesCertificacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_certificacao:
+                    referencedColumnName: num_certificacao
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkLicitacaoPenalidadesCertificacoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

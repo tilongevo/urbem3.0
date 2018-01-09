@@ -1,0 +1,574 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {# BASE #}
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h5 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-car left grey-text"></i>{{ veiculo.placa }} - {{ veiculo.fkFrotaMarca.nomMarca }} - {{ veiculo.fkFrotaModelo.nomModelo }}
+                </h5>
+                {% if not veiculo.fkFrotaVeiculoBaixado %}
+                    <a href="{{ path('urbem_patrimonial_frota_veiculo_edit', { 'id': veiculo.codVeiculo })}}" class="serv-btn right">
+                        <i class="material-icons right">edit</i>
+                    </a>
+                {% endif %}
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculo.codTipoVeiculo'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ veiculo.fkFrotaTipoVeiculo.nomTipo }}&nbsp;</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculo.prefixo'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ veiculo.prefixo }}&nbsp;</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculo.anoFabricacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ veiculo.anoFabricacao }}&nbsp;</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculo.anoModelo'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ veiculo.anoModelo }}&nbsp;</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculo.capacidadeTanque'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ veiculo.capacidadeTanque }}&nbsp;</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculo.dtAquisicao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ veiculo.dtAquisicao.format('d/m/Y') }}&nbsp;</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculo.codCategoria'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ veiculo.fkSwCategoriaHabilitacao.nomCategoria }}&nbsp;</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculo.codCombustivel'|trans }}</h6>
+                    {% for combustivel in veiculoCombustivel %}
+                        <h6 class="col s6 grey-text text-darken-1">{{ combustivel.fkFrotaCombustivel.nomCombustivel }}</h6>
+                    {% endfor %}&nbsp;
+                </div>
+
+                {# Tipo Veiculo #}
+
+                {% if tipoVeiculo == 'proprio' %}
+                    <div class="col s3 little-box">
+                        <h6 class="blue-text text-darken-4 profile-titles left">
+                            Veiculo Próprio - {{ 'label.veiculoProprio.codBem'|trans }}
+                        </h6>
+                        {% if not veiculo.fkFrotaVeiculoBaixado %}
+                            <a href="{{ path('urbem_patrimonial_frota_veiculo_proprio_edit', { 'id': proprio.codVeiculo ~ '~' ~ proprio.timestamp })}}" class="serv-btn right">
+                                <i class="material-icons right">edit</i>
+                            </a>
+                        {% endif %}
+                        <h6 class="col s12 grey-text text-darken-1">{{ proprio.fkPatrimonioBem }}&nbsp;</h6>
+                    </div>
+
+                    <div class="col s12">
+                        {% if not veiculo.fkFrotaVeiculoBaixado %}
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_excluir_baixa_veiculo_create',{'id': veiculo.codVeiculo })}}">
+                                    <i class="mdi mdi-download left"></i>Baixar Veículo
+                                </a>
+                            </div>
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                    <i class="fa fa-ban left"></i>Excluir Baixa
+                                </a>
+                            </div>
+
+                            {% if utilizacao is empty or utilizacao.fkFrotaUtilizacaoRetorno %}
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retirar_veiculo_create',{'id': veiculo.codVeiculo })}}">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            {% elseif not utilizacao.fkFrotaUtilizacaoRetorno %}
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retirar_veiculo_create',{'id': veiculo.codVeiculo })}}">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retirar_veiculo_delete',{'id': utilizacao.codVeiculo ~ '~' ~ utilizacao.dtSaida ~ '~' ~ utilizacao.hrSaida })}}">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retornar_veiculo_retornar',{'id': utilizacao.codVeiculo ~ '~' ~ utilizacao.dtSaida ~ '~' ~ utilizacao.hrSaida })}}">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="col s12">
+                                <div class="col s3 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="mdi mdi-download left"></i>Baixar Veículo
+                                    </a>
+                                </div>
+
+                                <div class="col s3 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_excluir_baixa_veiculo_delete',{'id': veiculo.codVeiculo })}}">
+                                        <i class="fa fa-ban left"></i>Excluir Baixa
+                                    </a>
+                                </div>
+
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    </div>
+                {% elseif tipoVeiculo == 'terceiros' %}
+                    <div class="col s12 little2-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles left">
+                            Veiculo de Terceiros
+                            {% if not veiculo.fkFrotaVeiculoBaixado %}
+                                <a href="{{ path('urbem_patrimonial_frota_veiculo_terceiro_edit', { 'id': terceiros.codVeiculo ~ '~' ~ terceiros.timestamp })}}" class="right">
+                                    <i class="material-icons right">edit</i>
+                                </a>
+                            {% endif %}
+                        </h6>
+                        <div class="col s4">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculoTerceiro.codProprietario'|trans }}</h6>
+                            <h6 class="col s12 grey-text text-darken-1">{{ terceiros.fkSwCgm.numcgm }} - {{ terceiros.fkSwCgm.nomCgm }}&nbsp;</h6>
+                        </div>
+                        <div class="col s4">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculoTerceiro.codLocal'|trans }}</h6>
+                            <h6 class="col s12 grey-text text-darken-1">{% if terceirosHistorico is not empty %} {{ terceirosHistorico.fkOrganogramaLocal.descricao }} {% endif %}&nbsp;</h6>
+                        </div>
+                        <div class="col s4">
+                            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.veiculoTerceiro.codResponsavel'|trans }}</h6>
+                            <h6 class="col s12 grey-text text-darken-1">{% if terceirosResponsavel is not empty %} {{ terceirosResponsavel|last.fkSwCgm.numcgm }} - {{ terceirosResponsavel|last.fkSwCgm.nomCgm }} {% endif %}&nbsp;</h6>
+                        </div>
+                    </div>
+                    <div class="col s12">
+                        {% if not veiculo.fkFrotaVeiculoBaixado %}
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_excluir_baixa_veiculo_create',{'id': veiculo.codVeiculo })}}">
+                                    <i class="mdi mdi-download left"></i>Baixar Veículo
+                                </a>
+                            </div>
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                    <i class="fa fa-ban left"></i>Excluir Baixa
+                                </a>
+                            </div>
+
+                            {% if utilizacao is empty or utilizacao.fkFrotaUtilizacaoRetorno %}
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retirar_veiculo_create',{'id': veiculo.codVeiculo })}}">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            {% elseif not utilizacao.fkFrotaUtilizacaoRetorno %}
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retirar_veiculo_delete',{'id': utilizacao.codVeiculo ~ '~' ~ utilizacao.dtSaida ~ '~' ~ utilizacao.hrSaida })}}">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retornar_veiculo_retornar',{'id': utilizacao.codVeiculo ~ '~' ~ utilizacao.dtSaida ~ '~' ~ utilizacao.hrSaida })}}">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="col s12">
+                                <div class="col s3 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="mdi mdi-download left"></i>Baixar Veículo
+                                    </a>
+                                </div>
+
+                                <div class="col s3 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_excluir_baixa_veiculo_delete',{'id': veiculo.codVeiculo })}}">
+                                        <i class="fa fa-ban left"></i>Excluir Baixa
+                                    </a>
+                                </div>
+
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                    {% if not veiculo.fkFrotaVeiculoBaixado %}
+                        <div class="col s12">
+                            <div class="col s6 center" style="margin-bottom: 20px">
+                                <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_proprio_create',{'id': veiculo.codVeiculo })}}">
+                                    <i class="mdi mdi-plus-circle left"></i>Adicionar à Veiculo Próprio
+                                </a>
+                            </div>
+                            <div class="col s6 center" style="margin-bottom: 20px">
+                                <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_terceiro_create',{'id': veiculo.codVeiculo })}}">
+                                    <i class="mdi mdi-plus-circle left"></i>Adicionar à Veiculo de Terceiros
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col s12">
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_excluir_baixa_veiculo_create',{'id': veiculo.codVeiculo })}}">
+                                    <i class="mdi mdi-download left"></i>Baixar Veículo
+                                </a>
+                            </div>
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                    <i class="fa fa-ban left"></i>Excluir Baixa
+                                </a>
+                            </div>
+
+                            {% if utilizacao is empty or utilizacao.fkFrotaUtilizacaoRetorno %}
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retirar_veiculo_create',{'id': veiculo.codVeiculo })}}">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            {% elseif not utilizacao.fkFrotaUtilizacaoRetorno %}
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                        <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retirar_veiculo_delete',{'id': utilizacao.codVeiculo ~ '~' ~ utilizacao.dtSaida ~ '~' ~ utilizacao.hrSaida })}}">
+                                        <i class="fa fa-undo left"></i>Excluir Retirada
+                                    </a>
+                                </div>
+                                <div class="col s2 center" style="margin-bottom: 10px">
+                                    <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_veiculo_retornar_veiculo_retornar',{'id': utilizacao.codVeiculo ~ '~' ~ utilizacao.dtSaida ~ '~' ~ utilizacao.hrSaida })}}">
+                                        <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="col s12">
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                    <i class="mdi mdi-download left"></i>Baixar Veículo
+                                </a>
+                            </div>
+
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action" href="{{ path('urbem_patrimonial_frota_excluir_baixa_veiculo_delete',{'id': veiculo.codVeiculo })}}">
+                                    <i class="fa fa-ban left"></i>Excluir Baixa
+                                </a>
+                            </div>
+
+                            <div class="col s2 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                    <i class="fa fa-arrow-circle-right left"></i>Retirar Veículo
+                                </a>
+                            </div>
+                            <div class="col s2 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                    <i class="fa fa-undo left"></i>Excluir Retirada
+                                </a>
+                            </div>
+                            <div class="col s2 center" style="margin-bottom: 10px">
+                                <a class="btn btn-success btn-sm sonata-ba-action grey">
+                                    <i class="fa fa-arrow-circle-left left"></i>Retornar Veículo
+                                </a>
+                            </div>
+                        </div>
+
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {# END Tipo Veiculo #}
+
+    {# VeiculoLocacao #}
+    {% if tipoVeiculo == 'terceiros' %}
+        <div class="row">
+            <div class="col s11 servidor-table">
+                {% if not veiculo.fkFrotaVeiculoBaixado %}
+                    <a class="btn-flat tooltipped"
+                       href="{{ path('urbem_patrimonial_frota_veiculo_locacao_create',{'id': veiculo.codVeiculo })}}"
+                       data-position="left"
+                       data-delay="50"
+                       data-tooltip="Incluir">
+                        <i class="material-icons left">location_on</i>
+                        {{ 'VeiculoLocacao'|trans }}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col s1">
+                {% if not veiculo.fkFrotaVeiculoBaixado %}
+                    <a href="{{ path('urbem_patrimonial_frota_veiculo_locacao_create',{'id': veiculo.codVeiculo })}}"
+                       class="btn-flat tooltipped"
+                       data-position="right"
+                       data-delay="50"
+                       data-tooltip="Incluir"
+                       id="locacao">
+                        <i class="mdi mdi-plus-circle left"></i>
+                    </a>
+                {% endif %}
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.veiculoLocacao.codProcesso'|trans }}</th>
+                    <th class="th-rh">{{ 'label.veiculoLocacao.cgmLocatario'|trans }}</th>
+                    <th class="th-rh">{{ 'label.veiculoLocacao.codEntidade'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for locacao in terceirosLocacao %}
+                    <tr>
+                        <td class="td-rh">{{ locacao.fkSwProcesso.codProcesso }}/{{ locacao.fkSwProcesso.anoExercicio }} - {{ locacao.fkSwProcesso.fkSwAssunto.nomAssunto }}</td>
+                        <td class="td-rh">{{ locacao.fkSwCgmPessoaJuridica.fkSwCgm.numcgm }} - {{ locacao.fkSwCgmPessoaJuridica.fkSwCgm.nomCgm }}</td>
+                        <td class="td-rh">{{ locacao.codEntidade }} - {{ locacao.fkSwCgmPessoaJuridica.fkSwCgm.nomCgm }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                {% if not veiculo.fkFrotaVeiculoBaixado %}
+                                    <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                       data-position="left"
+                                       data-delay="50"
+                                       data-tooltip="Editar"
+                                       href="{{ path('urbem_patrimonial_frota_veiculo_locacao_edit', { 'id': locacao.id }) }}"
+                                       id="editLocacao">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                       data-position="left"
+                                       data-delay="50"
+                                       data-tooltip="Excluir"
+                                       href="{{ path('urbem_patrimonial_frota_veiculo_locacao_delete', { 'id': locacao.id }) }}">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {# END VeiculoLocacao #}
+
+    {# VeiculoCessao #}
+    <div class="row">
+        <div class="col s11 servidor-table">
+            {% if not veiculo.fkFrotaVeiculoBaixado %}
+                <a class="btn-flat tooltipped"
+                   href="{{ path('urbem_patrimonial_frota_veiculo_cessao_create',{'id': veiculo.codVeiculo })}}"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="material-icons left">local_gas_station</i>
+                    {{ 'VeiculoCessao'|trans }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="col s1">
+            {% if not veiculo.fkFrotaVeiculoBaixado %}
+                <a href="{{ path('urbem_patrimonial_frota_veiculo_cessao_create',{'id': veiculo.codVeiculo })}}"
+                   class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+            {% endif %}
+        </div>
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.veiculoCessao.codProcesso'|trans }}</th>
+                <th class="th-rh">{{ 'label.veiculoCessao.cgmCedente'|trans }}</th>
+                <th class="th-rh">{{ 'label.veiculoCessao.dtInicio'|trans }}</th>
+                <th class="th-rh">{{ 'label.veiculoCessao.dtFim'|trans }}</th>
+                <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cessao in cessoes %}
+                <tr>
+                    <td class="td-rh">{{ cessao.fkSwProcesso.codProcesso }}/{{ cessao.fkSwProcesso.anoExercicio }} - {{ cessao.fkSwProcesso.fkSwAssunto.nomAssunto }}</td>
+                    <td class="td-rh">{{ cessao.fkSwCgmPessoaJuridica.fkSwCgm.numcgm }} -
+                        {{ cessao.fkSwCgmPessoaJuridica.fkSwCgm.nomCgm }}</td>
+                    <td class="td-rh">{{ cessao.dtInicio.format('d/m/Y') }}</td>
+                    <td class="td-rh">{{ cessao.dtTermino.format('d/m/Y') }}</td>
+                    <td class="td-rh">
+                        <div class="btn-group">
+                            {% if not veiculo.fkFrotaVeiculoBaixado %}
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Editar"
+                                   href="{{ path('urbem_patrimonial_frota_veiculo_cessao_edit', { 'id':
+                                       cessao.id }) }}"
+                                   id="cessao"
+                                >
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_frota_veiculo_cessao_delete', { 'id':
+                                       cessao.id }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {# END VeiculoCessao #}
+
+    {# VeiculoDocumento #}
+    <div class="row">
+        <div class="col s11 servidor-table">
+            {% if not veiculo.fkFrotaVeiculoBaixado %}
+                <a class="btn-flat tooltipped"
+                   href="{{ path('urbem_patrimonial_frota_veiculo_documento_create',{'id': veiculo.codVeiculo })}}"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-file-document left"></i>
+                    {{ 'VeiculoDocumento'|trans }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="col s1">
+            {% if not veiculo.fkFrotaVeiculoBaixado %}
+                <a href="{{ path('urbem_patrimonial_frota_veiculo_documento_create',{'id': veiculo.codVeiculo })}}"
+                   class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+            {% endif %}
+        </div>
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.veiculoDocumento.codDocumento'|trans }}</th>
+                <th class="th-rh">{{ 'label.veiculoDocumento.exercicio'|trans }}</th>
+                <th class="th-rh">{{ 'label.veiculoDocumento.mes'|trans }}</th>
+                <th class="th-rh">{{ 'label.veiculoDocumento.situacao'|trans }}</th>
+                <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for documento in documentos %}
+                <tr>
+                    <td class="td-rh">{{ documento.fkFrotaDocumento.codDocumento }} - {{ documento.fkFrotaDocumento.nomDocumento }}</td>
+                    <td class="td-rh">{{ documento.exercicio }}</td>
+                    <td class="td-rh">{{ documentosMes[documento.codDocumento].descricao }}</td>
+                    <td class="td-rh">{% if documento.fkFrotaVeiculoDocumentoEmpenho %} Sim {% else %} Não {% endif %}</td>
+                    <td class="td-rh">
+                        <div class="btn-group">
+                            {% if not veiculo.fkFrotaVeiculoBaixado %}
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Editar"
+                                   href="{{ path('urbem_patrimonial_frota_veiculo_documento_edit', { 'id': veiculo.codVeiculo ~ '~' ~ documento.codDocumento ~ '~' ~ documento.exercicio }) }}"
+                                   id="controleDocumento">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_frota_veiculo_documento_delete', { 'id': veiculo.codVeiculo ~ '~' ~ documento.codDocumento ~ '~' ~ documento.exercicio }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {# END VeiculoDocumento #}
+
+    {# END BASE #}
+{% endblock content %}

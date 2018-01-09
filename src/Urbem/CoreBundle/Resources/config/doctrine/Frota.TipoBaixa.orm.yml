@@ -1,0 +1,21 @@
+Urbem\CoreBundle\Entity\Frota\TipoBaixa:
+    type: entity
+    table: frota.tipo_baixa
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: true
+    oneToMany:
+        fkFrotaVeiculoBaixados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoBaixado
+            mappedBy: fkFrotaTipoBaixa

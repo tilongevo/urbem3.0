@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Frota\CombustivelItem:
+    type: entity
+    table: frota.combustivel_item
+    uniqueConstraints:
+        uk_combustivel_item:
+            columns:
+                - cod_item
+    id:
+        codCombustivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_combustivel
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+    fields: {  }
+    manyToOne:
+        fkFrotaCombustivel:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Combustivel
+            inversedBy: fkFrotaCombustivelItens
+            joinColumns:
+                cod_combustivel:
+                    referencedColumnName: cod_combustivel
+    oneToOne:
+        fkFrotaItem:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Item
+            inversedBy: fkFrotaCombustivelItem
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item

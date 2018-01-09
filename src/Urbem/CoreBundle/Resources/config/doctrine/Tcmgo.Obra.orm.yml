@@ -1,0 +1,94 @@
+Urbem\CoreBundle\Entity\Tcmgo\Obra:
+    type: entity
+    table: tcmgo.obra
+    id:
+        codObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_obra
+        anoObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ano_obra
+    fields:
+        especificacao:
+            type: string
+            nullable: false
+            length: 100
+        bairro:
+            type: string
+            nullable: true
+            length: 40
+        grauLatitude:
+            type: integer
+            nullable: true
+            column: grau_latitude
+        minutoLatitude:
+            type: integer
+            nullable: true
+            column: minuto_latitude
+        segundoLatitude:
+            type: decimal
+            nullable: true
+            precision: 4
+            scale: 2
+            column: segundo_latitude
+        grauLongitude:
+            type: integer
+            nullable: true
+            column: grau_longitude
+        minutoLongitude:
+            type: integer
+            nullable: true
+            column: minuto_longitude
+        segundoLongitude:
+            type: decimal
+            nullable: true
+            precision: 4
+            scale: 2
+            column: segundo_longitude
+        codUnidade:
+            type: integer
+            nullable: true
+            column: cod_unidade
+        codGrandeza:
+            type: integer
+            nullable: true
+            column: cod_grandeza
+        quantidade:
+            type: integer
+            nullable: true
+        endereco:
+            type: string
+            nullable: true
+            length: 100
+        fiscal:
+            type: string
+            nullable: true
+            length: 50
+    manyToOne:
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkTcmgoObras
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza
+    oneToMany:
+        fkTcmgoPatrimonioBemObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\PatrimonioBemObra
+            mappedBy: fkTcmgoObra
+        fkTcmgoObraEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ObraEmpenho
+            mappedBy: fkTcmgoObra

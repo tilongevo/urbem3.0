@@ -1,0 +1,87 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Imobiliario/Relatorios/header.html.twig' %}
+
+        {% set cgm = '' %}
+        {% set lancado = 0 %}
+        {% set pago = 0 %}
+        {% set aberto_vencido = 0 %}
+        {% set aberto_a_vencer = 0 %}
+
+        {% for result in results %}
+            {% if (cgm is not same as (result.cgm) and loop.index is not same as (1) )%}
+                </tbody>
+                </table>
+            {% endif %}
+            {% if cgm is not same as (result.cgm) %}
+                <p><strong>CGM: {{ result.cgm }}</strong></p>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td><strong>{{ 'label.periodicoArrecadacaoReport.creditoGrupo'|trans }}</strong></td>
+                        <td><strong>{{ 'label.periodicoArrecadacaoReport.valor'|trans }}</strong></td>
+                        <td><strong>{{ 'label.periodicoArrecadacaoReport.totalRecebido'|trans }}</strong></td>
+                        <td><strong>{{ 'label.periodicoArrecadacaoReport.totalVencido'|trans }}</strong></td>
+                        <td><strong>{{ 'label.periodicoArrecadacaoReport.totalVencer'|trans }}</strong></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+            {% endif %}
+            <tr>
+                <td class="text_align_left ">{{ result.descricao }}</td>
+                <td class="text_align_left ">{{ result.lancado|number_format(2, ',', '.') }}</td>
+                <td class="text_align_left ">{{ result.pago|number_format(2, ',', '.') }}</td>
+                <td class="text_align_left ">{{ result.aberto_vencido|number_format(2, ',', '.') }}</td>
+                <td class="text_align_left ">{{ result.aberto_a_vencer|number_format(2, ',', '.') }}</td>
+            </tr>
+            {% set lancado = lancado + result.lancado %}
+            {% set pago = pago + result.pago %}
+            {% set aberto_vencido = aberto_vencido + result.aberto_vencido %}
+            {% set aberto_a_vencer = aberto_a_vencer + result.aberto_a_vencer %}
+            {% set cgm = result.cgm %}
+        {% endfor %}
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td><strong>{{ 'label.periodicoArrecadacaoReport.totais'|trans }}</strong></td>
+                <td><strong>{{ 'label.periodicoArrecadacaoReport.valor'|trans }}</strong></td>
+                <td><strong>{{ 'label.periodicoArrecadacaoReport.totalRecebido'|trans }}</strong></td>
+                <td><strong>{{ 'label.periodicoArrecadacaoReport.totalVencido'|trans }}</strong></td>
+                <td><strong>{{ 'label.periodicoArrecadacaoReport.totalVencer'|trans }}</strong></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text_align_left "></td>
+                <td class="text_align_left ">{{ lancado|number_format(2, ',', '.') }}</td>
+                <td class="text_align_left ">{{ pago|number_format(2, ',', '.') }}</td>
+                <td class="text_align_left ">{{ aberto_vencido|number_format(2, ',', '.') }}</td>
+                <td class="text_align_left ">{{ aberto_a_vencer|number_format(2, ',', '.') }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p><strong>{{ 'label.corretagemReport.filtrosUtilizados'|trans }}</strong></p>
+        {% if filtros.dtInicio is defined and filtros.dtInicio is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.dtInicio'|trans }} :</strong>  {{ filtros.dtInicio|date("d/m/Y") }} {% endif %}
+        {% if filtros.dtFinal is defined and filtros.dtInicio is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.dtFinal'|trans }} :</strong>  {{ filtros.dtFinal|date("d/m/Y") }} {% endif %}
+        {% if filtros.creditoInicial is defined and filtros.creditoInicial is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.creditoInicial'|trans }} :</strong>  {{ filtros.creditoInicial }} {% endif %}
+        {% if filtros.creditoFinal is defined and filtros.creditoFinal is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.creditoFinal'|trans }} :</strong>  {{ filtros.creditoFinal }} {% endif %}
+        {% if filtros.grupoCreditoInicial is defined and filtros.grupoCreditoInicial is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.grupoCreditoInicial'|trans }} :</strong>  {{ filtros.grupoCreditoInicial }} {% endif %}
+        {% if filtros.grupoCreditoFinal is defined and filtros.grupoCreditoFinal is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.grupoCreditoFinal'|trans }} :</strong>  {{ filtros.grupoCreditoFinal }} {% endif %}
+        {% if filtros.inscricaoImobiliariaInicial is defined and filtros.inscricaoImobiliariaInicial is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.inscricaoImobiliariaInicial'|trans }} :</strong>  {{ filtros.inscricaoImobiliariaInicial }} {% endif %}
+        {% if filtros.inscricaoImobiliariaFinal is defined and filtros.inscricaoImobiliariaFinal is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.inscricaoImobiliariaFinal'|trans }} :</strong>  {{ filtros.inscricaoImobiliariaFinal }} {% endif %}
+        {% if filtros.inscricaoEconomicaInicial is defined and filtros.inscricaoEconomicaInicial is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.inscricaoEconomicaInicial'|trans }} :</strong>  {{ filtros.inscricaoEconomicaInicial }} {% endif %}
+        {% if filtros.inscricaoEconomicaFinal is defined and filtros.inscricaoEconomicaFinal is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.inscricaoEconomicaFinal'|trans }} :</strong>  {{ filtros.inscricaoEconomicaFinal }} {% endif %}
+        {% if filtros.contribuinteInicial is defined and filtros.contribuinteInicial is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.contribuinteInicial'|trans }} :</strong>  {{ filtros.contribuinteInicial }} {% endif %}
+        {% if filtros.contribuinteFinal is defined and filtros.contribuinteFinal is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.contribuinteFinal'|trans }} :</strong>  {{ filtros.contribuinteFinal }} {% endif %}
+        {% if filtros.atividadeEconomicaInicial is defined and filtros.atividadeEconomicaInicial is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.atividadeEconomicaInicial'|trans }} :</strong>  {{ filtros.atividadeEconomicaInicial }} {% endif %}
+        {% if filtros.atividadeEconomicaFinal is defined and filtros.atividadeEconomicaFinal is not empty %} <p><strong>{{ 'label.periodicoArrecadacaoReport.atividadeEconomicaFinal'|trans }} :</strong>  {{ filtros.atividadeEconomicaFinal }} {% endif %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

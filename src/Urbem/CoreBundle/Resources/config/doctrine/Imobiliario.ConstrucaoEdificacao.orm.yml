@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoEdificacao:
+    type: entity
+    table: imobiliario.construcao_edificacao
+    indexes:
+        id_construcao_edificacao_1:
+            columns:
+                - cod_construcao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+    fields: {  }
+    manyToOne:
+        fkImobiliarioTipoEdificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacao
+            inversedBy: fkImobiliarioConstrucaoEdificacoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkImobiliarioConstrucao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Construcao
+            inversedBy: fkImobiliarioConstrucaoEdificacoes
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+    oneToMany:
+        fkImobiliarioAtributoTipoEdificacaoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoEdificacaoValor
+            mappedBy: fkImobiliarioConstrucaoEdificacao
+        fkImobiliarioLicencaImovelNovaEdificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaImovelNovaEdificacao
+            mappedBy: fkImobiliarioConstrucaoEdificacao
+        fkImobiliarioUnidadeAutonomas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\UnidadeAutonoma
+            mappedBy: fkImobiliarioConstrucaoEdificacao

@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoGerado:
+    type: entity
+    table: pessoal.assentamento_gerado
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\AssentamentoGeradoRepository
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codAssentamentoGerado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento_gerado
+    fields:
+        codAssentamento:
+            type: integer
+            nullable: false
+            column: cod_assentamento
+        periodoInicial:
+            type: date
+            nullable: false
+            column: periodo_inicial
+        periodoFinal:
+            type: date
+            nullable: true
+            column: periodo_final
+        automatico:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        observacao:
+            type: string
+            nullable: true
+            length: 1800
+    manyToOne:
+        fkPessoalAssentamentoGeradoContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoGeradoContratoServidor
+            inversedBy: fkPessoalAssentamentoGerados
+            joinColumns:
+                cod_assentamento_gerado:
+                    referencedColumnName: cod_assentamento_gerado
+        fkPessoalAssentamentoAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            inversedBy: fkPessoalAssentamentoGerados
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+    oneToMany:
+        fkPessoalAssentamentoGeradoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoGeradoNorma
+            mappedBy: fkPessoalAssentamentoGerado
+    oneToOne:
+        fkPessoalAssentamentoGeradoExcluido:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoGeradoExcluido
+            mappedBy: fkPessoalAssentamentoGerado
+            joinColumns:
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_assentamento_gerado:
+                    referencedColumnName: cod_assentamento_gerado
+        fkPessoalAssentamentoLicencaPremio:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoLicencaPremio
+            mappedBy: fkPessoalAssentamentoGerado
+            joinColumns:
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_assentamento_gerado:
+                    referencedColumnName: cod_assentamento_gerado

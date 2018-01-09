@@ -1,0 +1,157 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block show %}
+    <div class="sonata-ba-view">
+        <div class="row">
+            <h2 class="col s10 box-title left-align show">
+                {{ 'label.imobiliarioTransferenciaPropriedade.listaTransferencia'|trans }}
+            </h2>
+            <table class="bordered highlight">
+                <thead>
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="sonata-ba-list-field-header-text">{{ 'label.codigo'|trans }}</th>
+                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioTransferenciaPropriedade.naturezaTransferencia'|trans }}</th>
+                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioTransferenciaPropriedade.processo'|trans }}</th>
+                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioTransferenciaPropriedade.dataEfetivacao'|trans }}</th>
+                        <th class="sonata-ba-list-field-header-text">{{ 'acoes'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if object.fkImobiliarioTransferenciaImoveis|length %}
+                    {% for transferenciaImovel in object.fkImobiliarioTransferenciaImoveis|sort %}
+                        {% if transferenciaImovel.fkImobiliarioTransferenciaEfetivacao %}
+                            <tr>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ transferenciaImovel.codTransferencia }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ transferenciaImovel.fkImobiliarioNaturezaTransferencia }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ transferenciaImovel.fkImobiliarioTransferenciaProcesso.fkSwProcesso }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ transferenciaImovel.fkImobiliarioTransferenciaEfetivacao.dtEfetivacao|date('d/m/Y') }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text"><i data-content='{{ transferenciaImovel.codTransferencia }}' class="material-icons btn_details blue-text text-darken-4" style="cursor: pointer">add</i></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="5">{{ 'listagemVazia'|trans }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+            {% if object.fkImobiliarioTransferenciaImoveis|length %}
+                {% for transferenciaImovel in object.fkImobiliarioTransferenciaImoveis|sort %}
+                    {% if transferenciaImovel.fkImobiliarioTransferenciaEfetivacao %}
+                        <div class="details-content" id="data_{{ transferenciaImovel.codTransferencia }}" style="display:none;">
+                            <h2 class="col s10 box-title left-align show">
+                                {{ 'label.imobiliarioTransferenciaPropriedade.dadosTransferencia'|trans }}
+                            </h2>
+                            <table class="table show-table">
+                                <tbody>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.codigo'|trans }}</th>
+                                    <td>{{ transferenciaImovel.codTransferencia }}</td>
+                                </tr>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.naturezaTransferencia'|trans }}</th>
+                                    <td>{{ transferenciaImovel.fkImobiliarioNaturezaTransferencia }}</td>
+                                </tr>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.processo'|trans }}</th>
+                                    <td>{{ transferenciaImovel.fkImobiliarioTransferenciaProcesso }}</td>
+                                </tr>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.creci'|trans }}</th>
+                                    <td>{{ transferenciaImovel.fkImobiliarioTransferenciaCorretagem }}</td>
+                                </tr>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.dataEfetivacao'|trans }}</th>
+                                    <td>{{ transferenciaImovel.fkImobiliarioTransferenciaEfetivacao.dtEfetivacao|date('d/m/Y') }}</td>
+                                </tr>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.observacao'|trans }}</th>
+                                    <td>{{ transferenciaImovel.fkImobiliarioTransferenciaEfetivacao.observacao }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <h2 class="col s10 box-title left-align show">
+                                {{ 'label.imobiliarioTransferenciaPropriedade.listaTransmitentes'|trans }}
+                            </h2>
+
+                            <table class="bordered highlight">
+                                <thead>
+                                    <tr class="sonata-ba-list-field-header">
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.cgm'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.nome'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioTransferenciaPropriedade.quota'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% if object.fkImobiliarioExProprietarios|length %}
+                                    {% for exProprietario in object.fkImobiliarioExProprietarios|sort %}
+                                        <tr>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ exProprietario.numcgm }}</td>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ exProprietario.fkSwCgm.nomCgm }}</td>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ exProprietario.cota|number_format(2, ',', '.') }}%</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+
+                            <h2 class="col s10 box-title left-align show">
+                                {{ 'label.imobiliarioTransferenciaPropriedade.listaAdquirentes'|trans }}
+                            </h2>
+
+                            <table class="bordered highlight">
+                                <thead>
+                                <tr class="sonata-ba-list-field-header">
+                                    <th class="sonata-ba-list-field-header-text">{{ 'label.cgm'|trans }}</th>
+                                    <th class="sonata-ba-list-field-header-text">{{ 'label.nome'|trans }}</th>
+                                    <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioTransferenciaPropriedade.quota'|trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if transferenciaImovel.fkImobiliarioTransferenciaAdquirentes|length %}
+                                    {% for proprietario in transferenciaImovel.fkImobiliarioTransferenciaAdquirentes|sort %}
+                                        <tr>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ proprietario.numcgm }}</td>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ proprietario.fkSwCgm.nomCgm }}</td>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ proprietario.cota|number_format(2, ',', '.') }}%</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s12">
+                <div class="col s8 initial">
+                    <a class="btn-floating white-text blue darken-4 btn-success" href="#" onclick="window.history.back();"><i class="material-icons">arrow_back</i>{</a>
+                </div>
+            </div>
+        </div>
+    {{ sonata_block_render_event('sonata.admin.show.bottom', { 'admin': admin, 'object': object }) }}
+{% endblock %}

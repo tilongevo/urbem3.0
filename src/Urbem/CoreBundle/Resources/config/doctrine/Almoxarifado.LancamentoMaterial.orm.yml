@@ -1,0 +1,246 @@
+Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial:
+    type: entity
+    table: almoxarifado.lancamento_material
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\LancamentoMaterialRepository
+    indexes:
+        ix_lancamento_material_1:
+            columns:
+                - cod_item
+    id:
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+    fields:
+        exercicioLancamento:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_lancamento
+        numLancamento:
+            type: integer
+            nullable: false
+            column: num_lancamento
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+        tipoNatureza:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_natureza
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+        complemento:
+            type: string
+            nullable: true
+            length: 160
+        valorMercado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: valor_mercado
+        timestamp:
+            type: datetimepk
+    manyToOne:
+        fkAlmoxarifadoEstoqueMaterial:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial
+            inversedBy: fkAlmoxarifadoLancamentoMateriais
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+        fkAlmoxarifadoCatalogoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            inversedBy: fkAlmoxarifadoLancamentoMateriais
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+        fkAlmoxarifadoNaturezaLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\NaturezaLancamento
+            inversedBy: fkAlmoxarifadoLancamentoMateriais
+            joinColumns:
+                exercicio_lancamento:
+                    referencedColumnName: exercicio_lancamento
+                num_lancamento:
+                    referencedColumnName: num_lancamento
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                tipo_natureza:
+                    referencedColumnName: tipo_natureza
+    oneToMany:
+        fkAlmoxarifadoAtributoEstoqueMaterialValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoEstoqueMaterialValor
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+        fkAlmoxarifadoLancamentoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoBem
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+        fkAlmoxarifadoLancamentoInventarioItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoInventarioItens
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+        fkAlmoxarifadoLancamentoMaterialEstornos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterialEstorno
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+        fkAlmoxarifadoLancamentoMaterialEstornos1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterialEstorno
+            mappedBy: fkAlmoxarifadoLancamentoMaterial1
+        fkAlmoxarifadoLancamentoOrdens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoOrdem
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+        fkAlmoxarifadoLancamentoRequisicoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoRequisicao
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+        fkAlmoxarifadoSaidaDiversas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\SaidaDiversa
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+        fkAlmoxarifadoTransferenciaAlmoxarifadoItemDestinos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\TransferenciaAlmoxarifadoItemDestino
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+        fkAlmoxarifadoTransferenciaAlmoxarifadoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\TransferenciaAlmoxarifadoItem
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+    oneToOne:
+        fkAlmoxarifadoDoacaoEmprestimo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\DoacaoEmprestimo
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+        fkAlmoxarifadoLancamentoAutorizacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoAutorizacao
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+        fkAlmoxarifadoLancamentoManutencaoFrota:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoManutencaoFrota
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+        fkAlmoxarifadoLancamentoPerecivel:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoPerecivel
+            mappedBy: fkAlmoxarifadoLancamentoMaterial
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+    lifecycleCallbacks:
+            prePersist:
+                - generatePkSequence

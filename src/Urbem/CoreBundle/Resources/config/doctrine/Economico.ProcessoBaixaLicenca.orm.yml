@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Economico\ProcessoBaixaLicenca:
+    type: entity
+    table: economico.processo_baixa_licenca
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        exercicioProcesso:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_processo
+    manyToOne:
+        fkEconomicoBaixaLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaLicenca
+            inversedBy: fkEconomicoProcessoBaixaLicencas
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+                dt_inicio:
+                    referencedColumnName: dt_inicio
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkEconomicoProcessoBaixaLicencas
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio_processo:
+                    referencedColumnName: ano_exercicio

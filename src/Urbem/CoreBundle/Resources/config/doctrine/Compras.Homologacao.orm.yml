@@ -1,0 +1,107 @@
+Urbem\CoreBundle\Entity\Compras\Homologacao:
+    type: entity
+    table: compras.homologacao
+    id:
+        numHomologacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_homologacao
+        exercicioCompraDireta:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_compra_direta
+        codCompraDireta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compra_direta
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        lote:
+            type: integer
+            generator:
+                strategy: NONE
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        exercicioCotacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_cotacao
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        homologado:
+            type: boolean
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkComprasJulgamentoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\JulgamentoItem
+            inversedBy: fkComprasHomologacoes
+            joinColumns:
+                exercicio_cotacao:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                cod_item:
+                    referencedColumnName: cod_item
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                lote:
+                    referencedColumnName: lote
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkComprasHomologacoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+        fkComprasCompraDireta:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDireta
+            inversedBy: fkComprasHomologacoes
+            joinColumns:
+                cod_compra_direta:
+                    referencedColumnName: cod_compra_direta
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_compra_direta:
+                    referencedColumnName: exercicio_entidade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade

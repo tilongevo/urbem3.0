@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Almoxarifado\Marca:
+    type: entity
+    table: almoxarifado.marca
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\MarcaRepository
+    uniqueConstraints:
+        uk_marca_1:
+            columns:
+                - descricao
+    id:
+        codMarca:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: almoxarifado.marca_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_marca
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkAlmoxarifadoCatalogoItemMarcas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItemMarca
+            mappedBy: fkAlmoxarifadoMarca
+        fkAlmoxarifadoPedidoTransferenciaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItem
+            mappedBy: fkAlmoxarifadoMarca
+        fkEmpenhoItemPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            mappedBy: fkAlmoxarifadoMarca
+        fkPatrimonioBemMarcas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemMarca
+            mappedBy: fkAlmoxarifadoMarca

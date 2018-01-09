@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\TipoConstrucao:
+    type: entity
+    table: cse.tipo_construcao
+    id:
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+    fields:
+        nomConstrucao:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_construcao
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkCseTipoConstrucao

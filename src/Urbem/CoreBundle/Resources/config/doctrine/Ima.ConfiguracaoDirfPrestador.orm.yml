@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfPrestador:
+    type: entity
+    table: ima.configuracao_dirf_prestador
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPrestador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_prestador
+    fields:
+        codDirf:
+            type: integer
+            nullable: false
+            column: cod_dirf
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+    manyToOne:
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkImaConfiguracaoDirfPrestadores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+        fkImaCodigoDirf:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\CodigoDirf
+            inversedBy: fkImaConfiguracaoDirfPrestadores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_dirf:
+                    referencedColumnName: cod_dirf
+                tipo:
+                    referencedColumnName: tipo
+        fkImaConfiguracaoDirf:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirf
+            inversedBy: fkImaConfiguracaoDirfPrestadores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio

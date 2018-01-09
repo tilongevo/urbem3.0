@@ -1,0 +1,83 @@
+Urbem\CoreBundle\Entity\Frota\Manutencao:
+    type: entity
+    table: frota.manutencao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Frota\ManutencaoRepository
+    id:
+        codManutencao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_manutencao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codVeiculo:
+            type: integer
+            nullable: false
+            column: cod_veiculo
+        km:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 1
+        dtManutencao:
+            type: date
+            nullable: false
+            column: dt_manutencao
+        observacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaManutencoes
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+    oneToMany:
+        fkAlmoxarifadoLancamentoManutencaoFrotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoManutencaoFrota
+            mappedBy: fkFrotaManutencao
+        fkFrotaEfetivacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Efetivacao
+            mappedBy: fkFrotaManutencao
+        fkFrotaManutencaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\ManutencaoItem
+            mappedBy: fkFrotaManutencao
+    oneToOne:
+        fkFrotaManutencaoAnulacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Frota\ManutencaoAnulacao
+            mappedBy: fkFrotaManutencao
+            joinColumns:
+                cod_manutencao:
+                    referencedColumnName: cod_manutencao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkFrotaManutencaoEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Frota\ManutencaoEmpenho
+            mappedBy: fkFrotaManutencao
+            joinColumns:
+                cod_manutencao:
+                    referencedColumnName: cod_manutencao
+                exercicio:
+                    referencedColumnName: exercicio

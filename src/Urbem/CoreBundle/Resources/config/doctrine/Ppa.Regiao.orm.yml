@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Ppa\Regiao:
+    type: entity
+    table: ppa.regiao
+    id:
+        codRegiao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ppa.regiao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_regiao
+    fields:
+        nome:
+            type: string
+            nullable: false
+            length: 80
+        descricao:
+            type: string
+            nullable: false
+            length: 240
+    oneToMany:
+        fkPpaAcaoDados:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            mappedBy: fkPpaRegiao

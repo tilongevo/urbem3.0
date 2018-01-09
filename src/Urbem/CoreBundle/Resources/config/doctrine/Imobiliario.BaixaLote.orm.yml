@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Imobiliario\BaixaLote:
+    type: entity
+    table: imobiliario.baixa_lote
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        justificativaTermino:
+            type: text
+            nullable: true
+            column: justificativa_termino
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    manyToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioBaixaLotes
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote

@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\TipoEsgotamento:
+    type: entity
+    table: cse.tipo_esgotamento
+    id:
+        codEsgotamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_esgotamento
+    fields:
+        nomEsgotamento:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_esgotamento
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkCseTipoEsgotamento

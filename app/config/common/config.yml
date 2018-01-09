@@ -1,0 +1,336 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: version.yml }
+    - { resource: twig_version.yml }
+    - { resource: import_database.yml }
+    - { resource: security.yml }
+    - { resource: upload.yml }
+    - { resource: modules.yml }
+    - { resource: '@CoreBundle/Resources/config/services.yml' }
+    - { resource: '@CoreBundle/Resources/config/sonata.yml' }
+    - { resource: "@PatrimonialBundle/Resources/config/sonata.yml" }
+    - { resource: "@RecursosHumanosBundle/Resources/config/sonata.yml" }
+    - { resource: "@AdministrativoBundle/Resources/config/sonata.yml" }
+    - { resource: "@FinanceiroBundle/Resources/config/sonata.yml" }
+    - { resource: "@TributarioBundle/Resources/config/sonata.yml" }
+
+    - { resource: "@ConfiguracaoBundle/Resources/config/form_type.yml" }
+
+    - { resource: "@PrestacaoContasBundle/Resources/config/services.yml" }
+    - { resource: "@PrestacaoContasBundle/Resources/config/parameters.yml" }
+    - { resource: "@PrestacaoContasBundle/Resources/config/form_type.yml" }
+
+    - { resource: "@PortalServicosBundle/Resources/config/services.yml" }
+    - { resource: "@PortalServicosBundle/Resources/config/sonata.yml" }
+
+    - { resource: "@PortalGestorBundle/Resources/config/services.yml" }
+
+    - { resource: "@ComprasGovernamentaisBundle/Resources/config/services.yml" }
+    - { resource: "@ComprasGovernamentaisBundle/Resources/config/sonata.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: pt_BR
+    web_path: %kernel.root_dir%/../var
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    default_locale:  "%locale%"
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/common/routing.yml"
+        strict_requirements: ~
+    serializer:
+        enabled: true
+    form:            ~
+    csrf_protection: ~
+    validation:      { enabled: true, enable_annotations: false }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: false
+    bundles:
+        - CoreBundle
+    filters:
+        cssrewrite: ~
+    write_to: "%kernel.root_dir%/../web"
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form_themes:
+        - '::forms.html.twig'
+        - '::form/form_row.html.twig'
+        - 'CoreBundle:Sonata/Form:datepicker.html.twig'
+    globals:
+        web_path: %web_path%
+        profilePic: '%profilepicture%'
+        servidorPic: '%servidorpicture%'
+        urbem_session: "@urbem.session.service"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_pgsql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        mapping_types:
+            point: string
+            enum: string
+            bit: integer
+            hstore: string
+            oid: string
+        types:
+            datetimeid:
+                class: Urbem\CoreBundle\Types\DateTimeIdType
+            datetimepk:
+                class: Urbem\CoreBundle\Doctrine\DBAL\Type\DateTimePKType
+            datetimetzpk:
+                class: Urbem\CoreBundle\Doctrine\DBAL\Type\DateTimeTZPKType
+            datepk:
+                class: Urbem\CoreBundle\Doctrine\DBAL\Type\DatePKType
+            timepk:
+                class: Urbem\CoreBundle\Doctrine\DBAL\Type\TimePKType
+            datetimemicrosecondpk:
+                class: Urbem\CoreBundle\Doctrine\DBAL\Type\DateTimeMicrosecondPKType
+            timemicrosecondpk:
+                class: Urbem\CoreBundle\Doctrine\DBAL\Type\TimeMicrosecondPKType
+            time:
+                class: Doctrine\DBAL\Types\VarDateTimeType
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        dql:
+          string_functions:
+            unaccent: Urbem\CoreBundle\Customize\Doctrine\DQL\UnaccentString
+            string: Urbem\CoreBundle\Customize\Doctrine\DQL\ConvertToString
+            lpad: Urbem\CoreBundle\Customize\Doctrine\DQL\Lpad
+          numeric_functions:
+            EmpenhoConsultarValorEmpenhado: Urbem\CoreBundle\Customize\Doctrine\DQL\EmpenhoConsultarValorEmpenhado
+            EmpenhoConsultarValorEmpenhadoAnulado: Urbem\CoreBundle\Customize\Doctrine\DQL\EmpenhoConsultarValorEmpenhadoAnulado
+          datetime_functions:
+            date: Urbem\CoreBundle\Customize\Doctrine\DQL\DateFunction
+            year: Urbem\CoreBundle\Customize\Doctrine\DQL\YearFunction
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+
+white_october_breadcrumbs: ~
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig    # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link templates
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts:   [patrimonio]
+
+sonata_core:
+   form:
+       mapping:
+           enabled:              true
+           type:
+              customField: Urbem\CoreBundle\Form\Type\CustomFieldType
+              autocomplete: Urbem\CoreBundle\Form\Type\AutoCompleteType
+              manytomany: Urbem\CoreBundle\Form\Type\ManyToManyType
+              manytomanyautocomplete: Urbem\CoreBundle\Form\Type\ManyToManyAutoCompleteType
+              datepkpicker: Urbem\CoreBundle\Form\Type\DatePKPickerType
+              datepk: Urbem\CoreBundle\Form\Type\DatePKType
+              currency: Urbem\CoreBundle\Form\Type\CurrencyType
+              percent_field: Urbem\CoreBundle\Form\Type\PercentType
+              month_field: Urbem\CoreBundle\Form\Type\MonthType
+              bimestre_field: Urbem\CoreBundle\Form\Type\TwoMonthType
+              quarter_field: Urbem\CoreBundle\Form\Type\QuarterType
+              four_month_period_field: Urbem\CoreBundle\Form\Type\FourMonthPeriodType
+              semester_field: Urbem\CoreBundle\Form\Type\SemesterType
+              year_field: Urbem\CoreBundle\Form\Type\YearType
+              periods_year_field: Urbem\CoreBundle\Form\Type\PeriodsYearType
+              onetoone: Urbem\CoreBundle\Form\Type\OneToOneType
+              yesno: Urbem\CoreBundle\Form\Type\YesNoType
+
+sonata_admin:
+    templates:
+        list:                   CoreBundle:Sonata/CRUD:list.html.twig
+        edit:                   CoreBundle:Sonata/CRUD:edit.html.twig
+        show:                   CoreBundle:Sonata/CRUD:show.html.twig
+        delete:                 CoreBundle:Sonata/CRUD:delete.html.twig
+        batch:                  CoreBundle:Sonata/CRUD:list__batch.html.twig
+        batch_confirmation:     CoreBundle:Sonata/CRUD:batch_confirmation.html.twig
+        show_compare:           CoreBundle:Sonata/CRUD:show_compare.html.twig
+        inner_list_row:         CoreBundle:Sonata/CRUD:list_inner_row.html.twig
+        outer_list_rows_list:   CoreBundle:Sonata/CRUD:list_outer_rows_list.html.twig
+        pager_results:          CoreBundle:Sonata/Pager:results.html.twig
+        pager_links:            CoreBundle:Sonata/Pager:links.html.twig
+        filter:                 CoreBundle:Sonata/Form:filter_admin_fields.html.twig
+    options:
+        html5_validate: true
+    assets:
+        javascripts:
+            - bundles/sonataadmin/vendor/jquery.scrollTo/jquery.scrollTo.min.js
+            - bundles/sonatacore/vendor/moment/min/moment.min.js
+            - bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js
+            - bundles/sonataadmin/vendor/jqueryui/ui/minified/i18n/jquery-ui-i18n.min.js
+            - bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js
+            - bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js
+            - bundles/sonataadmin/vendor/jquery-form/jquery.form.js
+            - bundles/sonataadmin/jquery/jquery.confirmExit.js
+            - bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js
+            - bundles/sonatacore/vendor/select2/select2.min.js
+            - bundles/sonataadmin/vendor/admin-lte/dist/js/app.min.js
+            - bundles/sonataadmin/vendor/iCheck/icheck.min.js
+            - bundles/sonataadmin/vendor/slimScroll/jquery.slimscroll.min.js
+            - bundles/sonataadmin/vendor/waypoints/lib/jquery.waypoints.min.js
+            - bundles/sonataadmin/vendor/waypoints/lib/shortcuts/sticky.min.js
+            - bundles/sonataadmin/Admin.js
+            - bundles/sonataadmin/treeview.js
+
+sonata_doctrine_orm_admin:
+    # default value is null, so doctrine uses the value defined in the configuration
+    entity_manager: ~
+
+    templates:
+        form:
+            - CoreBundle:Sonata/Form:form_admin_fields.html.twig
+        filter:
+            - SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig
+        types:
+            list:
+#                array:      SonataAdminBundle:CRUD:list_array.html.twig
+                boolean:    CoreBundle:Sonata/CRUD:list_boolean.html.twig
+                date:       CoreBundle:Sonata/CRUD:list_date.html.twig
+#                time:       SonataAdminBundle:CRUD:list_time.html.twig
+#                datetime:   SonataAdminBundle:CRUD:list_datetime.html.twig
+#                text:       SonataAdminBundle:CRUD:base_list_field.html.twig
+#                trans:      SonataAdminBundle:CRUD:list_trans.html.twig
+#                string:     SonataAdminBundle:CRUD:base_list_field.html.twig
+#                smallint:   SonataAdminBundle:CRUD:base_list_field.html.twig
+#                bigint:     SonataAdminBundle:CRUD:base_list_field.html.twig
+#                integer:    SonataAdminBundle:CRUD:base_list_field.html.twig
+#                decimal:    CoreBundle:Sonata/CRUD:base_list_field.html.twig
+#                identifier: SonataAdminBundle:CRUD:base_list_field.html.twig
+
+            show:
+#                array:      SonataAdminBundle:CRUD:show_array.html.twig
+                boolean:    CoreBundle:Sonata/CRUD:show_boolean.html.twig
+                date:       CoreBundle:Sonata/CRUD:show_date.html.twig
+#                time:       SonataAdminBundle:CRUD:show_time.html.twig
+#                datetime:   SonataAdminBundle:CRUD:show_datetime.html.twig
+#                text:       SonataAdminBundle:CRUD:base_show_field.html.twig
+#                trans:      SonataAdminBundle:CRUD:show_trans.html.twig
+                string:     CoreBundle:Sonata/CRUD:base_show_field.html.twig
+                smallint:   CoreBundle:Sonata/CRUD:base_show_field.html.twig
+                bigint:     CoreBundle:Sonata/CRUD:base_show_field.html.twig
+                integer:    CoreBundle:Sonata/CRUD:base_show_field.html.twig
+                decimal:    CoreBundle:Sonata/CRUD:base_show_field.html.twig
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Urbem\CoreBundle\Entity\Administracao\Usuario
+    from_email:
+        address: noreply@longevo.com.br
+        sender_name: No Reply
+    service:
+        mailer: fos_user.mailer.twig_swift
+    resetting:
+        email:
+            template:   FOSUserBundle:Resetting:email.html.twig
+
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
+
+rede_simples:
+    cache_dir: %kernel.cache_dir%/rede_simples/form/
+    form_create:
+        endpoint:
+            token: %rede_simples_form_create_endpoint_token%
+            fetch: %rede_simples_form_create_endpoint_fetch%
+            post: %rede_simples_form_create_endpoint_post%
+            status: %rede_simples_form_create_endpoint_status%
+
+monolog:
+    handlers:
+        filter_for_errors:
+            type: fingers_crossed
+            # if *one* log is error or higher, pass *all* to file_log
+            action_level: error
+            handler: file_log
+
+        # now passed *all* logs, but only if one log is error or higher
+        file_log:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%_exception.log"
+            level: error
+            # max number of log files to keep
+            # defaults to zero, which means infinite files
+            max_files: 10
+
+        # still passed *all* logs, and still only logs error or higher
+        syslog_handler:
+            type: syslog
+            level: error
+        console:
+            type:                console
+            verbosity_levels:
+                VERBOSITY_NORMAL:       WARNING
+                VERBOSITY_VERBOSE:      NOTICE
+                VERBOSITY_VERY_VERBOSE: INFO
+                VERBOSITY_DEBUG:        DEBUG
+
+zechim_queue:
+    host: %zechim_queue_host%
+    port: %zechim_queue_port%
+    user: %zechim_queue_user%
+    password: %zechim_queue_password%
+    default_routing_key: %zechim_queue_routing_key%
+    default_exchange: %zechim_queue_exchange%

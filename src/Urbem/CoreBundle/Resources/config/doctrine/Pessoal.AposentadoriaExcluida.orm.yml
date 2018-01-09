@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Pessoal\AposentadoriaExcluida:
+    type: entity
+    table: pessoal.aposentadoria_excluida
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestampAposentadoria:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_aposentadoria
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToOne:
+        fkPessoalAposentadoria:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Aposentadoria
+            inversedBy: fkPessoalAposentadoriaExcluida
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp_aposentadoria:
+                    referencedColumnName: timestamp

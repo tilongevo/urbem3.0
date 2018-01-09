@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Administracao\AssinaturaCrc:
+    type: entity
+    table: administracao.assinatura_crc
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        inscCrc:
+            type: string
+            nullable: false
+            length: 10
+            column: insc_crc
+    oneToOne:
+        fkAdministracaoAssinatura:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Assinatura
+            inversedBy: fkAdministracaoAssinaturaCrc
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp

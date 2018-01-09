@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Imobiliario\ParcelamentoSolo:
+    type: entity
+    table: imobiliario.parcelamento_solo
+    id:
+        codParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcelamento
+    fields:
+        codLote:
+            type: integer
+            nullable: false
+            column: cod_lote
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        dtParcelamento:
+            type: date
+            nullable: false
+            column: dt_parcelamento
+    manyToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioParcelamentoSolos
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkImobiliarioTipoParcelamento:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoParcelamento
+            inversedBy: fkImobiliarioParcelamentoSolos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkImobiliarioLicencaLoteParcelamentoSolos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaLoteParcelamentoSolo
+            mappedBy: fkImobiliarioParcelamentoSolo
+        fkImobiliarioLoteParcelados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteParcelado
+            mappedBy: fkImobiliarioParcelamentoSolo

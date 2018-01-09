@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Contabilidade\PlanoRecurso:
+    type: entity
+    table: contabilidade.plano_recurso
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codRecurso:
+            type: integer
+            nullable: false
+            column: cod_recurso
+        codRecursoContrapartida:
+            type: integer
+            nullable: true
+            column: cod_recurso_contrapartida
+    manyToOne:
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkContabilidadePlanoRecursos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkOrcamentoRecurso1:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkContabilidadePlanoRecursos1
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso_contrapartida:
+                    referencedColumnName: cod_recurso
+    oneToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkContabilidadePlanoRecurso
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

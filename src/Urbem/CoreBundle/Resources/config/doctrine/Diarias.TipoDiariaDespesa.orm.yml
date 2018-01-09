@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Diarias\TipoDiariaDespesa:
+    type: entity
+    table: diarias.tipo_diaria_despesa
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+    manyToOne:
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkDiariasTipoDiariaDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+    oneToOne:
+        fkDiariasTipoDiaria:
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\TipoDiaria
+            inversedBy: fkDiariasTipoDiariaDespesa
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                timestamp:
+                    referencedColumnName: timestamp

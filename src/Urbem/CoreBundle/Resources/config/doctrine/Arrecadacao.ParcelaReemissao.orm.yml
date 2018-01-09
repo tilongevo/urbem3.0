@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ParcelaReemissao:
+    type: entity
+    table: arrecadacao.parcela_reemissao
+    id:
+        codParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcela
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vencimento:
+            type: date
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkArrecadacaoParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Parcela
+            inversedBy: fkArrecadacaoParcelaReemissoes
+            joinColumns:
+                cod_parcela:
+                    referencedColumnName: cod_parcela

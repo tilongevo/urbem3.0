@@ -1,0 +1,216 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+{% block stylesheets %}
+    <style>
+        .exercicio-fixed-sonata .select2-choice {
+            height: 22px;
+            font-size: 10px !important;
+        }
+        .exercicio-fixed-sonata .select2-choice>span:first-child, .select2-chosen, .select2-container .select2-choices .select2-search-field input {
+            padding: 1px 6px;
+        }
+        .exercicio-fixed-sonata .select2-container .select2-choice .select2-arrow b, .select2-container .select2-choice div b {
+            background-position: 0 -1px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+{% block content %}
+    <div class="container-rh">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="box-header col s12">
+                <h5 class="col s12 box-title left-align show">
+                    Período Plano Plurianual
+                </h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+            <input type="hidden" value="{{ ppa.codPpa }}" name="cod_ppa" />
+            <div class="col s4">
+                <label for="anoInicio" class="control-label required">{{ 'label.ppa.anoInicio'|trans }}</label>
+                <input class="input-rh" id="anoInicio" name="ppa[anoInicio]" value="{{ ppa.anoInicio }}" disabled="disabled">
+            </div>
+            <div class="col s4">
+                <label for="anoFinal" class="control-label required">{{ 'label.ppa.anoFim'|trans }}</label>
+                <input class="input-rh" id="anoFinal" name="ppa[anoFinal]" value="{{ ppa.anoFinal }}" disabled="disabled">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="box-header col s12">
+                <h5 class="col s12 box-title left-align show">
+                    Configuração
+                </h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+            <div class="col s4">
+                {{ form_label(form.porcentagem, null, {'label_attr': {'class': '  '}}) }}
+                {{ form_widget(form.porcentagem, {'attr': {'class': 'input-rh-without-border white input-select2 browser-default '}}) }}
+                {{ form_errors(form.porcentagem) }}
+            </div>
+            <div class="col s4 sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                {{ form_label(form.porcentagemAno1, null, {'label_attr': {'class': '  '}}) }}
+                <div class="input-group">
+                    {{ form_widget(form.porcentagemAno1, {'attr': {'class': 'input-rh white browser-default'}}) }}
+                    <span class="input-group-addon" style="padding: 9px 12px !important">
+                         <span class="fa-percent fa"></span>
+                     </span>
+                </div>
+                {{ form_errors(form.porcentagemAno1) }}
+            </div>
+            <div class="col s4 sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                {{ form_label(form.porcentagemAno2, null, {'label_attr': {'class': '  '}}) }}
+                <div class="input-group">
+                    {{ form_widget(form.porcentagemAno2, {'attr': {'class': 'input-rh white '}}) }}
+                    <span class="input-group-addon" style="padding: 9px 12px !important">
+                         <span class="fa-percent fa"></span>
+                     </span>
+                </div>
+                {{ form_errors(form.porcentagemAno2) }}
+            </div>
+            <div class="col s4 sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                {{ form_label(form.porcentagemAno3, null, {'label_attr': {'class': '  '}}) }}
+                <div class="input-group">
+                    {{ form_widget(form.porcentagemAno3, {'attr': {'class': 'input-rh white '}}) }}
+                    <span class="input-group-addon" style="padding: 9px 12px !important">
+                         <span class="fa-percent fa"></span>
+                     </span>
+                </div>
+                {{ form_errors(form.porcentagemAno3) }}
+            </div>
+            <div class="col s4 sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                {{ form_label(form.porcentagemAno4, null, {'label_attr': {'class': '  '}}) }}
+                <div class="input-group">
+                    {{ form_widget(form.porcentagemAno4, {'attr': {'class': 'input-rh white '}}) }}
+                    <span class="input-group-addon" style="padding: 9px 12px !important">
+                         <span class="fa-percent fa"></span>
+                     </span>
+                </div>
+                {{ form_errors(form.porcentagemAno4) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="box-header col s12" style="margin-top: 15px">
+                <h5 class="col s12 box-title left-align show">
+                    Estimativa da Receita
+                </h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+            <table class="bordered highlight table-estimativa">
+                <tr>
+                    <th class="th-rh"></th>
+                    <th class="th-rh"></th>
+                    <th class="th-rh">{{ 'label.ppa.receitas'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppa.valor'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppa.ano1'|trans }} (%)</th>
+                    <th class="th-rh">{{ 'label.ppa.ano2'|trans }} (%)</th>
+                    <th class="th-rh">{{ 'label.ppa.ano3'|trans }} (%)</th>
+                    <th class="th-rh">{{ 'label.ppa.ano4'|trans }} (%)</th>
+                </tr>
+                {% for ppaEstimativaRow in ppaEstimativa %}
+                    <tr class="{{ 'row-estimativa row-' ~ ppaEstimativaRow.estimativa.codReceita }}">
+                         {% if ppaEstimativaRow.estimativa.tipo == 'S' %}
+                            <td class="td-rh">{{ ppaEstimativaRow.estimativa.codReceita }}</td>
+                            <td class="td-rh">{{ ppaEstimativaRow.estimativa.codEstrutural }}</td>
+                            <td class="td-rh">{{ ppaEstimativaRow.estimativa.descricao }}</td>
+                            <td class="td-rh">
+                                <p class="blue-text text-darken-4 text-center" id="{{ 'td-resultado-soma-' ~ ppaEstimativaRow.estimativa.codReceita }}">0</p>
+                            </td>
+                            <td class="td-rh"></td>
+                            <td class="td-rh"></td>
+                            <td class="td-rh"></td>
+                            <td class="td-rh"></td>
+                        {% else %}
+                            <td class="td-rh">{{ ppaEstimativaRow.estimativa.codReceita }}</td>
+                            <td class="td-rh">{{ ppaEstimativaRow.estimativa.codEstrutural }}</td>
+                            <td class="td-rh">{{ ppaEstimativaRow.estimativa.descricao }}</td>
+                            <td class="td-rh">
+                                {% if ppaEstimativaRow.estimativa.codReceita == 25 %}
+                                    <span class="menos-estimativa">-</span>
+                                {% endif %}
+                                <div class="col s11">
+                                    <input class="input-rh-table white valorParcial mask-monetaria"
+                                           id="valor_{{ ppaEstimativaRow.estimativa.codReceita }}"
+                                           name="ppa_valor[{{ ppaEstimativaRow.estimativa.codReceita }}]"
+                                           value="{{ (ppaEstimativaRow.ppaEstimativa.valor == null) ? 0 : ppaEstimativaRow.ppaEstimativa.valor }}">
+                                </div>
+                            </td>
+                            <td class="td-rh">
+                                <div class="col s12">
+                                    <input class="input-rh-table white ano1 mask-monetaria" id="ano1_{{ ppaEstimativaRow.estimativa.codReceita }}" name="ppa_ano1[{{ ppaEstimativaRow.estimativa.codReceita }}]" value="{{ ppaEstimativaRow.ppaEstimativa.percentualAno1 }}">
+                                </div>
+                            </td>
+                            <td class="td-rh">
+                                <div class="col s12">
+                                    <input class="input-rh-table white ano2 mask-monetaria" id="ano2_{{ ppaEstimativaRow.estimativa.codReceita }}" name="ppa_ano2[{{ ppaEstimativaRow.estimativa.codReceita }}]" value="{{ ppaEstimativaRow.ppaEstimativa.percentualAno2 }}">
+                                </div>
+                            </td>
+                            <td class="td-rh">
+                                <div class="col s12">
+                                    <input class="input-rh-table white ano3 mask-monetaria" id="ano3_{{ ppaEstimativaRow.estimativa.codReceita }}" name="ppa_ano3[{{ ppaEstimativaRow.estimativa.codReceita }}]" value="{{ ppaEstimativaRow.ppaEstimativa.percentualAno3 }}">
+                                </div>
+                            </td>
+                            <td class="td-rh">
+                                <div class="col s12">
+                                    <input class="input-rh-table white ano4 mask-monetaria" id="ano4_{{ ppaEstimativaRow.estimativa.codReceita }}" name="ppa_ano4[{{ ppaEstimativaRow.estimativa.codReceita }}]" value="{{ ppaEstimativaRow.ppaEstimativa.percentualAno4 }}">
+                                </div>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                <tr class="row-estimativa row-26" style="border-bottom: 1px solid #ccc; height: 36px;">
+                    <th class="td-rh text-center" colspan="2"
+                        style="color: #24669C !important;">
+                        {{ 'label.ppa.totalreceitas'|trans }}
+                    </th>
+                    <th class="td-rh">
+                        <div class="col s12">
+                            <p class="blue-text text-darken-4 text-center" id="valorTotal" name="ppa[valorTotal]">
+                                {{ total|number_format(2, ',', '.') }}
+                            </p>
+                        </div>
+                    </th>
+                    <th class="td-rh"></th>
+                    <th class="td-rh"></th>
+                    <th class="td-rh"></th>
+                    <th class="td-rh"></th>
+                    <th class="td-rh"></th>
+                </tr>
+            </table>
+            <div class="col s2 left-align table-space">
+                <a class="btn-floating white-text blue darken-4" href="/financeiro/plano-plurianual/ppa/list">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+            <div class="col s10 right-align table-space">
+                <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="Estimativa">
+                    <i class="material-icons left">insert_chart</i>Gerar Estimativa
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}
+{% block javascripts %}
+
+    <script type="text/javascript" src="{{ asset('/bundles/financeiro/javascripts/ppa/estimativa.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/financeiro/javascripts/ppa/somas_estimativa.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css') }}">
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/bootstrap-datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/bootstrap-datepicker.pt-BR.min.js') }}"></script>
+    <script src="{{ asset('/bundles/sonatacore/vendor/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/string.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem-sonata.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('select:not(.select-ano)').select2();
+            $('select:first (.select2-ano-hide)').css('height', '22px');
+        });
+    </script>
+{% endblock javascripts %}

@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\SwOperacaoAutomatica:
+    type: entity
+    table: sw_operacao_automatica
+    id:
+        codOperacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_operacao
+    fields:
+        nomOperacao:
+            type: string
+            nullable: false
+            length: 160
+            column: nom_operacao
+    oneToMany:
+        fkSwTransacaoOperacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwTransacaoOperacao
+            mappedBy: fkSwOperacaoAutomatica

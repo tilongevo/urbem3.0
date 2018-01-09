@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ProcessoSuspensao:
+    type: entity
+    table: arrecadacao.processo_suspensao
+    id:
+        codSuspensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_suspensao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+    manyToOne:
+        fkArrecadacaoSuspensao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Suspensao
+            inversedBy: fkArrecadacaoProcessoSuspensoes
+            joinColumns:
+                cod_suspensao:
+                    referencedColumnName: cod_suspensao
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkArrecadacaoProcessoSuspensoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

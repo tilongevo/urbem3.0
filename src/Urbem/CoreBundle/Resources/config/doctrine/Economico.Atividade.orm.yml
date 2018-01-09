@@ -1,0 +1,131 @@
+Urbem\CoreBundle\Entity\Economico\Atividade:
+    type: entity
+    table: economico.atividade
+    uniqueConstraints:
+        uk_atividade_1:
+            columns:
+                - cod_estrutural
+                - cod_vigencia
+                - cod_nivel
+    id:
+        codAtividade:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: economico.atividade_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_atividade
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        nomAtividade:
+            type: string
+            nullable: false
+            length: 240
+            column: nom_atividade
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 160
+            column: cod_estrutural
+        codVigencia:
+            type: integer
+            nullable: false
+            column: cod_vigencia
+        codNivel:
+            type: integer
+            nullable: false
+            column: cod_nivel
+    manyToOne:
+        fkEconomicoNivelAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelAtividade
+            inversedBy: fkEconomicoAtividades
+            joinColumns:
+                cod_nivel:
+                    referencedColumnName: cod_nivel
+                cod_vigencia:
+                    referencedColumnName: cod_vigencia
+    oneToMany:
+        fkComprasFornecedorAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorAtividade
+            mappedBy: fkEconomicoAtividade
+        fkEconomicoAtividadeProfissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeProfissao
+            mappedBy: fkEconomicoAtividade
+        fkEconomicoAtividadeModalidadeLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeLancamento
+            mappedBy: fkEconomicoAtividade
+        fkEconomicoAtividadeCadastroEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeCadastroEconomico
+            mappedBy: fkEconomicoAtividade
+        fkEconomicoAliquotaAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AliquotaAtividade
+            mappedBy: fkEconomicoAtividade
+        fkEconomicoElementoAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoAtividade
+            mappedBy: fkEconomicoAtividade
+        fkEconomicoNivelAtividadeValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelAtividadeValor
+            mappedBy: fkEconomicoAtividade
+        fkEconomicoProcessoAtividadeCadEcons:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoAtividadeCadEcon
+            mappedBy: fkEconomicoAtividade
+        fkFiscalizacaoDocumentoAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\DocumentoAtividade
+            mappedBy: fkEconomicoAtividade
+        fkEconomicoServicoAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ServicoAtividade
+            mappedBy: fkEconomicoAtividade
+    oneToOne:
+        fkEconomicoAtividadeCnaeFiscal:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeCnaeFiscal
+            mappedBy: fkEconomicoAtividade
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade

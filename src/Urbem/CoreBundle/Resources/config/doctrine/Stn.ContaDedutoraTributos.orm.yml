@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Stn\ContaDedutoraTributos:
+    type: entity
+    table: stn.conta_dedutora_tributos
+    id:
+        codTributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tributo
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkStnTributoAnexo8:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\TributoAnexo8
+            inversedBy: fkStnContaDedutoraTributos
+            joinColumns:
+                cod_tributo:
+                    referencedColumnName: cod_tributo
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkStnContaDedutoraTributos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita

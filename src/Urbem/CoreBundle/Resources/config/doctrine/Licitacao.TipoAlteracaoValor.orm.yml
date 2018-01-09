@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Licitacao\TipoAlteracaoValor:
+    type: entity
+    table: licitacao.tipo_alteracao_valor
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkLicitacaoContratoAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoAditivos
+            mappedBy: fkLicitacaoTipoAlteracaoValor

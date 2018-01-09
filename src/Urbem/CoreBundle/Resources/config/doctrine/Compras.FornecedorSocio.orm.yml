@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Compras\FornecedorSocio:
+    type: entity
+    table: compras.fornecedor_socio
+    uniqueConstraints:
+        uk_fornecedor_socio_1:
+            columns:
+                - cgm_fornecedor
+                - cgm_socio
+                - cod_tipo
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: compras.fornecedor_socio_seq
+                allocationSize: 1
+                initialValue: 1
+            column: id
+    fields:
+        cgmFornecedor:
+            type: integer
+            nullable: false
+            column: cgm_fornecedor
+        cgmSocio:
+            type: integer
+            nullable: false
+            column: cgm_socio
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkComprasFornecedorSocios
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkComprasFornecedorSocios
+            joinColumns:
+                cgm_socio:
+                    referencedColumnName: numcgm
+        fkComprasTipoSocio:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\TipoSocio
+            inversedBy: fkComprasFornecedorSocios
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

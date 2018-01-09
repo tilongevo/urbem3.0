@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioCaixaEconomicaFederal:
+    type: entity
+    table: ima.configuracao_convenio_caixa_economica_federal
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        codConvenioBanco:
+            type: string
+            nullable: false
+            length: 20
+            column: cod_convenio_banco
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            nullable: false
+            column: cod_conta_corrente
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkImaConfiguracaoConvenioCaixaEconomicaFederais
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente

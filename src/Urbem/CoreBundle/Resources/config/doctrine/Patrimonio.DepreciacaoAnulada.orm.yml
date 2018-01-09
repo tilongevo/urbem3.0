@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Patrimonio\DepreciacaoAnulada:
+    type: entity
+    table: patrimonio.depreciacao_anulada
+    id:
+        codDepreciacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_depreciacao
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        timestampAnulacao:
+            type: datetime
+            nullable: false
+            column: timestamp_anulacao
+        motivo:
+            type: string
+            nullable: false
+            length: 100
+    oneToOne:
+        fkPatrimonioDepreciacao:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Depreciacao
+            inversedBy: fkPatrimonioDepreciacaoAnulada
+            joinColumns:
+                cod_depreciacao:
+                    referencedColumnName: cod_depreciacao
+                cod_bem:
+                    referencedColumnName: cod_bem
+                timestamp:
+                    referencedColumnName: timestamp

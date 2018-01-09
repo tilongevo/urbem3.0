@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">Analista: Tonismar Régis Bernardo &lt;tonismar.bernardo@cnm.org.br>
+Desenvolvedor: Henrique Boaventura &lt;henrique.boaventura@cnm.org.br></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.4.0.v201405191524 Build &lt;4.4.0.v20140606-1451></property>
+    <html-property name="description">Template para o formato A4 retrato</html-property>
+    <property name="units">in</property>
+    <text-property name="displayName">Template Urbem Retrato</text-property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">../../../../../../gestaoAdministrativa/fontes/RPT/framework/library/urbem_250.rptlibrary</property>
+            <property name="namespace">urbem_250</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="term_user" id="6666">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="exercicio" id="1151" extends="urbem_250.exercicio">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="cod_acao" id="1152" extends="urbem_250.cod_acao">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="db_conn_url" id="1154" extends="urbem_250.db_conn_url">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="entidade" id="1157" extends="urbem_250.entidade">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="filtro" id="6668">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="query" id="6730">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="postgres" id="1150"
+ extends="urbem_250.postgres"/>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="rs_lancamentos" id="6667">
+            <structure name="cachedMetaData"/>
+            <method name="beforeOpen"><![CDATA[this.queryText  ="        SELECT * ";
+this.queryText +="          FROM ( SELECT DISTINCT lancamento.cod_lancamento ";
+this.queryText +="                       , to_char( lancamento.vencimento, 'dd/mm/yyyy' ) AS vencimento ";
+this.queryText +="                       , lancamento.total_parcelas ";
+this.queryText +="                       , replace(lancamento.valor::VARCHAR, '.', ',') AS valor ";
+this.queryText +="                       , CAST((SELECT array_to_string( ARRAY( select numcgm from sw_cgm where numcgm IN ( SELECT numcgm FROM arrecadacao.calculo_cgm WHERE cod_calculo = lancamento_calculo.cod_calculo)), '/' ) ) AS VARCHAR) AS numcgm ";
+this.queryText +="                       , CAST((SELECT array_to_string( ARRAY( select nom_cgm from sw_cgm where numcgm IN ( SELECT numcgm FROM arrecadacao.calculo_cgm WHERE cod_calculo = lancamento_calculo.cod_calculo)), '/' ) ) AS VARCHAR) AS nom_cgm ";
+this.queryText +="                       , COALESCE ( cadastro_economico_calculo.inscricao_economica, imovel_calculo.inscricao_municipal, 0 ) AS inscricao ";
+this.queryText +="                       , CASE WHEN parcela_desconto.valor IS NOT NULL THEN ";
+this.queryText +="                                 parcela_desconto.valor ";
+this.queryText +="                         ELSE ";
+this.queryText +="                                 parcela.valor ";
+this.queryText +="                         END AS valor_parcela ";
+this.queryText +="                       , COALESCE ( arrecadacao.fn_carne_parcela( parcela.cod_parcela ) , '    -    ' ) AS numeracao ";
+this.queryText +="                       , COALESCE ( ( CASE WHEN parcela.nr_parcela = 0 THEN ";
+this.queryText +="                                              'única'::text ";
+this.queryText +="                                      ELSE ";
+this.queryText +="                                              parcela.nr_parcela||'/'||lancamento.total_parcelas::text ";
+this.queryText +="                                      END ";
+this.queryText +="                                    ), ' - ' ) AS nr_parcela ";
+this.queryText +="                       , COALESCE( to_char( parcela.vencimento, 'dd/mm/yyyy' ), ' - ' ) AS data_vencimento ";
+this.queryText +="                       , COALESCE ( ( CASE WHEN parcela.nr_parcela = 0 THEN 0 ";
+this.queryText +="                                      ELSE parcela.nr_parcela ";
+this.queryText +="                                      END ";
+this.queryText +="                                    ), 0) AS ordenacao ";
+this.queryText +="                        , grupo_credito.ano_exercicio ";
+this.queryText +="                        , grupo_credito.cod_grupo ";
+this.queryText +="                        , COALESCE ( imovel_calculo.inscricao_municipal, 0 ) as inscricao_municipal ";
+this.queryText +="                        , COALESCE ( cadastro_economico_calculo.inscricao_economica, 0 ) AS inscricao_economica ";
+this.queryText +="                        , lancamento_calculo.dt_lancamento as dt_lancamento ";
+this.queryText +="                        ,parcela.cod_parcela ";
+this.queryText +="                    FROM arrecadacao.lancamento  ";
+this.queryText +="              INNER JOIN arrecadacao.lancamento_calculo ";
+this.queryText +="                      ON lancamento_calculo.cod_lancamento = lancamento.cod_lancamento ";
+this.queryText +="                INNER JOIN arrecadacao.calculo ";
+this.queryText +="                        ON calculo.cod_calculo = lancamento_calculo.cod_calculo ";
+this.queryText +="                INNER JOIN arrecadacao.calculo_grupo_credito  ";
+this.queryText +="                     ON calculo_grupo_credito.cod_calculo = calculo.cod_calculo ";
+this.queryText +="                INNER JOIN arrecadacao.grupo_credito ";
+this.queryText +="                     ON grupo_credito.ano_exercicio = calculo_grupo_credito.ano_exercicio ";
+this.queryText +="                    AND grupo_credito.cod_grupo     = calculo_grupo_credito.cod_grupo ";
+this.queryText +="                LEFT JOIN arrecadacao.parcela ";
+this.queryText +="                     ON parcela.cod_lancamento = lancamento.cod_lancamento ";
+this.queryText +="              LEFT JOIN arrecadacao.imovel_calculo ";
+this.queryText +="                     ON imovel_calculo.cod_calculo = lancamento_calculo.cod_calculo ";
+this.queryText +="              LEFT JOIN arrecadacao.cadastro_economico_calculo ";
+this.queryText +="                     ON cadastro_economico_calculo.cod_calculo = lancamento_calculo.cod_calculo ";
+this.queryText +="              LEFT JOIN arrecadacao.parcela_desconto ";
+this.queryText +="                     ON parcela_desconto.cod_parcela = parcela.cod_parcela ";
+this.queryText +="            ) AS lancamento ";
+this.queryText +=              params['filtro'] ; 
+ 
+params['query'] =  this.queryText;
+ 
+
+]]></method>
+            <property name="dataSource">postgres</property>
+            <xml-property name="queryText"><![CDATA[select 
+from ]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab" id="4">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="NewStyle" id="1148">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+        </style>
+        <style name="padrão_urbem" id="1149">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">8pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">portrait</property>
+            <property name="topMargin">10mm</property>
+            <property name="leftMargin">10mm</property>
+            <property name="bottomMargin">20mm</property>
+            <property name="rightMargin">10mm</property>
+            <page-header>
+                <grid name="cabecalho" id="1158" extends="urbem_250.cabecalho_retrato">
+                    <overridden-values>
+                        <ref-entry baseId="1051" id="1051"/>
+                        <ref-entry baseId="1052" id="1052"/>
+                        <ref-entry baseId="1053" id="1053"/>
+                        <ref-entry baseId="1054" id="1054"/>
+                        <ref-entry baseId="1055" id="1055"/>
+                        <ref-entry baseId="1397" name="NewText61221" id="1397"/>
+                        <ref-entry baseId="1398" name="NewText612111" id="1398"/>
+                        <ref-entry baseId="1056" id="1056"/>
+                        <ref-entry baseId="1061" name="NewGrid" id="1061"/>
+                        <ref-entry baseId="1062" id="1062"/>
+                        <ref-entry baseId="1063" id="1063"/>
+                        <ref-entry baseId="1064" id="1064"/>
+                        <ref-entry baseId="1102" name="NewData" id="1102"/>
+                        <ref-entry baseId="1137" name="NewData6" id="1137"/>
+                        <ref-entry baseId="1065" id="1065"/>
+                        <ref-entry baseId="1066" id="1066"/>
+                        <ref-entry baseId="1103" name="NewData1" id="1103"/>
+                        <ref-entry baseId="1138" name="NewData7" id="1138"/>
+                        <ref-entry baseId="1067" id="1067"/>
+                        <ref-entry baseId="1068" id="1068"/>
+                        <ref-entry baseId="1105" name="NewData2" id="1105"/>
+                        <ref-entry baseId="1139" name="NewData8" id="1139"/>
+                        <ref-entry baseId="1069" id="1069"/>
+                        <ref-entry baseId="1070" id="1070"/>
+                        <ref-entry baseId="1106" name="NewData3" id="1106"/>
+                        <ref-entry baseId="1140" name="NewData9" id="1140"/>
+                        <ref-entry baseId="1071" id="1071"/>
+                        <ref-entry baseId="1072" id="1072"/>
+                        <ref-entry baseId="1107" name="NewData4" id="1107"/>
+                        <ref-entry baseId="1141" name="NewData10" id="1141"/>
+                        <ref-entry baseId="1073" id="1073"/>
+                        <ref-entry baseId="1074" id="1074"/>
+                        <ref-entry baseId="1108" name="NewData5" id="1108"/>
+                        <ref-entry baseId="1143" name="NewData11" id="1143"/>
+                        <ref-entry baseId="1057" id="1057"/>
+                        <ref-entry baseId="1075" name="NewGrid1" id="1075"/>
+                        <ref-entry baseId="1076" id="1076"/>
+                        <ref-entry baseId="1077" id="1077"/>
+                        <ref-entry baseId="1078" id="1078"/>
+                        <ref-entry baseId="1109" name="NewGrid3" id="1109"/>
+                        <ref-entry baseId="1110" id="1110"/>
+                        <ref-entry baseId="1111" id="1111"/>
+                        <ref-entry baseId="1112" id="1112"/>
+                        <ref-entry baseId="1113" id="1113"/>
+                        <ref-entry baseId="735" name="NewData1212" id="735"/>
+                        <ref-entry baseId="1114" id="1114"/>
+                        <ref-entry baseId="744" name="NewData1412" id="744"/>
+                        <ref-entry baseId="1079" id="1079"/>
+                        <ref-entry baseId="1080" id="1080"/>
+                        <ref-entry baseId="1115" name="NewGrid31" id="1115"/>
+                        <ref-entry baseId="1116" id="1116"/>
+                        <ref-entry baseId="1117" id="1117"/>
+                        <ref-entry baseId="1118" id="1118"/>
+                        <ref-entry baseId="1119" id="1119"/>
+                        <ref-entry baseId="747" name="NewData1312" id="747"/>
+                        <ref-entry baseId="1120" id="1120"/>
+                        <ref-entry baseId="756" name="NewData152" id="756"/>
+                        <ref-entry baseId="1081" id="1081"/>
+                        <ref-entry baseId="1082" id="1082"/>
+                        <ref-entry baseId="759" name="NewData1112" id="759"/>
+                        <ref-entry baseId="1083" id="1083"/>
+                        <ref-entry baseId="1084" id="1084"/>
+                        <ref-entry baseId="762" name="NewData162" id="762"/>
+                        <ref-entry baseId="1085" id="1085"/>
+                        <ref-entry baseId="1086" id="1086"/>
+                        <ref-entry baseId="1087" name="NewGrid2" id="1087"/>
+                        <ref-entry baseId="1088" id="1088"/>
+                        <ref-entry baseId="1089" id="1089"/>
+                        <ref-entry baseId="1090" id="1090"/>
+                        <ref-entry baseId="1091" id="1091"/>
+                        <ref-entry baseId="1092" id="1092"/>
+                        <ref-entry baseId="1093" id="1093"/>
+                        <ref-entry baseId="1094" id="1094"/>
+                        <ref-entry baseId="1095" id="1095"/>
+                        <ref-entry baseId="765" name="NewText72" id="765"/>
+                        <ref-entry baseId="1096" id="1096"/>
+                        <ref-entry baseId="767" name="NewText112" id="767"/>
+                        <ref-entry baseId="1097" id="1097"/>
+                        <ref-entry baseId="776" name="NewLabel212" id="776"/>
+                        <ref-entry baseId="1098" id="1098"/>
+                        <ref-entry baseId="778" name="NewAutoText1" id="778"/>
+                        <ref-entry baseId="1099" id="1099"/>
+                        <ref-entry baseId="1101" name="NewLabel2121" id="1101"/>
+                        <ref-entry baseId="1100" id="1100"/>
+                        <ref-entry baseId="782" name="NewAutoText" id="782"/>
+                    </overridden-values>
+                </grid>
+            </page-header>
+            <page-footer>
+                <grid name="rodape" id="1159" extends="urbem_250.rodape">
+                    <overridden-values>
+                        <ref-entry baseId="180" id="180"/>
+                        <ref-entry baseId="181" id="181"/>
+                        <ref-entry baseId="182" id="182"/>
+                        <ref-entry baseId="183" name="NewText2" id="183"/>
+                    </overridden-values>
+                </grid>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="6721">
+            <column id="6722"/>
+            <row id="6723">
+                <cell id="6724"/>
+            </row>
+            <row id="6725">
+                <cell id="6726">
+                    <property name="style">padrão_urbem</property>
+                    <property name="fontSize">small</property>
+                    <property name="textAlign">center</property>
+                    <label id="6729">
+                        <property name="fontSize">16pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">Relatório de Lançamento Automático</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="6727">
+                <cell id="6728"/>
+            </row>
+        </grid>
+        <table id="6670">
+            <property name="pageBreakAfter">auto</property>
+            <property name="pageBreakBefore">auto</property>
+            <property name="pageBreakInside">auto</property>
+            <property name="dataSet">rs_lancamentos</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">codigo</property>
+                    <expression name="expression">dataSetRow["cod_lancamento"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">usuario</property>
+                    <expression name="expression">dataSetRow["numcgm"] +' - '+dataSetRow["nom_cgm"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">inscricao</property>
+                    <expression name="expression" type="javascript">if (dataSetRow["inscricao_municipal"] != '' ){
+	dataSetRow["inscricao_municipal"];
+} else {
+	dataSetRow["inscricao_economica"];
+}</expression>
+                    <property name="dataType">integer</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">numeracao</property>
+                    <expression name="expression">dataSetRow["numeracao"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">parcela</property>
+                    <expression name="expression">dataSetRow["nr_parcela"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">vencimento</property>
+                    <expression name="expression">dataSetRow["data_vencimento"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">valor</property>
+                    <expression name="expression">dataSetRow["valor_parcela"];</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">0</property>
+            <column id="6695">
+                <property name="style">padrão_urbem</property>
+                <property name="width">60px</property>
+            </column>
+            <column id="6696">
+                <property name="style">padrão_urbem</property>
+                <property name="width">303px</property>
+            </column>
+            <column id="6697">
+                <property name="style">padrão_urbem</property>
+                <property name="width">70px</property>
+            </column>
+            <column id="6698">
+                <property name="style">padrão_urbem</property>
+                <property name="width">92px</property>
+            </column>
+            <column id="6699">
+                <property name="style">padrão_urbem</property>
+                <property name="width">50px</property>
+            </column>
+            <column id="6700">
+                <property name="style">padrão_urbem</property>
+                <property name="width">80px</property>
+            </column>
+            <column id="6701">
+                <property name="style">padrão_urbem</property>
+                <property name="width">60px</property>
+            </column>
+            <header>
+                <row id="6671">
+                    <cell id="6672">
+                        <property name="style">padrão_urbem</property>
+                        <label id="6702">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">7pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Código</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6673">
+                        <property name="style">padrão_urbem</property>
+                        <label id="6703">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">7pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Usuário</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6674">
+                        <property name="style">padrão_urbem</property>
+                        <label id="6704">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">7pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Inscrição</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6675">
+                        <property name="style">padrão_urbem</property>
+                        <property name="fontFamily">sans-serif</property>
+                        <label id="6705">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">7pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Numeração</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6676">
+                        <property name="style">padrão_urbem</property>
+                        <label id="6706">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">7pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Parcela</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6677">
+                        <property name="style">padrão_urbem</property>
+                        <label id="6707">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">7pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Vencimento</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6678">
+                        <property name="style">padrão_urbem</property>
+                        <label id="6708">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">7pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Valor</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="6679">
+                    <cell id="6680">
+                        <property name="style">padrão_urbem</property>
+                        <property name="fontSize">6pt</property>
+                        <data id="6710">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">6pt</property>
+                            <property name="textAlign">center</property>
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr">if( row["parcela"] == "única"  || BirtStr.trim(row["parcela"]) == "-") {
+	false
+}else {
+	true
+}</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">codigo</property>
+                        </data>
+                    </cell>
+                    <cell id="6681">
+                        <property name="style">padrão_urbem</property>
+                        <data id="6711">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">6pt</property>
+                            <property name="textAlign">left</property>
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr">if( row["parcela"] == "única"  || BirtStr.trim(row["parcela"]) == "-") {
+	false
+}else {
+	true
+}</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">usuario</property>
+                        </data>
+                    </cell>
+                    <cell id="6682">
+                        <property name="style">padrão_urbem</property>
+                        <data id="6712">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">6pt</property>
+                            <property name="textAlign">center</property>
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr">if( row["parcela"] == "única"  || BirtStr.trim(row["parcela"]) == "-") {
+	false
+}else {
+	true
+}</expression>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">inscricao</property>
+                        </data>
+                    </cell>
+                    <cell id="6683">
+                        <property name="style">padrão_urbem</property>
+                        <data id="6713">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">6pt</property>
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">numeracao</property>
+                        </data>
+                    </cell>
+                    <cell id="6684">
+                        <property name="style">padrão_urbem</property>
+                        <data id="6714">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">6pt</property>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">parcela</property>
+                        </data>
+                    </cell>
+                    <cell id="6685">
+                        <property name="style">padrão_urbem</property>
+                        <data id="6715">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">6pt</property>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">vencimento</property>
+                        </data>
+                    </cell>
+                    <cell id="6686">
+                        <property name="style">padrão_urbem</property>
+                        <data id="6716">
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">6pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">R$#,##0.00</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">valor</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="6687">
+                    <cell id="6688">
+                        <property name="style">padrão_urbem</property>
+                    </cell>
+                    <cell id="6689">
+                        <property name="style">padrão_urbem</property>
+                    </cell>
+                    <cell id="6690">
+                        <property name="style">padrão_urbem</property>
+                    </cell>
+                    <cell id="6691">
+                        <property name="style">padrão_urbem</property>
+                    </cell>
+                    <cell id="6692">
+                        <property name="style">padrão_urbem</property>
+                    </cell>
+                    <cell id="6693">
+                        <property name="style">padrão_urbem</property>
+                    </cell>
+                    <cell id="6694">
+                        <property name="style">padrão_urbem</property>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

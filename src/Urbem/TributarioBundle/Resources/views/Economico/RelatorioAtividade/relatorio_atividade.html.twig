@@ -1,0 +1,42 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Economico/Relatorios/header.html.twig' %}
+
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.economicoRelatorioAtividade.codigo'|trans|upper }}</th>
+                    <th>{{ 'label.economicoRelatorioAtividade.atividades'|trans|upper }}</th>
+                    <th>{{ 'label.economicoRelatorioAtividade.descricao'|trans|upper }}</th>
+                    <th>{{ 'label.economicoRelatorioAtividade.vigencia'|trans|upper }}</th>
+                    <th>{{ 'label.economicoRelatorioAtividade.aliquota'|trans|upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for atividade in atividades %}
+                    <tr>
+                        <td>{{ atividade.getCodEstrutural() }}</td>
+                        <td style="text-align:left">{{ atividade.getNomAtividade()|trim|capitalize }}</td>
+                        <td>{{ '' }}</td>
+                        <td>{{ atividade.getFkEconomicoNivelAtividade().getFkEconomicoVigenciaAtividade().getDtInicio().format('d/m/Y') }}</td>
+                        <td>
+                            {% if atividade.getFkEconomicoAliquotaAtividades().last() %}
+                                {{ atividade.getFkEconomicoAliquotaAtividades().last().getValor()|number_format(2, ',', '.') }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+    <style>
+        table td,th{border: 0 !important; text-align:center}
+    </style>
+{% endblock %}

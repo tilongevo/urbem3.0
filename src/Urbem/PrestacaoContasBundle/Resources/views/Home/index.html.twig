@@ -1,0 +1,91 @@
+{% extends "base_home_cards.html.twig" %}
+
+{% block title %}
+    Prestação de Contas
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="col s12 m12 l12">
+            <h4 class="title-filtro blue-text text-darken-4">Módulo Prestação de Contas</h4>
+        </div>
+        <div class="row">
+            <!--Portal da Transparência-->
+            <div class="col s10 m6 l3">
+                <div class="card small white">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <a href="/transparencia" title="Portal da Transparência" target="_blank">
+                            <img class="activator responsive-img"
+                                 src="{{ asset('/bundles/prestacaocontas/images/annual.png') }}">
+                        </a>
+                    </div>
+                    <div class="card-content white">
+                        <span class="card-title activator blue-text text-darken-4 truncate flow-text">Portal da Transparência</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--STN-->
+            {% if stn is not empty %}
+                <div class="col s10 m6 l3">
+                    <div class="card small white">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <a href="#@" title="TCE - {{ tce_uf }}" id="abrecard">
+                                <img class="activator responsive-img"
+                                     src="{{ asset('/bundles/prestacaocontas/images/bidding.png') }}">
+                            </a>
+                        </div>
+                        <div class="card-content white">
+                            <span class="card-title activator blue-text text-darken-4 truncate flow-text">STN</span>
+                        </div>
+                        <div class="card-reveal">
+                            <div class="col s12 titulo-inside-card truncate">
+                                <i class="material-icons icoTitMenu left">list</i> STN
+                                <span class="card-title grey-text text-darken-4 closeHomeNovo">
+                            <i class="material-icons right">close</i>
+                        </span>
+                            </div>
+                            <div class="setaMenu"></div>
+                            <div class="menuHomeNovo">
+                                {% for key, item in stn %}
+                                    <p class="link-cards"><a href="{{ path(item['route'], {"uf": 'stn'|lower, "group": key}) }}">{{ item['title'] }}</a></p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!--TCE DINÂMICOS-->
+            {% if tribunal is not empty %}
+                <div class="col s10 m6 l3">
+                    <div class="card small white">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <a href="#@" title="TCE - {{ tce_uf }}" id="abrecard">
+                                <img class="activator responsive-img"
+                                     src="{{ asset('/bundles/prestacaocontas/images/annual_plan.png') }}">
+                            </a>
+                        </div>
+                        <div class="card-content white">
+                            <span class="card-title activator blue-text text-darken-4 truncate flow-text">TCE - {{ tce_uf }}</span>
+                        </div>
+                        <div class="card-reveal">
+                            <div class="col s12 titulo-inside-card truncate">
+                                <i class="material-icons icoTitMenu left">list</i> TCE - {{ tce_uf }}
+                                <span class="card-title grey-text text-darken-4 closeHomeNovo">
+                            <i class="material-icons right">close</i>
+                        </span>
+                            </div>
+                            <div class="setaMenu"></div>
+                            <div class="menuHomeNovo">
+                                {% for key, item in tribunal %}
+                                    <p class="link-cards"><a href="{{ path(item['route'], {"uf": tce_uf|lower, "group": key}) }}">{{ item['title'] }}</a></p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

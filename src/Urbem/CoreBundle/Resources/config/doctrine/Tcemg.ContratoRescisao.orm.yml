@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Tcemg\ContratoRescisao:
+    type: entity
+    table: tcemg.contrato_rescisao
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ContratoRescisaoRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        dataRescisao:
+            type: date
+            nullable: false
+            column: data_rescisao
+        valorRescisao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_rescisao
+    oneToOne:
+        fkTcemgContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            inversedBy: fkTcemgContratoRescisao
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio

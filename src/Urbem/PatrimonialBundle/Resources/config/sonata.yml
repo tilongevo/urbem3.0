@@ -1,0 +1,1144 @@
+services:
+    app.admin.patrimonial.bem:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\BemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\Bem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Bem }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Patrimonial\Bem\CRUD:show.html.twig]]
+
+    patrimonial.admin.bem_baixado:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\BemBaixadoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\BemBaixado, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Baixar Bem }
+
+    app.admin.twig.breadcrumb:
+        class: Urbem\CoreBundle\Twig\BreadcrumbExtension
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: twig.extension }
+
+    patrimonial.admin.tipo_baixa:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\TipoBaixaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\TipoBaixa, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tipo da Baixa }
+
+    patrimonial.admin.manutencao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\ManutencaoAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Patrimonio\Manutencao, PatrimonialBundle:Patrimonio\ManutencaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Manutenção }
+
+    patrimonial.admin.apolice:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\ApoliceAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\Apolice, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Apólice }
+
+    patrimonial.admin.veiculo:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\VeiculoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Veiculo, PatrimonialBundle:Frota\VeiculoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Veículo }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Frota\Veiculo\CRUD:show.html.twig]]
+
+    patrimonial.admin.veiculo_report:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\VeiculoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Veículo }
+
+    patrimonial.admin.motorista:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\MotoristaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Motorista, PatrimonialBundle:Frota\MotoristaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Motorista }
+
+    patrimonial.admin.motorista_report:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\MotoristaReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Motorista }
+
+    patrimonial.admin.posto:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\PostoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Posto, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Posto }
+
+    patrimonial.admin.marca:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\MarcaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Marca, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Marca de veículo }
+
+    patrimonial.admin.modelo:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\ModeloAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Modelo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Modelo }
+
+    patrimonial.admin.tipo_veiculo:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\TipoVeiculoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\TipoVeiculo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tipo de veículo }
+
+    patrimonial.admin.autorizacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\AutorizacaoAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Frota\Autorizacao, PatrimonialBundle:Frota\AutorizacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Autorização }
+        calls:
+            - [ setTemplates, [{show: PatrimonialBundle:Frota\Autorizacao:show.html.twig}]]
+
+    patrimonial.admin.combustivel:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\CombustivelAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Combustivel, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Combustível }
+
+    patrimonial.admin.natureza:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\NaturezaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\Natureza, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Natureza }
+
+    patrimonial.admin.grupo:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\GrupoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\Grupo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Grupo }
+
+    patrimonial.admin.grupo_plano_analitica:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\GrupoPlanoAnaliticaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\GrupoPlanoAnalitica, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: GrupoPlanoAnalitica }
+
+    patrimonial.admin.especie:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\EspecieAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\Especie, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Espécie }
+
+    patrimonial.admin.situacao_bem:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\SituacaoBemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\SituacaoBem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Situação do bem }
+
+    patrimonial.admin.manutencao_paga:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\ManutencaoPagaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\ManutencaoPaga, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ManutencaoPaga }
+
+    patrimonial.admin.reavaliacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\ReavaliacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\Reavaliacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Reavaliacao }
+
+    patrimonial.admin.cadastro_escola:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\CadastroEscolaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Escola, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Cadastro de Escola }
+
+    patrimonial.admin.objeto:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\ObjetoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Objeto, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Objeto }
+
+    patrimonial.admin.contrato_aditivos:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\ContratoAditivosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ContratoAditivos, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato Aditivos }
+
+    patrimonial.admin.especie_atributo:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\EspecieAtributoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\EspecieAtributo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EspecieAtributo }
+
+    patrimonial.admin.contrato:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\ContratoAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Licitacao\Contrato, PatrimonialBundle:Compras\ContratoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato }
+        calls:
+            - [ setTemplates, [{show: PatrimonialBundle:Sonata\Compras\Contrato\CRUD:show.html.twig}]]
+
+    patrimonial.admin.bem_responsavel:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\BemResponsavelAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\BemResponsavel, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: BemResponsavel }
+
+    patrimonial.admin.catalogo:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\CatalogoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Catalogo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Catálogo }
+
+    patrimonial.admin.catalogo_niveis:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\CatalogoNiveisAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\CatalogoNiveis, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CatalogoNiveis }
+
+    patrimonial.admin.localizacao_fisica_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\LocalizacaoFisicaItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\LocalizacaoFisicaItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: LocalizacaoFisicaItem }
+
+    patrimonial.admin.almoxarifado_marca:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\MarcaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Marca, PatrimonialBundle:Almoxarifado\MarcaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Marca }
+
+    patrimonial.admin.grupo_plano_depreciacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\GrupoPlanoDepreciacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\GrupoPlanoDepreciacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: GrupoPlanoDepreciacao }
+
+    patrimonial.admin.infracao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\InfracaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Infracao, PatrimonialBundle:Frota\InfracaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Infração }
+
+    patrimonial.admin.utilizacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\UtilizacaoAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Frota\Utilizacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Utilização }
+
+    patrimonial.admin.fornecedor:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\FornecedorAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Fornecedor, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Fornecedor }
+        calls:
+            - [ setTemplates, [{show: PatrimonialBundle:Sonata\Fornecedor\CRUD:show.html.twig}]]
+
+    patrimonial.admin.fornecedor_socio:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\FornecedorSocioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\FornecedorSocio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FornecedorSocio }
+
+    patrimonial.admin.fornecedor_classificacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\FornecedorClassificacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\FornecedorClassificacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FornecedorClassificacao }
+
+    patrimonial.admin.fornecedor_conta:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\FornecedorContaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\FornecedorConta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: FornecedorConta }
+
+    patrimonial.admin.localizacao_fisica:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\LocalizacaoFisicaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\LocalizacaoFisica, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: LocalizacaoFisica }
+
+    patrimonial.admin.utilizacao_retorno:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\UtilizacaoRetornoAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Frota\UtilizacaoRetorno, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: UtilizacaoRetorno }
+
+    patrimonial.admin.motorista_veiculo:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\MotoristaVeiculoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\MotoristaVeiculo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: MotoristaVeiculo }
+
+    patrimonial.admin.almoxarife:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\AlmoxarifeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Almoxarife, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Almoxarife }
+
+    patrimonial.admin.permissao_almoxarifados:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\PermissaoAlmoxarifadosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\PermissaoAlmoxarifados, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PermissaoAlmoxarifados }
+
+    patrimonial.admin.almoxarifado:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\AlmoxarifadoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado, PatrimonialBundle:Almoxarifado\AlmoxarifadoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Almoxarifado }
+
+    patrimonial.admin.convenio:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ConvenioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Convenio,  PatrimonialBundle:Licitacao\ConvenioAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Convenio }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Licitacao\Convenio\CRUD:show.html.twig]]
+
+    patrimonial.admin.convenio_aditivos:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ConvenioAditivosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivos, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConvenioAditivos }
+
+    patrimonial.admin.participante_convenio:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ParticipanteConvenioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ParticipanteConvenio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ParticipanteConvenio }
+
+    patrimonial.admin.publicacao_convenio:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\PublicacaoConvenioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\PublicacaoConvenio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PublicacaoConvenio }
+
+    patrimonial.admin.rescisao_convenio:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\RescisaoConvenioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\RescisaoConvenio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RescisaoConvenio }
+
+    patrimonial.admin.publicacao_rescisao_convenio:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\PublicacaoRescisaoConvenioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\PublicacaoRescisaoConvenio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PublicacaoRescisaoConvenio }
+
+    patrimonial.admin.convenio_anulado:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ConvenioAnuladoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ConvenioAnulado, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConvenioAnulado }
+
+    patrimonial.admin.item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\ItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Item, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Item }
+
+    patrimonial.admin.classificacao_catalogo_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\ClassificacaoCatalogoItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Item, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Item }
+
+    patrimonial.admin.documento:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\DocumentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Documento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Documento }
+
+    patrimonial.admin.tipo_contrato:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\TipoContratoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\TipoContrato, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tipo Contrato }
+
+    patrimonial.admin.solicitante:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\SolicitanteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Solicitante, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Solicitante }
+
+    patrimonial.admin.catalogo_classificacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\CatalogoClassificacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacao, PatrimonialBundle:Almoxarifado\CatalogoClassificacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CatalogoClassificacao }
+
+    patrimonial.admin.veiculos_publicidade:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\VeiculosPublicidadeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\VeiculosPublicidade, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Veiculos Publicidade }
+
+    patrimonial.admin.veiculo_baixado:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\VeiculoBaixadoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\VeiculoBaixado, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Veiculo Baixado }
+
+    patrimonial.admin.proprio:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\ProprioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Proprio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Proprio }
+
+    patrimonial.admin.compra_direta:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\CompraDiretaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CompraDireta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Compra Direta }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Compras\CompraDireta\CRUD:show.html.twig]]
+
+    patrimonial.admin.comissao_membros:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ComissaoMembrosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ComissaoMembros, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Comissão Membros }
+
+    patrimonial.admin.comissao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ComissaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Comissao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Comissão }
+
+    patrimonial.admin.veiculo_locacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\VeiculoLocacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\VeiculoLocacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Veiculo Locacao }
+
+    patrimonial.admin.terceiros:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\TerceirosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Terceiros, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Terceiros }
+
+    patrimonial.admin.contrato_documento:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ContratoDocumentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ContratoDocumento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato Documento }
+
+    patrimonial.admin.contrato_arquivo:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ContratoArquivoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ContratoArquivo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato Arquivo }
+
+    patrimonial.admin.publicacao_contrato:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\PublicacaoContratoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\PublicacaoContrato, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Publicação Contrato }
+
+    patrimonial.admin.veiculo_cessao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\VeiculoCessaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\VeiculoCessao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: VeiculoCessao }
+
+    patrimonial.admin.veiculo_documento:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\VeiculoDocumentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\VeiculoDocumento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: VeiculoDocumento }
+
+    patrimonial.admin.contrato_anulado:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ContratoAnuladoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ContratoAnulado, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrato Anulado }
+
+    patrimonial.admin.rescisao_contrato:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\RescisaoContratoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\RescisaoContrato, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Rescisão Contrato }
+
+    patrimonial.admin.contrato_apostila:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ContratoApostilaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ContratoApostila, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Apostila de Contrato }
+
+    patrimonial.admin.tipo_instrumento:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\TipoInstrumentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\TipoInstrumento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tipo de Instrumento }
+
+    patrimonial.admin.penalidades_certificacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\PenalidadesCertificacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\PenalidadesCertificacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Penalidades Certificação }
+
+    patrimonial.admin.participante_certificacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ParticipanteCertificacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Participante Certificação }
+        calls:
+            - [ setTemplates, [{show: PatrimonialBundle:Sonata\ParticipanteCertificacao\CRUD:show.html.twig}]]
+
+    patrimonial.admin.certificacao_documentos:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\CertificacaoDocumentosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\CertificacaoDocumentos, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Certificação Documentos }
+
+    patrimonial.admin.transporte_escolar:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\TransporteEscolarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Escola, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Transporte Escolar }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Frota\TransporteEscolar\CRUD:show.html.twig]]
+
+    patrimonial.admin.ordem:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\OrdemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Ordem, PatrimonialBundle:Compras\OrdemAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Ordem }
+
+    patrimonial.admin.ordem_anulacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\OrdemAnulacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\OrdemAnulacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: OrdemAnulacao }
+
+    patrimonial.admin.compra_direta_publicacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\CompraDiretaPublicacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\PublicacaoCompraDireta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PublicacaoCompraDireta }
+
+    patrimonial.admin.centro_custo:
+        class:  Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\CentroCustoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto, PatrimonialBundle:Almoxarifado\CentroCustoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Centro de Custo }
+        calls:
+            - [ setTemplates, [{show: PatrimonialBundle:Sonata\CentroCusto\CRUD:show.html.twig, list: PatrimonialBundle:Sonata\CentroCusto\CRUD:list.html.twig}]]
+
+    patrimonial.admin.centro_custo_dotacao:
+        class:  Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\CentroCustoDotacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoDotacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Centro de Custo Dotacão }
+
+    patrimonial.admin.compra_direta_anulacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\CompraDiretaAnulacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CompraDiretaAnulacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CompraDiretaAnulacao }
+        calls:
+            - [ setTemplate, [edit, PatrimonialBundle:Compras/CompraDireta:anulacao.html.twig]]
+
+    patrimonial.admin.solicitacao_anulacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\SolicitacaoAnulacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\SolicitacaoAnulacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Anular Solicitação }
+
+    patrimonial.admin.solicitacao_item_anulacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\SolicitacaoItemAnulacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\SolicitacaoItemAnulacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SolicitacaoItemAnulacao }
+
+    patrimonial.admin.solicitacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\SolicitacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Solicitacao, PatrimonialBundle:Compras\SolicitacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Solicitação }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Compras\Solicitacao\CRUD:show.html.twig]]
+
+    patrimonial.admin.centro_custo_permissao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\CentroCustoPermissaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoPermissao, PatrimonialBundle:Almoxarifado\CentroCustoPermissaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Centro Custo Permissão }
+
+    patrimonial.admin.requisicao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\RequisicaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Requisicao, PatrimonialBundle:Almoxarifado\RequisicaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Dados da Requisição }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Requisicao\CRUD:show.html.twig]]
+
+    patrimonial.admin.requisicao_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\RequisicaoItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItem, PatrimonialBundle:Almoxarifado\RequisicaoItemAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RequisicaoItem }
+
+    patrimonial.admin.requisicao_anulacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\RequisicaoAnulacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Requisicao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Anulacao da Requisição }
+
+    patrimonial.admin.requisicao_anulacao_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\RequisicaoAnulacaoItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RequisicaoItem }
+
+    patrimonial.admin.catalogo_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\CatalogoItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem, PatrimonialBundle:Almoxarifado\CatalogoItemAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CatalogoItem }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Almoxarifado\CatalogoItem\CRUD:show.html.twig]]
+
+    patrimonial.admin.catalogo_item_foto:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\CatalogoItemFotoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CatalogoItemFoto }
+
+    patrimonial.admin.mapa:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\MapaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Mapa,  PatrimonialBundle:Compras\MapaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Mapa de Compras }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Compras\Mapa\CRUD:show.html.twig]]
+
+    patrimonial.admin.mapa_solicitacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\MapaSolicitacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\MapaSolicitacao, PatrimonialBundle:Compras\MapaSolicitacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Mapa Solicitação }
+
+    patrimonial.admin.controle_estoque:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\ControleEstoqueAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\ControleEstoque, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ControleEstoque }
+
+    patrimonial.admin.solicitacao_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\SolicitacaoItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\SolicitacaoItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SolicitacaoItem }
+
+    patrimonial.admin.solicitacao_entrega:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\SolicitacaoEntregaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\SolicitacaoEntrega, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Solicitacao Entrega }
+
+    patrimonial.admin.solicitacao_convenio:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\SolicitacaoConvenioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\SolicitacaoConvenio, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Solicitacao Convenio }
+
+    patrimonial.admin.pedido_transferencia:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\PedidoTransferenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferencia, PatrimonialBundle:Almoxarifado\PedidoTransferenciaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PedidoTransferencia }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Almoxarifado\PedidoTransferencia\CRUD:show.html.twig]]
+
+    patrimonial.admin.pedido_transferencia_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\PedidoTransferenciaItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItem, PatrimonialBundle:Almoxarifado\PedidoTransferenciaItemAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PedidoTransferenciaItem }
+
+    patrimonial.admin.pedido_transferencia_item_destino:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\PedidoTransferenciaItemDestinoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItemDestino, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PedidoTransferenciaItemDestino }
+
+    patrimonial.admin.licitacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\LicitacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Licitacao, PatrimonialBundle:Licitacao\LicitacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Licitacao }
+        calls:
+            - [ setTemplates, [{show: PatrimonialBundle:Sonata\Licitacao\Licitacao\CRUD:show.html.twig}]]
+
+    patrimonial.admin.manutencao_proposta:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\ManutencaoPropostaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CompraDireta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Compra Direta }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Compras\ManutencaoProposta\CRUD:show.html.twig]]
+
+    patrimonial.admin.membro_adicional:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\MembroAdicionalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\MembroAdicional, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Membro Adicional }
+
+    patrimonial.admin.participante:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ParticipanteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Participante, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Participante }
+
+
+    patrimonial.admin.devolucao_requisicao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\DevolucaoRequisicaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Requisicao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Requisicao }
+
+    patrimonial.admin.saida_requisicao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\SaidaRequisicaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Requisicao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Requisicao }
+
+    patrimonial.admin.devolucao_requisicao_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\DevolucaoRequisicaoItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RequisicaoItem }
+
+    patrimonial.admin.participante_documentos:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ParticipanteDocumentosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ParticipanteDocumentos, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Participante Documentos }
+
+    patrimonial.admin.cotacao_fornecedor_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\CotacaoFornecedorItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItem, PatrimonialBundle:Compras\CotacaoFornecedorItemAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CotacaoFornecedorItem }
+
+    patrimonial.admin.edital:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\EditalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Edital, PatrimonialBundle:Licitacao\EditalAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Edital }
+        calls:
+            - [ setTemplates, [{show: PatrimonialBundle:Sonata\Edital\CRUD:show.html.twig}]]
+
+    patrimonial.admin.termo.autuacao.edital:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\TermoAutuacaoEditalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Edital, PatrimonialBundle:Licitacao\TermoAutuacaoEditalAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Termo Autuação Edital }
+
+    patrimonial.admin.edital_suspenso:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\EditalSuspensoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\EditalSuspenso, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Suspensão do Edital }
+
+    patrimonial.admin.publicacao_edital:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\PublicacaoEditalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\PublicacaoEdital, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Publicação do Edital }
+
+    patirmonial.admin.almoxarifado_inventario:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\InventarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Inventario, PatrimonialBundle:Almoxarifado\InventarioAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Inventario }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Almoxarifado\Inventario\CRUD:show.html.twig]]
+
+    patrimonial.admin.almoxarifado_inventario_itens:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\InventarioItensAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\InventarioItens, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: InventarioItens }
+
+    patrimonial.admin.inventario:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\InventarioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\Inventario, PatrimonialBundle:Patrimonio\InventarioAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Inventário }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Patrimonio\Inventario\CRUD:show.html.twig]]
+
+    patrimonial.admin.inventario_historico_bem:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\InventarioHistoricoBemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\InventarioHistoricoBem, PatrimonialBundle:Patrimonio\InventarioHistoricoBemAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: InventarioHistoricoBem }
+
+    patrimonial.admin.edital_impugnado:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\EditalImpugnadoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\EditalImpugnado, PatrimonialBundle:Licitacao\EditalImpugnadoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Edital Impugnado }
+
+    patrimonial.admin.ata:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\AtaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Ata, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Ata }
+
+    patrimonial.admin.processar_implantacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\ProcessarImplantacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ProcessarImplantacao }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Almoxarifado\ProcessarImplantacao\CRUD:show.html.twig]]
+
+    patrimonial.admin.processar_implantacao_perecivel:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\ProcessarImplantacaoPerecivelAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\LancamentoPerecivel, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Perecível }
+
+    patrimonial.admin.anulacao_impugnacao_edital:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\AnulacaoImpugnacaoEditalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\AnulacaoImpugnacaoEdital, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Anulação da Impugnação do Edital }
+
+    patrimonial.admin.edital_anulado:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\EditalAnuladoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\EditalAnulado, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Anulação do Edital }
+
+    patrimonial.admin.publicacao_ata:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\PublicacaoAtaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\PublicacaoAta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PublicacaoAta }
+
+    patrimonial.admin.frota.manutencao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\ManutencaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Manutencao, PatrimonialBundle:Frota\ManutencaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Manutencao }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Frota\Manutencao\CRUD:show.html.twig]]
+
+    patrimonial.admin.adjudicacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\AdjudicacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Adjudicacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Adjudicação }
+
+    patrimonial.admin.homologacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\HomologacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Homologacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Homologação }
+
+    patrimonial.admin.justificativa_razao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\JustificativaRazaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\JustificativaRazao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Justificativa Razão }
+
+    patrimonial.admin.licitacao_manutencao_proposta:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ManutencaoPropostaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Licitacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Licitação Manutenção Proposta }
+
+    patrimonial.admin.licitacao_cotacao_fornecedor_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\LicitacaoCotacaoFornecedorItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Cotação Fornecedor Item }
+
+    patrimonial.admin.frota.manutencao_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\ManutencaoItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\ManutencaoItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ManutencaoItem }
+
+    patrimonial.admin.frota.manutencao_anulacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Frota\ManutencaoAnulacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\ManutencaoAnulacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ManutencaoAnulacao }
+
+    patrimonial.admin.autorizacao_empenho:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\AutorizacaoEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Licitacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Licitacao }
+
+    patrimonial.admin.homologacao_compra_direta:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\HomologacaoCompraDiretaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CompraDireta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Homologação Compra Direta }
+
+    patrimonial.admin.compra_direta_julgamento:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\CompraDiretaGestaoJulgamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CompraDireta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CompraDireta }
+
+    patrimonial.admin.autorizacao_empenho_compra_direta:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\AutorizacaoEmpenhoCompraDiretaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CompraDireta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Gerar Autorização de Empenho }
+
+    patrimonial.admin.julgamento_proposta:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\JulgamentoPropostaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Licitacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Licitacao }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Licitacao\JulgamentoProposta\CRUD:show.html.twig]]
+
+    patrimonial.admin.licitacao_gestao_julgamento:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\LicitacaoGestaoJulgamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Licitacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Licitacao }
+
+    patrimonial.admin.entrada_compras_ordem:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\EntradaComprasOrdemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Ordem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Entrada Ordem de Compra }
+
+    patrimonial.admin.entrada_compras_ordem_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\EntradaComprasOrdemItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\OrdemItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: OrdemItem }
+
+    patrimonial.admin.entrada_doacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\EntradaDoacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\NaturezaLancamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NaturezaLancamento }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Almoxarifado\EntradaDoacao\CRUD:show.html.twig]]
+
+    patrimonial.admin.estoque_material:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\EstoqueMaterialAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EstoqueMaterial }
+
+    patrimonial.admin.cotacao_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\CotacaoItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CotacaoItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CotacaoItem }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Compras\CotacaoItem\CRUD:show.html.twig]]
+
+    patrimonial.admin.julgamento:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\JulgamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CompraDireta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Julgamento }
+
+    patrimonial.admin.entrada_diversos:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\EntradaDiversosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\NaturezaLancamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NaturezaLancamento }
+
+    patrimonial.admin.entrada_diversos_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\EntradaDiversosItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: LancamentoMaterial }
+
+    patrimonial.admin.saida_estorno_entrada:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\SaidaEstornoEntradaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\NaturezaLancamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NaturezaLancamento }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Almoxarifado\SaidaEstorno\CRUD:show.html.twig]]
+
+    patrimonial.admin.saida_estorno_entrada_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\SaidaEstornoEntradaItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: LancamentoMaterial }
+
+    patrimonial.admin.saida_autorizacao_abastecimento:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\SaidaAutorizacaoAbastecimentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Frota\Autorizacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Autorizacao }
+
+    patrimonial.admin.saida_transferencia:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\SaidaTransferenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PedidoTransferencia }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Almoxarifado\SaidaEntradaTransferencia\CRUD:show.html.twig]]
+
+    patrimonial.admin.lancamento_material:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\LancamentoMaterialAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: LancamentoMaterial }
+
+    patrimonial.admin.entrada_transferencia:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\EntradaTransferenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PedidoTransferencia }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Almoxarifado\SaidaEntradaTransferencia\CRUD:show.html.twig]]
+
+    patrimonial.admin.compra_direta_julgamento_proposta:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\JulgamentoPropostaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\CompraDireta, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: JulgamentoPropostaCompraDireta }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Compras\JulgamentoPropostaCompraDireta\CRUD:show.html.twig]]
+
+    patrimonial.admin.urbem.patrimonial_bundle.resources.config.sonata.compras.julgamento_proposta_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\JulgamentoPropostaItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\MapaItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: MapaItem }
+
+    patrimonial.admin.julgamento_licitacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\JulgamentoLicitacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Julgamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Julgamento }
+
+    patrimonial.admin.perecivel:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\PerecivelAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\Perecivel, PatrimonialBundle:Almoxarifado\PerecivelAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Perecivel }
+
+    patrimonial.admin.compras_configuracao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\ComprasConfiguracaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Administracao\Configuracao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configuracao }
+        calls:
+            - [ setTemplate, [show, PatrimonialBundle:Sonata\Compras\Configuracao\CRUD:show.html.twig]]
+
+    patrimonial.admin.compras_configuracao_entidade:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\ComprasConfiguracaoEntidadeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Administracao\ConfiguracaoEntidade, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Responsável por Entidade }
+
+    patrimonial.admin.saidas_diversas:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\SaidasDiversasAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\NaturezaLancamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NaturezaLancamento }
+
+    patrimonial.admin.saidas_diversas_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\SaidasDiversasItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: LancamentoMaterial }
+
+    patrimonial.admin.incluir_outra_solicitacao:
+        class: Urbem\PatrimonialBundle\Admin\IncluirOutraSolicitacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\Solicitacao, PatrimonialBundle:Compras\IncluirOutraSolicitacao]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Solicitacao }
+
+    patrimonial.admin.excluir_manutencao_paga:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\ExcluirManutencaoPagaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\ManutencaoPaga, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ManutencaoPaga }
+
+    patrimonial.admin.convenio_aditivos_publicacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ConvenioAditivosPublicacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivosPublicacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConvenioAditivosPublicacao }
+
+    patrimonial.admin.convenio_aditivos_anulacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Licitacao\ConvenioAditivosAnulacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivosAnulacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConvenioAditivosAnulacao }
+
+    app.admin.patrimonial.transferir:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\TransferirAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\HistoricoBem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Bem }
+
+    app.admin.patrimonial.transferir_bem:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\TransferirDestinoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\HistoricoBem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Bem }
+
+    patrimonial.admin.depreciacao_automatica:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\DepreciacaoAutomaticaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\Depreciacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Depreciacao }
+
+    patrimonial.admin.lancamento_depreciacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\LancamentoDepreciacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\LancamentoDepreciacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Lançamento Contábil de Depreciação }
+
+    patrimonial.admin.exportacao_arquivo_coletora:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Patrimonio\ExportacaoArquivoColetoraAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Patrimonio\ArquivoColetora, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Exportar Arquivo Coletora }
+
+    patrimonial.admin.mapa_item:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\MapaItemAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Compras\MapaItem, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Item do Mapa }
+
+    patrimonial.admin.almoxarifado_relatorios:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\Relatorios\ItensEstoqueAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, PatrimonialBundle:Almoxarifado\Relatorios\ItensEstoque]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatórios }
+
+    patrimonial.admin.movimentacao:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\Relatorios\MovimentacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, PatrimonialBundle:Almoxarifado\Relatorios\Movimentacao]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SonataReport }
+
+    patrimonial.admin.almoxarifado_relatorios_catalogo_item_sintetico:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\Relatorios\CatalogoItemSinteticoAdmin
+        arguments: [~, ~, PatrimonialBundle:Almoxarifado\Relatorios\CatalogoItemSinteticoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatórios - Catálogo Item - Sintético }
+
+    patrimonial.admin.almoxarifado_relatorios_catalogo_item_analitico:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Almoxarifado\Relatorios\CatalogoItemAnaliticoAdmin
+        arguments: [~, ~, PatrimonialBundle:Almoxarifado\Relatorios\CatalogoItemAnaliticoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatórios - Catálogo Item - Analítico }
+
+    patrimonial.admin.compras_relatorios_compra_estoque:
+        class: Urbem\PatrimonialBundle\Resources\config\Sonata\Compras\Relatorios\CompraEstoqueAdmin
+        arguments: [~, ~, PatrimonialBundle:Compras\Relatorios\CompraEstoqueAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatórios - Compra e Estoque }

@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col s12 servidor-table">
+        <a class="btn-flat">
+            <i class="mdi mdi-file-document left"></i>
+            {{ 'label.processo.documentosProcesso'|trans }}
+        </a>
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <tr>
+            <th class="th-rh">{{ 'label.nomeDocumento'|trans }}</th>
+            <th class="th-rh">{{ 'label.copiaDigital'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for swDocumentoProcesso in swProcesso.fkSwDocumentoProcessos %}
+            <tr>
+                <td class="td-rh">{{ swDocumentoProcesso.fkSwDocumento.nomDocumento }}</td>
+                <td class="td-rh">
+                    {% for swCopiaDigital in swDocumentoProcesso.fkSwCopiaDigitais %}
+                        {% set fileLink = admin.getFileLink(swCopiaDigital) %}
+                        <div>
+                            {% if fileLink is not null %}
+                                <a href="{{ asset(fileLink) }}" target="_blank">
+                                    {{ swCopiaDigital.anexo }}
+                                </a>
+                            {% else %}
+                                {{ swCopiaDigital.anexo }}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">Não existem atributos cadastrados para o assunto e a classificação deste processo.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

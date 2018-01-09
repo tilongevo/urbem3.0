@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCasoEspecialidade:
+    type: entity
+    table: folhapagamento.configuracao_evento_caso_especialidade
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codCaso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_caso
+        codEspecialidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especialidade
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoConfiguracaoEventoCasoCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCasoCargo
+            inversedBy: fkFolhapagamentoConfiguracaoEventoCasoEspecialidades
+            joinColumns:
+                cod_caso:
+                    referencedColumnName: cod_caso
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+        fkPessoalEspecialidade:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Especialidade
+            inversedBy: fkFolhapagamentoConfiguracaoEventoCasoEspecialidades
+            joinColumns:
+                cod_especialidade:
+                    referencedColumnName: cod_especialidade

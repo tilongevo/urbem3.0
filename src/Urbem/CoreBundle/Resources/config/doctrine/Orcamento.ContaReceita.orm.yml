@@ -1,0 +1,85 @@
+Urbem\CoreBundle\Entity\Orcamento\ContaReceita:
+    type: entity
+    table: orcamento.conta_receita
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\ContaReceitaRepository
+    uniqueConstraints:
+        uk_conta_receita_1:
+            columns:
+                - exercicio
+                - cod_estrutural
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+    fields:
+        codNorma:
+            type: integer
+            nullable: true
+            column: cod_norma
+        descricao:
+            type: string
+            nullable: true
+            length: 160
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 150
+            column: cod_estrutural
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkOrcamentoContaReceitas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkContabilidadeConfiguracaoLancamentoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoReceita
+            mappedBy: fkOrcamentoContaReceita
+        fkOrcamentoClassificacaoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ClassificacaoReceita
+            mappedBy: fkOrcamentoContaReceita
+        fkOrcamentoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            mappedBy: fkOrcamentoContaReceita
+    oneToOne:
+        fkImaConfiguracaoDirfIrrfContaReceita:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfIrrfContaReceita
+            mappedBy: fkOrcamentoContaReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+        fkTcerjContaReceita:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcerj\ContaReceita
+            mappedBy: fkOrcamentoContaReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta

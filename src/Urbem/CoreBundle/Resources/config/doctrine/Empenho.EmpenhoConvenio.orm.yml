@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Empenho\EmpenhoConvenio:
+    type: entity
+    table: empenho.empenho_convenio
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+    fields:
+        numConvenio:
+            type: integer
+            nullable: false
+            column: num_convenio
+    manyToOne:
+        fkLicitacaoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            inversedBy: fkEmpenhoEmpenhoConvenios
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            cascade:
+                - persist
+            inversedBy: fkEmpenhoEmpenhoConvenios
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkEmpenhoEmpenhoConvenio
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

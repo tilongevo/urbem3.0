@@ -1,0 +1,95 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 32px">
+        <input class="white-text grey btn col s12" type="button" name="cancel_{{ field.data.tipo }}" id="cancel_{{ field.data.tipo }}" value="Cancelar">
+    </div>
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn col s12" type="button" name="create_{{ field.data.tipo }}" id="create_{{ field.data.tipo }}" value="Incluir">
+    </div>
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">check_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn col s12" type="button" name="edit_{{ field.data.tipo }}" id="edit_{{ field.data.tipo }}" value="Alterar" style="text-align: right">
+    </div>
+</div>
+<div class="col s12 proprietarios">
+
+    <h3 class="col s10 box-title left-align show">{% if field.data.tipo == 'debito' %} {{ 'label.lote.listaDebito'|trans }} {% else %} {{ 'label.lote.listaCredito'|trans }} {% endif %}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableManual_{{ field.data.tipo }}" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.lote.codConta'|trans }}</th>
+            <th class="th-rh">{{ 'label.lote.codHistorico'|trans }}</th>
+            <th class="th-rh">{{ 'label.lote.valor'|trans }}</th>
+            <th class="th-rh">{{ 'acoes'|trans }}</th>
+        </tr>
+        <tr class="tr-rh row-model-{{ field.data.tipo }}" style="display:none;">
+            <td class="td-rh conta"></td>
+            <td class="td-rh historico"></td>
+            <td class="td-rh valor"></td>
+            <td class="td-rh">
+                <input type="hidden" class="imput-{{ field.data.tipo }}-id" name="{{ field.data.tipo }}_id[]" />
+                <input type="hidden" class="imput-{{ field.data.tipo }}-cod-plano" name="{{ field.data.tipo }}_codPlano[]" />
+                <input type="hidden" class="imput-{{ field.data.tipo }}-nom-conta" name="{{ field.data.tipo }}_nomConta[]" />
+                <input type="hidden" class="imput-{{ field.data.tipo }}-cod-historico" name="{{ field.data.tipo }}_codHistorico[]" />
+                <input type="hidden" class="imput-{{ field.data.tipo }}-nom-historico" name="{{ field.data.tipo }}_nomHistorico[]" />
+                <input type="hidden" class="imput-{{ field.data.tipo }}-vl-lancamento" name="{{ field.data.tipo }}_vlLancamento[]" />
+                <input type="hidden" class="imput-{{ field.data.tipo }}-complemento" name="{{ field.data.tipo }}_complemento[]" />
+                <input type="hidden" class="imput-{{ field.data.tipo }}-novo" name="{{ field.data.tipo }}_novo[]" value="1" />
+                <i class="material-icons blue-text text-darken-4 edit-{{ field.data.tipo }}">edit</i>
+                <i class="material-icons blue-text text-darken-4 remove-{{ field.data.tipo }}">delete</i>
+            </td>
+        </tr>
+        {% for lancamento in field.data.lancamentos|sort %}
+            {% for valorLancamento in lancamento.fkContabilidadeValorLancamentos %}
+                {% if field.data.tipo == 'debito' %}
+                    {% if valorLancamento.fkContabilidadeContaDebito is not null %}
+                        <tr class="tr-rh row-debito" id="debito-{{ valorLancamento.sequencia }}">
+                            <td class="td-rh conta">{{ valorLancamento.fkContabilidadeContaDebito.fkContabilidadePlanoAnalitica }}</td>
+                            <td class="td-rh historico">{{ lancamento.fkContabilidadeHistoricoContabil }}</td>
+                            <td class="td-rh valor">R${{ valorLancamento.vlLancamento|number_format(2, ',', '.') }}</td>
+                            <td class="td-rh">
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-id" name="{{ field.data.tipo }}_id[]" value="{{ valorLancamento.sequencia }}" />
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-cod-plano" name="{{ field.data.tipo }}_codPlano[]" value="{{ valorLancamento.fkContabilidadeContaDebito.fkContabilidadePlanoAnalitica.codPlano }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-nom-conta" name="{{ field.data.tipo }}_nomConta[]" value="{{ valorLancamento.fkContabilidadeContaDebito.fkContabilidadePlanoAnalitica }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-cod-historico" name="{{ field.data.tipo }}_codHistorico[]" value="{{ lancamento.fkContabilidadeHistoricoContabil.codHistorico }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-nom-historico" name="{{ field.data.tipo }}_nomHistorico[]" value="{{ lancamento.fkContabilidadeHistoricoContabil }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-vl-lancamento" name="{{ field.data.tipo }}_vlLancamento[]" value="{{ valorLancamento.vlLancamento }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-complemento" name="{{ field.data.tipo }}_complemento[]" value="{{ lancamento.complemento }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-novo" name="{{ field.data.tipo }}_novo[]" value="0" />
+                                <i class="material-icons blue-text text-darken-4 edit-{{ field.data.tipo }}">edit</i>
+                                <i class="material-icons blue-text text-darken-4 remove-{{ field.data.tipo }}">delete</i>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% else %}
+                    {% if valorLancamento.fkContabilidadeContaCredito is not null %}
+                        <tr class="tr-rh row-credito" id="credito-{{ valorLancamento.sequencia }}">
+                            <td class="td-rh conta">{{ valorLancamento.fkContabilidadeContaCredito.fkContabilidadePlanoAnalitica }}</td>
+                            <td class="td-rh historico">{{ lancamento.fkContabilidadeHistoricoContabil }}</td>
+                            <td class="td-rh valor">R${{ (valorLancamento.vlLancamento * -1)|number_format(2, ',', '.') }}</td>
+                            <td class="td-rh">
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-id" name="{{ field.data.tipo }}_id[]" value="{{ valorLancamento.sequencia }}" />
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-cod-plano" name="{{ field.data.tipo }}_codPlano[]" value="{{ valorLancamento.fkContabilidadeContaCredito.fkContabilidadePlanoAnalitica.codPlano }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-nom-conta" name="{{ field.data.tipo }}_nomConta[]" value="{{ valorLancamento.fkContabilidadeContaCredito.fkContabilidadePlanoAnalitica }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-cod-historico" name="{{ field.data.tipo }}_codHistorico[]" value="{{ lancamento.fkContabilidadeHistoricoContabil.codHistorico }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-nom-historico" name="{{ field.data.tipo }}_nomHistorico[]" value="{{ lancamento.fkContabilidadeHistoricoContabil }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-vl-lancamento" name="{{ field.data.tipo }}_vlLancamento[]" value="{{ valorLancamento.vlLancamento * -1 }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-complemento" name="{{ field.data.tipo }}_complemento[]" value="{{ lancamento.complemento }}"/>
+                                <input type="hidden" class="imput-{{ field.data.tipo }}-novo" name="{{ field.data.tipo }}_novo[]" value="0" />
+                                <i class="material-icons blue-text text-darken-4 edit-{{ field.data.tipo }}">edit</i>
+                                <i class="material-icons blue-text text-darken-4 remove-{{ field.data.tipo }}">delete</i>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        <tr class="tr-rh empty-row-{{ field.data.tipo }}">
+            <td colspan="5">{{ 'listagemVazia'|trans }}</td>
+        </tr>
+    </table>
+</div>

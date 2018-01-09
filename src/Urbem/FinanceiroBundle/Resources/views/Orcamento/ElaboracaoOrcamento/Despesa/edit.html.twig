@@ -1,0 +1,137 @@
+<table class="bordered highlight" style="width:100%">
+    <tbody>
+        <tr class="td-rh" >
+            <th colspan="15" class="text-center th-list-sonata">
+                {{ 'label.elaboracaoDespesa.registrosMetas'|trans }}
+                <br/>
+                {{ 'label.elaboracaoDespesa.despesa'|trans }} - {{ 'label.elaboracaoDespesa.periodos'|trans }}
+            </th>
+        </tr>
+        <tr class="tr-rh">
+            <th class="th-list-sonata text-center" >{{ 'label.elaboracaoDespesa.periodos'|trans }}</th>
+            <td class="td-rh text-center">1º</td>
+            <td class="td-rh text-center">2º</td>
+            <td class="td-rh text-center">3º</td>
+            <td class="td-rh text-center">4º</td>
+            <td class="td-rh text-center">5º</td>
+            <td class="td-rh text-center">6º</td>
+            <td class="td-rh text-center">{{ 'label.total'|trans }}</td>
+        </tr>
+        {% set valorTotal = 0 %}
+        {% set percentualTotal = 0 %}
+        {% for item in field.data.itens %} {% set valorTotal = valorTotal + item.vlPrevisto %} {% endfor %}
+        <tr class="tr-rh">
+            <th colspan="1" class="th-list-sonata text-center" >{{ 'label.ppa.porcentagem'|trans }}</th>
+            {% if field.data.itens|length > 0 %}
+                {% for item in field.data.itens %}
+                    {% set percentualTotal = percentualTotal + (item.vlPrevisto * 100 / valorTotal) %}
+                    {% set isEditable = (item.exercicio >= field.data.exercicioAtual and item.periodo >= field.data.periodoAtual) %}
+                    <td class="td-rh">
+                        <div class=" sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                            <div class="input-group">
+                                <input type="text" name="vlPercentual_{{ item.periodo }}" id="vlPercentual_{{ item.periodo }}" class="tb_percent input-rh input-rh" value="{{ (item.vlPrevisto * 100 / valorTotal)|number_format(2,',','.') }}"
+                                {{ (isEditable)?'':'data-no-edit="true"' }} {{ (isEditable)?'':'readonly="readonly"' }}>
+                                <span class="input-group-addon" style="padding: 6px 12px !important">
+                                        <span class="fa-percent fa"></span>
+                                    </span>
+                            </div>
+                        </div>
+                    </td>
+                {% endfor %}
+            {% else %}
+                {% for i in 1..6 %}
+                    <td class="td-rh">
+                        <div class=" sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                            <div class="input-group">
+                                <input type="text" name="vlPercentual_{{ i }}" id="vlPercentual_{{ i }}" class="tb_percent input-rh input-rh" value="0,00">
+                                <span class="input-group-addon" style="padding: 6px 12px !important">
+                                        <span class="fa-percent fa"></span>
+                                    </span>
+                            </div>
+                        </div>
+                    </td>
+                {% endfor %}
+            {% endif %}
+            <td class="td-rh">
+                <div class=" sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                    <div class="input-group">
+                        <input type="text" name="totalPercentual" id="totalPercentual" class="total_percent" value="{{ percentualTotal|number_format(2, ',', '.') }}">
+                        <span class="input-group-addon" style="padding: 6px 12px !important">
+                            <span class="fa-percent fa"></span>
+                        </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr class="tr-rh">
+            <th colspan="1" class="th-list-sonata text-center" >{{ 'label.suplementacao.valor'|trans }}</th>
+        {% if field.data.itens|length > 0 %}
+            {% for item in field.data.itens %}
+                <td class="td-rh">
+                    <div class=" sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                        <div class="input-group">
+                            <input type="text" name="vl_{{ loop.index }}" id="vl_{{ loop.index }}" class="money tb_val" style="text-align: center;" value="{{ item.vlPrevisto }}">
+                            <span class="input-group-addon" style="padding: 6px 12px !important">
+                            <span class="">R$</span>
+                        </span>
+                        </div>
+                    </div>
+                </td>
+            {% endfor %}
+        {% else %}
+            {% for i in 1..6 %}
+                <td class="td-rh">
+                    <div class=" sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                        <div class="input-group">
+                            <input type="text" name="vl_{{ i }}" id="vl_{{ i }}" class="money tb_val" style="text-align: center;" value="0,00">
+                            <span class="input-group-addon" style="padding: 6px 12px !important">
+                                <span class="">R$</span>
+                            </span>
+                        </div>
+                    </div>
+                </td>
+            {% endfor %}
+        {% endif %}
+            <td class="td-rh">
+                <div class=" sonata-ba-field sonata-ba-field-standard-natural input-porcentagem">
+                    <div class="input-group">
+                        <input type="text" name="totalValor" id="totalValor" class="money total_val" value="{{ valorTotal|number_format(2, ',', '.') }}">
+                        <span class="input-group-addon" style="padding: 6px 12px !important">
+                            <span class="">R$</span>
+                        </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% if field.data.itens|length > 0 %}
+            <tr class="tr-rh">
+                <th colspan="1" class="th-list-sonata text-center" >{{ 'label.elaboracaoReceita.receita.arrecadado'|trans }}</th>
+                {% set valorArrecadadoTotal = 0 %}
+                {% for lancamento in field.data.itens %}
+                    {% set valorArrecadadoTotal = valorArrecadadoTotal + lancamento.vlPrevisto %}
+                    <td class="td-rh">
+                        <div class=" sonata-ba-field sonata-ba-field-standard-natural input-lancamento">
+                            <div class="input-group">
+                                <input type="text" name="lancamento_{{ loop.index }}" id="lancamento_{{ loop.index }}" class="money tb_val" style="text-align: center;" value="{{ lancamento.vlPrevisto|number_format(2, ',', '.') }}">
+                                <span class="input-group-addon" style="padding: 6px 12px !important">
+                            <span class="">R$</span>
+                        </span>
+                            </div>
+                        </div>
+                    </td>
+                {% endfor %}
+                <td class="td-rh">
+                    <div class=" sonata-ba-field sonata-ba-field-standard-natural input-lancamento">
+                        <div class="input-group">
+                            <input type="text" name="totalValorArrecadado" id="totalValorArrecadado" class="money total_val" value="{{ valorArrecadadoTotal|number_format(2, ',', '.') }}" readonly="readonly">
+                            <span class="input-group-addon" style="padding: 6px 12px !important">
+                        <span class="">R$</span>
+                    </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+<div class="totalMsgValidate" style="width: 25%; float: right;"></div>

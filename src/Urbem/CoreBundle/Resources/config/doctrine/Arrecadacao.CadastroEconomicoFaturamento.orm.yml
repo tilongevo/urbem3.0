@@ -1,0 +1,66 @@
+Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoFaturamento:
+    type: entity
+    table: arrecadacao.cadastro_economico_faturamento
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        competencia:
+            type: string
+            nullable: false
+            length: 7
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkArrecadacaoCadastroEconomicoFaturamentos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+    oneToMany:
+        fkArrecadacaoCadastroEconomicoCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoCalculo
+            mappedBy: fkArrecadacaoCadastroEconomicoFaturamento
+        fkArrecadacaoRetencaoFontes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\RetencaoFonte
+            mappedBy: fkArrecadacaoCadastroEconomicoFaturamento
+        fkArrecadacaoAtributoCadEconFaturamentoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoCadEconFaturamentoValor
+            mappedBy: fkArrecadacaoCadastroEconomicoFaturamento
+        fkArrecadacaoFaturamentoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FaturamentoServico
+            mappedBy: fkArrecadacaoCadastroEconomicoFaturamento
+    oneToOne:
+        fkArrecadacaoFaturamentoSemMovimento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FaturamentoSemMovimento
+            mappedBy: fkArrecadacaoCadastroEconomicoFaturamento
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoIrrf:
+    type: entity
+    table: folhapagamento.desconto_externo_irrf
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vlBaseIrrf:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_base_irrf
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkFolhapagamentoDescontoExternoIrrfs
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToMany:
+        fkFolhapagamentoDescontoExternoIrrfValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoIrrfValor
+            mappedBy: fkFolhapagamentoDescontoExternoIrrf
+    oneToOne:
+        fkFolhapagamentoDescontoExternoIrrfAnulado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoIrrfAnulado
+            mappedBy: fkFolhapagamentoDescontoExternoIrrf
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp

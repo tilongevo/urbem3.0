@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Tcmgo\OrgaoControleInterno:
+    type: entity
+    table: tcmgo.orgao_controle_interno
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoOrgaoControleInternos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkTcmgoOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Orgao
+            inversedBy: fkTcmgoOrgaoControleInterno
+            joinColumns:
+                num_orgao:
+                    referencedColumnName: num_orgao
+                exercicio:
+                    referencedColumnName: exercicio

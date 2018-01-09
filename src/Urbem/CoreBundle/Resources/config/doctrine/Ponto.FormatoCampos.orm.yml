@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Ponto\FormatoCampos:
+    type: entity
+    table: ponto.formato_campos
+    id:
+        codCampo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_campo
+    fields:
+        nomCampo:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_campo
+    oneToMany:
+        fkPontoFormatoTamanhoFixos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoTamanhoFixo
+            mappedBy: fkPontoFormatoCampos
+        fkPontoDelimitadorColunas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DelimitadorColunas
+            mappedBy: fkPontoFormatoCampos

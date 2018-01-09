@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Tceal\OcorrenciaFuncional:
+    type: entity
+    table: tceal.ocorrencia_funcional
+    id:
+        codOcorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ocorrencia
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkTcealOcorrenciaFuncionalAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\OcorrenciaFuncionalAssentamento
+            mappedBy: fkTcealOcorrenciaFuncional

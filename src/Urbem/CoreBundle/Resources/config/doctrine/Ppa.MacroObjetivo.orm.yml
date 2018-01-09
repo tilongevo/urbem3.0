@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Ppa\MacroObjetivo:
+    type: entity
+    table: ppa.macro_objetivo
+    id:
+        codMacro:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ppa.macro_objetivo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_macro
+    fields:
+        codPpa:
+            type: integer
+            nullable: false
+            column: cod_ppa
+        descricao:
+            type: string
+            nullable: false
+            length: 450
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkPpaPpa:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Ppa
+            inversedBy: fkPpaMacroObjetivos
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+    oneToMany:
+        fkPpaProgramaSetoriais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaSetorial
+            mappedBy: fkPpaMacroObjetivo

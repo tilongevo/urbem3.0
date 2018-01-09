@@ -1,0 +1,93 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle:Relatorio:header.html.twig' %}
+        <p align="left">
+            <span style="font-size: 13pt"><strong>{{ 'label.arrecadacaoExtratoDebitosReport.modulo' |trans|upper }}</h5></strong></span>
+        </p>
+
+        {% if dados.inscricaoMunicipal != '' %}
+            <h5 class="box-title left-align">
+                {{ 'label.arrecadacaoExtratoDebitosReport.inscricaoImobiliaria'|trans }}
+                : {{ dados.inscricaoMunicipal ~ ' - ' ~ inscricaoLogradouro.endereco }}
+            </h5>
+            <h5 class="box-title left-align">
+                {{ 'label.arrecadacaoExtratoDebitosReport.contribuinte'|trans }} : {{ dados.contribuinte }}
+            </h5>
+        {% elseif dados.inscricaoEconomica != '' %}
+            <h5 class="box-title left-align">{{ 'label.arrecadacaoExtratoDebitosReport.inscricaoEconomica'|trans }}
+                : {{ dados.inscricaoEconomica ~' - ' ~dados.contribuinte }}
+            </h5>
+            <h5 class="box-title left-align">
+                {{ 'label.arrecadacaoExtratoDebitosReport.dadosComplementares'|trans }}
+                : {{ inscricaoEndereco.endereco }}
+            </h5>
+        {% elseif dados.contribuinte != '' %}
+            <h5 class="box-title left-align">{{ 'label.arrecadacaoExtratoDebitosReport.contribuinte'|trans }}
+                :{{ dados.numcgm ~' - ' ~dados.contribuinte }}</h5>
+        {% endif %}
+
+        {% for lancamento in listaParcelasEmAberto %}
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th colspan="2">{{ 'label.arrecadacaoExtratoDebitosReport.lista.lancamento'|trans|upper ~': '~ lancamento.cod_lancamento }}</th>
+                    <th colspan="8">{{ 'label.arrecadacaoExtratoDebitosReport.lista.origem'|trans|upper ~': '~ lancamento.origem }}</th>
+                </tr>
+                <tr style="background: #b3b3b3;">
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.exercicio'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.situacao'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.numeracao'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.parcela'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.venc'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.valor'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.juros'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.multa'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.correcao'|trans|upper }}</th>
+                    <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.total'|trans|upper }}</th>
+                </tr>
+                {% for parcela in parcelasLancamento[lancamento.cod_lancamento] %}
+                    <tr>
+                        <td style="text-align: center">{{ parcela.exercicio }}</td>
+                        <td>{{ parcela.situacao_parcela }}</td>
+                        <td>{{ parcela.numeracao }}</td>
+                        <td style="text-align: center">{{ parcela.nr_parcela~'/'~parcela.total_parcelas }}</td>
+                        <td style="text-align: center">{{ parcela.vencimento_br }}</td>
+                        <td style="text-align: right">{{ parcela.valor|number_format_decimal({'fraction_digits':2 }) }}</td>
+                        <td style="text-align: right">{{ parcela.juros|number_format_decimal({'fraction_digits':2}) }}</td>
+                        <td style="text-align: right">{{ parcela.multa|number_format_decimal({'fraction_digits':2 }) }}</td>
+                        <td style="text-align: right">{{ parcela.correcao|number_format_decimal({'fraction_digits':2 }) }}</td>
+                        <td style="text-align: right">{{ parcela.total|number_format_decimal({'fraction_digits':2 }) }}</td>
+                    </tr>
+                {% endfor %}
+                </thead>
+            </table>
+        {% endfor %}
+
+        <h5 class="box-title left-align">
+            {{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.filtros'|trans }}
+        </h5>
+        {% if dados.inscricaoMunicipal != '' %}
+            <h5 class="box-title left-align">
+                {{ 'label.arrecadacaoExtratoDebitosReport.inscricaoImobiliaria'|trans }}
+                : {{ dados.inscricaoMunicipal ~ ' - ' ~ inscricaoLogradouro.endereco }}
+            </h5>
+        {% elseif dados.inscricaoEconomica != '' %}
+            <h5 class="box-title left-align">{{ 'label.arrecadacaoExtratoDebitosReport.inscricaoEconomica'|trans }}
+                : {{ dados.inscricaoEconomica }}
+            </h5>
+        {% elseif dados.contribuinte != '' %}
+            <h5 class="box-title left-align">{{ 'label.arrecadacaoExtratoDebitosReport.contribuinte'|trans }}
+                :{{ dados.numcgm~' - '~dados.contribuinte }}</h5>
+        {% endif %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+{% endblock %}

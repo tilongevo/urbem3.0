@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoDecimo:
+    type: entity
+    table: folhapagamento.tipo_evento_decimo
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkFolhapagamentoDecimoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DecimoEvento
+            mappedBy: fkFolhapagamentoTipoEventoDecimo

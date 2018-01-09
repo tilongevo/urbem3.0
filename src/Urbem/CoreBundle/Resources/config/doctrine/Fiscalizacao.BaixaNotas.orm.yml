@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\BaixaNotas:
+    type: entity
+    table: fiscalizacao.baixa_notas
+    id:
+        codBaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_baixa
+        nrNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: nr_nota
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkFiscalizacaoBaixaAutorizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\BaixaAutorizacao
+            inversedBy: fkFiscalizacaoBaixaNotas
+            joinColumns:
+                cod_baixa:
+                    referencedColumnName: cod_baixa
+        fkFiscalizacaoTipoInutilizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\TipoInutilizacao
+            inversedBy: fkFiscalizacaoBaixaNotas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

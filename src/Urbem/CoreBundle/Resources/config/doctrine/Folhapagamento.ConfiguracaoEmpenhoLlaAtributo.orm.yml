@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaAtributo:
+    type: entity
+    table: folhapagamento.configuracao_empenho_lla_atributo
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConfiguracaoLla:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao_lla
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoLlaAtributos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkFolhapagamentoConfiguracaoEmpenhoLla:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLla
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoLlaAtributos
+            joinColumns:
+                cod_configuracao_lla:
+                    referencedColumnName: cod_configuracao_lla
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+    oneToMany:
+        fkFolhapagamentoConfiguracaoEmpenhoLlaAtributoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaAtributoValor
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenhoLlaAtributo

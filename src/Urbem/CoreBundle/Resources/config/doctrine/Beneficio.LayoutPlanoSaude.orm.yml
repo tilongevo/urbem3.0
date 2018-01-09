@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Beneficio\LayoutPlanoSaude:
+    type: entity
+    table: beneficio.layout_plano_saude
+    id:
+        codLayout:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_layout
+    fields:
+        padrao:
+            type: string
+            nullable: false
+            length: 25
+    oneToMany:
+        fkBeneficioLayoutFornecedores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\LayoutFornecedor
+            mappedBy: fkBeneficioLayoutPlanoSaude

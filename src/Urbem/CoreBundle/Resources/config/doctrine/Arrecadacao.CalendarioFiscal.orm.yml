@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Arrecadacao\CalendarioFiscal:
+    type: entity
+    table: arrecadacao.calendario_fiscal
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        valorMinimo:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_minimo
+        valorMinimoLancamento:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_minimo_lancamento
+        valorMinimoParcela:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_minimo_parcela
+    oneToMany:
+        fkArrecadacaoAtributoCalendarioValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoCalendarioValor
+            mappedBy: fkArrecadacaoCalendarioFiscal
+        fkArrecadacaoGrupoVencimentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoVencimento
+            mappedBy: fkArrecadacaoCalendarioFiscal
+    oneToOne:
+        fkArrecadacaoGrupoCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoCredito
+            inversedBy: fkArrecadacaoCalendarioFiscal
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Tceal\DeParaTipoCargo:
+    type: entity
+    table: tceal.de_para_tipo_cargo
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+    fields:
+        codTipoCargoTce:
+            type: integer
+            nullable: false
+            column: cod_tipo_cargo_tce
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcealDeParaTipoCargos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkTcealDeParaTipoCargos
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao
+        fkTcealTipoCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\TipoCargo
+            inversedBy: fkTcealDeParaTipoCargos
+            joinColumns:
+                cod_tipo_cargo_tce:
+                    referencedColumnName: cod_tipo_cargo

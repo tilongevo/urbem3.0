@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Calendario\PontoFacultativo:
+    type: entity
+    table: calendario.ponto_facultativo
+    id:
+        codFeriado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_feriado
+    fields: {  }
+    oneToMany:
+        fkCalendarioCalendarioPontoFacultativos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioPontoFacultativo
+            mappedBy: fkCalendarioPontoFacultativo
+    oneToOne:
+        fkCalendarioFeriado:
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\Feriado
+            inversedBy: fkCalendarioPontoFacultativo
+            joinColumns:
+                cod_feriado:
+                    referencedColumnName: cod_feriado

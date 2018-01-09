@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Cgm\Conta:
+    type: entity
+    table: cgm.conta
+    id:
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        numConta:
+            type: string
+            nullable: false
+            length: 20
+            column: num_conta
+        dtCriacao:
+            type: date
+            nullable: true
+            column: dt_criacao
+    manyToOne:
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkCgmContas
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+        fkCgmTipoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Cgm\TipoConta
+            inversedBy: fkCgmContas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkCgmContaCgns:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cgm\ContaCgm
+            mappedBy: fkCgmConta

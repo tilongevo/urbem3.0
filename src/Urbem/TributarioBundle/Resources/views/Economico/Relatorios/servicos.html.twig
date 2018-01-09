@@ -1,0 +1,32 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Economico/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'label.economico.servico.codigo'|trans|upper }}</td>
+                    <td>{{ 'label.economico.servico.nomeServico'|trans|upper }}</td>
+                    <td>{{ 'label.economico.servico.vigencia'|trans|upper }}</td>
+                    <td>{{ 'label.economico.servico.aliquota'|trans|upper }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for servico in servicos %}
+                    <tr>
+                        <td>{{ servico.cod_estrutural}}</td>
+                        <td>{{ servico.nom_servico}}</td>
+                        <td>{{ servico.vigencia}}</td>
+                        <td>{{ servico.aliquota}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

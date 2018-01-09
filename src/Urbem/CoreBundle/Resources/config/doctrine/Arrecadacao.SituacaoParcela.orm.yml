@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Arrecadacao\SituacaoParcela:
+    type: entity
+    table: arrecadacao.situacao_parcela
+    id:
+        codSituacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_situacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkArrecadacaoParcelaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ParcelaDocumento
+            mappedBy: fkArrecadacaoSituacaoParcela

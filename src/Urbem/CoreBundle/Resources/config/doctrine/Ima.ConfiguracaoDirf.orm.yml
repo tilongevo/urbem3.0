@@ -1,0 +1,108 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirf:
+    type: entity
+    table: ima.configuracao_dirf
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+        responsavelPrefeitura:
+            type: integer
+            nullable: false
+            column: responsavel_prefeitura
+        responsavelEntrega:
+            type: integer
+            nullable: false
+            column: responsavel_entrega
+        telefone:
+            type: string
+            nullable: false
+            length: 11
+        ramal:
+            type: string
+            nullable: false
+            length: 5
+        fax:
+            type: string
+            nullable: false
+            length: 11
+        email:
+            type: string
+            nullable: false
+            length: 30
+        pagamentoMesCompetencia:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+            column: pagamento_mes_competencia
+        codEventoMolestia:
+            type: integer
+            nullable: true
+            column: cod_evento_molestia
+    manyToOne:
+        fkImaNaturezaEstabelecimento:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\NaturezaEstabelecimento
+            inversedBy: fkImaConfiguracaoDirfs
+            joinColumns:
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkImaConfiguracaoDirfs
+            joinColumns:
+                responsavel_prefeitura:
+                    referencedColumnName: numcgm
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkImaConfiguracaoDirfs
+            joinColumns:
+                cod_evento_molestia:
+                    referencedColumnName: cod_evento
+        fkSwCgm1:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkImaConfiguracaoDirfs1
+            joinColumns:
+                responsavel_entrega:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkImaConfiguracaoDirfIrrfContaReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfIrrfContaReceita
+            mappedBy: fkImaConfiguracaoDirf
+        fkImaConfiguracaoDirfPlanos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfPlano
+            mappedBy: fkImaConfiguracaoDirf
+        fkImaConfiguracaoDirfIrrfPlanoContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfIrrfPlanoConta
+            mappedBy: fkImaConfiguracaoDirf
+        fkImaConfiguracaoDirfPrestadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfPrestador
+            mappedBy: fkImaConfiguracaoDirf
+        fkImaConfiguracaoDirfInss:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfInss
+            mappedBy: fkImaConfiguracaoDirf

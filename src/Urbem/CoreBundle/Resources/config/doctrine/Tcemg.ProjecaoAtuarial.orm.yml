@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Tcemg\ProjecaoAtuarial:
+    type: entity
+    table: tcemg.projecao_atuarial
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ProjecaoAtuarialRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicioEntidade:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_entidade
+    fields:
+        vlPatronal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_patronal
+        vlReceita:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_receita
+        vlDespesa:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_despesa
+        vlRpps:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_rpps
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcemgProjecaoAtuariais
+            joinColumns:
+                exercicio_entidade:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

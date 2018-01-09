@@ -1,0 +1,69 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container-rh">
+    <div class="row title-index filtro filtro-sonata z-depth-0 filtro-rh">
+        <form method="get" name="frm" action="{{ path('folha_pagamento_padrao_index')}}">
+                <div class="col s3 field-filtro">
+                    <label for="Padrao" class="control-label label-rh">Padrão Salarial</label>
+                    <div>
+                        <input id="padrao" name="padrao" type="text" class="input-rh">
+                    </div>
+                </div>
+            <div class="col s1 busca-rh">
+                <div class="buscar center">
+                    <button type="submit" class="hide-on-med-and-down btn waves-effect waves-light blue-darken-4">
+                        <i class="material-icons">search</i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <a class="left hide-on-med-and-down waves-effect waves-light btn blue darken-4 add-rh" href="{{ path('folha_pagamento_padrao_new') }}"><i class="material-icons left icon-rh">add</i>Incluir</a>
+    </div>
+    <div class="row">
+        <table class="bordered highlight">
+            <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                  <th class="th-rh">Codigo Padrão</th>
+                  <th class="th-rh">Descrição</th>
+                  <th class="th-rh">Horas Mensais</th>
+                  <th class="th-rh">Horas Semanais</th>
+                  <th class="th-rh"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for padrao in padraos %}
+              <tr>
+                <td class="td-rh"><a href="{{ path('folha_pagamento_padrao_show', { 'id': padrao.codPadrao }) }}">{{ padrao.codPadrao }}</a></td>
+                <td class="td-rh">{{ padrao.descricao }}</td>
+                <td class="td-rh">{{ padrao.horasMensais }}</td>
+                <td class="td-rh">{{ padrao.horasSemanais }}</td>
+                <td class="td-rh">
+                  <div class="btn-group">
+                    <a href="{{ path('folha_pagamento_padrao_show', { 'id': padrao.codPadrao }) }}" data-position="left" data-delay="50" data-tooltip="Detalhe" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-tooltip-id="d5c891dc-189c-f92e-efa7-e36184b2038c">
+                        <i class="fa fa-search-plus"></i>
+                    </a>
+                    <a href="{{ path('folha_pagamento_padrao_edit', { 'id': padrao.codPadrao }) }}" data-position="left" data-delay="50" data-tooltip="Editar" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped" data-tooltip-id="d5c891dc-189c-f92e-efa7-e36184b2038c">
+                        <i class="material-icons">edit</i>
+                    </a>
+                  <button type="submit" class="btn btn-delete-sonata blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir" data-action="{{ path('folha_pagamento_padrao_delete', { 'id': padrao.codPadrao }) }}" data-token="{{ csrf_token('form') }}">
+                      <i class="material-icons">delete</i>
+                  </button>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="center">
+      {{ knp_pagination_render(padraos) }}
+    </div>
+</div>
+{% block javascript %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem.js') }}"></script>
+{% endblock javascript %}
+{% endblock content %}

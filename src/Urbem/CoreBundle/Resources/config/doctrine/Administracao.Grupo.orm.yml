@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Administracao\Grupo:
+    type: entity
+    table: administracao.grupo
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\GrupoRepository
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: administracao.grupo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_grupo
+    fields:
+        nomGrupo:
+            type: string
+            nullable: false
+            length: 255
+            column: nom_grupo
+        descGrupo:
+            type: string
+            nullable: false
+            length: 255
+            column: desc_grupo
+        ativo:
+            type: boolean
+            nullable: true
+    oneToMany:
+        fkAdministracaoGrupoPermissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\GrupoPermissao
+            mappedBy: fkAdministracaoGrupo
+        fkAdministracaoGrupoUsuarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\GrupoUsuario
+            mappedBy: fkAdministracaoGrupo

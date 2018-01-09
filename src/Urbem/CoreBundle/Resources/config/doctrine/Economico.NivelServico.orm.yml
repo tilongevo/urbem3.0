@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Economico\NivelServico:
+    type: entity
+    table: economico.nivel_servico
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\NivelServicoRepository
+    id:
+        codVigencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+                sequenceGenerator:
+                    sequenceName: economico.nivel_seq
+                    allocationSize: 1
+                    initialValue: 1
+            column: cod_vigencia
+        codNivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel
+    fields:
+        nomNivel:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_nivel
+        mascara:
+            type: string
+            nullable: false
+            length: 10
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkEconomicoVigenciaServico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\VigenciaServico
+            inversedBy: fkEconomicoNivelServicos
+            joinColumns:
+                cod_vigencia:
+                    referencedColumnName: cod_vigencia
+    oneToMany:
+        fkEconomicoNivelServicoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelServicoValor
+            mappedBy: fkEconomicoNivelServico

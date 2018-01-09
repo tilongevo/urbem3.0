@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoConfiguracaoMedia:
+    type: entity
+    table: folhapagamento.tipo_evento_configuracao_media
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codCaso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_caso
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkFolhapagamentoTipoMedia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoMedia
+            inversedBy: fkFolhapagamentoTipoEventoConfiguracaoMedias
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkFolhapagamentoConfiguracaoEventoCaso:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCaso
+            inversedBy: fkFolhapagamentoTipoEventoConfiguracaoMedia
+            joinColumns:
+                cod_caso:
+                    referencedColumnName: cod_caso
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

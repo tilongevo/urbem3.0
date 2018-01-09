@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\SwAtributoDinamico:
+    type: entity
+    table: sw_atributo_dinamico
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        naoNulo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+            column: nao_nulo
+        nomAtributo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_atributo
+        valorPadrao:
+            type: text
+            nullable: false
+            column: valor_padrao
+        ajuda:
+            type: string
+            nullable: false
+            length: 80
+        mascara:
+            type: string
+            nullable: false
+            length: 40
+        indexado:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+    manyToOne:
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkSwAtributoDinamicos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+        fkAdministracaoTipoAtributo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\TipoAtributo
+            inversedBy: fkSwAtributoDinamicos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkSwAtributoValorPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoValorPadrao
+            mappedBy: fkSwAtributoDinamico
+        fkSwAtributoIntegridades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoIntegridade
+            mappedBy: fkSwAtributoDinamico

@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Compras\CotacaoItem:
+    type: entity
+    table: compras.cotacao_item
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+        lote:
+            type: integer
+            generator:
+                strategy: NONE
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+    fields:
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 4
+    manyToOne:
+        fkComprasCotacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Cotacao
+            inversedBy: fkComprasCotacaoItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+        fkAlmoxarifadoCatalogoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            inversedBy: fkComprasCotacaoItens
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+    oneToMany:
+        fkComprasCotacaoFornecedorItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItem
+            mappedBy: fkComprasCotacaoItem

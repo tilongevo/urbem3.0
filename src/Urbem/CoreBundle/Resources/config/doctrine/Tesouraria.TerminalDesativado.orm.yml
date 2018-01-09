@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Tesouraria\TerminalDesativado:
+    type: entity
+    table: tesouraria.terminal_desativado
+    id:
+        codTerminal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_terminal
+    fields:
+        timestampDesativado:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_desativado
+    oneToOne:
+        fkTesourariaTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Terminal
+            inversedBy: fkTesourariaTerminalDesativado
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal

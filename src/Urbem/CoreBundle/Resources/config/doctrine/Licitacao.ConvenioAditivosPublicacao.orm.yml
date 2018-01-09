@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivosPublicacao:
+    type: entity
+    table: licitacao.convenio_aditivos_publicacao
+    id:
+        exercicioConvenio:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_convenio
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        numAditivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_aditivo
+        dtPublicacao:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_publicacao
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        observacao:
+            type: string
+            nullable: false
+            length: 200
+        numPublicacao:
+            type: integer
+            nullable: true
+            column: num_publicacao
+    manyToOne:
+        fkLicitacaoConvenioAditivos:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ConvenioAditivos
+            inversedBy: fkLicitacaoConvenioAditivosPublicacoes
+            joinColumns:
+                exercicio_convenio:
+                    referencedColumnName: exercicio_convenio
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio
+                num_aditivo:
+                    referencedColumnName: num_aditivo
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoConvenioAditivosPublicacoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

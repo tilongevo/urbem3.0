@@ -1,0 +1,97 @@
+Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacao:
+    type: entity
+    table: almoxarifado.catalogo_classificacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\CatalogoClassificacaoRepository
+    indexes:
+        ix_catalogo_classificacao_1:
+            columns:
+                - cod_catalogo
+    uniqueConstraints:
+        uk_catalogo_classificacao_1:
+            columns:
+                - cod_catalogo
+                - cod_estrutural
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codCatalogo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_catalogo
+    fields:
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 160
+            column: cod_estrutural
+        descricao:
+            type: string
+            nullable: false
+            length: 400
+        descricaoIng:
+            type: string
+            nullable: true
+            length: 400
+            column: descricao_ing
+        descricaoEsp:
+            type: string
+            nullable: true
+            length: 400
+            column: descricao_esp
+        estruturalMercosul:
+            type: string
+            nullable: true
+            length: 160
+            column: estrutural_mercosul
+        importado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkAlmoxarifadoCatalogo:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Catalogo
+            inversedBy: fkAlmoxarifadoCatalogoClassificacoes
+            joinColumns:
+                cod_catalogo:
+                    referencedColumnName: cod_catalogo
+    oneToMany:
+        fkAlmoxarifadoAtributoCatalogoClassificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoClassificacao
+            mappedBy: fkAlmoxarifadoCatalogoClassificacao
+        fkAlmoxarifadoCatalogoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            mappedBy: fkAlmoxarifadoCatalogoClassificacao
+        fkAlmoxarifadoClassificacaoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\ClassificacaoNivel
+            mappedBy: fkAlmoxarifadoCatalogoClassificacao
+        fkComprasFornecedorClassificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorClassificacao
+            mappedBy: fkAlmoxarifadoCatalogoClassificacao
+        fkAlmoxarifadoCatalogoClassificacaoBloqueios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacaoBloqueio
+            mappedBy: fkAlmoxarifadoCatalogoClassificacao

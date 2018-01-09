@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Divida\ModalidadeDocumento:
+    type: entity
+    table: divida.modalidade_documento
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+    manyToOne:
+        fkDividaModalidadeVigencia:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            inversedBy: fkDividaModalidadeDocumentos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                timestamp:
+                    referencedColumnName: timestamp
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkDividaModalidadeDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento

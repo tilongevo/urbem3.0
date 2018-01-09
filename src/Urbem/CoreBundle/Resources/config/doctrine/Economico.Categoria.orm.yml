@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Economico\Categoria:
+    type: entity
+    table: economico.categoria
+    id:
+        codCategoria:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: economico.categoria_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_categoria
+    fields:
+        nomCategoria:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_categoria
+    oneToMany:
+        fkEconomicoCadastroEconomicoEmpresaDireitos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaDireito
+            mappedBy: fkEconomicoCategoria

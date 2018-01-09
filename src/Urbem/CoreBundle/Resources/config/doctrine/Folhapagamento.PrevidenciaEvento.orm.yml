@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaEvento:
+    type: entity
+    table: folhapagamento.previdencia_evento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\PrevidenciaEventoRepository
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codPrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_previdencia
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkFolhapagamentoTipoEventoPrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoPrevidencia
+            inversedBy: fkFolhapagamentoPrevidenciaEventos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoPrevidenciaPrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaPrevidencia
+            inversedBy: fkFolhapagamentoPrevidenciaEventos
+            joinColumns:
+                cod_previdencia:
+                    referencedColumnName: cod_previdencia
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoPrevidenciaEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

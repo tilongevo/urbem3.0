@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Tcerj\ContaDespesa:
+    type: entity
+    table: tcerj.conta_despesa
+    id:
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codEstruturalTce:
+            type: string
+            nullable: false
+            length: 8
+            column: cod_estrutural_tce
+        lancamento:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    oneToOne:
+        fkOrcamentoContaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkTcerjContaDespesa
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta

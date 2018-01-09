@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Beneficio\Itinerario:
+    type: entity
+    table: beneficio.itinerario
+    id:
+        valeTransporteCodValeTransporte:
+            type: integer
+            generator:
+                strategy: NONE
+            column: vale_transporte_cod_vale_transporte
+    fields:
+        codLinhaDestino:
+            type: integer
+            nullable: false
+            column: cod_linha_destino
+        codLinhaOrigem:
+            type: integer
+            nullable: false
+            column: cod_linha_origem
+        municipioDestino:
+            type: integer
+            nullable: false
+            column: municipio_destino
+        ufDestino:
+            type: integer
+            nullable: false
+            column: uf_destino
+        municipioOrigem:
+            type: integer
+            nullable: false
+            column: municipio_origem
+        ufOrigem:
+            type: integer
+            nullable: false
+            column: uf_origem
+    manyToOne:
+        fkBeneficioLinha:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Linha
+            inversedBy: fkBeneficioItinerarios
+            joinColumns:
+                cod_linha_destino:
+                    referencedColumnName: cod_linha
+        fkSwMunicipio:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkBeneficioItinerarios
+            joinColumns:
+                municipio_destino:
+                    referencedColumnName: cod_municipio
+                uf_destino:
+                    referencedColumnName: cod_uf
+        fkBeneficioLinha1:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Linha
+            inversedBy: fkBeneficioItinerarios1
+            joinColumns:
+                cod_linha_origem:
+                    referencedColumnName: cod_linha
+        fkSwMunicipio1:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkBeneficioItinerarios1
+            joinColumns:
+                municipio_origem:
+                    referencedColumnName: cod_municipio
+                uf_origem:
+                    referencedColumnName: cod_uf
+    oneToOne:
+        fkBeneficioValeTransporte:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ValeTransporte
+            inversedBy: fkBeneficioItinerario
+            joinColumns:
+                vale_transporte_cod_vale_transporte:
+                    referencedColumnName: cod_vale_transporte

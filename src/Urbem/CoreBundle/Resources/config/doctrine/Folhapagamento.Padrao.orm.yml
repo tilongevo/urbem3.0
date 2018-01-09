@@ -1,0 +1,67 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Padrao:
+    type: entity
+    table: folhapagamento.padrao
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\PadraoRepository
+    id:
+        codPadrao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: folhapagamento.cod_padrao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_padrao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        horasMensais:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: horas_mensais
+        horasSemanais:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: horas_semanais
+    oneToMany:
+        fkFolhapagamentoNivelPadraoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\NivelPadraoNivel
+            mappedBy: fkFolhapagamentoPadrao
+        fkFolhapagamentoPadraoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PadraoPadrao
+            mappedBy: fkFolhapagamentoPadrao
+        fkPessoalCargoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CargoPadrao
+            mappedBy: fkFolhapagamentoPadrao
+        fkPessoalEspecialidadePadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\EspecialidadePadrao
+            mappedBy: fkFolhapagamentoPadrao
+        fkPessoalContratoServidorPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorPadrao
+            mappedBy: fkFolhapagamentoPadrao

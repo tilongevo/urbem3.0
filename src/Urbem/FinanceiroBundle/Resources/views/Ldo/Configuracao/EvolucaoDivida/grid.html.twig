@@ -1,0 +1,126 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <div class="container-rh">
+        <div class="col s12 title-edit box-title-rh">
+            <h5>{{ 'label.divida'|trans }}</h5>
+            <div class="divider grey title-divider"><p>1</p></div>
+        </div>
+        <div class="row">
+            <form name="frm" method="post" action="{{ path('ldo_configuracao_evolucao_divida')}}">
+                <input type="hidden" name="ppa" value="{{ ppa.codPpa }}" />
+                <input type="hidden" name="ano" value="{{ ano }}" />
+                <input type="hidden" name="indicador" value="{{ indicador }}" />
+                {% if listDividasLDO is not null %}
+                    <table class="bordered highlight" style="width:100%">
+                        {% set label = exercicioInicial %}
+
+                        <tr class="tr-rh">
+                            <th class="th-rh"></th>
+                            <th class="th-rh"></th>
+                            <th class="th-rh">Saldo {{ label }}</th>
+                            <th class="th-rh">Saldo {{ label + 1}}</th>
+                            <th class="th-rh">Reestimativa {{ label + 2 }}</th>
+                            <th class="th-rh">Previsão {{ label + 3 }}</th>
+                            <th class="th-rh">Previsão {{ label + 4 }}</th>
+                            <th class="th-rh">Previsão {{ label + 5 }}</th>
+                        </tr>
+                        {% for divida in listDividasLDO %}
+                            <tr>
+                                <td class="td-rh">{{ loop.index }}</td>
+                                <td class="td-rh">{{ divida.especificacao }}</td>
+                                <td class="td-rh">{{ divida.valor_1 }}</td>
+                                <td class="td-rh">{{ divida.valor_2 }}</td>
+                                <td class="td-rh"><div id="valor_3">{{ divida.valor_3 }}</div></td>
+                                {% if (divida.cod_tipo == 4) %}
+                                    <td class="td-rh"><input class="white input-rh-table browser-default" id="valor_4_{{ loop.index }}" type="text" name="valor_4" value="{{ divida.valor_4 }}" ></td>
+                                    <td class="td-rh"><input class="white input-rh-table browser-default" id="valor_5_{{ loop.index }}" type="text" name="valor_5" value="{{ divida.valor_5 }}" ></td>
+                                    <td class="td-rh"><input class="white input-rh-table browser-default" style="text-align: center" id="valor_6_{{ loop.index }}" type="text" name="valor_6" value="{{ divida.valor_6 }}" ></td>
+                                {% else %}
+                                    <td class="td-rh"><div id="resultado_4_{{ loop.index }}">{{ divida.valor_4 }}</div></td>
+                                    <td class="td-rh"><div id="resultado_5_{{ loop.index }}">{{ divida.valor_5 }}</div></td>
+                                    <td class="td-rh"><div id="resultado_6_{{ loop.index }}">{{ divida.valor_6 }}</div></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                <div class="col s12 title-edit box-title-rh">
+                    <h5>{{ 'label.servicoDivida'|trans }}</h5>
+                    <div class="divider grey title-divider"><p>1</p></div>
+                </div>
+                {% if listServicosLDO is not null %}
+
+                    <table style="width:100%">
+                        {% set label = listServicosLDO|first %}
+                        <tr>
+                            <th class="th-rh"></th>
+                            <th class="th-rh"></th>
+                            <th class="th-rh">Realizado {{ label.exercicio_1 }}</th>
+                            <th class="th-rh">Realizado {{ label.exercicio_2 }}</th>
+                            <th class="th-rh">Reestimativa {{ label.exercicio_3 }}</th>
+                            <th class="th-rh">Previsão {{ label.exercicio_4 }}</th>
+                            <th class="th-rh">Previsão {{ label.exercicio_5 }}</th>
+                            <th class="th-rh">Previsão {{ label.exercicio_6 }}</th>
+                        </tr>
+                        {% for divida in listServicosLDO %}
+                            <tr>
+                                <td class="td-rh">{{ loop.index }}</td>
+                                <td class="td-rh">{{ divida.especificacao }}</td>
+                                <td class="td-rh">{{ divida.valor_1 }}</td>
+                                <td class="td-rh">{{ divida.valor_2 }}</td>
+                                <td class="td-rh">{{ divida.valor_3 }}</td>
+                                <td class="td-rh">{{ divida.valor_4 }}</td>
+                                <td class="td-rh">{{ divida.valor_5 }}</td>
+                                <td class="td-rh">{{ divida.valor_6 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <button type="submit" id="form_salvar" name="form[salvar]" class="waves-effect waves-light btn blue darken-4 btn btn-success save right" style="margin-top: 10px"><i class="material-icons left">save</i>Salvar</button>
+                {% else %}
+                    Nenhum serviço encontrado.
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#valor_4_4").on("change", function() {
+                var resultado_4_3 = $("#resultado_4_3").html();
+                var valor = $(this).val();
+                var total = resultado_4_3 - valor;
+                $("#resultado_4_5").html(total);
+
+                var resultado_4_6 = $("#resultado_4_6").html();
+                var valor_4_6 = $(this).val();
+                var total_4_6 = resultado_4_6 - valor_4_6;
+                $("#resultado_4_6").html(total_4_6);
+            });
+
+            $("#valor_5_4").on("change", function() {
+                var resultado_5_3 = $("#resultado_5_3").html();
+                var valor = $(this).val();
+                var total = resultado_5_3 - valor;
+                $("#resultado_5_5").html(total);
+
+                var resultado_5_6 = $("#resultado_5_6").html();
+                var valor_5_6 = $(this).val();
+                var total_5_6 = resultado_5_6 - valor_5_6;
+                $("#resultado_5_6").html(total_5_6);
+            });
+
+            $("#valor_6_4").on("change", function() {
+                var resultado_6_3 = $("#resultado_6_3").html();
+                var valor = $(this).val();
+                var total = resultado_6_3 - valor;
+                $("#resultado_6_5").html(total);
+
+                var resultado_6_6 = $("#resultado_6_6").html();
+                var valor_6_6 = $(this).val();
+                var total_6_6 = resultado_6_6 - valor_6_6;
+                $("#resultado_6_6").html(total_6_6);
+            });
+        });
+    </script>
+{% endblock javascripts %}

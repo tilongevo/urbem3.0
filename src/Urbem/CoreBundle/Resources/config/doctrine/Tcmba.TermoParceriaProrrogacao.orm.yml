@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Tcmba\TermoParceriaProrrogacao:
+    type: entity
+    table: tcmba.termo_parceria_prorrogacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        nroProcesso:
+            type: string
+            generator:
+                strategy: NONE
+            column: nro_processo
+        nroTermoAditivo:
+            type: string
+            generator:
+                strategy: NONE
+            column: nro_termo_aditivo
+        exercicioAditivo:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_aditivo
+    fields:
+        dtProrrogacao:
+            type: date
+            nullable: false
+            column: dt_prorrogacao
+        dtPublicacao:
+            type: date
+            nullable: false
+            column: dt_publicacao
+        imprensaOficial:
+            type: string
+            nullable: false
+            length: 50
+            column: imprensa_oficial
+        indicadorAdimplemento:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: indicador_adimplemento
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: false
+            column: dt_termino
+        vlProrrogacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_prorrogacao
+    manyToOne:
+        fkTcmbaTermoParceria:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TermoParceria
+            inversedBy: fkTcmbaTermoParceriaProrrogacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                nro_processo:
+                    referencedColumnName: nro_processo

@@ -1,0 +1,69 @@
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="box box-primary">
+	<div class="box-header col s12">
+        <h2 class="col s10 box-title left-align show">{{ 'label.comprasGovernamentaisCatalogoItem.detalhes'|trans }}</h2>
+	</div>
+	<div class="box-body  no-padding">
+        <table class="table show-table">
+        	<thead>
+        		<tr class="sonata-ba-view-container">
+        			<th style="text-align:center !important">
+        				<b>{{ 'label.comprasGovernamentaisCatalogoItem.almoxarifado'|trans }}</b>
+        			</th>
+        			<th style="text-align:center !important">
+        				<b>{{ 'label.comprasGovernamentaisCatalogoItem.marca'|trans }}</b>
+        			</th>
+        			<th style="text-align:center !important">
+        				<b>{{ 'label.comprasGovernamentaisCatalogoItem.centroCusto'|trans }}</b>
+        			</th>
+        			<th style="text-align:center !important">
+        				<b>{{ 'label.comprasGovernamentaisCatalogoItem.quantidade'|trans }}</b>
+        			</th>
+        			<th style="text-align:center !important">
+        				<b>{{ 'label.comprasGovernamentaisCatalogoItem.requisitar'|trans }}</b>
+        			</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		{% for lancamentoMaterial in admin.lancamentosMaterial %}
+	        		<tr class="sonata-ba-view-container">
+	            		<td style="text-align:center !important">
+	            			{{ lancamentoMaterial['almoxarifado'] }}
+	            		</td>
+	            		<td style="text-align:center !important">
+	            			{{ lancamentoMaterial['marca'] }}
+	            		</td>
+	            		<td style="text-align:center !important">
+	            			{{ lancamentoMaterial['centroCusto'] }}
+	            		</td>
+	            		<td style="text-align:center !important">
+	            			{% set saldoEstoque = admin.requisicaoItemModel.getSaldoEstoqueByParams({
+								'codAlmoxarifado': lancamentoMaterial['codAlmoxarifado'],
+								'codItem': lancamentoMaterial['codItem'],
+								'codMarca': lancamentoMaterial['codMarca'],
+								'codCentro': lancamentoMaterial['codCentro'],
+							}) %}
+
+	            			{{ saldoEstoque|number_format(2, ',', '.') }}
+	            		</td>
+	            		<td style="text-align:center !important">
+	            			<a href="{{ path('urbem_compras_governamentais_requisicao_create', {codAlmoxarifado: lancamentoMaterial['codAlmoxarifado'], codItem: object.getCodItem(), codMarca: lancamentoMaterial['codMarca'], codCentro: lancamentoMaterial['codCentro']}) }}" title="{{ 'label.comprasGovernamentaisCatalogoItem.requisitar'|trans }}">
+	            				<i class="fa fa-mail-forward"></i>
+	            			</a>
+	            		</td>
+			        </tr>
+			    {% endfor %}
+
+			    {% if not admin.lancamentosMaterial|length %}
+			    	<tr class="sonata-ba-view-container">
+	            		<td colspan="4" style="text-align:center !important">Nenhum registro encontrado!</td>
+	            	</tr>
+	            {% endif %}
+            </body>
+        </table>
+    </div>
+</div>

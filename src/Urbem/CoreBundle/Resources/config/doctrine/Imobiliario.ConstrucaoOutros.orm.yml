@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoOutros:
+    type: entity
+    table: imobiliario.construcao_outros
+    id:
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+    oneToMany:
+        fkImobiliarioAtributoConstrucaoOutrosValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoConstrucaoOutrosValor
+            mappedBy: fkImobiliarioConstrucaoOutros
+    oneToOne:
+        fkImobiliarioConstrucao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Construcao
+            inversedBy: fkImobiliarioConstrucaoOutros
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao

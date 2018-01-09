@@ -1,0 +1,137 @@
+Urbem\CoreBundle\Entity\Orcamento\ContaDespesa:
+    type: entity
+    table: orcamento.conta_despesa
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\ContaDespesaRepository
+    uniqueConstraints:
+        uk_conta_despesa_1:
+            columns:
+                - exercicio
+                - cod_estrutural
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 150
+            column: cod_estrutural
+    oneToMany:
+        fkContabilidadeConfiguracaoLancamentoContaDespesaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoContaDespesaItem
+            mappedBy: fkOrcamentoContaDespesa
+        fkContabilidadeConfiguracaoLancamentoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoCredito
+            mappedBy: fkOrcamentoContaDespesa
+        fkContabilidadeConfiguracaoLancamentoDebitos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoDebito
+            mappedBy: fkOrcamentoContaDespesa
+        fkDiariasTipoDiariaDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\TipoDiariaDespesa
+            mappedBy: fkOrcamentoContaDespesa
+        fkEmpenhoPreEmpenhoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenhoDespesa
+            mappedBy: fkOrcamentoContaDespesa
+        fkFolhapagamentoConfiguracaoEmpenhoContaDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoContaDespesa
+            mappedBy: fkOrcamentoContaDespesa
+        fkImaConfiguracaoDirfPrestadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfPrestador
+            mappedBy: fkOrcamentoContaDespesa
+        fkTcepbElementoDeParas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\ElementoDePara
+            mappedBy: fkOrcamentoContaDespesa
+        fkOrcamentoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            mappedBy: fkOrcamentoContaDespesa
+        fkComprasSolicitacaoItemDotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItemDotacao
+            mappedBy: fkOrcamentoContaDespesa
+        fkFolhapagamentoConfiguracaoEventoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoDespesa
+            mappedBy: fkOrcamentoContaDespesa
+        fkOrcamentoClassificacaoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ClassificacaoDespesa
+            mappedBy: fkOrcamentoContaDespesa
+    oneToOne:
+        fkTcerjContaDespesa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcerj\ContaDespesa
+            mappedBy: fkOrcamentoContaDespesa
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+        fkTcmgoElementoDePara:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ElementoDePara
+            mappedBy: fkOrcamentoContaDespesa
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta

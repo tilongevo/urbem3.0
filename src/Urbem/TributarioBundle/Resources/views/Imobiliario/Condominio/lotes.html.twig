@@ -1,0 +1,44 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="col s12 lotes">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioCondominio.listaLotes'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableLotesManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.imobiliarioCondominio.localizacao'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioCondominio.lote'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioCondominio.imoveis'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        <tr class="tr-rh row-modelo" style="display:none;">
+            <td class="td-rh localizacao">
+                <input type="hidden" class="imput-lote" name="lote[]" />
+            </td>
+            <td class="td-rh lote"></td>
+            <td class="td-rh imoveis"></td>
+            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+        </tr>
+        {% for loteCondominio in field.data.lotes|sort %}
+            <tr class="tr-rh row-lote" id="lote-{{ loteCondominio.codLote }}">
+                <td class="td-rh localizacao">
+                    <input type="hidden" value="{{ admin.getObjectKey(loteCondominio) }}" class="imput-lote" name="lote_old[]" />
+                    {{ loteCondominio.fkImobiliarioLote.fkImobiliarioLoteLocalizacao.fkImobiliarioLocalizacao.codigoComposto }}
+                </td>
+                <td class="td-rh lote">{{ loteCondominio.fkImobiliarioLote }}</td>
+                <td class="td-rh imoveis">
+                    {{ loteCondominio.fkImobiliarioLote.fkImobiliarioImovelLotes|join(', ') }}
+                </td>
+                <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+            </tr>
+        {% endfor %}
+        <tr class="tr-rh empty-row-lote">
+            <td colspan="4">{{ 'listagemVazia'|trans }}</td>
+        </tr>
+    </table>
+</div>

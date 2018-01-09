@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoLicencaPremio:
+    type: entity
+    table: pessoal.assentamento_licenca_premio
+    id:
+        codAssentamentoGerado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento_gerado
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        dtInicial:
+            type: date
+            nullable: false
+            column: dt_inicial
+        dtFinal:
+            type: date
+            nullable: false
+            column: dt_final
+    oneToOne:
+        fkPessoalAssentamentoGerado:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoGerado
+            inversedBy: fkPessoalAssentamentoLicencaPremio
+            joinColumns:
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_assentamento_gerado:
+                    referencedColumnName: cod_assentamento_gerado

@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Licitacao\ContratoAnulado:
+    type: entity
+    table: licitacao.contrato_anulado
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+    fields:
+        dtAnulacao:
+            type: date
+            nullable: false
+            column: dt_anulacao
+        motivo:
+            type: text
+            nullable: true
+        valorAnulacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: valor_anulacao
+    oneToOne:
+        fkLicitacaoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            inversedBy: fkLicitacaoContratoAnulado
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato

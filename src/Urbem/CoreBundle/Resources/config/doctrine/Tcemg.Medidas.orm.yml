@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Tcemg\Medidas:
+    type: entity
+    table: tcemg.medidas
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\MedidasRepository
+    id:
+        codMedida:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_medida
+    fields:
+        codPoder:
+            type: integer
+            nullable: false
+            column: cod_poder
+        codMes:
+            type: integer
+            nullable: false
+            column: cod_mes
+        descricao:
+            type: text
+            nullable: false
+        riscosFiscais:
+            type: boolean
+            nullable: true
+            column: riscos_fiscais
+        metasFiscais:
+            type: boolean
+            nullable: true
+            column: metas_fiscais
+        contratacaoAro:
+            type: boolean
+            nullable: true
+            column: contratacao_aro
+    manyToOne:
+        fkAdministracaoPoderPublico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\PoderPublico
+            inversedBy: fkTcemgMedidas
+            joinColumns:
+                cod_poder:
+                    referencedColumnName: cod_poder
+        fkAdministracaoMes:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Mes
+            inversedBy: fkTcemgMedidas
+            joinColumns:
+                cod_mes:
+                    referencedColumnName: cod_mes

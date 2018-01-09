@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Folhapagamento\AtributoEventoValor:
+    type: entity
+    table: folhapagamento.atributo_evento_valor
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestampEvento:
+            type: datetimepk
+            generator:
+                strategy: NONE
+            column: timestamp_evento
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkFolhapagamentoEventoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoEvento
+            inversedBy: fkFolhapagamentoAtributoEventoValores
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp_evento:
+                    referencedColumnName: timestamp
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkFolhapagamentoAtributoEventoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

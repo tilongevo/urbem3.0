@@ -1,0 +1,296 @@
+{% block body %}
+    {% block content %}
+        {% include 'RecursosHumanosBundle:FolhaPagamento/Relatorios:cabecalho.html.twig' %}
+        <table class="table-relatorio">
+            <tbody>
+                <tr>
+                    <td>Tipo de Folha: {{ tipoFolha.stFolha }}</td>
+                    <td>Competência: {{ tipoFolha.dtCompetencia }}</td>
+                    <td>Periodo de Movimentação: {{ tipoFolha.rsPeriodoMovimentaco }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="page-break" style="page-break-after: always;">
+            <table class="table-relatorio">
+                <tbody>
+                    {% for folhaAnalitica in folha.folha %}
+                        <tr>
+                            <td>Contrato:</td>
+                            <td>{{ folhaAnalitica.cabecalho.registro }}</td>
+                            <td>Regime:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_regime }}</td>
+                            <td>Regime:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_regime_funcao }}</td>
+                            <td>Padrão:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_padrao }}</td>
+                        </tr>
+                        <tr>
+                            <td>CGM:</td>
+                            <td>{{ folhaAnalitica.cabecalho.numcgm  ~ '-' ~ folhaAnalitica.cabecalho.nom_cgm }}</td>
+                            <td>Subdivisão:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_sub_divisao }}</td>
+                            <td>Subdivisão:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_sub_divisao_funcao }}</td>
+                            <td>Progressão:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_progressao }}</td>
+                        </tr>
+                        <tr>
+                            <td>Lotação</td>
+                            <td>{{ folhaAnalitica.cabecalho.orgao  ~ '-' ~ folhaAnalitica.cabecalho.descricao_lotacao }}</td>
+                            <td>Cargo</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_cargo }}</td>
+                            <td>Função</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_funcao }}</td>
+                            <td>Data de Admissão</td>
+                            <td>{{ folhaAnalitica.cabecalho.admissao_posse }}</td>
+                        </tr>
+                        <tr>
+                            <td>Local:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_local }}</td>
+                            <td>Especialidade:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_especialidade }}</td>
+                            <td>Especialidade:</td>
+                            <td>{{ folhaAnalitica.cabecalho.descricao_especialidade_funcao }}</td>
+                            <td>Multiplos Vínculos:</td>
+                            <td>{{ folhaAnalitica.cabecalho.multiplos }}</td>
+                        </tr>
+                        <tr>
+                            <td>C. Horária:</td>
+                            <td>{{ folhaAnalitica.cabecalho.horas_mensais }}</td>
+                            <td>Situação:</td>
+                            <td>{{ folhaAnalitica.cabecalho.situacao }}</td>
+                            <td>Previd. Oficial:</td>
+                            <td>{{ folhaAnalitica.cabecalho.previdencia_oficial }}</td>
+                            <td>Banco:</td>
+                            <td>{{ folhaAnalitica.cabecalho.num_banco ~ ' - ' ~ folhaAnalitica.cabecalho.descricao_banco }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <table class="table-relatorio">
+                                    <thead>
+                                        <tr class="cabecalho">
+                                            <th class="titulo">PROVENTOS</th>
+                                            <th class="titulo">DESCONTOS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td valign="top">
+                                                <table class="table-relatorio">
+                                                    <tbody>
+                                                        {% set totalProventos = 0 %}
+                                                        {% for provento in folhaAnalitica.provento %}
+                                                            {% set totalProventos = totalProventos + provento.valore %}
+                                                            <tr>
+                                                                <td>{{ provento.codigoe }}</td>
+                                                                <td>{{ provento.descricaoe }}</td>
+                                                                <td align="right">{{ provento.quantidadee|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                                                <td align="right">{{ provento.valore|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td valign="top">
+                                                <table class="table-relatorio">
+                                                    <tbody>
+                                                        {% set totalDescontos = 0 %}
+                                                        {% for desconto in folhaAnalitica.desconto %}
+                                                            {% set totalDescontos = totalDescontos + desconto.valord %}
+                                                            <tr>
+                                                                <td>{{ desconto.codigod }}</td>
+                                                                <td>{{ desconto.descricaod }}</td>
+                                                                <td align="right">{{ desconto.quantidaded|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                                                <td align="right">{{ desconto.valord|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">TOTAL DE PROVENTOS: {{ totalProventos|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                            <td align="right">TOTAL DE DESCONTOS: {{ totalDescontos|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">SALÁRIO LÍQUIDO: {{ (totalProventos - totalDescontos)|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                            <td align="right">&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table-relatorio">
+                                    <thead>
+                                        <tr class="cabecalho">
+                                            <th class="titulo">EVENTOS DE BASE</th>
+                                            <th class="titulo">EVENTOS INFORMATIVOS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td valign="top">
+                                                <table class="table-relatorio">
+                                                    <tbody>
+                                                        {% for base in folhaAnalitica.base %}
+                                                            <tr>
+                                                                <td>{{ base.codigoe }}</td>
+                                                                <td>{{ base.descricaoe }}</td>
+                                                                <td align="right">{{ base.quantidadee|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                                                <td align="right">{{ base.valore|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td valign="top">
+                                                <table class="table-relatorio">
+                                                    <tbody>
+                                                        {% if folhaAnalitica.informativo is defined %}
+                                                            {% for informativo in folhaAnalitica.informativo %}
+                                                                <tr>
+                                                                    <td>{{ informativo.codigod }}</td>
+                                                                    <td>{{ informativo.descricaod }}</td>
+                                                                    <td align="right">{{ informativo.quantidaded|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                                                    <td align="right">{{ informativo.valord|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        <table class="table-relatorio">
+            <thead>
+                <tr class="cabecalho">
+                    <th colspan="2" class="titulo">TOTAL GERAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="cabecalho">
+                    <td class="titulo">PROVENTOS</td>
+                    <td class="titulo">DESCONTOS</td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <table class="table-relatorio">
+                            <tbody>
+                                {% set totalProventos = 0 %}
+                                {% for totalProvento in folha.totalGeralProvento %}
+                                    {% set totalProventos = totalProventos + totalProvento.valore %}
+                                    <tr>
+                                        <td>{{ totalProvento.codigoe }}</td>
+                                        <td>{{ totalProvento.descricaoe }}</td>
+                                        <td align="right">{{ totalProvento.quantidadee|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                        <td align="right">{{ totalProvento.valore|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                    <td valign="top">
+                        <table class="table-relatorio">
+                            <tbody>
+                                {% set totalDescontos = 0 %}
+                                {% for totalDesconto in folha.totalGeralDesconto %}
+                                    {% set totalDescontos = totalDescontos + totalDesconto.valord %}
+                                    <tr>
+                                        <td>{{ totalDesconto.codigod }}</td>
+                                        <td>{{ totalDesconto.descricaod }}</td>
+                                        <td align="right">{{ totalDesconto.quantidaded|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                        <td align="right">{{ totalDesconto.valord|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">TOTAL DE PROVENTOS: {{ totalProventos|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td align="right">TOTAL DE DESCONTOS: {{ totalDescontos|number_format_decimal({'fraction_digits': 2}) }}</td>
+                </tr>
+                <tr>
+                    <td align="right">SALÁRIO LÍQUIDO: {{ (totalProventos - totalDescontos)|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td align="right">TOTAL DE SERVIDORES: {{ folha.folha|length }}</td>
+                </tr>
+                <tr>
+                    <td class="cabecalho titulo">EVENTOS DE BASE</td>
+                    <td class="cabecalho titulo">EVENTOS INFORMATIVOS</td>
+                    <tr>
+                        <td valign="top">
+                            <table class="table-relatorio">
+                                <tbody>
+                                    {% for totalBase in folha.totalGeralBase %}
+                                        <tr>
+                                            <td>{{ totalBase.codigoe }}</td>
+                                            <td>{{ totalBase.descricaoe }}</td>
+                                            <td align="right">{{ totalBase.quantidadee|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                            <td align="right">{{ totalBase.valore|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                        <td valign="top">
+                            <table class="table-relatorio">
+                                <tbody>
+                                    {% for totalInformativo in folha.totalGeralInformativo %}
+                                        <tr>
+                                            <td>{{ totalInformativo.codigod }}</td>
+                                            <td>{{ totalInformativo.descricaod }}</td>
+                                            <td align="right">{{ totalInformativo.quantidaded|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                            <td align="right">{{ totalInformativo.valord|number_format_decimal({'fraction_digits': 2}) }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table-relatorio">
+            <thead>
+                <th>
+                    <tr class="cabecalho">
+                        <th colspan="5" class="titulo">OUTRAS FOLHAS</th>
+                    </tr>
+                </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Complementar 1</td>
+                    <td>Base Previdência: 0,00</td>
+                    <td>Desc. INSS: 0,00</td>
+                    <td>Base IRRF: 0,00</td>
+                    <td>Desc. IRRF: 0,00</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Base FGTS: 0,00</td>
+                    <td>Valor Recolhido de FGTS: 0,00</td>
+                    <td>Valor Contribuição Social: 0,00</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table-relatorio">
+            <tbody>
+                <tr>
+                    <td>Legenda para Desdobramentos: A - Abono D - Adiantamento de Férias F - Férias I - Adiantamento de 13°</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    {% endblock content %}
+{% endblock body %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio-folha-pagamento.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio-folha-pagamento.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

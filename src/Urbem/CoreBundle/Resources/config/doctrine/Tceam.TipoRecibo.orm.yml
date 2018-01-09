@@ -1,0 +1,21 @@
+Urbem\CoreBundle\Entity\Tceam\TipoRecibo:
+    type: entity
+    table: tceam.tipo_recibo
+    id:
+        codTipoRecibo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_recibo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+    oneToMany:
+        fkTceamTipoDocumentoRecibos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoDocumentoRecibo
+            mappedBy: fkTceamTipoRecibo

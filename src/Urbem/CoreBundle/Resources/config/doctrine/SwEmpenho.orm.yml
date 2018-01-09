@@ -1,0 +1,75 @@
+Urbem\CoreBundle\Entity\SwEmpenho:
+    type: entity
+    table: sw_empenho
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+    fields:
+        codPreEmpenho:
+            type: integer
+            nullable: false
+            column: cod_pre_empenho
+        dtEmpenho:
+            type: date
+            nullable: false
+            column: dt_empenho
+        dtVencimento:
+            type: date
+            nullable: false
+            column: dt_vencimento
+        vlSaldoAnterior:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_saldo_anterior
+    manyToOne:
+        fkSwPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\SwPreEmpenho
+            inversedBy: fkSwEmpenhos
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkSwEmpenhamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwEmpenhamento
+            mappedBy: fkSwEmpenho
+        fkSwNotaLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwNotaLiquidacao
+            mappedBy: fkSwEmpenho
+        fkSwEmpenhoAutorizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwEmpenhoAutorizacao
+            mappedBy: fkSwEmpenho
+    oneToOne:
+        fkSwInsuficienciaFinanceira:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwInsuficienciaFinanceira
+            mappedBy: fkSwEmpenho
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_empenho:
+                    referencedColumnName: cod_empenho

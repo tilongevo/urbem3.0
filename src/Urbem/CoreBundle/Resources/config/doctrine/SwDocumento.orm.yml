@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\SwDocumento:
+    type: entity
+    table: sw_documento
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: sw_documento_cod_documento_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_documento
+    fields:
+        nomDocumento:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_documento
+    oneToMany:
+        fkSwDocumentoAssuntos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwDocumentoAssunto
+            mappedBy: fkSwDocumento
+        fkSwDocumentoProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwDocumentoProcesso
+            mappedBy: fkSwDocumento

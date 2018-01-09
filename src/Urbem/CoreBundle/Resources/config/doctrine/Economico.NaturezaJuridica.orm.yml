@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Economico\NaturezaJuridica:
+    type: entity
+    table: economico.natureza_juridica
+    id:
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+    fields:
+        nomNatureza:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_natureza
+    oneToMany:
+        fkEconomicoEmpresaDireitoNaturezaJuridicas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\EmpresaDireitoNaturezaJuridica
+            mappedBy: fkEconomicoNaturezaJuridica
+    oneToOne:
+        fkEconomicoBaixaNaturezaJuridica:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaNaturezaJuridica
+            mappedBy: fkEconomicoNaturezaJuridica
+            joinColumns:
+                cod_natureza:
+                    referencedColumnName: cod_natureza

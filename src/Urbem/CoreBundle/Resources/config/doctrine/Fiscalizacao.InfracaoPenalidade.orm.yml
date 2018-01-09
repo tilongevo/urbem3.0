@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoPenalidade:
+    type: entity
+    table: fiscalizacao.infracao_penalidade
+    id:
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFiscalizacaoInfracao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Infracao
+            inversedBy: fkFiscalizacaoInfracaoPenalidades
+            joinColumns:
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+        fkFiscalizacaoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Penalidade
+            inversedBy: fkFiscalizacaoInfracaoPenalidades
+            joinColumns:
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+    oneToMany:
+        fkFiscalizacaoNotificacaoInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoInfracao
+            mappedBy: fkFiscalizacaoInfracaoPenalidade
+        fkFiscalizacaoAutoInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutoInfracao
+            mappedBy: fkFiscalizacaoInfracaoPenalidade

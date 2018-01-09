@@ -1,0 +1,223 @@
+Urbem\CoreBundle\Entity\SwCgmPessoaJuridica:
+    type: entity
+    table: sw_cgm_pessoa_juridica
+    repositoryClass: Urbem\CoreBundle\Repository\SwCgmPessoaJuridicaRepository
+    uniqueConstraints:
+        uk_cgm_pessoa_juridica:
+            columns:
+                - cnpj
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        nomFantasia:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_fantasia
+        cnpj:
+            type: string
+            nullable: true
+            length: 14
+        inscEstadual:
+            type: string
+            nullable: true
+            length: 15
+            column: insc_estadual
+        codOrgaoRegistro:
+            type: integer
+            nullable: true
+            options:
+                default: '0'
+            column: cod_orgao_registro
+        numRegistro:
+            type: string
+            nullable: true
+            length: 20
+            column: num_registro
+        dtRegistro:
+            type: date
+            nullable: true
+            column: dt_registro
+        numRegistroCvm:
+            type: string
+            nullable: true
+            length: 20
+            column: num_registro_cvm
+        dtRegistroCvm:
+            type: date
+            nullable: true
+            column: dt_registro_cvm
+        objetoSocial:
+            type: text
+            nullable: true
+            column: objeto_social
+    manyToOne:
+        fkAdministracaoOrgaoRegistro:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\OrgaoRegistro
+            inversedBy: fkSwCgmPessoaJuridicas
+            joinColumns:
+                cod_orgao_registro:
+                    referencedColumnName: codigo
+    oneToMany:
+        fkEconomicoCadastroEconomicoEmpresaDireitos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaDireito
+            mappedBy: fkSwCgmPessoaJuridica
+        fkFrotaVeiculoLocacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoLocacao
+            mappedBy: fkSwCgmPessoaJuridica
+        fkImaConfiguracaoDirfPlanos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfPlano
+            mappedBy: fkSwCgmPessoaJuridica
+        fkImobiliarioImobiliarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imobiliaria
+            mappedBy: fkSwCgmPessoaJuridica
+        fkManadUniorcans:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\Uniorcam
+            mappedBy: fkSwCgmPessoaJuridica
+        fkTcealUniorcans:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\Uniorcam
+            mappedBy: fkSwCgmPessoaJuridica
+        fkTcersUniorcans:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\Uniorcam
+            mappedBy: fkSwCgmPessoaJuridica
+        fkTcetoUniorcans:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\Uniorcam
+            mappedBy: fkSwCgmPessoaJuridica
+        fkTcmbaTermoParcerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TermoParceria
+            mappedBy: fkSwCgmPessoaJuridica
+        fkTcmgoContadorTerceirizados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ContadorTerceirizado
+            mappedBy: fkSwCgmPessoaJuridica
+        fkTcmgoJuridicoTerceirizados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\JuridicoTerceirizado
+            mappedBy: fkSwCgmPessoaJuridica
+        fkTcmgoOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Orgao
+            mappedBy: fkSwCgmPessoaJuridica
+        fkFrotaVeiculoCessoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoCessao
+            mappedBy: fkSwCgmPessoaJuridica
+        fkMonetarioAgencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            mappedBy: fkSwCgmPessoaJuridica
+    oneToOne:
+        fkEstagioEntidadeIntermediadora:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EntidadeIntermediadora
+            mappedBy: fkSwCgmPessoaJuridica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkEstagioInstituicaoEnsino:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\InstituicaoEnsino
+            mappedBy: fkSwCgmPessoaJuridica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkFolhapagamentoSindicato:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Sindicato
+            mappedBy: fkSwCgmPessoaJuridica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkFrotaPosto:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Posto
+            mappedBy: fkSwCgmPessoaJuridica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: cgm_posto
+        fkBeneficioFornecedor:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Fornecedor
+            mappedBy: fkSwCgmPessoaJuridica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkImobiliarioCondominioCgm:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\CondominioCgm
+            mappedBy: fkSwCgmPessoaJuridica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkSwCgmPessoaJuridica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

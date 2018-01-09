@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\TipoFiscalizacao:
+    type: entity
+    table: fiscalizacao.tipo_fiscalizacao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkFiscalizacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Documento
+            mappedBy: fkFiscalizacaoTipoFiscalizacao
+        fkFiscalizacaoFiscalFiscalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalFiscalizacao
+            mappedBy: fkFiscalizacaoTipoFiscalizacao
+        fkFiscalizacaoProcessoFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            mappedBy: fkFiscalizacaoTipoFiscalizacao
+        fkFiscalizacaoInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Infracao
+            mappedBy: fkFiscalizacaoTipoFiscalizacao

@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Ponto\RelogioPontoJustificativaExclusao:
+    type: entity
+    table: ponto.relogio_ponto_justificativa_exclusao
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codJustificativa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_justificativa
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        timestampExclusao:
+            type: datetime
+            nullable: false
+            column: timestamp_exclusao
+    oneToOne:
+        fkPontoRelogioPontoJustificativa:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\RelogioPontoJustificativa
+            inversedBy: fkPontoRelogioPontoJustificativaExclusao
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_justificativa:
+                    referencedColumnName: cod_justificativa
+                sequencia:
+                    referencedColumnName: sequencia

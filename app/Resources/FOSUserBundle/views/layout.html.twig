@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="192x192" href="{{ asset('/bundles/core/images/android-desktop.png') }}">
+
+        <!-- Add to homescreen for Safari on iOS -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+        <link rel="apple-touch-icon-precomposed" href="{{ asset('/bundles/core/images/ios-desktop.png') }}">
+
+        <!-- Tile icon for Win8 (144x144 + tile color) -->
+        <meta name="msapplication-TileImage"
+              content="{{ asset('/bundles/core/images/ms-touch-icon-144x144-precomposed.png') }}">
+        <meta name="msapplication-TileColor" content="#3372DF">
+        <link rel="shortcut icon" href="{{ asset('/bundles/core/images/favicon.png') }}">
+
+        <!-- Compiled and minified CSS -->
+        <link type="text/css" rel="stylesheet" href="{{ asset('/bundles/core/css/style-login.css') }}"/>
+        <link rel="stylesheet" href="/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="{{ asset('/bundles/core/css/materialize.min.css') }}" media="screen,projection"/>
+
+        <!--Import Google Icon Font-->
+        <link rel="stylesheet" href="{{ asset('/bundles/core/css/material.css') }}">
+        <link rel="stylesheet" href="{{ asset('/bundles/core/css/materialdesignicons.min.css') }}">
+        <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/materialize.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/jquery.maskedinput.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/jquery.maskMoney.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/init.js') }}"></script>
+        <script src="{{ asset('/bundles/sonatacore/vendor/select2/select2.js') }}"></script>
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Urbem > Login</title>
+    </head>
+    <body>
+        <div class="hide">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="flash-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Tcmba\ConfiguracaoRatificador:
+    type: entity
+    table: tcmba.configuracao_ratificador
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        cgmRatificador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_ratificador
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        dtInicioVigencia:
+            type: date
+            nullable: false
+            column: dt_inicio_vigencia
+        dtFimVigencia:
+            type: date
+            nullable: false
+            column: dt_fim_vigencia
+        codTipoResponsavel:
+            type: integer
+            nullable: false
+            column: cod_tipo_responsavel
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcmbaConfiguracaoRatificadores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcmbaConfiguracaoRatificadores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkTcmbaConfiguracaoRatificadores
+            joinColumns:
+                cgm_ratificador:
+                    referencedColumnName: numcgm
+        fkTcmbaTipoResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoResponsavel
+            inversedBy: fkTcmbaConfiguracaoRatificadores
+            joinColumns:
+                cod_tipo_responsavel:
+                    referencedColumnName: cod_tipo_responsavel

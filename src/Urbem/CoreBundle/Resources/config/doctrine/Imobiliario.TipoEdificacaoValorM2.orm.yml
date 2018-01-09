@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacaoValorM2:
+    type: entity
+    table: imobiliario.tipo_edificacao_valor_m2
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        valorM2Territorial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_m2_territorial
+        valorM2Predial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_m2_predial
+    manyToOne:
+        fkImobiliarioTipoEdificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacao
+            inversedBy: fkImobiliarioTipoEdificacaoValorM2s
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkImobiliarioTipoEdificacaoValorM2s
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

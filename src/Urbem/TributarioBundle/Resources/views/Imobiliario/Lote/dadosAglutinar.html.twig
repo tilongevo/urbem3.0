@@ -1,0 +1,32 @@
+{% block content %}
+
+    {% if field.data.lote is not null %}
+
+        <table class="table show-table">
+            <tbody>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.numLote'|trans }}</th>
+                <td>{{ field.data.lote }}</td>
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.tipoLote'|trans }}</th>
+                {% if field.data.lote.fkImobiliarioLoteUrbano is not null %}
+                    <td>{{ 'label.imobiliarioLote.urbano.modulo'|trans }}</td>
+                {% else %}
+                    <td>{{ 'label.imobiliarioLote.rural.modulo'|trans }}</td>
+                {% endif %}
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.bairro'|trans }}</th>
+                <td>{{ field.data.lote.fkImobiliarioLoteBairros.last.fkSwBairro }}</td>
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.area'|trans }}</th>
+                <td>{{ field.data.lote.fkImobiliarioAreaLotes.last.areaReal|number_format(2, ',', '.') ~ ' ' ~ field.data.lote.fkImobiliarioAreaLotes.last.fkAdministracaoUnidadeMedida }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock content %}

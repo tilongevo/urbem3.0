@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Tesouraria\TransferenciasDote:
+    type: entity
+    table: tesouraria.transferencias_dote
+    id:
+        codDote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dote
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codPlanoDebito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano_debito
+        codPlanoCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano_credito
+    fields:
+        descricao:
+            type: text
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkTesourariaDote:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Dote
+            inversedBy: fkTesourariaTransferenciasDotes
+            joinColumns:
+                cod_dote:
+                    referencedColumnName: cod_dote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTesourariaTransferenciasDotes
+            joinColumns:
+                cod_plano_debito:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadePlanoAnalitica1:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTesourariaTransferenciasDotes1
+            joinColumns:
+                cod_plano_credito:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

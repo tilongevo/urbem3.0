@@ -1,0 +1,84 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Compensacao:
+    type: entity
+    table: arrecadacao.compensacao
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\CompensacaoRepository
+    id:
+        codCompensacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compensacao
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        aplicarAcrescimos:
+            type: boolean
+            nullable: false
+            column: aplicar_acrescimos
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkArrecadacaoCompensacoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkArrecadacaoTipoCompensacao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\TipoCompensacao
+            inversedBy: fkArrecadacaoCompensacoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkArrecadacaoPagamentoDiferencaCompensacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoDiferencaCompensacao
+            mappedBy: fkArrecadacaoCompensacao
+        fkArrecadacaoPagamentoCompensacaoPagas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoCompensacaoPagas
+            mappedBy: fkArrecadacaoCompensacao
+        fkArrecadacaoPagamentoCompensacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoCompensacao
+            mappedBy: fkArrecadacaoCompensacao
+    oneToOne:
+        fkArrecadacaoCompensacaoUtilizaResto:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CompensacaoUtilizaResto
+            mappedBy: fkArrecadacaoCompensacao
+            joinColumns:
+                cod_compensacao:
+                    referencedColumnName: cod_compensacao
+        fkArrecadacaoCompensacaoResto:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CompensacaoResto
+            mappedBy: fkArrecadacaoCompensacao
+            joinColumns:
+                cod_compensacao:
+                    referencedColumnName: cod_compensacao

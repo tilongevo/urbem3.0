@@ -1,0 +1,241 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-condensed table-custom" style="margin-top: 20px">
+            <tr>
+                <td><b>{{ 'label.tributarioCobrarDividaAtiva.contribuinte'|trans }}:</b></td>
+                <td>{{ contribuinte }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.tributarioCobrarDividaAtiva.exercicio'|trans }}:</b></td>
+                <td>{{ exercicio }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.tributarioCobrarDividaAtiva.inscricao'|trans }}:</b></td>
+                <td>{{ inscricao }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.tributarioCobrarDividaAtiva.endereco'|trans }}:</b></td>
+                <td>{{ endereco }}</td>
+            </tr>
+            <tr>
+                <td><b>{{ 'label.tributarioCobrarDividaAtiva.modalidade'|trans }}:</b></td>
+                <td>{{ admin.getDescricaoModalidade(modalidade) }}</td>
+            </tr>
+        </table>
+
+        <table class="table table-condensed table-custom" style="margin-top: 20px">
+            <thead>
+                <tr>
+                    <th colspan="12"><h5><b>{{ 'label.tributarioCobrarDividaAtiva.listaDividasVinculadas'|trans }}</b></h5></th>
+                </tr>
+                <tr class="bold grey">
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.inscricaoDivida'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.exercicioDevedor'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.tipo'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.valorOrigem'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.juros'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.comissaoCobranca'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.multa'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.correcaoUrm'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.reducao'|trans }}</th>
+                    <th>{{ 'label.tributarioCobrarDividaAtiva.subtotal'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% set subtotal = 0 %}
+                    {% set sumValorOrigem = 0 %}
+                    {% set sumJuros = 0 %}
+                    {% set sumComissao = 0 %}
+                    {% set sumMulta = 0 %}
+                    {% set sumCorrecao = 0 %}
+                    {% set sumReducao = 0 %}
+                    {% set sumSubtotal = 0 %}
+                    {% for inscricaoVinculada in inscricoesVinculadas %}
+                        {% set inscricao = admin.getInscricoesVinculadas(inscricaoVinculada) %}
+                        {% set complemento = admin.getComplementar(inscricao.cod_inscricao ~'/'~ inscricao.exercicio) %}
+                        {% set descricao = admin.getCreditoDescricao(inscricao.cod_inscricao, inscricao.exercicio)|first %}
+                        {% if inscricao and complemento and descricao %}
+
+                            {% set taxas = admin.getTaxas(inscricao.cod_inscricao, inscricao.exercicio, descricao.valor, descricao.dt_vencimento_origem) %}
+                            {% set juros = taxas.juros|split(';')|first %}
+
+                            {% set taxaComissao = '0.00' %}
+                            {% set taxaMulta = '0.00' %}
+
+                            {% set acrescimos = admin.getListaAcrescimosDaModalidade(app.request.get('codModalidade')) %}
+
+                            {% if acrescimos is defined %}
+                                {% set acrescimoIndex = admin.getKeyAcrescimoByDescricao(acrescimos, 'Comissão de Cobrança') %}
+                                {% for comissao in taxas.multa|split(';') %}
+                                    {% if taxas.multa|split(';')[loop.index] is defined and taxas.multa|split(';')[loop.index] == acrescimos[acrescimoIndex].cod_acrescimo and taxas.multa|split(';')[loop.index+1] is defined and taxas.multa|split(';')[loop.index+1] == acrescimos[acrescimoIndex].cod_tipo %}
+                                        {% set taxaComissao = taxas.multa|split(';')[loop.index-1] %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% set acrescimoIndex = admin.getKeyAcrescimoByDescricao(acrescimos, 'Multa') %}
+                                {% for multa in taxas.multa|split(';') %}
+                                    {% if taxas.multa|split(';')[loop.index-1] is defined and taxas.multa|split(';')[loop.index] is defined %}
+                                        {% if taxas.multa|split(';')[loop.index-1] == acrescimos[acrescimoIndex].cod_acrescimo and taxas.multa|split(';')[loop.index] == acrescimos[acrescimoIndex].cod_tipo %}
+                                            {% set taxaMulta = (taxas.multa|split(';')[loop.index-2]) %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+
+                            {% set multa = taxaMulta %}
+                            {% set comissao = taxaComissao %}
+                            {% set correcao = taxas.correcao|split(';')|first %}
+
+                            <tr>
+                                <td>{{ inscricao.cod_inscricao }}/{{ inscricao.exercicio }}</td>
+                                <td>{{ inscricao.exercicio_original }}</td>
+                                <td>{{ complemento[0].inscricao_tipo }}</td>
+                                <td>{{ descricao.valor|number_format(2, ',', '.')|default('0,00') }}</td>
+                                <td>{{ juros|number_format(2, ',', '.')|default('0,00') }}</td>
+                                <td>{{ comissao|number_format(2, ',', '.')|default('0,00') }}</td>
+                                <td>{{ multa|number_format(2, ',', '.')|default('0,00') }}</td>
+                                <td>{{ correcao|number_format(2, ',', '.')|default('0,00') }}</td>
+
+                                {% set inscricao = admin.getInscricaoMunicipal(inscricao.cod_inscricao, inscricao.exercicio) %}
+
+                                {% set reducao =
+                                    ( admin.getReducaoModalidadeAcrescimo(
+                                            app.request.get('codModalidade'),
+                                            inscricao,
+                                            juros,
+                                            2,
+                                            2,
+                                            descricao.dt_vencimento_origem,
+                                            app.request.get('parcelas')
+                                        )
+                                    ) +
+                                    ( admin.getReducaoModalidadeAcrescimo(
+                                            app.request.get('codModalidade'),
+                                            inscricao,
+                                            comissao,
+                                            4,
+                                            3,
+                                            descricao.dt_vencimento_origem,
+                                            app.request.get('parcelas')
+                                        )
+                                    ) +
+                                    ( admin.getReducaoModalidadeAcrescimo(
+                                            app.request.get('codModalidade'),
+                                            inscricao,
+                                            multa,
+                                            3,
+                                            3,
+                                            descricao.dt_vencimento_origem,
+                                            app.request.get('parcelas')
+                                        )
+                                    ) +
+                                    ( admin.getReducaoModalidadeAcrescimo(
+                                            app.request.get('codModalidade'),
+                                            inscricao,
+                                            correcao,
+                                            1,
+                                            1,
+                                            descricao.dt_vencimento_origem,
+                                            app.request.get('parcelas')
+                                        )
+                                    )
+                                %}
+
+                                <td>{{ reducao|number_format(2, ',', '.') }}</td>
+
+                                {% set sumValorOrigem = (descricao.valor + sumValorOrigem) %}
+                                {% set sumJuros = (juros + sumJuros) %}
+                                {% set sumComissao = (comissao + sumComissao) %}
+                                {% set sumMulta = (multa + sumMulta) %}
+                                {% set sumCorrecao = (correcao + sumCorrecao) %}
+                                {% set sumReducao = (reducao + sumReducao) %}
+                                {% set subtotal = (descricao.valor + taxas.juros + taxas.multa + taxas.correcao) %}
+                                {% set sumSubtotal = (subtotal + sumSubtotal) %}
+                                <td>{{ subtotal|number_format(2, ',', '.')|default('0,00') }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    <tr class="bold">
+                        <td>{{ 'label.tributarioCobrarDividaAtiva.totais'|trans }}</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>{{ sumValorOrigem|number_format(2, ',', '.') }}</td>
+                        <td>{{ sumJuros|number_format(2, ',', '.') }}</td>
+                        <td>{{ sumComissao|number_format(2, ',', '.') }}</td>
+                        <td>{{ sumMulta|number_format(2, ',', '.') }}</td>
+                        <td>{{ sumCorrecao|number_format(2, ',', '.') }}</td>
+                        <td>{{ sumReducao|number_format(2, ',', '.') }}</td>
+                        <td>{{ sumSubtotal|number_format(2, ',', '.') }}</td>
+                        {% set subtotal = admin.setSubtotal(sumSubtotal) %}
+                    </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-condensed table-custom" style="margin-top: 20px">
+            <thead>
+                <tr>
+                    <th colspan="12"><h5><b>{{ 'label.tributarioCobrarDividaAtiva.detalhamentoTributo'|trans }}</b></h5></th>
+                </tr>
+                <tr class="bold grey">
+                    <th colspan="4">{{ 'label.tributarioCobrarDividaAtiva.inscricaoDivida'|trans }}</th>
+                    <th colspan="4">{{ 'label.tributarioCobrarDividaAtiva.grupoOrigem'|trans }}</th>
+                    <th colspan="4">{{ 'label.tributarioCobrarDividaAtiva.creditoOrigem'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if inscricoesVinculadas %}
+                {% for inscricaoVinculada in inscricoesVinculadas %}
+                    <tr>
+                        {% set inscricao = admin.getInscricoesVinculadas(inscricaoVinculada) %}
+
+                        {% set descricao = admin.getCreditoDescricao(inscricao.cod_inscricao, inscricao.exercicio)|first %}
+
+                        <td colspan="4">{{ inscricao.cod_inscricao }}/{{ inscricao.exercicio }}</td>
+
+                        {% if descricao %}
+                            <td colspan="4">{{ descricao.origem }}</td>
+                            <td colspan="4">{{ descricao.credito_formatado }} - {{ descricao.descricao_credito }}</td>
+                        {% else %}
+                            <td colspan="4">-</td>
+                            <td colspan="4">-</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+
+        <table class="table table-condensed table-custom" style="margin-top: 20px">
+            <thead>
+                <tr>
+                    <th colspan="12"><h5><b>{{ 'label.tributarioCobrarDividaAtiva.listaParcelas'|trans }}</b></h5></th>
+                </tr>
+                <tr class="bold grey">
+                    <th colspan="4" class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.parcela'|trans }}</th>
+                    <th colspan="4" class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.vencimento'|trans }}</th>
+                    <th colspan="4" class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.valor'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set pagamentos = admin.getPagamentos() %}
+                {% for parcela in pagamentos %}
+                <tr>
+                    <td colspan="4">{{ parcela.parcela }}</td>
+                    <td colspan="4">{{ parcela.dtPagamento }}</td>
+                    <td colspan="4">{{ parcela.valor|number_format(2, ',', '.') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

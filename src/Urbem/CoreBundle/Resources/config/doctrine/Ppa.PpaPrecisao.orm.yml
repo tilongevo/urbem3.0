@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Ppa\PpaPrecisao:
+    type: entity
+    table: ppa.ppa_precisao
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+    fields:
+        codPrecisao:
+            type: integer
+            nullable: false
+            column: cod_precisao
+    manyToOne:
+        fkPpaPrecisao:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Precisao
+            inversedBy: fkPpaPpaPrecisoes
+            joinColumns:
+                cod_precisao:
+                    referencedColumnName: cod_precisao
+    oneToOne:
+        fkPpaPpa:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Ppa
+            inversedBy: fkPpaPpaPrecisao
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa

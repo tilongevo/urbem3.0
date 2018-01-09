@@ -1,0 +1,90 @@
+Urbem\CoreBundle\Entity\Imobiliario\Licenca:
+    type: entity
+    table: imobiliario.licenca
+    repositoryClass: Urbem\CoreBundle\Repository\Imobiliario\LicencaRepository
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        numcgm:
+            type: integer
+            nullable: false
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+        observacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkImobiliarioPermissao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Permissao
+            inversedBy: fkImobiliarioLicencas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp
+    oneToMany:
+        fkImobiliarioLicencaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaDocumento
+            mappedBy: fkImobiliarioLicenca
+        fkImobiliarioLicencaBaixas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaBaixa
+            mappedBy: fkImobiliarioLicenca
+        fkImobiliarioLicencaLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaLote
+            mappedBy: fkImobiliarioLicenca
+        fkImobiliarioLicencaResponsavelTecnicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaResponsavelTecnico
+            mappedBy: fkImobiliarioLicenca
+        fkImobiliarioLicencaProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaProcesso
+            mappedBy: fkImobiliarioLicenca
+        fkImobiliarioLicencaImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaImovel
+            mappedBy: fkImobiliarioLicenca

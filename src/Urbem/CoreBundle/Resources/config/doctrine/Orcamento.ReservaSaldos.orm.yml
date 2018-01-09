@@ -1,0 +1,96 @@
+Urbem\CoreBundle\Entity\Orcamento\ReservaSaldos:
+    type: entity
+    table: orcamento.reserva_saldos
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\ReservaSaldosRepository
+    id:
+        codReserva:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_reserva
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codDespesa:
+            type: integer
+            nullable: false
+            column: cod_despesa
+        dtValidadeInicial:
+            type: date
+            nullable: false
+            column: dt_validade_inicial
+        dtValidadeFinal:
+            type: date
+            nullable: false
+            column: dt_validade_final
+        dtInclusao:
+            type: date
+            nullable: false
+            column: dt_inclusao
+        vlReserva:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: vl_reserva
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                default: A
+        motivo:
+            type: string
+            nullable: false
+            length: 255
+    manyToOne:
+        fkOrcamentoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            inversedBy: fkOrcamentoReservaSaldos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_despesa:
+                    referencedColumnName: cod_despesa
+    oneToMany:
+        fkComprasSolicitacaoHomologadaReservas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoHomologadaReserva
+            mappedBy: fkOrcamentoReservaSaldos
+        fkComprasMapaItemReservas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaItemReserva
+            mappedBy: fkOrcamentoReservaSaldos
+    oneToOne:
+        fkEmpenhoAutorizacaoReserva:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoReserva
+            mappedBy: fkOrcamentoReservaSaldos
+            joinColumns:
+                cod_reserva:
+                    referencedColumnName: cod_reserva
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoReservaSaldosAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReservaSaldosAnulada
+            mappedBy: fkOrcamentoReservaSaldos
+            joinColumns:
+                cod_reserva:
+                    referencedColumnName: cod_reserva
+                exercicio:
+                    referencedColumnName: exercicio

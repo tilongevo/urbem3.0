@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Monetario\Moeda:
+    type: entity
+    table: monetario.moeda
+    id:
+        codMoeda:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: monetario.moeda_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_moeda
+    fields:
+        descricaoSingular:
+            type: string
+            nullable: false
+            length: 40
+            column: descricao_singular
+        descricaoPlural:
+            type: string
+            nullable: false
+            length: 40
+            column: descricao_plural
+        fracaoSingular:
+            type: string
+            nullable: false
+            length: 40
+            column: fracao_singular
+        fracaoPlural:
+            type: string
+            nullable: false
+            length: 40
+            column: fracao_plural
+        simbolo:
+            type: string
+            nullable: false
+            length: 4
+        inicioVigencia:
+            type: date
+            nullable: false
+            column: inicio_vigencia
+    oneToMany:
+        fkEconomicoAtividadeModalidadeMoedas:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeModalidadeMoeda
+            mappedBy: fkMonetarioMoeda
+        fkEconomicoCadEconModalidadeMoedas:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadEconModalidadeMoeda
+            mappedBy: fkMonetarioMoeda
+        fkMonetarioCreditoMoedas:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoMoeda
+            mappedBy: fkMonetarioMoeda
+    oneToOne:
+        fkMonetarioRegraConversaoMoeda:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\RegraConversaoMoeda
+            mappedBy: fkMonetarioMoeda
+            joinColumns:
+                cod_moeda:
+                    referencedColumnName: cod_moeda

@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoFonte:
+    type: entity
+    table: fiscalizacao.retencao_fonte
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        valorRetencao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_retencao
+    oneToMany:
+        fkFiscalizacaoRetencaoNotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoNota
+            mappedBy: fkFiscalizacaoRetencaoFonte
+    oneToOne:
+        fkFiscalizacaoProcessoLevantamento:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoLevantamento
+            inversedBy: fkFiscalizacaoRetencaoFonte
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia

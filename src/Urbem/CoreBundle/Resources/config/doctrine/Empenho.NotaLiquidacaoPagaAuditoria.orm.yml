@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPagaAuditoria:
+    type: entity
+    table: empenho.nota_liquidacao_paga_auditoria
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        timestampAtual:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_atual
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEmpenhoNotaLiquidacaoPagaAuditorias
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkEmpenhoNotaLiquidacaoPaga:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPaga
+            inversedBy: fkEmpenhoNotaLiquidacaoPagaAuditoria
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_nota:
+                    referencedColumnName: cod_nota
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

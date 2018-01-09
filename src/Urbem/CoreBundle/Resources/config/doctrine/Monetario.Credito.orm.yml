@@ -1,0 +1,184 @@
+Urbem\CoreBundle\Entity\Monetario\Credito:
+    type: entity
+    table: monetario.credito
+    repositoryClass: Urbem\CoreBundle\Repository\Monetario\CreditoRepository
+    id:
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+    fields:
+        descricaoCredito:
+            type: string
+            nullable: false
+            length: 80
+            column: descricao_credito
+        codConvenio:
+            type: integer
+            nullable: true
+            column: cod_convenio
+        iReceitas:
+            type: integer
+            nullable: true
+            column: i_receitas
+    manyToOne:
+        fkMonetarioEspecieCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\EspecieCredito
+            inversedBy: fkMonetarioCreditos
+            joinColumns:
+                cod_especie:
+                    referencedColumnName: cod_especie
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+        fkMonetarioConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Convenio
+            inversedBy: fkMonetarioCreditos
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+    oneToMany:
+        fkArrecadacaoCalculos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Calculo
+            mappedBy: fkMonetarioCredito
+        fkArrecadacaoDesoneracoes:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desoneracao
+            mappedBy: fkMonetarioCredito
+        fkArrecadacaoParametroCalculos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ParametroCalculo
+            mappedBy: fkMonetarioCredito
+        fkContabilidadePlanoAnaliticaCreditos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnaliticaCredito
+            mappedBy: fkMonetarioCredito
+        fkDividaParcelaOrigens:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ParcelaOrigem
+            mappedBy: fkMonetarioCredito
+        fkFiscalizacaoProcessoFiscalCreditos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalCredito
+            mappedBy: fkMonetarioCredito
+        fkMonetarioCreditoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoAcrescimo
+            mappedBy: fkMonetarioCredito
+        fkMonetarioCreditoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoNorma
+            mappedBy: fkMonetarioCredito
+        fkMonetarioCreditoIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoIndicador
+            mappedBy: fkMonetarioCredito
+        fkMonetarioCreditoMoedas:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoMoeda
+            mappedBy: fkMonetarioCredito
+        fkOrcamentoDespesaCreditos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\DespesaCredito
+            mappedBy: fkMonetarioCredito
+        fkOrcamentoReceitaCreditos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReceitaCredito
+            mappedBy: fkMonetarioCredito
+        fkArrecadacaoCreditoGrupos:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CreditoGrupo
+            mappedBy: fkMonetarioCredito
+    oneToOne:
+        fkMonetarioRegraDesoneracaoCredito:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\RegraDesoneracaoCredito
+            mappedBy: fkMonetarioCredito
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+        fkMonetarioCreditoContaCorrente:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoContaCorrente
+            mappedBy: fkMonetarioCredito
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+        fkMonetarioCreditoCarteira:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoCarteira
+            mappedBy: fkMonetarioCredito
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie

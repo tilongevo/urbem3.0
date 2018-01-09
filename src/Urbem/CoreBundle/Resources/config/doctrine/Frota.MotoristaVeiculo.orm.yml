@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Frota\MotoristaVeiculo:
+    type: entity
+    table: frota.motorista_veiculo
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+        cgmMotorista:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_motorista
+    fields:
+        padrao:
+            type: boolean
+            nullable: true
+    manyToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaMotoristaVeiculos
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkFrotaMotorista:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Motorista
+            inversedBy: fkFrotaMotoristaVeiculos
+            joinColumns:
+                cgm_motorista:
+                    referencedColumnName: cgm_motorista

@@ -1,0 +1,343 @@
+Urbem\CoreBundle\Entity\Licitacao\Licitacao:
+    type: entity
+    table: licitacao.licitacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Licitacao\LicitacaoRepository
+    id:
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipoObjeto:
+            type: integer
+            nullable: false
+            column: cod_tipo_objeto
+        codObjeto:
+            type: integer
+            nullable: false
+            column: cod_objeto
+        codCriterio:
+            type: integer
+            nullable: false
+            column: cod_criterio
+        codTipoLicitacao:
+            type: integer
+            nullable: false
+            column: cod_tipo_licitacao
+        codMapa:
+            type: integer
+            nullable: false
+            column: cod_mapa
+        exercicioMapa:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_mapa
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        exercicioProcesso:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_processo
+        vlCotado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_cotado
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        numOrgao:
+            type: integer
+            nullable: true
+            column: num_orgao
+        numUnidade:
+            type: integer
+            nullable: true
+            column: num_unidade
+        codRegime:
+            type: integer
+            nullable: true
+            column: cod_regime
+        tipoChamadaPublica:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: tipo_chamada_publica
+        registroPrecos:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: registro_precos
+    manyToOne:
+        fkComprasModalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Modalidade
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkComprasTipoObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\TipoObjeto
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                cod_tipo_objeto:
+                    referencedColumnName: cod_tipo_objeto
+        fkComprasObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Objeto
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                cod_objeto:
+                    referencedColumnName: cod_objeto
+        fkLicitacaoCriterioJulgamento:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\CriterioJulgamento
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                cod_criterio:
+                    referencedColumnName: cod_criterio
+        fkComprasTipoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\TipoLicitacao
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                cod_tipo_licitacao:
+                    referencedColumnName: cod_tipo_licitacao
+        fkComprasMapa:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Mapa
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                exercicio_mapa:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio_processo:
+                    referencedColumnName: ano_exercicio
+        fkComprasRegimeExecucaoObras:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\RegimeExecucaoObras
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                cod_regime:
+                    referencedColumnName: cod_regime
+        fkLicitacaoTipoChamadaPublica:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoChamadaPublica
+            inversedBy: fkLicitacaoLicitacoes
+            joinColumns:
+                tipo_chamada_publica:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkLicitacaoContratoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoLicitacao
+            mappedBy: fkLicitacaoLicitacao
+        fkLicitacaoParticipantes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Participante
+            mappedBy: fkLicitacaoLicitacao
+        fkLicitacaoMembroAdicionais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\MembroAdicional
+            mappedBy: fkLicitacaoLicitacao
+        fkLicitacaoParticipanteCertificacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacaoLicitacao
+            mappedBy: fkLicitacaoLicitacao
+        fkLicitacaoEditais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Edital
+            mappedBy: fkLicitacaoLicitacao
+        fkTcemgRegistroPrecosLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosLicitacao
+            mappedBy: fkLicitacaoLicitacao
+        fkTcmbaObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            mappedBy: fkLicitacaoLicitacao
+        fkLicitacaoComissaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ComissaoLicitacao
+            mappedBy: fkLicitacaoLicitacao
+        fkLicitacaoCotacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\CotacaoLicitacao
+            mappedBy: fkLicitacaoLicitacao
+        fkLicitacaoLicitacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\LicitacaoDocumentos
+            mappedBy: fkLicitacaoLicitacao
+    oneToOne:
+        fkLicitacaoLicitacaoAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\LicitacaoAnulada
+            mappedBy: fkLicitacaoLicitacao
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkLicitacaoAdjudicacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Adjudicacao
+            mappedBy: fkLicitacaoLicitacao
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio_licitacao
+        fkLicitacaoJustificativaRazao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\JustificativaRazao
+            mappedBy: fkLicitacaoLicitacao
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcemgResplic:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Resplic
+            mappedBy: fkLicitacaoLicitacao
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcemgLicitacaoTc:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\LicitacaoTc
+            mappedBy: fkLicitacaoLicitacao
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcmgoResponsavelLicitacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ResponsavelLicitacao
+            mappedBy: fkLicitacaoLicitacao
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcmgoResponsavelLicitacaoDispensa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ResponsavelLicitacaoDispensa
+            mappedBy: fkLicitacaoLicitacao
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio

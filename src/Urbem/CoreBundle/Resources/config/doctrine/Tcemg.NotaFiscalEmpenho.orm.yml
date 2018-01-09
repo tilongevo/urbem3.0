@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Tcemg\NotaFiscalEmpenho:
+    type: entity
+    table: tcemg.nota_fiscal_empenho
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+    fields:
+        exercicioEmpenho:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_empenho
+        vlAssociado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_associado
+        vlTotalLiquido:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_total_liquido
+    manyToOne:
+        fkTcemgNotaFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NotaFiscal
+            inversedBy: fkTcemgNotaFiscalEmpenhos
+            joinColumns:
+                cod_nota:
+                    referencedColumnName: cod_nota
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcemgNotaFiscalEmpenhos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio_empenho:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

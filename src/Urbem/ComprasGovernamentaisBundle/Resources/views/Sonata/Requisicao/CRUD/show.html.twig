@@ -1,0 +1,112 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% block title %}{{ 'label.almoxarifado.requisicao.requisicao'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+
+    <div class="container-rh">
+
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-store grey-text left"></i>
+                    {{ 'label.almoxarifado.requisicao.requisicao'|trans }}
+                </h2>
+
+                {% if object.fkAlmoxarifadoRequisicaoAnulacoes.count == 0 %}
+                    <a href="{{ path('urbem_compras_governamentais_requisicao_edit', { 'id': admin.objectKey(object) }) }}"
+                       class="serv-btn right">
+                        <i class="material-icons">edit</i>
+                    </a>
+                {% endif %}
+                <h6 class="divider grey col s12"></h6>
+
+                {# Codigo da Requisiçao #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.almoxarifado.requisicao.codRequisicao'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.codRequisicao }}</h6>
+                </div>
+
+                {# Data da Requisiçao #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.almoxarifado.requisicao.dtRequisicao'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.dtRequisicao|date("d/m/Y") }}</h6>
+                </div>
+
+                {# Exercicio #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.almoxarifado.requisicao.exercicio'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.exercicio }}</h6>
+                </div>
+
+                {# Observaçao #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.almoxarifado.requisicao.observacao'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.observacao }}</h6>
+                </div>
+
+                {# Status #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.almoxarifado.requisicao.status'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.status in constant('STATUS_LIST', object)|keys %}
+                            {{ constant('STATUS_LIST', object)[object.status] }}
+                        {% endif %}
+                    </h6>
+                </div>
+
+                {% set requisicaoAnulacao = object.getFkAlmoxarifadoRequisicaoAnulacoes().last() %}
+                {% if requisicaoAnulacao %}
+                    <div class="col s3 little3-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                            {{ 'label.almoxarifado.requisicao.motivo'|trans }}
+                        </h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            {{ requisicaoAnulacao.getMotivo() }}
+                        </h6>
+                    </div>
+                {% endif %}
+
+                {% include 'ComprasGovernamentaisBundle:Sonata/Requisicao/CRUD:show__acoes.html.twig' %}
+
+            </div>
+        </div>
+
+        {% include 'ComprasGovernamentaisBundle:Sonata/Requisicao/CRUD:show__requisicao_itens.html.twig' %}
+
+        <div class="row">
+            <div class="col s12 add space">
+                <a class="btn-floating white-text blue darken-4 btn-success"
+                   href="{{ path('urbem_compras_governamentais_requisicao_list') }}">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

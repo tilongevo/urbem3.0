@@ -1,0 +1,32 @@
+{% set item = field.data.item %}
+
+{% if item is not null %}
+    <div class="row">
+        <table class="col s12 highlight bordered">
+            <tr>
+                <th class="th-rh text-right" width="200">{{ 'label.entradaDiversos.unidade'|trans }}</th>
+                <td class="text-left">{{ item.nom_unidade }}</td>
+            </tr>
+            <tr>
+                <th class="th-rh text-right">{{ 'label.entradaDiversos.quantidade'|trans }}</th>
+                <td class="text-left">{{ item.quantidade|number_format(4, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <th class="th-rh text-right">{{ 'label.entradaDiversos.valorUnit'|trans }}</th>
+                <td class="text-left">{{ item.valor_unitario|number_format(2, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <th class="th-rh text-right">{{ 'label.entradaDiversos.valorMercado'|trans }}</th>
+                <td class="text-left">{{ item.valor|number_format(2, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <th class="th-rh text-right">{{ 'label.saidaEstorno.item.quantidadeEstornada'|trans }}</th>
+                <td class="text-left">{{ item.quantidade_estornada|number_format(4, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <th class="th-rh text-right">{{ 'label.saidaEstorno.item.saldoEstoque'|trans }}</th>
+                <td class="text-left">{{ (item.quantidade-item.quantidade_estornada)|number_format(4, ',', '.') }}</td>
+            </tr>
+        </table>
+    </div>
+{% endif %}

@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Pessoal\ClassificacaoEnquadramento:
+    type: entity
+    table: pessoal.classificacao_enquadramento
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codEnquadramento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_enquadramento
+    fields: {  }
+    manyToOne:
+        fkPessoalClassificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Classificacao
+            inversedBy: fkPessoalClassificacaoEnquadramentos
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+        fkPessoalEnquadramento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Enquadramento
+            inversedBy: fkPessoalClassificacaoEnquadramentos
+            joinColumns:
+                cod_enquadramento:
+                    referencedColumnName: cod_enquadramento
+    oneToMany:
+        fkPessoalAposentadorias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Aposentadoria
+            mappedBy: fkPessoalClassificacaoEnquadramento

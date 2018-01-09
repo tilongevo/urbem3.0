@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoFuncaoServidor:
+    type: entity
+    table: tcmba.tipo_funcao_servidor
+    id:
+        codTipoFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_funcao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkFolhapagamentoTcmbaCargoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TcmbaCargoServidor
+            mappedBy: fkTcmbaTipoFuncaoServidor

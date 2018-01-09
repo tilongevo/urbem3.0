@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container">
+        <div class="">
+            {% macro codCategoria_prototype(codCategoria) %}
+                <div class="col s12 padrao-box padrao-box-padrao">
+                    <div class="col s7">
+                        {{ form_label(codCategoria.cod_categoria,null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                        {{ form_widget(codCategoria.cod_categoria,{'attr': {'class': 'white input-rh browser-default'}}) }}
+                        {{ form_errors(codCategoria.cod_categoria) }}
+                    </div>
+                    <div class="col s2">
+                        {{ form_label(codCategoria.aliquota_deposito,null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                        {{ form_widget(codCategoria.aliquota_deposito,{'attr': {'class': 'white input-rh browser-default'}}) }}
+                        {{ form_errors(codCategoria.aliquota_deposito) }}
+                    </div>
+                    <div class="col s2">
+                        {{ form_label(codCategoria.aliquota_contribuicao,null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                        {{ form_widget(codCategoria.aliquota_contribuicao, {'attr': {'class': 'white input-rh browser-default'}}) }}
+                        {{ form_errors(codCategoria.aliquota_contribuicao) }}
+                    </div>
+                    <div class="col s1 deletar-padrao">
+                        <button type="button" class="removerPadrao btn btn-delete blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped"><i class="material-icons">delete</i></button>
+                    </div>
+                </div>
+            {% endmacro codCategoria_prototype %}
+            {{ form_start(form, {'attr': {'novalidate': ''}}) }}
+            <div class="col s12 m12 l12">
+                <div class="row">
+                    {{ form_label(form.vigencia,null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.vigencia,{'attr': {'class': 'white input-rh browser-default'}}) }}
+                    {{ form_errors(form.vigencia) }}
+                </div>
+            </div>
+            <div class="col s12 m12 l12">
+                <div class="row">
+                    <label class="control-label label-rh">*Evento Informativo do Valor Recolhido de
+                    FGTS</label>
+                    {{ form_widget(form.codEvento1,{'attr': {'class': 'white input-rh browser-default'}}) }}
+                    {{ form_errors(form.codEvento1) }}
+                </div>
+            </div>
+            <div class="col s12 m12 l12">
+                <div class="row">
+                    <label class="control-label label-rh">*Evento Informativo da Alíquota de Contribuição
+                        Social </label>
+                    {{ form_widget(form.codEvento2,{'attr': {'class': 'white input-rh browser-default'}}) }}
+                    {{ form_errors(form.codEvento2) }}
+                </div>
+            </div>
+            <div class="col s12 m12 l12">
+                <div class="row">
+                    <label class="control-label label-rh">*Evento de Base do FGTS</label>
+                    {{ form_widget(form.codEvento3,{'attr': {'class': 'white input-rh browser-default'}}) }}
+                    {{ form_errors(form.codEvento3) }}
+                </div>
+            </div>
+            <div class="">
+                <div class="col s2 m2 l2">
+                    {{ form_widget(form.btnAddCategoria, {'attr': {'class':'waves-effect waves-light btn blue darken-4'}}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    {{ form_widget(form.btnAddCategoria, {'attr': {'class':'waves-effect waves-light btn blue darken-4'}}) }}
+                    <ul class="codCategoriaFgts" data-prototype="{{ _self.codCategoria_prototype(form.codCategoria.vars.prototype)|e }}"></ul>
+                </div>
+            </div>
+
+            <div class="row right-align">
+                <button type="submit" class="top-btn waves-effect waves-light btn blue darken-4" value="Salvar"><i class="material-icons left">save</i> Salvar</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    {% block javascript %}
+        {{ parent() }}
+        <script type="text/javascript">
+            $(function() {
+                var collectionPadrao = $("ul.codCategoriaFgts");
+
+                collectionPadrao.data('index', collectionPadrao.find(':input').length);
+
+                $("#form_btnAddCategoria").on("click", function(e) {
+                    e.preventDefault();
+
+                    var prototype = collectionPadrao.data('prototype');
+                    var index = collectionPadrao.data('index');
+                    console.log(index);
+                    var newForm = prototype.replace(/__name__/g, index);
+                    collectionPadrao.data('index', index + 1);
+                    var newFormLi = $('<li></li>').append(newForm);
+                    collectionPadrao.append(newFormLi);
+                    $('select').material_select();
+                });
+
+                $(".removerPadrao").on("click", function() {
+                    $(this).parent().parent().parent().remove()
+                });
+            });
+        </script>
+    {% endblock javascript %}
+{% endblock content %}

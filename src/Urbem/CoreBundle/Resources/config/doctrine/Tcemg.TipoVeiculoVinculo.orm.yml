@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoVeiculoVinculo:
+    type: entity
+    table: tcemg.tipo_veiculo_vinculo
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        codTipoTce:
+            type: integer
+            nullable: false
+            column: cod_tipo_tce
+        codSubtipoTce:
+            type: integer
+            nullable: false
+            column: cod_subtipo_tce
+    manyToOne:
+        fkTcemgSubtipoVeiculoTce:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\SubtipoVeiculoTce
+            inversedBy: fkTcemgTipoVeiculoVinculos
+            joinColumns:
+                cod_tipo_tce:
+                    referencedColumnName: cod_tipo_tce
+                cod_subtipo_tce:
+                    referencedColumnName: cod_subtipo_tce
+        fkTcemgTipoVeiculoTce:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoVeiculoTce
+            inversedBy: fkTcemgTipoVeiculoVinculos
+            joinColumns:
+                cod_tipo_tce:
+                    referencedColumnName: cod_tipo_tce
+    oneToOne:
+        fkFrotaTipoVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\TipoVeiculo
+            inversedBy: fkTcemgTipoVeiculoVinculo
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

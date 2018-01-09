@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Tceam\TipoDocumentoDiaria:
+    type: entity
+    table: tceam.tipo_documento_diaria
+    id:
+        codTipoDocumentoDiaria:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento_diaria
+    fields:
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        funcionario:
+            type: string
+            nullable: true
+            length: 30
+        matricula:
+            type: string
+            nullable: true
+            length: 10
+        dtSaida:
+            type: date
+            nullable: true
+            column: dt_saida
+        horaSaida:
+            type: time
+            nullable: true
+            column: hora_saida
+        destino:
+            type: string
+            nullable: true
+            length: 25
+        dtRetorno:
+            type: date
+            nullable: true
+            column: dt_retorno
+        horaRetorno:
+            type: time
+            nullable: true
+            column: hora_retorno
+        motivo:
+            type: string
+            nullable: true
+            length: 120
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 0
+    manyToOne:
+        fkTceamDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\Documento
+            inversedBy: fkTceamTipoDocumentoDiarias
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento

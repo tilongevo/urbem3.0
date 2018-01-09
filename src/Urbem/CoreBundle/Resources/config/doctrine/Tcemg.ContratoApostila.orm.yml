@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Tcemg\ContratoApostila:
+    type: entity
+    table: tcemg.contrato_apostila
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ContratoApostilaRepository
+    id:
+        codApostila:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_apostila
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codAlteracao:
+            type: integer
+            nullable: false
+            column: cod_alteracao
+        descricao:
+            type: string
+            nullable: false
+            length: 250
+        dataApostila:
+            type: date
+            nullable: false
+            column: data_apostila
+        valorApostila:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_apostila
+    manyToOne:
+        fkTcemgContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            inversedBy: fkTcemgContratoApostilas
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio

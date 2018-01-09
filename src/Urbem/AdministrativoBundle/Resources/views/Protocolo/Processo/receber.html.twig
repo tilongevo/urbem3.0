@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {% include 'AdministrativoBundle::Protocolo/Processo/detalhe.html.twig' %}
+
+        {{ form_start(form) }}
+            <input type="hidden" value="{{ processo.codProcesso }}" name="processo" />
+            <input type="hidden" value="{{ processo.anoExercicio }}" name="exercicio" />
+
+            <div class="col s12 right-align" style="margin-top: 30px">
+                <a class="btn grey darken-1 btn-bold cancel left" href="/administrativo/protocolo/processo/perfil?id={{ processo.codProcesso }}~{ processo.anoExercicio }}"><i class="fa fa-ban left"></i>Cancelar</a>
+                <button type="submit" class="waves-effect waves-light btn blue darken-4" value="Receber processo"><i class="material-icons left">input</i>Receber Processo</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}

@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Tesouraria\SaldoTesouraria:
+    type: entity
+    table: tesouraria.saldo_tesouraria
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\SaldoTesourariaRepository
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        vlSaldo:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_saldo
+    oneToOne:
+        fkContabilidadePlanoBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoBanco
+            inversedBy: fkTesourariaSaldoTesouraria
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

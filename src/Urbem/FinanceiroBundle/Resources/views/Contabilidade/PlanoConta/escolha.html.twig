@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="sonata-ba-form">
+        <div class="box box-primary">
+            <div class="box-header col s12">
+                <h5 class="col s12 box-title left-align show">
+                    Versão Atual:
+                    {% if last.versao is empty %}
+                    Não foi escolhido nenhum plano
+                    {% else %}
+                    {{ last.versao }},
+                    {% endif %}
+                    {% if last.exercicio is empty %}
+                    para o exercício actual
+                    {% else %}
+                    {{  last.exercicio }}
+                    {% endif %}
+                </h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+        </div>
+
+        <form name="form" method="post" action="{{  path('financeiro_contabilidade_planoconta_escolha') }}">
+            <div class="col s12">
+                {{ form_rest(form) }}
+            </div>
+                <br />
+            <div class="col s12" style="margin-top: 20px">
+                <div class="col s8 initial">
+                    <a class="btn-floating white-text blue darken-4 btn-success" href="#" onclick="window.history.back();"><i class="material-icons">arrow_back</i>{</a>
+                </div>
+                <div class="col s4 right-align initial">
+                    <button type="submit" class="white-text blue darken-4 btn btn-success save" name="btn_create_and_list"><i class="material-icons left">save</i>Salvar</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock content %}

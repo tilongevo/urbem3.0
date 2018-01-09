@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Administracao\ConfiguracaoEntidade:
+    type: entity
+    table: administracao.configuracao_entidade
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        parametro:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkAdministracaoConfiguracaoEntidades
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkAdministracaoConfiguracaoEntidades
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo

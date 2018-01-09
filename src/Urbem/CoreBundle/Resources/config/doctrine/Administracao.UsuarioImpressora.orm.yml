@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Administracao\UsuarioImpressora:
+    type: entity
+    table: administracao.usuario_impressora
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codImpressora:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_impressora
+    fields:
+        impressoraPadrao:
+            type: boolean
+            nullable: false
+            column: impressora_padrao
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkAdministracaoUsuarioImpressoras
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkAdministracaoImpressora:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Impressora
+            inversedBy: fkAdministracaoUsuarioImpressoras
+            joinColumns:
+                cod_impressora:
+                    referencedColumnName: cod_impressora

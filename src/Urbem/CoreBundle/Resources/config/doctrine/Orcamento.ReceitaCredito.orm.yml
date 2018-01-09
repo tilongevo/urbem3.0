@@ -1,0 +1,67 @@
+Urbem\CoreBundle\Entity\Orcamento\ReceitaCredito:
+    type: entity
+    table: orcamento.receita_credito
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        dividaAtiva:
+            type: boolean
+            generator:
+                strategy: NONE
+            column: divida_ativa
+    fields:
+        codReceita:
+            type: integer
+            nullable: false
+            column: cod_receita
+    manyToOne:
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkOrcamentoReceitaCreditos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkOrcamentoReceitaCreditos
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+    oneToMany:
+        fkOrcamentoReceitaCreditoDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReceitaCreditoDesconto
+            mappedBy: fkOrcamentoReceitaCredito

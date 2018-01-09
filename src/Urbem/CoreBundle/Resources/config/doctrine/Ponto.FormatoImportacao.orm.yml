@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Ponto\FormatoImportacao:
+    type: entity
+    table: ponto.formato_importacao
+    id:
+        codFormato:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ponto.seq_formato_importacao
+                allocationSize: 1
+                initialValue: 1
+            column: cod_formato
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+        referenciaCadastro:
+            type: string
+            nullable: false
+            length: 1
+            column: referencia_cadastro
+        formatoColunas:
+            type: string
+            nullable: false
+            length: 1
+            column: formato_colunas
+    oneToMany:
+        fkPontoFormatoTamanhoFixos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoTamanhoFixo
+            mappedBy: fkPontoFormatoImportacao
+        fkPontoImportacaoPontoErros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ImportacaoPontoErro
+            mappedBy: fkPontoFormatoImportacao
+        fkPontoImportacaoPontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ImportacaoPonto
+            mappedBy: fkPontoFormatoImportacao
+    oneToOne:
+        fkPontoFormatoDelimitador:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoDelimitador
+            mappedBy: fkPontoFormatoImportacao
+            joinColumns:
+                cod_formato:
+                    referencedColumnName: cod_formato

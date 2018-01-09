@@ -1,0 +1,110 @@
+Urbem\CoreBundle\Entity\Tcepb\Obras:
+    type: entity
+    table: tcepb.obras
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_obra
+    fields:
+        dtCadastro:
+            type: date
+            nullable: true
+            column: dt_cadastro
+        patrimonio:
+            type: string
+            nullable: true
+            length: 1
+        localidade:
+            type: string
+            nullable: true
+            length: 200
+        descricao:
+            type: string
+            nullable: true
+            length: 300
+        codTipoObra:
+            type: integer
+            nullable: true
+            column: cod_tipo_obra
+        codTipoCategoria:
+            type: integer
+            nullable: true
+            column: cod_tipo_categoria
+        codTipoFonte:
+            type: integer
+            nullable: true
+            column: cod_tipo_fonte
+        mesAnoEstimadoFim:
+            type: string
+            nullable: true
+            length: 6
+            column: mes_ano_estimado_fim
+        dtInicio:
+            type: date
+            nullable: true
+            column: dt_inicio
+        dtConclusao:
+            type: date
+            nullable: true
+            column: dt_conclusao
+        dtRecebimento:
+            type: date
+            nullable: true
+            column: dt_recebimento
+        codTipoSituacao:
+            type: integer
+            nullable: true
+            column: cod_tipo_situacao
+        vlObra:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_obra
+    manyToOne:
+        fkTcepbTipoSituacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoSituacao
+            inversedBy: fkTcepbObras
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo_situacao:
+                    referencedColumnName: cod_tipo
+        fkTcepbTipoObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoObra
+            inversedBy: fkTcepbObras
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo_obra:
+                    referencedColumnName: cod_tipo
+        fkTcepbTipoCategoriaObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoCategoriaObra
+            inversedBy: fkTcepbObras
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo_categoria:
+                    referencedColumnName: cod_tipo
+        fkTcepbTipoFonteObras:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoFonteObras
+            inversedBy: fkTcepbObras
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo_fonte:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkTcepbEmpenhoObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\EmpenhoObras
+            mappedBy: fkTcepbObras

@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Ponto\EscalaTurno:
+    type: entity
+    table: ponto.escala_turno
+    id:
+        codEscala:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_escala
+        codTurno:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_turno
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        dtTurno:
+            type: date
+            nullable: false
+            column: dt_turno
+        horaEntrada1:
+            type: time
+            nullable: false
+            column: hora_entrada_1
+        horaSaida1:
+            type: time
+            nullable: false
+            column: hora_saida_1
+        horaEntrada2:
+            type: time
+            nullable: false
+            column: hora_entrada_2
+        horaSaida2:
+            type: time
+            nullable: false
+            column: hora_saida_2
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+    manyToOne:
+        fkPontoEscala:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\Escala
+            inversedBy: fkPontoEscalaTurnos
+            joinColumns:
+                cod_escala:
+                    referencedColumnName: cod_escala

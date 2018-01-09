@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+<div class="container-rh">
+    <div class="col s12 title-edit box-title-rh">
+        <h5>Editar FGTS</h5>
+        <div class="divider grey title-divider"><p>1</p></div>
+    </div>
+    {{ form_start(form)}}
+    <div class="row">
+    <div class="col s3">
+        {{ form_label(form.vigencia, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+        {{ form_widget(form.vigencia, {'attr': {'class': 'white input-rh browser-default'}}) }}
+        {{ form_errors(form.vigencia) }}
+    </div>
+    <div class="col s3">
+        <label for="form[evento][3]" class="required control-label label-rh">*Evento de Base do FGTS</label>
+        <select name="form[evento][3]" class="white input-rh browser-default">
+            {% for ev in evento %}
+                <option value="{{ ev.codEvento }}" {% if eventoSelecionado[2] == ev.codEvento %} selected {% endif %}>{{ ev.descricao }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col s3">
+        <label for="form[evento][1]" class="required control-label label-rh">*Informativo do Valor Recolhido de
+            FGTS </label>
+        <select name="form[evento][1]" class="white input-rh browser-default">
+            {% for ev in evento %}
+                <option value="{{ ev.codEvento }}" {% if eventoSelecionado[0] == ev.codEvento %} selected {% endif %}>{{ ev.descricao }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col s3">
+        <label for="form[evento][2]" class="required control-label label-rh">*Informativo da Alíquota de Contribuição Social </label>
+        <select name="form[evento][2]" class="white input-rh browser-default">
+            {% for ev in evento %}
+                <option value="{{ ev.codEvento }}" {% if eventoSelecionado[1] == ev.codEvento %} selected {% endif %}>{{ ev.descricao }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+    <div class="col s12  ">
+    {% macro codCategoria_prototype(codCategoria) %}
+            <div class="col s7">
+                {{ form_label(codCategoria.cod_categoria, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                {{ form_widget(codCategoria.cod_categoria, {'attr': {'class': 'white input-rh browser-default'}}) }}
+                {{ form_errors(codCategoria.cod_categoria) }}
+            </div>
+            <div class="col s2">
+                {{ form_label(codCategoria.aliquota_deposito, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                {{ form_widget(codCategoria.aliquota_deposito, {'attr': {'class': 'white input-rh browser-default'}}) }}
+                {{ form_errors(codCategoria.aliquota_deposito) }}
+            </div>
+            <div class="col s2">
+                {{ form_label(codCategoria.aliquota_contribuicao, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                {{ form_widget(codCategoria.aliquota_contribuicao, {'attr': {'class': 'white input-rh browser-default'}}) }}
+                {{ form_errors(codCategoria.aliquota_contribuicao) }}
+            </div>
+            <div class="col s1">
+                <button type="button" class="removerPadrao btn btn-delete blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down"><i class="material-icons">delete</i></button>
+            </div>
+    {% endmacro codCategoria_prototype %}
+    </div>
+    <div class="col s12">
+        {{ form_widget(form.btnAddCategoria, {'attr': {'class':'waves-effect waves-light btn blue darken-4'}}) }}
+    </div>
+    <div class="col s12 padrao-box">
+        <div class="padrao-box">
+            <ul class="codCategoriaFgts" data-prototype="{{ _self.codCategoria_prototype(form.codCategoria.vars.prototype)|e }}"></ul>
+        </div>
+        {% for categorias in categoria_form %}
+        <div class="row">
+            <div class="col s7">
+                <label for="form_codCategoria" class="required control-label label-rh">Categoria</label>
+                <select name="form[categoria][ {{ loop.index }} ][codCategoria]" class="white input-rh browser-default">
+                    {% for cat in categoria %}
+                        <option value="{{ cat.codCategoria }}" {% if  cat.codCategoria == categorias.codCategoria.codCategoria %} selected {% endif %}>{{ cat.descricao }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col s2">
+                <label for="" class="required control-label label-rh">Aliquota Depósito</label>
+                <input type="text" name="form[categoria][ {{ loop.index }} ][aliquotaDeposito]"
+                       required="required"
+                       value="{{ categorias.aliquotaDeposito }}"
+                       class="white input-rh browser-default">
+            </div>
+            <div class="col s2">
+                <label for="" class="required control-label label-rh">Aliquota Contribuicao</label>
+                <input type="text" name="form[categoria][ {{ loop.index }} ][aliquotaContribuicao]"
+                       required="required"
+                       value="{{ categorias.aliquotaContribuicao }}"
+                       class="white input-rh browser-default">
+            </div>
+            <div class=" col s1 center">
+                <BR/>
+                <button type="button" class="removerPadrao btn btn-delete blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down"><i class="material-icons">delete</i></button>
+            </div>
+         </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="row right-align">
+        <button type="submit" class="top-btn waves-effect waves-light btn blue darken-4" value="Salvar"><i class="material-icons left">save</i> Salvar</button>
+    </div>
+    {{ form_end(form) }}
+</div>
+
+    {% block javascript %}
+        {{ parent() }}
+        <script type="text/javascript">
+            $(function () {
+                var collectionPadrao = $("ul.codCategoriaFgts");
+
+                collectionPadrao.data('index', collectionPadrao.find(':input').length);
+
+                $("#fgts_btnAddCategoria").on("click", function (e) {
+                    e.preventDefault();
+
+                    var prototype = collectionPadrao.data('prototype');
+                    var index = collectionPadrao.data('index');
+                    var newForm = prototype.replace(/__name__/g, index);
+                    collectionPadrao.data('index', index + 1);
+                    var newFormLi = $('<li></li>').append(newForm);
+                    collectionPadrao.append(newFormLi);
+                    $('select').material_select();
+                });
+            });
+            $(document.body).on("click", ".removerPadrao", function() {
+                $(this).parent().parent().remove();
+            });
+        </script>
+    {% endblock javascript %}
+{% endblock content %}

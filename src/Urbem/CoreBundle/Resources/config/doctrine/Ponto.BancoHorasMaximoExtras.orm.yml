@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Ponto\BancoHorasMaximoExtras:
+    type: entity
+    table: ponto.banco_horas_maximo_extras
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        horas:
+            type: time
+            nullable: false
+    oneToOne:
+        fkPontoConfiguracaoBancoHoras:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoBancoHoras
+            inversedBy: fkPontoBancoHorasMaximoExtras
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp

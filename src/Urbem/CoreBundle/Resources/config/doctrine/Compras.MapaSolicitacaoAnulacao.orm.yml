@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Compras\MapaSolicitacaoAnulacao:
+    type: entity
+    table: compras.mapa_solicitacao_anulacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codMapa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mapa
+        exercicioSolicitacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_solicitacao
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSolicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_solicitacao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        motivo:
+            type: string
+            nullable: false
+            length: 200
+    manyToOne:
+        fkComprasMapaSolicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaSolicitacao
+            inversedBy: fkComprasMapaSolicitacaoAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa
+                exercicio_solicitacao:
+                    referencedColumnName: exercicio_solicitacao
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+    oneToMany:
+        fkComprasMapaItemAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaItemAnulacao
+            mappedBy: fkComprasMapaSolicitacaoAnulacao

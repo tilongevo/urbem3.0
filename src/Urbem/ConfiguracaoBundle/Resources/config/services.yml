@@ -1,0 +1,64 @@
+services:
+    configuracao.admin.configuracao:
+        class: Urbem\ConfiguracaoBundle\Admin\ConfiguracaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Administracao\Modulo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin }
+
+    Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType:
+        abstract:  true
+        arguments: ['@doctrine.orm.entity_manager', '@service_container']
+
+    configuracao.form.type.text:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationTextType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+            -  { name: form.type, alias: configuration_text }
+
+    configuracao.form.type.textarea:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationTextareaType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+            -  { name: form.type, alias: configuration_textarea }
+
+    configuracao.form.type.choice:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationChoiceType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+            -  { name: form.type, alias: configuration_choice }
+
+    configuracao.form.type.autocomplete:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAutocompleteType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+            -  { name: form.type, alias: configuration_autocomplete }
+
+    configuracao.form.type.uf:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationUFType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+            -  { name: form.type, alias: configuration_uf }
+
+    configuracao.form.type.municipio:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationMunicipioType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+            -  { name: form.type, alias: configuration_municipio }
+
+    configuracao.form.type.tipo_logradouro:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationTipoLogradouroType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+            -  { name: form.type, alias: configuration_tipo_logradouro }
+
+    configuracao.form.type.logo_tipo:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationLogoTipoType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+          -  { name: form.type, alias: configuration_logo_tipo }
+
+    configuracao.form.type.entidade:
+        class: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationEntidadeType
+        parent: Urbem\ConfiguracaoBundle\Form\Type\ConfigurationAbstractType
+        tags:
+            -  { name: form.type, alias: configuration_entidade }

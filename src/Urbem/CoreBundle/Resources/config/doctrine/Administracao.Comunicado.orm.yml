@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Administracao\Comunicado:
+    type: entity
+    table: administracao.comunicado
+    id:
+        codComunicado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_comunicado
+    fields:
+        codOrgao:
+            type: integer
+            nullable: false
+            column: cod_orgao
+        exercicioSetor:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_setor
+        numcgm:
+            type: integer
+            nullable: false
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        titulo:
+            type: string
+            nullable: false
+            length: 30
+        texto:
+            type: text
+            nullable: false
+    manyToOne:
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkAdministracaoComunicados
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkAdministracaoComunicados
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

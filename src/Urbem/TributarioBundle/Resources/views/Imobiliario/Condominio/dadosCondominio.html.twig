@@ -1,0 +1,33 @@
+{% block content %}
+
+    {% if field.data.condominio is not null %}
+
+        <table class="table show-table">
+            <tbody>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.codigo'|trans }}</th>
+                    <td>{{ field.data.condominio.codCondominio }}</td>
+
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.nome'|trans }}</th>
+                    <td>{{ field.data.condominio.nomCondominio }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.tipo'|trans }}</th>
+                    <td>{{ field.data.condominio.fkImobiliarioTipoCondominio.nomTipo }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.cgm'|trans }}</th>
+                    <td>
+                        {% if field.data.condominio.fkImobiliarioCondominioCgns|length %}
+                            {{ field.data.condominio.fkImobiliarioCondominioCgns.last.fkSwCgmPessoaJuridica }}
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock content %}

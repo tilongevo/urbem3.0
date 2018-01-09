@@ -1,0 +1,46 @@
+<div class="sonata-ba-show col s12">
+    <div class="sonata-ba-view">
+        <div class="row">
+            <h3 class="col s10 box-title left-align show">Registros</h3>
+            <div class="divider grey lighten-1  title-divider"></div>
+            <table id="tableAssinatura" class="bordered highlight" style="width:100%">
+                <tr class="tr-rh">
+                    <th class="th-rh">{{ 'label.ordemPagamento.empenho'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.dtEmpenho'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.liquidacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.dtLiquidacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.vlOrdemPagamento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ordemPagamento.vlAnulacao'|trans }}</th>
+                </tr>
+                {% for pagamentoLiquidacao in admin.customAnulacao %}
+                    <tr>
+                        <td>{{ pagamentoLiquidacao.empenho }}</td>
+                        <td>{{ pagamentoLiquidacao.dtEmpenho }}</td>
+                        <td>{{ pagamentoLiquidacao.liquidacao }}</td>
+                        <td>{{ pagamentoLiquidacao.dtLiquidacao }}</td>
+                        <td>{{ pagamentoLiquidacao.vlOrdemPagamento|number_format_currency('BRL') }}</td>
+                        <td>
+                            <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <input
+                                            type="text"
+                                            id="vlAnulacao_{{ pagamentoLiquidacao.parametro }}"
+                                            name="vlAnulacao[{{ pagamentoLiquidacao.parametro }}]"
+                                            required="required"
+                                            class="money campo-sonata form-control"
+                                            value="{{ pagamentoLiquidacao.vlAnulacao|number_format_decimal({'fraction_digits': 2}) }}"
+                                            {% if pagamentoLiquidacao.retencoes %}
+                                                readonly="readonly"
+                                                title="Esta O.P. possui retenções: A Anulação não poderá ser parcial"
+                                            {% endif %}
+                                    />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>

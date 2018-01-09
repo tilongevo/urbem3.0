@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Economico\AtributoLicencaDiversaValor:
+    type: entity
+    table: economico.atributo_licenca_diversa_valor
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkEconomicoLicencaDiversa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiversa
+            inversedBy: fkEconomicoAtributoLicencaDiversaValores
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEconomicoAtributoTipoLicencaDiversa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoTipoLicencaDiversa
+            inversedBy: fkEconomicoAtributoLicencaDiversaValores
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_modulo:
+                    referencedColumnName: cod_modulo

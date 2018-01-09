@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoPasep:
+    type: entity
+    table: ima.configuracao_pasep
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        numConvenio:
+            type: integer
+            nullable: false
+            column: num_convenio
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            nullable: false
+            column: cod_conta_corrente
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+        email:
+            type: string
+            nullable: false
+            length: 50
+    manyToOne:
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkImaConfiguracaoPaseps
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkImaConfiguracaoPaseps
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

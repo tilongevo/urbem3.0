@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Administracao\PoderPublico:
+    type: entity
+    table: administracao.poder_publico
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\PoderPublicoRepository
+    id:
+        codPoder:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_poder
+    fields:
+        nome:
+            type: string
+            nullable: false
+            length: 25
+    oneToMany:
+        fkTcemgMedidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Medidas
+            mappedBy: fkAdministracaoPoderPublico

@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoSubdivisao:
+    type: entity
+    table: folhapagamento.configuracao_empenho_subdivisao
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoConfiguracaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoSubdivisoes
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                exercicio:
+                    referencedColumnName: exercicio
+                sequencia:
+                    referencedColumnName: sequencia
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoSubdivisoes
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao

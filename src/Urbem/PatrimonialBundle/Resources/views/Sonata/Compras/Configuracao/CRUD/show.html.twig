@@ -1,0 +1,143 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h3 class="blue-text text-darken-4 left">
+                    <i class="fa fa-cubes grey-text left" aria-hidden="true"></i>
+                    <span style="padding-top: 10px">{{ 'label.configuracaoDeCompras'|trans }}</span>
+                </h3>
+                <a href="{{ path('urbem_patrimonial_compras_configuracao_create', {'id': object.codModulo }) }}"
+                class="serv-btn right">
+                <i class="material-icons right">edit</i>
+                </a>
+                <p class="divider grey col s12"></p>
+                {% for atributo in object.atributos %}
+                    {% if atributo.parametro == 'reserva_rigida' %}
+                        {%  set labelAtributo = "label.administracao.atributo_tipo_reserva" %}
+                    {%  else %}
+                        {%  set labelAtributo = "label.administracao.atributo_"~atributo.parametro %}
+                    {%  endif %}
+                    <div class="col s3 little-box" style="min-height: 80px">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ labelAtributo|trans }}</h6>
+                        {% if atributo.parametro in object.atributosBooleanos %}
+                            <h6 class="col s12 grey-text text-darken-1">{{ atributo.valor ? 'Sim' : 'Não' }}</h6>
+                        {% elseif atributo.parametro == 'numeracao_licitacao' %}
+                            {% if atributo.valor  == "entidademodalidade" %}
+                                <h6 class="col s12 grey-text text-darken-1">Entidade e modalidade</h6>
+                            {% else %}
+                                <h6 class="col s12 grey-text text-darken-1">{{ atributo.valor|capitalize }}</h6>
+                            {% endif %}
+                        {% elseif atributo.parametro == 'tipo_valor_referencia' %}
+                            {% if atributo.valor  == "solicitado" %}
+                                <h6 class="col s12 grey-text text-darken-1">{{ "label.administracao.valorReservaSolicitado"|trans }}</h6>
+                            {% elseif atributo.valor  == "livre" %}
+                                <h6 class="col s12 grey-text text-darken-1">{{ "label.administracao.valorReservaLivre"|trans }}</h6>
+                            {% elseif atributo.valor  == "10%" %}
+                                <h6 class="col s12 grey-text text-darken-1">{{ "label.administracao.valorReserva10"|trans }}</h6>
+                            {% else %}
+                                <h6 class="col s12 grey-text text-darken-1">{{ atributo.valor }}</h6>
+                            {% endif %}
+                        {% elseif atributo.parametro == 'reserva_rigida' %}
+                            <h6 class="col s12 grey-text text-darken-1">{{ atributo.valor ? "label.administracao.reservaAutorizacao"|trans : "label.administracao.reservaRigida"|trans }}</h6>
+                        {% else %}
+                            <h6 class="col s12 grey-text text-darken-1">{{ atributo.valor }}</h6>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% for entidade in object.entidades %}
+                    <p class="divider grey col s12"></p>
+                    <div class="col s12">
+                        <h3 class="blue-text text-darken-4 left">
+                            <span style="padding-top: 10px">{{ entidade.perfil.nom_cgm }}</span>
+                        </h3>
+                    </div>
+                    <div class="col s3 little-box" style="min-height: 80px">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ "label.administracao.entidade_data_fixa_solicitacao"|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ entidade.valorSolicitacao.valor }}</h6>
+                    </div>
+
+                    <div class="col s3 little-box" style="min-height: 80px">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ "label.administracao.entidade_data_fixa_para_compra_direta"|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ entidade.valorCompra.valor }}</h6>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a style="font-size: 16px">
+                    <i class="mdi mdi-newspaper"></i>
+                    {{ 'label.administracao.comprasEntidadesResponsaveis'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a class="tooltipped"
+                   href="{{ path('urbem_patrimonial_compras_configuracao_entidade_create', { 'exercicio': object.exercicio, 'codModulo': object.codModulo }) }}"
+                   data-toggle="tooltip" data-placement="top" title="{{ "incluir"|trans }}">
+                    <i class="mdi mdi-plus-circle right small"></i>
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <th class="th-rh" width="10"></th>
+                <th class="th-rh">{{ 'label.administracao.entidade'|trans }}</th>
+                <th class="th-rh">{{ 'label.cgm'|trans }}</th>
+                <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+                </thead>
+                <tbody>
+                {% for configuracao in object.configuracaoEntidade %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ configuracao.fkOrcamentoEntidade }}</td>
+                        <td>{{ configuracao.swCgm }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{ path('urbem_patrimonial_compras_configuracao_entidade_delete', { 'id': admin.getObjectKey(configuracao) }) }}"
+                                   class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_patrimonial_compras_configuracao_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

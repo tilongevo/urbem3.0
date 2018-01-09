@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Administracao\AssinaturaModulo:
+    type: entity
+    table: administracao.assinatura_modulo
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\AssinaturaModuloRepository
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkAdministracaoAssinatura:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Assinatura
+            inversedBy: fkAdministracaoAssinaturaModulos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkAdministracaoAssinaturaModulos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo

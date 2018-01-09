@@ -1,0 +1,92 @@
+Urbem\CoreBundle\Entity\SwAndamento:
+    type: entity
+    table: public.sw_andamento
+    repositoryClass: Urbem\CoreBundle\Repository\SwAndamentoRepository
+    id:
+        codAndamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_andamento
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        codOrgao:
+            type: integer
+            nullable: false
+            column: cod_orgao
+        codUsuario:
+            type: integer
+            nullable: false
+            column: cod_usuario
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        codSituacao:
+            type: integer
+            nullable: false
+            column: cod_situacao
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkSwAndamentos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkSwAndamentos
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkSwAndamentos
+            joinColumns:
+                cod_usuario:
+                    referencedColumnName: numcgm
+        fkSwSituacaoProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwSituacaoProcesso
+            inversedBy: fkSwAndamentos
+            joinColumns:
+                cod_situacao:
+                    referencedColumnName: cod_situacao
+    oneToMany:
+        fkSwUltimoAndamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwUltimoAndamento
+            mappedBy: fkSwAndamento
+        fkSwDespachos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwDespacho
+            mappedBy: fkSwAndamento
+    oneToOne:
+        fkSwRecebimento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwRecebimento
+            mappedBy: fkSwAndamento
+            joinColumns:
+                cod_andamento:
+                    referencedColumnName: cod_andamento
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

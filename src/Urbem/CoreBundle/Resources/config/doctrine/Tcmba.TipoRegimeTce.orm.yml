@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoRegimeTce:
+    type: entity
+    table: tcmba.tipo_regime_tce
+    id:
+        codTipoRegimeTce:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_regime_tce
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkPessoalDeParaTipoCargoTcmbas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DeParaTipoCargoTcmba
+            mappedBy: fkTcmbaTipoRegimeTce

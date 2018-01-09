@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Frota\Marca:
+    type: entity
+    table: frota.marca
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\MarcaRepository
+    id:
+        codMarca:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: frota.marca_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_marca
+    fields:
+        nomMarca:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_marca
+    oneToMany:
+        fkFrotaModelos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Modelo
+            mappedBy: fkFrotaMarca

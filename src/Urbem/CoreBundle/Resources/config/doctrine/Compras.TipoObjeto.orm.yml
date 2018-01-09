@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Compras\TipoObjeto:
+    type: entity
+    table: compras.tipo_objeto
+    id:
+        codTipoObjeto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_objeto
+    fields:
+        descricao:
+            type: string
+            nullable: true
+            length: 50
+    oneToMany:
+        fkComprasCompraDiretas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDireta
+            mappedBy: fkComprasTipoObjeto
+        fkLicitacaoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            mappedBy: fkComprasTipoObjeto
+        fkLicitacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkComprasTipoObjeto

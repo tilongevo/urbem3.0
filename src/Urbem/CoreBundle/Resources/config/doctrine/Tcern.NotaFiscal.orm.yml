@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Tcern\NotaFiscal:
+    type: entity
+    table: tcern.nota_fiscal
+    id:
+        codNotaLiquidacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota_liquidacao
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nroNota:
+            type: string
+            nullable: true
+            length: 12
+            column: nro_nota
+        nroSerie:
+            type: string
+            nullable: true
+            length: 12
+            column: nro_serie
+        dataEmissao:
+            type: date
+            nullable: true
+            column: data_emissao
+        codValidacao:
+            type: string
+            nullable: true
+            length: 50
+            column: cod_validacao
+        modelo:
+            type: string
+            nullable: true
+            length: 3
+    oneToOne:
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkTcernNotaFiscal
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota_liquidacao:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade

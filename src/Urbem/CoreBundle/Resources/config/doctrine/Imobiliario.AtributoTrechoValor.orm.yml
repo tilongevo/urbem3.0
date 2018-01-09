@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Imobiliario\AtributoTrechoValor:
+    type: entity
+    table: imobiliario.atributo_trecho_valor
+    id:
+        codTrecho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_trecho
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkImobiliarioTrecho:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Trecho
+            inversedBy: fkImobiliarioAtributoTrechoValores
+            joinColumns:
+                cod_trecho:
+                    referencedColumnName: cod_trecho
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkImobiliarioAtributoTrechoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

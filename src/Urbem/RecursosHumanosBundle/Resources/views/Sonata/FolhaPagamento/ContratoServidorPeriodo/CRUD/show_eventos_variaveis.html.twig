@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a class="btn-lg tooltipped"
+           data-position="left"
+           data-delay="50"
+           data-tooltip="Incluir">
+            <i class="fa fa-cubes left"></i>
+            {{ 'label.recursosHumanos.contratoServidorPeriodo.eventosVariaveisCadastrados'|trans }}
+        </a>
+    </div>
+    <div class="col s1">
+        <a href="{{ path('urbem_recursos_humanos_folha_pagamento_registro_evento_create',{'id': object|objectKey, 'tipo' : 'V' }) }}"
+           class="btn-lg"><i class="mdi mdi-plus-circle "></i></a>
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <tr class="sonata-ba-list-field-header">
+            <th class="th-rh">#</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.codigo'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.evento'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.valor'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.quantidade'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.contratoServidorPeriodo.automatico'|trans }}</th>
+            <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for variaveis in object.eventosVariaveis %}
+            <tr>
+                <td class="td-rh">{{ loop.index }}</td>
+                <td class="td-rh">{{ variaveis.codigo }}</td>
+                <td class="td-rh">{{ variaveis.descricao }}</td>
+                <td class="td-rh">{{ variaveis.valor|number_format(2, ',', '.') }}</td>
+                <td class="td-rh">{{ variaveis.quantidade|number_format(2, ',', '.') }}</td>
+                <td class="td-rh">{{ variaveis.automatico ? 'Sim' : 'Não' }}</td>
+                <td class="td-rh">
+                    <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                       data-position="left"
+                       data-delay="50"
+                       data-tooltip="Editar"
+                       href="{{ path('urbem_recursos_humanos_folha_pagamento_registro_evento_edit', { 'id': variaveis.cod_registro~'~'~variaveis.timestamp~'~'~variaveis.cod_evento, 'tipo' : 'V' }) }}">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <div class="btn-group">
+                        <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                           data-position="left"
+                           data-delay="50"
+                           data-tooltip="Excluir"
+                           href="{{ path('urbem_recursos_humanos_folha_pagamento_registro_evento_delete', { 'id': variaveis.cod_registro~'~'~variaveis.timestamp~'~'~variaveis.cod_evento }) }}">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,48 @@
+<table class="table table-custom padding-none">
+    <tbody>
+    <tr>
+        <td rowspan="5" class="border-top-none border-right-none border-left-none text-align-center vertical-align-middle">
+            {% if logoTipo is defined %}
+                <img class="responsive-img" src="{{ logoTipo }}" style="height: 45px;">
+            {% endif %}
+        </td>
+        <td rowspan="5" colspan="6" class="border-top-none vertical-align-middle">
+            <span class="bold">{{ entidade.fkSwCgm.nomCgm }}</span><br />
+            Fone/Fax: {{ entidade.fkSwCgm.foneResidencial }} / {{ entidade.fkSwCgm.foneComercial }}<br />
+            E-mail: {{ entidade.fkSwCgm.eMail }}<br />
+            {{ entidade.fkSwCgm.tipoLogradouro }}
+            {{ entidade.fkSwCgm.logradouro }}, {{ entidade.fkSwCgm.numero }} - {{ entidade.fkSwCgm.bairro }}<br />
+            CEP: {{ entidade.fkSwCgm.cep|slice(0,5) }}-{{ entidade.fkSwCgm.cep|slice(5) }}<br />
+            CNPJ: {{ entidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(0,2) }}.{{ entidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(2,3) }}.{{ entidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(5,3) }}/{{ entidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(8,4) }}-{{ entidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(12) }}
+        </td>
+        <td class="bold" width="20%">{{ modulo }}</td>
+        <td width="20%">
+            <span class="bold">Versão:</span>
+            {{ versao }}
+        </td>
+    </tr>
+    <tr>
+        <td class="bold">{{ subModulo }}</td>
+        <td>
+            <span class="bold">Usuario:</span>
+            {{ usuario.username }}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="bold">{{ funcao }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">{{ nomRelatorio }}</td>
+    </tr>
+    <tr>
+        <td>
+            <span class="bold">Emissão:</span>
+            {{ dtEmissao|date('d/m/Y') }}
+        </td>
+        <td>
+            <span class="bold">Hora:</span>
+            {{ dtEmissao|date('H:i:s') }}
+        </td>
+    </tr>
+    </tbody>
+</table>

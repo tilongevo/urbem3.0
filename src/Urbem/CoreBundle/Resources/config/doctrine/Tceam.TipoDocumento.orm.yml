@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tceam\TipoDocumento:
+    type: entity
+    table: tceam.tipo_documento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 15
+    oneToMany:
+        fkTceamDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\Documento
+            mappedBy: fkTceamTipoDocumento

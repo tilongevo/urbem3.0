@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Licitacao\TipoInstrumento:
+    type: entity
+    table: licitacao.tipo_instrumento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: licitacao.tipo_instrumento_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_tipo
+    fields:
+        codigoTc:
+            type: integer
+            nullable: true
+            column: codigo_tc
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    oneToMany:
+        fkLicitacaoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            mappedBy: fkLicitacaoTipoInstrumento

@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Patrimonio\TipoBaixa:
+    type: entity
+    table: patrimonio.tipo_baixa
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: patrimonio.tipo_baixa_seq
+                allocationSize: 1
+                initialValue: 0
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkPatrimonioBemBaixados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\BemBaixado
+            mappedBy: fkPatrimonioTipoBaixa

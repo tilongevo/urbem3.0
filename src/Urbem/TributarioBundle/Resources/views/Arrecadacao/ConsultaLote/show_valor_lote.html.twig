@@ -1,0 +1,12 @@
+<tr class="sonata-ba-view-container">
+	{% set valorTotal = 0 %}
+
+	{% for pagamentoLote in object.getFkArrecadacaoLote().getFkArrecadacaoPagamentoLotes() %}
+		{% set valorTotal = valorTotal + pagamentoLote.getFkArrecadacaoPagamento().getValor() %}
+	{% endfor %}
+
+	<th>{{ 'label.arrecadacaoConsultaLote.valorLote'|trans }}</th>
+	<td>
+		R$ {{ valorTotal|number_format(2, ',', '.') }}
+	</td>
+</tr>

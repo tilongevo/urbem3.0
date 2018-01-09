@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Suspensao:
+    type: entity
+    table: arrecadacao.suspensao
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\SuspensaoRepository
+    id:
+        codSuspensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_suspensao
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+    fields:
+        codTipoSuspensao:
+            type: integer
+            nullable: false
+            column: cod_tipo_suspensao
+        inicio:
+            type: date
+            nullable: false
+        observacoes:
+            type: text
+            nullable: false
+    manyToOne:
+        fkArrecadacaoTipoSuspensao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\TipoSuspensao
+            inversedBy: fkArrecadacaoSuspensoes
+            joinColumns:
+                cod_tipo_suspensao:
+                    referencedColumnName: cod_tipo_suspensao
+        fkArrecadacaoLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lancamento
+            inversedBy: fkArrecadacaoSuspensoes
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+    oneToMany:
+        fkArrecadacaoProcessoSuspensoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ProcessoSuspensao
+            mappedBy: fkArrecadacaoSuspensao
+        fkArrecadacaoSuspensaoTerminos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\SuspensaoTermino
+            mappedBy: fkArrecadacaoSuspensao

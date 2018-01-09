@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalEmpresa:
+    type: entity
+    table: fiscalizacao.processo_fiscal_empresa
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        inscricaoEconomica:
+            type: integer
+            nullable: false
+            column: inscricao_economica
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkFiscalizacaoProcessoFiscalEmpresas
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+    oneToMany:
+        fkFiscalizacaoProcessoLevantamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoLevantamento
+            mappedBy: fkFiscalizacaoProcessoFiscalEmpresa
+    oneToOne:
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoProcessoFiscalEmpresa
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo

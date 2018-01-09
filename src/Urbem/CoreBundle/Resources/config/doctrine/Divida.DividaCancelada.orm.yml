@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Divida\DividaCancelada:
+    type: entity
+    table: divida.divida_cancelada
+    repositoryClass: Urbem\CoreBundle\Repository\Tributario\DividaAtiva\InscricaoRepository
+    id:
+        codInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inscricao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        motivo:
+            type: string
+            nullable: false
+            length: 80
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkDividaDividaCanceladas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkDividaProcessoCancelamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ProcessoCancelamento
+            mappedBy: fkDividaDividaCancelada
+            joinColumns:
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkDividaDividaAtiva:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAtiva
+            inversedBy: fkDividaDividaCancelada
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao

@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Tcepe\TipoTransferenciaRecebida:
+    type: entity
+    table: tcepe.tipo_transferencia_recebida
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        codTipoTcepe:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_tcepe
+    fields:
+        codEntidadeTransferidora:
+            type: integer
+            nullable: false
+            column: cod_entidade_transferidora
+    manyToOne:
+        fkTesourariaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            inversedBy: fkTcepeTipoTransferenciaRecebidas
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcepeTipoTransferenciaRecebidas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade_transferidora:
+                    referencedColumnName: cod_entidade
+        fkTcepeTipoTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoTransferencia
+            inversedBy: fkTcepeTipoTransferenciaRecebidas
+            joinColumns:
+                cod_tipo_tcepe:
+                    referencedColumnName: cod_tipo

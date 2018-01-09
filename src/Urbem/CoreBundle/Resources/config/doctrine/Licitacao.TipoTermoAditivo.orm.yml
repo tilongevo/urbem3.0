@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Licitacao\TipoTermoAditivo:
+    type: entity
+    table: licitacao.tipo_termo_aditivo
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkLicitacaoContratoAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoAditivos
+            mappedBy: fkLicitacaoTipoTermoAditivo

@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Patrimonio\Inventario:
+    type: entity
+    table: patrimonio.inventario
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Patrimonio\InventarioRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        idInventario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: id_inventario
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtFim:
+            type: date
+            nullable: true
+            column: dt_fim
+        observacao:
+            type: text
+            nullable: true
+        processado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkPatrimonioInventarios
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkPatrimonioInventarioHistoricoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\InventarioHistoricoBem
+            mappedBy: fkPatrimonioInventario

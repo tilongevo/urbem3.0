@@ -1,0 +1,46 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Imobiliario/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'label.swLogradouro.codigo'|trans|upper }}</td>
+                    <td>{{ 'label.swLogradouro.tipo'|trans|upper }}</td>
+                    <td>{{ 'label.swLogradouro.nome'|trans|upper }}</td>
+                    <td>{{ 'label.swLogradouro.bairros'|trans|upper }}</td>
+                    <td>{{ 'label.swLogradouro.cep'|trans|upper }}</td>
+                    <td>{{ 'label.swLogradouro.uf'|trans|upper }}</td>
+                    <td>{{ 'label.swLogradouro.municipio'|trans|upper }}</td>
+                    <td>{{ 'label.swLogradouro.dtInicial'|trans|upper }}</td>
+                    <td>{{ 'label.swLogradouro.dtFinal'|trans|upper }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for logradouro in logradouros %}
+                    <tr>
+                        <td style="width: 12mm; {% if logradouro.grupo == 3 %} font-style: italic; {% endif %}" class="text_align_right tabulacao_nivel_{{ logradouro.grupo }}">{{ logradouro.cod_logradouro }}</td>
+                        <td style="width: 14mm; {% if logradouro.grupo == 3 %} font-style: italic; {% endif %}" class="text_align_left tabulacao_nivel_{{ logradouro.grupo }}">{{ logradouro.nom_tipo }}</td>
+                        <td style="width: 98mm; {% if logradouro.grupo == 3 %} font-style: italic; {% endif %}" class="text_align_left tabulacao_nivel_{{ logradouro.grupo }}">{{ logradouro.nom_logradouro }}</td>
+                        <td rowspan="2" style="width: 30mm; font-size: 11px;" class="text_align_left ">{{ logradouro.nom_bairro }}</td>
+                        <td rowspan="2" style="width: 18mm; {% if logradouro.grupo == 3 %} font-style: italic; {% endif %}" class="text_align_left ">{{ logradouro.cep }}</td>
+                        <td rowspan="2" style="width: 10mm; {% if logradouro.grupo == 3 %} font-style: italic; {% endif %}" class="text_align_left ">{{ logradouro.sigla_uf }}</td>
+                        <td rowspan="2" style="width: 40mm; {% if logradouro.grupo == 3 %} font-style: italic; {% endif %}" class="text_align_left ">{{ logradouro.nom_municipio }}</td>
+                        <td rowspan="2" style="width: 20mm; {% if logradouro.grupo == 3 %} font-style: italic; {% endif %}" class="text_align_left ">{{ logradouro.dt_inicio }}</td>
+                        <td rowspan="2" style="width: 10mm; {% if logradouro.grupo == 3 %} font-style: italic; {% endif %}" class="text_align_left ">{{ logradouro.dt_fim }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>{{ 'label.swLogradouro.norma'|trans|upper }}: {% if demonstrarNormaLogradouro %} {{ logradouro.descricao_norma_relatorio}} {% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

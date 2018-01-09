@@ -1,0 +1,138 @@
+{
+  "PI" : {
+    "configuracoes" : {
+      "title" : "Configurações",
+      "route": "prestacao_contas_tce_configuracao",
+      "itens" : [
+        {
+          "label" : "Sagres Contabilidade",
+          "reportHash" : "se64eegk4A2BJupHqU3xZACWjjFxSmGkCtmx",
+          "className": "Urbem\\PrestacaoContasBundle\\Service\\Tribunal\\PI\\Configuration\\BalanceteContabilConfiguration",
+          "parameters" : [
+            {
+              "name": "mes",
+              "label" : "Mês",
+              "required": true,
+              "type" : "month_field"
+            }
+          ]
+        },
+        {
+          "label" : "Sagres Folha de Pagamento",
+          "reportHash" : "fFLvJerrgxepgUprFsw7X5dyvD7urq4cnuQz",
+          "className": "Urbem\\PrestacaoContasBundle\\Service\\Tribunal\\PI\\Configuration\\FolhaPagamentoConfiguration",
+          "parameters" : [
+            {
+              "name": "mes",
+              "label" : "Mês",
+              "required": true,
+              "type" : "month_field"
+            }
+          ]
+        }
+      ]
+    },
+    "contabilidade" : {
+      "title" : "SAGRES (Contabilidade)",
+      "route": "prestacao_contas_tce_dinamico",
+      "itens" : [
+        {
+          "label" : "Balancete Contábil",
+          "reportHash" : "8nJrqkqhUfthB3M9jd8678CXrKpNdBCF2p3Z",
+          "className": "Urbem\\PrestacaoContasBundle\\Service\\Tribunal\\PI\\Type\\BalanceteContabil",
+          "job_nome" : "/TCE/PI/SAGRES_CONTABILIDADE_BALANCETE_CONTABIL_JOB",
+          "classe_processamento": "Urbem\\PrestacaoContasBundle\\Service\\Tribunal\\PI\\Process\\BalanceteContabil",
+          "parameters" : [
+            {
+              "name": "entidade",
+              "label" : "Entidades",
+              "required": true,
+              "multiple": true,
+              "type" : "prestacao_contas_entidade"
+            },
+            {
+              "name": "arquivo",
+              "label" : "Arquivos",
+              "type" : "multiple",
+              "style": "select2-parameters select2-multiple-options-custom",
+              "auto_populate": true,
+              "choices" : [
+                {
+                  "value": "BalanceteContabil",
+                  "label" : "Balancete Contabil"
+                },
+                {
+                  "value": "LançamentosContabeis",
+                  "label" : "Lançamentos Contábeis"
+                },
+                {
+                  "value": "CadastrosAuxiliares",
+                  "label" : "Cadastros Auxiliares"
+                },
+                {
+                  "value": "EmpenhoRP",
+                  "label" : "Empenho e RP"
+                }
+              ]
+            },
+            {
+              "name": "mes",
+              "label" : "Mês",
+              "required": true,
+              "type" : "month_field"
+            }
+          ]
+        }
+      ]
+    },
+    "folha_pagamento" : {
+        "title" : "SAGRES (Folha Pagamento)",
+        "route": "prestacao_contas_tce_dinamico",
+        "itens" : [
+          {
+            "label" : "Folha Pagamento",
+            "reportHash" : "ADaYFhT6wKZWNhbMyRatXupJU9eZ2SDnzndN",
+            "className": "Urbem\\PrestacaoContasBundle\\Service\\Tribunal\\PI\\Type\\FolhaPagamento",
+            "job_nome" : "/TCE/PI/SAGRES_FOLHA_PAGAMENTO_FOLHA_PAGAMENTO_JOB",
+            "classe_processamento": "Urbem\\PrestacaoContasBundle\\Service\\Tribunal\\PI\\Process\\FolhaPagamento",
+            "parameters" : [
+              {
+                "name": "entidade",
+                "label" : "Entidades",
+                "required": true,
+                "multiple": true,
+                "type" : "prestacao_contas_entidade"
+              },
+              {
+                "name": "arquivo",
+                "label" : "Arquivos",
+                "type" : "multiple",
+                "style": "select2-parameters select2-multiple-options-custom",
+                "auto_populate": true,
+                "choices" : [
+                  {
+                    "value": "FolhaPagamento",
+                    "label" : "Folha Pagamento"
+                  },
+                  {
+                    "value": "CadastrosAuxiliares",
+                    "label" : "Cadastros Auxiliares"
+                  },
+                  {
+                    "value": "Historicos",
+                    "label" : "Históricos"
+                  }
+                ]
+              },
+              {
+                "name": "mes",
+                "label" : "Mês",
+                "required": true,
+                "type" : "month_field"
+              }
+            ]
+          }
+        ]
+     }
+  }
+}

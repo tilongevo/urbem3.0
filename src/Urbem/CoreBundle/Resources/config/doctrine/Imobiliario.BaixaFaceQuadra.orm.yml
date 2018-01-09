@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Imobiliario\BaixaFaceQuadra:
+    type: entity
+    table: imobiliario.baixa_face_quadra
+    id:
+        codFace:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_face
+        codLocalizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_localizacao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        justificativaTermino:
+            type: text
+            nullable: true
+            column: justificativa_termino
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    manyToOne:
+        fkImobiliarioFaceQuadra:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\FaceQuadra
+            inversedBy: fkImobiliarioBaixaFaceQuadras
+            joinColumns:
+                cod_face:
+                    referencedColumnName: cod_face
+                cod_localizacao:
+                    referencedColumnName: cod_localizacao

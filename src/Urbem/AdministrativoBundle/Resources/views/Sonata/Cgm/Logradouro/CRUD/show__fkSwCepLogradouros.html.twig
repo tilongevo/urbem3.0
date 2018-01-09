@@ -1,0 +1,46 @@
+<table>
+    <thead>
+    <tr>
+        <th width="5%"></th>
+        <th width="20%">{{ 'label.swLogradouro.cep'|trans }}</th>
+        <th>{{ 'label.numInicial'|trans }}</th>
+        <th>{{ 'label.numFinal'|trans }}</th>
+        <th>{{ 'numeracao'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for swCepLogradouro in object.fkSwCepLogradouros %}
+        <tr class="sonata-ba-view-container">
+            <td class="center">{{ loop.index }}</td>
+            <td class="center">{{ swCepLogradouro.cep|cep }}</td>
+            <td class="center">
+                {% if swCepLogradouro.numInicial != '' and swCepLogradouro.numInicial != null %}
+                    {{ swCepLogradouro.numFinal }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td class="center">
+                {% if swCepLogradouro.numFinal != '' and swCepLogradouro.numFinal != null %}
+                    {{ swCepLogradouro.numFinal }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td class="center">
+                {% if swCepLogradouro.impar == 1 and swCepLogradouro.par == 1 %}
+                    {{ 'todas'|trans }}
+                {% elseif swCepLogradouro.impar == 1 and swCepLogradouro.par == 0 %}
+                    {{ 'label.impar'|trans }}
+                {% elseif swCepLogradouro.impar == 0 and swCepLogradouro.par == 1 %}
+                    {{ 'label.par'|trans }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br/>
+

@@ -1,0 +1,94 @@
+Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoComplementar:
+    type: entity
+    table: folhapagamento.registro_evento_complementar
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\RegistroEventoComplementarRepository
+    id:
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        codContrato:
+            type: integer
+            nullable: false
+            column: cod_contrato
+        codComplementar:
+            type: integer
+            nullable: false
+            column: cod_complementar
+        codPeriodoMovimentacao:
+            type: integer
+            nullable: false
+            column: cod_periodo_movimentacao
+        valor:
+            type: decimal
+            nullable: true
+            precision: 15
+            scale: 2
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 15
+            scale: 2
+    manyToOne:
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoRegistroEventoComplementares
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoConfiguracaoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEvento
+            inversedBy: fkFolhapagamentoRegistroEventoComplementares
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkFolhapagamentoContratoServidorComplementar:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ContratoServidorComplementar
+            inversedBy: fkFolhapagamentoRegistroEventoComplementares
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+                cod_complementar:
+                    referencedColumnName: cod_complementar
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToMany:
+        fkFolhapagamentoReajusteRegistroEventoComplementares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEventoComplementar
+            mappedBy: fkFolhapagamentoRegistroEventoComplementar
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEventoComplementar:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEventoComplementar
+            mappedBy: fkFolhapagamentoRegistroEventoComplementar
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_evento:
+                    referencedColumnName: cod_evento
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

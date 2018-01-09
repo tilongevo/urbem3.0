@@ -1,0 +1,187 @@
+Urbem\CoreBundle\Entity\Tcmgo\UnidadeResponsavel:
+    type: entity
+    table: tcmgo.unidade_responsavel
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        cgmGestor:
+            type: integer
+            nullable: false
+            column: cgm_gestor
+        gestorDtInicio:
+            type: date
+            nullable: false
+            column: gestor_dt_inicio
+        gestorDtFim:
+            type: date
+            nullable: true
+            column: gestor_dt_fim
+        tipoResponsavel:
+            type: integer
+            nullable: false
+            column: tipo_responsavel
+        gestorCargo:
+            type: string
+            nullable: true
+            length: 50
+            column: gestor_cargo
+        cgmContador:
+            type: integer
+            nullable: false
+            column: cgm_contador
+        contadorDtInicio:
+            type: date
+            nullable: false
+            column: contador_dt_inicio
+        contadorDtFim:
+            type: date
+            nullable: true
+            column: contador_dt_fim
+        contadorCrc:
+            type: string
+            nullable: true
+            length: 11
+            column: contador_crc
+        ufCrc:
+            type: integer
+            nullable: true
+            column: uf_crc
+        codProvimentoContabil:
+            type: integer
+            nullable: true
+            column: cod_provimento_contabil
+        cgmControleInterno:
+            type: integer
+            nullable: false
+            column: cgm_controle_interno
+        controleInternoDtInicio:
+            type: date
+            nullable: false
+            column: controle_interno_dt_inicio
+        controleInternoDtFim:
+            type: date
+            nullable: true
+            column: controle_interno_dt_fim
+        cgmJuridico:
+            type: integer
+            nullable: false
+            column: cgm_juridico
+        juridicoDtInicio:
+            type: date
+            nullable: false
+            column: juridico_dt_inicio
+        juridicoDtFim:
+            type: date
+            nullable: true
+            column: juridico_dt_fim
+        juridicoOab:
+            type: decimal
+            nullable: true
+            precision: 8
+            scale: 0
+            column: juridico_oab
+        ufOab:
+            type: integer
+            nullable: true
+            column: uf_oab
+        codProvimentoJuridico:
+            type: integer
+            nullable: true
+            column: cod_provimento_juridico
+    manyToOne:
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcmgoUnidadeResponsaveis
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoUnidadeResponsaveis
+            joinColumns:
+                cgm_gestor:
+                    referencedColumnName: numcgm
+        fkTcmgoTipoResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoResponsavel
+            inversedBy: fkTcmgoUnidadeResponsaveis
+            joinColumns:
+                tipo_responsavel:
+                    referencedColumnName: cod_tipo
+        fkSwUf:
+            targetEntity: Urbem\CoreBundle\Entity\SwUf
+            inversedBy: fkTcmgoUnidadeResponsaveis
+            joinColumns:
+                uf_crc:
+                    referencedColumnName: cod_uf
+        fkTcmgoProvimentoContabil:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ProvimentoContabil
+            inversedBy: fkTcmgoUnidadeResponsaveis
+            joinColumns:
+                cod_provimento_contabil:
+                    referencedColumnName: cod_provimento
+        fkTcmgoProvimentoJuridico:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ProvimentoJuridico
+            inversedBy: fkTcmgoUnidadeResponsaveis
+            joinColumns:
+                cod_provimento_juridico:
+                    referencedColumnName: cod_provimento
+        fkSwCgm1:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoUnidadeResponsaveis1
+            joinColumns:
+                cgm_contador:
+                    referencedColumnName: numcgm
+        fkSwCgm2:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoUnidadeResponsaveis2
+            joinColumns:
+                cgm_controle_interno:
+                    referencedColumnName: numcgm
+        fkSwCgm3:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoUnidadeResponsaveis3
+            joinColumns:
+                cgm_juridico:
+                    referencedColumnName: numcgm
+        fkSwUf1:
+            targetEntity: Urbem\CoreBundle\Entity\SwUf
+            inversedBy: fkTcmgoUnidadeResponsaveis1
+            joinColumns:
+                uf_oab:
+                    referencedColumnName: cod_uf
+    oneToMany:
+        fkTcmgoContadorTerceirizados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ContadorTerceirizado
+            mappedBy: fkTcmgoUnidadeResponsavel
+        fkTcmgoJuridicoTerceirizados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\JuridicoTerceirizado
+            mappedBy: fkTcmgoUnidadeResponsavel

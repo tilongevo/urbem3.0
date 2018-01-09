@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Monetario\ContaCorrenteConvenio:
+    type: entity
+    table: monetario.conta_corrente_convenio
+    id:
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        variacao:
+            type: integer
+            nullable: true
+    manyToOne:
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkMonetarioContaCorrenteConvenios
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+        fkMonetarioConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Convenio
+            inversedBy: fkMonetarioContaCorrenteConvenios
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+    oneToMany:
+        fkMonetarioCreditoContaCorrentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoContaCorrente
+            mappedBy: fkMonetarioContaCorrenteConvenio

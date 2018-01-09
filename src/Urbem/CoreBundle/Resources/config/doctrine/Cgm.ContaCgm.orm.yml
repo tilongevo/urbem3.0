@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Cgm\ContaCgm:
+    type: entity
+    table: cgm.conta_cgm
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+    fields:
+        titular:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkCgmContaCgns
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkCgmConta:
+            targetEntity: Urbem\CoreBundle\Entity\Cgm\Conta
+            inversedBy: fkCgmContaCgns
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_banco:
+                    referencedColumnName: cod_banco

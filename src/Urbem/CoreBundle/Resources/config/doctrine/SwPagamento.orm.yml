@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\SwPagamento:
+    type: entity
+    table: sw_pagamento
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+        codNota:
+            type: integer
+            nullable: false
+            column: cod_nota
+        codOrdem:
+            type: integer
+            nullable: false
+            column: cod_ordem
+    manyToOne:
+        fkSwPagamentoLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\SwPagamentoLiquidacao
+            inversedBy: fkSwPagamentos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+    oneToOne:
+        fkSwLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamento
+            inversedBy: fkSwPagamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio

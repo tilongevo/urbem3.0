@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Stn\AporteRecursoRppsReceita:
+    type: entity
+    table: stn.aporte_recurso_rpps_receita
+    id:
+        codAporte:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_aporte
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkStnAporteRecursoRpps:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\AporteRecursoRpps
+            inversedBy: fkStnAporteRecursoRppsReceitas
+            joinColumns:
+                cod_aporte:
+                    referencedColumnName: cod_aporte
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkStnAporteRecursoRppsReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita

@@ -1,0 +1,41 @@
+<div class="col s6">
+    <div class="row">
+        <div class="col s12 servidor-table">
+            <a class="btn-flat">
+                <i class="fa fa-wrench left"></i>
+                {{ 'label.processo.atributosProcesso'|trans }}
+            </a>
+        </div>
+
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+            <tr>
+                <th class="th-rh">{{ 'label.atributo'|trans }}</th>
+                <th class="th-rh">{{ 'label.processo.valor'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for swProcessoAtributoValor in swProcesso.fkSwProcessoAtributoValores %}
+                <tr>
+                    <td class="td-rh">
+                        {{ swProcessoAtributoValor.nomAtributo }}
+                    </td>
+                    <td class="td-rh">
+                        {% if swProcessoAtributoValor.valor is null %}
+                            {{ 'label.naoInformado'|trans }}
+                        {% else %}
+                            {{ swProcessoAtributoValor.valor }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">Não existem atributos cadastrados para o assunto e a classificação deste
+                        processo.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+Urbem\CoreBundle\Entity\Tceam\Documento:
+    type: entity
+    table: tceam.documento
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codNota:
+            type: integer
+            nullable: false
+            column: cod_nota
+        vlComprometido:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_comprometido
+        vlTotal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_total
+    manyToOne:
+        fkTceamTipoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoDocumento
+            inversedBy: fkTceamDocumentos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkTceamDocumentos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToMany:
+        fkTceamTipoDocumentoBilhetes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoDocumentoBilhete
+            mappedBy: fkTceamDocumento
+        fkTceamTipoDocumentoDiarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoDocumentoDiaria
+            mappedBy: fkTceamDocumento
+        fkTceamTipoDocumentoFolhas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoDocumentoFolha
+            mappedBy: fkTceamDocumento
+        fkTceamTipoDocumentoNotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoDocumentoNota
+            mappedBy: fkTceamDocumento
+        fkTceamTipoDocumentoRecibos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoDocumentoRecibo
+            mappedBy: fkTceamDocumento
+        fkTceamTipoDocumentoDiversos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\TipoDocumentoDiverso
+            mappedBy: fkTceamDocumento

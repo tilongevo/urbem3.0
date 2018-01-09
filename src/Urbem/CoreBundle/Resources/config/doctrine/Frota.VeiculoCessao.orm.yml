@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Frota\VeiculoCessao:
+    type: entity
+    table: frota.veiculo_cessao
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: frota.veiculo_cessao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: id
+    fields:
+        codVeiculo:
+            type: integer
+            nullable: false
+            column: cod_veiculo
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        cgmCedente:
+            type: integer
+            nullable: false
+            column: cgm_cedente
+        dtInicio:
+            type: date
+            nullable: true
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    manyToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaVeiculoCessoes
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkFrotaVeiculoCessoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkFrotaVeiculoCessoes
+            joinColumns:
+                cgm_cedente:
+                    referencedColumnName: numcgm

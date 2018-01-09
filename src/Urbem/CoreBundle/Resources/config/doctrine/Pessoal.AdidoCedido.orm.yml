@@ -1,0 +1,88 @@
+Urbem\CoreBundle\Entity\Pessoal\AdidoCedido:
+    type: entity
+    table: pessoal.adido_cedido
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\AdidoCedidoRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        cgmCedenteCessionario:
+            type: integer
+            nullable: false
+            column: cgm_cedente_cessionario
+        dtInicial:
+            type: date
+            nullable: false
+            column: dt_inicial
+        dtFinal:
+            type: date
+            nullable: true
+            column: dt_final
+        tipoCedencia:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_cedencia
+        indicativoOnus:
+            type: string
+            nullable: false
+            length: 1
+            column: indicativo_onus
+        numConvenio:
+            type: string
+            nullable: true
+            length: 15
+            column: num_convenio
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalAdidoCedidos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPessoalAdidoCedidos
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkPessoalAdidoCedidos
+            joinColumns:
+                cgm_cedente_cessionario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkPessoalAdidoCedidoLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AdidoCedidoLocal
+            mappedBy: fkPessoalAdidoCedido
+    oneToOne:
+        fkPessoalAdidoCedidoExcluido:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AdidoCedidoExcluido
+            mappedBy: fkPessoalAdidoCedido
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_norma:
+                    referencedColumnName: cod_norma
+                timestamp:
+                    referencedColumnName: timestamp_cedido_adido

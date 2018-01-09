@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Tcers\PlanoContaModeloLrf:
+    type: entity
+    table: tcers.plano_conta_modelo_lrf
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        codQuadro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_quadro
+    fields:
+        redutora:
+            type: boolean
+            nullable: false
+        ordem:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkTcersQuadroModeloLrf:
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\QuadroModeloLrf
+            inversedBy: fkTcersPlanoContaModeloLrfs
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_modelo:
+                    referencedColumnName: cod_modelo
+                cod_quadro:
+                    referencedColumnName: cod_quadro
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkTcersPlanoContaModeloLrfs
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkTcersAjustePlanoContaModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\AjustePlanoContaModeloLrf
+            mappedBy: fkTcersPlanoContaModeloLrf

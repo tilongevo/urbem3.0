@@ -1,0 +1,193 @@
+Urbem\CoreBundle\Entity\Cse\Domicilio:
+    type: entity
+    table: cse.domicilio
+    id:
+        codDomicilio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_domicilio
+    fields:
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+        codTipoLogradouro:
+            type: integer
+            nullable: false
+            column: cod_tipo_logradouro
+        codCobertura:
+            type: integer
+            nullable: false
+            column: cod_cobertura
+        codAbastecimento:
+            type: integer
+            nullable: false
+            column: cod_abastecimento
+        codTratamento:
+            type: integer
+            nullable: false
+            column: cod_tratamento
+        codEsgotamento:
+            type: integer
+            nullable: false
+            column: cod_esgotamento
+        codDestinoLixo:
+            type: integer
+            nullable: false
+            column: cod_destino_lixo
+        codLocalidade:
+            type: integer
+            nullable: false
+            column: cod_localidade
+        codTipoDomicilio:
+            type: integer
+            nullable: false
+            column: cod_tipo_domicilio
+        codConstrucao:
+            type: integer
+            nullable: false
+            column: cod_construcao
+        codSituacao:
+            type: integer
+            nullable: false
+            column: cod_situacao
+        logradouro:
+            type: string
+            nullable: false
+            length: 60
+        numero:
+            type: string
+            nullable: false
+            length: 6
+        complemento:
+            type: string
+            nullable: false
+            length: 60
+        bairro:
+            type: string
+            nullable: false
+            length: 60
+        cep:
+            type: string
+            nullable: false
+            length: 8
+        telefone:
+            type: string
+            nullable: false
+            length: 10
+        qtdComodos:
+            type: integer
+            nullable: false
+            column: qtd_comodos
+        energiaEletrica:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+            column: energia_eletrica
+        qtdResidentes:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: qtd_residentes
+        qtdGravidas:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: qtd_gravidas
+        qtdMaesAmamentando:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: qtd_maes_amamentando
+        qtdDeficientes:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: qtd_deficientes
+    manyToOne:
+        fkSwMunicipio:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_uf:
+                    referencedColumnName: cod_uf
+        fkSwTipoLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwTipoLogradouro
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_tipo_logradouro:
+                    referencedColumnName: cod_tipo
+        fkCseTipoCobertura:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoCobertura
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_cobertura:
+                    referencedColumnName: cod_cobertura
+        fkCseTipoAbastecimento:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoAbastecimento
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_abastecimento:
+                    referencedColumnName: cod_abastecimento
+        fkCseTipoTratamentoAgua:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoTratamentoAgua
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_tratamento:
+                    referencedColumnName: cod_tratamento
+        fkCseTipoEsgotamento:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoEsgotamento
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_esgotamento:
+                    referencedColumnName: cod_esgotamento
+        fkCseTipoDestinoLixo:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoDestinoLixo
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_destino_lixo:
+                    referencedColumnName: cod_destino_lixo
+        fkCseTipoLocalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoLocalidade
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_localidade:
+                    referencedColumnName: cod_localidade
+        fkCseTipoDomicilio:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoDomicilio
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_tipo_domicilio:
+                    referencedColumnName: cod_domicilio
+        fkCseTipoConstrucao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoConstrucao
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+        fkCseSituacaoDomicilio:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\SituacaoDomicilio
+            inversedBy: fkCseDomicilios
+            joinColumns:
+                cod_situacao:
+                    referencedColumnName: cod_situacao
+    oneToMany:
+        fkCseCidadaoDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\CidadaoDomicilio
+            mappedBy: fkCseDomicilio

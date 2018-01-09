@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Tcepr\ResponsavelModulo:
+    type: entity
+    table: tcepr.responsavel_modulo
+    repositoryClass: Urbem\CoreBundle\Repository\Tcepr\ResponsavelModuloRepository
+    id:
+        codResponsavel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_responsavel
+    fields:
+        idTipoModulo:
+            type: integer
+            nullable: false
+            column: id_tipo_modulo
+        idTipoResponsavelModulo:
+            type: integer
+            nullable: false
+            column: id_tipo_responsavel_modulo
+        numcgm:
+            type: integer
+            nullable: false
+        dtInicioVinculo:
+            type: date
+            nullable: false
+            column: dt_inicio_vinculo
+        dtBaixa:
+            type: date
+            nullable: true
+            column: dt_baixa
+        descricaoBaixa:
+            type: text
+            nullable: true
+            column: descricao_baixa
+    manyToOne:
+        fkTceprTipoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepr\TipoModulo
+            inversedBy: fkTceprResponsavelModulos
+            joinColumns:
+                id_tipo_modulo:
+                    referencedColumnName: id_tipo_modulo
+        fkTceprTipoResponsavelModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepr\TipoResponsavelModulo
+            inversedBy: fkTceprResponsavelModulos
+            joinColumns:
+                id_tipo_responsavel_modulo:
+                    referencedColumnName: id_tipo_responsavel_modulo
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

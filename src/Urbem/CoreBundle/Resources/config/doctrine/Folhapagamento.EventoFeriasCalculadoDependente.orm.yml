@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Folhapagamento\EventoFeriasCalculadoDependente:
+    type: entity
+    table: folhapagamento.evento_ferias_calculado_dependente
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+        timestampRegistro:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_registro
+        codDependente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dependente
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 15
+            scale: 2
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 15
+            scale: 2
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkFolhapagamentoEventoFeriasCalculado:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoFeriasCalculado
+            inversedBy: fkFolhapagamentoEventoFeriasCalculadoDependentes
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp_registro:
+                    referencedColumnName: timestamp_registro
+                desdobramento:
+                    referencedColumnName: desdobramento
+        fkPessoalDependente:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Dependente
+            inversedBy: fkFolhapagamentoEventoFeriasCalculadoDependentes
+            joinColumns:
+                cod_dependente:
+                    referencedColumnName: cod_dependente

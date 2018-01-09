@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Tcepe\ConfiguracaoGestor:
+    type: entity
+    table: tcepe.configuracao_gestor
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        cgmGestor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_gestor
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        dtInicioVigencia:
+            type: date
+            nullable: false
+            column: dt_inicio_vigencia
+        dtFimVigencia:
+            type: date
+            nullable: false
+            column: dt_fim_vigencia
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcepeConfiguracaoGestores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcepeConfiguracaoGestores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkTcepeConfiguracaoGestores
+            joinColumns:
+                cgm_gestor:
+                    referencedColumnName: numcgm

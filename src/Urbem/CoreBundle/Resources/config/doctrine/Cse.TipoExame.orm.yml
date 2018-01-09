@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Cse\TipoExame:
+    type: entity
+    table: cse.tipo_exame
+    id:
+        codExame:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_exame
+    fields:
+        nomExame:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_exame
+        codTratamento:
+            type: integer
+            nullable: false
+            column: cod_tratamento
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+    manyToOne:
+        fkCseTipoTratamento:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoTratamento
+            inversedBy: fkCseTipoExames
+            joinColumns:
+                cod_tratamento:
+                    referencedColumnName: cod_tratamento
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+    oneToMany:
+        fkCsePrescricaoExames:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\PrescricaoExame
+            mappedBy: fkCseTipoExame

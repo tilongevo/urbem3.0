@@ -1,0 +1,180 @@
+{% block form %}
+    {{ sonata_block_render_event('sonata.admin.edit.form.top', { 'admin': admin, 'object': object }) }}
+
+    {% set url = admin.id(object) is not null ? 'edit' : 'create' %}
+
+    {% if not admin.hasRoute(url)%}
+            {{ "form_not_available"|trans({}, "SonataCoreBundle") }}
+    {% else %}
+        <form
+              {% if sonata_admin.adminPool.getOption('form_type') == 'horizontal' %}class="form-horizontal"{% endif %}
+              role="form"
+              action="
+                {% if admin.form.config.action != "" %}
+                    {{ admin.generateUrl(admin.form.config.action, {'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}
+                {% else %}
+                    {% block sonata_form_action_url %}
+                        {{ admin.generateUrl(url, {'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}
+                    {% endblock %}
+                {% endif %}
+              "
+              {% if form.vars.multipart %} enctype="multipart/form-data"{% endif %}
+              method="POST"
+              {% if not sonata_admin.adminPool.getOption('html5_validate') %}novalidate="novalidate"{% endif %}
+              {% block sonata_form_attributes %}{% endblock %}
+              >
+            {% if form.vars.errors|length > 0 %}
+                <div class="sonata-ba-form-error">
+                    {{ form_errors(form) }}
+                </div>
+            {% endif %}
+
+            {% block sonata_pre_fieldsets %}
+
+            {% endblock %}
+
+            {% block sonata_tab_content %}
+                {% set has_tab = ((admin.formtabs|length == 1 and admin.formtabs|keys[0] != 'default') or admin.formtabs|length > 1 ) %}
+
+                    {% if has_tab %}
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs" role="tablist">
+                                {% for name, form_tab in admin.formtabs %}
+                                    <li{% if loop.index == 1 %} class="active"{% endif %}><a href="#tab_{{ admin.uniqid }}_{{ loop.index }}" data-toggle="tab"><i class="fa fa-exclamation-circle has-errors hide"></i> {{ admin.trans(name, {}, form_tab.translation_domain) }}</a></li>
+                                {% endfor %}
+                            </ul>
+                            <div class="tab-content">
+                                {% for code, form_tab in admin.formtabs %}
+                                    <div class="tab-pane fade{% if loop.first %} in active{% endif %}" id="tab_{{ admin.uniqid }}_{{ loop.index }}">
+                                        <div class="box-body  container-fluid">
+                                            <div class="sonata-ba-collapsed-fields">
+                                                {% if form_tab.description != false %}
+                                                    <p>{{ form_tab.description|raw }}</p>
+                                                {% endif %}
+
+                                                {{ form_helper.render_groups(admin, form, form_tab['groups'], has_tab) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ form_helper.render_groups(admin, form, admin.formtabs['default'].groups, has_tab) }}
+                    {% endif %}
+            {% endblock %}
+
+            {% block sonata_post_fieldsets %}
+
+            {% endblock %}
+
+            {{ form_rest(form) }}
+
+            <div class="">
+                {% if admin.customBodyTemplate is defined and admin.customBodyTemplate is not empty %}
+                    {% include admin.customBodyTemplate %}
+                {% endif %}
+            </div>
+
+            {% block formactions %}
+                <div class="sonata-ba-form-actions well well-small form-actions row">
+                    {% block sonata_form_actions %}
+                        {% if app.request.isxmlhttprequest %}
+                            {% if admin.id(object) is not null %}
+                                <button type="submit" class="btn btn-success" name="btn_update"><i class="fa fa-save"></i> {{ 'btn_update'|trans({}, 'SonataCoreBundle') }}</button>
+                            {% else %}
+                                <button type="submit" class="btn btn-success" name="btn_create"><i class="fa fa-plus-circle"></i> {{ 'btn_create'|trans({}, 'SonataCoreBundle') }}</button>
+                            {% endif %}
+                        {% else %}
+                            {% if admin.supportsPreviewMode %}
+                                <button class="btn btn-info persist-preview" name="btn_preview" type="submit">
+                                    <i class="fa fa-eye"></i>
+                                    {{ 'btn_preview'|trans({}, 'SonataCoreBundle') }}
+                                </button>
+                            {% endif %}
+                            {% if admin.id(object) is not null %}
+                                <div class="col s12">
+                                {% if admin.hasroute('list') and admin.isGranted('LIST') %}
+                                    <div class="col s8 initial left-align">
+                                        {% if admin.baseRouteName == "urbem_financeiro_orcamento_registro_metas_arrecadacao_receita" %}
+                                            <a  class="back btn-floating white-text blue darken-4 btn-success lancarMetas" href="#" onclick="window.history.back();">
+                                                <i class="material-icons">arrow_back</i>
+                                            </a>
+                                        {% else %}
+                                            {% if admin.exibirBotaoVoltar == true %}
+                                                <a  class="back btn-floating white-text blue darken-4 btn-success" href="#" onclick="window.history.back();">
+                                                    <i class="material-icons">arrow_back</i>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+
+                                {% elseif admin.exibirBotaoVoltar == true %}
+                                    <div class="col s8 initial left-align">
+                                        <a  class="back btn-floating white-text blue darken-4 btn-success" href="{{ admin.goBackURL }}">
+                                            <i class="material-icons">arrow_back</i>
+                                        </a>
+                                    </div>
+
+                                {% endif %}
+
+                                {% if admin.exibirBotaoExcluir is defined %}
+                                    {% if admin.exibirBotaoExcluir == true %}
+                                        {% if admin.hasroute('delete') and admin.isGranted('DELETE', object) %}
+                                            <div class="col s2 initial right-align deletar">
+                                                {% if disable_delete is not defined or admin.exibirBotaoExcluir == false %}
+                                                    <a class="btn waves-effect waves-light white-text grey tooltipped" data-toggle="tooltip" data-placement="left" title="Excluir" href="{{ admin.generateObjectUrl('delete', object) }}"><i class="material-icons">delete</i>{#{ 'link_delete'|trans({}, 'SonataCoreBundle') }#}</a>
+                                                {% else %}
+                                                    {% if disable_delete == false %}
+                                                        <a class="btn waves-effect waves-light white-text grey tooltipped" data-toggle="tooltip" data-placement="left" title="Excluir" href="{{ admin.generateObjectUrl('delete', object) }}"><i class="material-icons">delete</i>{#{ 'link_delete'|trans({}, 'SonataCoreBundle') }#}</a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                                {#INICIA BTN SALVAR FORM EDIT#}
+                                    <div class="col s2 initial right-align right">
+                                        {% for key, item in admin.getActionButtons('edit', object|default(null)) %}
+                                            {% if key == 'custom_action' %}
+                                                {% include item.template with item %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if admin.exibeBotaoSalvar == true %}
+                                            <button type="submit" class="waves-effect waves-light btn blue darken-4 btn btn-success save" name="btn_update_and_list"><i class="material-icons left">{{ admin.legendButtonSave.icon }}</i>{{ admin.legendButtonSave.text }}</button>
+                                        {% endif %}
+                                    </div>
+                                {#FINALIZA BTN SALVAR FORM EDIT#}
+                                {% if admin.isAclEnabled() and admin.hasroute('acl') and admin.isGranted('MASTER', object) %}
+                                    <a class="btn btn-info" href="{{ admin.generateObjectUrl('acl', object) }}"><i class="fa fa-users"></i> {{ 'link_edit_acl'|trans({}, 'SonataCoreBundle') }}</a>
+                                {% endif %}
+                                </div>
+                            {% else %}
+                            {#INICIA ROW FORM ADD#}
+                                <div class="col s12">
+                                    <div class="col s8 initial">
+                                        {% if admin.urlReferer is defined and admin.urlReferer is not empty %}
+                                            <a class="btn-floating white-text blue darken-4 btn-success" href="{{ admin.urlReferer }}"><i class="material-icons">arrow_back</i></a>
+                                        {% else %}
+                                            <a class="btn-floating white-text blue darken-4 btn-success" href="#" onclick="window.history.back();"><i class="material-icons">arrow_back</i>{</a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col s4 right-align initial">
+                                        {% if admin.exibeBotaoSalvar == true %}
+                                            <button type="submit" class="white-text blue darken-4 btn btn-success save" name="btn_create_and_list"><i class="material-icons left">{{ admin.legendButtonSave.icon }}</i>{{ admin.legendButtonSave.text }}</button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {#FINALIZA ROW FORM ADD#}
+                            {% endif %}
+                        {% endif %}
+                {% endblock sonata_form_actions %}
+                </div>
+            {% endblock formactions %}
+        </form>
+    {% endif%}
+
+    {{ sonata_block_render_event('sonata.admin.edit.form.bottom', { 'admin': admin, 'object': object }) }}
+
+{% endblock %}

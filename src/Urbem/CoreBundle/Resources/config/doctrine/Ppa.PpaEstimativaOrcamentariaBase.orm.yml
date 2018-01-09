@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Ppa\PpaEstimativaOrcamentariaBase:
+    type: entity
+    table: ppa.ppa_estimativa_orcamentaria_base
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        percentualAno1:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: percentual_ano_1
+        percentualAno2:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: percentual_ano_2
+        percentualAno3:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: percentual_ano_3
+        percentualAno4:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: percentual_ano_4
+        tipoPercentualInformado:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_percentual_informado
+    manyToOne:
+        fkPpaPpa:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Ppa
+            inversedBy: fkPpaPpaEstimativaOrcamentariaBases
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+        fkPpaEstimativaOrcamentariaBase:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\EstimativaOrcamentariaBase
+            inversedBy: fkPpaPpaEstimativaOrcamentariaBases
+            joinColumns:
+                cod_receita:
+                    referencedColumnName: cod_receita

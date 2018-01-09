@@ -1,0 +1,150 @@
+Urbem\CoreBundle\Entity\Divida\DividaAtiva:
+    type: entity
+    table: divida.divida_ativa
+    repositoryClass: Urbem\CoreBundle\Repository\Tributario\DividaAtiva\DividaAtivaRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inscricao
+    fields:
+        codAutoridade:
+            type: integer
+            nullable: false
+            column: cod_autoridade
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+        dtInscricao:
+            type: date
+            nullable: false
+            column: dt_inscricao
+        numLivro:
+            type: integer
+            nullable: false
+            column: num_livro
+        numFolha:
+            type: integer
+            nullable: false
+            column: num_folha
+        dtVencimentoOrigem:
+            type: date
+            nullable: false
+            column: dt_vencimento_origem
+        exercicioOriginal:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_original
+        exercicioLivro:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_livro
+    manyToOne:
+        fkDividaAutoridade:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Autoridade
+            inversedBy: fkDividaDividaAtivas
+            joinColumns:
+                cod_autoridade:
+                    referencedColumnName: cod_autoridade
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkDividaDividaAtivas
+            joinColumns:
+                numcgm_usuario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkDividaDividaImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaImovel
+            mappedBy: fkDividaDividaAtiva
+        fkDividaDividaAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAcrescimo
+            mappedBy: fkDividaDividaAtiva
+        fkDividaDividaEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaEmpresa
+            mappedBy: fkDividaDividaAtiva
+        fkDividaDividaCgns:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaCgm
+            mappedBy: fkDividaDividaAtiva
+        fkDividaDividaParcelamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaParcelamento
+            mappedBy: fkDividaDividaAtiva
+        fkDividaDividaProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaProcesso
+            mappedBy: fkDividaDividaAtiva
+    oneToOne:
+        fkDividaDividaEstorno:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaEstorno
+            mappedBy: fkDividaDividaAtiva
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+        fkDividaCobrancaJudicial:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\CobrancaJudicial
+            mappedBy: fkDividaDividaAtiva
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+        fkDividaDividaRemissao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaRemissao
+            mappedBy: fkDividaDividaAtiva
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+        fkDividaDividaCancelada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaCancelada
+            mappedBy: fkDividaDividaAtiva
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao

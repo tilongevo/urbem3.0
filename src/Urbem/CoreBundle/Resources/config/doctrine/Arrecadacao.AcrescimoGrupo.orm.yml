@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Arrecadacao\AcrescimoGrupo:
+    type: entity
+    table: arrecadacao.acrescimo_grupo
+    id:
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields: {  }
+    manyToOne:
+        fkMonetarioAcrescimo:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Acrescimo
+            inversedBy: fkArrecadacaoAcrescimoGrupos
+            joinColumns:
+                cod_acrescimo:
+                    referencedColumnName: cod_acrescimo
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkArrecadacaoGrupoCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoCredito
+            inversedBy: fkArrecadacaoAcrescimoGrupos
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

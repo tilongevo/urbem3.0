@@ -1,0 +1,22 @@
+{% block content %}
+
+    {% if field.data.atributosDinamicos|length > 0 %}
+        <table class="table show-table">
+            {% for atributoDinamico in field.data.atributosDinamicos %}
+                    <tr class="sonata-ba-view-container">
+                        <td>{{ atributoDinamico.nomAtributo }}</td>
+                        <td>
+                            {% if atributoDinamico.valor is defined %}
+                                {% for valor in atributoDinamico.valor %}
+                                    <p>{{ valor }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                    </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <span>{{ 'listagemVazia'|trans }}</span>
+    {% endif %}
+
+{% endblock content %}

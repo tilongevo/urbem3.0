@@ -1,0 +1,73 @@
+{% block content %}
+
+    {% if field.data.construcao is not null %}
+
+        <table class="table show-table">
+            <tbody>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.codigo'|trans }}</th>
+                <td>{{ field.data.construcao }}</td>
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioConstrucao.tipoEdificacao'|trans }}</th>
+                <td>{{ field.data.construcao.fkImobiliarioConstrucaoEdificacoes.last.fkImobiliarioTipoEdificacao }}</td>
+            </tr>
+
+            {% if field.data.construcao.fkImobiliarioConstrucaoEdificacoes.last.fkImobiliarioUnidadeAutonomas|length > 0 %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioConstrucao.inscricaoImobiliaria'|trans }}</th>
+                    <td>{{ field.data.construcao.fkImobiliarioConstrucaoEdificacoes.last.fkImobiliarioUnidadeAutonomas.last.fkImobiliarioImovel }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioConstrucao.tipoUnidade'|trans }}</th>
+                    <td>{{ 'label.imobiliarioConstrucao.autonoma'|trans }}</td>
+                </tr>
+            {% elseif field.data.construcao.fkImobiliarioUnidadeDependentes|length > 0 %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioConstrucao.inscricaoImobiliaria'|trans }}</th>
+                    <td>{{ field.data.construcao.fkImobiliarioUnidadeDependentes.last.fkImobiliarioUnidadeAutonoma.fkImobiliarioImovel }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioConstrucao.tipoUnidade'|trans }}</th>
+                    <td>{{ 'label.imobiliarioConstrucao.dependente'|trans }}</td>
+                </tr>
+            {% elseif field.data.construcao.fkImobiliarioConstrucaoCondominios|length > 0 %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioConstrucao.condominio'|trans }}</th>
+                    <td>{{ field.data.construcao.fkImobiliarioConstrucaoCondominios.last.fkImobiliarioCondominio }}</td>
+                </tr>
+            {% else %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioConstrucao.condominio'|trans }}</th>
+                    <td></td>
+                </tr>
+            {% endif %}
+
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioConstrucao.dataConstrucao'|trans }}</th>
+                <td>
+                    {% if field.data.construcao.fkImobiliarioDataConstrucao %}
+                        {{ field.data.construcao.fkImobiliarioDataConstrucao.dataConstrucao|date('d/m/Y') }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% if admin.verificaBaixa(field.data.construcao) %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioConstrucao.dataBaixa'|trans }}</th>
+                    <td>{{ field.data.construcao.fkImobiliarioBaixaConstrucoes.last.dtInicio|date('d/m/Y') }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioConstrucao.motivoBaixa'|trans }}</th>
+                    <td>{{ field.data.construcao.fkImobiliarioBaixaConstrucoes.last.justificativa }}</td>
+                </tr>
+            {% endif %}
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioConstrucao.areaTotal'|trans }}</th>
+                <td>{{ field.data.construcao.area|number_format(2, ',', '.') }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock content %}

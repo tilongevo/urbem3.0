@@ -1,0 +1,44 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="col s12 lote-loteamentos">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioLoteamento.listaLotes'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableLoteLoteamentosManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.imobiliarioLoteamento.lote'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLoteamento.localizacao'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioLoteamento.caucionado'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        <tr class="tr-rh row-modelo-lotes" style="display:none;">
+            <td class="td-rh lote">
+                <input type="hidden" class="imput-lotes" name="lotes[]" />
+                <input type="hidden" class="imput-lotes-caucionados" name="lotes_caucionados[]" />
+            </td>
+            <td class="td-rh localizacao"></td>
+            <td class="td-rh caucionado"></td>
+            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+        </tr>
+        {% for loteLoteamento in field.data.loteLoteamentos|sort %}
+            <tr class="tr-rh row-lotes" id="lote-{{ loteLoteamento.codLote }}">
+                <td class="td-rh lote">
+                    <input type="hidden" value="{{ admin.getObjectKey(loteLoteamento) }}" class="imput-lotes" name="lotes_old[]" />
+                    <input type="hidden" value="{{ loteLoteamento.caucionado }}" class="imput-lotes-caucionados" name="lotes_caucionados_old[]" />
+                    {{ loteLoteamento.fkImobiliarioLote }}
+                </td>
+                <td class="td-rh localizacao">{{ loteLoteamento.fkImobiliarioLote.fkImobiliarioLoteLocalizacao.fkImobiliarioLocalizacao.codigoComposto }}</td>
+                <td class="td-rh caucionado">{% if loteLoteamento.caucionado %} {{ 'label_type_yes'|trans }} {% else %} {{ 'label_type_no'|trans }} {% endif %}</td>
+                <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+            </tr>
+        {% endfor %}
+        <tr class="tr-rh empty-row-lotes">
+            <td colspan="4">{{ 'listagemVazia'|trans }}</td>
+        </tr>
+    </table>
+</div>

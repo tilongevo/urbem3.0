@@ -1,0 +1,113 @@
+<div class="col s12">
+    <div class="col s12 profile-box-processo">
+        <h4 class="col s12 blue-text text-darken-4 left">
+            <i class="mdi mdi-barcode left"></i>{{ 'label.ordemPagamento.nrop'|trans }}: {{ ordemPagamento.codOrdem ~ '/' ~ ordemPagamento.exercicio }}
+            {% if ordemPagamento.getStatus == 'A Pagar' %}
+                <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_edit', { 'id': ordemPagamento.codOrdem ~ '~' ~ ordemPagamento.exercicio ~ '~' ~ ordemPagamento.codEntidade })}}" class="btn small-btn white-text blue darken-4 tooltipped right" data-position="left" data-delay="50" data-tooltip="Anular">
+                    <i class="material-icons">block</i>
+                </a>
+            {% endif %}
+            {% if ordemPagamento.getStatus != 'Incompleta' %}
+                <a href="{{ path('urbem_financeiro_empenho_ordem_pagamento_relatorio', { 'codOrdem': ordemPagamento.codOrdem, 'exercicio': ordemPagamento.exercicio, 'codEntidade': ordemPagamento.codEntidade })}}" class="btn small-btn white-text blue darken-4 tooltipped right" data-position="left" data-delay="50" data-tooltip="Emitir" target="_blank">
+                    <i class="material-icons">print</i>
+                </a>
+            {% endif %}
+        </h4>
+        <h6 class="divider grey col s12"></h6>
+        <div class="col s6">
+            <h6 class="col s12 left-align blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.codEntidade'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.fkOrcamentoEntidade.codEntidade ~ ' - ' ~ ordemPagamento.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</h6>
+        </div>
+        <div class="col s3">
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.dtEmissao'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.dtEmissao|date("d/m/Y") }}</h6>
+        </div>
+        <div class="col s3">
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.dtVencimento'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.dtVencimento|date("d/m/Y") }}</h6>
+        </div>
+
+        {% if despesa is not null %}
+            <h6 class="col s12"></h6>
+            <div class="col s6">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.orgao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ despesa.fkOrcamentoUnidade.fkOrcamentoOrgao.numOrgao ~ ' - ' ~ despesa.fkOrcamentoUnidade.fkOrcamentoOrgao.nomOrgao }}</h6>
+            </div>
+            <div class="col s6">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.unidade'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ despesa.fkOrcamentoUnidade.numUnidade ~ ' - ' ~ despesa.fkOrcamentoUnidade.nomUnidade }}</h6>
+            </div>
+        {% endif %}
+
+        {% if contaDespesa is not null %}
+            <h6 class="col s12"></h6>
+            <div class="col s3">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.dotacao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ contaDespesa.codConta }}</h6>
+            </div>
+            <div class="col s9">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.desdobramento'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ contaDespesa.codEstrutural ~ ' - ' ~ contaDespesa.descricao }}</h6>
+            </div>
+        {% endif %}
+
+        {% if despesa is not null %}
+            <h6 class="col s12"></h6>
+            <div class="col s3">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.recurso'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ despesa.fkOrcamentoRecurso.codRecurso ~ ' - ' ~ despesa.fkOrcamentoRecurso.nomRecurso }}</h6>
+            </div>
+            {% if fornecedor is not null %}
+                <div class="col s9">
+                    <h6 class="col s12 left-align blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.credor'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ fornecedor.numcgm ~ ' - ' ~ fornecedor.nomCgm }}</h6>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <h6 class="col s12"></h6>
+
+        <div class="col s3">
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.vlOriginal'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.getValorOriginal|number_format_currency('BRL') }}</h6>
+        </div>
+        <div class="col s3">
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.vlAnulado'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.getValorAnulado|number_format_currency('BRL') }}</h6>
+        </div>
+        <div class="col s3">
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.valorRetencao'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.getValorRetencao|number_format_currency('BRL') }}</h6>
+        </div>
+        <div class="col s3">
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.valorLiquido'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.getValorLiquido|number_format_currency('BRL') }}</h6>
+        </div>
+
+        <h6 class="col s12"></h6>
+
+        <div class="col s3">
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.status'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.getStatus }}</h6>
+        </div>
+        {% if ordemPagamento.getDataStatus is not null %}
+            <div class="col s3">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.dataSituacao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.getDataStatus|date('d/m/Y') }}</h6>
+            </div>
+        {% endif %}
+        <div class="col s3">
+            <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.estornado'|trans }}</h6>
+            <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.getEstornado }}</h6>
+        </div>
+
+        <h6 class="col s12"></h6>
+        {% if ordemPagamento.observacao != '' %}
+            <div class="col s12">
+                <h6 class="col s12 left-align blue-text text-darken-4 profile-titles">{{ 'label.ordemPagamento.descricao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ ordemPagamento.observacao }}</h6>
+            </div>
+            <h6 class="col s12"></h6>
+        {%  endif %}
+    </div>
+</div>

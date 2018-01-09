@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Imobiliario\ImovelImobiliaria:
+    type: entity
+    table: imobiliario.imovel_imobiliaria
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+    fields:
+        creci:
+            type: string
+            nullable: false
+            length: 10
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkImobiliarioCorretagem:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Corretagem
+            inversedBy: fkImobiliarioImovelImobiliarias
+            joinColumns:
+                creci:
+                    referencedColumnName: creci
+    oneToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkImobiliarioImovelImobiliaria
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

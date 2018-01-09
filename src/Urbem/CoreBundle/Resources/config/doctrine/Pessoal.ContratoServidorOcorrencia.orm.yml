@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorOcorrencia:
+    type: entity
+    table: pessoal.contrato_servidor_ocorrencia
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorOcorrenciaRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codOcorrencia:
+            type: integer
+            nullable: false
+            column: cod_ocorrencia
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorOcorrencias
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalOcorrencia:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Ocorrencia
+            inversedBy: fkPessoalContratoServidorOcorrencias
+            joinColumns:
+                cod_ocorrencia:
+                    referencedColumnName: cod_ocorrencia

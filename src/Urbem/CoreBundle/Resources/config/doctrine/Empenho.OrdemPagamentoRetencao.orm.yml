@@ -1,0 +1,101 @@
+Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoRetencao:
+    type: entity
+    table: empenho.ordem_pagamento_retencao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        sequencial:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        vlRetencao:
+            type: decimal
+            nullable: false
+            precision: 12
+            scale: 2
+            column: vl_retencao
+        codReceita:
+            type: integer
+            nullable: true
+            column: cod_receita
+    manyToOne:
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkEmpenhoOrdemPagamentoRetencoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkEmpenhoOrdemPagamentoRetencoes
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEmpenhoOrdemPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamento
+            inversedBy: fkEmpenhoOrdemPagamentoRetencoes
+            joinColumns:
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToMany:
+        fkContabilidadeLancamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoRetencao
+            mappedBy: fkEmpenhoOrdemPagamentoRetencao
+        fkTesourariaArrecadacaoEstornadaOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornadaOrdemPagamentoRetencao
+            mappedBy: fkEmpenhoOrdemPagamentoRetencao
+        fkTesourariaArrecadacaoOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoOrdemPagamentoRetencao
+            mappedBy: fkEmpenhoOrdemPagamentoRetencao
+        fkTesourariaTransferenciaOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaOrdemPagamentoRetencao
+            mappedBy: fkEmpenhoOrdemPagamentoRetencao
+        fkTesourariaTransferenciaEstornadaOrdemPagamentoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornadaOrdemPagamentoRetencao
+            mappedBy: fkEmpenhoOrdemPagamentoRetencao

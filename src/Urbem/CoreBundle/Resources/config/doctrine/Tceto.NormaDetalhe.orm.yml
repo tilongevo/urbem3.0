@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Tceto\NormaDetalhe:
+    type: entity
+    table: tceto.norma_detalhe
+    id:
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields:
+        codLeiAlteracao:
+            type: integer
+            nullable: false
+            column: cod_lei_alteracao
+        percentualCreditoAdicional:
+            type: decimal
+            nullable: false
+            precision: 3
+            scale: 0
+            column: percentual_credito_adicional
+        codNormaAlteracao:
+            type: integer
+            nullable: false
+            column: cod_norma_alteracao
+    manyToOne:
+        fkNormasLei:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Lei
+            inversedBy: fkTcetoNormaDetalhes
+            joinColumns:
+                cod_lei_alteracao:
+                    referencedColumnName: cod_lei
+        fkNormasNorma1:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcetoNormaDetalhes1
+            joinColumns:
+                cod_norma_alteracao:
+                    referencedColumnName: cod_norma
+    oneToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcetoNormaDetalhe
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

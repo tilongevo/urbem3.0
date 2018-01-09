@@ -1,0 +1,82 @@
+Urbem\CoreBundle\Entity\Pessoal\Ferias:
+    type: entity
+    table: pessoal.ferias
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\FeriasRepository
+    id:
+        codFerias:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.cod_ferias_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_ferias
+    fields:
+        codForma:
+            type: integer
+            nullable: false
+            column: cod_forma
+        codContrato:
+            type: integer
+            nullable: false
+            column: cod_contrato
+        faltas:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+        diasFerias:
+            type: integer
+            nullable: false
+            column: dias_ferias
+        diasAbono:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: dias_abono
+        dtInicialAquisitivo:
+            type: date
+            nullable: false
+            column: dt_inicial_aquisitivo
+        dtFinalAquisitivo:
+            type: date
+            nullable: false
+            column: dt_final_aquisitivo
+        rescisao:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkPessoalFormaPagamentoFerias:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\FormaPagamentoFerias
+            inversedBy: fkPessoalFerias
+            joinColumns:
+                cod_forma:
+                    referencedColumnName: cod_forma
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalFerias
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToMany:
+        fkPessoalLoteFeriasLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LoteFeriasLote
+            mappedBy: fkPessoalFerias
+    oneToOne:
+        fkPessoalLancamentoFerias:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LancamentoFerias
+            mappedBy: fkPessoalFerias
+            joinColumns:
+                cod_ferias:
+                    referencedColumnName: cod_ferias

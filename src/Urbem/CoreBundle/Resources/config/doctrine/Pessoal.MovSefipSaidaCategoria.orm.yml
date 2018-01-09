@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Pessoal\MovSefipSaidaCategoria:
+    type: entity
+    table: pessoal.mov_sefip_saida_categoria
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\MovSefipSaidaCategoriaRepository
+    id:
+        codSefipSaida:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sefip_saida
+        codCategoria:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_categoria
+    fields:
+        indicativo:
+            type: string
+            nullable: true
+            length: 1
+    manyToOne:
+        fkPessoalMovSefipSaida:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipSaida
+            inversedBy: fkPessoalMovSefipSaidaCategorias
+            joinColumns:
+                cod_sefip_saida:
+                    referencedColumnName: cod_sefip_saida
+        fkPessoalCategoria:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Categoria
+            inversedBy: fkPessoalMovSefipSaidaCategorias
+            joinColumns:
+                cod_categoria:
+                    referencedColumnName: cod_categoria

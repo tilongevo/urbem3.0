@@ -1,0 +1,62 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    <div class="row">        
+        <div class="box box-primary">
+            <div class="box-header col s12">
+                <h2 class="col s12 box-title left-align show">
+                    {{ 'label.dividaAtivaInscreverDividaAtiva.cabecalhoEmissaoTermo'|trans }}
+                </h2>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+            <div class="box-body">
+                <div class="col s12">
+                    <table class="js-table-lista-downloads">
+                        <thead>
+                            <tr>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.contribuinte'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.inscricaoAno'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.documento'|trans }}</th>
+                                <th>{{ 'label.dividaAtivaInscreverDividaAtiva.emissao'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dividaAtiva in dividasAtivas %}
+                                <tr>
+                                    <td>{{ dividaAtiva.getFkDividaDividaCgns().last().getFkSwCgm() }}</td>
+                                    <td>{{ '%d/%d'|format(dividaAtiva.getCodInscricao(), dividaAtiva.getExercicio()) }}</td>
+                                    <td>
+                                        {% for documento in dividaAtiva.getFkDividaDividaParcelamentos().last().getFkDividaParcelamento().getFkDividaDocumentos() %}
+                                            {% set emissaoDocumento = documento.getFkDividaEmissaoDocumentos().last() %}
+                                            <a href="{{ path('urbem_tributario_divida_ativa_emitir_documento_download_documento', { 'id': '%d~%d~%d~%d~%d~%d'|format(emissaoDocumento.getNumParcelamento(), emissaoDocumento.getNumEmissao(), emissaoDocumento.getCodTipoDocumento(), emissaoDocumento.getCodDocumento(), emissaoDocumento.getNumDocumento(), emissaoDocumento.getExercicio()) }) }}" class="waves-effect waves-light btn blue darken-4 btn btn-success">
+                                                {{ documento.getFkAdministracaoModeloDocumento().getNomeDocumento() }}
+                                            </a>
+                                            <br>
+                                        {% endfor %}
+                                    </td>
+                                    <td>1</td>
+                                </tr>
+                            {% endfor %}
+
+                            {% if not dividasAtivas|length %}
+                                <tr>
+                                    <td colspan="4" style="text-align:center">{{ 'label.dividaAtivaInscreverDividaAtiva.nenhumRegistroEncontrado'|trans }}</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col s12">
+                    <div class="col s8 left-align">
+                       <a class="back btn-floating white-text blue darken-4 btn-success" href="javascript: window.location.replace('{{ admin.generateUrl('create') }}');">
+                        <i class="material-icons">arrow_back</i>
+                       </a>
+                    </div>    
+                </div>    
+            </div>
+        </div>
+    </div>
+{% endblock content %}

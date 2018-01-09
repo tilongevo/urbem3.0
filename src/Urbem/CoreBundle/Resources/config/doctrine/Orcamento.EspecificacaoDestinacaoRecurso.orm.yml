@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Orcamento\EspecificacaoDestinacaoRecurso:
+    type: entity
+    table: orcamento.especificacao_destinacao_recurso
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEspecificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especificacao
+    fields:
+        codFonte:
+            type: integer
+            nullable: false
+            column: cod_fonte
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    manyToOne:
+        fkOrcamentoFonteRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\FonteRecurso
+            inversedBy: fkOrcamentoEspecificacaoDestinacaoRecursos
+            joinColumns:
+                cod_fonte:
+                    referencedColumnName: cod_fonte
+    oneToMany:
+        fkOrcamentoRecursoDestinacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\RecursoDestinacao
+            mappedBy: fkOrcamentoEspecificacaoDestinacaoRecurso

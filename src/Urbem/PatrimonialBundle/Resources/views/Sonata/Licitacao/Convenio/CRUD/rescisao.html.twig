@@ -1,0 +1,57 @@
+{% if object.fkLicitacaoRescisaoConvenio is not null %}
+    <hr>
+    {# Rescisão Convênio #}
+    <div class="row">
+        <div class="col s12 profile-box">
+            <h2 class="blue-text text-darken-4 left">
+                <i class="mdi mdi-image-broken-variant fa-lg left grey-text" aria-hidden="true"></i>
+                <span style="padding-top: 10px">{{ 'label.convenioAdmin.rescisao'|trans }}:</span><span class="grey-text bold" style="padding-top: 10px; font-weight: bold">{{ object.fkLicitacaoRescisaoConvenio.numRescisao ~ "/" ~ object.fkLicitacaoRescisaoConvenio.exercicio }}</span>
+            </h2>
+            <p class="divider grey col s12"></p>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.rescisaoConvenio.responsavelJuridico'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.fkLicitacaoRescisaoConvenio.fkSwCgm }}</h6>
+            </div>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.rescisaoConvenio.dtRescisao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.fkLicitacaoRescisaoConvenio.dtRescisao|date('d/m/Y') }}</h6>
+            </div>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.rescisaoConvenio.vlrMulta'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.fkLicitacaoRescisaoConvenio.vlrMulta|number_format(2, ',', '.') }}</h6>
+            </div>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.rescisaoConvenio.vlrIndenizacao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.fkLicitacaoRescisaoConvenio.vlrIndenizacao|number_format(2, ',', '.') }}</h6>
+            </div>
+        </div>
+    </div>
+
+    {# Rescisão Convênio - Veículo Publicação #}
+    <div class="row">
+        <div class="col s11 servidor-table">
+            <a style="font-size: 16px">
+                <i class="mdi mdi-newspaper"></i>
+                {{ 'label.convenioAdmin.rescisaoConvenio.veiculoPublicacao'|trans }}
+            </a>
+        </div>
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+            <th class="th-rh">{{ 'label.convenioAdmin.rescisaoConvenio.publicacaoRescisaoConvenio.numPublicacao'|trans }}</th>
+            <th class="th-rh">{{ 'label.convenioAdmin.rescisaoConvenio.publicacaoRescisaoConvenio.veiculoPublicacao'|trans }}</th>
+            <th class="th-rh">{{ 'label.convenioAdmin.rescisaoConvenio.publicacaoRescisaoConvenio.dtPublicacao'|trans }}</th>
+            <th class="th-rh">{{ 'label.convenioAdmin.rescisaoConvenio.publicacaoRescisaoConvenio.observacao'|trans }}</th>
+            </thead>
+            <tbody>
+            {% for publicacao in object.fkLicitacaoRescisaoConvenio.fkLicitacaoPublicacaoRescisaoConvenios %}
+                <tr>
+                    <td class="td-rh">{{ publicacao.numPublicacao }}</td>
+                    <td class="td-rh">{{ publicacao.fkSwCgm }}</td>
+                    <td class="td-rh">{{ publicacao.dtPublicacao|date('d/m/Y') }}</td>
+                    <td class="td-rh">{{ publicacao.observacao }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

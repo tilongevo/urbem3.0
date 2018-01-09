@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ComplementarSituacao:
+    type: entity
+    table: folhapagamento.complementar_situacao
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\ComplementarSituacaoRepository
+    id:
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+        codComplementar:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_complementar
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        situacao:
+            type: string
+            nullable: false
+            length: 1
+    manyToOne:
+        fkFolhapagamentoComplementar:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Complementar
+            inversedBy: fkFolhapagamentoComplementarSituacoes
+            joinColumns:
+                cod_complementar:
+                    referencedColumnName: cod_complementar
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+    oneToMany:
+        fkFolhapagamentoComplementarSituacaoFechadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ComplementarSituacaoFechada
+            mappedBy: fkFolhapagamentoComplementarSituacao

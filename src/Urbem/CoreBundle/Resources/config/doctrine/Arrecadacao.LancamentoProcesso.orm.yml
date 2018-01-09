@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Arrecadacao\LancamentoProcesso:
+    type: entity
+    table: arrecadacao.lancamento_processo
+    id:
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields: {  }
+    manyToOne:
+        fkArrecadacaoLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lancamento
+            inversedBy: fkArrecadacaoLancamentoProcessos
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkArrecadacaoLancamentoProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

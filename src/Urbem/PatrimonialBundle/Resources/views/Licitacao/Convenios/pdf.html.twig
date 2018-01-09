@@ -1,0 +1,90 @@
+{% block body %}
+    {% block content %}
+        {#{% include 'CoreBundle::Relatorio/header.html.twig' %}#}
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th class="grey" colspan="2">Convênio</th>
+                <td colspan="3">{{ object }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Tipo</th>
+                <td colspan="3">{{ object.fkLicitacaoTipoConvenio.descricao }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Objeto</th>
+                <td colspan="3">{{ object.fkComprasObjeto.descricao }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Observações</th>
+                <td colspan="3">{{ object.observacao }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Responsável Jurídico</th>
+                <td colspan="3">{{ object.fkSwCgm.nomCgm }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Data da Assinatura</th>
+                <td colspan="3">{{ object.dtAssinatura|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Data do Final da Vigência</th>
+                <td colspan="3">{{ object.dtVigencia|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Valor do Convênio</th>
+                <td colspan="3">{{ object.valor|number_format(2, ',', '.') }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th class="grey" colspan="2">Código</th>
+                <th class="grey" colspan="2">Veículo de Publicidade</th>
+            </tr>
+            {% for publicacao in object.fkLicitacaoPublicacaoConvenios %}
+                <tr>
+                    <td colspan="2">{{ publicacao.numcgm }}</td>
+                    <td colspan="2">{{ publicacao.fkLicitacaoVeiculosPublicidade.fkSwCgm.nomCgm|upper }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th class="grey" colspan="8">
+                    <center>Participações</center>
+                </th>
+            </tr>
+            <tr>
+                <th class="grey" colspan="2">Nome</th>
+                <th class="grey" colspan="2">Tipo</th>
+                <th class="grey" colspan="2">Valor</th>
+                <th class="grey" colspan="2">Participação</th>
+            </tr>
+            {% for participante in object.fkLicitacaoParticipanteConvenios %}
+                <tr>
+                    <td colspan="2">{{ participante.fkLicitacaoParticipanteCertificacao.fkSwCgm.nomCgm|upper }}</td>
+                    <td colspan="2">{{ participante.fkLicitacaoTipoParticipante.descricao }}</td>
+                    <td colspan="2">R$ {{ participante.valorParticipacao|number_format(2, ',', '.') }}</td>
+                    <td colspan="2">{{ participante.percentualParticipacao|number_format(2, ',', '.') }}%</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+{% endblock %}

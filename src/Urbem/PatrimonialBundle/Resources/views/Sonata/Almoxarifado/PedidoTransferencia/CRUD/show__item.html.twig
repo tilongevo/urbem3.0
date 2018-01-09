@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a style="font-size: 16px">
+            <i class="mdi mdi-file-document"></i>
+            {{ 'label.pedidoTransferencia.pedidoTransferenciaItem'|trans }}
+        </a>
+    </div>
+    <div class="col s1">
+        {% if object.fkAlmoxarifadoPedidoTransferenciaAnulacoes|length == 0 %}
+            <a class="tooltipped"
+               href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_item_create', {
+                   'codTransferencia': admin.adminRequestId
+               }) }}"
+               data-toggle="tooltip"
+               data-placement="top"
+               title="{{ "incluir"|trans }}">
+                <i class="mdi mdi-plus-circle right small"></i>
+            </a>
+        {% endif %}
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'label.pedidoTransferencia.codItem'|trans }}</th>
+        <th class="th-rh">{{ 'label.pedidoTransferencia.quantidade'|trans }}</th>
+        <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for item in object.fkAlmoxarifadoPedidoTransferenciaItens %}
+            <tr>
+                <td class="td-rh">{{ loop.index }}</td>
+                <td class="td-rh">{{ item }}</td>
+                <td class="td-rh">{{ item.quantidade|number_format(4, ',') }}</td>
+                <td class="td-rh">
+                    {% if object.fkAlmoxarifadoPedidoTransferenciaAnulacoes|length == 0 %}
+                        <div class="btn-group">
+                            <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_item_edit', {
+                                   'id': item.objectId
+                               }) }}"
+                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_item_delete', {
+                                    'id': item.objectId
+                               }) }}"
+                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <span class="label label-danger">{{ 'label.pedidoTransferencia.anulado.unavalable'|trans }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

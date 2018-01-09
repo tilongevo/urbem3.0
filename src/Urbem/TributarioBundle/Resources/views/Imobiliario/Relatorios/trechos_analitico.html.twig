@@ -1,0 +1,58 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Imobiliario/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'label.imobiliarioRelatorios.trechos.cod'|trans|upper }}</td>
+                    <td>{{ 'label.imobiliarioRelatorios.trechos.seq'|trans|upper }}</td>
+                    <td>{{ 'label.imobiliarioRelatorios.trechos.ext'|trans|upper }}</td>
+                    <td>{{ 'label.imobiliarioRelatorios.trechos.logradouro'|trans|upper }}</td>
+                    <td>{{ 'label.imobiliarioRelatorios.trechos.vigencia'|trans|upper }}</td>
+                    {% if trechos|first.atributos is defined %}
+                        {% for atributo in trechos|first.atributos %}
+                            <td>{{ atributo.nom_atributo|upper }}</td>
+                        {% endfor %}
+                    {% endif %}
+              </tr>
+            </thead>
+            <tbody>
+                {% for trecho in trechos %}
+                    <tr>
+                        <td class="text_align_left ">{{ trecho.trecho }}</td>
+                        <td class="text_align_left ">{{ trecho.sequencia }}</td>
+                        <td class="text_align_left ">{{ trecho.extensao }}</td>
+                        <td class="text_align_left ">{{ trecho.logradouro }}</td>
+                        {% if trecho.dt_vigencia is defined %}<td class="text_align_left ">trecho.dt_vigencia</td>{% endif %}
+                        {% if trecho.dt_vigencia is not defined %}<td class="text_align_left "></td>{% endif %}
+
+                        {% if trecho.atributos is defined %}
+                                {% for atributo in trecho.atributos %}
+                                    <td class="text_align_left ">
+                                        {{ atributo.valor }}
+                                    </td>
+                                {% endfor %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><strong>{{ 'label.imobiliarioRelatorios.trechos.totalRegistros'|trans }} :</strong> {{ trechos|length }}
+        <p><strong>{{ 'label.imobiliarioRelatorios.trechos.tipoRelatorio'|trans }} :</strong> {{ filtros['tipoRelatorio'] }}
+        <p><strong>{{ 'label.imobiliarioRelatorios.trechos.filtrosUtilizados'|trans }}</strong>
+        {% if filtros['codLogradouroDe'] %} <p><strong>{{ 'label.imobiliarioRelatorios.trechos.codigoLogradouroDe'|trans }} :</strong>  {{ filtros['codLogradouroDe'] }} {% endif %}
+        {% if filtros['codLogradouroAte'] %} <p><strong>{{ 'label.imobiliarioRelatorios.trechos.codigoLogradouroAte'|trans }} :</strong>  {{ filtros['codLogradouroAte'] }} {% endif %}
+        {% if filtros['sequenciaDe'] %} <p><strong>{{ 'label.imobiliarioRelatorios.trechos.sequenciaDe'|trans }} :</strong>  {{ filtros['sequenciaDe'] }} {% endif %}
+        {% if filtros['sequenciaAte'] %} <p><strong>{{ 'label.imobiliarioRelatorios.trechos.sequenciaAte'|trans }} :</strong>  {{ filtros['sequenciaAte'] }} {% endif %}
+        <p><strong>{{ 'label.imobiliarioRelatorios.trechos.ordenacao'|trans }} :</strong> {{ filtros['ordenacao'] }}
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

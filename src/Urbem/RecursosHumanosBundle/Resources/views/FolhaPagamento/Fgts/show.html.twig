@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    <div class="container">
+        {{ form_start(form, {'attr': {'novalidate': ''}}) }}
+        <div class="row title-index filtro filtro-sonata z-depth-0 filtro-rh col s12">
+            <div class="col s3 field-filtro">
+                {{ form_label(form.vigencia) }}
+                {{ form_widget(form.vigencia,{'attr': {'class': 'white input-rh browser-default'}}) }}
+                {{ form_errors(form.vigencia) }}
+            </div>
+            <div class="buscar-fgts col s6">
+                <button type="submit" class="hide-on-med-and-down btn waves-effect waves-light blue-darken-4">
+                    <i class="material-icons">search</i> 
+                </button>
+            </div>
+        </div>
+        <div class="col s12 profile-box center-align">
+        {% if fgts %}
+            <div class="col s10">
+                <h5 class="blue-text text-darken-4">FGTS</h5>
+                <h5 class="grey-text">{{ fgts.codFgts }}</h5>
+            </div>
+            <div class="col s2 right-align">
+                <h5><a class="blue-text text-darken-4 tooltipped right-align" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('folhapagamento_fgts_edit', { 'id': fgts.codFgts }) }}"><i class="material-icons">edit</i></a></h5>
+            </div>
+        {% endif %}
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock content %}

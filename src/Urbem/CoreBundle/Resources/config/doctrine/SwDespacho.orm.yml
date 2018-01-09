@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\SwDespacho:
+    type: entity
+    table: sw_despacho
+    id:
+        codAndamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_andamento
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codUsuario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_usuario
+    fields:
+        descricao:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkSwAndamento:
+            targetEntity: Urbem\CoreBundle\Entity\SwAndamento
+            inversedBy: fkSwDespachos
+            joinColumns:
+                cod_andamento:
+                    referencedColumnName: cod_andamento
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkSwDespachos
+            joinColumns:
+                cod_usuario:
+                    referencedColumnName: numcgm

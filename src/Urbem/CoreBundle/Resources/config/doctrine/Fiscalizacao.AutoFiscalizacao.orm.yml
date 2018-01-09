@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\AutoFiscalizacao:
+    type: entity
+    table: fiscalizacao.auto_fiscalizacao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        codAutoFiscalizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_auto_fiscalizacao
+    fields:
+        codFiscal:
+            type: integer
+            nullable: false
+            column: cod_fiscal
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        dtNotificacao:
+            type: date
+            nullable: false
+            column: dt_notificacao
+        observacao:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkFiscalizacaoFiscalProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalProcessoFiscal
+            inversedBy: fkFiscalizacaoAutoFiscalizacoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                cod_fiscal:
+                    referencedColumnName: cod_fiscal
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoAutoFiscalizacoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoAutoFiscalizacoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToMany:
+        fkFiscalizacaoAutoInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutoInfracao
+            mappedBy: fkFiscalizacaoAutoFiscalizacao

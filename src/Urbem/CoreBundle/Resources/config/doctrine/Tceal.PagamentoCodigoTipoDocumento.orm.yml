@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Tceal\PagamentoCodigoTipoDocumento:
+    type: entity
+    table: tceal.pagamento_codigo_tipo_documento
+    id:
+        codTipoDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento
+    fields:
+        nomTipoDocumento:
+            type: string
+            nullable: false
+            length: 255
+            column: nom_tipo_documento
+    oneToMany:
+        fkTcealPagamentoTipoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\PagamentoTipoDocumento
+            mappedBy: fkTcealPagamentoCodigoTipoDocumento

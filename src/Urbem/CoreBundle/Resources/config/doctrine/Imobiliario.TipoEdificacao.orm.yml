@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacao:
+    type: entity
+    table: imobiliario.tipo_edificacao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: imobiliario.tipo_edificacao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_tipo
+    oneToMany:
+        fkImobiliarioAtributoTipoEdificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoEdificacao
+            mappedBy: fkImobiliarioTipoEdificacao
+        fkImobiliarioTipoEdificacaoValorM2s:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacaoValorM2
+            mappedBy: fkImobiliarioTipoEdificacao
+        fkImobiliarioTipoEdificacaoAliquotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacaoAliquota
+            mappedBy: fkImobiliarioTipoEdificacao
+        fkImobiliarioConstrucaoEdificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoEdificacao
+            mappedBy: fkImobiliarioTipoEdificacao

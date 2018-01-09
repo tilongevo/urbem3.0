@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Pessoal\Especialidade:
+    type: entity
+    table: pessoal.especialidade
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\EspecialidadeRepository
+    id:
+        codEspecialidade:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.especialidade_cod_especialidade_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_especialidade
+    fields:
+        codCargo:
+            type: integer
+            nullable: false
+            column: cod_cargo
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkPessoalEspecialidades
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+    oneToMany:
+        fkFolhapagamentoConfiguracaoEventoCasoEspecialidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCasoEspecialidade
+            mappedBy: fkPessoalEspecialidade
+        fkPessoalCboEspecialidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CboEspecialidade
+            mappedBy: fkPessoalEspecialidade
+        fkPessoalContratoServidorEspecialidadeFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorEspecialidadeFuncao
+            mappedBy: fkPessoalEspecialidade
+        fkPessoalContratoServidorEspecialidadeCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorEspecialidadeCargo
+            mappedBy: fkPessoalEspecialidade
+        fkPessoalEspecialidadePadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\EspecialidadePadrao
+            mappedBy: fkPessoalEspecialidade
+        fkPessoalEspecialidadeSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\EspecialidadeSubDivisao
+            mappedBy: fkPessoalEspecialidade

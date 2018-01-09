@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\SwAutorizacaoEmpenho:
+    type: entity
+    table: sw_autorizacao_empenho
+    id:
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autorizacao
+    fields:
+        codReserva:
+            type: integer
+            nullable: false
+            column: cod_reserva
+        dtAutorizacao:
+            type: date
+            nullable: false
+            column: dt_autorizacao
+    manyToOne:
+        fkSwPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\SwPreEmpenho
+            inversedBy: fkSwAutorizacaoEmpenhos
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkSwEmpenhoAutorizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwEmpenhoAutorizacao
+            mappedBy: fkSwAutorizacaoEmpenho
+    oneToOne:
+        fkSwAutorizacaoAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwAutorizacaoAnulada
+            mappedBy: fkSwAutorizacaoEmpenho
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao

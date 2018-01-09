@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Cgm\TipoConta:
+    type: entity
+    table: cgm.tipo_conta
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkCgmContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cgm\Conta
+            mappedBy: fkCgmTipoConta

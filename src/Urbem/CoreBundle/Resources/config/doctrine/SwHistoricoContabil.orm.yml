@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\SwHistoricoContabil:
+    type: entity
+    table: sw_historico_contabil
+    id:
+        codHistorico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_historico
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomHistorico:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_historico
+        complemento:
+            type: boolean
+            nullable: false
+    oneToMany:
+        fkSwTransacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwTransacao
+            mappedBy: fkSwHistoricoContabil
+        fkSwTransacoes1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwTransacao
+            mappedBy: fkSwHistoricoContabil1
+        fkSwLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamento
+            mappedBy: fkSwHistoricoContabil

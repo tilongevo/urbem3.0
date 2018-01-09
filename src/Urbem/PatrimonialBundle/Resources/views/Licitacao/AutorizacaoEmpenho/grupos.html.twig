@@ -1,0 +1,25 @@
+<table class="bordered highlight">
+    <thead>
+    <tr>
+        <th width="3%"></th>
+        <th width="50%">{{ 'label.itens.item'|trans }}</th>
+        <th class="right-align">{{ 'label.itens.qtde'|trans }}</th>
+        <th class="right-align">{{ 'label.itens.valorTotal'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for grupo in grupos %}
+        {% set totalMapa = totalMapa + grupo.vl_cotacao %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ grupo.desc_objeto }}</td>
+            <td class="right-align">{{ grupo.qtd_itens_homologados }}</td>
+            <td class="right-align">{{ grupo.vl_cotacao|number_format(2, ',', '.') }}</td>
+        </tr>
+    {% endfor %}
+        <tr>
+            <td colspan="3" class="right-align"></td>
+            <td class="right-align"><strong>{{ 'label.patrimonial.licitacao.autorizacaoEmpenho.totalMapa'|trans }}</strong> {{ totalMapa|number_format(2, ',', '.') }}</td>
+        </tr>
+    </tbody>
+</table>

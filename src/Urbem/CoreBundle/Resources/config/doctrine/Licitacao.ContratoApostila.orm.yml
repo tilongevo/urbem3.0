@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Licitacao\ContratoApostila:
+    type: entity
+    table: licitacao.contrato_apostila
+    id:
+        codApostila:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_apostila
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codAlteracao:
+            type: integer
+            nullable: false
+            column: cod_alteracao
+        descricao:
+            type: text
+            nullable: false
+        dataApostila:
+            type: date
+            nullable: false
+            column: data_apostila
+        valorApostila:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_apostila
+    manyToOne:
+        fkLicitacaoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            inversedBy: fkLicitacaoContratoApostilas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato

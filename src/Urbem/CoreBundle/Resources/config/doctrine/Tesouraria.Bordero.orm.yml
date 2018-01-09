@@ -1,0 +1,123 @@
+Urbem\CoreBundle\Entity\Tesouraria\Bordero:
+    type: entity
+    table: tesouraria.bordero
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\BorderoRepository
+    id:
+        codBordero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bordero
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+        codBoletim:
+            type: integer
+            nullable: false
+            column: cod_boletim
+        exercicioBoletim:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_boletim
+        timestampBordero:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_bordero
+        codTerminal:
+            type: integer
+            nullable: false
+            column: cod_terminal
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_terminal
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_usuario
+        codAutenticacao:
+            type: integer
+            nullable: false
+            column: cod_autenticacao
+        dtAutenticacao:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_autenticacao
+    manyToOne:
+        fkTesourariaBoletim:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Boletim
+            inversedBy: fkTesourariaBorderos
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_boletim:
+                    referencedColumnName: exercicio
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTesourariaBorderos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkContabilidadePlanoBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoBanco
+            inversedBy: fkTesourariaBorderos
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaBorderos
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario
+        fkTesourariaAutenticacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Autenticacao
+            inversedBy: fkTesourariaBorderos
+            joinColumns:
+                cod_autenticacao:
+                    referencedColumnName: cod_autenticacao
+                dt_autenticacao:
+                    referencedColumnName: dt_autenticacao
+    oneToMany:
+        fkTesourariaTransacoesTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransacoesTransferencia
+            mappedBy: fkTesourariaBordero
+        fkTesourariaTransacoesPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransacoesPagamento
+            mappedBy: fkTesourariaBordero

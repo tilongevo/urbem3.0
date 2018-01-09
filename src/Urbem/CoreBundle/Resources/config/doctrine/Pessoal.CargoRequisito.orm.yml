@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Pessoal\CargoRequisito:
+    type: entity
+    table: pessoal.cargo_requisito
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\CargoRequisitoRepository
+    id:
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+        codRequisito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_requisito
+    fields: {  }
+    manyToOne:
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkPessoalCargoRequisitos
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+        fkPessoalRequisito:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Requisito
+            inversedBy: fkPessoalCargoRequisitos
+            joinColumns:
+                cod_requisito:
+                    referencedColumnName: cod_requisito

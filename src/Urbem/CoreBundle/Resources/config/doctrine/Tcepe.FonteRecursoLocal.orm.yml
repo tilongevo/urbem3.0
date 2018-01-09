@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Tcepe\FonteRecursoLocal:
+    type: entity
+    table: tcepe.fonte_recurso_local
+    id:
+        codFonte:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fonte
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codLocal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_local
+    fields: {  }
+    manyToOne:
+        fkTcepeFonteRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\FonteRecurso
+            inversedBy: fkTcepeFonteRecursoLocais
+            joinColumns:
+                cod_fonte:
+                    referencedColumnName: cod_fonte
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcepeFonteRecursoLocais
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkTcepeFonteRecursoLocais
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local

@@ -1,0 +1,122 @@
+Urbem\CoreBundle\Entity\Tcemg\ConfiguracaoDdc:
+    type: entity
+    table: tcemg.configuracao_ddc
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ConfiguracaoDdcRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        mesReferencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: mes_referencia
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        nroContratoDivida:
+            type: string
+            generator:
+                strategy: NONE
+            column: nro_contrato_divida
+    fields:
+        codOrgao:
+            type: integer
+            nullable: true
+            column: cod_orgao
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtAssinatura:
+            type: date
+            nullable: false
+            column: dt_assinatura
+        contratoDecLei:
+            type: integer
+            nullable: true
+            column: contrato_dec_lei
+        objetoContratoDivida:
+            type: text
+            nullable: false
+            column: objeto_contrato_divida
+        especificacaoContratoDivida:
+            type: text
+            nullable: false
+            column: especificacao_contrato_divida
+        tipoLancamento:
+            type: string
+            nullable: false
+            length: 2
+            column: tipo_lancamento
+        justificativaCancelamento:
+            type: text
+            nullable: true
+            column: justificativa_cancelamento
+        numcgm:
+            type: integer
+            nullable: true
+        valorSaldoAnterior:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_saldo_anterior
+        valorContratacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_contratacao
+        valorAmortizacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_amortizacao
+        valorCancelamento:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_cancelamento
+        valorEncampacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_encampacao
+        valorAtualizacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_atualizacao
+        valorSaldoAtual:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_saldo_atual
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcemgConfiguracaoDdcs
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

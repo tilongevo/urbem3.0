@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAdiantamento:
+    type: entity
+    table: folhapagamento.configuracao_adiantamento
+    id:
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        percentual:
+            type: decimal
+            nullable: false
+            precision: 4
+            scale: 2
+        vantagensFixas:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+            column: vantagens_fixas
+    oneToOne:
+        fkFolhapagamentoConcessaoDecimo:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConcessaoDecimo
+            inversedBy: fkFolhapagamentoConfiguracaoAdiantamento
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                desdobramento:
+                    referencedColumnName: desdobramento

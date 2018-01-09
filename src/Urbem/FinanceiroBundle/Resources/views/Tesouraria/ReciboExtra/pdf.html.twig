@@ -1,0 +1,82 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th class="grey" colspan="2">Entidade</th>
+                    <td colspan="3">{{ object.fkOrcamentoEntidade.codEntidade }} - {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</td>
+                </tr>
+                <tr>
+                    <th class="grey" colspan="2">Valor do Recibo</th>
+                    <td colspan="3">{{ object.valor|number_format_currency('BRL') }}</td>
+                </tr>
+                <tr>
+                    <th class="grey" colspan="2">Credor</th>
+                    <td colspan="3">{{ object.fkTesourariaReciboExtraCredor }}</td>
+                </tr>
+                <tr>
+                    <th class="grey" colspan="2">Conta Caixa/Banco</th>
+                    <td colspan="3">
+                        {% if object.fkTesourariaReciboExtraBanco is not null %}
+                            {{ object.fkTesourariaReciboExtraBanco.fkContabilidadePlanoAnalitica.fkContabilidadePlanoConta.codEstrutural }},
+                            {{ object.fkTesourariaReciboExtraBanco.fkContabilidadePlanoAnalitica.codPlano }},
+                            {{ object.fkTesourariaReciboExtraBanco.fkContabilidadePlanoAnalitica.fkContabilidadePlanoConta.nomConta }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="grey" colspan="2" >Conta Receita/Despesa</th>
+                    <td>{{ contaReceita.codEstrutural }}</td>
+                    <td>{{ contaReceita.codPlano }}</td>
+                    <td>{{ contaReceita.nomConta }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered" style="margin-top: 10px">
+            <tr>
+                <th class="grey">Histórico</th>
+                <th class="grey">Recurso</th>
+            </tr>
+            <tr>
+                <td>{{ recurso.codFonte ~  ' - ' ~ recurso.nomRecurso }}</td>
+                <td>{{ object.historico }}</td>
+            </tr>
+        </table>
+        <table class="table table-bordered" style="margin-top: 10px">
+            <tbody>
+            <tr>
+                <th class="grey text-center">
+                    RECIBO
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p style="width: 600px; padding-left: 50px">
+                        Recebi o valor acima informado.
+                        <br /><br /><br /><br /><br />
+                        ______________________________________<br /><br />
+                        {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }},{{ dtRecibo }}.
+                        <br /><br /><br /><br /><br />
+                        {% if object.fkTesourariaReciboExtraAssinaturas|length > 0 %}
+                            {{ object.fkTesourariaReciboExtraAssinaturas.last.fkSwCgm.nomCgm }}<br />
+                            {{ object.fkTesourariaReciboExtraAssinaturas.last.cargo }}
+                        {% endif %}
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-s12 text-center">
+                <img src="data:image/png;base64,{{ codebar }}" />
+            </div>
+        </div>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

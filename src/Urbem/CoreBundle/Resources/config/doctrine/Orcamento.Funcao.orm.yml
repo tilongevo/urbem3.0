@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Orcamento\Funcao:
+    type: entity
+    table: orcamento.funcao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_funcao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPpaAcaoDados:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            mappedBy: fkOrcamentoFuncao
+        fkOrcamentoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            mappedBy: fkOrcamentoFuncao

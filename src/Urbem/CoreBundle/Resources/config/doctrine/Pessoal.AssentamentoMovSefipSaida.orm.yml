@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoMovSefipSaida:
+    type: entity
+    table: pessoal.assentamento_mov_sefip_saida
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\AssentamentoMovSefipSaidaRepository
+    id:
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codSefipSaida:
+            type: integer
+            nullable: false
+            column: cod_sefip_saida
+    manyToOne:
+        fkPessoalMovSefipSaida:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipSaida
+            inversedBy: fkPessoalAssentamentoMovSefipSaidas
+            joinColumns:
+                cod_sefip_saida:
+                    referencedColumnName: cod_sefip_saida
+    oneToOne:
+        fkPessoalAssentamentoAfastamentoTemporario:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAfastamentoTemporario
+            inversedBy: fkPessoalAssentamentoMovSefipSaida
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp

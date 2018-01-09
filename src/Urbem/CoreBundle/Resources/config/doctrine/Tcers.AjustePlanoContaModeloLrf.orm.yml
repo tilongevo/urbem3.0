@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Tcers\AjustePlanoContaModeloLrf:
+    type: entity
+    table: tcers.ajuste_plano_conta_modelo_lrf
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codQuadro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_quadro
+        mes:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        vlAjuste:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_ajuste
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcersAjustePlanoContaModeloLrfs
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcersPlanoContaModeloLrf:
+            targetEntity: Urbem\CoreBundle\Entity\Tcers\PlanoContaModeloLrf
+            inversedBy: fkTcersAjustePlanoContaModeloLrfs
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_modelo:
+                    referencedColumnName: cod_modelo
+                cod_conta:
+                    referencedColumnName: cod_conta
+                cod_quadro:
+                    referencedColumnName: cod_quadro

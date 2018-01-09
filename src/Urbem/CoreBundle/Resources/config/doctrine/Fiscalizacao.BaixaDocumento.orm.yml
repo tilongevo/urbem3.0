@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\BaixaDocumento:
+    type: entity
+    table: fiscalizacao.baixa_documento
+    id:
+        codBaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_baixa
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+    manyToOne:
+        fkFiscalizacaoBaixaAutorizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\BaixaAutorizacao
+            inversedBy: fkFiscalizacaoBaixaDocumentos
+            joinColumns:
+                cod_baixa:
+                    referencedColumnName: cod_baixa
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoBaixaDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento

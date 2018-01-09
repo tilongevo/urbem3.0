@@ -1,0 +1,27 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% if object.getStatus() == constant('STATUS_PENDENTE_AUTORIZACAO', object) %}
+	{% set requisicaoItem = object.getFkAlmoxarifadoRequisicaoItens().last() %}
+	{% set saldoEstoque = 0 %}
+
+	{% if requisicaoItem %}
+		{% set saldoEstoque = admin.getSaldoEstoque(requisicaoItem) %}
+	{% endif %}
+
+	{% if saldoEstoque %}
+		<a href="{{ path('urbem_compras_governamentais_controle_itens_autorizar_requisicao', { 'id': admin.objectKey(object) }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.comprasGovernamentaisControleItens.autorizarRequisicao'|trans }}">
+			<i class="fa fa-thumbs-up fa-lg"></i>
+		</a>
+	{% endif %}
+{% endif %}
+
+

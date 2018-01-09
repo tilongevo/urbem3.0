@@ -1,0 +1,366 @@
+<table class="table show-table ">
+    <thead class="thead-rh">
+    <tr>
+        <th></th>
+        <th></th>
+        <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.cobranca'|trans }}</th>
+        <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.modalidade'|trans }}</th>
+        <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.data'|trans }}</th>
+        <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.usuario'|trans }}</th>
+        <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.parcelas'|trans }}</th>
+        <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.situacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.valor'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for cobranca in admin.cobrancasDivida %}
+        <tr class="sonata-ba-view-container">
+            <td width="10">
+                <a data-toggle="collapse" data-target="#accordion-"{{ cobranca.numero_parcelamento }} role="button"
+                   class="mostrar-mais">
+                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                </a>
+            </td>
+            <td>
+                <span>{{ loop.index }}</span>
+            </td>
+            <td>
+                <span>{{ cobranca.numero_parcelamento }}</span>
+            </td>
+            <td>
+                <span>{{ cobranca.cod_modalidade ~' - '~ cobranca.descricao_modalidade }}</span>
+            </td>
+            <td>
+                <span>{{ cobranca.dt_parcelamento }}</span>
+            </td>
+            <td>
+                <span>{{ cobranca.numcgm_usuario ~' - '~ cobranca.nomcgm_usuario }}</span>
+            </td>
+            <td>
+                <span>{{ cobranca.qtd_parcelas }}</span>
+            </td>
+            <td>
+                <span>{{ cobranca.situacao }}</span>
+            </td>
+            <td>
+                <span>{{ cobranca.valor_parcelamento|number_format(2, ',', '.') }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0 !important;"></td>
+            <td style="padding: 0 !important;" colspan="8">
+                <div class="collapsing" id="accordion-" cobranca.numero_parcelamento>
+                    <div class="box-header">
+                        <h2 class="box-title left-align">
+                            {{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaInscricoesVinculdas.cabecalhoLista'|trans }}
+                        </h2>
+                    </div>
+                    <table class="col s12 highlight bordered">
+                        <thead class="thead-rh">
+                        <tr>
+                            <th class="th-rh" width="10">#</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaInscricoesVinculdas.inscricaoDivida'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaInscricoesVinculdas.origem'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaInscricoesVinculdas.parcelas'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaInscricoesVinculdas.valorOriginal'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaInscricoesVinculdas.valorCobranca'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                    <div class="box-header">
+                        <h2 class="box-title left-align">
+                            {{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.cabecalhoLista'|trans }}
+                        </h2>
+                    </div>
+                    <table class="col s12 highlight">
+                        <thead class="thead-rh ">
+                        <tr>
+                            <th class="th-rh" width="10"></th>
+                            <th class="th-rh" width="10"></th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.numeracao'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.numeracaoMigrada'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.parcela'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.valor'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.vencimento'|trans }}</th>
+                            <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.cobrancas.listaParcelas.situacao'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for parcela in admin.listaParcelas[cobranca.num_parcelamento] %}
+                            <tr class="sonata-ba-view-container">
+                                <td width="10">
+                                    <a data-toggle="collapse" data-target="#accordion-parcela-{{ parcela.num_parcela }}"
+                                       role="button" class="mostrar-mais">
+                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td class="td-rh">{{ parcela.num_parcela }}</td>
+                                <td class="td-rh">{{ parcela.numeracao ~ ' / ' ~ parcela.exercicio }}</td>
+                                <td class="td-rh">{{ parcela.numeracao_migracao~'/'~parcela.prefixo }}</td>
+                                <td class="td-rh">{{ parcela.info_parcela }}</td>
+                                <td class="td-rh">{{ parcela.vlr_parcela|number_format(2, ',', '.') }}</td>
+                                <td class="td-rh">{{ parcela.vencimento }}</td>
+                                <td class="td-rh">{{ parcela.situacao }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0 !important;"></td>
+                                <td style="padding: 0 !important;" colspan="5">
+                                    <div class="collapsing" id="accordion-parcela-{{ parcela.num_parcela }}">
+                                        <div class="box-body  container-fluid">
+                                            <div class="sonata-ba-collapsed-fields">
+                                                <div class="row">
+                                                    <div class="">
+                                                        <div class="box box-primary">
+                                                            <div class="box-header col s12">
+                                                                <h5 class="col s12 box-title left-align show">
+                                                                    {{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.cabecalho' |trans ~ ' ' ~ parcela.num_parcela ~ '/' ~ parcela.total_de_parcelas  }}
+                                                                </h5>
+                                                            </div>
+                                                            <table class="table show-table">
+                                                                <tbody>
+                                                                <tr class="sonata-ba-view-container">
+                                                                    <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.ultimaNumeracao'|trans }}</th>
+                                                                    <td>
+                                                                        {{ parcela.numeracao~'/'~parcela.exercicio }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="sonata-ba-view-container">
+                                                                    <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.parcela'|trans }}</th>
+                                                                    <td>
+                                                                        {{ admin.detalheParcela[parcela.cod_lancamento].info_parcela }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="sonata-ba-view-container">
+                                                                    <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.vencimento'|trans }}</th>
+                                                                    <td>
+                                                                        {{ admin.detalheParcela[parcela.cod_lancamento].parcela_vencimento_original }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="sonata-ba-view-container">
+                                                                    <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.situacao'|trans }}</th>
+                                                                    <td>
+                                                                        {{ admin.detalheParcela[parcela.cod_lancamento].situacao }}
+                                                                    </td>
+                                                                </tr>
+
+                                                                {% if admin.detalheParcela[parcela.cod_lancamento].situacao == 'Devolucao' %}
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.dataDevolucao'|trans }}</th>
+                                                                        <td>
+                                                                            {{ admin.detalheParcela[parcela.cod_lancamento].devolucao_data }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.motivo'|trans }}</th>
+                                                                        <td>
+                                                                            {{ admin.detalheParcela[parcela.cod_lancamento].devolucao_descricao }}
+                                                                        </td>
+                                                                    </tr>
+                                                                {% elseif admin.detalheParcela[parcela.cod_lancamento].pagamento_data %}
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.dataPagamento'|trans }}</th>
+                                                                        <td>
+                                                                            {{ admin.detalheParcela[parcela.cod_lancamento].pagamento_data }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.lote'|trans }}</th>
+                                                                        <td>
+                                                                            {{ admin.detalheParcela[parcela.cod_lancamento].pagamento_cod_lote }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.dataProcessamento'|trans }}</th>
+                                                                        <td>
+                                                                            {{ admin.detalheParcela[parcela.cod_lancamento].pagamento_data_baixa }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    {% if admin.detalheParcela[parcela.cod_lancamento].situacao != 'Baixa Manual' %}
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.banco'|trans }}</th>
+                                                                            <td>
+                                                                                {{ admin.detalheParcela[parcela.cod_lancamento].pagamento_num_banco ~'-'~ admin.detalheParcela[parcela.cod_lancamento].pagamento_nom_banco}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.agencia'|trans }}</th>
+                                                                            <td>
+                                                                                {{ admin.detalheParcela[parcela.cod_lancamento].pagamento_num_agencia ~'-'~ admin.detalheParcela[parcela.cod_lancamento].pagamento_nom_agencia}}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endif %}
+
+                                                                    {% if admin.detalheParcela[parcela.cod_lancamento].processo_pagamento %}
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.processoPagamento'|trans }}</th>
+                                                                            <td>
+                                                                                {{ admin.detalheParcela[parcela.cod_lancamento].processo_pagamento }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endif %}
+                                                                    {% if admin.detalheParcela[parcela.cod_lancamento].observacao %}
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.observacao'|trans }}</th>
+                                                                            <td>
+                                                                                {{ admin.detalheParcela[parcela.cod_lancamento].observacao }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endif %}
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.usuario'|trans }}</th>
+                                                                        <td>
+                                                                            {{ admin.detalheParcela[parcela.cod_lancamento].pagamento_numcgm ~' - '~ admin.detalheParcela[parcela.cod_lancamento].pagamento_nomcgm }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.valor'|trans }}</th>
+                                                                        <td>
+                                                                            R$ {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.valor_credito|number_format(2, ',', '.') }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.descontos'|trans }}</th>
+                                                                        <td>
+                                                                            R$ {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.credito_descontos|number_format(2, ',', '.') }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    {% if admin.detalheParcela[parcela.cod_lancamento].tp_pagamento == 't' %}
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.pagamentoDiferenca'|trans }}</th>
+                                                                            <td>
+                                                                                R$ {{ admin.detalheParcela[parcela.cod_lancamento].pagamento_diferenca|number_format(2, ',', '.') }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.totalPago'|trans }}</th>
+                                                                            <td>
+                                                                                R$ {{ admin.detalheParcela[parcela.cod_lancamento].valor_total|number_format(2, ',', '.') }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% else %}
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.totalPagar'|trans }}</th>
+                                                                            <td>
+                                                                                R$ {{ admin.detalheParcela[parcela.cod_lancamento].valor_total|number_format(2, ',', '.') }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.parcelaValor'|trans }}</th>
+                                                                        <td>
+                                                                            {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                            R$ {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.valor_credito|number_format(2, ',', '.') }}
+                                                                            }
+                                                                            {% endif %}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.parcelaDesconto'|trans }}</th>
+                                                                        <td>
+                                                                            {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                                R$ {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.credito_descontos|number_format(2, ',', '.') }}
+                                                                            {% endif %}
+                                                                        </td>
+                                                                    </tr>
+                                                                    {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                        {% for acrescimo_nome in admin.listaDetalheCreditos[parcela.cod_lancamento]|first.lista_acrescimos %}
+                                                                            <tr class="sonata-ba-view-container">
+                                                                                <th> {{ acrescimo_nome }}</th>
+                                                                                <td> R$ {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.lista_acrescimos_valor[loop.index0]|number_format(2, ',', '.') }} </td>
+                                                                            </tr>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                    <tr class="sonata-ba-view-container">
+                                                                        <th>{{ 'label.dividaAtivaConsultaInscricao.detalhamentoParcela.totalPagar'|trans }}</th>
+                                                                        <td>
+                                                                            R$ {{ admin.detalheParcela[parcela.cod_lancamento].valor_total|number_format(2, ',', '.') }}
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                                                            <div class="box-header">
+                                                                <h2 class="box-title left-align">
+                                                                    {{ 'label.dividaAtivaConsultaInscricao.detalhamentoCredito.cabecalho'|trans }}
+                                                                </h2>
+                                                            </div>
+                                                            <table class="col s12 highlight">
+                                                                <thead class="thead-rh ">
+                                                                <tr>
+                                                                    <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.detalhamentoCredito.credito'|trans }}</th>
+                                                                    <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.detalhamentoCredito.valor'|trans }}</th>
+                                                                    <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.detalhamentoCredito.descontos'|trans }}</th>
+                                                                    {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                        {% for acrescimo_nome in admin.listaDetalheCreditos[parcela.cod_lancamento]|first.lista_acrescimos %}
+                                                                            <th class="th-rh">{{ acrescimo_nome }}</th>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                    <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.detalhamentoCredito.valorDiferenca'|trans }}</th>
+                                                                    <th class="th-rh">{{ 'label.dividaAtivaConsultaInscricao.detalhamentoCredito.valorTotal'|trans }}</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr class="sonata-ba-view-container">
+                                                                    <td class="td-rh">
+                                                                        {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                            {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.credito_codigo_composto~' - '~admin.listaDetalheCreditos[parcela.cod_lancamento]|first.credito_nome }}
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    <td class="td-rh">
+                                                                        {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                            {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.valor_credito|number_format(2, ',', '.') }}
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    
+                                                                    <td class="td-rh">
+                                                                        {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                            {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.credito_descontos|number_format(2, ',', '.') }}
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                        {% for acrescimo_valor in admin.listaDetalheCreditos[parcela.cod_lancamento]|first.lista_acrescimos_valor %}
+                                                                            <td class="td-rh">{{ acrescimo_valor|number_format(2, ',', '.') }}</td>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+
+                                                                    <td class="td-rh">
+                                                                        {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                            {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.diferenca|number_format(2, ',', '.') }}
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    <td class="td-rh">
+                                                                        {% if admin.listaDetalheCreditos[parcela.cod_lancamento]|length %}
+                                                                            {{ admin.listaDetalheCreditos[parcela.cod_lancamento]|first.valor_total|number_format(2, ',', '.') }}
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </div>
+    </tbody>
+</table>
+
+

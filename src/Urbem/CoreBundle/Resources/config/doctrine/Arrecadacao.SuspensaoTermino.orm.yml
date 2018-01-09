@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Arrecadacao\SuspensaoTermino:
+    type: entity
+    table: arrecadacao.suspensao_termino
+    id:
+        codSuspensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_suspensao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+    fields:
+        termino:
+            type: date
+            nullable: false
+        observacoes:
+            type: text
+            nullable: false
+    manyToOne:
+        fkArrecadacaoSuspensao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Suspensao
+            inversedBy: fkArrecadacaoSuspensaoTerminos
+            joinColumns:
+                cod_suspensao:
+                    referencedColumnName: cod_suspensao
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento

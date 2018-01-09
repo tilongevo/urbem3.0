@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\SwSituacaoProcesso:
+    type: entity
+    table: sw_situacao_processo
+    id:
+        codSituacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_situacao
+    fields:
+        nomSituacao:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_situacao
+    oneToMany:
+        fkSwAndamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAndamento
+            mappedBy: fkSwSituacaoProcesso
+        fkSwProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            mappedBy: fkSwSituacaoProcesso

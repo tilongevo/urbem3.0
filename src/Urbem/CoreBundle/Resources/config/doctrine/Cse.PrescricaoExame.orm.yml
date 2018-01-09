@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Cse\PrescricaoExame:
+    type: entity
+    table: cse.prescricao_exame
+    id:
+        codExame:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_exame
+        codInstituicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_instituicao
+        codPrescricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_prescricao
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codTipoExame:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_exame
+    fields:
+        dtRealizacao:
+            type: date
+            nullable: false
+            column: dt_realizacao
+        descricao:
+            type: string
+            nullable: false
+            length: 240
+    manyToOne:
+        fkCseInstituicaoSaude:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\InstituicaoSaude
+            inversedBy: fkCsePrescricaoExames
+            joinColumns:
+                cod_instituicao:
+                    referencedColumnName: cod_instituicao
+        fkCsePrescricao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Prescricao
+            inversedBy: fkCsePrescricaoExames
+            joinColumns:
+                cod_prescricao:
+                    referencedColumnName: cod_prescricao
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+        fkCseTipoExame:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\TipoExame
+            inversedBy: fkCsePrescricaoExames
+            joinColumns:
+                cod_tipo_exame:
+                    referencedColumnName: cod_exame

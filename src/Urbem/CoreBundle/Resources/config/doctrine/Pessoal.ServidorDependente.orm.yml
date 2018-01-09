@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Pessoal\ServidorDependente:
+    type: entity
+    table: pessoal.servidor_dependente
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ServidorDependenteRepository
+    id:
+        codServidor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servidor
+        codDependente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dependente
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+    manyToOne:
+        fkPessoalServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Servidor
+            inversedBy: fkPessoalServidorDependentes
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor
+        fkPessoalDependente:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Dependente
+            inversedBy: fkPessoalServidorDependentes
+            joinColumns:
+                cod_dependente:
+                    referencedColumnName: cod_dependente
+    oneToMany:
+        fkPessoalPensoes:
+            orderBy: { 'timestamp': 'ASC' }
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensao
+            mappedBy: fkPessoalServidorDependente
+    oneToOne:
+        fkPessoalDependenteExcluido:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DependenteExcluido
+            mappedBy: fkPessoalServidorDependente
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor
+                cod_dependente:
+                    referencedColumnName: cod_dependente

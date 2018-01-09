@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Orcamento\ClassificacaoDespesa:
+    type: entity
+    table: orcamento.classificacao_despesa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        codPosicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_posicao
+    fields:
+        codClassificacao:
+            type: integer
+            nullable: true
+            column: cod_classificacao
+    manyToOne:
+        fkOrcamentoContaDespesa:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaDespesa
+            inversedBy: fkOrcamentoClassificacaoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta
+        fkOrcamentoPosicaoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\PosicaoDespesa
+            inversedBy: fkOrcamentoClassificacaoDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_posicao:
+                    referencedColumnName: cod_posicao

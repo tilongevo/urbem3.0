@@ -1,0 +1,69 @@
+Urbem\CoreBundle\Entity\Divida\ParcelaOrigem:
+    type: entity
+    table: divida.parcela_origem
+    indexes:
+        ix_parcela_origem_1:
+            columns:
+                - num_parcelamento
+    id:
+        codParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_parcela
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        numParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcelamento
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkArrecadacaoParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Parcela
+            inversedBy: fkDividaParcelaOrigens
+            joinColumns:
+                cod_parcela:
+                    referencedColumnName: cod_parcela
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkDividaParcelaOrigens
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+        fkDividaParcelamento:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Parcelamento
+            inversedBy: fkDividaParcelaOrigens
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento

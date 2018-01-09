@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoRegistroPreco:
+    type: entity
+    table: tcemg.tipo_registro_preco
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields:
+        codTipoDecreto:
+            type: integer
+            nullable: true
+            column: cod_tipo_decreto
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcemgTipoRegistroPrecos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcemgTipoRegistroPrecos
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkTcemgTipoDecreto:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoDecreto
+            inversedBy: fkTcemgTipoRegistroPrecos
+            joinColumns:
+                cod_tipo_decreto:
+                    referencedColumnName: cod_tipo_decreto

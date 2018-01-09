@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Tcemg\ContaBancaria:
+    type: entity
+    table: tcemg.conta_bancaria
+    id:
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        sequencia:
+            type: integer
+            nullable: false
+        codTipoAplicacao:
+            type: integer
+            nullable: true
+            column: cod_tipo_aplicacao
+        codCtbAnterior:
+            type: bigint
+            nullable: true
+            column: cod_ctb_anterior
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcemgContaBancarias
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcemgTipoAplicacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoAplicacao
+            inversedBy: fkTcemgContaBancarias
+            joinColumns:
+                cod_tipo_aplicacao:
+                    referencedColumnName: cod_tipo_aplicacao
+    oneToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkTcemgContaBancaria
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio

@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\SwTipoTransferencia:
+    type: entity
+    table: sw_tipo_transferencia
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_tipo
+        lancamentoContabil:
+            type: boolean
+            nullable: false
+            column: lancamento_contabil
+    oneToMany:
+        fkSwLancamentoTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamentoTransferencia
+            mappedBy: fkSwTipoTransferencia

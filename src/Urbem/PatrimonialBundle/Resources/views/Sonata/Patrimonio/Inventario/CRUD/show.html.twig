@@ -1,0 +1,114 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">{{ 'label.inventarioPatrimonio.inventario'|trans }}
+                        - {{ object.idInventario }}/{{ object.exercicio }}</span>
+                </h2>
+                {% if object.processado == false %}
+                    <a href="{{ path('urbem_patrimonial_patrimonio_inventario_edit', { 'id': admin.id(object) }) }}"
+                       class="serv-btn right">
+                        <i class="material-icons right">edit</i>
+                    </a>
+                {% endif %}
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.inventarioPatrimonio.dtInicio'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.dtInicio.format('d/m/Y') }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.inventarioPatrimonio.dtFim'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.dtFim is not null %}
+                            {{ object.dtFim.format('d/m/Y') }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </h6>
+                </div>
+
+                <div class="col s6 little-box-without-wide" style="width: 47%;">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.inventarioPatrimonio.observacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.observacao }}</h6>
+                </div>
+
+                <div class="col s12" style="margin-top: 15px;">
+                    {% if object.processado == false %}
+                        <div class="col s4 center" style="margin-bottom: 10px">
+                            <a class="white-text blue darken-4 btn btn-success save"
+                               href="{{ path('urbem_patrimonial_patrimonio_inventario_historico_bem_create', { 'inventario': admin.id(object) }) }}">
+                                <i class="mdi mdi-cube-unfolded left"></i>Alterar Bem
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    {% if object.processado == false %}
+                        <div class="col s4 center" style="margin-bottom: 10px">
+                            <a class="white-text blue darken-4 btn btn-success save"
+                               href="{{ path('urbem_patrimonial_patrimonio_inventario_processar_inventario', { 'id': admin.id(object) }) }}">
+                                <i class="mdi mdi-cube-send left"></i>Processar Inventário
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    <div class="col s4 center" style="margin-bottom: 10px">
+                        <a class="white-text blue darken-4 btn btn-success save"
+                           href="{{ path('urbem_patrimonial_patrimonio_inventario_termo_abertura_inventario', { 'id': admin.id(object) }) }}">
+                            <i class="mdi mdi-cube-send left"></i>Abertura de Inventário
+                        </a>
+                    </div>
+
+                    {% if object.processado == true %}
+                        <div class="col s4 center" style="margin-bottom: 10px">
+                            <a class="white-text blue darken-4 btn btn-success save"
+                               href="{{ path('urbem_patrimonial_patrimonio_inventario_termo_encerramento_inventario', { 'id': admin.id(object) }) }}">
+                                <i class="mdi mdi-cube-send left"></i>Encerramento de Inventário
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% include 'PatrimonialBundle:Sonata/Patrimonio/Inventario/CRUD:show__bem_orgao.html.twig' %}
+
+        <hr>
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Ima\ExportacaoTcmBaSubDivisao:
+    type: entity
+    table: ima.exportacao_tcm_ba_sub_divisao
+    id:
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        codTipoServidor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_servidor
+    fields: {  }
+    manyToOne:
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkImaExportacaoTcmBaSubDivisoes
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao
+        fkImaExportacaoTcmBa:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ExportacaoTcmBa
+            inversedBy: fkImaExportacaoTcmBaSubDivisoes
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkImaTipoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\TipoServidor
+            inversedBy: fkImaExportacaoTcmBaSubDivisoes
+            joinColumns:
+                cod_tipo_servidor:
+                    referencedColumnName: cod_tipo_servidor

@@ -1,0 +1,74 @@
+{% block content %}
+
+    {% if field.data.licenca is not null %}
+
+        <table class="table show-table">
+            <tbody>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLicenca.licencaExercicio'|trans }}</th>
+                <td>{{ field.data.licenca }}</td>
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLicenca.tipoLicenca'|trans }}</th>
+                <td>{{ field.data.licenca.fkImobiliarioPermissao.fkImobiliarioTipoLicenca }}</td>
+            </tr>
+            {% if field.data.licenca.fkImobiliarioLicencaImoveis|length %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioLicenca.inscricaoImobiliario'|trans }}</th>
+                    <td>{{ field.data.licenca.fkImobiliarioLicencaImoveis.last.inscricaoMunicipal }}</td>
+                </tr>
+
+                {% if  field.data.licenca.fkImobiliarioLicencaImoveis.last.fkImobiliarioLicencaImovelNovaConstrucao is not null %}
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.descricao'|trans }}</th>
+                        <td>{{ field.data.licenca.fkImobiliarioLicencaImoveis.last.fkImobiliarioLicencaImovelNovaConstrucao.fkImobiliarioConstrucao.fkImobiliarioConstrucaoOutros.descricao }}</td>
+                    </tr>
+                {% elseif  field.data.licenca.fkImobiliarioLicencaImoveis.last.fkImobiliarioLicencaImovelNovaEdificacao is not null %}
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.imobiliarioLicenca.tipoEdificacao'|trans }}</th>
+                        <td>{{ field.data.licenca.fkImobiliarioLicencaImoveis.last.fkImobiliarioLicencaImovelNovaEdificacao.fkImobiliarioConstrucaoEdificacao.fkImobiliarioTipoEdificacao }}</td>
+                    </tr>
+                {% endif %}
+
+                {% if  field.data.licenca.fkImobiliarioLicencaImoveis.last.fkImobiliarioLicencaImovelUnidadeAutonomas|length %}
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.imobiliarioLicenca.edificacaoConstrucao'|trans }}</th>
+                        <td>{{ field.data.licenca.fkImobiliarioLicencaImoveis.last.fkImobiliarioLicencaImovelUnidadeAutonomas.last.fkImobiliarioUnidadeAutonoma.fkImobiliarioConstrucaoEdificacao.fkImobiliarioConstrucao }}</td>
+                    </tr>
+                {% elseif  field.data.licenca.fkImobiliarioLicencaImoveis.last.fkImobiliarioLicencaImovelUnidadeDependentes|length %}
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.imobiliarioLicenca.edificacaoConstrucao'|trans }}</th>
+                        <td>{{ field.data.licenca.fkImobiliarioLicencaImoveis.last.fkImobiliarioLicencaImovelUnidadeDependentes.last.fkImobiliarioUnidadeDependente.fkImobiliarioConstrucao }}</td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioLicenca.localizacao'|trans }}</th>
+                    <td>{{ field.data.licenca.fkImobiliarioLicencaLotes.last.fkImobiliarioLote.fkImobiliarioLoteLocalizacao.fkImobiliarioLocalizacao }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioLicenca.lote'|trans }}</th>
+                    <td>{{ field.data.licenca.fkImobiliarioLicencaLotes.last.fkImobiliarioLote }}</td>
+                </tr>
+                {% if field.data.licenca.fkImobiliarioLicencaLotes.last.fkImobiliarioLicencaLoteLoteamentos|length %}
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.imobiliarioLicenca.loteamento'|trans }}</th>
+                        <td>{{ field.data.licenca.fkImobiliarioLicencaLotes.last.fkImobiliarioLicencaLoteLoteamentos.last.fkImobiliarioLoteamento }}</td>
+                    </tr>
+                {% elseif field.data.licenca.fkImobiliarioLicencaLotes.last.fkImobiliarioLicencaLoteParcelamentoSolos|length %}
+                    <tr class="sonata-ba-view-container">
+                        {% if field.data.licenca.codTipo == 8 %}
+                            <th>{{ 'label.imobiliarioLicenca.desmembramento'|trans }}</th>
+                        {% else  %}
+                            <th>{{ 'label.imobiliarioLicenca.aglutinacao'|trans }}</th>
+                        {% endif %}
+                        <td>{{ field.data.licenca.fkImobiliarioLicencaLotes.last.fkImobiliarioLicencaLoteParcelamentoSolos.last.fkImobiliarioParcelamentoSolo }}</td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock content %}

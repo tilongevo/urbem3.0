@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Imobiliario\ProcessoLoteamento:
+    type: entity
+    table: imobiliario.processo_loteamento
+    id:
+        codLoteamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_loteamento
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+    manyToOne:
+        fkImobiliarioLoteamento:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Loteamento
+            inversedBy: fkImobiliarioProcessoLoteamentos
+            joinColumns:
+                cod_loteamento:
+                    referencedColumnName: cod_loteamento
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkImobiliarioProcessoLoteamentos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio:
+                    referencedColumnName: ano_exercicio

@@ -1,0 +1,172 @@
+Urbem\CoreBundle\Entity\Tcmgo\Contrato:
+    type: entity
+    table: tcmgo.contrato
+    uniqueConstraints:
+        uk_contrato:
+            columns:
+                - nro_contrato
+                - exercicio
+                - cod_entidade
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        nroContrato:
+            type: integer
+            nullable: false
+            column: nro_contrato
+        codAssunto:
+            type: integer
+            nullable: false
+            column: cod_assunto
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+        vlContrato:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_contrato
+        objetoContrato:
+            type: string
+            nullable: false
+            length: 200
+            column: objeto_contrato
+        dataInicio:
+            type: date
+            nullable: false
+            column: data_inicio
+        dataFinal:
+            type: date
+            nullable: false
+            column: data_final
+        dataPublicacao:
+            type: date
+            nullable: false
+            column: data_publicacao
+        nroSequencial:
+            type: integer
+            nullable: false
+            column: nro_sequencial
+        nroProcesso:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 0
+            column: nro_processo
+        anoProcesso:
+            type: string
+            nullable: true
+            length: 4
+            column: ano_processo
+        codSubAssunto:
+            type: integer
+            nullable: true
+            column: cod_sub_assunto
+        detalhamentosubassunto:
+            type: string
+            nullable: true
+            length: 200
+        dtFirmatura:
+            type: date
+            nullable: true
+            column: dt_firmatura
+        dtLancamento:
+            type: date
+            nullable: true
+            column: dt_lancamento
+        vlAcrescimo:
+            type: decimal
+            nullable: true
+            precision: 12
+            scale: 2
+            column: vl_acrescimo
+        vlDecrescimo:
+            type: decimal
+            nullable: true
+            precision: 12
+            scale: 2
+            column: vl_decrescimo
+        vlContratual:
+            type: decimal
+            nullable: true
+            precision: 12
+            scale: 2
+            column: vl_contratual
+        dtRescisao:
+            type: date
+            nullable: true
+            column: dt_rescisao
+        vlFinalContrato:
+            type: decimal
+            nullable: true
+            precision: 12
+            scale: 2
+            column: vl_final_contrato
+        prazo:
+            type: integer
+            nullable: true
+        numeroTermo:
+            type: string
+            nullable: true
+            length: 4
+            column: numero_termo
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcmgoContratos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcmgoContratoAssunto:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ContratoAssunto
+            inversedBy: fkTcmgoContratos
+            joinColumns:
+                cod_assunto:
+                    referencedColumnName: cod_assunto
+        fkTcmgoContratoTipo:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ContratoTipo
+            inversedBy: fkTcmgoContratos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkTcmgoContratoModalidadeLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ContratoModalidadeLicitacao
+            inversedBy: fkTcmgoContratos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkTcmgoContratoSubAssunto:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ContratoSubAssunto
+            inversedBy: fkTcmgoContratos
+            joinColumns:
+                cod_sub_assunto:
+                    referencedColumnName: cod_sub_assunto
+    oneToMany:
+        fkTcmgoContratoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ContratoEmpenho
+            mappedBy: fkTcmgoContrato

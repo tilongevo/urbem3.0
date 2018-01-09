@@ -1,0 +1,127 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Arrecadacao/Consultas/ConsultaArrecadacao/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <tr>
+                <td>Contribuinte:</td><td>{{ contribuinte }}</td>
+            </tr>
+            <tr>
+                <td>
+                {% if arrecadacao.inscricao|length > 0 %}
+                    {% if arrecadacao.cod_modulo == 12 %}
+                        Inscrição Imobiliária:
+                    {% elseif arrecadacao.cod_modulo == 14 %}
+                        Inscrição Econômica:
+                    {% else %}
+                        Outros:
+                    {% endif %}
+                {% endif %}
+                </td>
+                <td>
+                {{ endereco }}
+                </td>
+            </tr>
+            {% if venal|length > 0 %}
+            <tr>
+                <td>Valor Venal Total:</td><td>R$ {{ venal|number_format(2, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td>Situação do Imóvel:</td><td>{{ situacaoImovel }}</td>
+            </tr>
+            {% endif %}
+        </table>
+
+        <table class="table table-bordered">
+            <tr>
+                <td>{% if arrecadacao.cod_grupo|length >0 %} Grupo de Créditos:{% else %} Crédito:{% endif %}</td>
+                <td>{% for cobranca in cobrancas %} {{ cobranca }}<br> {% endfor %}</td>
+                <td>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Créditos</th><th>Valor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% set total = 0 %}
+                            {% for credito in creditos %}
+                            <tr>
+                                <td>{{ credito.codigo_composto }}</td>
+                                <td>R$ {{ credito.valor }}</td>
+                            </tr>
+                            {% set total = total + credito.valor_calculado %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+                <td><strong>Total</strong></td><td>R$ {{ total }}</td>
+            <tr>
+        </table>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'label.arrecadacaoConsulta.label.parcela'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.numeracao'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.vencimento'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.valor'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.pagamento'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.banco'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.agencia'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.juros'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.multa'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.descontos'|trans|upper }}</td>
+                    <td>{{ 'label.arrecadacaoConsulta.label.difPagto'|trans|upper }}</td>
+                    <td>{{ 'label.total'|trans|upper }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% set valorSum = 0 %}
+                {% set jurosSum = 0 %}
+                {% set multaSum = 0 %}
+                {% set totalSum = 0 %}
+                {% for parcela in parcelas %}
+                    <tr>
+                        <td>{{ parcela.info_parcela }}</td>
+                        <td>{{ parcela.numeracao }}</td>
+                        <td>{{ parcela.vencimento }}</td>
+                        <td>{{ parcela.valor }}</td>
+                        <td>{% if parcela.pagamento %} {{ parcela.pagamento|date("d/m/Y") }} {% endif %}</td>
+
+                        {% set parcelaDetalhe = admin.getDetalheParcela(object, parcela.numeracao, parcela.ocorrencia_pagamento, parcela.cod_parcela) %}
+
+                        <td>{% if parcelaDetalhe.pagamento_num_banco %}{{ parcelaDetalhe.pagamento_num_banco }}{% endif %}</td>
+                        <td>{% if parcelaDetalhe.pagamento_num_agencia %}{{ parcelaDetalhe.pagamento_num_agencia }}{% endif %}</td>
+                        <td>{% if parcelaDetalhe.parcela_juros %}{{ parcelaDetalhe.parcela_juros }}{% endif %}</td>
+                        <td>{% if parcelaDetalhe.parcela_multa %}{{ parcelaDetalhe.parcela_multa }}{% endif %}</td>
+                        <td>{% if parcelaDetalhe.parcela_valor_desconto %}{{ parcelaDetalhe.parcela_valor_desconto }}{% endif %}</td>
+                        <td>{% if parcelaDetalhe.pagamento_diferenca %}{{ parcelaDetalhe.pagamento_diferenca }}{% endif %}</td>
+                        <td>{% if parcelaDetalhe.valor_total %}{{ parcelaDetalhe.valor_total }}{% endif %}</td>
+                    </tr>
+                    {% set valorSum = valorSum + parcela.valor %}
+                    {% set jurosSum = jurosSum + parcelaDetalhe.parcela_juros %}
+                    {% set multaSum = multaSum + parcelaDetalhe.parcela_multa %}
+                    {% set totalSum = totalSum + parcelaDetalhe.valor_total %}
+                {% endfor %}
+                    <tr>
+                        <td>TOTAL</td>
+                        <td colspan="2">&nbsp;</td>
+                        <td>{% if valorSum %}{{ valorSum|number_format(2, ',')}}{% endif %}</td>
+                        <td colspan="3">&nbsp;</td>
+                        <td>{% if jurosSum %}{{ jurosSum }}{% endif %}</td>
+                        <td>{% if multaSum %}{{ multaSum }}{% endif %}</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>{% if totalSum %}{{ totalSum|number_format(2, ',') }}{% endif %}</td>
+                    </tr>
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

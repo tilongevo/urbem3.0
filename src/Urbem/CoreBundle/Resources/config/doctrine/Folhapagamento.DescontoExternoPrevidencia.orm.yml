@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoPrevidencia:
+    type: entity
+    table: folhapagamento.desconto_externo_previdencia
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\DescontoExternoPrevidenciaRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vlBasePrevidencia:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_base_previdencia
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkFolhapagamentoDescontoExternoPrevidencias
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToMany:
+        fkFolhapagamentoDescontoExternoPrevidenciaValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoPrevidenciaValor
+            mappedBy: fkFolhapagamentoDescontoExternoPrevidencia
+    oneToOne:
+        fkFolhapagamentoDescontoExternoPrevidenciaAnulado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoPrevidenciaAnulado
+            mappedBy: fkFolhapagamentoDescontoExternoPrevidencia
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp

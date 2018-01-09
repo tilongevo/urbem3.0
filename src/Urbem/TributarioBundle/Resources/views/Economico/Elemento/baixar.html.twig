@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Elemento{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {{ form_start(form) }}
+            <input type="hidden" value="{{ elemento.codElemento }}" name="elemento_id" />
+
+             <div class="row col s12">
+                 <div class="box-header">
+                     <h2 class="box-title left-align">
+                         {{ 'label.economicoElemento.dados'|trans }}
+                     </h2>
+                     <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                 </div>
+                 <table class="table show-table">
+                     <tbody>
+                         <tr class="sonata-ba-view-container">
+                             <th>{{ 'label.codigo'|trans }}</th>
+                             <td>{{ elemento.codElemento }}</td>
+                         </tr>
+                         <tr class="sonata-ba-view-container">
+                             <th>{{ 'label.nome'|trans }}</th>
+                             <td>{{ elemento.nomElemento }}</td>
+                         </tr>
+                     </tbody>
+                 </table>
+             </div>
+
+            <div class="row col s12">
+                {{ form_widget(form) }}
+            </div>
+
+            <div class="row col s12">
+                <div class="sonata-ba-form-actions form-actions row">
+                    <div class="col s8 initial left-align">
+                        <a class="back btn-floating white-text blue darken-4 btn-success" href="{{ admin.generateUrl('list') }}">
+                            <i class="material-icons">arrow_back</i>
+                        </a>
+                    </div>
+
+                    <div class="col s2 right-align deletar"></div>
+
+                    <div class="col s2 right-align right">
+                        <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="Baixar">
+                            <i class="mdi mdi-arrow-down-bold left"></i>
+                            {{ 'label.economicoElemento.baixar'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {{ form_end(form) }}
+        </div>
+{% endblock content %}

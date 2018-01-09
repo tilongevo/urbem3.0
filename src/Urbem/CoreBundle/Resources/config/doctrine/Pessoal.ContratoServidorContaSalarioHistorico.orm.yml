@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorContaSalarioHistorico:
+    type: entity
+    table: pessoal.contrato_servidor_conta_salario_historico
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        nrConta:
+            type: string
+            nullable: false
+            length: 15
+            column: nr_conta
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorContaSalarioHistoricos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkPessoalContratoServidorContaSalarioHistoricos
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia

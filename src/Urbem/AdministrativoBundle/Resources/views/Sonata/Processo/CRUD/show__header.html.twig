@@ -1,0 +1,54 @@
+<h2 class="blue-text text-darken-4 left">
+    <i class="mdi mdi-barcode left"></i>
+    {{ 'label.processo.processo'|trans }}: {{ admin.mascaraDoProcesso(swProcesso) }}
+</h2>
+
+<a href="{{ path('urbem_administrativo_protocolo_processo_edit', { 'id': admin.id(swProcesso) }) }}"
+   class="serv-btn right">
+    <i class="material-icons right">edit</i>
+</a>
+
+<p class="divider grey col s12"></p>
+
+<div class="row">
+    <div class="col s3 little-box">
+        <h6 class="col s12 blue-text text-darken-4 profile-titles">
+            {{ 'label.classificacao'|trans }}
+        </h6>
+        <h6 class="col s12 grey-text text-darken-1">
+            {{ swProcesso.fkSwAssunto.fkSwClassificacao.nomClassificacao }}
+        </h6>
+    </div>
+    <div class="col s3 little-box">
+        <h6 class="col s12 blue-text text-darken-4 profile-titles">
+            {{ 'label.assunto'|trans }}
+        </h6>
+        <h6 class="col s12 grey-text text-darken-1">
+            {{ swProcesso.fkSwAssunto.nomAssunto }}
+        </h6>
+    </div>
+    <div class="col s3 little-box">
+        <h6 class="col s12 blue-text text-darken-4 profile-titles">
+            {{ 'label.processo.confidencial'|trans }}
+        </h6>
+        <h6 class="col s12 grey-text text-darken-1">
+            {% if swProcesso.confidencial %}
+                <span class="label label-success">
+                                    {{ 'sim'|trans }}
+                                </span>
+            {% else %}
+                <span class="label label-danger">
+                                    {{ 'nao'|trans }}
+                                </span>
+            {% endif %}
+        </h6>
+    </div>
+    <div class="col s3 little-box">
+        <h6 class="col s12 blue-text text-darken-4 profile-titles">
+            {{ 'label.exercicio'|trans }}
+        </h6>
+        <h6 class="col s12 grey-text text-darken-1">
+            {{ swProcesso.anoExercicio }}
+        </h6>
+    </div>
+</div>

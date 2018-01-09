@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Calendario\CalendarioCadastro:
+    type: entity
+    table: calendario.calendario_cadastro
+    id:
+        codCalendar:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: calendario.calendario_cadastro_cod_calendar_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_calendar
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkCalendarioCalendarioPontoFacultativos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioPontoFacultativo
+            mappedBy: fkCalendarioCalendarioCadastro
+        fkCalendarioCalendarioDiaCompensados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioDiaCompensado
+            mappedBy: fkCalendarioCalendarioCadastro
+        fkBeneficioConcessaoValeTransporteCalendarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporteCalendario
+            mappedBy: fkCalendarioCalendarioCadastro
+        fkCalendarioCalendarioFeriadoVariaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioFeriadoVariavel
+            mappedBy: fkCalendarioCalendarioCadastro
+        fkEstagioEstagiarioValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioValeTransporte
+            mappedBy: fkCalendarioCalendarioCadastro
+        fkOrganogramaOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            mappedBy: fkCalendarioCalendarioCadastro
+        fkPontoCalendarioPontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\CalendarioPonto
+            mappedBy: fkCalendarioCalendarioCadastro

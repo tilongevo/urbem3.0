@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Sindicato:
+    type: entity
+    table: folhapagamento.sindicato
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        dataBase:
+            type: integer
+            nullable: true
+            column: data_base
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoSindicatos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+    oneToMany:
+        fkPessoalContratoServidorSindicatos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSindicato
+            mappedBy: fkFolhapagamentoSindicato
+    oneToOne:
+        fkFolhapagamentoSindicatoFuncao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SindicatoFuncao
+            mappedBy: fkFolhapagamentoSindicato
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkFolhapagamentoSindicato
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

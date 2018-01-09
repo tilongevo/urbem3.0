@@ -1,0 +1,84 @@
+<footer class="grey lighten-5">
+    <div class="footer blue darken-4 grey-text text-lighten-1">
+        <div class="text-center">
+            <a href="#politicas" class="grey-text text-lighten-1">{{ 'politicaPrivacidade'|trans }}</a>
+                <i class="fa fa-circle point-f" aria-hidden="true"></i>
+            <a href="#termosdeuso" class="grey-text text-lighten-1">{{ 'termosUso'|trans }}</a>
+                <i class="fa fa-circle point-f" aria-hidden="true"></i>
+
+            <a href="#versao-box" id="versao-btn" class="grey-text text-lighten-1">{{ 'versao'|trans }}</a>
+                <div class="versao-box" id="versao-box">
+                    <div class="setaVersao"></div>
+                    <p class="text-center">Versão {{ version }}</p>
+                </div>
+        </div>
+    </div>
+</footer>
+{% include '::partials/analyticstracking.html.twig' %}
+
+<div class="acc">
+    <button id="btn-accesibilidade" class="btn waves-effect waves-light blue-darken-4">
+        <i class="material-icons" aria-hidden="true">accessibility</i>
+        <span class="sr-only">menu acessibilidade</span>
+    </button>
+    <div id="menu-accesibilidade" style="display: none">
+        <ul class="text-center">
+           <li>
+               <a href="#" id="contraste" title="Alto Contraste" onclick="opcaoDeConstraste()" data-toggle="tooltip" data-placement="top">
+                   <i class="mdi mdi-contrast-circle"></i>
+               </a>
+           </li>
+           <li>
+                <a href="#" id="fonte" title="Tamanho da Fonte " data-toggle="tooltip" data-placement="top">
+                    <i class="fa fa-font" aria-hidden="true"></i>
+                </a>
+               <div class="fonte" id="fonte-box" style="display: none">
+                   <ul>
+                       <li>
+                           <a href="#" id="zoom-in" title="Aumentar" data-toggle="tooltip" data-placement="right">
+                               <i class="fa fa-plus white-text" aria-hidden="true"></i>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="#" id="zoom-out" title="Diminuir" data-toggle="tooltip" data-placement="right">
+                               <i class="fa fa-minus white-text" aria-hidden="true"></i>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="#" id="reset" title="Reestablecer" data-toggle="tooltip" data-placement="right">
+                               <i class="fa fa-refresh white-text" aria-hidden="true"></i>
+                           </a>
+                       </li>
+                   </ul>
+               </div>
+           </li>
+           <li>
+               <a href="#" id="audio">
+                   <i class="fa fa-volume-up" aria-hidden="true"></i>
+               </a>
+           </li>
+        </ul>
+    </div>
+</div>
+<div class="audio" id="audio-box" style="display: none">
+    <p>{{ 'AccessibilityAudio'|trans }}</p>
+</div>
+<script type="text/javascript" src="{{ asset('/bundles/core/javascripts/footer.js') }}"></script>
+
+{% if admin is defined and admin.adminRequestId is defined and admin.adminRequestId is not empty %}
+    <script type="text/javascript">
+        var currentRequestId = '{{ admin.adminRequestId }}';
+    </script>
+{% endif %}
+
+{% if admin is defined and admin.includeJs is defined and admin.includeJs is not empty %}
+    {% for javascript in admin.includeJs %}
+        <script type="text/javascript" src="/bundles{{ asset(javascript) }}"></script>
+    {% endfor %}
+{% endif %}
+
+{% if admin is defined and admin.scriptDynamicBlock is defined and admin.scriptDynamicBlock is not empty %}
+    <script type="text/javascript">
+        {{ admin.scriptDynamicBlock|raw }}
+    </script>
+{% endif %}

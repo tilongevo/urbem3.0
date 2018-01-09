@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Ponto\FormatoExportacao:
+    type: entity
+    table: ponto.formato_exportacao
+    id:
+        codFormato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_formato
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 60
+        formatoMinutos:
+            type: string
+            nullable: false
+            length: 1
+            column: formato_minutos
+    oneToMany:
+        fkPontoDadosExportacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DadosExportacao
+            mappedBy: fkPontoFormatoExportacao

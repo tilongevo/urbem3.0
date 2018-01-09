@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Tcmgo\ResponsavelTecnico:
+    type: entity
+    table: tcmgo.responsavel_tecnico
+    id:
+        cgmResponsavel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_responsavel
+    fields:
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        crc:
+            type: string
+            nullable: true
+            length: 10
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtFim:
+            type: date
+            nullable: false
+            column: dt_fim
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcmgoResponsavelTecnicos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcmgoTipoResponsavelTecnico:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\TipoResponsavelTecnico
+            inversedBy: fkTcmgoResponsavelTecnicos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoResponsavelTecnico
+            joinColumns:
+                cgm_responsavel:
+                    referencedColumnName: numcgm

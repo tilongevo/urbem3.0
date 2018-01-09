@@ -1,0 +1,61 @@
+<div class=" ">
+    <div class="box box-primary">
+        <div class="box-header col s12">
+            <h3 class="col s10 box-title left-align show">
+                {{ 'label.dados_endereco_correspondencia'|trans }}
+            </h3>
+        </div>
+        <div class="box-body  no-padding">
+            <table class="table show-table">
+                <tbody>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.logradouro'|trans }}</th>
+                    <td>{% if object.fkSwCgm.codMunicipioCorresp == 0 %}
+                            {{ 'label.naoInformado'|trans }}
+                        {% else %}
+                            {{ object.fkSwCgm.tipoLogradouroAndNumeroCorresp|title }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.swBairro.codUf'|trans }}</th>
+                    <td>{% if object.fkSwCgm.codMunicipioCorresp == 0 %}
+                            -
+                        {% else %}
+                            {{ object.fkSwCgm.fkSwMunicipio1.fkSwUf.nomUf ~ ' / ' ~ object.fkSwCgm.fkSwMunicipio1.fkSwUf.siglaUf }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.cidade'|trans }}</th>
+                    <td>{% if object.fkSwCgm.codMunicipioCorresp == 0 %}
+                            -
+                        {% else %}
+                            {{ object.fkSwCgm.fkSwMunicipio1.nomMunicipio|title }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.servidor.bairro'|trans }}</th>
+                    <td>{% if object.fkSwCgm.codMunicipioCorresp == 0 %}
+                            -
+                        {% else %}
+                            {{ object.fkSwCgm.bairroCorresp|title }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.servidor.cep'|trans }}</th>
+                    <td>{% if object.fkSwCgm.codMunicipioCorresp == 0 %}
+                            -
+                        {% else %}
+                            {{ object.fkSwCgm.cepCorresp|cep }}
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

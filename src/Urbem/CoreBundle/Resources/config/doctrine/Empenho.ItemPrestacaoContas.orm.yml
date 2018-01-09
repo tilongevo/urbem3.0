@@ -1,0 +1,108 @@
+Urbem\CoreBundle\Entity\Empenho\ItemPrestacaoContas:
+    type: entity
+    table: empenho.item_prestacao_contas
+    id:
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+    fields:
+        exercicioConta:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_conta
+        contaContrapartida:
+            type: integer
+            nullable: false
+            column: conta_contrapartida
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        numDocumento:
+            type: integer
+            nullable: true
+            column: num_documento
+        dataItem:
+            type: date
+            nullable: false
+            column: data_item
+        valorItem:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_item
+        justificativa:
+            type: string
+            nullable: false
+            length: 80
+        credor:
+            type: string
+            nullable: false
+            length: 30
+    manyToOne:
+        fkEmpenhoPrestacaoContas:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PrestacaoContas
+            inversedBy: fkEmpenhoItemPrestacaoContas
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEmpenhoContrapartidaResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ContrapartidaResponsavel
+            inversedBy: fkEmpenhoItemPrestacaoContas
+            joinColumns:
+                exercicio_conta:
+                    referencedColumnName: exercicio
+                conta_contrapartida:
+                    referencedColumnName: conta_contrapartida
+        fkEmpenhoTipoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\TipoDocumento
+            inversedBy: fkEmpenhoItemPrestacaoContas
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+    oneToMany:
+        fkContabilidadePrestacaoContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PrestacaoContas
+            mappedBy: fkEmpenhoItemPrestacaoContas
+    oneToOne:
+        fkEmpenhoItemPrestacaoContasAnulado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPrestacaoContasAnulado
+            mappedBy: fkEmpenhoItemPrestacaoContas
+            joinColumns:
+                num_item:
+                    referencedColumnName: num_item
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_empenho:
+                    referencedColumnName: cod_empenho

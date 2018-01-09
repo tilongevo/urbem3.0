@@ -1,0 +1,89 @@
+Urbem\CoreBundle\Entity\Licitacao\RescisaoContrato:
+    type: entity
+    table: licitacao.rescisao_contrato
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Licitacao\RescisaoContratoRepository
+    uniqueConstraints:
+        uk_rescisao_contrato_1:
+            columns:
+                - exercicio
+                - num_contrato
+    id:
+        exercicioContrato:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_contrato
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        numRescisao:
+            type: integer
+            nullable: false
+            column: num_rescisao
+        dtRescisao:
+            type: date
+            nullable: false
+            column: dt_rescisao
+        vlrMulta:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: vlr_multa
+        vlrIndenizacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: vlr_indenizacao
+        motivo:
+            type: text
+            nullable: false
+    oneToMany:
+        fkLicitacaoPublicacaoRescisaoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PublicacaoRescisaoContrato
+            mappedBy: fkLicitacaoRescisaoContrato
+    oneToOne:
+        fkLicitacaoRescisaoContratoResponsavelJuridico:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\RescisaoContratoResponsavelJuridico
+            mappedBy: fkLicitacaoRescisaoContrato
+            joinColumns:
+                exercicio_contrato:
+                    referencedColumnName: exercicio_contrato
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato
+        fkLicitacaoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            inversedBy: fkLicitacaoRescisaoContrato
+            joinColumns:
+                exercicio_contrato:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato

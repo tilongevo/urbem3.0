@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\VinculoEmpregaticio:
+    type: entity
+    table: pessoal.vinculo_empregaticio
+    id:
+        codVinculo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            column: cod_vinculo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    oneToMany:
+        fkPessoalContratoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            mappedBy: fkPessoalVinculoEmpregaticio

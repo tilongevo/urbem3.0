@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Empenho\ContrapartidaResponsavel:
+    type: entity
+    table: empenho.contrapartida_responsavel
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        contaContrapartida:
+            type: integer
+            generator:
+                strategy: NONE
+            column: conta_contrapartida
+    fields:
+        prazo:
+            type: integer
+            nullable: false
+    oneToMany:
+        fkEmpenhoContrapartidaAutorizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ContrapartidaAutorizacao
+            mappedBy: fkEmpenhoContrapartidaResponsavel
+        fkEmpenhoItemPrestacaoContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPrestacaoContas
+            mappedBy: fkEmpenhoContrapartidaResponsavel
+        fkEmpenhoContrapartidaEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ContrapartidaEmpenho
+            mappedBy: fkEmpenhoContrapartidaResponsavel
+        fkEmpenhoResponsavelAdiantamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ResponsavelAdiantamento
+            mappedBy: fkEmpenhoContrapartidaResponsavel
+    oneToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkEmpenhoContrapartidaResponsavel
+            joinColumns:
+                conta_contrapartida:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

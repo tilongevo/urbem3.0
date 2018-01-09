@@ -1,0 +1,13 @@
+{% set homologado = admin.getStatus(object) %}
+{% if homologado == 'Homologado' %}
+    <a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="Excluir"
+       class="btn-list grey-text text-darken-1 transparent z-depth-0 hide-on-med-and-down tooltipped">
+        <i class="fa fa-trash fa-lg grey-text" aria-hidden="true"></i>
+    </a>
+{% elseif admin.isGranted('DELETE', object) %}
+    <a href="{{ path('urbem_financeiro_plano_plurianual_ppa_delete', { 'id': object.codPpa }) }}"
+           data-toggle="tooltip" data-placement="bottom" title="Excluir"
+           class="btn-list blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped">
+        <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+    </a>
+{% endif %}

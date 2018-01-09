@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Licitacao\NaturezaCargo:
+    type: entity
+    table: licitacao.natureza_cargo
+    id:
+        codigo:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: true
+    oneToMany:
+        fkLicitacaoComissaoMembros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ComissaoMembros
+            mappedBy: fkLicitacaoNaturezaCargo
+        fkLicitacaoMembroAdicionais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\MembroAdicional
+            mappedBy: fkLicitacaoNaturezaCargo

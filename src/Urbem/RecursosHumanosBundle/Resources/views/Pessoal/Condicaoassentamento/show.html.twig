@@ -1,0 +1,41 @@
+{% extends "::base.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s10">
+            <h4 class="blue-text text-darken-4 title-filtro">Condição Assentamento</h4>
+        </div>
+        <div class="hide-on-med-and-down col l1 right-align">
+            <a class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('pessoal_condicao_assentamento_edit', { 'id': condicaoAssentamento.codCondicao }) }}"><i class="material-icons">edit</i></a>
+        </div>
+        <div class="hide-on-med-and-down col l1 left-align">
+            {{ form_start(delete_form) }}
+            <button class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir" value="Delete" type="submit" name="action"><i class="material-icons">delete</i></button>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+    <div class="row">
+        <table class="striped bordered">
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <td>{{ condicaoAssentamento.codCondicao }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.dtCriacao'|trans }}</th>
+                <td>{% if condicaoAssentamento.cpTimestamp %}{{ condicaoAssentamento.cpTimestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.codigo'|trans }} {{ 'label.assentamento.modulo'|trans }}</th>
+                <td>{{ condicaoAssentamento.codAssentamento.descricao }}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <a  class="btn-floating white-text blue darken-4" href="{{ path('pessoal_condicao_assentamento_index') }}"><i class="material-icons">arrow_back</i></a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

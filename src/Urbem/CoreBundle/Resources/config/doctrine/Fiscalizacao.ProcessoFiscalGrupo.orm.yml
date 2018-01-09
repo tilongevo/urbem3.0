@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalGrupo:
+    type: entity
+    table: fiscalizacao.processo_fiscal_grupo
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+    fields: {  }
+    manyToOne:
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoProcessoFiscalGrupos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkArrecadacaoGrupoCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoCredito
+            inversedBy: fkFiscalizacaoProcessoFiscalGrupos
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

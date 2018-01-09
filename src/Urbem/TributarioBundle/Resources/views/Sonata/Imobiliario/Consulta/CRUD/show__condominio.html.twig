@@ -1,0 +1,439 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block show %}
+    <div class="sonata-ba-view">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_{{ admin.uniqid }}_1" data-toggle="tab">
+                    <i class="fa fa-exclamation-circle has-errors hide"></i>
+                    {{ admin.trans('label.imobiliarioImovel.condominio', {}) }}
+                </a>
+            </li>
+            <li>
+                <a href="#tab_{{ admin.uniqid }}_2" data-toggle="tab">
+                    <i class="fa fa-exclamation-circle has-errors hide"></i>
+                    {{ admin.trans('label.imobiliarioImovel.edificacoes', {}) }}
+                </a>
+            </li>
+            <li>
+                <a href="#tab_{{ admin.uniqid }}_3" data-toggle="tab">
+                    <i class="fa fa-exclamation-circle has-errors hide"></i>
+                    {{ admin.trans('label.imobiliarioImovel.construcoes', {}) }}
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab_{{ admin.uniqid }}_1">
+                <div class="box-body  container-fluid">
+                    <div class="sonata-ba-collapsed-fields">
+                        <div class="box-header col s12">
+                            <h2 class="col s10 box-title left-align show">
+                                {{ 'label.imobiliarioCondominio.dadosCondominio'|trans }}
+                            </h2>
+                        </div>
+                        <div class="box-body  no-padding">
+                            <table class="table show-table">
+                                <tbody>
+                                {% if object.fkImobiliarioImovelCondominio %}
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'label.codigo'|trans }}</th>
+                                        <td>{{ object.fkImobiliarioImovelCondominio.codCondominio }}</td>
+                                    </tr>
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'label.nome'|trans }}</th>
+                                        <td>{{ object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.nomCondominio }}</td>
+                                    </tr>
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'label.tipo'|trans }}</th>
+                                        <td>{{ object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioTipoCondominio }}</td>
+                                    </tr>
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'label.cgm'|trans }}</th>
+                                        <td>
+                                            {% if object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioCondominioCgns|length %}
+                                                {{ object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioCondominioCgns.last.fkSwCgmPessoaJuridica }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'label.imobiliarioCondominio.areaTotalComum'|trans }}</th>
+                                        <td>
+                                            {% if object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioCondominioAreaComuns|length %}
+                                                {{ object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioCondominioAreaComuns.last.areaTotalComum|number_format(2, ',', '.') }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {%  else %}
+                                    <tr><td>{{ 'listagemVazia'|trans }}</td></tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {% if object.fkImobiliarioImovelCondominio %}
+                        <h2 class="col s10 box-title left-align show">
+                            {{ 'label.imobiliarioImovel.listaProcessos'|trans }}
+                        </h2>
+
+                        <table class="bordered highlight">
+                            <thead>
+                            <tr class="sonata-ba-list-field-header">
+                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.processo'|trans }}</th>
+                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.data'|trans }}</th>
+                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.hora'|trans }}</th>
+                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.detalhe'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if admin.consultaProcessosCondominio(object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio)|length %}
+                                {% for lista in admin.consultaProcessosCondominio(object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio)|sort %}
+                                    <tr>
+                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.fkSwProcesso }}</td>
+                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.timestamp|date('d/m/Y') }}</td>
+                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.timestamp|date('H:i:s') }}</td>
+                                        <td class="sonata-ba-list-field sonata-ba-list-field-text"><i data-lote-processo='{{ lista.processo.timestamp|date('dmYHis') }}' class="material-icons btn_meta blue-text text-darken-4" style="cursor: pointer">add</i></td>
+                                    </tr>
+                                    <tr class="detalhe" id="lote_processo_{{ lista.processo.timestamp|date('dmYHis') }}" style="display:none;">
+                                        <td></td>
+                                        <td colspan="3" class="sonata-ba-list-field sonata-ba-list-field-text">
+                                            {% if lista.atributoDinamico|length > 0 %}
+                                                <table class="table show-table">
+                                                    {% for atributo in lista.atributoDinamico %}
+                                                        <tr class="sonata-ba-view-container">
+                                                            <td>{{ atributo.nomAtributo }}</td>
+                                                            <td>
+                                                                {% if atributo.valor is defined %}
+                                                                    {% for valor in atributo.valor %}
+                                                                        <p>{{ valor }}</p>
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            {% else %}
+                                                {{ 'listagemVazia'|trans }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab_{{ admin.uniqid }}_2">
+                <div class="box-body  container-fluid">
+                    <div class="sonata-ba-collapsed-fields">
+                        <div class="row">
+                            <h2 class="col s10 box-title left-align show">
+                                {{ 'label.imobiliarioImovel.listaEdificacoes'|trans }}
+                            </h2>
+                            <table class="bordered highlight">
+                                <thead>
+                                <tr class="sonata-ba-list-field-header">
+                                    <th class="sonata-ba-list-field-header-text">{{ 'label.codigo'|trans }}</th>
+                                    <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioConstrucao.tipoUnidade'|trans }}</th>
+                                    <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioConstrucao.tipoEdificacao'|trans }}</th>
+                                    <th class="sonata-ba-list-field-header-text">{{ 'acoes'|trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if object.fkImobiliarioImovelCondominio %}
+                                    {% if object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioConstrucaoCondominios|length %}
+                                        {% for construcaoCondominio in object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioConstrucaoCondominios|sort %}
+                                            {% if construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioConstrucaoEdificacoes|length %}
+                                                <tr>
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ construcaoCondominio.fkImobiliarioConstrucao.codConstrucao }}</td>
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ 'label.imobiliarioConstrucao.condominio'|trans }}</td>
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ construcaoCondominio.fkImobiliarioConstrucao.tipoEdificacao }}</td>
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text"><i data-content='{{ construcaoCondominio.fkImobiliarioConstrucao.codConstrucao }}' class="material-icons btn_details blue-text text-darken-4" style="cursor: pointer">add</i></td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                                    {% endif %}
+                                {% else %}
+                                    <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+
+                            {% if object.fkImobiliarioImovelCondominio %}
+                            {% if object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioConstrucaoCondominios|length %}
+                                {% for construcaoCondominio in object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioConstrucaoCondominios|sort %}
+                                    {% if construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioConstrucaoEdificacoes|length %}
+                                    <div class="details-content" id="data_{{ construcaoCondominio.fkImobiliarioConstrucao.codConstrucao }}" style="display:none;">
+                                        <h2 class="col s10 box-title left-align show">
+                                            {{ 'label.imobiliarioConstrucao.dadosEdificacao'|trans }}
+                                        </h2>
+                                        <table class="table show-table">
+                                            <tbody>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.codigo'|trans }}</th>
+                                                <td>{{ construcaoCondominio.fkImobiliarioConstrucao.codConstrucao }}</td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.imobiliarioConstrucao.tipoEdificacao'|trans }}</th>
+                                                <td>{{ construcaoCondominio.fkImobiliarioConstrucao.tipoEdificacao }}</td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.imobiliarioConstrucao.tipoUnidade'|trans }}</th>
+                                                <td>{{ 'label.imobiliarioConstrucao.condominio'|trans }}</td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.imobiliarioConstrucao.dataEdificacao'|trans }}</th>
+                                                <td>{% if construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioDataConstrucao %} {{ construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioDataConstrucao.dataConstrucao|date('d/m/Y') }} {% endif %}</td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.imobiliarioConstrucao.areaEdificacao'|trans }}</th>
+                                                <td>{{ construcaoCondominio.fkImobiliarioConstrucao.area|number_format(2, ',', '.') }}</td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.imobiliarioConstrucao.processo'|trans }}</th>
+                                                <td>
+                                                    {% if construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioConstrucaoProcessos|length %}
+                                                        {{ construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioConstrucaoProcessos.last.fkSwProcesso }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class="sonata-ba-view-container">
+                                                <th>{{ 'label.imobiliarioConstrucao.situacao'|trans }}</th>
+                                                <td>{{ admin.consultaSituacaoConstrucao(construcaoCondominio.fkImobiliarioConstrucao) }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <h2 class="col s10 box-title left-align show">
+                                            {{ 'label.imobiliarioImovel.listaProcessos'|trans }}
+                                        </h2>
+
+                                        <table class="bordered highlight">
+                                            <thead>
+                                            <tr class="sonata-ba-list-field-header">
+                                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.processo'|trans }}</th>
+                                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.data'|trans }}</th>
+                                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.hora'|trans }}</th>
+                                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.detalhe'|trans }}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% if admin.consultaProcessosConstrucao(construcaoCondominio.fkImobiliarioConstrucao)|length %}
+                                                {% for lista in admin.consultaProcessosConstrucao(construcaoCondominio.fkImobiliarioConstrucao)|sort %}
+                                                    <tr>
+                                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.fkSwProcesso }}</td>
+                                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.timestamp|date('d/m/Y') }}</td>
+                                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.timestamp|date('H:i:s') }}</td>
+                                                        <td class="sonata-ba-list-field sonata-ba-list-field-text"><i data-lote-processo='{{ lista.processo.timestamp|date('dmYHis') }}' class="material-icons btn_meta blue-text text-darken-4" style="cursor: pointer">add</i></td>
+                                                    </tr>
+                                                    <tr class="detalhe" id="lote_processo_{{ lista.processo.timestamp|date('dmYHis') }}" style="display:none;">
+                                                        <td></td>
+                                                        <td colspan="3" class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                            {% if lista.atributoDinamico|length > 0 %}
+                                                                <table class="table show-table">
+                                                                    {% for atributo in lista.atributoDinamico %}
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <td>{{ atributo.nomAtributo }}</td>
+                                                                            <td>
+                                                                                {% if atributo.valor is defined %}
+                                                                                    {% for valor in atributo.valor %}
+                                                                                        <p>{{ valor }}</p>
+                                                                                    {% endfor %}
+                                                                                {% endif %}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                </table>
+                                                            {% else %}
+                                                                {{ 'listagemVazia'|trans }}
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab_{{ admin.uniqid }}_3">
+                <div class="box-body container-fluid">
+                    <div class="row">
+                        <h2 class="col s10 box-title left-align show">
+                            {{ 'label.imobiliarioImovel.listaConstrucoes'|trans }}
+                        </h2>
+                        <table class="bordered highlight">
+                            <thead>
+                            <tr class="sonata-ba-list-field-header">
+                                <th class="sonata-ba-list-field-header-text">{{ 'label.codigo'|trans }}</th>
+                                <th class="sonata-ba-list-field-header-text">{{ 'label.descricao'|trans }}</th>
+                                <th class="sonata-ba-list-field-header-text">{{ 'acoes'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if object.fkImobiliarioImovelCondominio %}
+                                {% if object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioConstrucaoCondominios|length %}
+                                    {% for construcaoCondominio in object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioConstrucaoCondominios|sort %}
+                                        {% if construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioConstrucaoEdificacoes|length == 0 %}
+                                            <tr>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ construcaoCondominio.fkImobiliarioConstrucao.codConstrucao }}</td>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ construcaoCondominio.fkImobiliarioConstrucao.descricao }}</td>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text"><i data-content='{{ construcaoCondominio.fkImobiliarioConstrucao.codConstrucao }}' class="material-icons btn_details blue-text text-darken-4" style="cursor: pointer">add</i></td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                                {% endif %}
+                            {% else %}
+                                <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+
+                        {% if object.fkImobiliarioImovelCondominio %}
+                        {% if object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioConstrucaoCondominios|length %}
+                            {% for construcaoCondominio in object.fkImobiliarioImovelCondominio.fkImobiliarioCondominio.fkImobiliarioConstrucaoCondominios|sort %}
+                                {% if construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioConstrucaoEdificacoes|length == 0 %}
+                                    <div class="details-content" id="data_{{ construcaoCondominio.fkImobiliarioConstrucao.codConstrucao }}" style="display:none;">
+                                        <h2 class="col s10 box-title left-align show">
+                                            {{ 'label.imobiliarioConstrucao.dadosEdificacao'|trans }}
+                                        </h2>
+                                        <table class="table show-table">
+                                            <tbody>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.codigo'|trans }}</th>
+                                                    <td>{{ construcaoCondominio.fkImobiliarioConstrucao.codConstrucao }}</td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.descricao'|trans }}</th>
+                                                    <td>{{ construcaoCondominio.fkImobiliarioConstrucao.descricao }}</td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.imobiliarioConstrucao.dataEdificacao'|trans }}</th>
+                                                    <td>{% if construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioDataConstrucao %} {{ construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioDataConstrucao.dataConstrucao|date('d/m/Y') }} {% endif %}</td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.imobiliarioConstrucao.areaEdificacao'|trans }}</th>
+                                                    <td>{{ construcaoCondominio.fkImobiliarioConstrucao.area|number_format(2, ',', '.') }}</td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.imobiliarioConstrucao.processo'|trans }}</th>
+                                                    <td>
+                                                        {% if construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioConstrucaoProcessos|length %}
+                                                            {{ construcaoCondominio.fkImobiliarioConstrucao.fkImobiliarioConstrucaoProcessos.last.fkSwProcesso }}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr class="sonata-ba-view-container">
+                                                    <th>{{ 'label.imobiliarioConstrucao.situacao'|trans }}</th>
+                                                    <td>{{ admin.consultaSituacaoConstrucao(construcaoCondominio.fkImobiliarioConstrucao) }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <h2 class="col s10 box-title left-align show">
+                                            {{ 'label.imobiliarioImovel.listaProcessos'|trans }}
+                                        </h2>
+
+                                        <table class="bordered highlight">
+                                            <thead>
+                                            <tr class="sonata-ba-list-field-header">
+                                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.processo'|trans }}</th>
+                                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.data'|trans }}</th>
+                                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.hora'|trans }}</th>
+                                                <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.detalhe'|trans }}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% if admin.consultaProcessosConstrucao(construcaoCondominio.fkImobiliarioConstrucao)|length %}
+                                                {% for lista in admin.consultaProcessosConstrucao(construcaoCondominio.fkImobiliarioConstrucao)|sort %}
+                                                    <tr>
+                                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.fkSwProcesso }}</td>
+                                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.timestamp|date('d/m/Y') }}</td>
+                                                        <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.timestamp|date('H:i:s') }}</td>
+                                                        <td class="sonata-ba-list-field sonata-ba-list-field-text"><i data-lote-processo='{{ lista.processo.timestamp|date('dmYHis') }}' class="material-icons btn_meta blue-text text-darken-4" style="cursor: pointer">add</i></td>
+                                                    </tr>
+                                                    <tr class="detalhe" id="lote_processo_{{ lista.processo.timestamp|date('dmYHis') }}" style="display:none;">
+                                                        <td></td>
+                                                        <td colspan="3" class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                            {% if lista.atributoDinamico|length > 0 %}
+                                                                <table class="table show-table">
+                                                                    {% for atributo in lista.atributoDinamico %}
+                                                                        <tr class="sonata-ba-view-container">
+                                                                            <td>{{ atributo.nomAtributo }}</td>
+                                                                            <td>
+                                                                                {% if atributo.valor is defined %}
+                                                                                    {% for valor in atributo.valor %}
+                                                                                        <p>{{ valor }}</p>
+                                                                                    {% endfor %}
+                                                                                {% endif %}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                </table>
+                                                            {% else %}
+                                                                {{ 'listagemVazia'|trans }}
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s12">
+            <div class="col s8 initial">
+                <a class="btn-floating white-text blue darken-4 btn-success" href="#" onclick="window.history.back();"><i class="material-icons">arrow_back</i>{</a>
+            </div>
+        </div>
+    </div>
+    {{ sonata_block_render_event('sonata.admin.show.bottom', { 'admin': admin, 'object': object }) }}
+{% endblock %}

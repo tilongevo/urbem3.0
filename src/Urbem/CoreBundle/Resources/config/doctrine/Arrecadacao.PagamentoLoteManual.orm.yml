@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Arrecadacao\PagamentoLoteManual:
+    type: entity
+    table: arrecadacao.pagamento_lote_manual
+    id:
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        ocorrenciaPagamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_pagamento
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+    fields: {  }
+    manyToOne:
+        fkArrecadacaoPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Pagamento
+            inversedBy: fkArrecadacaoPagamentoLoteManuais
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                ocorrencia_pagamento:
+                    referencedColumnName: ocorrencia_pagamento
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkArrecadacaoPagamentoLoteManuais
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\TipoDocumentoDigital:
+    type: entity
+    table: pessoal.tipo_documento_digital
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkPessoalServidorDocumentoDigitais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorDocumentoDigital
+            mappedBy: fkPessoalTipoDocumentoDigital

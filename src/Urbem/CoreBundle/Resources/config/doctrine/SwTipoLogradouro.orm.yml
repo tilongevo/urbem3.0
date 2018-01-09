@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\SwTipoLogradouro:
+    type: entity
+    table: sw_tipo_logradouro
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_tipo
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkSwTipoLogradouro
+        fkSwNomeLogradouros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwNomeLogradouro
+            mappedBy: fkSwTipoLogradouro

@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoCondominio:
+    type: entity
+    table: imobiliario.construcao_condominio
+    id:
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+        codCondominio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_condominio
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkImobiliarioConstrucao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Construcao
+            inversedBy: fkImobiliarioConstrucaoCondominios
+            joinColumns:
+                cod_construcao:
+                    referencedColumnName: cod_construcao
+        fkImobiliarioCondominio:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Condominio
+            inversedBy: fkImobiliarioConstrucaoCondominios
+            joinColumns:
+                cod_condominio:
+                    referencedColumnName: cod_condominio

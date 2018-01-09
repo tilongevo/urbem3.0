@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Contabilidade\PlanoAnaliticaCredito:
+    type: entity
+    table: contabilidade.plano_analitica_credito
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+    fields:
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+    manyToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkContabilidadePlanoAnaliticaCreditos
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkContabilidadePlanoAnaliticaCreditos
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie

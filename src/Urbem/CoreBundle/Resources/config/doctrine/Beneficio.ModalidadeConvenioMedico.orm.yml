@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Beneficio\ModalidadeConvenioMedico:
+    type: entity
+    table: beneficio.modalidade_convenio_medico
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkBeneficioBeneficiarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Beneficiario
+            mappedBy: fkBeneficioModalidadeConvenioMedico

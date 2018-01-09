@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Tcmgo\OrgaoGestor:
+    type: entity
+    table: tcmgo.orgao_gestor
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        dtFim:
+            type: date
+            nullable: false
+            column: dt_fim
+        cargo:
+            type: string
+            nullable: true
+            length: 50
+    manyToOne:
+        fkTcmgoOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Orgao
+            inversedBy: fkTcmgoOrgaoGestores
+            joinColumns:
+                num_orgao:
+                    referencedColumnName: num_orgao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoOrgaoGestores
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

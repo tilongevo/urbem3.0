@@ -1,0 +1,96 @@
+Urbem\CoreBundle\Entity\Tcemg\ContratoAditivoItem:
+    type: entity
+    table: tcemg.contrato_aditivo_item
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ContratoAditivoItemRepository
+    id:
+        codContratoAditivoItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato_aditivo_item
+        codContratoAditivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato_aditivo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+    fields:
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+        exercicioEmpenho:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_empenho
+        codPreEmpenho:
+            type: integer
+            nullable: false
+            column: cod_pre_empenho
+        exercicioPreEmpenho:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_pre_empenho
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+        tipoAcrescDecresc:
+            type: integer
+            nullable: true
+            column: tipo_acresc_decresc
+    manyToOne:
+        fkTcemgContratoAditivo:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContratoAditivo
+            inversedBy: fkTcemgContratoAditivoItens
+            joinColumns:
+                cod_contrato_aditivo:
+                    referencedColumnName: cod_contrato_aditivo
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcemgContratoAditivoItens
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio_empenho:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenho
+            inversedBy: fkTcemgContratoAditivoItens
+            joinColumns:
+                exercicio_pre_empenho:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+        fkEmpenhoItemPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            inversedBy: fkTcemgContratoAditivoItens
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio_pre_empenho:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item

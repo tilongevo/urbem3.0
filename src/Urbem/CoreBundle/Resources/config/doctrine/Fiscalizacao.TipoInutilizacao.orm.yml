@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\TipoInutilizacao:
+    type: entity
+    table: fiscalizacao.tipo_inutilizacao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkFiscalizacaoBaixaNotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\BaixaNotas
+            mappedBy: fkFiscalizacaoTipoInutilizacao

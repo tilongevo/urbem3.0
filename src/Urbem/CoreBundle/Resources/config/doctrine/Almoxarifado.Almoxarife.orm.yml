@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Almoxarifado\Almoxarife:
+    type: entity
+    table: almoxarifado.almoxarife
+    id:
+        cgmAlmoxarife:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_almoxarife
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    oneToMany:
+        fkAlmoxarifadoNaturezaLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\NaturezaLancamento
+            mappedBy: fkAlmoxarifadoAlmoxarife
+        fkAlmoxarifadoPedidoTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferencia
+            mappedBy: fkAlmoxarifadoAlmoxarife
+        fkAlmoxarifadoPermissaoAlmoxarifados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PermissaoAlmoxarifados
+            mappedBy: fkAlmoxarifadoAlmoxarife
+    oneToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            mappedBy: fkAlmoxarifadoAlmoxarife
+            joinColumns:
+                cgm_almoxarife:
+                    referencedColumnName: numcgm

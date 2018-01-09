@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Licitacao\RescisaoConvenio:
+    type: entity
+    table: licitacao.rescisao_convenio
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Licitacao\RescisaoConvenioRepository
+    uniqueConstraints:
+        uk_rescisao_convenio_1:
+            columns:
+                - exercicio
+                - num_convenio
+    id:
+        exercicioConvenio:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_convenio
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        numRescisao:
+            type: integer
+            nullable: false
+            column: num_rescisao
+        responsavelJuridico:
+            type: integer
+            nullable: false
+            column: responsavel_juridico
+        dtRescisao:
+            type: date
+            nullable: false
+            column: dt_rescisao
+        vlrMulta:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: vlr_multa
+        vlrIndenizacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: vlr_indenizacao
+        motivo:
+            type: text
+            nullable: false
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoRescisaoConvenios
+            joinColumns:
+                responsavel_juridico:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkLicitacaoPublicacaoRescisaoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PublicacaoRescisaoConvenio
+            mappedBy: fkLicitacaoRescisaoConvenio
+    oneToOne:
+        fkLicitacaoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            inversedBy: fkLicitacaoRescisaoConvenio
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio_convenio:
+                    referencedColumnName: exercicio

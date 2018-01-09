@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Almoxarifado\CatalogoNiveis:
+    type: entity
+    table: almoxarifado.catalogo_niveis
+    id:
+        nivel:
+            type: integer
+            generator:
+                strategy: NONE
+        codCatalogo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_catalogo
+    fields:
+        mascara:
+            type: string
+            nullable: false
+            length: 10
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+    manyToOne:
+        fkAlmoxarifadoCatalogo:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Catalogo
+            inversedBy: fkAlmoxarifadoCatalogoNiveis
+            joinColumns:
+                cod_catalogo:
+                    referencedColumnName: cod_catalogo
+    oneToMany:
+        fkAlmoxarifadoClassificacaoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\ClassificacaoNivel
+            mappedBy: fkAlmoxarifadoCatalogoNiveis

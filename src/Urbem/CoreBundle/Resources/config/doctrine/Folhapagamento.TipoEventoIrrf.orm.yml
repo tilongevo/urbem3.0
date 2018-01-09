@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoIrrf:
+    type: entity
+    table: folhapagamento.tipo_evento_irrf
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkFolhapagamentoTabelaIrrfEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfEvento
+            mappedBy: fkFolhapagamentoTipoEventoIrrf

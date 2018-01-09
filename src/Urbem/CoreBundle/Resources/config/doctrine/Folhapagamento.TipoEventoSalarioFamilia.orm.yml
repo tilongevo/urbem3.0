@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoSalarioFamilia:
+    type: entity
+    table: folhapagamento.tipo_evento_salario_familia
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkFolhapagamentoSalarioFamiliaEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamiliaEvento
+            mappedBy: fkFolhapagamentoTipoEventoSalarioFamilia

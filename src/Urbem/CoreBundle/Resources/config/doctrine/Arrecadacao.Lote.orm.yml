@@ -1,0 +1,103 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Lote:
+    type: entity
+    table: arrecadacao.lote
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\LoteRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        dataLote:
+            type: date
+            nullable: false
+            column: data_lote
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        automatico:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkArrecadacaoLotes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkArrecadacaoLotes
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+    oneToMany:
+        fkArrecadacaoLoteInconsistencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LoteInconsistencia
+            mappedBy: fkArrecadacaoLote
+        fkArrecadacaoPagamentoLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\PagamentoLote
+            mappedBy: fkArrecadacaoLote
+        fkTesourariaBoletimLoteArrecadacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteArrecadacao
+            mappedBy: fkArrecadacaoLote
+        fkTesourariaBoletimLoteArrecadacaoInconsistencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteArrecadacaoInconsistencia
+            mappedBy: fkArrecadacaoLote
+        fkTesourariaBoletimLoteTransferenciaInconsistencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteTransferenciaInconsistencia
+            mappedBy: fkArrecadacaoLote
+        fkTesourariaBoletimLoteTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteTransferencia
+            mappedBy: fkArrecadacaoLote
+    oneToOne:
+        fkArrecadacaoLoteArquivo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LoteArquivo
+            mappedBy: fkArrecadacaoLote
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_lote:
+                    referencedColumnName: cod_lote

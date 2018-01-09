@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Ldo\ConfiguracaoReceitaDespesa:
+    type: entity
+    table: ldo.configuracao_receita_despesa
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        vlArrecadadoLiquidado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_arrecadado_liquidado
+        vlPrevistoFixado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_previsto_fixado
+        vlProjetado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_projetado
+    manyToOne:
+        fkLdoLdo:
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Ldo
+            inversedBy: fkLdoConfiguracaoReceitaDespesas
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+                ano:
+                    referencedColumnName: ano
+        fkLdoTipoReceitaDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\TipoReceitaDespesa
+            inversedBy: fkLdoConfiguracaoReceitaDespesas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                tipo:
+                    referencedColumnName: tipo

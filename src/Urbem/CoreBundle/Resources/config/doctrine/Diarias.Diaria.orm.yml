@@ -1,0 +1,128 @@
+Urbem\CoreBundle\Entity\Diarias\Diaria:
+    type: entity
+    table: diarias.diaria
+    repositoryClass: Urbem\CoreBundle\Repository\Diarias\DiariaRepository
+    id:
+        codDiaria:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_diaria
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        numcgm:
+            type: integer
+            nullable: false
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: false
+            column: dt_termino
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        vlTotal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_total
+        motivo:
+            type: text
+            nullable: false
+        vlUnitario:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_unitario
+        hrInicio:
+            type: time
+            nullable: false
+            column: hr_inicio
+        hrTermino:
+            type: time
+            nullable: false
+            column: hr_termino
+        timestampTipo:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_tipo
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkDiariasDiarias
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkDiariasTipoDiaria:
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\TipoDiaria
+            inversedBy: fkDiariasDiarias
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                timestamp_tipo:
+                    referencedColumnName: timestamp
+        fkSwMunicipio:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkDiariasDiarias
+            joinColumns:
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_uf:
+                    referencedColumnName: cod_uf
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkDiariasDiarias
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkDiariasDiarias
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkDiariasDiariaEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\DiariaEmpenho
+            mappedBy: fkDiariasDiaria
+            joinColumns:
+                cod_diaria:
+                    referencedColumnName: cod_diaria
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp

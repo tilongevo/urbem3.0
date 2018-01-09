@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\SwProcessoApensado:
+    type: entity
+    table: sw_processo_apensado
+    id:
+        codProcessoFilho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo_filho
+        exercicioFilho:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_filho
+        timestampApensamento:
+            type: datetimepk
+            generator:
+                strategy: NONE
+            column: timestamp_apensamento
+    fields:
+        codProcessoPai:
+            type: integer
+            nullable: false
+            column: cod_processo_pai
+        exercicioPai:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_pai
+        timestampDesapensamento:
+            type: datetime
+            nullable: true
+            column: timestamp_desapensamento
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkSwProcessoApensados
+            joinColumns:
+                cod_processo_filho:
+                    referencedColumnName: cod_processo
+                exercicio_filho:
+                    referencedColumnName: ano_exercicio

@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoOrdemPagamento:
+    type: entity
+    table: tesouraria.cheque_emissao_ordem_pagamento
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\ChequeEmissaoOrdemPagamentoRepository
+    id:
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+        numCheque:
+            type: string
+            generator:
+                strategy: NONE
+            column: num_cheque
+        timestampEmissao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_emissao
+    fields: {  }
+    manyToOne:
+        fkEmpenhoOrdemPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamento
+            inversedBy: fkTesourariaChequeEmissaoOrdemPagamentos
+            joinColumns:
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTesourariaChequeEmissao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissao
+            inversedBy: fkTesourariaChequeEmissaoOrdemPagamentos
+            joinColumns:
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+                num_cheque:
+                    referencedColumnName: num_cheque
+                timestamp_emissao:
+                    referencedColumnName: timestamp_emissao

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoLeiOrigemDecreto:
+    type: entity
+    table: tcemg.tipo_lei_origem_decreto
+    id:
+        codTipoLei:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_lei
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkTcemgNormaDetalhes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NormaDetalhe
+            mappedBy: fkTcemgTipoLeiOrigemDecreto

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tceal\TipoDocumentoFiscal:
+    type: entity
+    table: tceal.tipo_documento_fiscal
+    id:
+        codTipoDocumentoFiscal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento_fiscal
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 25
+    oneToMany:
+        fkTcealBemCompradoTipoDocumentoFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\BemCompradoTipoDocumentoFiscal
+            mappedBy: fkTcealTipoDocumentoFiscal

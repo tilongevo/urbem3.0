@@ -1,0 +1,76 @@
+Urbem\CoreBundle\Entity\Tcemg\LoteRegistroPrecos:
+    type: entity
+    table: tcemg.lote_registro_precos
+    uniqueConstraints:
+        uk_lote_registro_precos_1:
+            columns:
+                - cod_entidade
+                - numero_registro_precos
+                - exercicio
+                - interno
+                - numcgm_gerenciador
+                - descricao_lote
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numeroRegistroPrecos:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numero_registro_precos
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        interno:
+            type: boolean
+            generator:
+                strategy: NONE
+        numcgmGerenciador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numcgm_gerenciador
+    fields:
+        descricaoLote:
+            type: string
+            nullable: false
+            length: 250
+            column: descricao_lote
+        percentualDescontoLote:
+            type: decimal
+            nullable: true
+            precision: 6
+            scale: 2
+            column: percentual_desconto_lote
+    manyToOne:
+        fkTcemgRegistroPrecos:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecos
+            inversedBy: fkTcemgLoteRegistroPrecos
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numero_registro_precos:
+                    referencedColumnName: numero_registro_precos
+                exercicio:
+                    referencedColumnName: exercicio
+                numcgm_gerenciador:
+                    referencedColumnName: numcgm_gerenciador
+                interno:
+                    referencedColumnName: interno
+    oneToMany:
+        fkTcemgItemRegistroPrecos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ItemRegistroPrecos
+            mappedBy: fkTcemgLoteRegistroPrecos

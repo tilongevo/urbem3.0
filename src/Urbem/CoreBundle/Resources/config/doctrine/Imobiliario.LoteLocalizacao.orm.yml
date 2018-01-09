@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Imobiliario\LoteLocalizacao:
+    type: entity
+    table: imobiliario.lote_localizacao
+    indexes:
+        idx_lote_localizacao_1:
+            columns:
+                - cod_localizacao
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        codLocalizacao:
+            type: integer
+            nullable: false
+            column: cod_localizacao
+        valor:
+            type: string
+            nullable: false
+            length: 10
+        localizacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkImobiliarioLocalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Localizacao
+            inversedBy: fkImobiliarioLoteLocalizacoes
+            joinColumns:
+                cod_localizacao:
+                    referencedColumnName: cod_localizacao
+    oneToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioLoteLocalizacao
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote

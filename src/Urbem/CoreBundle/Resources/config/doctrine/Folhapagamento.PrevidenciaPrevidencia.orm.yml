@@ -1,0 +1,79 @@
+Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaPrevidencia:
+    type: entity
+    table: folhapagamento.previdencia_previdencia
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\PrevidenciaPrevidenciaRepository
+    id:
+        codPrevidencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: folhapagamento.previdencia_previdencia_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_previdencia
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        aliquota:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+        tipoPrevidencia:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_previdencia
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkFolhapagamentoPrevidencia:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Previdencia
+            inversedBy: fkFolhapagamentoPrevidenciaPrevidencias
+            joinColumns:
+                cod_previdencia:
+                    referencedColumnName: cod_previdencia
+    oneToMany:
+        fkFolhapagamentoAtributoPrevidenciaValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\AtributoPrevidenciaValor
+            mappedBy: fkFolhapagamentoPrevidenciaPrevidencia
+        fkFolhapagamentoFaixaDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FaixaDesconto
+            mappedBy: fkFolhapagamentoPrevidenciaPrevidencia
+        fkFolhapagamentoPrevidenciaEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaEvento
+            mappedBy: fkFolhapagamentoPrevidenciaPrevidencia
+    oneToOne:
+        fkFolhapagamentoPrevidenciaRegimeRat:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaRegimeRat
+            mappedBy: fkFolhapagamentoPrevidenciaPrevidencia
+            joinColumns:
+                cod_previdencia:
+                    referencedColumnName: cod_previdencia
+                timestamp:
+                    referencedColumnName: timestamp

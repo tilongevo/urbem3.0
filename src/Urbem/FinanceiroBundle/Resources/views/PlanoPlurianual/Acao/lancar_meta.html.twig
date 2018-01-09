@@ -1,0 +1,110 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {{ form_start(form) }}
+            <div class="box-header col s12">
+                <h5 class="col s12 box-title left-align show">
+                    {{ 'label.ppaAcao.planoPlurianual'|trans }}
+                </h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+            <input type="hidden" value="{{ ppa.codPpa }}" name="cod_ppa" />
+            <div class="col s3">
+                <label for="anoInicio" class="control-label required">{{ 'label.ppaAcao.ppa'|trans }}</label>
+                <input class="input-rh" id="ppa" name="ppa[ppa]" value="{{ ppa }}" disabled="disabled">
+            </div>
+            <div class="col s3">
+                <label for="anoFinal" class="control-label required">{{ 'label.ppaAcao.exercicio'|trans }}</label>
+                <input class="input-rh" id="exercicio" name="ppa[exercicio]" value="{{ exercicio }}" disabled="disabled">
+            </div>
+            <div class="col s3">
+                <label for="buscaPorRecurso" class="control-label required">{{ 'label.ppaAcao.recurso'|trans }}</label>
+                <select class="form-control" id="buscaPorRecurso">
+                    <option value="0">--Selecione--</option>
+                    {% for key,listaRecurso in listaRecursos %}
+                        <option value="{{ key }}"> {{ listaRecurso }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="box-header col s12" style="margin-top: 20px">
+                <h5 class="col s12 box-title left-align show">
+                    {{ 'label.ppaAcao.ListaAcoesRecursos'|trans }}
+                </h5>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+            <div class="box-body aguarde">
+                <h5 class="col s12 box-title center-align show">
+                    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw text-center blue-text text-darken-4"
+                       style="text-shadow: 5px 3px 10px #ccc"></i>
+                </h5>
+            </div>
+            <table class="carrega-tabela" style="display: none;">
+                <tr class="tr-rh">
+                    <th class="th-rh"></th>
+                    <th class="th-rh">{{ 'label.ppaAcao.acao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.recurso'|trans }}</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.valorAno'|trans }} (%)</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.valorAno'|trans }} (%)</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.valorAno'|trans }} (%)</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.valorAno'|trans }} (%)</th>
+                    <th class="th-rh">{{ 'label.ppaAcao.totalRecurso'|trans }} (%)</th>
+                </tr>
+                    {% for metaFisicaRealizadaRow in metaFisicaRealizada %}
+                        <tr class="tr-rh tr-todos tr-{{ metaFisicaRealizadaRow.cod_recurso }}">
+                            <td class="td-rh">
+                                <i data-codAcao='{{ metaFisicaRealizadaRow.cod_acao ~ '-' ~ metaFisicaRealizadaRow.cod_recurso }}' class="material-icons btn_meta blue-text text-darken-4" style="cursor: pointer">add</i>
+                                <input type="hidden" value="{{ metaFisicaRealizadaRow.cod_recurso }}" name="meta[{{ metaFisicaRealizadaRow.cod_acao }}][cod_recurso]" />
+                                <input type="hidden" value="{{ metaFisicaRealizadaRow.timestamp_acao_dados }}" name="meta[{{ metaFisicaRealizadaRow.cod_acao }}][timestamp_acao_dados]" />
+                                <input type="hidden" value="{{ metaFisicaRealizadaRow.cod_acao }}" name="meta[{{ metaFisicaRealizadaRow.cod_acao }}][cod_acao]" />
+                            </td>
+                            <td class="td-rh">{{ metaFisicaRealizadaRow.num_acao }}</td>
+                            <td class="td-rh">{{ metaFisicaRealizadaRow.nom_cod_recurso }}</td>
+                            {% for metaFisicaRealizadaValores in metaFisicaRealizadaRow.valores %}
+                                <td class="td-rh"><input class="money input-rh" type="text" value="{{ metaFisicaRealizadaValores.ano_valor }}" disabled="disabled"></td>
+                            {% endfor %}
+                            <td class="td-rh"><input class="money input-rh" type="text" value="{{ metaFisicaRealizadaRow.total_valor }}" disabled="disabled"></td>
+                        </tr>
+                        <tr class="tr-rh tr-todos tr-{{ metaFisicaRealizadaRow.cod_recurso }}">
+                            <td colspan='2'></td>
+                            <td colspan='7'>
+                                <table id='meta_{{ metaFisicaRealizadaRow.cod_acao ~ '-' ~ metaFisicaRealizadaRow.cod_recurso }}' class='metas'>
+                                    <tr class="tr-rh">
+                                        <th class="th-rh"></th>
+                                        <th class="th-rh"></th>
+                                        <th class="th-rh">{{ 'label.ppaAcao.quantidade'|trans }}</th>
+                                        <th class="th-rh">{{ 'label.ppaAcao.valorPrevisto'|trans }} (%)</th>
+                                        <th class="th-rh">{{ 'label.ppaAcao.valorRealizado'|trans }} (%)</th>
+                                        <th class="th-rh">{{ 'label.ppaAcao.justificativa'|trans }} (%)</th>
+                                    </tr>
+                                    {% for metaFisicaRealizadaValores in metaFisicaRealizadaRow.valores %}
+                                        <tr class="tr-rh">
+                                            <td class="td-rh"></td>
+                                            <td class="td-rh">Ano {{ loop.index }} do PPA</td>
+                                            <td class="td-rh"><input class=" input-rh" type="text" value="{{ metaFisicaRealizadaValores.ano_qtd | number_format }}" disabled="disabled"></td>
+                                            <td class="td-rh"><input class="money input-rh" type="text" value="{{ metaFisicaRealizadaValores.ano_valor }}" disabled="disabled"></td>
+                                            <td class="td-rh"><input class="money input-rh" name="meta[{{ metaFisicaRealizadaRow.cod_acao }}][valores][{{ metaFisicaRealizadaValores.ano }}][valor]" type="text" value="{{ metaFisicaRealizadaValores.ano_realizada }}" {% if (metaFisicaRealizadaValores.ano > exercicio) %} disabled="disabled" {% endif %}></td>
+                                            <td class="td-rh"><textarea class="input-rh" name="meta[{{ metaFisicaRealizadaRow.cod_acao }}][valores][{{ metaFisicaRealizadaValores.ano }}][justificativa]" {% if (metaFisicaRealizadaValores.ano > exercicio) %} disabled="disabled" {% endif %}>{{ metaFisicaRealizadaValores.ano_justificativa }}</textarea></td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            </table>
+            {{ form_widget(form) }}
+            <div class="col s12 right-align" style="margin-top: 10px">
+                <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="Lancar Meta"><i class="material-icons left">assignment_turned_in</i>Lancar Meta</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('/bundles/financeiro/javascripts/ppa/lancar_meta.js') }}"></script>
+{% endblock javascripts %}

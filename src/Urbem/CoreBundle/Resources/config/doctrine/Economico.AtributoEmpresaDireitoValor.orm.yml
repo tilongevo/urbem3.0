@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Economico\AtributoEmpresaDireitoValor:
+    type: entity
+    table: economico.atributo_empresa_direito_valor
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkEconomicoCadastroEconomicoEmpresaDireito:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaDireito
+            inversedBy: fkEconomicoAtributoEmpresaDireitoValores
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkEconomicoAtributoEmpresaDireitoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

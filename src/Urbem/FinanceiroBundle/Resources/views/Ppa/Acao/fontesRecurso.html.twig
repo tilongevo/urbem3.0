@@ -1,0 +1,175 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="row acao-recurso" {% if field.data.fontesRecurso|length == 0 %} style="display:none;" {% endif %}>
+    <h3 class="col s10 box-title left-align show">{{ 'label.ppaAcao.listaAcaoRecursos'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableLancamentoManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh"></th>
+            <th class="th-rh">{{ 'label.ppaAcao.recurso'|trans }}</th>
+            <th class="th-rh">{{ 'label.ppaAcao.valor1'|trans }}</th>
+            <th class="th-rh">{{ 'label.ppaAcao.valor2'|trans }}</th>
+            <th class="th-rh">{{ 'label.ppaAcao.valor3'|trans }}</th>
+            <th class="th-rh">{{ 'label.ppaAcao.valor4'|trans }}</th>
+            <th class="th-rh">{{ 'label.ppaAcao.totalRecurso'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if field.data.fontesRecurso|length > 0 %}
+            {% for nomRecurso, fontesRecurso in field.data.fontesRecurso %}
+                <tr class="tr-rh">
+                    <td class="td-rh">
+                        <i data-codRecurso='{{ fontesRecurso.1.codRecurso }}' class="material-icons btn_fontes_recurso blue-text text-darken-4" style="cursor: pointer">add</i>
+                        <input type="hidden" value="{{ admin.getObjectKey(fontesRecurso.1) }}" id="acaoRecurso_{{ fontesRecurso.1.codRecurso }}" name="acaoRecurso[{{ fontesRecurso.1.codRecurso }}][old]" />
+                    </td>
+                    <td class="td-rh">{{ nomRecurso }}</td>
+                    {% if fontesRecurso.1.fkPpaAcaoQuantidade.fkLdoAcaoValidada is null %}
+                        <td class="td-rh">
+                            <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                <div class="input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <input type="text" id="acaoRecurso{{ fontesRecurso.1.codRecurso }}-valor1" name="acaoRecurso[{{ fontesRecurso.1.codRecurso }}][valor1]" class="acao-recurso-valor money campo-sonata form-control" value="{{ fontesRecurso.1.valor|number_format(2, ',', '') }}" recurso="{{ fontesRecurso.1.codRecurso }}" ano="1">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="td-rh">
+                            <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                <div class="input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <input type="text" id="acaoRecurso{{ fontesRecurso.2.codRecurso }}-valor2" name="acaoRecurso[{{ fontesRecurso.2.codRecurso }}][valor2]" class="acao-recurso-valor money campo-sonata form-control" value="{{ fontesRecurso.2.valor|number_format(2, ',', '') }}" recurso="{{ fontesRecurso.2.codRecurso }}" ano="2">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="td-rh">
+                            <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                <div class="input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <input type="text" id="acaoRecurso{{ fontesRecurso.3.codRecurso }}-valor3" name="acaoRecurso[{{ fontesRecurso.3.codRecurso }}][valor3]" class="acao-recurso-valor money campo-sonata form-control" value="{{ fontesRecurso.3.valor|number_format(2, ',', '') }}" recurso="{{ fontesRecurso.3.codRecurso }}" ano="3">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="td-rh">
+                            <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                <div class="input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <input type="text" id="acaoRecurso{{ fontesRecurso.4.codRecurso }}-valor4" name="acaoRecurso[{{ fontesRecurso.4.codRecurso }}][valor4]" class="acao-recurso-valor money campo-sonata form-control" value="{{ fontesRecurso.4.valor|number_format(2, ',', '') }}" recurso="{{ fontesRecurso.4.codRecurso }}" ano="4">
+                                </div>
+                            </div>
+                        </td>
+                    {% else %}
+                        <td class="td-rh">{{ fontesRecurso.1.valor|number_format_currency('BRL') }}</td>
+                        <td class="td-rh">{{ fontesRecurso.2.valor|number_format_currency('BRL') }}</td>
+                        <td class="td-rh">{{ fontesRecurso.3.valor|number_format_currency('BRL') }}</td>
+                        <td class="td-rh">{{ fontesRecurso.4.valor|number_format_currency('BRL') }}</td>
+                    {% endif %}
+                    <td class="td-rh"><span id="vlTotal_{{ fontesRecurso.1.codRecurso }}">{{ (fontesRecurso.1.valor + fontesRecurso.2.valor + fontesRecurso.3.valor + fontesRecurso.4.valor)|number_format_currency('BRL') }}</span></td>
+                    {% if fontesRecurso.1.fkPpaAcaoQuantidade.fkLdoAcaoValidada is null %}
+                        <td recurso="{{ fontesRecurso.1.codRecurso }}" class="td-rh remove"><i class="material-icons blue-text text-darken-4" style="cursor: pointer">delete</i></td>
+                    {% else %}
+                        <td class="td-rh"><i class="material-icons grey-text" title="{{ 'label.ppaAcao.erroRemoverRecursoValidado'|trans }}">delete</i></td>
+                    {% endif %}
+                </tr>
+                <tr class="tr-rh fontes-recurso" id='fontesRecurso_{{ fontesRecurso.1.codRecurso }}'>
+                    <td></td>
+                    <td colspan='7'>
+                        <h4 class="col s10 box-title left-align show">{{ 'label.ppaAcao.metasFisica'|trans }}</h4>
+                        <div class="divider grey lighten-1  title-divider"></div>
+                        <table>
+                            <tr class="tr-rh">
+                                <th class="th-rh"></th>
+                                <th class="th-rh">{{ 'label.ppaAcao.quantidade'|trans }}</th>
+                                <th class="th-rh">{{ 'label.ppaAcao.valorTotal'|trans }}</th>
+                            </tr>
+                            <tr class="tr-rh">
+                                <td class="td-rh">{{ 'label.ppaAcao.primeiroAno'|trans }}</td>
+                                {% if fontesRecurso.1.fkPpaAcaoQuantidade.fkLdoAcaoValidada is null %}
+                                    <td class="td-rh">
+                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                            <div class="input-group">
+                                                <input type="text" id="acaoRecurso{{ fontesRecurso.1.codRecurso }}-quantidade1" name="acaoRecurso[{{ fontesRecurso.1.codRecurso }}][quantidade1]" class="acao-recurso-quantidade money campo-sonata form-control" value="{{ fontesRecurso.1.fkPpaAcaoQuantidade.quantidade|number_format(2, ',', '') }}"  recurso="{{ fontesRecurso.1.codRecurso }}" ano="1">
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td class="td-rh">{{ fontesRecurso.1.fkPpaAcaoQuantidade.quantidade|number_format(2, ',', '') }}</td>
+                                {% endif %}
+                                <td class="td-rh"><span id="acaoRecurso{{ fontesRecurso.1.codRecurso }}-ano1">{{ fontesRecurso.1.valor|number_format_currency('BRL') }}</span></td>
+                            </tr>
+                            <tr class="tr-rh">
+                                <td class="td-rh">{{ 'label.ppaAcao.segundoAno'|trans }}</td>
+                                {% if fontesRecurso.1.fkPpaAcaoQuantidade.fkLdoAcaoValidada is null %}
+                                    <td class="td-rh">
+                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                            <div class="input-group">
+                                                <input type="text" id="acaoRecurso{{ fontesRecurso.2.codRecurso }}-quantidade2" name="acaoRecurso[{{ fontesRecurso.2.codRecurso }}][quantidade2]" class="acao-recurso-quantidade money campo-sonata form-control" value="{{ fontesRecurso.2.fkPpaAcaoQuantidade.quantidade|number_format(2, ',', '') }}"  recurso="{{ fontesRecurso.2.codRecurso }}" ano="2">
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td class="td-rh">{{ fontesRecurso.2.fkPpaAcaoQuantidade.quantidade|number_format(2, ',', '') }}</td>
+                                {% endif %}
+                                <td class="td-rh"><span id="acaoRecurso{{ fontesRecurso.2.codRecurso }}-ano2">{{ fontesRecurso.2.valor|number_format_currency('BRL') }}</span></td>
+                            </tr>
+                            <tr class="tr-rh">
+                                <td class="td-rh">{{ 'label.ppaAcao.terceiroAno'|trans }}</td>
+                                {% if fontesRecurso.1.fkPpaAcaoQuantidade.fkLdoAcaoValidada is null %}
+                                    <td class="td-rh">
+                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                            <div class="input-group">
+                                                <input type="text" id="acaoRecurso{{ fontesRecurso.3.codRecurso }}-quantidade3" name="acaoRecurso[{{ fontesRecurso.3.codRecurso }}][quantidade3]" class="acao-recurso-quantidade money campo-sonata form-control" value="{{ fontesRecurso.3.fkPpaAcaoQuantidade.quantidade|number_format(2, ',', '') }}"  recurso="{{ fontesRecurso.3.codRecurso }}" ano="3">
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td class="td-rh">{{ fontesRecurso.3.fkPpaAcaoQuantidade.quantidade|number_format(2, ',', '') }}</td>
+                                {% endif %}
+                                <td class="td-rh"><span id="acaoRecurso{{ fontesRecurso.3.codRecurso }}-ano3">{{ fontesRecurso.3.valor|number_format_currency('BRL') }}</span></td>
+                            </tr>
+                            <tr class="tr-rh">
+                                <td class="td-rh">{{ 'label.ppaAcao.quartoAno'|trans }}</td>
+                                {% if fontesRecurso.1.fkPpaAcaoQuantidade.fkLdoAcaoValidada is null %}
+                                    <td class="td-rh">
+                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                            <div class="input-group">
+                                                <input type="text" id="acaoRecurso{{ fontesRecurso.4.codRecurso }}-quantidade4" name="acaoRecurso[{{ fontesRecurso.4.codRecurso }}][quantidade4]" class="acao-recurso-quantidade money campo-sonata form-control" value="{{ fontesRecurso.4.fkPpaAcaoQuantidade.quantidade|number_format(2, ',', '') }}"  recurso="{{ fontesRecurso.4.codRecurso }}" ano="4">
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td class="td-rh">{{ fontesRecurso.4.fkPpaAcaoQuantidade.quantidade|number_format(2, ',', '') }}</td>
+                                {% endif %}
+                                <td class="td-rh"><span id="acaoRecurso{{ fontesRecurso.4.codRecurso }}-ano4">{{ fontesRecurso.4.valor|number_format_currency('BRL') }}</span></td>
+                            </tr>
+                            <tr class="tr-rh">
+                                <td class="td-rh">{{ 'label.ppaAcao.total'|trans }}</td>
+                                <td class="td-rh"><span id="qntTotal_{{ fontesRecurso.1.codRecurso }}">{{ ( fontesRecurso.4.fkPpaAcaoQuantidade.quantidade + fontesRecurso.3.fkPpaAcaoQuantidade.quantidade + fontesRecurso.2.fkPpaAcaoQuantidade.quantidade + fontesRecurso.2.fkPpaAcaoQuantidade.quantidade )|number_format(2, ',', '') }}</span></td>
+                                <td class="td-rh"><span id="vlTotalMf_{{ fontesRecurso.1.codRecurso }}">{{ ( fontesRecurso.4.valor + fontesRecurso.3.valor + fontesRecurso.2.valor + fontesRecurso.2.valor )|number_format_currency('BRL') }}</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        <tr class="tr-rh fontes-recurso-totais">
+            <td class="td-rh"></td>
+            <td class="td-rh"></td>
+            <td class="td-rh"><span id="valor-ano-1">{{ field.data.totais.ano1|number_format_currency('BRL') }}</span></td>
+            <td class="td-rh"><span id="valor-ano-2">{{ field.data.totais.ano2|number_format_currency('BRL') }}</span></td>
+            <td class="td-rh"><span id="valor-ano-3">{{ field.data.totais.ano3|number_format_currency('BRL') }}</span></td>
+            <td class="td-rh"><span id="valor-ano-4">{{ field.data.totais.ano4|number_format_currency('BRL') }}</span></td>
+            <td class="td-rh"><span id="valor-total">{{ field.data.totais.total|number_format_currency('BRL') }}</span></td>
+            <td class="td-rh">
+                <input type="hidden" id="total-ano-1" value="{{ field.data.totais.ano1 }}">
+                <input type="hidden" id="total-ano-2" value="{{ field.data.totais.ano2 }}">
+                <input type="hidden" id="total-ano-3" value="{{ field.data.totais.ano3 }}">
+                <input type="hidden" id="total-ano-4" value="{{ field.data.totais.ano4 }}">
+                <input type="hidden" id="total" value="{{ field.data.totais.total }}">
+            </td>
+        </tr>
+    </table>
+</div>

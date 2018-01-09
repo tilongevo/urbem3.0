@@ -1,0 +1,40 @@
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomico.codInscricao'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getInscricaoEconomica() }} - {{ 'label.economicoConsultaCadastroEconomico.empresaFato'|trans }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoConsultaCadastroEconomico.nome'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getFkEconomicoCadastroEconomicoEmpresaFato().getFkSwCgmPessoaFisica() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoConsultaCadastroEconomico.cpf'|trans }}</th>
+    <td class="js-cpf">{{ admin.cadastroEconomico.getFkEconomicoCadastroEconomicoEmpresaFato().getFkSwCgmPessoaFisica().getCpf() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomico.dtAbertura'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getDtAbertura().format('d/m/Y') }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoConsultaCadastroEconomico.dtInclusao'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getTimestamp().format('d/m/Y') }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoConsultaCadastroEconomico.situacao'|trans }}</th>
+    <td>
+	    {% set situacao = 'label.economicoConsultaCadastroEconomico.ativo'|trans %}
+
+        {% for item in object.getFkEconomicoBaixaCadastroEconomicos() %}
+            {% if item.getDtTermino() is empty %}
+                {% set situacao = 'label.economicoConsultaCadastroEconomico.baixado'|trans %}
+            {% endif %}
+        {% endfor %}
+
+        {{ situacao }}
+	</td>
+</tr>
+

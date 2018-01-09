@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Imobiliario\BaixaUnidadeAutonoma:
+    type: entity
+    table: imobiliario.baixa_unidade_autonoma
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        justificativaTermino:
+            type: text
+            nullable: true
+            column: justificativa_termino
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    manyToOne:
+        fkImobiliarioUnidadeAutonoma:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\UnidadeAutonoma
+            inversedBy: fkImobiliarioBaixaUnidadeAutonomas
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_construcao:
+                    referencedColumnName: cod_construcao

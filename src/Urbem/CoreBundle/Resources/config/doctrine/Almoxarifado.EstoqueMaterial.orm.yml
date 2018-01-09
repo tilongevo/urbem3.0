@@ -1,0 +1,75 @@
+Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial:
+    type: entity
+    table: almoxarifado.estoque_material
+    id:
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+    fields: {  }
+    manyToOne:
+        fkAlmoxarifadoCatalogoItemMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItemMarca
+            inversedBy: fkAlmoxarifadoEstoqueMateriais
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+        fkAlmoxarifadoAlmoxarifado:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado
+            inversedBy: fkAlmoxarifadoEstoqueMateriais
+            joinColumns:
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+        fkAlmoxarifadoCentroCusto:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto
+            inversedBy: fkAlmoxarifadoEstoqueMateriais
+            joinColumns:
+                cod_centro:
+                    referencedColumnName: cod_centro
+    oneToMany:
+        fkAlmoxarifadoPereciveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Perecivel
+            mappedBy: fkAlmoxarifadoEstoqueMaterial
+        fkAlmoxarifadoRequisicaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\RequisicaoItem
+            mappedBy: fkAlmoxarifadoEstoqueMaterial
+        fkAlmoxarifadoLancamentoMateriais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial
+            mappedBy: fkAlmoxarifadoEstoqueMaterial
+        fkAlmoxarifadoInventarioItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\InventarioItens
+            mappedBy: fkAlmoxarifadoEstoqueMaterial

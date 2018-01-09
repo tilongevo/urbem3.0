@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmgo\FundamentacaoLegal:
+    type: entity
+    table: tcmgo.fundamentacao_legal
+    id:
+        codFundamentacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: cod_fundamentacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 600
+    oneToMany:
+        fkTcmgoEmpenhoModalidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\EmpenhoModalidade
+            mappedBy: fkTcmgoFundamentacaoLegal

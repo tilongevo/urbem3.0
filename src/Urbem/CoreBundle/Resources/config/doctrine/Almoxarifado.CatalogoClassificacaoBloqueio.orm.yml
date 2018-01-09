@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacaoBloqueio:
+    type: entity
+    table: almoxarifado.catalogo_classificacao_bloqueio
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codCatalogo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_catalogo
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codInventario:
+            type: integer
+            nullable: false
+            column: cod_inventario
+    manyToOne:
+        fkAlmoxarifadoCatalogoClassificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacao
+            inversedBy: fkAlmoxarifadoCatalogoClassificacaoBloqueios
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+                cod_catalogo:
+                    referencedColumnName: cod_catalogo
+        fkAlmoxarifadoInventario:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Inventario
+            inversedBy: fkAlmoxarifadoCatalogoClassificacaoBloqueios
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_inventario:
+                    referencedColumnName: cod_inventario

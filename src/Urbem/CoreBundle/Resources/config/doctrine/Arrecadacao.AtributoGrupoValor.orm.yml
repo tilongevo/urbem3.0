@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Arrecadacao\AtributoGrupoValor:
+    type: entity
+    table: arrecadacao.atributo_grupo_valor
+    id:
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkArrecadacaoCalculo:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Calculo
+            inversedBy: fkArrecadacaoAtributoGrupoValores
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo
+        fkArrecadacaoAtributoGrupo:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoGrupo
+            inversedBy: fkArrecadacaoAtributoGrupoValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

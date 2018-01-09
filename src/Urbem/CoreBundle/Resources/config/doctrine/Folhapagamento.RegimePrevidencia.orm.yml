@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Folhapagamento\RegimePrevidencia:
+    type: entity
+    table: folhapagamento.regime_previdencia
+    id:
+        codRegimePrevidencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: folhapagamento.regime_previdencia_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_regime_previdencia
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 4
+    oneToMany:
+        fkFolhapagamentoSalarioFamilias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamilia
+            mappedBy: fkFolhapagamentoRegimePrevidencia
+        fkPessoalAssentamentoAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            mappedBy: fkFolhapagamentoRegimePrevidencia
+        fkPessoalOcorrencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Ocorrencia
+            mappedBy: fkFolhapagamentoRegimePrevidencia
+        fkFolhapagamentoPrevidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Previdencia
+            mappedBy: fkFolhapagamentoRegimePrevidencia

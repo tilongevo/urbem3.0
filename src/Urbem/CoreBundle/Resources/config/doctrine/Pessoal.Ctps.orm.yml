@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Pessoal\Ctps:
+    type: entity
+    table: pessoal.ctps
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\CtpsRepository
+    id:
+        codCtps:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.ctps_seq
+                allocationSize: 1
+                initialValue: 0
+            column: cod_ctps
+    fields:
+        numero:
+            type: string
+            nullable: false
+            length: 10
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+        orgaoExpedidor:
+            type: string
+            nullable: false
+            length: 10
+            column: orgao_expedidor
+        serie:
+            type: string
+            nullable: false
+            length: 5
+        ufExpedicao:
+            type: integer
+            nullable: true
+            column: uf_expedicao
+    manyToOne:
+        fkSwUf:
+            targetEntity: Urbem\CoreBundle\Entity\SwUf
+            inversedBy: fkPessoalCtps
+            joinColumns:
+                uf_expedicao:
+                    referencedColumnName: cod_uf
+    oneToMany:
+        fkPessoalServidorCtps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorCtps
+            mappedBy: fkPessoalCtps

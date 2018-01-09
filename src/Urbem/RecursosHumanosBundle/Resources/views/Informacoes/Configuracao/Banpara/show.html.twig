@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container-rh">
+    <div class="box-header col s12">
+    <div class="col s10 box-title left-align show">
+        <h2>{{ 'label.configuracaoBanpara.modulo'|trans }}</h2>
+    </div>
+    <div class="col s2">
+        <div class="hide-on-med-and-down col l9 right-align">
+            <a class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('informacoes_configuracao_banpara_edit', { 'id': configuracao.id }) }}"><i class="material-icons">edit</i></a>
+        </div>
+        <div class="hide-on-med-and-down col l3 right-align">
+            {{ form_start(delete_form) }}
+            <button class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir" value="Delete" type="submit" name="action"><i class="material-icons">delete</i></button>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+</div>
+<div class="box-body  no-padding">
+    <table class="bordered show-table">
+        <tbody>
+            <tr class="sonata-ba-view-container">
+                <th>Id</th>
+                <td>{{ configuracao.id }}</td>
+            </tr>
+            <tr>
+                <th>Descricao</th>
+                <td>{{ configuracao.descricao }}</td>
+            </tr>
+            <tr>
+                <th>Numorgaobanpara</th>
+                <td>{{ configuracao.numOrgaoBanpara }}</td>
+            </tr>
+            <tr>
+                <th>Timestamp</th>
+                <td>{% if configuracao.timestamp %}{{ configuracao.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Vigencia</th>
+                <td>{% if configuracao.vigencia %}{{ configuracao.vigencia|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <a  class="btn-floating white-text blue darken-4" href="{{ path('informacoes_configuracao_banco_brasil_index') }}"><i class="material-icons">arrow_back</i></a>
+    </div>
+</div>
+{% endblock %}

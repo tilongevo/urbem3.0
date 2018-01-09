@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\SwAutorizacaoAnulada:
+    type: entity
+    table: sw_autorizacao_anulada
+    id:
+        codAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autorizacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+    fields:
+        dtAnulacao:
+            type: date
+            nullable: false
+            column: dt_anulacao
+        motivo:
+            type: text
+            nullable: true
+    oneToOne:
+        fkSwAutorizacaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\SwAutorizacaoEmpenho
+            inversedBy: fkSwAutorizacaoAnulada
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao

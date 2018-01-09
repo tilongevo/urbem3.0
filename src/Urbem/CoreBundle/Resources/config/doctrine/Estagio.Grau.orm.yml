@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Estagio\Grau:
+    type: entity
+    table: estagio.grau
+    id:
+        codGrau:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: estagio.grau_cod_grau_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_grau
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkEstagioCursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\Curso
+            mappedBy: fkEstagioGrau

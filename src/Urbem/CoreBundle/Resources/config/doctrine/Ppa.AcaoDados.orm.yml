@@ -1,0 +1,172 @@
+Urbem\CoreBundle\Entity\Ppa\AcaoDados:
+    type: entity
+    table: ppa.acao_dados
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        timestampAcaoDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_acao_dados
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codProduto:
+            type: integer
+            nullable: true
+            column: cod_produto
+        codRegiao:
+            type: integer
+            nullable: false
+            column: cod_regiao
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codFuncao:
+            type: integer
+            nullable: true
+            column: cod_funcao
+        codSubfuncao:
+            type: integer
+            nullable: true
+            column: cod_subfuncao
+        codGrandeza:
+            type: integer
+            nullable: false
+            column: cod_grandeza
+        codUnidadeMedida:
+            type: integer
+            nullable: true
+            column: cod_unidade_medida
+        titulo:
+            type: string
+            nullable: false
+            length: 480
+        descricao:
+            type: string
+            nullable: false
+            length: 480
+        finalidade:
+            type: string
+            nullable: false
+            length: 480
+        codForma:
+            type: integer
+            nullable: false
+            column: cod_forma
+        codTipoOrcamento:
+            type: integer
+            nullable: false
+            column: cod_tipo_orcamento
+        detalhamento:
+            type: string
+            nullable: false
+            length: 480
+        valorEstimado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_estimado
+        metaEstimada:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: meta_estimada
+        codNatureza:
+            type: integer
+            nullable: true
+            column: cod_natureza
+    manyToOne:
+        fkPpaAcao:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Acao
+            inversedBy: fkPpaAcaoDados
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+        fkPpaTipoAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\TipoAcao
+            inversedBy: fkPpaAcaoDados
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkPpaProduto:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Produto
+            inversedBy: fkPpaAcaoDados
+            joinColumns:
+                cod_produto:
+                    referencedColumnName: cod_produto
+        fkPpaRegiao:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Regiao
+            inversedBy: fkPpaAcaoDados
+            joinColumns:
+                cod_regiao:
+                    referencedColumnName: cod_regiao
+        fkOrcamentoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Funcao
+            inversedBy: fkPpaAcaoDados
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+        fkOrcamentoSubfuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Subfuncao
+            inversedBy: fkPpaAcaoDados
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_subfuncao:
+                    referencedColumnName: cod_subfuncao
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkPpaAcaoDados
+            joinColumns:
+                cod_unidade_medida:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza
+    oneToMany:
+        fkPpaAcaoUnidadeExecutoras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoUnidadeExecutora
+            mappedBy: fkPpaAcaoDados
+        fkPpaAcaoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoNorma
+            mappedBy: fkPpaAcaoDados
+        fkPpaAcaoRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoRecurso
+            mappedBy: fkPpaAcaoDados
+    oneToOne:
+        fkPpaAcaoPeriodo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoPeriodo
+            mappedBy: fkPpaAcaoDados
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados

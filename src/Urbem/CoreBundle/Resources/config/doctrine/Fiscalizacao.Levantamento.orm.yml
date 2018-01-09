@@ -1,0 +1,86 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\Levantamento:
+    type: entity
+    table: fiscalizacao.levantamento
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        receitaDeclarada:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: receita_declarada
+        receitaEfetiva:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: receita_efetiva
+        issPago:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: iss_pago
+        issDevido:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: iss_devido
+        issDevolver:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: iss_devolver
+        issPagar:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: iss_pagar
+        totalDevolver:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: total_devolver
+        totalPagar:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: total_pagar
+    oneToMany:
+        fkFiscalizacaoLevantamentoCorrecoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\LevantamentoCorrecao
+            mappedBy: fkFiscalizacaoLevantamento
+        fkFiscalizacaoLevantamentoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\LevantamentoAcrescimo
+            mappedBy: fkFiscalizacaoLevantamento
+    oneToOne:
+        fkFiscalizacaoProcessoLevantamento:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoLevantamento
+            inversedBy: fkFiscalizacaoLevantamento
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia

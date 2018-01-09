@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Pessoal\ServidorReservista:
+    type: entity
+    table: pessoal.servidor_reservista
+    id:
+        codServidor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servidor
+    fields:
+        nrCarteiraRes:
+            type: string
+            nullable: false
+            length: 15
+            column: nr_carteira_res
+        catReservista:
+            type: string
+            nullable: false
+            length: 1
+            column: cat_reservista
+        origemReservista:
+            type: string
+            nullable: false
+            length: 1
+            column: origem_reservista
+    oneToOne:
+        fkPessoalServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Servidor
+            inversedBy: fkPessoalServidorReservista
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor

@@ -1,0 +1,99 @@
+Urbem\CoreBundle\Entity\Compras\MapaItem:
+    type: entity
+    table: compras.mapa_item
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\MapaItemRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codMapa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mapa
+        exercicioSolicitacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_solicitacao
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSolicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_solicitacao
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        lote:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 4
+        vlTotal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_total
+    manyToOne:
+        fkComprasMapaSolicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaSolicitacao
+            inversedBy: fkComprasMapaItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa
+                exercicio_solicitacao:
+                    referencedColumnName: exercicio_solicitacao
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+        fkComprasSolicitacaoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItem
+            inversedBy: fkComprasMapaItens
+            joinColumns:
+                exercicio_solicitacao:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+                cod_centro:
+                    referencedColumnName: cod_centro
+                cod_item:
+                    referencedColumnName: cod_item
+    oneToMany:
+        fkComprasMapaItemAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaItemAnulacao
+            mappedBy: fkComprasMapaItem
+        fkComprasMapaItemDotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaItemDotacao
+            mappedBy: fkComprasMapaItem

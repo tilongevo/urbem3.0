@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Manad\QuadroModeloLrf:
+    type: entity
+    table: manad.quadro_modelo_lrf
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+        codQuadro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_quadro
+    fields:
+        nomQuadro:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_quadro
+    manyToOne:
+        fkManadModeloLrf:
+            targetEntity: Urbem\CoreBundle\Entity\Manad\ModeloLrf
+            inversedBy: fkManadQuadroModeloLrfs
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_modelo:
+                    referencedColumnName: cod_modelo
+    oneToMany:
+        fkManadRecursoModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\RecursoModeloLrf
+            mappedBy: fkManadQuadroModeloLrf
+        fkManadPlanoContaModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\PlanoContaModeloLrf
+            mappedBy: fkManadQuadroModeloLrf

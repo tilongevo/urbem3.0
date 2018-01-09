@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\Documento:
+    type: entity
+    table: fiscalizacao.documento
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+    fields:
+        codTipoFiscalizacao:
+            type: integer
+            nullable: false
+            column: cod_tipo_fiscalizacao
+        nomDocumento:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_documento
+        usoInterno:
+            type: boolean
+            nullable: false
+            column: uso_interno
+        ativo:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkFiscalizacaoTipoFiscalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\TipoFiscalizacao
+            inversedBy: fkFiscalizacaoDocumentos
+            joinColumns:
+                cod_tipo_fiscalizacao:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkFiscalizacaoDocumentoAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\DocumentoAtividade
+            mappedBy: fkFiscalizacaoDocumento
+        fkFiscalizacaoInicioFiscalizacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InicioFiscalizacaoDocumentos
+            mappedBy: fkFiscalizacaoDocumento

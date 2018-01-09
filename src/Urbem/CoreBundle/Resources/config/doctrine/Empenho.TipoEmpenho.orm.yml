@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Empenho\TipoEmpenho:
+    type: entity
+    table: empenho.tipo_empenho
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_tipo
+    oneToMany:
+        fkEmpenhoPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenho
+            mappedBy: fkEmpenhoTipoEmpenho

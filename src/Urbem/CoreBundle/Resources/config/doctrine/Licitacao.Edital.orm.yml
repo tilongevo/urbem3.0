@@ -1,0 +1,175 @@
+Urbem\CoreBundle\Entity\Licitacao\Edital:
+    type: entity
+    table: licitacao.edital
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Licitacao\EditalRepository
+    id:
+        numEdital:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_edital
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        exercicioLicitacao:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_licitacao
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+        codLicitacao:
+            type: integer
+            nullable: false
+            column: cod_licitacao
+        dtEntregaPropostas:
+            type: date
+            nullable: false
+            column: dt_entrega_propostas
+        horaEntregaPropostas:
+            type: string
+            nullable: false
+            length: 5
+            column: hora_entrega_propostas
+        localEntregaPropostas:
+            type: string
+            nullable: false
+            length: 100
+            column: local_entrega_propostas
+        localAberturaPropostas:
+            type: string
+            nullable: false
+            length: 100
+            column: local_abertura_propostas
+        dtAberturaPropostas:
+            type: date
+            nullable: false
+            column: dt_abertura_propostas
+        horaAberturaPropostas:
+            type: string
+            nullable: false
+            length: 5
+            column: hora_abertura_propostas
+        localEntregaMaterial:
+            type: string
+            nullable: false
+            length: 100
+            column: local_entrega_material
+        dtValidadeProposta:
+            type: date
+            nullable: false
+            column: dt_validade_proposta
+        observacaoValidadeProposta:
+            type: text
+            nullable: true
+            column: observacao_validade_proposta
+        condicoesPagamento:
+            type: string
+            nullable: false
+            length: 80
+            column: condicoes_pagamento
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        dtAprovacaoJuridico:
+            type: date
+            nullable: false
+            column: dt_aprovacao_juridico
+        responsavelJuridico:
+            type: integer
+            nullable: false
+            column: responsavel_juridico
+        dtFinalEntregaPropostas:
+            type: date
+            nullable: true
+            column: dt_final_entrega_propostas
+        horaFinalEntregaPropostas:
+            type: string
+            nullable: true
+            length: 5
+            column: hora_final_entrega_propostas
+    manyToOne:
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkLicitacaoEditais
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_licitacao:
+                    referencedColumnName: exercicio
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkLicitacaoEditais
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoEditais
+            joinColumns:
+                responsavel_juridico:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkLicitacaoAtas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Ata
+            mappedBy: fkLicitacaoEdital
+        fkLicitacaoEditalImpugnados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\EditalImpugnado
+            mappedBy: fkLicitacaoEdital
+        fkLicitacaoPublicacaoEditais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PublicacaoEdital
+            mappedBy: fkLicitacaoEdital
+    oneToOne:
+        fkLicitacaoEditalAnulado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\EditalAnulado
+            mappedBy: fkLicitacaoEdital
+            joinColumns:
+                num_edital:
+                    referencedColumnName: num_edital
+                exercicio:
+                    referencedColumnName: exercicio
+        fkLicitacaoEditalSuspenso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\EditalSuspenso
+            mappedBy: fkLicitacaoEdital
+            joinColumns:
+                num_edital:
+                    referencedColumnName: num_edital
+                exercicio:
+                    referencedColumnName: exercicio

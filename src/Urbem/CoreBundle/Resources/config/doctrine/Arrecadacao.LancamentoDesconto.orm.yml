@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Arrecadacao\LancamentoDesconto:
+    type: entity
+    table: arrecadacao.lancamento_desconto
+    id:
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+        codDesconto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_desconto
+    fields:
+        vencimento:
+            type: date
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkArrecadacaoLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lancamento
+            inversedBy: fkArrecadacaoLancamentoDescontos
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento

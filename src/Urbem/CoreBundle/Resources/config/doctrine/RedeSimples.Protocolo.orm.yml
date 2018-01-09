@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\RedeSimples\Protocolo:
+    type: entity
+    table: rede_simples.protocolo
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: rede_simples.protocolo_id_sq
+                allocationSize: 1
+                initialValue: 1
+            column: id
+    fields:
+        protocolo:
+            type: string
+            nullable: true
+            length: 80
+        status:
+            type: string
+            nullable: false
+            length: 80
+        retorno:
+            type: string
+            nullable: true
+            length: 80
+        dataCriacao:
+            type: date
+            nullable: false
+            column: data_criacao
+        dataUltimaConsulta:
+            type: date
+            nullable: true
+            column: data_ultima_consulta
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            joinColumns:
+                cod_usuario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkRedeSimplesProtocoloItens:
+          cascade:
+              - persist
+              - remove
+          orphanRemoval: true
+          targetEntity: Urbem\CoreBundle\Entity\RedeSimples\ProtocoloItem
+          mappedBy: fkProtocoloRedeSimplesProtocolo

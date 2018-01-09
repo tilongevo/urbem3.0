@@ -1,0 +1,168 @@
+Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho:
+    type: entity
+    table: empenho.item_pre_empenho
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\ItemPreEmpenhoRepository
+    id:
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+    fields:
+        codUnidade:
+            type: integer
+            nullable: true
+            column: cod_unidade
+        codGrandeza:
+            type: integer
+            nullable: true
+            column: cod_grandeza
+        nomUnidade:
+            type: string
+            nullable: true
+            length: 80
+            column: nom_unidade
+        siglaUnidade:
+            type: string
+            nullable: true
+            length: 20
+            column: sigla_unidade
+        nomItem:
+            type: text
+            nullable: false
+            column: nom_item
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+        vlTotal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_total
+        complemento:
+            type: text
+            nullable: false
+        codItem:
+            type: integer
+            nullable: true
+            column: cod_item
+        codCentro:
+            type: integer
+            nullable: true
+            column: cod_centro
+        codMarca:
+            type: integer
+            nullable: true
+            column: cod_marca
+    manyToOne:
+        fkEmpenhoPreEmpenho:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenho
+            inversedBy: fkEmpenhoItemPreEmpenhos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkEmpenhoItemPreEmpenhos
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza
+        fkAlmoxarifadoCatalogoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            inversedBy: fkEmpenhoItemPreEmpenhos
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+        fkAlmoxarifadoCentroCusto:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto
+            inversedBy: fkEmpenhoItemPreEmpenhos
+            joinColumns:
+                cod_centro:
+                    referencedColumnName: cod_centro
+        fkAlmoxarifadoMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Marca
+            inversedBy: fkEmpenhoItemPreEmpenhos
+            joinColumns:
+                cod_marca:
+                    referencedColumnName: cod_marca
+    oneToMany:
+        fkComprasOrdemItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemItem
+            mappedBy: fkEmpenhoItemPreEmpenho
+        fkEmpenhoEmpenhoAnuladoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoAnuladoItem
+            mappedBy: fkEmpenhoItemPreEmpenho
+        fkEmpenhoNotaLiquidacaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoItem
+            mappedBy: fkEmpenhoItemPreEmpenho
+        fkTcemgContratoAditivoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContratoAditivoItem
+            mappedBy: fkEmpenhoItemPreEmpenho
+        fkEmpenhoItemEmpenhoDespesasFixas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemEmpenhoDespesasFixas
+            mappedBy: fkEmpenhoItemPreEmpenho
+    oneToOne:
+        fkEmpenhoItemPreEmpenhoCompra:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenhoCompra
+            mappedBy: fkEmpenhoItemPreEmpenho
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item
+        fkEmpenhoItemPreEmpenhoJulgamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenhoJulgamento
+            mappedBy: fkEmpenhoItemPreEmpenho
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item

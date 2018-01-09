@@ -1,0 +1,104 @@
+Urbem\CoreBundle\Entity\Patrimonio\InventarioHistoricoBem:
+    type: entity
+    table: patrimonio.inventario_historico_bem
+    indexes:
+            exercicio_id_iventario_idx:
+                columns:
+                    - exercicio
+                    - id_inventario
+            cod_bem_idx:
+                columns:
+                    - cod_bem
+            cod_bem_timestamp_historico_idx:
+                columns:
+                    - cod_bem
+                    - timestamp_historico
+            cod_situacao_idx:
+                columns:
+                    - cod_situacao
+            cod_local_idx:
+                columns:
+                    - cod_local
+            cod_orgao_idx:
+                columns:
+                    - cod_orgao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        idInventario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: id_inventario
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+    fields:
+        timestampHistorico:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_historico
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        codSituacao:
+            type: integer
+            nullable: false
+            column: cod_situacao
+        codLocal:
+            type: integer
+            nullable: false
+            column: cod_local
+        codOrgao:
+            type: integer
+            nullable: false
+            column: cod_orgao
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    manyToOne:
+        fkPatrimonioInventario:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Inventario
+            inversedBy: fkPatrimonioInventarioHistoricoBens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                id_inventario:
+                    referencedColumnName: id_inventario
+        fkPatrimonioHistoricoBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\HistoricoBem
+            inversedBy: fkPatrimonioInventarioHistoricoBens
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+                timestamp_historico:
+                    referencedColumnName: timestamp
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioInventarioHistoricoBens
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkPatrimonioSituacaoBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\SituacaoBem
+            inversedBy: fkPatrimonioInventarioHistoricoBens
+            joinColumns:
+                cod_situacao:
+                    referencedColumnName: cod_situacao
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkPatrimonioInventarioHistoricoBens
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkPatrimonioInventarioHistoricoBens
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao

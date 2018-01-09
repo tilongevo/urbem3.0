@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a class="btn-lg tooltipped"
+           data-position="left"
+           data-delay="50"
+           data-tooltip="Incluir">
+            <i class="fa fa-cubes left"></i>
+            {{ 'label.recursosHumanos.registrosEventoFerias.eventosCadastrados'|trans }}
+        </a>
+    </div>
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <tr class="sonata-ba-list-field-header">
+            <th class="th-rh">#</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.registrosEventoFerias.codigo'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.registrosEventoFerias.evento'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.registrosEventoFerias.desdobramento'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.registrosEventoFerias.valor'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.registrosEventoFerias.quantidade'|trans }}</th>
+            <th class="th-rh">{{ 'label.recursosHumanos.registrosEventoFerias.automatico'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for evento in object.eventos %}
+            <tr>
+                <td class="td-rh">{{ loop.index }}</td>
+                <td class="td-rh">{{ evento.codigo }}</td>
+                <td class="td-rh">{{ evento.descricao|upper }}</td>
+                <td class="td-rh">{{ evento.desdobramento_texto|upper }}</td>
+                <td class="td-rh">{{ evento.valor|number_format(2, ',', '.') }}</td>
+                {% if evento.parcela and evento.parcela != '' %}
+                    <td class="td-rh">{{ evento.quantidade|number_format(0, '.', ',') ~'/'~ evento.parcela }}</td>
+                {% else %}
+                    <td class="td-rh">{{ evento.quantidade|number_format(2, '.', ',')}}</td>
+                {% endif %}
+                <td class="td-rh">{{ evento.automatico|upper }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

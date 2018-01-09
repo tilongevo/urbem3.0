@@ -1,0 +1,130 @@
+Urbem\CoreBundle\Entity\Tcern\ObraContrato:
+    type: entity
+    table: tcern.obra_contrato
+    uniqueConstraints:
+        uk_tcern_obra_contrato:
+            columns:
+                - num_contrato
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        numObra:
+            type: integer
+            nullable: false
+            column: num_obra
+        numContrato:
+            type: string
+            nullable: false
+            length: 50
+            column: num_contrato
+        servico:
+            type: string
+            nullable: false
+            length: 255
+        processoLicitacao:
+            type: string
+            nullable: false
+            length: 10
+            column: processo_licitacao
+        numcgm:
+            type: integer
+            nullable: false
+        valorContrato:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_contrato
+        valorExecutadoExercicio:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_executado_exercicio
+        valorAExercutar:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_a_exercutar
+        dtInicioContrato:
+            type: date
+            nullable: false
+            column: dt_inicio_contrato
+        dtTerminoContrato:
+            type: date
+            nullable: false
+            column: dt_termino_contrato
+        numArt:
+            type: integer
+            nullable: false
+            column: num_art
+        valorIss:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_iss
+        numDcms:
+            type: integer
+            nullable: false
+            column: num_dcms
+        valorInss:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_inss
+        numcgmFiscal:
+            type: integer
+            nullable: false
+            column: numcgm_fiscal
+    manyToOne:
+        fkTcernObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Obra
+            inversedBy: fkTcernObraContratos
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                num_obra:
+                    referencedColumnName: num_obra
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcernObraContratos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkSwCgm1:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcernObraContratos1
+            joinColumns:
+                numcgm_fiscal:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkTcernObraAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ObraAditivo
+            mappedBy: fkTcernObraContrato
+        fkTcernObraAcompanhamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ObraAcompanhamento
+            mappedBy: fkTcernObraContrato

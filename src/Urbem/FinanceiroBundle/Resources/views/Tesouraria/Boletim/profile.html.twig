@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <table class="bordered striped">
+                <thead>
+                    <tr><h5 class="blue-text text-darken-4">Boletim</h5></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Boletim</td>
+                        <td>{{ boletim.codBoletim }}</td>
+                    </tr>
+                    <tr>
+                        <td>Data do Boletim</td>
+                        <td>{{ boletim.dtBoletim|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td>Exercicio</td>
+                        <td>{{ boletim.exercicio }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s8">
+            <a  class="btn-floating white-text blue darken-4" href="{{ path('urbem_financeiro_tesouraria_abrir_boletim_list') }}"><i class="material-icons">arrow_back</i></a>
+        </div>
+        <div class="col s4 right-align">
+            {% for form in forms %}
+                {{ form(form) }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

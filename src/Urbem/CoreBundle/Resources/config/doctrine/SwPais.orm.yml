@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\SwPais:
+    type: entity
+    table: sw_pais
+    uniqueConstraints:
+        uq_pais_1:
+            columns:
+                - cod_rais
+    id:
+        codPais:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pais
+    fields:
+        codRais:
+            type: integer
+            nullable: false
+            column: cod_rais
+        nomPais:
+            type: string
+            nullable: false
+            length: 20
+            column: nom_pais
+        nacionalidade:
+            type: string
+            nullable: false
+            length: 80
+        sigla3:
+            type: string
+            nullable: false
+            length: 3
+            column: sigla_3
+    oneToMany:
+        fkSwUfs:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwUf
+            mappedBy: fkSwPais
+        fkSwCgaPessoaFisicas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaPessoaFisica
+            mappedBy: fkSwPais
+        fkSwCgmPessoaFisicas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            mappedBy: fkSwPais
+        fkSwCgns:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            mappedBy: fkSwPais
+        fkSwCgns1:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            mappedBy: fkSwPais1

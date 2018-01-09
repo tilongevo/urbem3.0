@@ -1,0 +1,72 @@
+{% set item = field.data.item %}
+{% set saldoDotacao = field.data.saldoDotacao %}
+{% set saldoDisponivelDotacao = field.data.saldoDisponivelDotacao %}
+{% set valorReserva = field.data.valorReserva %}
+<div class="form_row col s12 campo-sonata">
+    <table class="table show-table col s12">
+        <tbody>
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.patrimonial.compras.mapaItem.item'|trans }}</th>
+            <td>{{ item.nom_item }}</td>
+        </tr>
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.patrimonial.compras.mapaItem.unidadeMedida'|trans }}</th>
+            <td>{{ item.nom_unidade }}</td>
+        </tr>
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.patrimonial.compras.mapaItem.complemento'|trans }}</th>
+            <td>{{ item.complemento }}</td>
+        </tr>
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.patrimonial.compras.mapaItem.centroCusto'|trans }}</th>
+            <td>{{ item.cod_centro }} - {{ item.centro_custo }}</td>
+        </tr>
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.patrimonial.compras.mapaItem.saldoEstoque'|trans }}</th>
+            <td>{{ item.quantidade_estoque|number_format(2, ',', '.') }}</td>
+        </tr>
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.patrimonial.compras.mapaItem.qtdeSolicitada'|trans }}</th>
+            <td>{{ item.quantidade_solicitada|number_format(2, ',', '.') }}</td>
+        </tr>
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.patrimonial.compras.mapaItem.qtdeOutrosMapas'|trans }}</th>
+            <td>{{ item.quantidade_mapa|number_format(2, ',', '.') }}</td>
+        </tr>
+
+        {% if item.boDotacao == 'T' %}
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.patrimonial.compras.mapaItem.dotacaoOrcamentaria'|trans }}</th>
+                <td>{{ item.cod_despesa }} - {{ item.dotacao_nom_conta }}</td>
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.patrimonial.compras.mapaItem.desdobramento'|trans }}</th>
+                <td>{{ item.cod_estrutural }} - {{ item.nom_conta }}</td>
+            </tr>
+
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.patrimonial.compras.mapaItem.saldoDotacao'|trans }}</th>
+                <td>{{ saldoDotacao|number_format(2, ',', '.') }}</td>
+            </tr>
+        {% elseif item.boDotacao == 'F' %}
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.patrimonial.compras.mapaItem.qtdMapa'|trans }}</th>
+                <td id="quantidade">{{ item.quantidade_atendida|number_format(4, ',', '.') }}</td>
+            </tr>
+        {% endif %}
+
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.patrimonial.compras.mapaItem.vlReservadoExercicio'|trans }}</th>
+            <td>{{ valorReserva > 0 ? valorReserva|number_format(2, ',', '.') : '-' }}</td>
+        </tr>
+
+        {% if item.boDotacao == 'T' %}
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.patrimonial.compras.mapaItem.saldoDisponivelItem'|trans }}</th>
+                <td>{{ saldoDisponivelDotacao|number_format(2, ',', '.') }}</td>
+            </tr>
+        {% endif %}
+
+        </tbody>
+    </table>
+</div>

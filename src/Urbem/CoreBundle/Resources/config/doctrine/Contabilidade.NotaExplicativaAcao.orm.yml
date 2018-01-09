@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Contabilidade\NotaExplicativaAcao:
+    type: entity
+    table: contabilidade.nota_explicativa_acao
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+    fields: {  }
+    oneToMany:
+        fkContabilidadeNotaExplicativas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\NotaExplicativa
+            mappedBy: fkContabilidadeNotaExplicativaAcao
+    oneToOne:
+        fkAdministracaoAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Acao
+            inversedBy: fkContabilidadeNotaExplicativaAcao
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao

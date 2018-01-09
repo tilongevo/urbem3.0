@@ -1,0 +1,91 @@
+Urbem\CoreBundle\Entity\Licitacao\ParticipanteDocumentos:
+    type: entity
+    table: licitacao.participante_documentos
+    id:
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        dtValidade:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_validade
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        numDocumento:
+            type: string
+            nullable: false
+            length: 30
+            column: num_documento
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkLicitacaoParticipante:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Participante
+            inversedBy: fkLicitacaoParticipanteDocumentos
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkLicitacaoLicitacaoDocumentos:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\LicitacaoDocumentos
+            inversedBy: fkLicitacaoParticipanteDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkLicitacaoAtributoParticipanteDocumentosValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\AtributoParticipanteDocumentosValor
+            mappedBy: fkLicitacaoParticipanteDocumentos

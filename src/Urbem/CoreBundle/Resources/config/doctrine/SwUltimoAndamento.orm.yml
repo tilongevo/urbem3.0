@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\SwUltimoAndamento:
+    type: entity
+    table: sw_ultimo_andamento
+    indexes:
+        ix_sw_ultimo_andamento_1:
+            columns:
+                - ano_exercicio
+                - cod_processo
+                - cod_andamento
+    id:
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+    fields:
+        codAndamento:
+            type: integer
+            nullable: false
+            column: cod_andamento
+        codOrgao:
+            type: integer
+            nullable: false
+            column: cod_orgao
+        codUsuario:
+            type: integer
+            nullable: false
+            column: cod_usuario
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkSwAndamento:
+            targetEntity: Urbem\CoreBundle\Entity\SwAndamento
+            inversedBy: fkSwUltimoAndamentos
+            joinColumns:
+                cod_andamento:
+                    referencedColumnName: cod_andamento
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkSwUltimoAndamentos
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkSwUltimoAndamentos
+            joinColumns:
+                cod_usuario:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkSwUltimoAndamento
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+<div class="container-rh">
+    <div class="row title-edit box-title-rh">
+        <h5>Incluir Salário Padrão</h5>
+        <div class="divider grey title-divider"><p>1</p></div>
+    </div>
+    {% macro codNivelPadraoNivel_prototype(codNivelPadraoNivel) %}
+        <div class="row padrao-box padrao-box-nivel row-help-padrao">
+            <div class="col s4 field-filtro select-filtro">
+                {{ form_label(codNivelPadraoNivel.descricao, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+                <span class="label-rh required-helper">*</span>
+                {{ form_widget(codNivelPadraoNivel.descricao, {'attr': {'class': 'white required input-rh browser-default'}}) }}
+                {{ form_errors(codNivelPadraoNivel.descricao) }}
+            </div>
+            <div class="col s2 field-filtro select-filtro">
+                {{ form_label(codNivelPadraoNivel.percentual, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+                <span class="label-rh required-helper">*</span>
+                <div class="input-group">
+                    {{ form_widget(codNivelPadraoNivel.percentual, {'attr': {'class': 'white required input-rh browser-default', 'onBlur' : 'calculaCorrecao(this)'}}) }}
+                    <span class="input-group-addon">
+                        <span>%</span>
+                    </span>
+                </div>
+                {{ form_errors(codNivelPadraoNivel.percentual) }}
+            </div>
+            <div class="col s2 field-filtro select-filtro padrao-box-nivel">
+                {{ form_label(codNivelPadraoNivel.valor, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+                <span class="label-rh required-helper">*</span>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <span>R$</span>
+                    </span>
+                {{ form_widget(codNivelPadraoNivel.valor, {'attr': {'class': 'white required input-money browser-default money '}}) }}
+                </div>
+                {{ form_errors(codNivelPadraoNivel.valor) }}
+            </div>
+            <div class="col s2 field-filtro select-filtro">
+                {{ form_label(codNivelPadraoNivel.qtdmeses, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+                <span class="label-rh required-helper">*</span>
+                {{ form_widget(codNivelPadraoNivel.qtdmeses, {'attr': {'class': 'white required input-rh browser-default', 'min':'0'}}) }}
+                {{ form_errors(codNivelPadraoNivel.qtdmeses) }}
+            </div>
+            <div class="col s1 deletar-padrao">
+                <button class="removerNivel btn btn-delete blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir" type="button"><i class="material-icons">delete</i></button>
+            </div>
+        </div>
+    {% endmacro codNivelPadraoNivel_prototype %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col s8">
+            {{ form_label(form.descricao, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+            <span class="label-rh required-helper">*</span>
+            {{ form_widget(form.descricao, {'attr': {'class': 'white required input-rh browser-default'}}) }}
+            {{ form_errors(form.descricao) }}
+        </div>
+        <div class="col s2">
+            {{ form_label(form.horasMensais, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+            <span class="label-rh required-helper">*</span>
+            {{ form_widget(form.horasMensais, {'attr': {'class': 'white required input-rh browser-default'}}) }}
+            {{ form_errors(form.horasMensais) }}
+        </div>
+        <div class="col s2">
+            {{ form_label(form.horasSemanais, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+            <span class="label-rh required-helper">*</span>
+            {{ form_widget(form.horasSemanais, {'attr': {'class': 'white required input-rh browser-default'}}) }}
+            {{ form_errors(form.horasSemanais) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s3 field-filtro select-filtro">
+            {{ form_label(form.codPadraoPadrao.valor, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+            <span class="label-rh required-helper">*</span>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span>R$</span>
+                </span>
+            {{ form_widget(form.codPadraoPadrao.valor, {'attr': {'class': 'white input-money browser-default money'}}) }}
+            </div>
+            {{ form_errors(form.codPadraoPadrao.valor) }}
+        </div>
+        <div class="col s3 field-filtro select-filtro">
+            {{ form_label(form.codPadraoPadrao.vigencia, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+            <span class="label-rh required-helper">*</span>
+            <div class="input-group date">
+            {{ form_widget(form.codPadraoPadrao.vigencia, {'attr': {'class': 'white required input-rh browser-default'}}) }}
+                <span class="input-group-addon">
+                    <span class="fa-calendar fa"></span>
+                </span>
+            </div>
+            {{ form_errors(form.codPadraoPadrao.vigencia) }}
+        </div>
+        <div class="col s3 field-filtro select-filtro">
+            {{ form_label(form.codPadraoPadrao.tipoNorma, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+            <span class="label-rh required-helper">*</span>
+            {{ form_widget(form.codPadraoPadrao.tipoNorma, {'attr': {'class': 'white required input-rh browser-default'}, 'placeholder': 'label.orgao.codTipoNorma'}) }}
+            {{ form_errors(form.codPadraoPadrao.tipoNorma) }}
+        </div>
+        <div class="col s3 field-filtro select-filtro">
+            {{ form_label(form.codPadraoPadrao.codNorma, null, {'label_attr': {'class': 'control-label required label-rh'}}) }}
+            <span class="label-rh required-helper">*</span>
+            {{ form_widget(form.codPadraoPadrao.codNorma, {'attr': {'class': 'white required input-rh browser-default'}, 'placeholder': 'label.codNorma'}) }}
+            {{ form_errors(form.codPadraoPadrao.codNorma) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 left-align">
+            <button type="button" id="padrao_btnNivelPadraoNivel" name="padrao[btnNivelPadraoNivel]" class="waves-effect waves-light btn blue darken-4" style="margin-left: 0px;"><i class="material-icons left">add_circle</i>Progressão salarial</button>
+            {# {{ form_widget(form.btnNivelPadraoNivel, {'attr': {'class':'waves-effect waves-light btn-flat padrao-btn'}}) }} #}
+            <ul class="codNivelPadraoNivel" data-prototype="{{ _self.codNivelPadraoNivel_prototype(form.codNivelPadraoNivel.vars.prototype)|e }}"></ul>
+            {% for codNivelPadraoNivel in form.codNivelPadraoNivel %}
+                {{ _self.codNivelPadraoNivel_prototype(codNivelPadraoNivel) }}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <a  class="btn-floating white required-text blue darken-4" href="{{ path('urbem_recursos_humanos_folha_pagamento_padrao_list') }}"><i class="material-icons">arrow_back</i></a>
+        </div>
+        <div class="col s6 right-align">
+            <button type="submit" class="waves-effect waves-light btn blue darken-4" value="Salvar"><i class="material-icons left">save</i> Salvar</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+    </div>
+</div>
+    {% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('/bundles/recursoshumanos/javascripts/folhapagamento/padrao.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/recursoshumanos/javascripts/folhapagamento/normas.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/recursoshumanos/javascripts/folhapagamento/calcularCorrecao.js') }}"></script>
+    {% endblock javascript %}
+{% endblock content %}

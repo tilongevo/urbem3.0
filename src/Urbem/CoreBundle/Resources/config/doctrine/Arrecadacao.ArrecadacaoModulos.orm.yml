@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ArrecadacaoModulos:
+    type: entity
+    table: arrecadacao.arrecadacao_modulos
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields: {  }
+    oneToMany:
+        fkArrecadacaoGrupoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\GrupoCredito
+            mappedBy: fkArrecadacaoArrecadacaoModulos
+        fkArrecadacaoTabelaConversoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\TabelaConversao
+            mappedBy: fkArrecadacaoArrecadacaoModulos
+    oneToOne:
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkArrecadacaoArrecadacaoModulos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo

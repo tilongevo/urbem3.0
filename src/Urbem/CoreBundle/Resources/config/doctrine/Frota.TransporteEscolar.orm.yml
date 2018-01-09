@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Frota\TransporteEscolar:
+    type: entity
+    table: frota.transporte_escolar
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        mes:
+            type: integer
+            generator:
+                strategy: NONE
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+        cgmEscola:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_escola
+    fields:
+        passageiros:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+        distancia:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+        diasRodados:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: dias_rodados
+        codTurno:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: cod_turno
+    manyToOne:
+        fkAdministracaoMes:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Mes
+            inversedBy: fkFrotaTransporteEscolares
+            joinColumns:
+                mes:
+                    referencedColumnName: cod_mes
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaTransporteEscolares
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkFrotaEscola:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Escola
+            inversedBy: fkFrotaTransporteEscolares
+            joinColumns:
+                cgm_escola:
+                    referencedColumnName: numcgm
+        fkFrotaTurno:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Turno
+            inversedBy: fkFrotaTransporteEscolares
+            joinColumns:
+                cod_turno:
+                    referencedColumnName: cod_turno

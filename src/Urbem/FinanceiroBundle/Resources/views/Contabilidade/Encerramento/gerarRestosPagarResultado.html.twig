@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <div class="container-rh">
+        <div class="col s12 title-edit box-title-rh">
+            <h5>{{ 'label.registros'|trans }}</h5>
+            <div class="divider grey title-divider"><p>1</p></div>
+            <table id="tableContaCaixa" class="bordered highlight" style="width:100%">
+                <tr class="tr-rh">
+                    <th class="th-rh">{{ 'entidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recurso.modulo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.saldo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.restosProcessados'|trans }}</th>
+                    <th class="th-rh">{{ 'label.restosNaoProcessados'|trans }}</th>
+                    <th class="th-rh">{{ 'label.empenhoLiquidadesPagar'|trans }}</th>
+                    <th class="th-rh">{{ 'label.empenhosLiquidar'|trans }}</th>
+                    <th class="th-rh">{{ 'label.total'|trans }}</th>
+                </tr>
+                {% if retorno is not empty %}
+                    {% for result in retorno %}
+                        <tr>
+                            <td class="td-rh">{{ result.cod_recurso}}</td>
+                            <td class="td-rh">{{ result.tipo }}</td>
+                            <td class="td-rh">{{ result.saldo }}</td>
+                            <td class="td-rh">{{ result.restos_processados }}</td>
+                            <td class="td-rh">{{ result.restos_nao_processados }}</td>
+                            <td class="td-rh">{{ result.liquidado_a_pagar }}</td>
+                            <td class="td-rh">{{ result.a_liquidar }}</td>
+                            <td class="td-rh">{{ result.saldo_inscrito }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+
+            <form name="frm" method="post" action="{{ path('financeiro_contabilidade_encerramento_efetuar_gerar_restos_pagar')}}">
+                <input type="hidden" name="entidade" value="{{ entidade }}" />
+                <div class="col s6" style="margin-top: 15px">
+                    <a class="waves-effect waves-light btn blue darken-4 btn btn-success save left" style="margin-left: -10px"
+                       href="{{ path('urbem_financeiro_contabilidade_encerramento_gerar_restos_a_pagar_list', {cod_entidade : entidade}) }}">
+                        <i class="mdi mdi-file-document left"></i>Gerar Relatório
+                    </a>
+                </div>
+                <div class="col s6" style="margin-top: 15px">
+                    <button type="submit" class="waves-effect waves-light btn blue darken-4 btn btn-success save right"
+                            style="margin-right: -10px" name="btn_update_and_list">
+                            <i class="material-icons left">save</i>
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

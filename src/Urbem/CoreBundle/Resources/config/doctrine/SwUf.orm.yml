@@ -1,0 +1,112 @@
+Urbem\CoreBundle\Entity\SwUf:
+    type: entity
+    table: sw_uf
+    id:
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+    fields:
+        codPais:
+            type: integer
+            nullable: false
+            column: cod_pais
+        nomUf:
+            type: string
+            nullable: false
+            length: 50
+            column: nom_uf
+        siglaUf:
+            type: string
+            nullable: false
+            length: 2
+            column: sigla_uf
+    manyToOne:
+        fkSwPais:
+            targetEntity: Urbem\CoreBundle\Entity\SwPais
+            inversedBy: fkSwUfs
+            joinColumns:
+                cod_pais:
+                    referencedColumnName: cod_pais
+    oneToMany:
+        fkCseCidadoes:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            mappedBy: fkSwUf
+        fkContabilidadePlanoContaGerais:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoContaGeral
+            mappedBy: fkSwUf
+        fkEconomicoResponsavelTecnicos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ResponsavelTecnico
+            mappedBy: fkSwUf
+        fkPessoalCtps:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Ctps
+            mappedBy: fkSwUf
+        fkSwMunicipios:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            mappedBy: fkSwUf
+        fkTcepeDocumentos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\Documento
+            mappedBy: fkSwUf
+        fkTcmgoConfiguracaoIdes:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoIde
+            mappedBy: fkSwUf
+        fkTcmgoUnidadeResponsaveis:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\UnidadeResponsavel
+            mappedBy: fkSwUf
+        fkTcmgoUnidadeResponsaveis1:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\UnidadeResponsavel
+            mappedBy: fkSwUf1
+        fkSwCgmPessoaFisicas:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            mappedBy: fkSwUf

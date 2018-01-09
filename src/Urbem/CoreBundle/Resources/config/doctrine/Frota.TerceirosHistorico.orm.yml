@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Frota\TerceirosHistorico:
+    type: entity
+    table: frota.terceiros_historico
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codOrgao:
+            type: integer
+            nullable: false
+            column: cod_orgao
+        codLocal:
+            type: integer
+            nullable: false
+            column: cod_local
+    manyToOne:
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkFrotaTerceirosHistoricos
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkFrotaTerceirosHistoricos
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local
+    oneToOne:
+        fkFrotaTerceiros:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Terceiros
+            inversedBy: fkFrotaTerceirosHistorico
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+                timestamp:
+                    referencedColumnName: timestamp

@@ -1,0 +1,68 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% if object | terminalStatusFilter() == "Inativo"  %}
+    {% if admin.isGranted('EDIT', object) and admin.hasRoute('ativar_terminal') %}
+        <a href="{{ admin.generateObjectUrl('ativar_terminal', object) }}"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="Ativar terminal"
+           class="btn-list blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped">
+            <i class="mdi mdi-toggle-switch-off fa-lg" aria-hidden="true"></i>
+        </a>
+    {% endif %}
+{% endif %}
+{% if object | terminalStatusFilter() != "Inativo"  %}
+    {% if admin.isGranted('EDIT', object) and admin.hasRoute('desativar_terminal') %}
+        <a href="{{ admin.generateObjectUrl('desativar_terminal', object) }}"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="Desativar terminal"
+           class="btn-list blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped">
+            <i class="mdi mdi-toggle-switch fa-lg" aria-hidden="true"></i>
+        </a>
+    {% endif %}
+{% endif %}
+
+{% if object | terminalStatusFilter() == "reaberto"  %}
+    {% if admin.isGranted('EDIT', object) and admin.hasRoute('fechar_terminal') %}
+        <a href="{{ admin.generateObjectUrl('fechar_terminal', object) }}"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="Fechar terminal"
+           class="btn-list blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped">
+            <i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+        </a>
+    {% endif %}
+{% endif %}
+{% if object | terminalStatusFilter() == "fechado"  %}
+    {% if admin.isGranted('EDIT', object) and admin.hasRoute('reabrir_terminal') %}
+        <a href="{{ admin.generateObjectUrl('reabrir_terminal', object) }}"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="Reabrir terminal"
+           class="btn-list blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped">
+            <i class="fa fa-unlock fa-lg" aria-hidden="true"></i>
+        </a>
+    {% endif %}
+{% endif %}
+
+
+{% if object | terminalStatusFilter() == "Inativo" and "fechado" is defined %}
+    <a href="#" class="btn-list z-depth-0 hide-on-med-and-down">
+        <i class="fa fa-unlock fa-lg" style="color: transparent; cursor: default;" aria-hidden="true"></i>
+    </a>
+{% endif %}
+
+{% if object | terminalStatusFilter() != "Inativo" is defined %}
+    <a href="#" class="btn-list z-depth-0 hide-on-med-and-down">
+        <i class="fa fa-unlock fa-lg" style="color: transparent; cursor: default;" aria-hidden="true"></i>
+    </a>
+{% endif %}

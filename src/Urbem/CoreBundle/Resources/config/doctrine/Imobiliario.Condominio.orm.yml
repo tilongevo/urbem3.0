@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Imobiliario\Condominio:
+    type: entity
+    table: imobiliario.condominio
+    repositoryClass: Urbem\CoreBundle\Repository\Imobiliario\CondominioRepository
+    id:
+        codCondominio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_condominio
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        nomCondominio:
+            type: string
+            nullable: false
+            length: 160
+            column: nom_condominio
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+    manyToOne:
+        fkImobiliarioTipoCondominio:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoCondominio
+            inversedBy: fkImobiliarioCondominios
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkImobiliarioAtributoCondominioValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoCondominioValor
+            mappedBy: fkImobiliarioCondominio
+        fkImobiliarioLoteCondominios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteCondominio
+            mappedBy: fkImobiliarioCondominio
+        fkImobiliarioConstrucaoCondominios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConstrucaoCondominio
+            mappedBy: fkImobiliarioCondominio
+        fkImobiliarioCondominioProcessos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\CondominioProcesso
+            mappedBy: fkImobiliarioCondominio
+        fkImobiliarioCondominioAreaComuns:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\CondominioAreaComum
+            mappedBy: fkImobiliarioCondominio
+        fkImobiliarioCondominioCgns:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\CondominioCgm
+            mappedBy: fkImobiliarioCondominio
+        fkImobiliarioImovelCondominios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelCondominio
+            mappedBy: fkImobiliarioCondominio

@@ -1,0 +1,75 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\FiscalProcessoFiscal:
+    type: entity
+    table: fiscalizacao.fiscal_processo_fiscal
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        codFiscal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fiscal
+    fields:
+        status:
+            type: string
+            nullable: false
+            length: 1
+    manyToOne:
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoFiscalProcessoFiscais
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkFiscalizacaoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Fiscal
+            inversedBy: fkFiscalizacaoFiscalProcessoFiscais
+            joinColumns:
+                cod_fiscal:
+                    referencedColumnName: cod_fiscal
+    oneToMany:
+        fkFiscalizacaoAutoFiscalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutoFiscalizacao
+            mappedBy: fkFiscalizacaoFiscalProcessoFiscal
+        fkFiscalizacaoDocumentosEntregas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\DocumentosEntrega
+            mappedBy: fkFiscalizacaoFiscalProcessoFiscal
+        fkFiscalizacaoInicioFiscalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InicioFiscalizacao
+            mappedBy: fkFiscalizacaoFiscalProcessoFiscal
+        fkFiscalizacaoNotificacaoTermos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoTermo
+            mappedBy: fkFiscalizacaoFiscalProcessoFiscal
+        fkFiscalizacaoTerminoFiscalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\TerminoFiscalizacao
+            mappedBy: fkFiscalizacaoFiscalProcessoFiscal
+        fkFiscalizacaoNotificacaoFiscalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoFiscalizacao
+            mappedBy: fkFiscalizacaoFiscalProcessoFiscal

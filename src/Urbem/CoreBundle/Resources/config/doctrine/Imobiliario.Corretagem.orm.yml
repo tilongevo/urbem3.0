@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Imobiliario\Corretagem:
+    type: entity
+    table: imobiliario.corretagem
+    repositoryClass: Urbem\CoreBundle\Repository\Imobiliario\CorretagemRepository
+    id:
+        creci:
+            type: string
+            generator:
+                strategy: NONE
+            column: creci
+    fields: {  }
+    oneToMany:
+        fkImobiliarioImovelImobiliarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ImovelImobiliaria
+            mappedBy: fkImobiliarioCorretagem
+        fkImobiliarioTransferenciaCorretagens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaCorretagem
+            mappedBy: fkImobiliarioCorretagem
+    oneToOne:
+        fkImobiliarioImobiliaria:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imobiliaria
+            mappedBy: fkImobiliarioCorretagem
+            joinColumns:
+                creci:
+                    referencedColumnName: creci
+        fkImobiliarioCorretor:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Corretor
+            mappedBy: fkImobiliarioCorretagem
+            joinColumns:
+                creci:
+                    referencedColumnName: creci

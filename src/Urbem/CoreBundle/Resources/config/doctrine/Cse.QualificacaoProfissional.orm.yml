@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Cse\QualificacaoProfissional:
+    type: entity
+    table: cse.qualificacao_profissional
+    id:
+        codProfissao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_profissao
+        codEmpresa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empresa
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+    fields:
+        dtCadastro:
+            type: date
+            nullable: false
+            column: dt_cadastro
+        dtAdmissao:
+            type: date
+            nullable: true
+            column: dt_admissao
+        empregoAtual:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+            column: emprego_atual
+        ocupacao:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkCseProfissao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Profissao
+            inversedBy: fkCseQualificacaoProfissionais
+            joinColumns:
+                cod_profissao:
+                    referencedColumnName: cod_profissao
+        fkCseEmpresa:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Empresa
+            inversedBy: fkCseQualificacaoProfissionais
+            joinColumns:
+                cod_empresa:
+                    referencedColumnName: cod_empresa
+        fkCseCidadao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            inversedBy: fkCseQualificacaoProfissionais
+            joinColumns:
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao

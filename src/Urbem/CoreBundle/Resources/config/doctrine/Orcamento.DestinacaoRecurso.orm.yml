@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Orcamento\DestinacaoRecurso:
+    type: entity
+    table: orcamento.destinacao_recurso
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\DestinacaoRecursoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDestinacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_destinacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkOrcamentoRecursoDestinacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\RecursoDestinacao
+            mappedBy: fkOrcamentoDestinacaoRecurso

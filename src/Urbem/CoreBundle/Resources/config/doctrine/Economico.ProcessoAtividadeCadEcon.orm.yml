@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Economico\ProcessoAtividadeCadEcon:
+    type: entity
+    table: economico.processo_atividade_cad_econ
+    id:
+        ocorrenciaAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_atividade
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkEconomicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Atividade
+            inversedBy: fkEconomicoProcessoAtividadeCadEcons
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoProcessoAtividadeCadEcons
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica

@@ -1,0 +1,21 @@
+{% for object in admin.datagrid.results %}
+    <tr>
+        {% include admin.getTemplate('inner_list_row') %}
+    </tr>
+
+    <tr class="hidden">
+        <td colspan="{{ datagrid.columns.count}}">
+            {% include admin.getTemplate('hidden_inner_list_row') %}
+        </td>
+    </tr>
+{% endfor %}
+
+<script>
+    $(function () {
+        $('.hidden_table').click(function (e) {
+            $(this).parent().parent().parent().next('tr').toggleClass('hidden');
+            e.preventDefault();
+            return false;
+        });
+    });
+</script>

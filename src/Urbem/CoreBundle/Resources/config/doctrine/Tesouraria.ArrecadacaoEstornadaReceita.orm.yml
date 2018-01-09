@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornadaReceita:
+    type: entity
+    table: tesouraria.arrecadacao_estornada_receita
+    id:
+        timestampEstornada:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_estornada
+        timestampArrecadacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_arrecadacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_arrecadacao
+    fields:
+        codReceita:
+            type: integer
+            nullable: false
+            column: cod_receita
+        vlEstornado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_estornado
+    manyToOne:
+        fkTesourariaArrecadacaoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoReceita
+            inversedBy: fkTesourariaArrecadacaoEstornadaReceitas
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                cod_receita:
+                    referencedColumnName: cod_receita
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkTesourariaArrecadacaoEstornada:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornada
+            inversedBy: fkTesourariaArrecadacaoEstornadaReceita
+            joinColumns:
+                cod_arrecadacao:
+                    referencedColumnName: cod_arrecadacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp_arrecadacao:
+                    referencedColumnName: timestamp_arrecadacao
+                timestamp_estornada:
+                    referencedColumnName: timestamp_estornada

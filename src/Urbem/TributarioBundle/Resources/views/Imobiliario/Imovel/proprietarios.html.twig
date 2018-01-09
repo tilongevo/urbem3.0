@@ -1,0 +1,84 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="col s12 proprietarios">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioImovel.listaProprietarios'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableProprietariosManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.imobiliarioImovel.cgm'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioImovel.nome'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioImovel.quota'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        <tr class="tr-rh row-modelo-proprietarios" style="display:none;">
+            <td class="td-rh cgm">
+                <input type="hidden" class="imput-proprietario" name="proprietarios[]" />
+                <input type="hidden" class="imput-proprietario-quota" name="proprietario_quotas[]" />
+            </td>
+            <td class="td-rh nome"></td>
+            <td class="td-rh quota"></td>
+            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+        </tr>
+        {% for proprietario in field.data.proprietarios|sort %}
+            {% if proprietario.promitente == false %}
+                <tr class="tr-rh row-proprietarios" id="proprietario-{{ proprietario.fkSwCgm.numcgm }}">
+                    <td class="td-rh cgm">
+                        <input type="hidden" value="{{ admin.getObjectKey(proprietario) }}" class="imput-proprietario" name="proprietarios_old[]" />
+                        <input type="hidden" value="{{ proprietario.cota|number_format(0, ',', '.') }}" class="imput-proprietario-quota" name="proprietario_quotas_old[]" />
+                        {{ proprietario.fkSwCgm.numcgm }}
+                    </td>
+                    <td class="td-rh nome">{{ proprietario.fkSwCgm.nomCgm }}</td>
+                    <td class="td-rh quota">{{ proprietario.cota|number_format(0, ',', '.') }}%</td>
+                    <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr class="tr-rh empty-row-proprietarios">
+            <td colspan="4">{{ 'listagemVazia'|trans }}</td>
+        </tr>
+    </table>
+</div>
+<div class="col s12 proprietarios-promitente">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioImovel.listaPromitentes'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableProprietariosPromitenteManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.imobiliarioImovel.cgm'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioImovel.nome'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioImovel.quota'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        <tr class="tr-rh row-modelo-proprietarios-promitente" style="display:none;">
+            <td class="td-rh cgm">
+                <input type="hidden" class="imput-promitente" name="promitentes[]" />
+                <input type="hidden" class="imput-promitente-quota" name="promitente_quotas[]" />
+            </td>
+            <td class="td-rh nome"></td>
+            <td class="td-rh quota"></td>
+            <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+        </tr>
+        {% for proprietario in field.data.proprietarios|sort %}
+            {% if proprietario.promitente == true %}
+                <tr class="tr-rh row-proprietarios-promitente" id="proprietario-{{ proprietario.fkSwCgm.numcgm }}">
+                    <td class="td-rh cgm">
+                        <input type="hidden" value="{{ admin.getObjectKey(proprietario) }}" class="imput-promitente" name="proprietarios_old[]" />
+                        <input type="hidden" value="{{ proprietario.cota|number_format(0, ',', '.') }}" class="imput-promitente-quota" name="proprietario_quotas_old[]" />
+                        {{ proprietario.fkSwCgm.numcgm }}
+                    </td>
+                    <td class="td-rh nome">{{ proprietario.fkSwCgm.nomCgm }}</td>
+                    <td class="td-rh quota">{{ proprietario.cota|number_format(0, ',', '.') }}%</td>
+                    <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr class="tr-rh empty-row-proprietarios-promitente">
+            <td colspan="4">{{ 'listagemVazia'|trans }}</td>
+        </tr>
+    </table>
+</div>

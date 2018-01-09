@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Administracao\Orgao:
+    type: entity
+    table: administracao.orgao
+    id:
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        usuarioResponsavel:
+            type: integer
+            nullable: false
+            column: usuario_responsavel
+        nomOrgao:
+            type: string
+            nullable: true
+            length: 60
+            column: nom_orgao
+    manyToOne:
+        fkSwCgm:
+            fetch: EXTRA_LAZY
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkAdministracaoOrgoes
+            joinColumns:
+                usuario_responsavel:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkAdministracaoUnidades:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Unidade
+            mappedBy: fkAdministracaoOrgao

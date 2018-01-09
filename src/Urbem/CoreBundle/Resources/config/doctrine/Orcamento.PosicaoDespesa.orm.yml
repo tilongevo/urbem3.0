@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Orcamento\PosicaoDespesa:
+    type: entity
+    table: orcamento.posicao_despesa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPosicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_posicao
+    fields:
+        mascara:
+            type: string
+            nullable: false
+            length: 10
+    oneToMany:
+        fkOrcamentoClassificacaoDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ClassificacaoDespesa
+            mappedBy: fkOrcamentoPosicaoDespesa

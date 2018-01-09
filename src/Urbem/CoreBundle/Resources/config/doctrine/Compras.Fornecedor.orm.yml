@@ -1,0 +1,163 @@
+Urbem\CoreBundle\Entity\Compras\Fornecedor:
+    type: entity
+    table: compras.fornecedor
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\FornecedorRepository
+    id:
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        vlMinimoNf:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_minimo_nf
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                default: 'N'
+    oneToMany:
+        fkBeneficioValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ValeTransporte
+            mappedBy: fkComprasFornecedor
+        fkComprasFornecedorClassificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorClassificacao
+            mappedBy: fkComprasFornecedor
+        fkComprasFornecedorInativacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorInativacao
+            mappedBy: fkComprasFornecedor
+        fkComprasFornecedorAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorAtividade
+            mappedBy: fkComprasFornecedor
+        fkComprasFornecedorContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorConta
+            mappedBy: fkComprasFornecedor
+        fkComprasCotacaoFornecedorItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItem
+            mappedBy: fkComprasFornecedor
+        fkLicitacaoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            mappedBy: fkComprasFornecedor
+        fkLicitacaoParticipantes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Participante
+            mappedBy: fkComprasFornecedor
+        fkTcemgConvenioParticipantes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ConvenioParticipante
+            mappedBy: fkComprasFornecedor
+        fkBeneficioBeneficiarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Beneficiario
+            mappedBy: fkComprasFornecedor
+        fkComprasFornecedorSocios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\FornecedorSocio
+            mappedBy: fkComprasFornecedor
+        fkComprasNotaFiscalFornecedores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\NotaFiscalFornecedor
+            mappedBy: fkComprasFornecedor
+        fkTcemgContratoFornecedores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContratoFornecedor
+            mappedBy: fkComprasFornecedor
+    oneToOne:
+        fkBeneficioFornecedorAuxilioRefeicao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\FornecedorAuxilioRefeicao
+            mappedBy: fkComprasFornecedor
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: fornecedor_numcgm
+        fkBeneficioFornecedorConvenioMedico:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\FornecedorConvenioMedico
+            mappedBy: fkComprasFornecedor
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: fornecedor_numcgm
+        fkBeneficioFornecedorValeTransporte:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\FornecedorValeTransporte
+            mappedBy: fkComprasFornecedor
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: fornecedor_numcgm
+        fkBeneficioLayoutFornecedor:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\LayoutFornecedor
+            mappedBy: fkComprasFornecedor
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkComprasFornecedor
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: numcgm

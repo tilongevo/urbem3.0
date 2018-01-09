@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\Sexo:
+    type: entity
+    table: cse.sexo
+    id:
+        codSexo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sexo
+    fields:
+        nomSexo:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_sexo
+    oneToMany:
+        fkCseCidadoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            mappedBy: fkCseSexo

@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Ldo\TipoIndicadores:
+    type: entity
+    table: ldo.tipo_indicadores
+    repositoryClass: Urbem\CoreBundle\Repository\Ldo\TipoIndicadoresRepository
+    id:
+        codTipoIndicador:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: tipo_indicadores_cod_tipo_indicador_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_tipo_indicador
+    fields:
+        codUnidade:
+            type: integer
+            nullable: false
+            column: cod_unidade
+        codGrandeza:
+            type: integer
+            nullable: false
+            column: cod_grandeza
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    manyToOne:
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkLdoTipoIndicadoreses
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza
+    oneToMany:
+        fkLdoIndicadoreses:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Indicadores
+            mappedBy: fkLdoTipoIndicadores

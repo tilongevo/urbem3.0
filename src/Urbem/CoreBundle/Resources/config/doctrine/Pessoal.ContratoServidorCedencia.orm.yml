@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCedencia:
+    type: entity
+    table: pessoal.contrato_servidor_cedencia
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkPessoalTipoCedencia:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TipoCedencia
+            inversedBy: fkPessoalContratoServidorCedencias
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorCedencia
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

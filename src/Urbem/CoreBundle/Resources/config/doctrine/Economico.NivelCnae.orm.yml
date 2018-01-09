@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Economico\NivelCnae:
+    type: entity
+    table: economico.nivel_cnae
+    id:
+        codNivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel
+        codVigencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vigencia
+    fields:
+        nomNivel:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_nivel
+        mascara:
+            type: string
+            nullable: false
+            length: 10
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkEconomicoVigenciaCnae:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\VigenciaCnae
+            inversedBy: fkEconomicoNivelCnaes
+            joinColumns:
+                cod_vigencia:
+                    referencedColumnName: cod_vigencia
+    oneToMany:
+        fkEconomicoCnaeFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CnaeFiscal
+            mappedBy: fkEconomicoNivelCnae
+        fkEconomicoNivelCnaeValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelCnaeValor
+            mappedBy: fkEconomicoNivelCnae

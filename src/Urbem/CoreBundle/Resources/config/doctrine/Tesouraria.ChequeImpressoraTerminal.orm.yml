@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Tesouraria\ChequeImpressoraTerminal:
+    type: entity
+    table: tesouraria.cheque_impressora_terminal
+    id:
+        codTerminal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_terminal
+        codImpressora:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_impressora
+    fields: {  }
+    manyToOne:
+        fkTesourariaTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Terminal
+            inversedBy: fkTesourariaChequeImpressoraTerminais
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+        fkAdministracaoImpressora:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Impressora
+            inversedBy: fkTesourariaChequeImpressoraTerminais
+            joinColumns:
+                cod_impressora:
+                    referencedColumnName: cod_impressora

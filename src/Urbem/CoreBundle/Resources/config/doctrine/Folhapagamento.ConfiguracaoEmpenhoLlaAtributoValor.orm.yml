@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaAtributoValor:
+    type: entity
+    table: folhapagamento.configuracao_empenho_lla_atributo_valor
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\ConfiguracaoEmpenhoLlaAtributoValorRepository
+    id:
+        numPao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_pao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConfiguracaoLla:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao_lla
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        valor:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkOrcamentoPao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Pao
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoLlaAtributoValores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_pao:
+                    referencedColumnName: num_pao
+        fkFolhapagamentoConfiguracaoEmpenhoLlaAtributo:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaAtributo
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoLlaAtributoValores
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_configuracao_lla:
+                    referencedColumnName: cod_configuracao_lla
+                timestamp:
+                    referencedColumnName: timestamp

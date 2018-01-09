@@ -1,0 +1,64 @@
+Urbem\CoreBundle\Entity\Administracao\Variavel:
+    type: entity
+    table: administracao.variavel
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\VariavelRepository
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_biblioteca
+        codFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_funcao
+        codVariavel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_variavel
+    fields:
+        nomVariavel:
+            type: string
+            nullable: true
+            length: 30
+            column: nom_variavel
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        valorInicial:
+            type: text
+            nullable: true
+            column: valor_inicial
+    manyToOne:
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkAdministracaoVariaveis
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+        fkAdministracaoTipoPrimitivo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\TipoPrimitivo
+            inversedBy: fkAdministracaoVariaveis
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkAdministracaoParametros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Parametro
+            mappedBy: fkAdministracaoVariavel

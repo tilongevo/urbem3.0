@@ -1,0 +1,35 @@
+<div class="col s12 proprietarios">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioImovel.listaProprietarios'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableProprietariosManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.imobiliarioImovel.cgm'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioImovel.nome'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioTransferenciaPropriedade.quotaAtual'|trans }} (%)</th>
+        </tr>
+        <tr class="tr-rh row-modelo-proprietario" style="display:none;">
+            <td class="td-rh cgm">
+                <input type="hidden" class="imput-proprietario" name="proprietarios[]" />
+                <input type="hidden" class="imput-proprietario-quota" name="proprietario_quotas[]" />
+            </td>
+            <td class="td-rh nome"></td>
+            <td class="td-rh quota"></td>
+        </tr>
+        {% for proprietario in field.data.proprietarios|sort %}
+            {% if proprietario.promitente == false %}
+                <tr class="tr-rh row-proprietarios" id="proprietario-{{ proprietario.fkSwCgm.numcgm }}">
+                    <td class="td-rh cgm">
+                        <input type="hidden" value="{{ admin.getObjectKey(proprietario) }}" class="imput-proprietario" name="proprietarios_old[]" />
+                        <input type="hidden" value="{{ proprietario.cota|number_format(0, ',', '.') }}" class="imput-proprietario-quota" name="proprietario_quotas_old[]" />
+                        {{ proprietario.fkSwCgm.numcgm }}
+                    </td>
+                    <td class="td-rh nome">{{ proprietario.fkSwCgm.nomCgm }}</td>
+                    <td class="td-rh quota">{{ proprietario.cota|number_format(0, ',', '.') }}%</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr class="tr-rh empty-row-proprietarios">
+            <td colspan="3">{{ 'listagemVazia'|trans }}</td>
+        </tr>
+    </table>
+</div>

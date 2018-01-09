@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Economico\EmissaoDocumento:
+    type: entity
+    table: economico.emissao_documento
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\EmissaoDocumentoRepository
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        codTipoDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento
+        numEmissao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_emissao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numcgmDiretor:
+            type: integer
+            nullable: false
+            column: numcgm_diretor
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+    manyToOne:
+        fkEconomicoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Licenca
+            inversedBy: fkEconomicoEmissaoDocumentos
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkEconomicoEmissaoDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento

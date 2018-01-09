@@ -1,0 +1,66 @@
+Urbem\CoreBundle\Entity\Administracao\Assinatura:
+    type: entity
+    table: administracao.assinatura
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\AssinaturaRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        cargo:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkAdministracaoAssinaturas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkAdministracaoAssinaturas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkAdministracaoAssinaturaModulos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AssinaturaModulo
+            mappedBy: fkAdministracaoAssinatura
+    oneToOne:
+        fkAdministracaoAssinaturaCrc:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AssinaturaCrc
+            mappedBy: fkAdministracaoAssinatura
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp

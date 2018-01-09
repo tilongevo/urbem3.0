@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Organograma\Nivel:
+    type: entity
+    table: organograma.nivel
+    repositoryClass: Urbem\CoreBundle\Repository\Organograma\NivelRepository
+    id:
+        codNivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel
+        codOrganograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_organograma
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        mascaracodigo:
+            type: string
+            nullable: false
+            length: 10
+    manyToOne:
+        fkOrganogramaOrganograma:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Organograma
+            inversedBy: fkOrganogramaNiveis
+            joinColumns:
+                cod_organograma:
+                    referencedColumnName: cod_organograma
+    oneToMany:
+        fkOrcamentoOrganogramaNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\OrganogramaNivel
+            mappedBy: fkOrganogramaNivel
+        fkOrganogramaOrgaoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\OrgaoNivel
+            mappedBy: fkOrganogramaNivel

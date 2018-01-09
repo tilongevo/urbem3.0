@@ -1,0 +1,91 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenho:
+    type: entity
+    table: folhapagamento.configuracao_autorizacao_empenho
+    id:
+        codConfiguracaoAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao_autorizacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+        numcgm:
+            type: integer
+            nullable: false
+        complementar:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        descricaoItem:
+            type: string
+            nullable: false
+            length: 160
+            column: descricao_item
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkComprasModalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Modalidade
+            inversedBy: fkFolhapagamentoConfiguracaoAutorizacaoEmpenhos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFolhapagamentoConfiguracaoAutorizacaoEmpenhos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkFolhapagamentoConfiguracaoAutorizacaoEmpenhoComplemento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenhoComplemento
+            mappedBy: fkFolhapagamentoConfiguracaoAutorizacaoEmpenho
+            joinColumns:
+                cod_configuracao_autorizacao:
+                    referencedColumnName: cod_configuracao_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoConfiguracaoAutorizacaoEmpenhoDescricao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenhoDescricao
+            mappedBy: fkFolhapagamentoConfiguracaoAutorizacaoEmpenho
+            joinColumns:
+                cod_configuracao_autorizacao:
+                    referencedColumnName: cod_configuracao_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoConfiguracaoAutorizacaoEmpenhoHistorico:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenhoHistorico
+            mappedBy: fkFolhapagamentoConfiguracaoAutorizacaoEmpenho
+            joinColumns:
+                cod_configuracao_autorizacao:
+                    referencedColumnName: cod_configuracao_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

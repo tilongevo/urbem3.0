@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Ponto\FormatoTamanhoFixo:
+    type: entity
+    table: ponto.formato_tamanho_fixo
+    id:
+        codFormato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_formato
+        codCampo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_campo
+    fields:
+        posicaoInicial:
+            type: integer
+            nullable: false
+            column: posicao_inicial
+        posicaoFinal:
+            type: integer
+            nullable: false
+            column: posicao_final
+    manyToOne:
+        fkPontoFormatoImportacao:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoImportacao
+            inversedBy: fkPontoFormatoTamanhoFixos
+            joinColumns:
+                cod_formato:
+                    referencedColumnName: cod_formato
+        fkPontoFormatoCampos:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoCampos
+            inversedBy: fkPontoFormatoTamanhoFixos
+            joinColumns:
+                cod_campo:
+                    referencedColumnName: cod_campo

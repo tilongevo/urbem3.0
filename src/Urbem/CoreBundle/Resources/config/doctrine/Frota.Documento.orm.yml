@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Frota\Documento:
+    type: entity
+    table: frota.documento
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+    fields:
+        nomDocumento:
+            type: string
+            nullable: false
+            length: 100
+            column: nom_documento
+    oneToMany:
+        fkFrotaVeiculoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoDocumento
+            mappedBy: fkFrotaDocumento

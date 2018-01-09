@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.prorrogarDesoneracao.subModulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {% set descricao = desonerado.codDesoneracao ~ ' - ' ~ desonerado.fkArrecadacaoDesoneracao.fkMonetarioCredito.descricaoCredito%}
+        {{ form_start(form) }}
+            <input type="hidden" value="{{ desonerado.codDesoneracao }}" name="codDesoneracao" />
+            <input type="hidden" value="{{ desonerado.numcgm }}" name="numcgm" />
+            <input type="hidden" value="{{ desonerado.ocorrencia }}" name="ocorrencia" />
+
+             <div class="row col s12">
+                 <div class="box-header">
+                     <h2 class="box-title left-align">
+                         {{ 'label.prorrogarDesoneracao.dados'|trans }}
+                     </h2>
+                     <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                 </div>
+                 <table class="table show-table">
+                     <tbody>
+                         <tr class="sonata-ba-view-container">
+                             <th>{{ 'label.prorrogarDesoneracao.desoneracao'|trans }}</th>
+                             <td>{{ descricao }}</td>
+                         </tr>
+                         <tr class="sonata-ba-view-container">
+                             <th>{{ 'label.cgm'|trans }}</th>
+                             <td>{{ desonerado.fkSwCgm }}</td>
+                         </tr>
+                     </tbody>
+                 </table>
+             </div>
+
+            <div class="row col s12">
+                {{ form_widget(form) }}
+            </div>
+
+            <div class="row col s12">
+                <div class="sonata-ba-form-actions form-actions row">
+                    <div class="col s8 initial left-align">
+                        <a class="back btn-floating white-text blue darken-4 btn-success" href="{{ admin.generateUrl('list') }}">
+                            <i class="material-icons">arrow_back</i>
+                        </a>
+                    </div>
+
+                    <div class="col s2 right-align deletar"></div>
+
+                    <div class="col s2 right-align right">
+                        <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="Baixar">
+                            <i class="mdi mdi-calendar-plus left"></i>
+                            {{ 'label.prorrogarDesoneracao.prorrogar'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {{ form_end(form) }}
+        </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css') }}">
+    <script src="{{ asset('/bundles/sonatacore/vendor/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/string.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem-sonata.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('select:not(.select-ano)').select2();
+        });
+    </script>
+{% endblock javascripts %}

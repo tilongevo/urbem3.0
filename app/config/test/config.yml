@@ -1,0 +1,44 @@
+imports:
+    - { resource: ../dev/config.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_pgsql
+        host:     "%database_test_host%"
+        port:     "%database_test_port%"
+        dbname:   "%database_test_name%"
+        user:     "%database_test_user%"
+        password: "%database_test_password%"
+        charset:  UTF8
+        mapping_types:
+            point: string
+            enum: string
+            bit: integer
+            hstore: string
+            oid: string
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true

@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Folhapagamento\DeducaoDependenteComplementar:
+    type: entity
+    table: folhapagamento.deducao_dependente_complementar
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        codComplementar:
+            type: integer
+            nullable: false
+            column: cod_complementar
+    manyToOne:
+        fkFolhapagamentoComplementar:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Complementar
+            inversedBy: fkFolhapagamentoDeducaoDependenteComplementares
+            joinColumns:
+                cod_complementar:
+                    referencedColumnName: cod_complementar
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+    oneToOne:
+        fkFolhapagamentoDeducaoDependente:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DeducaoDependente
+            inversedBy: fkFolhapagamentoDeducaoDependenteComplementar
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+                cod_tipo:
+                    referencedColumnName: cod_tipo

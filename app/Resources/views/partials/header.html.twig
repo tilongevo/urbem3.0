@@ -1,0 +1,52 @@
+{% macro render_profile_picture(picture, css, style) %}
+    {% set profilePicturePath = profilePic.realpath ~ '/' ~ picture %}
+
+    {% if file_exists(profilePicturePath) and picture is not null %}
+        <img src="{{ asset('/show/administrativo/usuarios/' ~ app.user.profilePicture) }}"
+             alt="foto do usuário"
+             class="{{ css }}"
+             style="{{ style }}">
+    {% else %}
+        <img src="{{ asset('/bundles/core/images/avatar-li.png') }}"
+             class="{{ css }}"
+             style="{{ style }}">
+    {% endif %}
+
+{% endmacro %}
+
+<nav class="z-depth-0">
+    <div class="nav-wrapper white">
+        {% if is_granted('ROLE_MUNICIPE') and is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') %}
+            <a href="{{ path('home-portalservicos') }}" class="black-text brand-logo">
+        {% else %}
+            <a href="{{ path('home-urbem') }}" class="black-text brand-logo">
+        {% endif %}
+                <img class="img-responsive"
+                     style="max-height:35px; margin: 8% 10%;"
+                     src="{{ asset('/bundles/core/images/logo_lighten.png') }}"
+                     alt="Link para página principal do sistema">
+            </a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse">
+            <i class=" blue-text text-darken-4 material-icons">menu</i>
+        </a>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            {% if admin.uniqId is defined %}
+                {{ include("::partials/exercicioSonata.html.twig", {ano_range: "now"|exercicioLista}) }}
+            {% else %}
+                {{ include("::partials/exercicio.html.twig", {ano_range: "now"|exercicioLista}) }}
+            {% endif %}
+        {% endif %}
+
+        {% include ':partials:user_modal.html.twig' %}
+        <!--MENU RESPONSIVE-->
+        <ul class="side-nav left-mobile" id="mobile-demo">
+            <li><a href="#"><i class="blue-text text-darken-4 medium material-icons">view_module</i></a></li>
+            <li><a href="#"><i class="blue-text text-darken-4 medium material-icons">search</i></a></li>
+            <li><a href="#"><i class="blue-text text-darken-4 medium material-icons">account_circle</i></a></li>
+        </ul>
+    </div>
+</nav>
+
+<!--BREADCRUMBS-->
+{{ wo_render_breadcrumbs() }}

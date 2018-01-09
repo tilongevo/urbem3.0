@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Empenho\PagamentoLiquidacaoNotaLiquidacaoPaga:
+    type: entity
+    table: empenho.pagamento_liquidacao_nota_liquidacao_paga
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        exercicioLiquidacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_liquidacao
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkEmpenhoPagamentoLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PagamentoLiquidacao
+            inversedBy: fkEmpenhoPagamentoLiquidacaoNotaLiquidacaoPagas
+            joinColumns:
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_liquidacao:
+                    referencedColumnName: exercicio_liquidacao
+                cod_nota:
+                    referencedColumnName: cod_nota
+        fkEmpenhoNotaLiquidacaoPaga:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoPaga
+            inversedBy: fkEmpenhoPagamentoLiquidacaoNotaLiquidacaoPagas
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_nota:
+                    referencedColumnName: cod_nota
+                exercicio_liquidacao:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp

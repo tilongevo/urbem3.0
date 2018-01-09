@@ -1,0 +1,39 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Imobiliario/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'label.imobiliarioRelatorios.bairros.estado'|trans|upper }}</td>
+                    <td>{{ 'label.imobiliarioRelatorios.bairros.municipio'|trans|upper }}</td>
+                    <td>{{ 'label.imobiliarioRelatorios.bairros.codigo'|trans|upper }}</td>
+                    <td>{{ 'label.imobiliarioRelatorios.bairros.bairro'|trans|upper }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bairro in bairros %}
+                    <tr>
+                        <td class="text_align_left ">{{ bairro.nom_uf }}</td>
+                        <td class="text_align_left ">{{ bairro.nom_municipio }}</td>
+                        <td class="text_align_left ">{{ bairro.cod_bairro }}</td>
+                        <td class="text_align_left ">{{ bairro.nom_bairro }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><strong>Total de registros :</strong> {{ bairros|length }}
+        <p><p><strong>Filtros Utilizados</strong>
+        {% if filtros['nomBairro'] %} <p><strong>Nome do Bairro :</strong>  {{ filtros['nomBairro'] }} {% endif %}
+        {% if filtros['codBairroDe'] %} <p><strong>Código Inicial :</strong>  {{ filtros['codBairroDe'] }} {% endif %}
+        {% if filtros['codBairroAte'] %} <p><strong>Código Final :</strong>  {{ filtros['codBairroAte'] }} {% endif %}
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

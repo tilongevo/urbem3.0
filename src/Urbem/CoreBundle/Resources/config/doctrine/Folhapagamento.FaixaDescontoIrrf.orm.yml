@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Folhapagamento\FaixaDescontoIrrf:
+    type: entity
+    table: folhapagamento.faixa_desconto_irrf
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\FaixaDescontoIrrfRepository
+    id:
+        codFaixa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_faixa
+        codTabela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tabela
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vlInicial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_inicial
+        vlFinal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_final
+        aliquota:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+        parcelaDeduzir:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: parcela_deduzir
+    manyToOne:
+        fkFolhapagamentoTabelaIrrf:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrf
+            inversedBy: fkFolhapagamentoFaixaDescontoIrrfs
+            joinColumns:
+                cod_tabela:
+                    referencedColumnName: cod_tabela
+                timestamp:
+                    referencedColumnName: timestamp

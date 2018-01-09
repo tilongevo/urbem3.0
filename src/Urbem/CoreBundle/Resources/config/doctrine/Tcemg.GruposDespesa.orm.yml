@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Tcemg\GruposDespesa:
+    type: entity
+    table: tcemg.grupos_despesa
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\GruposDespesaRepository
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkTcemgCronogramaExecucaoMensalDesembolsos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\CronogramaExecucaoMensalDesembolso
+            mappedBy: fkTcemgGruposDespesa

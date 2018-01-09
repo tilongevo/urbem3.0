@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoAtoPessoal:
+    type: entity
+    table: tcmba.tipo_ato_pessoal
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalTcmbaAssentamentoAtoPessoais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TcmbaAssentamentoAtoPessoal
+            mappedBy: fkTcmbaTipoAtoPessoal

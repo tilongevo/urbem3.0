@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Ppa\AcaoPeriodo:
+    type: entity
+    table: ppa.acao_periodo
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        timestampAcaoDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_acao_dados
+    fields:
+        dataInicio:
+            type: date
+            nullable: false
+            column: data_inicio
+        dataTermino:
+            type: date
+            nullable: false
+            column: data_termino
+    oneToOne:
+        fkPpaAcaoDados:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            inversedBy: fkPpaAcaoPeriodo
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados

@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Compras\SolicitacaoEntrega:
+    type: entity
+    table: compras.solicitacao_entrega
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSolicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_solicitacao
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkComprasSolicitacaoEntregas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkComprasSolicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Solicitacao
+            inversedBy: fkComprasSolicitacaoEntrega
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao

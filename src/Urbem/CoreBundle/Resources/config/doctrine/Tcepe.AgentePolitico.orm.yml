@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcepe\AgentePolitico:
+    type: entity
+    table: tcepe.agente_politico
+    id:
+        codAgentePolitico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agente_politico
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkTcepeCgmAgentePoliticos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\CgmAgentePolitico
+            mappedBy: fkTcepeAgentePolitico

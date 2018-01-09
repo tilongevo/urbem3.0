@@ -1,0 +1,88 @@
+Urbem\CoreBundle\Entity\Divida\ModalidadeReducaoAcrescimo:
+    type: entity
+    table: divida.modalidade_reducao_acrescimo
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_biblioteca
+        codFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_funcao
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        pagamento:
+            type: boolean
+            generator:
+                strategy: NONE
+        percentual:
+            type: boolean
+            generator:
+                strategy: NONE
+        valor:
+            type: decimal
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkDividaModalidadeReducao:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeReducao
+            inversedBy: fkDividaModalidadeReducaoAcrescimos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                percentual:
+                    referencedColumnName: percentual
+                valor:
+                    referencedColumnName: valor
+        fkDividaModalidadeAcrescimo:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeAcrescimo
+            inversedBy: fkDividaModalidadeReducaoAcrescimos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_acrescimo:
+                    referencedColumnName: cod_acrescimo
+                pagamento:
+                    referencedColumnName: pagamento

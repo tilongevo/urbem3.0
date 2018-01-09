@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Frota\VeiculoTerceirosResponsavel:
+    type: entity
+    table: frota.veiculo_terceiros_responsavel
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtFim:
+            type: date
+            nullable: true
+            column: dt_fim
+    manyToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaVeiculoTerceirosResponsaveis
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFrotaVeiculoTerceirosResponsaveis
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

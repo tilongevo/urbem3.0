@@ -1,0 +1,89 @@
+Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacao:
+    type: entity
+    table: licitacao.participante_certificacao
+    id:
+        numCertificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_certificacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        dtRegistro:
+            type: date
+            nullable: false
+            column: dt_registro
+        finalVigencia:
+            type: date
+            nullable: true
+            column: final_vigencia
+        observacao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoParticipanteCertificacoes
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: numcgm
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkLicitacaoParticipanteCertificacoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToMany:
+        fkLicitacaoCertificacaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\CertificacaoDocumentos
+            mappedBy: fkLicitacaoParticipanteCertificacao
+        fkLicitacaoParticipanteCertificacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacaoLicitacao
+            mappedBy: fkLicitacaoParticipanteCertificacao
+        fkLicitacaoParticipanteConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteConvenio
+            mappedBy: fkLicitacaoParticipanteCertificacao
+    oneToOne:
+        fkLicitacaoParticipanteCertificacaoPenalidade:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacaoPenalidade
+            mappedBy: fkLicitacaoParticipanteCertificacao
+            joinColumns:
+                num_certificacao:
+                    referencedColumnName: num_certificacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor

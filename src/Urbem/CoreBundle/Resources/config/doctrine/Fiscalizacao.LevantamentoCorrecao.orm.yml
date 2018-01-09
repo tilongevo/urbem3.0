@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\LevantamentoCorrecao:
+    type: entity
+    table: fiscalizacao.levantamento_correcao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+        codIndicador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_indicador
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        indice:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkFiscalizacaoLevantamento:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Levantamento
+            inversedBy: fkFiscalizacaoLevantamentoCorrecoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia

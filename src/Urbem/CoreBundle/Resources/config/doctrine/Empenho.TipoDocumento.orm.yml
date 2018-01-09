@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Empenho\TipoDocumento:
+    type: entity
+    table: empenho.tipo_documento
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkEmpenhoItemPrestacaoContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPrestacaoContas
+            mappedBy: fkEmpenhoTipoDocumento

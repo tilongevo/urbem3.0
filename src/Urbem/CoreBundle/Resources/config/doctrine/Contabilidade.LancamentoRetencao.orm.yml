@@ -1,0 +1,81 @@
+Urbem\CoreBundle\Entity\Contabilidade\LancamentoRetencao:
+    type: entity
+    table: contabilidade.lancamento_retencao
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\LancamentoRetencaoRepository
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codOrdem:
+            type: integer
+            nullable: false
+            column: cod_ordem
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+        exercicioRetencao:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_retencao
+        estorno:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        sequencial:
+            type: integer
+            nullable: false
+            options:
+                default: '1'
+    manyToOne:
+        fkEmpenhoOrdemPagamentoRetencao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoRetencao
+            inversedBy: fkContabilidadeLancamentoRetencoes
+            joinColumns:
+                exercicio_retencao:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                cod_plano:
+                    referencedColumnName: cod_plano
+                sequencial:
+                    referencedColumnName: sequencial
+    oneToOne:
+        fkContabilidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lancamento
+            inversedBy: fkContabilidadeLancamentoRetencao
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

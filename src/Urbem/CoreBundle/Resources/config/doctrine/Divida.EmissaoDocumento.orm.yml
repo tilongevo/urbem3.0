@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Divida\EmissaoDocumento:
+    type: entity
+    table: divida.emissao_documento
+    id:
+        numParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcelamento
+        numEmissao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_emissao
+        codTipoDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        numDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_documento
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkDividaDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Documento
+            inversedBy: fkDividaEmissaoDocumentos
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+                cod_documento:
+                    referencedColumnName: cod_documento
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkDividaEmissaoDocumentos
+            joinColumns:
+                numcgm_usuario:
+                    referencedColumnName: numcgm

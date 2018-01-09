@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEvento:
+    type: entity
+    table: folhapagamento.configuracao_evento
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkFolhapagamentoEventoConfiguracaoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoConfiguracaoEvento
+            mappedBy: fkFolhapagamentoConfiguracaoEvento
+        fkFolhapagamentoRegistroEventoComplementares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoComplementar
+            mappedBy: fkFolhapagamentoConfiguracaoEvento
+        fkFolhapagamentoConfiguracaoDesdobramentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoDesdobramento
+            mappedBy: fkFolhapagamentoConfiguracaoEvento
+        fkFolhapagamentoConfiguracaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho
+            mappedBy: fkFolhapagamentoConfiguracaoEvento

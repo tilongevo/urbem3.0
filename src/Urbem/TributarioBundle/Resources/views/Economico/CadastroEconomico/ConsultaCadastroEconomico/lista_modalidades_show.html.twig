@@ -1,0 +1,34 @@
+<table class="table show-table">
+    <thead>
+        <tr>
+            <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.codigo'|trans }}</th>
+            <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.modalidade'|trans }}</th>
+            <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.atividade'|trans }}</th>
+            <th>{{ 'label.economicoCadastroEconomicoModalidadeLancamento.dtInicio'|trans }}</th>
+            <th>{{ 'label.economicoConsultaCadastroEconomico.situacao'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for atividadeCadastroEconomico in admin.cadastroEconomico.getFkEconomicoAtividadeCadastroEconomicos() %}
+            {% for modalidadeLancamento in atividadeCadastroEconomico.getFkEconomicoCadastroEconomicoModalidadeLancamentos() %}
+                <tr class="sonata-ba-view-container">
+                    <td>
+                        <span>{{ modalidadeLancamento.getCodModalidade() }}</span>
+                    </td>
+                    <td>
+                        <span>{{ modalidadeLancamento.getFkEconomicoModalidadeLancamento().getNomModalidade() }}</span>
+                    </td>
+                    <td>
+                        <span>{{ atividadeCadastroEconomico.getFkEconomicoAtividade() }}</span>
+                    </td>
+                    <td>
+                        <span>{{ modalidadeLancamento.getDtInicio().format('d/m/Y') }}</span>
+                    </td>
+                    <td>
+                        <span>{{ modalidadeLancamento.getDtBaixa() is empty ? 'label.economicoConsultaCadastroEconomico.ativo'|trans : 'label.economicoConsultaCadastroEconomico.baixado'|trans }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>

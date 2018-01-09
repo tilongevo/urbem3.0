@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Arrecadacao\TipoObservacao:
+    type: entity
+    table: arrecadacao.tipo_observacao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_tipo
+    oneToMany:
+        fkArrecadacaoObservacaoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ObservacaoPagamento
+            mappedBy: fkArrecadacaoTipoObservacao

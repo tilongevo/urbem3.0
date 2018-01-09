@@ -1,0 +1,224 @@
+Urbem\CoreBundle\Entity\SwCga:
+    type: entity
+    table: sw_cga
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        codMunicipioCorresp:
+            type: integer
+            nullable: false
+            column: cod_municipio_corresp
+        codUfCorresp:
+            type: integer
+            nullable: false
+            column: cod_uf_corresp
+        codResponsavel:
+            type: integer
+            nullable: false
+            column: cod_responsavel
+        codResponsavelAlteracao:
+            type: integer
+            nullable: false
+            column: cod_responsavel_alteracao
+        nomCgm:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_cgm
+        tipoLogradouro:
+            type: string
+            nullable: false
+            length: 15
+            column: tipo_logradouro
+        logradouro:
+            type: string
+            nullable: false
+            length: 100
+        numero:
+            type: string
+            nullable: false
+            length: 6
+        complemento:
+            type: string
+            nullable: false
+            length: 30
+        bairro:
+            type: string
+            nullable: false
+            length: 65
+        cep:
+            type: string
+            nullable: false
+            length: 8
+        tipoLogradouroCorresp:
+            type: string
+            nullable: false
+            length: 15
+            column: tipo_logradouro_corresp
+        logradouroCorresp:
+            type: string
+            nullable: false
+            length: 100
+            column: logradouro_corresp
+        numeroCorresp:
+            type: string
+            nullable: false
+            length: 6
+            column: numero_corresp
+        complementoCorresp:
+            type: string
+            nullable: false
+            length: 30
+            column: complemento_corresp
+        bairroCorresp:
+            type: string
+            nullable: false
+            length: 65
+            column: bairro_corresp
+        cepCorresp:
+            type: string
+            nullable: false
+            length: 8
+            column: cep_corresp
+        foneResidencial:
+            type: string
+            nullable: false
+            length: 12
+            column: fone_residencial
+        ramalResidencial:
+            type: string
+            nullable: false
+            length: 6
+            column: ramal_residencial
+        foneComercial:
+            type: string
+            nullable: false
+            length: 12
+            column: fone_comercial
+        ramalComercial:
+            type: string
+            nullable: false
+            length: 6
+            column: ramal_comercial
+        foneCelular:
+            type: string
+            nullable: false
+            length: 12
+            column: fone_celular
+        eMail:
+            type: string
+            nullable: false
+            length: 100
+            column: e_mail
+        eMailAdcional:
+            type: string
+            nullable: false
+            length: 100
+            column: e_mail_adcional
+        dtCadastro:
+            type: date
+            nullable: false
+            column: dt_cadastro
+        codPais:
+            type: integer
+            nullable: false
+            column: cod_pais
+        codPaisCorresp:
+            type: integer
+            nullable: false
+            column: cod_pais_corresp
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkSwCgas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkSwMunicipio:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkSwCgas
+            joinColumns:
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_uf:
+                    referencedColumnName: cod_uf
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkSwCgas
+            joinColumns:
+                cod_responsavel:
+                    referencedColumnName: numcgm
+        fkSwMunicipio1:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkSwCgas1
+            joinColumns:
+                cod_municipio_corresp:
+                    referencedColumnName: cod_municipio
+                cod_uf_corresp:
+                    referencedColumnName: cod_uf
+        fkAdministracaoUsuario1:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkSwCgas1
+            joinColumns:
+                cod_responsavel_alteracao:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkSwCgaAtributoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaAtributoValor
+            mappedBy: fkSwCga
+        fkSwCgaLogradouroCorrespondencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaLogradouroCorrespondencia
+            mappedBy: fkSwCga
+        fkSwCgaLogradouros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaLogradouro
+            mappedBy: fkSwCga
+    oneToOne:
+        fkSwCgaPessoaFisica:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaPessoaFisica
+            mappedBy: fkSwCga
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp
+        fkSwCgaPessoaJuridica:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaPessoaJuridica
+            mappedBy: fkSwCga
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp

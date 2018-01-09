@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoLevantamento:
+    type: entity
+    table: fiscalizacao.processo_levantamento
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFiscalizacaoProcessoFiscalEmpresa:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalEmpresa
+            inversedBy: fkFiscalizacaoProcessoLevantamentos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+    oneToMany:
+        fkFiscalizacaoFaturamentoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FaturamentoServico
+            mappedBy: fkFiscalizacaoProcessoLevantamento
+    oneToOne:
+        fkFiscalizacaoLevantamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Levantamento
+            mappedBy: fkFiscalizacaoProcessoLevantamento
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia
+        fkFiscalizacaoRetencaoFonte:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoFonte
+            mappedBy: fkFiscalizacaoProcessoLevantamento
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia

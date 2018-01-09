@@ -1,0 +1,89 @@
+{% block body %}
+    {% block content %}
+        {% include 'RecursosHumanosBundle:FolhaPagamento/Relatorios:cabecalho.html.twig' %}
+        <table class="table-relatorio">
+            <tbody>
+            <tr>
+                <td>Tipo de Folha: {{ tipoFolha.stFolha }}</td>
+                <td>Competência: {{ tipoFolha.dtCompetencia }}</td>
+                <td>Periodo de Movimentação: {{ tipoFolha.rsPeriodoMovimentaco }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="page-break" style="">
+            <table class="table-relatorio">
+                <thead>
+                <tr class="cabecalho">
+                    <th class="titulo">Contrato</th>
+                    <th class="titulo">CGM</th>
+                    <th class="titulo">Lotação</th>
+                    <th class="titulo">Banco</th>
+                    <th class="titulo">Proventos</th>
+                    <th class="titulo">Descontos</th>
+                    <th class="titulo">Previdência</th>
+                    <th class="titulo">IRRF</th>
+                    <th class="titulo">Líquido</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set totalProventos, totalDescontos, totalPrevidencia, totalIrrf, totalLiquido = 0, 0, 0, 0, 0 %}
+                {% for folhaSintetica in folha %}
+                    {% set totalProventos = totalProventos + folhaSintetica.proventos %}
+                    {% set totalDescontos = totalDescontos + folhaSintetica.descontos %}
+                    {% set totalPrevidencia = totalPrevidencia + folhaSintetica.previdencia %}
+                    {% set totalIrrf = totalIrrf + folhaSintetica.irrf %}
+                    {% set totalLiquido = totalLiquido + folhaSintetica.liquido %}
+                    <tr>
+                        <td>{{ folhaSintetica.registro }}</td>
+                        <td>{{ folhaSintetica.numcgm ~ '-' ~ folhaSintetica.nom_cgm }}</td>
+                        <td>{{ folhaSintetica.orgao ~ '-' ~ folhaSintetica.descricao_lotacao }}</td>
+                        <td>{{ folhaSintetica.num_banco ~ '-' ~ folhaSintetica.descricao_banco }}</td>
+                        <td align="right">{{ folhaSintetica.proventos|number_format_decimal({'fraction_digits': 2}) }}</td>
+                        <td align="right">{{ folhaSintetica.descontos|number_format_decimal({'fraction_digits': 2}) }}</td>
+                        <td align="right">{{ folhaSintetica.previdencia|number_format_decimal({'fraction_digits': 2}) }}</td>
+                        <td align="right">{{ folhaSintetica.irrf|number_format_decimal({'fraction_digits': 2}) }}</td>
+                        <td align="right">{{ folhaSintetica.liquido|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <table class="table-relatorio">
+                <thead>
+                <tr class="cabecalho">
+                    <th colspan="2" class="titulo">TOTAL GERAL</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td align="right">Soma Valor Recolhido Previdência: {{ totalPrevidencia|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="right">Soma Valor Recolhido IRRF: {{ totalIrrf|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="right">Soma dos Proventos: {{ totalProventos|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td align="right">Soma dos Descontos: {{ totalDescontos|number_format_decimal({'fraction_digits': 2}) }}</td>
+                </tr>
+                <tr>
+                    <td align="right">Salário Líquido: {{ totalLiquido|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td align="right">N° Servidores: {{ folha|length }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table-relatorio">
+                <tbody>
+                <tr>
+                    <td>Legenda para Desdobramentos: A - Abono D - Adiantamento de Férias F - Férias I - Adiantamento de 13°</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endblock content %}
+{% endblock body %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio-folha-pagamento.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio-folha-pagamento.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

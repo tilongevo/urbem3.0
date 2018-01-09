@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Arrecadacao\VariaveisLayoutCarne:
+    type: entity
+    table: arrecadacao.variaveis_layout_carne
+    id:
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        ordem:
+            type: integer
+            nullable: false
+        posicaoInicial:
+            type: integer
+            nullable: false
+            column: posicao_inicial
+        largura:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkArrecadacaoModeloCarne:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ModeloCarne
+            inversedBy: fkArrecadacaoVariaveisLayoutCarnes
+            joinColumns:
+                cod_modelo:
+                    referencedColumnName: cod_modelo
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkArrecadacaoVariaveisLayoutCarnes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Pessoal\ServidorConjuge:
+    type: entity
+    table: pessoal.servidor_conjuge
+    id:
+        codServidor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servidor
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        boExcluido:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+            column: bo_excluido
+    manyToOne:
+        fkPessoalServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Servidor
+            inversedBy: fkPessoalServidorConjuges
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkPessoalServidorConjuges
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

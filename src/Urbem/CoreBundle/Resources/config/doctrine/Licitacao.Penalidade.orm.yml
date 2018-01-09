@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Licitacao\Penalidade:
+    type: entity
+    table: licitacao.penalidade
+    id:
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkLicitacaoPenalidadesCertificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PenalidadesCertificacao
+            mappedBy: fkLicitacaoPenalidade

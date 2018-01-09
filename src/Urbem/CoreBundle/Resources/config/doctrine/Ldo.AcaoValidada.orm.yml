@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Ldo\AcaoValidada:
+    type: entity
+    table: ldo.acao_validada
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+        timestampAcaoDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_acao_dados
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+        exercicioRecurso:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_recurso
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+    oneToOne:
+        fkPpaAcaoQuantidade:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoQuantidade
+            inversedBy: fkLdoAcaoValidada
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+                ano:
+                    referencedColumnName: ano
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+                exercicio_recurso:
+                    referencedColumnName: exercicio_recurso

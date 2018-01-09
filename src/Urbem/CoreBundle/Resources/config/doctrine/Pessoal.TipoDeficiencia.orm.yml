@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Pessoal\TipoDeficiencia:
+    type: entity
+    table: pessoal.tipo_deficiencia
+    id:
+        codTipoDeficiencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_deficiencia
+    fields:
+        numDeficiencia:
+            type: integer
+            nullable: false
+            column: num_deficiencia
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkPessoalCids:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cid
+            mappedBy: fkPessoalTipoDeficiencia

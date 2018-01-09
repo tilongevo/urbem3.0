@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Administracao\GrupoPermissao:
+    type: entity
+    table: administracao.grupo_permissao
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\GrupoPermissaoRepository
+    indexes:
+        idx_1c4b311b4221a5c2:
+            columns:
+                - cod_grupo
+        idx_1c4b311b9cc5585d:
+            columns:
+                - cod_rota
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codRota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_rota
+    fields: {  }
+    manyToOne:
+        fkAdministracaoGrupo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Grupo
+            inversedBy: fkAdministracaoGrupoPermissoes
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+        fkAdministracaoRota:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Rota
+            inversedBy: fkAdministracaoGrupoPermissoes
+            joinColumns:
+                cod_rota:
+                    referencedColumnName: cod_rota

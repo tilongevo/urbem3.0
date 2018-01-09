@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Tcern\ObraAcompanhamento:
+    type: entity
+    table: tcern.obra_acompanhamento
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        obraContratoId:
+            type: integer
+            nullable: false
+            column: obra_contrato_id
+        dtEvento:
+            type: date
+            nullable: false
+            column: dt_evento
+        numcgmResponsavel:
+            type: integer
+            nullable: false
+            column: numcgm_responsavel
+        codSituacao:
+            type: integer
+            nullable: false
+            column: cod_situacao
+        justificativa:
+            type: string
+            nullable: false
+            length: 255
+    manyToOne:
+        fkTcernObraContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ObraContrato
+            inversedBy: fkTcernObraAcompanhamentos
+            joinColumns:
+                obra_contrato_id:
+                    referencedColumnName: id
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcernObraAcompanhamentos
+            joinColumns:
+                numcgm_responsavel:
+                    referencedColumnName: numcgm
+        fkTcernObraAcompanhamentoSituacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ObraAcompanhamentoSituacao
+            inversedBy: fkTcernObraAcompanhamentos
+            joinColumns:
+                cod_situacao:
+                    referencedColumnName: cod_situacao

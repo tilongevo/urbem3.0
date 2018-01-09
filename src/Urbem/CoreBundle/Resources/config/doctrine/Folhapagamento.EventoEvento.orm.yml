@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Folhapagamento\EventoEvento:
+    type: entity
+    table: folhapagamento.evento_evento
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        observacao:
+            type: string
+            nullable: true
+            length: 250
+        valorQuantidade:
+            type: decimal
+            nullable: true
+            precision: 15
+            scale: 2
+            column: valor_quantidade
+        unidadeQuantitativa:
+            type: decimal
+            nullable: true
+            precision: 15
+            scale: 2
+            column: unidade_quantitativa
+    manyToOne:
+        fkFolhapagamentoEvento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoEventoEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+    oneToMany:
+        fkFolhapagamentoAtributoEventoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\AtributoEventoValor
+            mappedBy: fkFolhapagamentoEventoEvento
+        fkFolhapagamentoEventoConfiguracaoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoConfiguracaoEvento
+            mappedBy: fkFolhapagamentoEventoEvento

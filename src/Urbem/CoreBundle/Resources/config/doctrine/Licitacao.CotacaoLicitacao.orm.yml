@@ -1,0 +1,84 @@
+Urbem\CoreBundle\Entity\Licitacao\CotacaoLicitacao:
+    type: entity
+    table: licitacao.cotacao_licitacao
+    id:
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicioLicitacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_licitacao
+        lote:
+            type: integer
+            generator:
+                strategy: NONE
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        exercicioCotacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_cotacao
+    fields: {  }
+    manyToOne:
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkLicitacaoCotacaoLicitacoes
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_licitacao:
+                    referencedColumnName: exercicio
+        fkComprasCotacaoFornecedorItem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItem
+            inversedBy: fkLicitacaoCotacaoLicitacoes
+            joinColumns:
+                exercicio_cotacao:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                cod_item:
+                    referencedColumnName: cod_item
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                lote:
+                    referencedColumnName: lote
+    oneToMany:
+        fkLicitacaoAdjudicacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Adjudicacao
+            mappedBy: fkLicitacaoCotacaoLicitacao

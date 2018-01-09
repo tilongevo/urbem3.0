@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Tcern\RoyaltiesEmpenho:
+    type: entity
+    table: tcern.royalties_empenho
+    id:
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codRoyalties:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_royalties
+    fields: {  }
+    manyToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcernRoyaltiesEmpenhos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcernRoyalties:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Royalties
+            inversedBy: fkTcernRoyaltiesEmpenhos
+            joinColumns:
+                cod_royalties:
+                    referencedColumnName: cod_royalties

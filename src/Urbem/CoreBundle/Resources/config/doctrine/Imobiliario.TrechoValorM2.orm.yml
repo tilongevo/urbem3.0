@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Imobiliario\TrechoValorM2:
+    type: entity
+    table: imobiliario.trecho_valor_m2
+    id:
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+        codTrecho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_trecho
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        valorM2Territorial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_m2_territorial
+        valorM2Predial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_m2_predial
+    manyToOne:
+        fkImobiliarioTrecho:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Trecho
+            inversedBy: fkImobiliarioTrechoValorM2s
+            joinColumns:
+                cod_trecho:
+                    referencedColumnName: cod_trecho
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkImobiliarioTrechoValorM2s
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Manad\ModeloLrf:
+    type: entity
+    table: manad.modelo_lrf
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+    fields:
+        nomModelo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_modelo
+        nomModeloOrcamento:
+            type: string
+            nullable: true
+            length: 100
+            column: nom_modelo_orcamento
+    oneToMany:
+        fkManadQuadroModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\QuadroModeloLrf
+            mappedBy: fkManadModeloLrf

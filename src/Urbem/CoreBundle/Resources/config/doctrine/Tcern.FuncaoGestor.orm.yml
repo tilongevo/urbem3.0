@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Tcern\FuncaoGestor:
+    type: entity
+    table: tcern.funcao_gestor
+    id:
+        codFuncao:
+            type: decimal
+            generator:
+                strategy: NONE
+            column: cod_funcao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkTcernUnidadeGestoraResponsaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeGestoraResponsavel
+            mappedBy: fkTcernFuncaoGestor
+        fkTcernUnidadeOrcamentariaResponsaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeOrcamentariaResponsavel
+            mappedBy: fkTcernFuncaoGestor

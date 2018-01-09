@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Economico\Sociedade:
+    type: entity
+    table: economico.sociedade
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\SociedadeRepository
+    indexes:
+        idx_sociedade_1:
+            columns:
+                - inscricao_economica
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        quotaSocio:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: quota_socio
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEconomicoSociedades
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkEconomicoCadastroEconomicoEmpresaDireito:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaDireito
+            inversedBy: fkEconomicoSociedades
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+    oneToMany:
+        fkEconomicoProcessoSociedades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoSociedade
+            mappedBy: fkEconomicoSociedade

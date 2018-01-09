@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Imobiliario\TransferenciaAdquirente:
+    type: entity
+    table: imobiliario.transferencia_adquirente
+    id:
+        codTransferencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transferencia
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        ordem:
+            type: integer
+            nullable: false
+        cota:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+    manyToOne:
+        fkImobiliarioTransferenciaImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaImovel
+            inversedBy: fkImobiliarioTransferenciaAdquirentes
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkImobiliarioTransferenciaAdquirentes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

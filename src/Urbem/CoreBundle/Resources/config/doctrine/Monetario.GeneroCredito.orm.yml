@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Monetario\GeneroCredito:
+    type: entity
+    table: monetario.genero_credito
+    id:
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+    fields:
+        nomGenero:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_genero
+    manyToOne:
+        fkMonetarioNaturezaCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\NaturezaCredito
+            inversedBy: fkMonetarioGeneroCreditos
+            joinColumns:
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+    oneToMany:
+        fkMonetarioEspecieCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\EspecieCredito
+            mappedBy: fkMonetarioGeneroCredito

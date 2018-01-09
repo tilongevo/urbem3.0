@@ -1,0 +1,36 @@
+<table class="table show-table">
+    <thead>
+        <tr>
+            <th>{{ 'label.arrecadacaoConsultaLote.numeracao'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.parcela'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.origem'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.inscricao'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.contribuinte'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.valor'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.juros'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.multa'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.diferenca'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.valorTotal'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.pagamento'|trans }}</th>
+            <th>{{ 'label.arrecadacaoConsultaLote.situacao'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for credito, pagamento in admin.pagamentos %}
+            <tr class="sonata-ba-view-container">
+                <td>{{ pagamento['numeracao'] }}</td>
+                <td>{{ pagamento['info_parcela'] }}</td>
+                <td>{{ pagamento['origem'] }}</td>
+                <td>{{ pagamento['inscricao'] }}</td>
+                <td>{{ pagamento['contribuinte'] }}</td>
+                <td>{{ pagamento['valor_pago_calculo']|number_format(2, ',', '.') }}</td>
+                <td>{{ pagamento['juros']|number_format(2, ',', '.') }}</td>
+                <td>{{ pagamento['multa']|number_format(2, ',', '.') }}</td>
+                <td>{{ pagamento['diferenca']|number_format(2, ',', '.') }}</td>
+                <td>{{ pagamento['valor_pago_normal']|number_format(2, ',', '.') }}</td>
+                <td>{{ pagamento['data_pagamento_br'] }}</td>
+                <td>{{ pagamento['nom_tipo'] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

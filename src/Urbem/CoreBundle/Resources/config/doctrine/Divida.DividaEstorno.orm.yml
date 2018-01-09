@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Divida\DividaEstorno:
+    type: entity
+    table: divida.divida_estorno
+    id:
+        codInscricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inscricao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        motivo:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkDividaDividaEstornos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkDividaProcessoEstorno:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ProcessoEstorno
+            mappedBy: fkDividaDividaEstorno
+            joinColumns:
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkDividaDividaAtiva:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaAtiva
+            inversedBy: fkDividaDividaEstorno
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_inscricao:
+                    referencedColumnName: cod_inscricao

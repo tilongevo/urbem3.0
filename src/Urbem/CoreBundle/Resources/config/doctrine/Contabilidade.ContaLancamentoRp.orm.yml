@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Contabilidade\ContaLancamentoRp:
+    type: entity
+    table: contabilidade.conta_lancamento_rp
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codTipoConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_conta
+    fields:
+        codPlano:
+            type: integer
+            nullable: false
+            column: cod_plano
+    manyToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkContabilidadeContaLancamentoRps
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkContabilidadeContaLancamentoRps
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkContabilidadeTipoContaLancamentoRp:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\TipoContaLancamentoRp
+            inversedBy: fkContabilidadeContaLancamentoRps
+            joinColumns:
+                cod_tipo_conta:
+                    referencedColumnName: cod_tipo_conta

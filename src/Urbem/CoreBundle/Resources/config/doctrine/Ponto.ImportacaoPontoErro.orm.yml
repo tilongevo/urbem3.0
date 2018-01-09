@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Ponto\ImportacaoPontoErro:
+    type: entity
+    table: ponto.importacao_ponto_erro
+    id:
+        codPontoErro:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ponto.seq_importacao_ponto_erro
+                allocationSize: 1
+                initialValue: 1
+            column: cod_ponto_erro
+    fields:
+        codFormato:
+            type: integer
+            nullable: false
+            column: cod_formato
+        codImportacaoErro:
+            type: integer
+            nullable: false
+            column: cod_importacao_erro
+        linha:
+            type: string
+            nullable: false
+            length: 150
+    manyToOne:
+        fkPontoFormatoImportacao:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoImportacao
+            inversedBy: fkPontoImportacaoPontoErros
+            joinColumns:
+                cod_formato:
+                    referencedColumnName: cod_formato

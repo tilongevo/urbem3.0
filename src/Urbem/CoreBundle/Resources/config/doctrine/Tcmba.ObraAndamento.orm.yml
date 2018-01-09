@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Tcmba\ObraAndamento:
+    type: entity
+    table: tcmba.obra_andamento
+    id:
+        codObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_obra
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codSituacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_situacao
+        dataSituacao:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: data_situacao
+    fields:
+        justificativa:
+            type: string
+            nullable: true
+            length: 255
+    manyToOne:
+        fkTcmbaObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            inversedBy: fkTcmbaObraAndamentos
+            joinColumns:
+                cod_obra:
+                    referencedColumnName: cod_obra
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkTcmbaSituacaoObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\SituacaoObra
+            inversedBy: fkTcmbaObraAndamentos
+            joinColumns:
+                cod_situacao:
+                    referencedColumnName: cod_situacao

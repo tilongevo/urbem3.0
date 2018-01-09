@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Patrimonio\ArquivoColetoraDados:
+    type: entity
+    table: patrimonio.arquivo_coletora_dados
+    id:
+        codigo:
+            type: integer
+            generator:
+                strategy: NONE
+        numPlaca:
+            type: string
+            generator:
+                strategy: NONE
+            column: num_placa
+    fields:
+        codLocal:
+            type: integer
+            nullable: false
+            column: cod_local
+    manyToOne:
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkPatrimonioArquivoColetoraDados
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local
+        fkPatrimonioArquivoColetora:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\ArquivoColetora
+            inversedBy: fkPatrimonioArquivoColetoraDados
+            joinColumns:
+                codigo:
+                    referencedColumnName: codigo
+    oneToOne:
+        fkPatrimonioArquivoColetoraConsistencia:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\ArquivoColetoraConsistencia
+            mappedBy: fkPatrimonioArquivoColetoraDados
+            joinColumns:
+                codigo:
+                    referencedColumnName: codigo
+                num_placa:
+                    referencedColumnName: num_placa

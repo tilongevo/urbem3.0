@@ -1,0 +1,285 @@
+Urbem\CoreBundle\Entity\Organograma\Orgao:
+    type: entity
+    table: organograma.orgao
+    repositoryClass: Urbem\CoreBundle\Repository\Organograma\OrgaoRepository
+    id:
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+    fields:
+        numCgmPf:
+            type: integer
+            nullable: false
+            column: num_cgm_pf
+        codCalendar:
+            type: integer
+            nullable: false
+            column: cod_calendar
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        criacao:
+            type: date
+            nullable: false
+        inativacao:
+            type: date
+            nullable: true
+        siglaOrgao:
+            type: string
+            nullable: true
+            length: 10
+            column: sigla_orgao
+    manyToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkOrganogramaOrgoes
+            joinColumns:
+                num_cgm_pf:
+                    referencedColumnName: numcgm
+        fkCalendarioCalendarioCadastro:
+            targetEntity: Urbem\CoreBundle\Entity\Calendario\CalendarioCadastro
+            inversedBy: fkOrganogramaOrgoes
+            joinColumns:
+                cod_calendar:
+                    referencedColumnName: cod_calendar
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkOrganogramaOrgoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkAdministracaoComunicados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Comunicado
+            mappedBy: fkOrganogramaOrgao
+        fkAdministracaoImpressoras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Impressora
+            mappedBy: fkOrganogramaOrgao
+        fkSwUltimoAndamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwUltimoAndamento
+            mappedBy: fkOrganogramaOrgao
+        fkFolhapagamentoConfiguracaoEmpenhoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLotacao
+            mappedBy: fkOrganogramaOrgao
+        fkFolhapagamentoConfiguracaoEmpenhoLlaLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLlaLotacao
+            mappedBy: fkOrganogramaOrgao
+        fkFrotaTerceirosHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\TerceirosHistorico
+            mappedBy: fkOrganogramaOrgao
+        fkImaConfiguracaoBanparaOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanparaOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkImaConfiguracaoBbOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBbOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkImaConfiguracaoBescOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBescOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkImaConfiguracaoBanrisulOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoBanrisulOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkImaConfiguracaoHsbcOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoHsbcOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkOrganogramaDeParaOrgaoHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\DeParaOrgaoHistorico
+            mappedBy: fkOrganogramaOrgao
+        fkOrganogramaDeParaOrgaoHistoricos1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\DeParaOrgaoHistorico
+            mappedBy: fkOrganogramaOrgao1
+        fkOrganogramaOrgaoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\OrgaoNivel
+            mappedBy: fkOrganogramaOrgao
+        fkOrganogramaDeParaSetores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\DeParaSetor
+            mappedBy: fkOrganogramaOrgao
+        fkOrganogramaOrgaoCgns:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\OrgaoCgm
+            mappedBy: fkOrganogramaOrgao
+        fkOrganogramaOrgaoDescricoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\OrgaoDescricao
+            mappedBy: fkOrganogramaOrgao
+        fkPessoalContratoPensionistaOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkPessoalContratoServidorOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkPessoalDeParaOrgaoUnidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DeParaOrgaoUnidade
+            mappedBy: fkOrganogramaOrgao
+        fkPessoalLoteFeriasOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\LoteFeriasOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkPessoalDeParaLotacaoOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DeParaLotacaoOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkPontoConfiguracaoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoLotacao
+            mappedBy: fkOrganogramaOrgao
+        fkSwAndamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAndamento
+            mappedBy: fkOrganogramaOrgao
+        fkTcepeFonteRecursoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\FonteRecursoLotacao
+            mappedBy: fkOrganogramaOrgao
+        fkEstagioEstagiarioEstagios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio
+            mappedBy: fkOrganogramaOrgao
+        fkOrganogramaDeParaOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\DeParaOrgao
+            mappedBy: fkOrganogramaOrgao
+        fkOrganogramaDeParaOrgoes1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\DeParaOrgao
+            mappedBy: fkOrganogramaOrgao1
+        fkSwAndamentoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAndamentoPadrao
+            mappedBy: fkOrganogramaOrgao
+        fkPatrimonioInventarioHistoricoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\InventarioHistoricoBem
+            mappedBy: fkOrganogramaOrgao
+        fkPatrimonioHistoricoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\HistoricoBem
+            mappedBy: fkOrganogramaOrgao
+        fkTcmbaFonteRecursoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\FonteRecursoLotacao
+            mappedBy: fkOrganogramaOrgao
+        fkAdministracaoUsuarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            mappedBy: fkOrganogramaOrgao

@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Compras\Modalidade:
+    type: entity
+    table: compras.modalidade
+    repositoryClass: Urbem\CoreBundle\Repository\Compras\ModalidadeRepository
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields:
+        descricao:
+            type: string
+            nullable: true
+            length: 50
+    oneToMany:
+        fkComprasCompraDiretas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDireta
+            mappedBy: fkComprasModalidade
+        fkComprasMapaModalidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaModalidade
+            mappedBy: fkComprasModalidade
+        fkFolhapagamentoConfiguracaoAutorizacaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoAutorizacaoEmpenho
+            mappedBy: fkComprasModalidade
+        fkLicitacaoModalidadeDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ModalidadeDocumentos
+            mappedBy: fkComprasModalidade
+        fkLicitacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkComprasModalidade
+        fkTcemgArquivoEmps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ArquivoEmp
+            mappedBy: fkComprasModalidade

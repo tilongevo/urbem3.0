@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a class="btn-lg tooltipped"
+           data-position="left"
+           data-delay="50"
+           data-tooltip="Incluir">
+            <i class="mdi mdi-source-branch left"></i>
+            {{ 'label.patrimonial.licitacao.participantes'|trans }}
+        </a>
+    </div>
+    <div class="col s1">
+        {% if object.habilitaParticipante %}
+            <a href="{{ path('urbem_patrimonial_licitacao_participante_create',{'id': object.licitacao|objectKey }) }}"
+               class="btn-lg"><i class="mdi mdi-plus-circle center"></i></a>
+        {% endif %}
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <tr class="sonata-ba-list-field-header">
+            <th class="th-rh" width="5%">#</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.entidade'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.cgmFornecedor'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.numcgmRepresentante'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.dtInclusao'|trans }}</th>
+            <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for participante in object.participantes %}
+            <tr>
+                <td class="td-rh">{{ loop.index }}</td>
+                <td class="td-rh">{{ participante.fkLicitacaoLicitacao.fkOrcamentoEntidade }}</td>
+                <td class="td-rh">{{ participante.fkComprasFornecedor }}</td>
+                <td class="td-rh">{{ participante.fkSwCgm }}</td>
+                <td class="td-rh">{{ participante.dtInclusao|date("d/m/Y") }}</td>
+                <td class="td-rh">
+                    {% if object.habilitaParticipante %}
+                        <div class="btn-group">
+                            <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                               data-position="left"
+                               data-delay="50"
+                               data-tooltip="Excluir"
+                               href="{{ path('urbem_patrimonial_licitacao_participante_delete', { 'id': participante|objectKey }) }}">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

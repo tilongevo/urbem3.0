@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Patrimonio\Manutencao:
+    type: entity
+    table: patrimonio.manutencao
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+        dtAgendamento:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_agendamento
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        dtGarantia:
+            type: date
+            nullable: true
+            column: dt_garantia
+        dtRealizacao:
+            type: date
+            nullable: true
+            column: dt_realizacao
+        observacao:
+            type: string
+            nullable: true
+            length: 200
+    manyToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioManutencoes
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkPatrimonioManutencoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkPatrimonioManutencaoPaga:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\ManutencaoPaga
+            mappedBy: fkPatrimonioManutencao
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+                dt_agendamento:
+                    referencedColumnName: dt_agendamento

@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Licitacao\LicitacaoDocumentos:
+    type: entity
+    table: licitacao.licitacao_documentos
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkLicitacaoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Documento
+            inversedBy: fkLicitacaoLicitacaoDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkLicitacaoLicitacaoDocumentos
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkLicitacaoParticipanteDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteDocumentos
+            mappedBy: fkLicitacaoLicitacaoDocumentos

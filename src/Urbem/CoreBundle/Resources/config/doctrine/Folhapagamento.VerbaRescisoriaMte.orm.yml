@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Folhapagamento\VerbaRescisoriaMte:
+    type: entity
+    table: folhapagamento.verba_rescisoria_mte
+    id:
+        codVerba:
+            type: string
+            generator:
+                strategy: NONE
+            column: cod_verba
+    fields:
+        nomVerba:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_verba
+        natureza:
+            type: string
+            nullable: false
+            length: 1
+    oneToMany:
+        fkFolhapagamentoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            mappedBy: fkFolhapagamentoVerbaRescisoriaMte

@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Administracao\Formula:
+    type: entity
+    table: administracao.formula
+    id:
+        codFormula:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_formula
+    fields:
+        nomFormula:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_formula
+    oneToMany:
+        fkAdministracaoFormulaElementos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\FormulaElemento
+            mappedBy: fkAdministracaoFormula

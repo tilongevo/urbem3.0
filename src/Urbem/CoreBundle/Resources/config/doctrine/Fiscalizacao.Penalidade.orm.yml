@@ -1,0 +1,77 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\Penalidade:
+    type: entity
+    table: fiscalizacao.penalidade
+    id:
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+    fields:
+        codTipoPenalidade:
+            type: integer
+            nullable: false
+            column: cod_tipo_penalidade
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        nomPenalidade:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_penalidade
+    manyToOne:
+        fkFiscalizacaoTipoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\TipoPenalidade
+            inversedBy: fkFiscalizacaoPenalidades
+            joinColumns:
+                cod_tipo_penalidade:
+                    referencedColumnName: cod_tipo
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkFiscalizacaoPenalidades
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkFiscalizacaoInfracaoPenalidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoPenalidade
+            mappedBy: fkFiscalizacaoPenalidade
+        fkFiscalizacaoPenalidadeBaixas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeBaixa
+            mappedBy: fkFiscalizacaoPenalidade
+        fkFiscalizacaoPenalidadeDescontos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeDesconto
+            mappedBy: fkFiscalizacaoPenalidade
+    oneToOne:
+        fkFiscalizacaoPenalidadeDocumento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeDocumento
+            mappedBy: fkFiscalizacaoPenalidade
+            joinColumns:
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+        fkFiscalizacaoPenalidadeMulta:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeMulta
+            mappedBy: fkFiscalizacaoPenalidade
+            joinColumns:
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade

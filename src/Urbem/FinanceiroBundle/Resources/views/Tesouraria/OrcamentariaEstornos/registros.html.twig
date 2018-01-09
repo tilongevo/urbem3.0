@@ -1,0 +1,46 @@
+<table id="tableAssinatura" class="bordered highlight" style="width:100%">
+    <tr class="tr-rh">
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.empenho'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.dtEmpenho'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.notaLiquidacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.dtLiquidacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.conta'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.dtPagamento'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.vlPago'|trans }}</th>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.vlEstornar'|trans }}</th>
+    </tr>
+    {% if field.data.ordemPagamentoEstorno is not null %}
+        {% for notaLiquidacaoPaga in field.data.fkEmpenhoNotaLiquidacaoPagas %}
+            {% if notaLiquidacaoPaga.fkEmpenhoNotaLiquidacaoPagaAnuladas|length == 0 %}
+                <tr>
+                    <td>{{ field.data.empenho }}</td>
+                    <td>{{ field.data.fkEmpenhoEmpenho.dtEmpenho|date('d/m/Y') }}</td>
+                    <td>{{ field.data.notaLiquidacao }}</td>
+                    <td>{{ field.data.dtLiquidacao|date('d/m/Y') }}</td>
+                    <td>{{ notaLiquidacaoPaga.fkTesourariaPagamento.codPlano }}</td>
+                    <td>{{ notaLiquidacaoPaga.fkTesourariaPagamento.fkTesourariaBoletim.dtBoletim|date('d/m/Y') }}</td>
+                    <td>{{ notaLiquidacaoPaga.vlPago|number_format_currency('BRL') }}</td>
+                    <td>
+                        <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                            <div class="input-group">
+                                <span class="input-group-addon">R$</span>
+                                <input
+                                        type="text"
+                                        id="vlEstorno_{{ admin.getObjectKey(notaLiquidacaoPaga) }}"
+                                        name="vlEstorno[{{ admin.getObjectKey(notaLiquidacaoPaga) }}]"
+                                        required="required"
+                                        class="money vl-estorno campo-sonata form-control"
+                                        value="{{ notaLiquidacaoPaga.vlPago|number_format_decimal({'fraction_digits': 2}) }}"
+                                        {% if field.data.ordemPagamentoEstorno.fkEmpenhoOrdemPagamentoRetencoes|length > 0 %}
+                                            readonly="readonly"
+                                            title="{{ 'label.orcamentariaEstornos.opRetencoes'|trans }}"
+                                        {% endif %}
+                                />
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</table>

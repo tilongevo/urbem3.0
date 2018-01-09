@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Pessoal\Sefip:
+    type: entity
+    table: pessoal.sefip
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\SefipRepository
+    id:
+        codSefip:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+    sequenceGenerator:
+            sequenceName: pessoal.sefip_cod_sefip_seq
+            allocationSize: 1
+            initialValue: 1
+            column: cod_sefip
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+        numSefip:
+            type: string
+            nullable: false
+            length: 3
+            column: num_sefip
+        repetirMensal:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+            column: repetir_mensal
+    oneToOne:
+        fkPessoalMovSefipSaida:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipSaida
+            mappedBy: fkPessoalSefip
+            joinColumns:
+                cod_sefip:
+                    referencedColumnName: cod_sefip_saida
+        fkPessoalMovSefipRetorno:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipRetorno
+            mappedBy: fkPessoalSefip
+            joinColumns:
+                cod_sefip:
+                    referencedColumnName: cod_sefip_retorno

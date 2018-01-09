@@ -1,0 +1,84 @@
+Urbem\CoreBundle\Entity\Tcepe\DividaFundadaOperacaoCredito:
+    type: entity
+    table: tcepe.divida_fundada_operacao_credito
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        tipoOperacaoCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: tipo_operacao_credito
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+    fields:
+        dtAssinatura:
+            type: date
+            nullable: true
+            column: dt_assinatura
+        vlSaldoAnteriorTitulo:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_saldo_anterior_titulo
+        vlInscricaoExercicioTitulo:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_inscricao_exercicio_titulo
+        vlBaixaExercicioTitulo:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_baixa_exercicio_titulo
+        vlSaldoAnteriorContrato:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_saldo_anterior_contrato
+        vlInscricaoExercicioContrato:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_inscricao_exercicio_contrato
+        vlBaixaExercicioContrato:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_baixa_exercicio_contrato
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcepeDividaFundadaOperacaoCreditos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcepeDividaFundadaOperacaoCreditos
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

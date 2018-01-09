@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Arrecadacao\MotivoDevolucao:
+    type: entity
+    table: arrecadacao.motivo_devolucao
+    id:
+        codMotivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_motivo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 60
+        descricaoResumida:
+            type: string
+            nullable: true
+            length: 20
+            column: descricao_resumida
+    oneToMany:
+        fkArrecadacaoCarneDevolucoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CarneDevolucao
+            mappedBy: fkArrecadacaoMotivoDevolucao

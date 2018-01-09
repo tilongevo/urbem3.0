@@ -1,0 +1,100 @@
+Urbem\CoreBundle\Entity\Imobiliario\TransferenciaImovel:
+    type: entity
+    table: imobiliario.transferencia_imovel
+    id:
+        codTransferencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: imobiliario.transferencia_imovel_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_transferencia
+    fields:
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+        inscricaoMunicipal:
+            type: integer
+            nullable: false
+            column: inscricao_municipal
+        dtCadastro:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: dt_cadastro
+    manyToOne:
+        fkImobiliarioNaturezaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\NaturezaTransferencia
+            inversedBy: fkImobiliarioTransferenciaImoveis
+            joinColumns:
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkImobiliarioTransferenciaImoveis
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+    oneToMany:
+        fkImobiliarioTransferenciaAdquirentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaAdquirente
+            mappedBy: fkImobiliarioTransferenciaImovel
+        fkImobiliarioTransferenciaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaDocumento
+            mappedBy: fkImobiliarioTransferenciaImovel
+    oneToOne:
+        fkImobiliarioMatriculaImovelTransferencia:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\MatriculaImovelTransferencia
+            mappedBy: fkImobiliarioTransferenciaImovel
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia
+        fkImobiliarioTransferenciaEfetivacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaEfetivacao
+            mappedBy: fkImobiliarioTransferenciaImovel
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia
+        fkImobiliarioTransferenciaProcesso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaProcesso
+            mappedBy: fkImobiliarioTransferenciaImovel
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia
+        fkImobiliarioTransferenciaCancelamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaCancelamento
+            mappedBy: fkImobiliarioTransferenciaImovel
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia
+        fkImobiliarioTransferenciaCorretagem:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaCorretagem
+            mappedBy: fkImobiliarioTransferenciaImovel
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia

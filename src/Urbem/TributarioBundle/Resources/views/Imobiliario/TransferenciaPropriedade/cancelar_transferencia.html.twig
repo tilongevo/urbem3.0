@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+        <div class="sonata-ba-delete center valign-wrapper delete-box">
+            <form action ="{{ admin.generateUrl('cancelar_transferencia') }}" method="post">
+
+                <input type="hidden" name="codTransferencia" value="{{ transferenciaImovel.codTransferencia }}">
+
+                <div class="col s12">
+                    <h2 class="col s12 box-title left-align show">{{ 'label.imobiliarioTransferenciaPropriedade.cancelarTitulo'|trans }}</h2>
+                    <div class="divider grey lighten-1  title-divider"></div>
+                </div>
+                <div class="col s12">
+                    <h6 class="blue-text text-darken-4">
+                        {{ 'label.imobiliarioTransferenciaPropriedade.cancelarConfirmacao'|trans({'%codTransferencia%': transferenciaImovel.codTransferencia}) }}
+                    </h6>
+                </div>
+                <div class="col s12">
+                    <div class="col s6">
+                        <a class="btn grey darken-1 btn-bold cancel" href="#" onclick="window.history.back();" ><i></i>Voltar</a>
+                    </div>
+                    <div class="col s6">
+                        <button type="submit" class="btn btn-danger btn-bold"><i class="fa fa-trash"></i> Sim, cancelar</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+{% endblock content %}

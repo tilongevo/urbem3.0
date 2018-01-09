@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col s12 servidor-table">
+        <a style="font-size: 16px">
+            <i class="fa fa-box"></i>
+            {{ 'label.inventario.itens.list'|trans }}
+        </a>
+    </div>
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'label.saidaTransferencia.item'|trans }}</th>
+        <th class="th-rh">{{ 'label.saidaTransferencia.unidadeMedida'|trans }}</th>
+        <th class="th-rh">{{ 'label.saidaTransferencia.marca'|trans }}</th>
+        <th class="th-rh">{{ 'label.saidaTransferencia.centroCustoOrigem'|trans }}</th>
+        <th class="th-rh">{{ 'label.saidaTransferencia.saldoAtual'|trans }}</th>
+        <th class="th-rh">{{ 'label.saidaTransferencia.quantidade'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for item in object.fkAlmoxarifadoPedidoTransferenciaItens %}
+            <tr>
+                <td class="td-rh">{{ loop.index }}</td>
+                <td class="td-rh">{{ item.codItem ~ ' - ' ~ item.fkAlmoxarifadoCatalogoItem.descricaoResumida }}</td>
+                <td class="td-rh">{{ item.fkAlmoxarifadoCatalogoItem.fkAdministracaoUnidadeMedida.nomUnidade }}</td>
+                <td class="td-rh">{{ item.codMarca ~ ' - ' ~ item.fkAlmoxarifadoMarca.descricao }}</td>
+                <td class="td-rh">{{ item.fkAlmoxarifadoCentroCusto.descricao }}</td>
+                <td class="td-rh">{{ item.saldoAtual|number_format(4, ',') }}</td>
+                <td class="td-rh">{{ item.quantidade|number_format(4, ',') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

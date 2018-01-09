@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Imobiliario\TrechoAliquota:
+    type: entity
+    table: imobiliario.trecho_aliquota
+    id:
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+        codTrecho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_trecho
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        aliquotaTerritorial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: aliquota_territorial
+        aliquotaPredial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: aliquota_predial
+    manyToOne:
+        fkImobiliarioTrecho:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Trecho
+            inversedBy: fkImobiliarioTrechoAliquotas
+            joinColumns:
+                cod_trecho:
+                    referencedColumnName: cod_trecho
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkImobiliarioTrechoAliquotas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

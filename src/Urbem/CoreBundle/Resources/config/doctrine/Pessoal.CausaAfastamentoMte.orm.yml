@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Pessoal\CausaAfastamentoMte:
+    type: entity
+    table: pessoal.causa_afastamento_mte
+    id:
+        codCausaAfastamento:
+            type: string
+            generator:
+                strategy: NONE
+            column: cod_causa_afastamento
+    fields:
+        nomCausaAfastamento:
+            type: string
+            nullable: false
+            length: 120
+            column: nom_causa_afastamento
+    oneToMany:
+        fkPessoalCausaRescisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaRescisao
+            mappedBy: fkPessoalCausaAfastamentoMte

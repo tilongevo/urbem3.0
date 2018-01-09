@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Ppa\ProgramaNorma:
+    type: entity
+    table: ppa.programa_norma
+    id:
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+        timestampProgramaDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_programa_dados
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields: {  }
+    manyToOne:
+        fkPpaProgramaDados:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaDados
+            inversedBy: fkPpaProgramaNormas
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+                timestamp_programa_dados:
+                    referencedColumnName: timestamp_programa_dados
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPpaProgramaNormas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Diarias\DiariaEmpenho:
+    type: entity
+    table: diarias.diaria_empenho
+    id:
+        codDiaria:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_diaria
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codAutorizacao:
+            type: integer
+            nullable: false
+            column: cod_autorizacao
+    manyToOne:
+        fkEmpenhoAutorizacaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho
+            inversedBy: fkDiariasDiariaEmpenhos
+            joinColumns:
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToOne:
+        fkDiariasDiaria:
+            targetEntity: Urbem\CoreBundle\Entity\Diarias\Diaria
+            inversedBy: fkDiariasDiariaEmpenho
+            joinColumns:
+                cod_diaria:
+                    referencedColumnName: cod_diaria
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp

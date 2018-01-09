@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Tcepb\TipoFonteObras:
+    type: entity
+    table: tcepb.tipo_fonte_obras
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+    oneToMany:
+        fkTcepbObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\Obras
+            mappedBy: fkTcepbTipoFonteObras

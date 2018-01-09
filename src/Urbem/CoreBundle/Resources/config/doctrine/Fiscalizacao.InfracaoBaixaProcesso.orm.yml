@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoBaixaProcesso:
+    type: entity
+    table: fiscalizacao.infracao_baixa_processo
+    id:
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+        timestampInicio:
+            type: datetimepk
+            generator:
+                strategy: NONE
+            column: timestamp_inicio
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkFiscalizacaoInfracaoBaixaProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkFiscalizacaoInfracaoBaixa:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoBaixa
+            inversedBy: fkFiscalizacaoInfracaoBaixaProcesso
+            joinColumns:
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+                timestamp_inicio:
+                    referencedColumnName: timestamp_inicio

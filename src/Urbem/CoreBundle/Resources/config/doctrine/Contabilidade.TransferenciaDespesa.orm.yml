@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Contabilidade\TransferenciaDespesa:
+    type: entity
+    table: contabilidade.transferencia_despesa
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codSuplementacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_suplementacao
+    fields: {  }
+    manyToOne:
+        fkContabilidadeLancamentoTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoTransferencia
+            inversedBy: fkContabilidadeTransferenciaDespesas
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                sequencia:
+                    referencedColumnName: sequencia
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoSuplementacao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Suplementacao
+            inversedBy: fkContabilidadeTransferenciaDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_suplementacao:
+                    referencedColumnName: cod_suplementacao

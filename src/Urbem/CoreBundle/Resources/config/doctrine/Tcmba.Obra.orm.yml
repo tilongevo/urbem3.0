@@ -1,0 +1,173 @@
+Urbem\CoreBundle\Entity\Tcmba\Obra:
+    type: entity
+    table: tcmba.obra
+    id:
+        codObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_obra
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nroObra:
+            type: string
+            nullable: false
+            length: 10
+            column: nro_obra
+        local:
+            type: string
+            nullable: false
+            length: 50
+        cep:
+            type: string
+            nullable: false
+            length: 8
+        codBairro:
+            type: integer
+            nullable: false
+            column: cod_bairro
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        descricao:
+            type: string
+            nullable: false
+            length: 255
+        vlObra:
+            type: decimal
+            nullable: false
+            precision: 16
+            scale: 2
+            column: vl_obra
+        dataCadastro:
+            type: date
+            nullable: false
+            column: data_cadastro
+        dataInicio:
+            type: date
+            nullable: false
+            column: data_inicio
+        dataAceite:
+            type: date
+            nullable: false
+            column: data_aceite
+        prazo:
+            type: integer
+            nullable: false
+        dataRecebimento:
+            type: date
+            nullable: false
+            column: data_recebimento
+        codLicitacao:
+            type: integer
+            nullable: true
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            nullable: true
+            column: cod_modalidade
+        exercicioLicitacao:
+            type: string
+            nullable: true
+            length: 4
+            column: exercicio_licitacao
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcmbaObras
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkTcmbaObras
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_licitacao:
+                    referencedColumnName: exercicio
+        fkTcmbaTipoObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoObra
+            inversedBy: fkTcmbaObras
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkSwCep:
+            targetEntity: Urbem\CoreBundle\Entity\SwCep
+            inversedBy: fkTcmbaObras
+            joinColumns:
+                cep:
+                    referencedColumnName: cep
+        fkSwBairro:
+            targetEntity: Urbem\CoreBundle\Entity\SwBairro
+            inversedBy: fkTcmbaObras
+            joinColumns:
+                cod_bairro:
+                    referencedColumnName: cod_bairro
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+        fkTcmbaTipoFuncaoObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoFuncaoObra
+            inversedBy: fkTcmbaObras
+            joinColumns:
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+    oneToMany:
+        fkTcmbaObraMedicoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ObraMedicao
+            mappedBy: fkTcmbaObra
+        fkTcmbaObraAndamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ObraAndamento
+            mappedBy: fkTcmbaObra
+        fkTcmbaObraFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ObraFiscal
+            mappedBy: fkTcmbaObra
+        fkTcmbaObraContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ObraContratos
+            mappedBy: fkTcmbaObra

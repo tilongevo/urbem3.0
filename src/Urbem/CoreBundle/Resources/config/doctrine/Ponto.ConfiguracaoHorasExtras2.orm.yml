@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Ponto\ConfiguracaoHorasExtras2:
+    type: entity
+    table: ponto.configuracao_horas_extras_2
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        anteriorPeriodo1:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: anterior_periodo_1
+        entrePeriodo12:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: entre_periodo_1_2
+        posteriorPeriodo2:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: posterior_periodo_2
+        autorizacao:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        atrasos:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        faltas:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkPontoConfiguracaoRelogioPonto:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoRelogioPonto
+            inversedBy: fkPontoConfiguracaoHorasExtras2s
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+    oneToMany:
+        fkPontoFaixasHorasExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FaixasHorasExtra
+            mappedBy: fkPontoConfiguracaoHorasExtras2

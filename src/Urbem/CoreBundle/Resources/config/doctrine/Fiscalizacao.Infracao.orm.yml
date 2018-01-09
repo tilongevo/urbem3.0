@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\Infracao:
+    type: entity
+    table: fiscalizacao.infracao
+    id:
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+    fields:
+        nomInfracao:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_infracao
+        comminar:
+            type: boolean
+            nullable: false
+        codTipoFiscalizacao:
+            type: integer
+            nullable: false
+            column: cod_tipo_fiscalizacao
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+    manyToOne:
+        fkFiscalizacaoTipoFiscalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\TipoFiscalizacao
+            inversedBy: fkFiscalizacaoInfracoes
+            joinColumns:
+                cod_tipo_fiscalizacao:
+                    referencedColumnName: cod_tipo
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkFiscalizacaoInfracoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkFiscalizacaoInfracaoPenalidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoPenalidade
+            mappedBy: fkFiscalizacaoInfracao
+        fkFiscalizacaoInfracaoBaixas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoBaixa
+            mappedBy: fkFiscalizacaoInfracao
+        fkFiscalizacaoNotificacaoTermoInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoTermoInfracao
+            mappedBy: fkFiscalizacaoInfracao

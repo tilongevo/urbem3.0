@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoLicenca:
+    type: entity
+    table: imobiliario.atributo_tipo_licenca
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkImobiliarioTipoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoLicenca
+            inversedBy: fkImobiliarioAtributoTipoLicencas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkImobiliarioAtributoTipoLicencas
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+    oneToMany:
+        fkImobiliarioAtributoTipoLicencaLoteValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoLicencaLoteValor
+            mappedBy: fkImobiliarioAtributoTipoLicenca
+        fkImobiliarioAtributoTipoLicencaImovelValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoLicencaImovelValor
+            mappedBy: fkImobiliarioAtributoTipoLicenca

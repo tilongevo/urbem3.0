@@ -1,0 +1,87 @@
+Urbem\CoreBundle\Entity\SwCgaPessoaFisica:
+    type: entity
+    table: sw_cga_pessoa_fisica
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codCategoriaCnh:
+            type: integer
+            nullable: false
+            column: cod_categoria_cnh
+        dtEmissaoRg:
+            type: date
+            nullable: true
+            column: dt_emissao_rg
+        orgaoEmissor:
+            type: string
+            nullable: false
+            length: 20
+            column: orgao_emissor
+        cpf:
+            type: string
+            nullable: true
+            length: 11
+        numCnh:
+            type: string
+            nullable: false
+            length: 15
+            column: num_cnh
+        dtValidadeCnh:
+            type: date
+            nullable: true
+            column: dt_validade_cnh
+        codNacionalidade:
+            type: integer
+            nullable: false
+            column: cod_nacionalidade
+        codEscolaridade:
+            type: integer
+            nullable: true
+            column: cod_escolaridade
+        rg:
+            type: string
+            nullable: false
+            length: 15
+        dtNascimento:
+            type: date
+            nullable: true
+            column: dt_nascimento
+        sexo:
+            type: string
+            nullable: true
+            length: 1
+    manyToOne:
+        fkSwCategoriaHabilitacao:
+            targetEntity: Urbem\CoreBundle\Entity\SwCategoriaHabilitacao
+            inversedBy: fkSwCgaPessoaFisicas
+            joinColumns:
+                cod_categoria_cnh:
+                    referencedColumnName: cod_categoria
+        fkSwPais:
+            targetEntity: Urbem\CoreBundle\Entity\SwPais
+            inversedBy: fkSwCgaPessoaFisicas
+            joinColumns:
+                cod_nacionalidade:
+                    referencedColumnName: cod_pais
+        fkSwEscolaridade:
+            targetEntity: Urbem\CoreBundle\Entity\SwEscolaridade
+            inversedBy: fkSwCgaPessoaFisicas
+            joinColumns:
+                cod_escolaridade:
+                    referencedColumnName: cod_escolaridade
+    oneToOne:
+        fkSwCga:
+            targetEntity: Urbem\CoreBundle\Entity\SwCga
+            inversedBy: fkSwCgaPessoaFisica
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp

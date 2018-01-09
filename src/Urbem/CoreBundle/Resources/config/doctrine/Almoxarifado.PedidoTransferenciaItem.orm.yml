@@ -1,0 +1,84 @@
+Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItem:
+    type: entity
+    table: almoxarifado.pedido_transferencia_item
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\PedidoTransferenciaItemRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTransferencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transferencia
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+    fields:
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 4
+    manyToOne:
+        fkAlmoxarifadoPedidoTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferencia
+            inversedBy: fkAlmoxarifadoPedidoTransferenciaItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia
+        fkAlmoxarifadoCatalogoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            inversedBy: fkAlmoxarifadoPedidoTransferenciaItens
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+        fkAlmoxarifadoMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Marca
+            inversedBy: fkAlmoxarifadoPedidoTransferenciaItens
+            joinColumns:
+                cod_marca:
+                    referencedColumnName: cod_marca
+        fkAlmoxarifadoCentroCusto:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto
+            inversedBy: fkAlmoxarifadoPedidoTransferenciaItens
+            joinColumns:
+                cod_centro:
+                    referencedColumnName: cod_centro
+    oneToMany:
+        fkAlmoxarifadoAtributoPedidoTransferenciaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoPedidoTransferenciaItem
+            mappedBy: fkAlmoxarifadoPedidoTransferenciaItem
+        fkAlmoxarifadoPedidoTransferenciaItemDestinos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItemDestino
+            mappedBy: fkAlmoxarifadoPedidoTransferenciaItem
+        fkAlmoxarifadoTransferenciaAlmoxarifadoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\TransferenciaAlmoxarifadoItem
+            mappedBy: fkAlmoxarifadoPedidoTransferenciaItem

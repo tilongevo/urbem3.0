@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoGeradoExcluido:
+    type: entity
+    table: pessoal.assentamento_gerado_excluido
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codAssentamentoGerado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento_gerado
+    fields:
+        descricao:
+            type: text
+            nullable: false
+        timestampExcluido:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_excluido
+    oneToOne:
+        fkPessoalAssentamentoGerado:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoGerado
+            inversedBy: fkPessoalAssentamentoGeradoExcluido
+            joinColumns:
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_assentamento_gerado:
+                    referencedColumnName: cod_assentamento_gerado

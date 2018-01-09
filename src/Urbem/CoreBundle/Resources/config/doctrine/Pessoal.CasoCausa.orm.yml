@@ -1,0 +1,131 @@
+Urbem\CoreBundle\Entity\Pessoal\CasoCausa:
+    type: entity
+    table: pessoal.caso_causa
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\CasoCausaRepository
+    id:
+        codCasoCausa:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.caso_causa_cod_caso_causa_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_caso_causa
+    fields:
+        codCausaRescisao:
+            type: integer
+            nullable: false
+            column: cod_causa_rescisao
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        pagaAvisoPrevio:
+            type: boolean
+            nullable: false
+            column: paga_aviso_previo
+        pagaFeriasVencida:
+            type: boolean
+            nullable: false
+            column: paga_ferias_vencida
+        codSaqueFgts:
+            type: string
+            nullable: true
+            length: 10
+            column: cod_saque_fgts
+        percContSocial:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+            column: perc_cont_social
+        incFgtsFerias:
+            type: boolean
+            nullable: false
+            column: inc_fgts_ferias
+        incFgtsAvisoPrevio:
+            type: boolean
+            nullable: false
+            column: inc_fgts_aviso_previo
+        incFgts13:
+            type: boolean
+            nullable: false
+            column: inc_fgts_13
+        incIrrfFerias:
+            type: boolean
+            nullable: false
+            column: inc_irrf_ferias
+        incIrrfAvisoPrevio:
+            type: boolean
+            nullable: false
+            column: inc_irrf_aviso_previo
+        incIrrf13:
+            type: boolean
+            nullable: false
+            column: inc_irrf_13
+        incPrevFerias:
+            type: boolean
+            nullable: false
+            column: inc_prev_ferias
+        incPrevAvisoPrevio:
+            type: boolean
+            nullable: false
+            column: inc_prev_aviso_previo
+        incPrev13:
+            type: boolean
+            nullable: false
+            column: inc_prev_13
+        pagaFeriasProporcional:
+            type: boolean
+            nullable: false
+            column: paga_ferias_proporcional
+        indenArt479:
+            type: boolean
+            nullable: false
+            column: inden_art_479
+        multaFgts:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+            column: multa_fgts
+        codPeriodo:
+            type: integer
+            nullable: false
+            column: cod_periodo
+    manyToOne:
+        fkPessoalCausaRescisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaRescisao
+            inversedBy: fkPessoalCasoCausas
+            joinColumns:
+                cod_causa_rescisao:
+                    referencedColumnName: cod_causa_rescisao
+        fkPessoalPeriodoCaso:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PeriodoCaso
+            inversedBy: fkPessoalCasoCausas
+            joinColumns:
+                cod_periodo:
+                    referencedColumnName: cod_periodo
+    oneToMany:
+        fkPessoalCasoCausaSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CasoCausaSubDivisao
+            mappedBy: fkPessoalCasoCausa
+        fkPessoalContratoServidorCasoCausas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausa
+            mappedBy: fkPessoalCasoCausa
+        fkPessoalContratoPensionistaCasoCausas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaCasoCausa
+            mappedBy: fkPessoalCasoCausa

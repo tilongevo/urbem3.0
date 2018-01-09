@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Divida\Modalidade:
+    type: entity
+    table: divida.modalidade
+    repositoryClass: Urbem\CoreBundle\Repository\Tributario\DividaAtiva\ModalidadeRepository
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        ultimoTimestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+            column: ultimo_timestamp
+        ativa:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    oneToMany:
+        fkDividaModalidadeVigencias:
+            orderBy: { 'timestamp': 'DESC' }
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            mappedBy: fkDividaModalidade

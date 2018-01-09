@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcern\NaturezaJuridica:
+    type: entity
+    table: tcern.natureza_juridica
+    id:
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkTcernUnidadeGestoras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeGestora
+            mappedBy: fkTcernNaturezaJuridica

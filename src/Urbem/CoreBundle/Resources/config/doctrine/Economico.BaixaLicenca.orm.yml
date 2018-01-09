@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Economico\BaixaLicenca:
+    type: entity
+    table: economico.baixa_licenca
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+    fields:
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        motivo:
+            type: text
+            nullable: false
+    manyToOne:
+        fkEconomicoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Licenca
+            inversedBy: fkEconomicoBaixaLicencas
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEconomicoTipoBaixa:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\TipoBaixa
+            inversedBy: fkEconomicoBaixaLicencas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkEconomicoProcessoBaixaLicencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoBaixaLicenca
+            mappedBy: fkEconomicoBaixaLicenca

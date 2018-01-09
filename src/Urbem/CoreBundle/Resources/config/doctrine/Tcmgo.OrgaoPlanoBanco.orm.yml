@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Tcmgo\OrgaoPlanoBanco:
+    type: entity
+    table: tcmgo.orgao_plano_banco
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+    fields: {  }
+    manyToOne:
+        fkContabilidadePlanoBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoBanco
+            inversedBy: fkTcmgoOrgaoPlanoBancos
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkTcmgoOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Orgao
+            inversedBy: fkTcmgoOrgaoPlanoBancos
+            joinColumns:
+                num_orgao:
+                    referencedColumnName: num_orgao
+                exercicio:
+                    referencedColumnName: exercicio

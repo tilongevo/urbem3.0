@@ -1,0 +1,53 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_MUNICIPE:    ROLE_USER
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                login_path: /login
+                always_use_default_target_path: false
+                success_handler: core.login_success_handler
+            logout:       true
+            anonymous:    true
+            logout:
+                  path: fos_user_security_logout
+                  target: /login
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/server/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        - { path: ^/acesso-negado, role: ROLE_USER }
+        - { path: ^/pagina-nao-encontrada, role: ROLE_USER }
+        - { path: ^/show, role: ROLE_USER }
+        - { path: ^/download, role: ROLE_USER }
+        - { path: ^/autocomplete, role: ROLE_USER }
+
+#        - { path: ^/recursos-humanos, role: ROLE_ADMIN }
+#        - { path: ^/patrimonial, role: ROLE_ADMIN }
+#        - { path: ^/tributario, role: ROLE_ADMIN }
+#        - { path: ^/financeiro, role: ROLE_ADMIN }
+#        - { path: ^/administrativo, role: ROLE_ADMIN }
+#        - { path: ^/rede-simples, role: ROLE_ADMIN }
+
+        - { path: ^/portal-cidadao, role: ROLE_MUNICIPE }
+
+        - { path: ^/, role: ROLE_ADMIN }

@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Organograma\DeParaSetor:
+    type: entity
+    table: organograma.de_para_setor
+    id:
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        codUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_unidade
+        codDepartamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_departamento
+        codSetor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_setor
+    fields:
+        codOrgaoOrganograma:
+            type: integer
+            nullable: true
+            column: cod_orgao_organograma
+    manyToOne:
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkOrganogramaDeParaSetores
+            joinColumns:
+                cod_orgao_organograma:
+                    referencedColumnName: cod_orgao
+    oneToOne:
+        fkAdministracaoSetor:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Setor
+            inversedBy: fkOrganogramaDeParaSetor
+            joinColumns:
+                cod_setor:
+                    referencedColumnName: cod_setor
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+                cod_departamento:
+                    referencedColumnName: cod_departamento

@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Tcmgo\TipoRetencao:
+    type: entity
+    table: tcmgo.tipo_retencao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+    oneToMany:
+        fkTcmgoDeParaTipoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\DeParaTipoRetencao
+            mappedBy: fkTcmgoTipoRetencao

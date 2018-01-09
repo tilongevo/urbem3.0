@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Tceto\NotaLiquidacaoDocumento:
+    type: entity
+    table: tceto.nota_liquidacao_documento
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        nroDocumento:
+            type: string
+            nullable: false
+            length: 15
+            column: nro_documento
+        dtDocumento:
+            type: date
+            nullable: true
+            column: dt_documento
+        descricao:
+            type: string
+            nullable: true
+            length: 255
+        autorizacao:
+            type: string
+            nullable: true
+            length: 15
+        modelo:
+            type: string
+            nullable: true
+            length: 15
+    manyToOne:
+        fkTcetoTipoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\TipoDocumento
+            inversedBy: fkTcetoNotaLiquidacaoDocumentos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkTcetoNotaLiquidacaoDocumento
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade

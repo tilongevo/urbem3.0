@@ -1,0 +1,99 @@
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomico.codInscricao'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getInscricaoEconomica() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomicoEmpresaFato.cgm'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getFkEconomicoCadastroEconomicoEmpresaFato().getFkSwCgmPessoaFisica() }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+	<th>{{ 'label.economicoCadastroEconomico.responsavel'|trans }}</th>
+	{% if admin.cadastroEconomico.getFkEconomicoCadastroEconRespContabiis().count() %}
+	    <td>{{ admin.cadastroEconomico.getFkEconomicoCadastroEconRespContabiis().first().getFkEconomicoResponsavel() }}</td>
+	{% else %}
+		<td>{{ '-' }}</td>
+	{% endif %}
+</tr>
+
+<tr class="sonata-ba-view-container">
+    <th>{{ 'label.economicoCadastroEconomico.dtAbertura'|trans }}</th>
+    <td>{{ admin.cadastroEconomico.getDtAbertura().format('d/m/Y') }}</td>
+</tr>
+
+<tr class="sonata-ba-view-container">
+	<th>{{ 'label.economicoCadastroEconomico.processo'|trans }}</th>
+	{% if admin.cadastroEconomico.getFkEconomicoProcessoCadastroEconomicos().count() %}
+		<td>{{ '%s / %s / %s'|format(admin.processo.getFkSwAssunto().getFkSwClassificacao(), admin.processo.getFkSwAssunto(), admin.processo) }}</td>
+	{% else %}
+		<td>{{ '-' }}</td>
+	{% endif %}
+</tr>
+
+<tr class="sonata-ba-view-container">
+	<tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomico.tipoDomicilio'|trans }}</th>
+	    <td>{{ admin.tipoDomicilio }}</td>
+	</tr>
+</tr>
+
+{% if admin.domicilioFiscal is defined %}
+	<tr class="sonata-ba-view-container">
+		<th>{{ 'label.economicoCadastroEconomico.domicilio'|trans }}</th>
+	    <td>{{ admin.domicilioFiscal.getFkImobiliarioImovel().getfkImobiliarioImovelLotes().first().getFkImobiliarioLote() }}</td>
+	</tr>
+{% endif %}
+
+{% if admin.domicilioInformado is defined %}
+	<tr class="sonata-ba-view-container">
+		<th>{{ 'label.economicoCadastroEconomico.logradouro'|trans }}</th>
+	    <td>{{ admin.domicilioInformado.getFkSwLogradouro() }}</td>
+	</tr>
+
+	<tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomico.numero'|trans }}</th>
+	    <td>{{ admin.domicilioInformado.getNumero() }}</td>
+	</tr>
+
+	<tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomico.complemento'|trans }}</th>
+	    <td>{{ admin.domicilioInformado.getComplemento() }}</td>
+	</tr>
+
+	<tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomico.bairro'|trans }}</th>
+	    <td>{{ admin.domicilioInformado.getFkSwBairroLogradouro().getFkSwBairro() }}</td>
+	</tr>
+
+	<tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomico.cep'|trans }}</th>
+	    <td>{{ admin.domicilioInformado.getFkSwLogradouro().getFkSwCepLogradouros().first().getFkSwCep().getCep() }}</td>
+	</tr>
+
+    <tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomico.caixaPostal'|trans }}</th>
+	    <td>{{ admin.domicilioInformado.getCaixaPostal() }}</td>
+	</tr>
+
+    <tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomico.municipio'|trans }}</th>
+	    <td>{{ '%s - %s'|format(admin.municipio.getCodMunicipio(), admin.municipio.getNomMunicipio()) }}</td>
+	</tr>
+
+    <tr class="sonata-ba-view-container">
+	    <th>{{ 'label.economicoCadastroEconomico.uf'|trans }}</th>
+	    <td>{{ '%s - %s'|format(admin.uf.getCodUf(), admin.uf.getNomUf()) }}</td>
+	</tr>
+{% endif %}
+
+{% for atributo in admin.atributos %}
+<tr class="sonata-ba-view-container">
+	<th>{{ atributo.name }}</th>
+	{% if atributo.value is not empty %}
+	    <td>{{ atributo.value }}</td>
+	{% else %}
+		<td>{{ '-' }}</td>
+	{% endif %}
+</tr>
+{% endfor %}

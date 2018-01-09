@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Tcepe\VinculoTipoNorma:
+    type: entity
+    table: tcepe.vinculo_tipo_norma
+    id:
+        codTipoNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_norma
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkTcepeTipoNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoNorma
+            inversedBy: fkTcepeVinculoTipoNormas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkNormasTipoNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\TipoNorma
+            inversedBy: fkTcepeVinculoTipoNorma
+            joinColumns:
+                cod_tipo_norma:
+                    referencedColumnName: cod_tipo_norma

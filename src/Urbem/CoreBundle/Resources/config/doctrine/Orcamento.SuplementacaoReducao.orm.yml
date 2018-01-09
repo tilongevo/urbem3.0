@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Orcamento\SuplementacaoReducao:
+    type: entity
+    table: orcamento.suplementacao_reducao
+    id:
+        codSuplementacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_suplementacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+    manyToOne:
+        fkOrcamentoSuplementacao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Suplementacao
+            inversedBy: fkOrcamentoSuplementacaoReducoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_suplementacao:
+                    referencedColumnName: cod_suplementacao
+        fkOrcamentoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            inversedBy: fkOrcamentoSuplementacaoReducoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_despesa:
+                    referencedColumnName: cod_despesa

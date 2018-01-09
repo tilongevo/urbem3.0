@@ -1,0 +1,46 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div>
+        <div class="container">
+                <h2 class="blue-text text-darken-4">Cancelar Abertura Restos a Pagar</h2>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                <p class="delay-message">
+                      {{ 'label.AberturaRestosPagar.mensagem.permitido'|trans }}
+                </p>
+        </div>
+
+        <a href="{{ path('urbem_financeiro_contabilidade_cancelar_abertura_restos_a_pagar_processar') }}"
+                       class="waves-effect waves-light btn blue darken-4 btn btn-success left"
+                       style="padding: 0 40px !important; margin-left: 45px"
+                       name="btn_update_and_list">
+                <i class="mdi mdi-file-document left" style="margin-top: 5px;"></i>
+                Gerar
+            </a>
+        <i class="fa fa-exclamation-triangle delay-icon" aria-hidden="true"></i>
+    </div>
+{% endblock show %}

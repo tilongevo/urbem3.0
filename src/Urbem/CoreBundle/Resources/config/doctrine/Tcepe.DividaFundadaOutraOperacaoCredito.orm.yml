@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Tcepe\DividaFundadaOutraOperacaoCredito:
+    type: entity
+    table: tcepe.divida_fundada_outra_operacao_credito
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+    fields:
+        dtAssinatura:
+            type: date
+            nullable: true
+            column: dt_assinatura
+        cgmCredor:
+            type: integer
+            nullable: false
+            column: cgm_credor
+        vlSaldoAnterior:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_saldo_anterior
+        vlInscricaoExercicio:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_inscricao_exercicio
+        vlBaixaExercicio:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_baixa_exercicio
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcepeDividaFundadaOutraOperacaoCreditos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcepeDividaFundadaOutraOperacaoCreditos
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcepeDividaFundadaOutraOperacaoCreditos
+            joinColumns:
+                cgm_credor:
+                    referencedColumnName: numcgm

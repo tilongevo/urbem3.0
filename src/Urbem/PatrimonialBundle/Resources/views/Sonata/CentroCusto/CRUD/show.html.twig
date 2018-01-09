@@ -1,0 +1,113 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+
+    {% if object.responsavel == null %}
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            Este Centro de Custo não possui um Responsável
+        </div>
+    {% endif %}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="fa fa-book fa-lg" aria-hidden="true"></i>
+                    <span style="padding-top: 10px">{{ 'label.patrimonial.almoxarifado.centrodecusto.descricao'|trans }}
+                        :</span>
+                    <span class="grey-text bold" style="padding-top: 10px; font-weight: bold">
+                        {{ object.descricao }}
+                    </span>
+                </h2>
+                <a href="{{ path('urbem_patrimonial_almoxarifado_centro_custo_edit', { 'id': object.codCentro }) }}"
+                   class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+                <p class="divider grey col s12"></p>
+
+                {# Codigo #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.almoxarifado.centrodecusto.codCentro'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.codCentro }}
+                    </h6>
+                </div>
+
+                {# Entidade #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.comprasDireta.codEntidade'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkAlmoxarifadoCentroCustoEntidades.last.fkOrcamentoEntidade.fkSwCgm.nomCgm }}
+                    </h6>
+                </div>
+
+                {# Data da Vigencia #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.almoxarifado.centrodecusto.dtVigencia'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.dtVigencia|date("d/m/Y") }}
+                    </h6>
+                </div>
+
+                {# Responsavel #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.patrimonial.almoxarifado.centrodecusto.responsavel'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.responsavel.fkSwCgm }}
+                    </h6>
+                </div>
+            </div>
+        </div>
+
+        {% include 'PatrimonialBundle::Sonata/CentroCusto/CRUD/show__dotacoes.html.twig' %}
+
+        <br>
+
+        {% include 'PatrimonialBundle::Sonata/CentroCusto/CRUD/show__permissoes.html.twig' %}
+
+    </div>
+
+    <hr>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_patrimonial_almoxarifado_centro_custo_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        </div>
+    </div>
+
+{% endblock show %}

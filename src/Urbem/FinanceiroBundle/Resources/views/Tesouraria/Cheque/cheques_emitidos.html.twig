@@ -1,0 +1,61 @@
+<table class="col s12 highlight bordered">
+    <thead class="thead-rh">
+        <tr class="sonata-ba-list-field-header">
+            <th class="th-rh">{{ 'label.tesouraria.cheque.banco'|trans }}</th>
+            <th class="th-rh">{{ 'label.tesouraria.cheque.agencia'|trans }}</th>
+            <th class="th-rh">{{ 'label.tesouraria.cheque.cc'|trans }}</th>
+            <th class="th-rh">{{ 'label.tesouraria.cheque.numeroCheque'|trans }}</th>
+            <th class="th-rh">{{ 'label.tesouraria.cheque.valor'|trans }}</th>
+            <th class="th-rh">{{ 'acoes'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cheque in field.data.chequeEmissao %}
+            <tr>
+                <td class="td-rh">{{ field.data.contaCorrente.fkMonetarioAgencia.fkMonetarioBanco.nomBanco }}</td>
+                <td class="td-rh">{{ field.data.contaCorrente.fkMonetarioAgencia.nomAgencia }}</td>
+                <td class="td-rh">{{ field.data.contaCorrente.numContaCorrente }}</td>
+                <td class="td-rh">{{ cheque.numCheque }}</td>
+                <td class="td-rh">{{ cheque.fkTesourariaChequeEmissao.valor|number_format(2, ',', '.') }}</td>
+                <td class="td-rh">
+                    <div class="btn-group">
+                            {% if not cheque.fkTesourariaChequeEmissao.fkTesourariaCheque.fkTesourariaChequeEmissaoBaixas.first()
+                            or cheque.fkTesourariaChequeEmissao.fkTesourariaCheque.fkTesourariaChequeEmissaoBaixaAnuladas.first() %}
+                            <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-position="left"
+                               data-delay="50"
+                               title="Baixar"
+                               data-tooltip="Baixar"
+                               href="{{ path('urbem_financeiro_tesouraria_cheque_emissao_emissao_baixar', {
+                                   'id': field.data.contaCorrente.fkMonetarioAgencia.codAgencia ~ '~' ~
+                                       field.data.contaCorrente.fkMonetarioAgencia.fkMonetarioBanco.codBanco ~ '~' ~
+                                       field.data.contaCorrente.codContaCorrente ~ '~' ~
+                                       cheque.numCheque,
+                                   'transferencia': admin.adminRequestId
+                               }) }}"
+                               id="baixaCheque">
+                                <i class="material-icons">file_download</i>
+                            </a>
+                        {% else %}
+                            <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                               data-position="left"
+                               data-delay="50"
+                               data-tooltip="Anular Baixa"
+                               title="Anular Baixa"
+                               href="{{ path('urbem_financeiro_tesouraria_cheque_emissao_emissao_anular_baixa', {
+                                   'id': field.data.contaCorrente.fkMonetarioAgencia.codAgencia ~ '~' ~
+                                       field.data.contaCorrente.fkMonetarioAgencia.fkMonetarioBanco.codBanco ~ '~' ~
+                                       field.data.contaCorrente.codContaCorrente ~ '~' ~
+                                       cheque.numCheque,
+                                   'transferencia': admin.adminRequestId
+                               }) }}"
+                               id="anulaBaixa">
+                                <i class="material-icons">block</i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

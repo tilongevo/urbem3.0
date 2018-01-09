@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ServicoSemRetencao:
+    type: entity
+    table: fiscalizacao.servico_sem_retencao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        valorDeclarado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_declarado
+        valorDeducao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_deducao
+        valorDeducaoLegal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_deducao_legal
+        valorLancado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_lancado
+        aliquota:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    oneToOne:
+        fkFiscalizacaoFaturamentoServico:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FaturamentoServico
+            inversedBy: fkFiscalizacaoServicoSemRetencao
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia
+                cod_servico:
+                    referencedColumnName: cod_servico
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                ocorrencia:
+                    referencedColumnName: ocorrencia

@@ -1,0 +1,115 @@
+Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosOrgao:
+    type: entity
+    table: tcemg.registro_precos_orgao
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numeroRegistroPrecos:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numero_registro_precos
+        exercicioRegistroPrecos:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_registro_precos
+        interno:
+            type: boolean
+            generator:
+                strategy: NONE
+        numcgmGerenciador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numcgm_gerenciador
+        exercicioUnidade:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_unidade
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        participante:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        numeroProcessoAdesao:
+            type: string
+            nullable: true
+            length: 12
+            column: numero_processo_adesao
+        exercicioAdesao:
+            type: string
+            nullable: true
+            length: 4
+            column: exercicio_adesao
+        dtPublicacaoAvisoIntencao:
+            type: date
+            nullable: true
+            column: dt_publicacao_aviso_intencao
+        dtAdesao:
+            type: date
+            nullable: true
+            column: dt_adesao
+        gerenciador:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        cgmAprovacao:
+            type: integer
+            nullable: false
+            column: cgm_aprovacao
+    manyToOne:
+        fkTcemgRegistroPrecos:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecos
+            inversedBy: fkTcemgRegistroPrecosOrgoes
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numero_registro_precos:
+                    referencedColumnName: numero_registro_precos
+                exercicio_registro_precos:
+                    referencedColumnName: exercicio
+                numcgm_gerenciador:
+                    referencedColumnName: numcgm_gerenciador
+                interno:
+                    referencedColumnName: interno
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcemgRegistroPrecosOrgoes
+            joinColumns:
+                exercicio_unidade:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkTcemgRegistroPrecosOrgoes
+            joinColumns:
+                cgm_aprovacao:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkTcemgRegistroPrecosOrgaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosOrgaoItem
+            mappedBy: fkTcemgRegistroPrecosOrgao

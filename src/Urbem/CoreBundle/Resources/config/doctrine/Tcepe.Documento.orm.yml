@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Tcepe\Documento:
+    type: entity
+    table: tcepe.documento
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        nroDocumento:
+            type: string
+            nullable: false
+            length: 20
+            column: nro_documento
+        serie:
+            type: string
+            nullable: false
+            length: 5
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+    manyToOne:
+        fkTcepeTipoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoDocumento
+            inversedBy: fkTcepeDocumentos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkSwUf:
+            targetEntity: Urbem\CoreBundle\Entity\SwUf
+            inversedBy: fkTcepeDocumentos
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+    oneToOne:
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkTcepeDocumento
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade

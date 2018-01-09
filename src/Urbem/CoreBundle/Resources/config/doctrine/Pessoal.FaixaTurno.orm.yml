@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Pessoal\FaixaTurno:
+    type: entity
+    table: pessoal.faixa_turno
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\FaixaTurnoRepository
+    id:
+        codTurno:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_turno
+        codGrade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codDia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dia
+    fields:
+        horaEntrada:
+            type: time
+            nullable: false
+            column: hora_entrada
+        horaSaida:
+            type: time
+            nullable: false
+            column: hora_saida
+        horaEntrada2:
+            type: time
+            nullable: true
+            column: hora_entrada_2
+        horaSaida2:
+            type: time
+            nullable: true
+            column: hora_saida_2
+    manyToOne:
+        fkPessoalGradeHorario:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\GradeHorario
+            inversedBy: fkPessoalFaixaTurnos
+            joinColumns:
+                cod_grade:
+                    referencedColumnName: cod_grade
+        fkPessoalDiasTurno:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DiasTurno
+            inversedBy: fkPessoalFaixaTurnos
+            joinColumns:
+                cod_dia:
+                    referencedColumnName: cod_dia

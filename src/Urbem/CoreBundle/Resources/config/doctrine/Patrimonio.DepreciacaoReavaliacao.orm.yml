@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Patrimonio\DepreciacaoReavaliacao:
+    type: entity
+    table: patrimonio.depreciacao_reavaliacao
+    id:
+        codDepreciacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_depreciacao
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codReavaliacao:
+            type: integer
+            nullable: false
+            column: cod_reavaliacao
+    manyToOne:
+        fkPatrimonioReavaliacao:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Reavaliacao
+            inversedBy: fkPatrimonioDepreciacaoReavaliacoes
+            joinColumns:
+                cod_reavaliacao:
+                    referencedColumnName: cod_reavaliacao
+                cod_bem:
+                    referencedColumnName: cod_bem
+    oneToOne:
+        fkPatrimonioDepreciacao:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Depreciacao
+            inversedBy: fkPatrimonioDepreciacaoReavaliacao
+            joinColumns:
+                cod_depreciacao:
+                    referencedColumnName: cod_depreciacao
+                cod_bem:
+                    referencedColumnName: cod_bem
+                timestamp:
+                    referencedColumnName: timestamp

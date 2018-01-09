@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\Fiscal:
+    type: entity
+    table: fiscalizacao.fiscal
+    id:
+        codFiscal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fiscal
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        codContrato:
+            type: integer
+            nullable: false
+            column: cod_contrato
+        administrador:
+            type: boolean
+            nullable: false
+        ativo:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkFiscalizacaoFiscais
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkFiscalizacaoFiscais
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToMany:
+        fkFiscalizacaoFiscalFiscalizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalFiscalizacao
+            mappedBy: fkFiscalizacaoFiscal
+        fkFiscalizacaoFiscalProcessoFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\FiscalProcessoFiscal
+            mappedBy: fkFiscalizacaoFiscal

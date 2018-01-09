@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Imobiliario\TransferenciaCorretagem:
+    type: entity
+    table: imobiliario.transferencia_corretagem
+    id:
+        codTransferencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transferencia
+    fields:
+        creci:
+            type: string
+            nullable: false
+            length: 10
+    manyToOne:
+        fkImobiliarioCorretagem:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Corretagem
+            inversedBy: fkImobiliarioTransferenciaCorretagens
+            joinColumns:
+                creci:
+                    referencedColumnName: creci
+    oneToOne:
+        fkImobiliarioTransferenciaImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaImovel
+            inversedBy: fkImobiliarioTransferenciaCorretagem
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia

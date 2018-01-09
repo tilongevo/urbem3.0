@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Ppa\ProgramaTemporarioVigencia:
+    type: entity
+    table: ppa.programa_temporario_vigencia
+    id:
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+        timestampProgramaDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_programa_dados
+    fields:
+        dtInicial:
+            type: date
+            nullable: false
+            column: dt_inicial
+        dtFinal:
+            type: date
+            nullable: false
+            column: dt_final
+        valorGlobal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_global
+    oneToOne:
+        fkPpaProgramaDados:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaDados
+            inversedBy: fkPpaProgramaTemporarioVigencia
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+                timestamp_programa_dados:
+                    referencedColumnName: timestamp_programa_dados

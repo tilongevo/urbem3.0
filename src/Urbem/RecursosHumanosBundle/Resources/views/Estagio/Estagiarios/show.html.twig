@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="col s10 title-show">
+        <h5>Estagio\EstagiarioEstagio</h5>
+    </div>
+    <div class="col s2">
+        <div class="hide-on-med-and-down col l9 right-align">
+            <a class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('estagio_estagiario_edit', { 'id': estagiario.codEstagio }) }}"><i class="material-icons">edit</i></a>
+        </div>
+        <div class="hide-on-med-and-down col l3 right-align">
+            {{ form_start(delete_form) }}
+            <button class="top-btn btn waves-effect waves-light white-text blue darken-4 tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir" value="Delete" type="submit" name="action"><i class="material-icons">delete</i></button>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+    <div class="col s12">
+        <table class="striped bordered show-table">
+        <tbody>
+            <tr>
+                <th>{{ 'label.estagio.numero_estagio'|trans }}</th>
+                <td>{{ estagiario.numeroEstagio }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.curso'|trans }}</th>
+                <td>{{ estagiario.codCurso.getNomCurso() }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.instituicao_ensino'|trans }}</th>
+                <td>{{ estagiario.cgmInstituicaoEnsino.getNumcgm().getNomFantasia() }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.vinculo_estagio'|trans }}</th>
+                <td>{{ estagiario.vinculoEstagio }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.dt_inicial'|trans }}</th>
+                <td>{% if estagiario.dtInicio %}{{ estagiario.dtInicio|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.dt_final'|trans }}</th>
+                <td>{% if estagiario.dtFinal %}{{ estagiario.dtFinal|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.dt_renovacao'|trans }}</th>
+                <td>{% if estagiario.dtRenovacao %}{{ estagiario.dtRenovacao|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.funcao'|trans }}</th>
+                <td>{{ estagiario.funcao }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.objetivos'|trans }}</th>
+                <td>{{ estagiario.objetivos }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.estagio.ano_semestre'|trans }}</th>
+                <td>{{ estagiario.anoSemestre }}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="col s12">
+        <a  class="btn-floating white-text blue darken-4" href="{{ path('estagio_estagiario_index') }}"><i class="material-icons">arrow_back</i></a>
+    </div>
+</div>
+{% endblock %}

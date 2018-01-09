@@ -1,0 +1,44 @@
+<table class="bordered highlight striped">
+    <tbody>
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.dataCalculo'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.calculo'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.credito'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.exercicio'|trans }}</th>
+            <th class="th-rh">{{ 'label.arrecadacaoConsultaFinanceira.valorCalculado'|trans }}</th>
+        </tr>
+        <tr class="tr-rh">
+            {% if admin.getListaCalculosNaoLancados(admin.getSubject()) %}
+
+                {% set lista1 = null %}
+                {% set lista2 = null %}
+                 {% set goNext = false %}
+
+                {% for listaCalculo in admin.getListaCalculosNaoLancados(admin.getSubject()) %}
+                    {% if not lista1 %}
+                        {% set lista1 = listaCalculo %}
+                        {% set goNext = true %}
+                    {% endif %}
+                    {% if not goNext %}
+                        {% if lista1 and not lista2 %}
+                            {% set lista2 = listaCalculo %}
+                        {% endif %}
+                        {% if lista1 and lista2 %}
+                            <tr class="tr-rh striped">
+                                <td>{{ lista1.data }}</td>
+                                <td>{{ lista1.cod_calculo }}<br>{{ lista2.cod_calculo }}</td>
+                                <td>{{ lista1.credito }}<br>{{ lista2.credito }}</td>
+                                <td>{{ lista1.exercicio }}<br>{{ lista2.exercicio }}</td>
+                                <td>{{ lista1.vlr|number_format(2,',','.') }}<br>{{ lista2.vlr|number_format(2,',','.') }}</td>
+                            </tr>
+                            {% set lista1 = null %}
+                            {% set lista2 = null %}
+                        {% endif %}
+                    {% endif %}
+                    {% set goNext = false %}
+                {% endfor %}
+
+            {% endif %}
+        </tr>
+    </tbody>
+</table>

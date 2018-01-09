@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col s12 servidor-table">
+        <a style="font-size: 16px">
+            <i class="mdi mdi-newspaper"></i>
+            {{ 'label.julgamentoProposta.itens'|trans }}
+        </a>
+    </div>
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.itens'|trans }}</th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.quantidade'|trans }}</th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.valorReferencia'|trans }}</th>
+        <th class="th-rh">{{ 'label.julgamentoProposta.valorUltimaCompra'|trans }}</th>
+        <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for item in object.mapaItem %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ item.codItem }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>
+                    {%  if item.vlReferencia is defined  %}
+                        {{ item.vlReferencia|number_format(2, ',') }}
+                    {% else %}
+                        --
+                    {% endif %}
+                </td>
+                <td>
+                    {%  if item.vlUltimaCompra is defined  %}
+                        {{ item.vlUltimaCompra|number_format(2, ',') }}
+                    {% else %}
+                        --
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{{ path('urbem_patrimonial_licitacao_julgamento_proposta_cotacao_show', {'id': item.cotacaoItemReference}) }}"
+                           class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                           data-toggle="tooltip" data-placement="top" title="{{ "detalhe"|trans }}">
+                            <i class="fa fa-search-plus fa-lg"></i>
+                        </a>
+                    </div>
+                </td>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

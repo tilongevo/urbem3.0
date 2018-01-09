@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Almoxarifado\Perecivel:
+    type: entity
+    table: almoxarifado.perecivel
+    id:
+        lote:
+            type: string
+            generator:
+                strategy: NONE
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+    fields:
+        dtFabricacao:
+            type: date
+            nullable: false
+            column: dt_fabricacao
+        dtValidade:
+            type: date
+            nullable: false
+            column: dt_validade
+    manyToOne:
+        fkAlmoxarifadoEstoqueMaterial:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial
+            inversedBy: fkAlmoxarifadoPereciveis
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+    oneToMany:
+        fkAlmoxarifadoLancamentoPereciveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoPerecivel
+            mappedBy: fkAlmoxarifadoPerecivel

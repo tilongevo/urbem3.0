@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Contabilidade\TipoTransferencia:
+    type: entity
+    table: contabilidade.tipo_transferencia
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_tipo
+        lancamentoContabil:
+            type: boolean
+            nullable: false
+            column: lancamento_contabil
+    oneToMany:
+        fkOrcamentoSuplementacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Suplementacao
+            mappedBy: fkContabilidadeTipoTransferencia
+        fkTcerjTipoAlteracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcerj\TipoAlteracao
+            mappedBy: fkContabilidadeTipoTransferencia
+        fkContabilidadeLancamentoTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoTransferencia
+            mappedBy: fkContabilidadeTipoTransferencia

@@ -1,0 +1,129 @@
+{% block body %}
+    {% block content %}
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td rowspan="5" style="border-bottom: 0; border-left: 0; border-top: 0">
+                    <img class="responsive-img" style="height: 65px; margin-top: 20px"
+                         src="http://urbem.cnm.org.br/bundles/portal/images/logo_urbem.png">
+                </td>
+                <th rowspan="5" colspan="6">
+                {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.nomCgm }}<br />
+                {{ 'foneFax'|trans }}: {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.foneResidencial }} / {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.foneComercial }}<br />
+                {{ 'email'|trans }}: {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.eMail }}<br />
+                {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.tipoLogradouro }}
+                {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.logradouro }}, {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.numero }} - {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.bairro }}<br />
+                {{ 'cep'|trans }}: {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.cep|slice(0,5) }}-{{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.cep|slice(5) }}<br />
+                {{ 'cnpj'|trans }}: {{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(0,2) }}.{{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(2,3) }}.{{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(5,3) }}/{{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(8,4) }}-{{ entidadeUsuario.fkOrcamentoEntidade.fkSwCgm.fkSwCgmPessoaJuridica.cnpj|slice(12) }}
+                </th>
+                <td>{{ modulo|trans }}</td>
+                <td>
+                    <span class="bold">{{ 'versao'|trans }}</span>
+                    {{ versao }}
+                </td>
+
+            </tr>
+            <tr>
+                <td>{{ subModulo|trans }}</td>
+                <td>
+                    <span class="bold">{{ 'usuario'|trans }}</span>
+                    {{ usuario.username }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class="bold">{{ 'emissao'|trans }}</span>
+                    {{ dtEmissao|date('d/m/Y') }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="divider">
+            <p></p>
+        </div>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th class="grey">
+                    <center>TERMO DE ABERTURA DO INVENTÁRIO</center>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Fica Instaurado o processo de localização dos bens patrimoniais para fins de inventário, registrados
+                    neste setor de patrimônio.
+                </th>
+            </tr>
+            <tr>
+                <th><b>Código do Inventário:</b> {{ object.idInventario }}/{{ object.exercicio }}</th>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        {% for invetario in invetarios %}
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td colspan="3"><b>Orgão: {{ invetario.orgao }}</b></td>
+                </tr>
+                {% for local in locais %}
+                    {% if local.cod_orgao == invetario.cod_orgao %}
+                        <tr>
+                            <td colspan="3"><b>Local: {{ local.nom_local }}</b></td>
+                        </tr>
+                        <tr>
+                            <th class="grey">Código</th>
+                            <th class="grey">Descrição</th>
+                            <th class="grey">Placa</th>
+                        </tr>
+                        {% for keys, loc in local %}
+                            {% if loc.descricao is defined %}
+                                <tr>
+                                    <td>{{ loc.codigo }}</td>
+                                    <td>{{ loc.descricao }}</td>
+                                    <td>{{ loc.placa }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+        <hr>
+        {% if assinaturas|length > 0 %}
+            <table class="table table-bordered" style="margin-top: 10px">
+                <tbody>
+                    <tr>
+                        <th class="grey text-center">
+                            Assinaturas
+                        </th>
+                    </tr>
+                    {% for assinatura in assinaturas %}
+                        <tr>
+                            <td class="text-center">
+                                <p style="width: 600px; padding-left: 50px">
+                                    <br /><br /><br /><br /><br />
+                                    ______________________________________<br /><br />
+                                    {{ assinatura.nom_cgm }}<br>
+                                    {{ assinatura.cargo }}
+                                    <br /><br /><br /><br /><br />
+                                </p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+{% endblock %}

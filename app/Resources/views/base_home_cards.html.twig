@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include '::partials/metas.html.twig' %}
+    <title>
+        {% block title %}
+            {{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}
+        {% endblock title %}
+    </title>
+    {% block stylesheets %}{% endblock stylesheets %}
+</head>
+<body>
+    {% include '::partials/header.html.twig' %}
+    <div class="row back">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    {% include '::partials/modulesMaterialBase.html.twig' %}
+    {% include '::partials/footer.html.twig' %}
+    <script type="text/javascript" src="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    {% block javascripts %}
+          <script type="text/javascript">
+          $(document).ready(function() {
+              $('select').material_select();
+              $('.datepicker').pickadate({
+                  selectMonths: true,
+                  selectYears: 100,
+                  format: 'yyyy-mm-dd'
+              });
+          });
+          </script>
+    {% endblock javascripts %}
+</body>
+
+</html>

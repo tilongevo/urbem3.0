@@ -1,0 +1,26 @@
+{% extends "base_home.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="delete-box2">
+    {{ form_start(form) }}
+        <input type="hidden" value="{{ processo.codProcesso }}" name="processo" />
+        <input type="hidden" value="{{ processo.anoExercicio }}" name="exercicio" />
+        <h5 class="blue-text text-darken-4 regular center cancelar-material">Deseja remover o trâmite do processo {{ processo.codProcesso }}/{{ processo.anoExercicio }} para o setor {{orgao.getCodigoComposto}} - {{orgao.descricao}}?</h5>
+        {#{% include 'AdministrativoBundle::Protocolo/Processo/detalhe.html.twig' %}#}
+        <div class="box-footer clearfix col s12" style="margin-top: 10px">
+            <div class="col s6 right-align">
+                <a class="small-btn btn grey darken-1 btn-bold cancel" href="/administrativo/protocolo/processo/perfil?id={{ processo.codProcesso }}~{{ processo.anoExercicio }}"><i class="fa fa-ban left"></i>Cancelar</a>
+            </div>
+            <div class="col s6 left-align">
+                <button type="submit" class="small-btn btn btn-danger btn-bold" value="Cancelar Encaminhamento"><i class="fa fa-trash"></i> Sim, remover</button>
+            </div>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock content %}

@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Economico\NivelServicoValor:
+    type: entity
+    table: economico.nivel_servico_valor
+    id:
+        codNivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel
+        codVigencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vigencia
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 20
+    manyToOne:
+        fkEconomicoNivelServico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NivelServico
+            inversedBy: fkEconomicoNivelServicoValores
+            joinColumns:
+                cod_vigencia:
+                    referencedColumnName: cod_vigencia
+                cod_nivel:
+                    referencedColumnName: cod_nivel
+        fkEconomicoServico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Servico
+            inversedBy: fkEconomicoNivelServicoValores
+            joinColumns:
+                cod_servico:
+                    referencedColumnName: cod_servico

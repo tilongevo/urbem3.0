@@ -1,0 +1,39 @@
+<table class="table table-bordered js-table-lista-responsaveis">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'label.economicoCadastroEconRespTecnico.numcgm'|trans }}</th>
+            <th>{{ 'label.economicoCadastroEconRespTecnico.nomCgm'|trans }}</th>
+            <th>{{ 'label.economicoCadastroEconRespTecnico.numRegistro'|trans }}</th>
+            <th>{{ 'label.economicoCadastroEconRespTecnico.nomProfissao'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sonata-ba-tbody ui-sortable">
+        {% if field.data.itens|length > 0 %}
+            {% for item in field.data.itens %}
+                <tr class="form_row campo-sonata" data-index="{{ loop.index }}">
+                    <td class="control-group">
+                        {{ ++loop.index}}
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getNumcgm() }}</span>
+                        <input type="hidden" name="responsaveis[{{ loop.index }}][numcgm]" class="js-lista-responsaveis-numcgm" value="{{ item.getNumcgm() }}" readonly>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getFkSwCgm().getNomCgm() }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ "%s - %s"|format(item.getNumRegistro(), item.getFkSwUf().getSiglaUf()) }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ item.getFkCseProfissao().getNomProfissao() }}</span>
+                    </td>
+                    <td class="control-group">
+                        <button class="js-delete-row">Remover</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>

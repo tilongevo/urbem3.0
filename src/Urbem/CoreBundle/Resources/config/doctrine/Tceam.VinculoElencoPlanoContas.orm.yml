@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Tceam\VinculoElencoPlanoContas:
+    type: entity
+    table: tceam.vinculo_elenco_plano_contas
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicioPlano:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_plano
+    fields:
+        codElenco:
+            type: integer
+            nullable: false
+            column: cod_elenco
+        exercicioElenco:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_elenco
+    manyToOne:
+        fkTceamElencoContasTce:
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\ElencoContasTce
+            inversedBy: fkTceamVinculoElencoPlanoContas
+            joinColumns:
+                cod_elenco:
+                    referencedColumnName: cod_elenco
+                exercicio_elenco:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTceamVinculoElencoPlanoContas
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio_plano:
+                    referencedColumnName: exercicio

@@ -1,0 +1,86 @@
+Urbem\CoreBundle\Entity\Compras\OrdemItemAnulacao:
+    type: entity
+    table: compras.ordem_item_anulacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicioPreEmpenho:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_pre_empenho
+    fields:
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+        vlTotal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_total
+    manyToOne:
+        fkComprasOrdemItem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemItem
+            inversedBy: fkComprasOrdemItemAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                num_item:
+                    referencedColumnName: num_item
+                tipo:
+                    referencedColumnName: tipo
+                exercicio_pre_empenho:
+                    referencedColumnName: exercicio_pre_empenho
+        fkComprasOrdemAnulacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\OrdemAnulacao
+            inversedBy: fkComprasOrdemItemAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                timestamp:
+                    referencedColumnName: timestamp
+                tipo:
+                    referencedColumnName: tipo

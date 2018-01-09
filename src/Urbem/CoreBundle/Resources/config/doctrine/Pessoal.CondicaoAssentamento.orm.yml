@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Pessoal\CondicaoAssentamento:
+    type: entity
+    table: pessoal.condicao_assentamento
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\CondicaoAssentamentoRepository
+    id:
+        codCondicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_condicao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+    fields: {  }
+    manyToOne:
+        fkPessoalAssentamentoAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            inversedBy: fkPessoalCondicaoAssentamentos
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+    oneToMany:
+        fkPessoalAssentamentoVinculados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoVinculado
+            mappedBy: fkPessoalCondicaoAssentamento
+    oneToOne:
+        fkPessoalCondicaoAssentamentoExcluido:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CondicaoAssentamentoExcluido
+            mappedBy: fkPessoalCondicaoAssentamento
+            joinColumns:
+                cod_condicao:
+                    referencedColumnName: cod_condicao
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento

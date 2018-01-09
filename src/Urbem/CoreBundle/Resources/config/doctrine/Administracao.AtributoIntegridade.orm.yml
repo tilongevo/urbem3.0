@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Administracao\AtributoIntegridade:
+    type: entity
+    table: administracao.atributo_integridade
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codIntegridade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_integridade
+    fields:
+        regra:
+            type: text
+            nullable: true
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkAdministracaoAtributoIntegridades
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkAdministracaoRestricaoIntegridade:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\RestricaoIntegridade
+            inversedBy: fkAdministracaoAtributoIntegridades
+            joinColumns:
+                cod_integridade:
+                    referencedColumnName: cod_integridade

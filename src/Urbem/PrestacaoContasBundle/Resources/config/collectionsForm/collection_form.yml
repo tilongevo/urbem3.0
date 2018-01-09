@@ -1,0 +1,42 @@
+services:
+    app.service_dynamic_collection_manager_factory:
+        class: Urbem\PrestacaoContasBundle\Form\DynamicCollectionManagerFactory
+
+    pc_rs.contratos_liquidacao_type.class:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\RS\Form\ContratosLiquidacaoType
+        factory:   ['@app.service_dynamic_collection_manager_factory', createNewsletterManager]
+        arguments: ['@pc_rs.contratos_liquidacao_collection_type.class']
+        tags:
+            -  { name: form.type, alias: pc_rs_contratos_liquidacao_type_class }
+
+    pc_rs.parametros_arquivo_rd_extra.class:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\RS\Form\ParametrosArquivoRdExtraType
+        factory:   ['@app.service_dynamic_collection_manager_factory', createNewsletterManager]
+        arguments: ['@pc_rs.parametros_arquivo_collection_rd_extra.class']
+        tags:
+            -  { name: form.type, alias: pc_rs_parametros_arquivo_rd_extra_type_class }
+
+    pc_rs.relacionamento_conta_entidade.class:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\RS\Form\RelacionamentoContaEntidadeType
+        factory:   ['@app.service_dynamic_collection_manager_factory', createNewsletterManager]
+        arguments: ['@pc_rs.prelacionamento_conta_entidade_collection.class']
+        tags:
+            -  { name: form.type, alias: pc_rs_parametros_arquivo_rd_extra_type_class }
+
+    pc_rs.contratos_liquidacao_collection_type.class:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\RS\Form\Collection\ContratosLiquidacaoCollectionType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: pc_rs_contratos_liquidacao_type_class }
+
+    pc_rs.parametros_arquivo_collection_rd_extra.class:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\RS\Form\Collection\ParametrosArquivoRdExtraCollectionType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: pc_rs_contratos_liquidacao_type_class }
+
+    pc_rs.prelacionamento_conta_entidade_collection.class:
+        class: Urbem\PrestacaoContasBundle\Service\Tribunal\RS\Form\Collection\RelacionamentoContaEntidadeCollectionType
+        arguments: ['@urbem.session.service', '@doctrine.orm.entity_manager']
+        tags:
+            -  { name: form.type, alias: pc_rs_prelacionamento_conta_entidade_collection_class }

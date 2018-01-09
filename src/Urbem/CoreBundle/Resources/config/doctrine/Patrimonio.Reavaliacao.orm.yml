@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Patrimonio\Reavaliacao:
+    type: entity
+    table: patrimonio.reavaliacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Patrimonio\ReavaliacaoRepository
+    id:
+        codReavaliacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_reavaliacao
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+    fields:
+        dtReavaliacao:
+            type: date
+            nullable: false
+            column: dt_reavaliacao
+        vidaUtil:
+            type: integer
+            nullable: false
+            column: vida_util
+        vlReavaliacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_reavaliacao
+        motivo:
+            type: string
+            nullable: false
+            length: 100
+    manyToOne:
+        fkPatrimonioBem:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioReavaliacoes
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+    oneToMany:
+        fkPatrimonioDepreciacaoReavaliacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\DepreciacaoReavaliacao
+            mappedBy: fkPatrimonioReavaliacao

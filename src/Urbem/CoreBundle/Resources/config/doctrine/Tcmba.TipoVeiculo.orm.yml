@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoVeiculo:
+    type: entity
+    table: tcmba.tipo_veiculo
+    id:
+        codTipoTcm:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_tcm
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    oneToMany:
+        fkTcmbaTipoVeiculoVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoVeiculoVinculo
+            mappedBy: fkTcmbaTipoVeiculo
+        fkTcmbaMarcas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Marca
+            mappedBy: fkTcmbaTipoVeiculo

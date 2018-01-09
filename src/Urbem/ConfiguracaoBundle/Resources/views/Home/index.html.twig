@@ -1,0 +1,35 @@
+{% extends "base_home_cards.html.twig" %}
+
+{% block title %}
+    {{ 'configuracao.titulo' | trans }}
+
+{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+
+{% endblock menu %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+                {% for configuration in configurations %}
+                    <div class="col s10 m6 l3">
+                    {{
+                        singleCard(
+                            {
+                                name:'configuracao_edit',
+                                parameters: {
+                                    id: configuration.service
+                                }
+                            },
+                            asset(configuration.image),
+                            configuration.name | trans
+                        )
+                    }}
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

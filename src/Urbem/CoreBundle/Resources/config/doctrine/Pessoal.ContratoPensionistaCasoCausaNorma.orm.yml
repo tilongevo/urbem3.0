@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaCasoCausaNorma:
+    type: entity
+    table: pessoal.contrato_pensionista_caso_causa_norma
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPessoalContratoPensionistaCasoCausaNormas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToOne:
+        fkPessoalContratoPensionistaCasoCausa:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionistaCasoCausa
+            inversedBy: fkPessoalContratoPensionistaCasoCausaNorma
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

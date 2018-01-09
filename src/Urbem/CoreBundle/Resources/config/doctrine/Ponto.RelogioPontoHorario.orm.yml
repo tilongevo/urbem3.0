@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Ponto\RelogioPontoHorario:
+    type: entity
+    table: ponto.relogio_ponto_horario
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codPonto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ponto
+        codHorario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_horario
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        hora:
+            type: time
+            nullable: false
+    manyToOne:
+        fkPontoRelogioPontoDias:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\RelogioPontoDias
+            inversedBy: fkPontoRelogioPontoHorarios
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_ponto:
+                    referencedColumnName: cod_ponto

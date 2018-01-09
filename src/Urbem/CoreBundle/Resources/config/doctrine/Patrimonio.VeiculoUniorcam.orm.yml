@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Patrimonio\VeiculoUniorcam:
+    type: entity
+    table: patrimonio.veiculo_uniorcam
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_veiculo
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        numOrgao:
+            type: integer
+            nullable: false
+            column: num_orgao
+        numUnidade:
+            type: integer
+            nullable: false
+            column: num_unidade
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkPatrimonioVeiculoUniorcans
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkPatrimonioVeiculoUniorcans
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+    oneToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkPatrimonioVeiculoUniorcam
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo

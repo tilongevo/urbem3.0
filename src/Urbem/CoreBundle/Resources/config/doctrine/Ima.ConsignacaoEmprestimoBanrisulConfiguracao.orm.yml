@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Ima\ConsignacaoEmprestimoBanrisulConfiguracao:
+    type: entity
+    table: ima.consignacao_emprestimo_banrisul_configuracao
+    id:
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+    fields:
+        codConvenio:
+            type: integer
+            nullable: false
+            column: cod_convenio
+        nomConvenio:
+            type: string
+            nullable: false
+            length: 50
+            column: nom_convenio
+        anoMes:
+            type: string
+            nullable: false
+            length: 6
+            column: ano_mes
+    oneToMany:
+        fkImaConsignacaoEmprestimoBanrisuis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConsignacaoEmprestimoBanrisul
+            mappedBy: fkImaConsignacaoEmprestimoBanrisulConfiguracao

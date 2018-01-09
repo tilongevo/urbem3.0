@@ -1,0 +1,97 @@
+Urbem\CoreBundle\Entity\Ppa\Acao:
+    type: entity
+    table: ppa.acao
+    repositoryClass: Urbem\CoreBundle\Repository\Ppa\AcaoRepository
+    id:
+        codAcao:
+           type: integer
+           generator:
+               strategy: SEQUENCE
+           sequenceGenerator:
+               sequenceName: ppa.acao_cod_acao_seq
+               allocationSize: 1
+               initialValue: 1
+           column: cod_acao
+    fields:
+        codPrograma:
+            type: integer
+            nullable: false
+            column: cod_programa
+        ultimoTimestampAcaoDados:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: ultimo_timestamp_acao_dados
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        numAcao:
+            type: integer
+            nullable: false
+            column: num_acao
+    manyToOne:
+        fkPpaPrograma:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Programa
+            inversedBy: fkPpaAcoes
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+    oneToMany:
+        fkOrcamentoPaoPpaAcoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\PaoPpaAcao
+            mappedBy: fkPpaAcao
+        fkPpaAcaoDados:
+            orderBy: { 'timestampAcaoDados': 'DESC' }
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            mappedBy: fkPpaAcao
+        fkTcemgArquivoIncamps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ArquivoIncamp
+            mappedBy: fkPpaAcao
+        fkOrcamentoDespesaAcoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\DespesaAcao
+            mappedBy: fkPpaAcao
+        fkTcemgArquivoAmps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ArquivoAmp
+            mappedBy: fkPpaAcao
+    oneToOne:
+        fkTcealAcaoIdentificadorAcao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\AcaoIdentificadorAcao
+            mappedBy: fkPpaAcao
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+        fkTcetoAcaoIdentificadorAcao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\AcaoIdentificadorAcao
+            mappedBy: fkPpaAcao
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao

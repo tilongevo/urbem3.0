@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\LevantamentoAcrescimo:
+    type: entity
+    table: fiscalizacao.levantamento_acrescimo
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkFiscalizacaoLevantamento:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Levantamento
+            inversedBy: fkFiscalizacaoLevantamentoAcrescimos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia
+        fkMonetarioAcrescimo:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Acrescimo
+            inversedBy: fkFiscalizacaoLevantamentoAcrescimos
+            joinColumns:
+                cod_acrescimo:
+                    referencedColumnName: cod_acrescimo
+                cod_tipo:
+                    referencedColumnName: cod_tipo

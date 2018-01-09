@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Pessoal\EspecialidadePadrao:
+    type: entity
+    table: pessoal.especialidade_padrao
+    id:
+        codPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_padrao
+        codEspecialidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especialidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoPadrao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Padrao
+            inversedBy: fkPessoalEspecialidadePadroes
+            joinColumns:
+                cod_padrao:
+                    referencedColumnName: cod_padrao
+        fkPessoalEspecialidade:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Especialidade
+            inversedBy: fkPessoalEspecialidadePadroes
+            joinColumns:
+                cod_especialidade:
+                    referencedColumnName: cod_especialidade

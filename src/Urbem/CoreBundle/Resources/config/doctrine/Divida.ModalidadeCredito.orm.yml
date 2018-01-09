@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Divida\ModalidadeCredito:
+    type: entity
+    table: divida.modalidade_credito
+    id:
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+    fields: {  }
+    manyToOne:
+        fkDividaModalidadeVigencia:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            inversedBy: fkDividaModalidadeCreditos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                timestamp:
+                    referencedColumnName: timestamp
+    oneToMany:
+        fkDividaModalidadeReducaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeReducaoCredito
+            mappedBy: fkDividaModalidadeCredito

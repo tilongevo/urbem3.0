@@ -1,0 +1,320 @@
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <form method="post" target="_blank" action="{{ path('urbem_patrimonial_compras_solicitacao_gerar_relatorio', { 'id': admin.getObjectKey(object) }) }}">
+        <div class="container-rh">
+            {% if object.exercicio != admin.exercicio %}
+                <div class="alert alert-warning alert-dismissable">
+                    {{ 'patrimonial.solicitacao_compra.exercicio_diferente'|trans({}, 'flashes') }}
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col s12 profile-box">
+                    <h3 class="blue-text text-darken-4 left">
+                        <i class="fa fa-cubes grey-text left" aria-hidden="true"></i>
+                        <span style="text-transform: capitalize;">{{ object.solicitacao.codSolicitacao }} - {{ object.solicitacao.fkComprasObjeto.descricao }}</span>
+                    </h3>
+                    {% if (object.exercicio == admin.exercicio and (object.anuladaItens == false or object.anulacao|last == false) and (object.homologado is null or object.homologado_anulacao is not null)) or (object.homologacao_automatica == true and (object.anuladaItens == false or object.anulacao|last == false)) %}
+                        <a href="{{ path('urbem_patrimonial_compras_solicitacao_edit', {'id': object.solicitacao|objectKey }) }}" class="serv-btn right">
+                            <i class="material-icons right">edit</i>
+                        </a>
+                    {% endif %}
+                    <p class="divider grey col s12"></p>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.homologacao_automatica'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            {% if object.homologacao_automatica == true %}
+                                <span class="label label-success">{{ 'label.patrimonial.compras.solicitacao.sim'|trans }}</span>
+                            {% else %}
+                                <span class="label label-danger">{{ 'label.patrimonial.compras.solicitacao.nao'|trans }}</span>
+                            {% endif %}
+                        </h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.requisitante'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.solicitacao.requisitante }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.entidade'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.solicitacao.fkOrcamentoEntidade.fkSwCgm.nomcgm }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.solicitante'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.solicitacao.fkSwCgm.nomcgm }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.exercicio'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.solicitacao.exercicio }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.almoxarifado'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.solicitacao.fkAlmoxarifadoAlmoxarifado.fkSwCgm.nomcgm }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.prazoentrega'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.solicitacao.prazoentrega }} {{ 'label.patrimonial.compras.solicitacao.dias'|trans }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.registro_precos'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            {% if object.solicitacao.registroprecos == true %}
+                                <span class="label label-success">{{ 'label.patrimonial.compras.solicitacao.sim'|trans }}</span>
+                            {% else %}
+                                <span class="label label-danger">{{ 'label.patrimonial.compras.solicitacao.nao'|trans }}</span>
+                            {% endif %}
+                        </h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.almoxarifado.requisicao.status'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            {% if (object.anuladaItens == false or object.anulacao|last == false) %}
+                                <span class="label label-success">Ativo</span>
+                            {% else %}
+                                <span class="label label-danger">Anulado</span>
+                            {% endif %}
+                        </h6>
+                    </div>
+                    <div class="col s8 little-box-without-wide" style="width: 73%;">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.compras.solicitacao.observacao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.solicitacao.observacao }}</h6>
+                    </div>
+                    <div class="col s12" style="margin: 15px 0;">
+                        {% if object.exercicio == admin.exercicio %}
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                {% if object.passivel_homologacao == true and (object.anuladaItens == false or object.anulacao|last == false) and object.solicitacaoItem|first != false and object.homologado is null and object.homologacao_automatica == false %}
+                                    <a class="white-text blue darken-4 btn btn-success save"
+                                       href="{{ path('urbem_patrimonial_compras_solicitacao_homologar_solicitacao', {'id': object.solicitacao|objectKey }) }}">
+                                        <i class="fa fa-ban left"></i>{{ 'label.patrimonial.compras.solicitacao.homologar_solicitacao'|trans }}
+                                    </a>
+                                {% else %}
+                                    {% if object.anuladaItens == false and object.solicitacaoItem|first != false  and (object.homologado is null or object.homologado_anulacao is not null) and (object.homologado_anulacao is not null or object.homologacao_automatica == false)  %}
+                                        <a class="white-text blue darken-4 btn btn-success save"
+                                           href="{{ path('urbem_patrimonial_compras_solicitacao_homologar_solicitacao', {'id': object.solicitacao|objectKey }) }}">
+                                            <i class="fa fa-ban left"></i>{{ 'label.patrimonial.compras.solicitacao.homologar_solicitacao'|trans }}
+                                        </a>
+                                    {% else %}
+                                        <a class="white-text btn btn-success save grey lighten-2 disabled">
+                                            <i class="fa fa-ban left"></i>{{ 'label.patrimonial.compras.solicitacao.homologar_solicitacao'|trans }}
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="col s3 center" style="margin-bottom: 10px">
+                                {% if object.passivel_anulacao_homologacao is null and object.homologado is not null and (object.anuladaItens == false or object.anulacao|last == false) %}
+                                    <a class="white-text blue darken-4 btn btn-success save"
+                                       href="{{ path('urbem_patrimonial_compras_solicitacao_anular_homologacao_solicitacao', {'id': object.solicitacao|objectKey }) }}">
+                                        <i class="fa fa-ban left"></i>{{ 'label.patrimonial.compras.solicitacao.anular_homologar'|trans }}
+                                    </a>
+                                {% else %}
+                                    <a class="white-text btn btn-success save grey lighten-2 disabled">
+                                        <i class="fa fa-ban left"></i>{{ 'label.patrimonial.compras.solicitacao.anular_homologar'|trans }}
+                                    </a>
+                                {% endif %}
+                            </div>
+
+                            {% if (object.anuladaItens == false or object.anulacao|last == false) and (object.homologado is null or object.homologado_anulacao is not null) %}
+                                <div class="col s3 center" style="margin-bottom: 10px">
+                                    <a class="white-text blue darken-4 btn btn-success save"
+                                       href="{{ path('patrimonial_compras_anular_solicitacao', {'id': object.solicitacao|objectKey }) }}">
+                                        <i class="fa fa-ban left"></i>{{ 'label.patrimonial.compras.solicitacao.anular_solicitacao'|trans }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if  (object.anuladaItens == false or object.anulacao|last == false) and (object.homologado is null or object.homologado_anulacao is not null) %}
+                                <div class="col s3 center" style="margin-bottom: 10px">
+                                    <a class="white-text blue darken-4 btn btn-success save"
+                                       href="{{ path('urbem_patrimonial_compras_solicitacoes_itens_incluir', {'id': object.solicitacao|objectKey }) }}">
+                                        <i class="fa fa-plus left"></i> {{ 'label.patrimonial.compras.solicitacao.incluirItensOutraSolicitacao'|trans }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        <div class="col s3 center" style="margin-bottom: 10px">
+                            <button type="submit" name="form[acao]" value="gerar-relatorio" class="white-text blue darken-4 btn btn-success save"><i class="mdi mdi-file-document left"></i>
+                                {{ 'label.patrimonial.compras.solicitacao.emitir_relatorio'|trans }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s11 servidor-table">
+                    <a class="btn-lg tooltipped"
+                       data-position="left"
+                       data-delay="50"
+                       data-tooltip="Incluir">
+                        <i class="fa fa-cubes left"></i>
+                        {{ 'label.patrimonial.compras.solicitacao.itens'|trans }}
+                    </a>
+                </div>
+                {% if (object.exercicio == admin.exercicio and (object.anuladaItens == false or object.anulacao|last == false) and (object.homologado is null or object.homologado_anulacao is not null)) or (object.homologacao_automatica == true and (object.anuladaItens == false or object.anulacao|last == false)) %}
+                    <div class="col s1">
+                        <a href="{{ path('urbem_patrimonial_compras_solicitacao_item_create',{'id': object.solicitacao|objectKey }) }}"
+                           class="btn-lg"><i class="mdi mdi-plus-circle "></i></a>
+                    </div>
+                {% endif %}
+                <table class="col s12 highlight bordered">
+                    <thead class="thead-rh">
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="th-rh" width="5%">#</th>
+                        <th class="th-rh">{{ 'label.patrimonial.compras.solicitacao.item'|trans }}</th>
+                        <th class="th-rh">{{ 'label.patrimonial.compras.solicitacao.unidadeMedida'|trans }}</th>
+                        <th class="th-rh">{{ 'label.patrimonial.compras.solicitacao.centrocusto'|trans }}</th>
+                        <th class="th-rh">{{ 'label.patrimonial.compras.solicitacao.quantidadeSolicitada'|trans }}</th>
+                        <th class="th-rh">{{ 'label.patrimonial.compras.solicitacao.quantidadeAnulada'|trans }}</th>
+                        <th class="th-rh">{{ 'label.patrimonial.compras.solicitacao.vlSolicitado'|trans }}</th>
+                        <th class="th-rh">{{ 'label.patrimonial.compras.solicitacao.vlAnulado'|trans }}</th>
+                        {% if (object.exercicio == admin.exercicio and (object.anuladaItens == false or object.anulacao|last == false) and (object.homologado is null or object.homologado_anulacao is not null)) or (object.homologacao_automatica == true and (object.anuladaItens == false or object.anulacao|last == false)) %}
+                            <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in object.solicitacaoItem %}
+                        <tr>
+                            <td class="td-rh">{{ loop.index }}</td>
+                            <td class="td-rh">{{ item.fkAlmoxarifadoCatalogoItem.descricao }}</td>
+                            <td class="td-rh">{{ item.fkAlmoxarifadoCatalogoItem.fkAdministracaoUnidadeMedida.nomUnidade }}</td>
+                            <td class="td-rh">{{ item.fkAlmoxarifadoCentroCusto.descricao }}</td>
+                            <td class="td-rh">{{ item.quantidade }}</td>
+                            <td class="td-rh">
+                                {% for itemAnulacao in item.fkComprasSolicitacaoItemAnulacoes %}
+                                    {{ itemAnulacao.quantidade }}
+                                {% endfor %}
+                            </td>
+
+                            <td class="td-rh">R$ {{ item.vltotal|number_format(2, ',', '.') }}</td>
+                            <td class="td-rh">
+                                {% for itemAnulacao in item.fkComprasSolicitacaoItemAnulacoes %}
+                                    R$ {{ itemAnulacao.vltotal|number_format(2, ',', '.') }}
+                                {% endfor %}
+                            </td>
+
+
+                            {% if (object.exercicio == admin.exercicio and (object.anuladaItens == false or object.anulacao|last == false) and (object.homologado is null or object.homologado_anulacao is not null)) or (object.homologacao_automatica == true and (object.anuladaItens == false or object.anulacao|last == false)) %}
+                                <td class="td-rh">
+                                    <div class="btn-group">
+                                        <a href="{{ path('urbem_patrimonial_compras_solicitacao_item_edit', { 'id': item|objectKey }) }}"
+                                           class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                           data-position="left"
+                                           data-delay="50"
+                                           data-tooltip="Alterar">
+                                            <i class="material-icons right">edit</i>
+                                        </a>
+                                        <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                           data-position="right"
+                                           data-delay="50"
+                                           data-tooltip="Excluir"
+                                           href="{{ path('urbem_patrimonial_compras_solicitacao_item_delete',
+                                           {'id': item|objectKey }) }}">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </div>
+                                </td>
+                            {% endif %}
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <table class="col s12 highlight bordered" style="margin-top: 20px">
+                    <thead class="thead-rh">
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="th-rh" colspan="2">{{ 'label.patrimonial.compras.solicitacao.vlTotaisAtualizados'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="td-rh" width="20%">Total Solicitado</td>
+                        <td class="td-rh" width="80%" style="text-align:left;">R$ {{ object.nuTotalVlSolicitado|number_format(2, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="td-rh">Total Anulado</td>
+                        <td class="td-rh" style="text-align:left;">R$ {{ object.nuTotalVlAnulada|number_format(2, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="td-rh">Valor Total em Mapas</td>
+                        <td class="td-rh" style="text-align:left;">R$ {{ object.nuTotalVlMapa|number_format(2, ',', '.') }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            {% if object.assinaturaCgm is not empty %}
+                <div class="row">
+
+                    <div class="col s11 servidor-table">
+                        <a class="btn-lg tooltipped"
+                           data-position="left"
+                           data-delay="50"
+                           data-tooltip="Incluir">
+                            <i class="fa fa-address-book-o left"></i>
+                            {{ 'label.patrimonial.compras.solicitacao.incluirAssinaturas'|trans }}
+                        </a>
+                    </div>
+                    <table class="col s12 highlight bordered">
+                        <thead class="thead-rh">
+                        <tr class="sonata-ba-list-field-header">
+                            <th class="th-rh" width="5%">#</th>
+                            <th class="th-rh">{{ 'label.entidade'|trans }}</th>
+                            <th class="th-rh">{{ 'label.usuario.nomCgm'|trans }}</th>
+                            <th class="th-rh">{{ 'label.codCargo'|trans }}</th>
+                            <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for assinatura in object.assinaturaCgm %}
+                            <tr>
+                                <td class="td-rh">{{ loop.index }}</td>
+                                <td class="td-rh">{{ object.solicitacao.fkOrcamentoEntidade.fkSwCgm.nomcgm }}</td>
+                                <td class="td-rh">{{ assinatura.nom_cgm }}</td>
+                                <td class="td-rh">{{ assinatura.cargo }}</td>
+                                <td class="td-rh">
+                                    <div class="btn-group">
+                                        <input name="assinatura[{{ loop.index }}]" id="assinatura_{{ loop.index }}" tabindex="1" value="{{ loop.index }}" onclick="JavaScript:getIMontaAssinaturas(this)" type="checkbox">
+                                        <input name="nomCgm[{{ loop.index }}]" type="hidden" value="{{ assinatura.nom_cgm }}">
+                                        <input name="cargo[{{ loop.index }}]" type="hidden" value="{{ assinatura.cargo }}">
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+
+        </div>
+    </form>
+
+    <hr>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_patrimonial_compras_solicitacao_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+                Add a comment to this line
+            </a>
+        </div>
+    </div>
+{% endblock show %}

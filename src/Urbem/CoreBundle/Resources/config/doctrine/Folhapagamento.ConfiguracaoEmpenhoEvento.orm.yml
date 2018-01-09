@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoEvento:
+    type: entity
+    table: folhapagamento.configuracao_empenho_evento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\ConfiguracaoEmpenhoEventoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoConfiguracaoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoEventos
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                exercicio:
+                    referencedColumnName: exercicio
+                sequencia:
+                    referencedColumnName: sequencia
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhoEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

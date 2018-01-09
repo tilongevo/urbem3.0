@@ -1,0 +1,54 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% if admin.hasBaixa(object) %}
+	<a href="{{ path('urbem_tributario_economico_baixa_cadastro_economico_certidao', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoBaixaCadastroEconomico.baixar.certidaoBaixa'|trans }}" target="_blank">
+        <i class="fa fa-file-pdf-o fa-lg"></i>
+    </a>
+    <a href="{{ path('urbem_tributario_economico_baixa_cadastro_economico_reativar', { 'inscricaoEconomica': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoBaixaCadastroEconomico.baixar.reativarInscricaoEconomica'|trans }}">
+        <i class="fa fa-arrow-up fa-lg"></i>
+    </a>
+{% else %}
+    <a href="{{ path('urbem_tributario_economico_baixa_cadastro_economico_create', { 'inscricaoEconomica': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoBaixaCadastroEconomico.baixar.baixarInscricaoEconomica'|trans }}">
+        <i class="fa fa-arrow-down fa-lg"></i>
+    </a>
+    <a href="{{ path('urbem_tributario_economico_baixa_cadastro_economico_oficio', { 'inscricaoEconomica': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoBaixaCadastroEconomico.baixar.baixarInscricaoOficio'|trans }}">
+		<i class="fa fa-gavel fa-lg"></i>
+    </a>
+    <a href="{{ path('urbem_tributario_economico_atividade_cadastro_economico_definir', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoAtividadeCadastroEconomico.definirAtividades'|trans }}">
+        <i class="fa fa-archive fa-lg"></i>
+    </a>
+    <a href="{{ path('urbem_tributario_economico_cadastro_economico_responsavel_tecnico_definir', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoCadastroEconRespTecnico.definirResponsaveis'|trans }}">
+        <i class="fa fa-users fa-lg"></i>
+    </a>
+    {% if object.getFkEconomicoCadastroEconomicoEmpresaDireito() is not empty %}
+        <a href="{{ path('urbem_tributario_economico_empresa_direito_natureza_juridica_alterar', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.EmpresaDireitoNaturezaJuridicaAdmin.alterarNaturezaJuridica'|trans }}">
+            <i class="fa fa-exchange fa-lg"></i>
+        </a>
+        <a href="{{ path('urbem_tributario_economico_empresa_direito_sociedade_alterar', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.EmpresaDireitoSociedadeAdmin.alterarSociedade'|trans }}">
+            <i class="fa fa-file-text-o fa-lg"></i>
+        </a>
+    {% endif %}
+    <a href="{{ path('urbem_tributario_economico_cadastro_economico_domicilio_fiscal_alterar', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.CadastroEconomicoDomicilioFiscalAdmin.alterarDomicilioFiscal'|trans }}">
+        <i class="fa fa-home fa-lg"></i>
+    </a>
+    <a href="{{ path('urbem_tributario_economico_dias_cadastro_economico_alterar', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.DiasCadastroEconomicoAdmin.alterarHorario'|trans }}">
+        <i class="fa fa-clock-o fa-lg"></i>
+    </a>
+    <a href="{{ path('urbem_tributario_economico_elemento_atividade_cadastro_economico_definir', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.ElementoAtividadeCadastroEconomicoAdmin.definirElementos'|trans }}">
+        <i class="fa fa-folder-open fa-lg"></i>
+    </a>
+    {% if object.getFkEconomicoCadastroEconomicoEmpresaDireito() is empty %}
+        <a href="{{ path('urbem_tributario_economico_cadastro_economico_empresa_direito_converter_empresa_direito', { 'id': object.inscricaoEconomica }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.economicoCadastroEconomicoEmpresaDireito.converterEmpresaDireito'|trans }}">
+            <i class="fa fa-shield fa-lg"></i>
+        </a>
+    {% endif %}
+{% endif %}

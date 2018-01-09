@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Divida\Documento:
+    type: entity
+    table: divida.documento
+    repositoryClass: Urbem\CoreBundle\Repository\Tributario\DividaAtiva\DocumentoRepository
+    id:
+        numParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcelamento
+        codTipoDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+    fields: {  }
+    manyToOne:
+        fkDividaParcelamento:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Parcelamento
+            inversedBy: fkDividaDocumentos
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkDividaDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToMany:
+        fkDividaDocumentoParcelas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DocumentoParcela
+            mappedBy: fkDividaDocumento
+        fkDividaEmissaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\EmissaoDocumento
+            mappedBy: fkDividaDocumento

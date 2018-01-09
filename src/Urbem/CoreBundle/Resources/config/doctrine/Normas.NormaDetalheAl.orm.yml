@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Normas\NormaDetalheAl:
+    type: entity
+    table: normas.norma_detalhe_al
+    id:
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+    fields:
+        codLeiAlteracao:
+            type: integer
+            nullable: false
+            column: cod_lei_alteracao
+        codNormaAlteracao:
+            type: integer
+            nullable: false
+            column: cod_norma_alteracao
+        descricaoAlteracao:
+            type: string
+            nullable: false
+            length: 400
+            column: descricao_alteracao
+    manyToOne:
+        fkNormasLei:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Lei
+            inversedBy: fkNormasNormaDetalheAis
+            joinColumns:
+                cod_lei_alteracao:
+                    referencedColumnName: cod_lei
+        fkNormasNorma1:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkNormasNormaDetalheAis1
+            joinColumns:
+                cod_norma_alteracao:
+                    referencedColumnName: cod_norma
+    oneToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkNormasNormaDetalheAl
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

@@ -1,0 +1,66 @@
+Urbem\CoreBundle\Entity\Pessoal\Cid:
+    type: entity
+    table: pessoal.cid
+    uniqueConstraints:
+        uk_cid_1:
+            columns:
+                - sigla
+    id:
+        codCid:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.cid_cod_cid_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_cid
+    fields:
+        sigla:
+            type: string
+            nullable: false
+            length: 5
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        codTipoDeficiencia:
+            type: integer
+            nullable: false
+            column: cod_tipo_deficiencia
+    manyToOne:
+        fkPessoalTipoDeficiencia:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TipoDeficiencia
+            inversedBy: fkPessoalCids
+            joinColumns:
+                cod_tipo_deficiencia:
+                    referencedColumnName: cod_tipo_deficiencia
+    oneToMany:
+        fkPessoalPensionistaCids:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensionistaCid
+            mappedBy: fkPessoalCid
+        fkPessoalServidorCids:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorCid
+            mappedBy: fkPessoalCid
+        fkFolhapagamentoTabelaIrrfCids:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfCid
+            mappedBy: fkPessoalCid
+        fkPessoalDependenteCids:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DependenteCid
+            mappedBy: fkPessoalCid

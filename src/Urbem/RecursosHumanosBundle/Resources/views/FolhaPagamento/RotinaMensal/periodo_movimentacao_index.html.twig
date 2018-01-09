@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container">
+   <div class="row title-index">
+        <div class="col s8 filtro">
+            <div class="input-field">
+              <input id="1" placeholder="Digite ..." type="text" class="validate">
+              <label for="1"></label>
+            </div>
+        </div>
+        <div class="col s2">
+            <a href="#" class="btn btn-fil z-depth-0 blue darken-4 white-text right-align"><i class="material-icons">search</i></a>
+        </div>
+        <div class="col s2 right-align hide-on-med-and-down">
+            <a href="{{ path('folha_pagamento_rotina_mensal_periodo_movimentacao_new') }}" class="valign btn-floating btn-large waves-effect waves-light blue darken-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Incluir Periodo de Movimentação"><i class="small material-icons">add</i></a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="bordered highlight">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Data Inicial</th>
+                <th>Data Final</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for folhapagamento in folhapagamentos %}
+            <tr>
+                <td><a href="{{ path('folha_pagamento_rotina_mensal_periodo_movimentacao_show', { 'id': folhapagamento.codPeriodoMovimentacao }) }}">{{ folhapagamento.codPeriodoMovimentacao }}</a></td>
+                <td>{% if folhapagamento.dtInicial %}{{ folhapagamento.dtInicial|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if folhapagamento.dtFinal %}{{ folhapagamento.dtFinal|date('Y-m-d') }}{% endif %}</td>
+                 <td>
+                    <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('folha_pagamento_rotina_mensal_periodo_movimentacao_edit', { 'id': folhapagamento.codPeriodoMovimentacao }) }}"><i class="material-icons">edit</i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+<div class="center">
+    {{ knp_pagination_render(folhapagamentos) }}
+</div>
+{% endblock content %}

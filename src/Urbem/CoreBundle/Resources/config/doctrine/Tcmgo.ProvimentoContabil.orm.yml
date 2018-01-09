@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmgo\ProvimentoContabil:
+    type: entity
+    table: tcmgo.provimento_contabil
+    id:
+        codProvimento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_provimento
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkTcmgoUnidadeResponsaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\UnidadeResponsavel
+            mappedBy: fkTcmgoProvimentoContabil

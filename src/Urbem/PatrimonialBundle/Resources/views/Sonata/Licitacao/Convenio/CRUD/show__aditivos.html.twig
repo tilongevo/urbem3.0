@@ -1,0 +1,135 @@
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a style="font-size: 16px">
+            <i class="mdi mdi-newspaper"></i>
+            {{ 'label.convenioAdmin.aditivos.list'|trans }}
+        </a>
+    </div>
+
+    <div class="col s1">
+        {% if object.fkLicitacaoConvenioAnulado is null and object.fkLicitacaoRescisaoConvenio is null and object.totais.percentualUsado == 100 %}
+            <a class="tooltipped"
+               href="{{ path('urbem_patrimonial_licitacao_convenio_aditivos_create', { 'convenio': admin.id(object) }) }}"
+               data-toggle="tooltip"
+               data-placement="top"
+               title="{{ "incluir"|trans }}">
+                <i class="mdi mdi-plus-circle right small"></i>
+            </a>
+        {% else %}
+            <a class="grey-text text-darken-1 tooltipped"
+               data-toggle="tooltip"
+               data-placement="top"
+               title="{{ "anulacao_convenio.errors.whenConvenioNotReach100"|trans({}, 'validators') }}">
+                <i class="mdi mdi-plus-circle right small"></i>
+            </a>
+        {% endif %}
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'label.convenioAdmin.aditivos.responsavelJuridico'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.aditivos.dtVigencia'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.aditivos.dtAssinatura'|trans }}</th>
+        <th class="th-rh"> {{ 'label.almoxarifado.requisicao.status'|trans }}</th>
+        <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+        </thead>
+
+        <tbody>
+        {% for convenioAditivo in object.fkLicitacaoConvenioAditivos %}
+            <tr>
+                <td class="td-rh">{{ convenioAditivo.numAditivo }}/{{ convenioAditivo.exercicio }}</td>
+                <td class="td-rh">{{ convenioAditivo.fkSwCgm.nomCgm }}</td>
+                <td class="td-rh">{{ convenioAditivo.dtVigencia|date('d/m/Y') }}</td>
+                <td class="td-rh">{{ convenioAditivo.dtAssinatura|date('d/m/Y') }}</td>
+                {% if convenioAditivo.fkLicitacaoConvenioAditivosAnulacao is null %}
+                    <td class="td-rh">Ativo</td>
+                {% else %}
+                    <td class="td-rh">Rescindido</td>
+                {% endif %}
+                <td class="td-rh">
+                    {% if object.fkLicitacaoConvenioAnulado is null and object.fkLicitacaoRescisaoConvenio is null %}
+                        {% if convenioAditivo.fkLicitacaoConvenioAditivosAnulacao is null %}
+                            <div class="btn-group">
+                                <a href="{{ path('urbem_patrimonial_licitacao_convenio_aditivos_edit', { 'id': admin.id(convenioAditivo) }) }}"
+                                   class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   title="{{ 'editar'|trans }}">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a href="{{ path('urbem_patrimonial_licitacao_convenio_aditivos_anulacao_create', { 'convenio': admin.id(convenioAditivo) }) }}"
+                                   class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   title="{{ 'rescindir'|trans }}">
+                                    <i class="material-icons">cancel</i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <span class="label label-danger">{{ 'label.convenioAdmin.anulado.unavalable'|trans }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col s12 servidor-table">
+        <a style="font-size: 16px">
+            <i class="mdi mdi-newspaper"></i>
+            {{ 'label.convenioAdmin.aditivos.publicacoes.list'|trans }}
+        </a>
+    </div>
+    <table class="col s12 highlight bordered">
+        <thead class="thead-rh">
+        <th class="th-rh" width="10"></th>
+        <th class="th-rh">{{ 'label.convenioAdmin.publicacoes.numcgm'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.publicacoes.dtPublicacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.publicacoes.numPublicacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.convenioAdmin.publicacoes.observacao'|trans }}</th>
+        <th class="th-rh">{{ 'label.almoxarifado.requisicao.status'|trans }}</th>
+        <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+        </thead>
+        <tbody>
+        {% for aditivos in object.fkLicitacaoConvenioAditivos %}
+            {% for publicacaoAditivos in aditivos.fkLicitacaoConvenioAditivosPublicacoes %}
+                <tr>
+                    <td class="td-rh">{{ loop.index }}</td>
+                    <td class="td-rh">{{ publicacaoAditivos.fkSwCgm.nomCgm|upper }}</td>
+                    <td class="td-rh">{{ publicacaoAditivos.dtPublicacao|date('d/m/Y') }}</td>
+                    <td class="td-rh">{{ publicacaoAditivos.numPublicacao }}</td>
+                    <td class="td-rh">{{ publicacaoAditivos.observacao }}</td>
+                    {% if aditivos.fkLicitacaoConvenioAditivosAnulacao is null %}
+                        <td class="td-rh">Aditivo {{ aditivos }} Ativo</td>
+                    {% else %}
+                        <td class="td-rh">Aditivo {{ aditivos }} Rescindido</td>
+                    {% endif %}
+                    <td class="td-rh">
+                        {% if object.fkLicitacaoConvenioAnulado is null and object.fkLicitacaoRescisaoConvenio is null %}
+                            {% if aditivos.fkLicitacaoConvenioAditivosAnulacao is null %}
+                                <div class="btn-group">
+                                    <a href="{{ path('urbem_patrimonial_licitacao_convenio_aditivos_edit', { 'id': admin.getObjectKey(aditivos) }) }}"
+                                       class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                       data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    {#<a href="{{ path('urbem_patrimonial_licitacao_convenio_aditivos_delete', { 'id': admin.getObjectKey(aditivos) }) }}"#}
+                                    {#class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"#}
+                                    {#data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">#}
+                                    {#<i class="material-icons">delete</i>#}
+                                    {#</a>#}
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <span class="label label-danger">{{ 'label.convenioAdmin.anulado.unavalable'|trans }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

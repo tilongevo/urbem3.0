@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Licitacao\ContratoCompraDireta:
+    type: entity
+    table: licitacao.contrato_compra_direta
+    id:
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codCompraDireta:
+            type: integer
+            nullable: false
+            column: cod_compra_direta
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+        exercicioCompraDireta:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_compra_direta
+    manyToOne:
+        fkComprasCompraDireta:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDireta
+            inversedBy: fkLicitacaoContratoCompraDiretas
+            joinColumns:
+                cod_compra_direta:
+                    referencedColumnName: cod_compra_direta
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_compra_direta:
+                    referencedColumnName: exercicio_entidade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+    oneToOne:
+        fkLicitacaoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            inversedBy: fkLicitacaoContratoCompraDireta
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato

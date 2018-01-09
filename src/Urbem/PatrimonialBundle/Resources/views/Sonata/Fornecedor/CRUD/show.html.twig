@@ -1,0 +1,226 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h5 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-worker left grey-text"></i> {{ object.fkSwCgm.nomcgm }}
+                </h5>
+                <a href="{{ path('urbem_patrimonial_compras_fornecedor_edit', { 'id': object.fkSwCgm.numcgm })}}" class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+                <h6 class="divider grey col s12"></h6>
+                <div class="col s6 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.fornecedor.vlMinimoNf'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.vlminimoNf }}</h6>
+                </div>
+                <div class="col s6 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.fornecedor.tipoFornecedor'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ ('label.fornecedor.tipo.' ~ object.tipo)|trans }}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-source-branch left"></i>
+                    {{ 'label.fornecedor.ramoAtividade'|trans }}
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.codigo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.fornecedor.atividade'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for atividade in object.fkComprasFornecedorAtividades %}
+                    <tr>
+                        <td class="td-rh">{{ atividade.codAtividade }}</td>
+                        <td class="td-rh">{{ atividade.fkEconomicoAtividade.codEstrutural }}</td>
+                        <td class="td-rh">{{ atividade.fkEconomicoAtividade.nomAtividade|upper }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-bank left"></i>
+                    {{ 'label.fornecedor.dadosBancarios'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_patrimonial_compras_fornecedor_conta_create',{ 'cgm_fornecedor': object.fkSwCgm.numcgm })}}"
+                   class="btn-lg" id="addConta"><i class="mdi mdi-plus-circle right"></i></a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.fornecedor.codBanco'|trans }}</th>
+                    <th class="th-rh">{{ 'label.fornecedor.codAgencia'|trans }}</th>
+                    <th class="th-rh">{{ 'label.fornecedor.numConta'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for conta in object.fkComprasFornecedorContas %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ conta.fkMonetarioAgencia.fkMonetarioBanco.codBanco }} - {{ conta.fkMonetarioAgencia.fkMonetarioBanco.nomBanco }}</td>
+                        <td class="td-rh">{{ conta.fkMonetarioAgencia.numAgencia }} - {{ conta.fkMonetarioAgencia.nomAgencia }}</td>
+                        <td class="td-rh">{{ conta.numConta }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_compras_fornecedor_conta_delete', { 'id': conta.numConta~'~'~conta.fkMonetarioAgencia.fkMonetarioBanco.codBanco~'~'~conta.fkMonetarioAgencia.codAgencia~'~'~object.fkSwCgm.numcgm, 'cgm_fornecedor': object.fkSwCgm.numcgm }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-account-multiple left"></i>
+                    {{ 'label.fornecedor.socios'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_patrimonial_compras_fornecedor_socio_create',{ 'cgm_fornecedor': object.fkSwCgm.numcgm })}}"
+                   class="btn-lg"  id="addSocio"><i class="mdi mdi-plus-circle right"></i></a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.fornecedor.socio'|trans }}</th>
+                    <th class="th-rh">{{ 'label.tipo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.fornecedor.ativo'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for socio in object.fkComprasFornecedorSocios %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">
+                            <a href="{{ path('urbem_patrimonial_compras_fornecedor_socio_edit',{ 'id': socio.id, 'cgm_fornecedor': object.fkSwCgm.numcgm })}}"
+                               id="editSocio">
+                                {{ socio.fkSwCgm.nomCgm }}
+                            </a>
+                        </td>
+                        <td class="td-rh">{% if socio.codTipo is not null %}
+                                {{ socio.fkComprasTipoSocio.descricao }}
+                            {% endif %}
+                        </td>
+                        <td class="td-rh">{% if socio.ativo %}
+                                <span class="label label-success">sim</span>
+                            {% else %}
+                                <span class="label label-danger">não</span>
+                            {% endif %}
+                        </td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Editar"
+                                   href="{{ path('urbem_patrimonial_compras_fornecedor_socio_edit', { 'id': socio.id, 'cgm_fornecedor': object.fkSwCgm.numcgm }) }}"><i class="material-icons">edit</i></a>
+
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_compras_fornecedor_socio_delete', { 'id': socio.id, 'cgm_fornecedor': object.fkSwCgm.numcgm }) }}"><i class="material-icons">delete</i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-lan left"></i>
+                    {{ 'label.fornecedor.classificacoes'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_patrimonial_compras_fornecedor_classificacao_create',{ 'cgm_fornecedor': object.fkSwCgm.numcgm })}}"
+                   class="btn-lg"><i class="mdi mdi-plus-circle right"></i></a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.fornecedor.catalogo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.fornecedor.classificacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.descricao'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for classificacao in object.fkComprasFornecedorClassificacoes %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ classificacao.fkAlmoxarifadoCatalogoClassificacao.fkAlmoxarifadoCatalogo.descricao|upper }}</td>
+                        <td class="td-rh">{{ classificacao.fkAlmoxarifadoCatalogoClassificacao.codEstrutural }}</td>
+                        <td class="td-rh">{{ classificacao.fkAlmoxarifadoCatalogoClassificacao.descricao }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_compras_fornecedor_classificacao_delete', { 'id': classificacao.cgmFornecedor~'~'~classificacao.codCatalogo~'~'~classificacao.codClassificacao, 'cgm_fornecedor': classificacao.cgmFornecedor }) }}"><i class="material-icons">delete</i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <hr>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_patrimonial_compras_fornecedor_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+            </a>
+        </div>
+    </div>
+{% endblock content %}

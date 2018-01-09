@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Stn\VinculoContasRgf2:
+    type: entity
+    table: stn.vinculo_contas_rgf_2
+    id:
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkStnContasRgf2:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\ContasRgf2
+            inversedBy: fkStnVinculoContasRgf2s
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkStnVinculoContasRgf2s
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

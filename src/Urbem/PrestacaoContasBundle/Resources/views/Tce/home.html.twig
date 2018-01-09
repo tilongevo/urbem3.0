@@ -1,0 +1,32 @@
+{% extends "base_home_cards.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="container">
+        <h4 class="blue-text text-darken-4">{{ titlePage }}</h4>
+        <div class="divider grey title-divider"><p>1</p></div>
+    </div>
+    <div class="container">
+        {% for configuracao in configuracoes %}
+            {% set style = "color: #ccc !important;" %}
+            {% set urlAction = "@" %}
+
+            {%  if configuracao['hash'] is not empty %}
+                {% set style = "" %}
+                {% set urlAction = path(route, {"uf": uf, "group": group, "hash": configuracao['hash']}) %}
+            {% endif %}
+            <div class="col s6 m6 l3">
+                <div class="card-panel col s12 hoverable center">
+                    <a href="{{ urlAction }}" style="{{ style }}" title="{{ configuracao['title'] }}">
+                        <h6><i style="{{ style }}" class="material-icons medium">{{ configuracao['icon'] }}</i></h6>
+                        <h6 style="{{ style }}" class="truncate center">{{ configuracao['title'] }}</h6>
+                    </a>
+                    <p></p>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,78 @@
+Urbem\CoreBundle\Entity\Compras\Objeto:
+    type: entity
+    table: compras.objeto
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\ObjetoRepository
+    id:
+        codObjeto:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: compras.objeto_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_objeto
+    fields:
+        descricao:
+            type: text
+            nullable: true
+        timestamp:
+            type: datetime
+            nullable: true
+    oneToMany:
+        fkComprasCompraDiretas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDireta
+            mappedBy: fkComprasObjeto
+        fkComprasSolicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Solicitacao
+            mappedBy: fkComprasObjeto
+        fkLicitacaoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            mappedBy: fkComprasObjeto
+        fkLicitacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            mappedBy: fkComprasObjeto
+        fkTcemgConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Convenio
+            mappedBy: fkComprasObjeto
+        fkTcernConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Convenio
+            mappedBy: fkComprasObjeto
+        fkComprasMapas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Mapa
+            mappedBy: fkComprasObjeto
+        fkTcernContratoAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ContratoAditivo
+            mappedBy: fkComprasObjeto

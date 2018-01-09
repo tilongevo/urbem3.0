@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row title-index">
+        <div class="col s8 filtro">
+            <div class="input-field">
+              <input id="1" placeholder="Digite..." type="text" class="validate">
+              <label for="1"></label>
+            </div>
+        </div>
+        <div class="col s2">
+            <a href="#" class="btn btn-fil z-depth-0 blue darken-4 white-text right-align"><i class="material-icons">search</i></a>
+        </div>
+        <div class="col s2 right-align hide-on-med-and-down">
+            <a href="{{ path('pessoal_condicao_assentamento_new') }}" class="valign btn-floating btn-large waves-effect waves-light blue darken-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Incluir Condição Assentamento"><i class="small material-icons">add</i></a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="highlight bordered">
+        <thead>
+            <tr>
+                <th>{{ 'label.id'|trans }}</th>
+                <th>{{ 'label.codigo'|trans }} {{ 'label.assentamento.modulo'|trans }}</th>
+                <th>{{ 'label.dtCriacao'|trans }}</th>
+                <th class="hide-on-med-and-down"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for condicaoAssentamento in condicaoAssentamentos %}
+            <tr>
+                <td><a class="blue-text text-darken-4" href="{{ path('pessoal_condicao_assentamento_show', { 'id': condicaoAssentamento.codCondicao }) }}">{{ condicaoAssentamento.codCondicao }}</a></td>
+                <td>{% if condicaoAssentamento.codAssentamento %}{{ condicaoAssentamento.codAssentamento.descricao }} {% endif %}</td>
+                <td>{% if condicaoAssentamento.cpTimestamp %}{{ condicaoAssentamento.cpTimestamp|date('d/m/Y H:i:s') }}{% endif %}</td>
+                <td class="hide-on-med-and-down"><a class="blue-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar Condição Assentamento" href="{{ path('pessoal_condicao_assentamento_edit', { 'id': condicaoAssentamento.codCondicao }) }}"><i class="small material-icons">edit</i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        <div class="center">
+            {{ knp_pagination_render(condicaoAssentamentos) }}
+        </div>
+    </div>
+</div>
+{% endblock content %}

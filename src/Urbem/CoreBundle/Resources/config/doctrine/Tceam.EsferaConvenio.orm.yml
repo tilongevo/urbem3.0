@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Tceam\EsferaConvenio:
+    type: entity
+    table: tceam.esfera_convenio
+    id:
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        esfera:
+            type: string
+            nullable: false
+            length: 1
+    oneToOne:
+        fkLicitacaoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            inversedBy: fkTceamEsferaConvenio
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio

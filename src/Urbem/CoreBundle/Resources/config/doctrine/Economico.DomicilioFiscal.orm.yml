@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Economico\DomicilioFiscal:
+    type: entity
+    table: economico.domicilio_fiscal
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        inscricaoMunicipal:
+            type: integer
+            nullable: false
+            column: inscricao_municipal
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoDomicilioFiscais
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkEconomicoDomicilioFiscais
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+    oneToMany:
+        fkEconomicoProcessoDomicilioFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoDomicilioFiscal
+            mappedBy: fkEconomicoDomicilioFiscal

@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\SwLancamentoEmpenho:
+    type: entity
+    table: sw_lancamento_empenho
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        estorno:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    oneToOne:
+        fkSwLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\SwLancamento
+            inversedBy: fkSwLancamentoEmpenho
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio

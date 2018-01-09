@@ -1,0 +1,45 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% if admin.isGranted('DELETE', object) and admin.hasRoute('delete') %}
+    {% if object.fkComprasCompraDiretaAnulacao != null %}
+        <a href="#"
+           class="btn-list grey-text transparent z-depth-0 hide-on-med-and-down tooltipped" data-position="bottom"
+           data-delay="50"
+           data-tooltip="{{ 'compra_direta.errors.anulacaoIsNotAvailable' }}">
+            <i class="fa fa-ban fa-lg"></i>
+        </a>
+    {% elseif admin.anulacaoIsAvailable(object) %}
+        <a href="{{ path('urbem_patrimonial_compras_compra_direta_anulacao_create', { 'cod_compra_direta': object.codCompraDireta~'~'~object.codEntidade~'~'~object.exercicioEntidade~'~'~object.codModalidade }) }}"
+           class="btn-list blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped"
+           data-toggle="tooltip" data-placement="bottom" title="{{ 'anular'|trans }}">
+            <i class="fa fa-ban fa-lg"></i>
+        </a>
+    {% else %}
+        {% set autorizacoes = '(' %}
+        {% for autorizacao in object.autorizacoesAndJulgamentos %}
+            {% set autorizacoes = autorizacoes ~ autorizacao.codAutorizacao ~ '\\' ~ autorizacao.exercicio %}
+
+            {% if not loop.last %}
+                {% set autorizacoes = autorizacoes ~ ", " %}
+            {% endif %}
+
+        {% endfor %}
+        {% set autorizacoes = autorizacoes ~ ')' %}
+
+        <a href="#"
+           class="btn-list grey-text transparent z-depth-0 hide-on-med-and-down tooltipped" data-position="bottom"
+           data-delay="50"
+           data-tooltip="{{ 'compra_direta.errors.anulacaoIsNotAvailable'|trans({'%autorizacoes%': autorizacoes }, 'validators') }}">
+            <i class="fa fa-ban fa-lg"></i>
+        </a>
+    {% endif %}
+{% endif %}
+

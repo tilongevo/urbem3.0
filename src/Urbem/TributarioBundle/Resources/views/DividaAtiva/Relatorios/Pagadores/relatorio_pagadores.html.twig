@@ -1,0 +1,46 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::DividaAtiva/Relatorios/header.html.twig' %}
+        <p align="center">
+            <span style="font-size: 13pt"><strong>{{ 'label.dividaAtivaPagadoresReport.modulo' |trans|upper  }}</h5></strong></span>
+        </p>
+        {% for key, pagadores in creditos_pagadores %}
+        <h5 class="box-title left-align">
+            {{ key|trans|upper }}
+        </h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr style="background: #b3b3b3;">
+                    <td>{{ 'label.dividaAtivaPagadoresReport.listaCreditos.cgm'|trans|upper }}</td>
+                    <td>{{ 'label.dividaAtivaPagadoresReport.listaCreditos.nome'|trans|upper }}</td>
+                    <td>{{ 'label.dividaAtivaPagadoresReport.listaCreditos.inscricaoOrigem'|trans|upper }}</td>
+                    <td>{{ 'label.dividaAtivaPagadoresReport.listaCreditos.valor'|trans|upper }}</td>
+                    <td>{{ 'label.dividaAtivaPagadoresReport.codigo'|trans|upper }}</td>
+                    <td>{{ 'label.dividaAtivaPagadoresReport.listaCreditos.descricao'|trans|upper }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pagador in pagadores %}
+                    <tr>
+                        <td style="text-align:left">{{ pagador.numcgm }}</td>
+                        <td style="text-align:left">{{ pagador.nom_cgm }}</td>
+                        <td style="text-align:center">{{ pagador.cod_inscricao }}</td>
+                        <td>{{ pagador.valor }}</td>
+                        <td>{{ pagador.codigo }}</td>
+                        <td style="text-align:left">{{ pagador.descricao }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="6" style="text-align:left">{{ 'label.dividaAtivaPagadoresReport.listaCreditos.totalRegistros'|trans|upper~': '~pagadores|length }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

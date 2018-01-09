@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Tcern\SubDivisaoDescricaoSiai:
+    type: entity
+    table: tcern.sub_divisao_descricao_siai
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSubDivisao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sub_divisao
+        codSiai:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_siai
+    fields: {  }
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcernSubDivisaoDescricaoSiais
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkTcernSubDivisaoDescricaoSiais
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao
+        fkTcernDescricaoSiai:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\DescricaoSiai
+            inversedBy: fkTcernSubDivisaoDescricaoSiais
+            joinColumns:
+                cod_siai:
+                    referencedColumnName: cod_siai

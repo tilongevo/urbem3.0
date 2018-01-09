@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Folhapagamento\LogErroCalculoDecimo:
+    type: entity
+    table: folhapagamento.log_erro_calculo_decimo
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\LogErroCalculoDecimoRepository
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        erro:
+            type: string
+            nullable: false
+            length: 2000
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEventoDecimo:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEventoDecimo
+            inversedBy: fkFolhapagamentoLogErroCalculoDecimo
+            joinColumns:
+                desdobramento:
+                    referencedColumnName: desdobramento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento

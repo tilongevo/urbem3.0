@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Pessoal\ServidorCid:
+    type: entity
+    table: pessoal.servidor_cid
+    id:
+        codServidor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servidor
+        codCid:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cid
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        dataLaudo:
+            type: date
+            nullable: true
+            column: data_laudo
+    manyToOne:
+        fkPessoalServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Servidor
+            inversedBy: fkPessoalServidorCids
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor
+        fkPessoalCid:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cid
+            inversedBy: fkPessoalServidorCids
+            joinColumns:
+                cod_cid:
+                    referencedColumnName: cod_cid

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Monetario\TipoConta:
+    type: entity
+    table: monetario.tipo_conta
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkMonetarioContaCorrentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            mappedBy: fkMonetarioTipoConta

@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Organograma\Organograma:
+    type: entity
+    table: organograma.organograma
+    repositoryClass: Urbem\CoreBundle\Repository\Organograma\OrganogramaRepository
+    id:
+        codOrganograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_organograma
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        implantacao:
+            type: date
+            nullable: false
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        permissaoHierarquica:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+            column: permissao_hierarquica
+    manyToOne:
+        fkNormasNorma:
+            fetch: EXTRA_LAZY
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkOrganogramaOrganogramas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkOrcamentoOrganogramaNiveis:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\OrganogramaNivel
+            mappedBy: fkOrganogramaOrganograma
+        fkOrganogramaDeParaOrgaoHistoricos:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\DeParaOrgaoHistorico
+            mappedBy: fkOrganogramaOrganograma
+        fkOrganogramaNiveis:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Nivel
+            mappedBy: fkOrganogramaOrganograma
+        fkOrganogramaDeParaOrgoes:
+            fetch: EXTRA_LAZY
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\DeParaOrgao
+            mappedBy: fkOrganogramaOrganograma

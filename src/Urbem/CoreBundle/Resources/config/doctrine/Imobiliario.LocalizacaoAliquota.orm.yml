@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Imobiliario\LocalizacaoAliquota:
+    type: entity
+    table: imobiliario.localizacao_aliquota
+    id:
+        codLocalizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_localizacao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        aliquotaTerritorial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: aliquota_territorial
+        aliquotaPredial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: aliquota_predial
+    manyToOne:
+        fkImobiliarioLocalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Localizacao
+            inversedBy: fkImobiliarioLocalizacaoAliquotas
+            joinColumns:
+                cod_localizacao:
+                    referencedColumnName: cod_localizacao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkImobiliarioLocalizacaoAliquotas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

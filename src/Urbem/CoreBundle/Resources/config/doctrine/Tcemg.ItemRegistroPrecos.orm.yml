@@ -1,0 +1,128 @@
+Urbem\CoreBundle\Entity\Tcemg\ItemRegistroPrecos:
+    type: entity
+    table: tcemg.item_registro_precos
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numeroRegistroPrecos:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numero_registro_precos
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        interno:
+            type: boolean
+            generator:
+                strategy: NONE
+        numcgmGerenciador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numcgm_gerenciador
+    fields:
+        numItem:
+            type: integer
+            nullable: false
+            column: num_item
+        dataCotacao:
+            type: date
+            nullable: false
+            column: data_cotacao
+        vlCotacaoPrecoUnitario:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+            column: vl_cotacao_preco_unitario
+        quantidadeCotacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+            column: quantidade_cotacao
+        precoUnitario:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+            column: preco_unitario
+        quantidadeLicitada:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+            column: quantidade_licitada
+        quantidadeAderida:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+            column: quantidade_aderida
+        percentualDesconto:
+            type: decimal
+            nullable: false
+            precision: 6
+            scale: 2
+            column: percentual_desconto
+        ordemClassificacaoFornecedor:
+            type: integer
+            nullable: false
+            column: ordem_classificacao_fornecedor
+    manyToOne:
+        fkTcemgLoteRegistroPrecos:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\LoteRegistroPrecos
+            inversedBy: fkTcemgItemRegistroPrecos
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numero_registro_precos:
+                    referencedColumnName: numero_registro_precos
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_lote:
+                    referencedColumnName: cod_lote
+                interno:
+                    referencedColumnName: interno
+                numcgm_gerenciador:
+                    referencedColumnName: numcgm_gerenciador
+        fkAlmoxarifadoCatalogoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            inversedBy: fkTcemgItemRegistroPrecos
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcemgItemRegistroPrecos
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkTcemgRegistroPrecosOrgaoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosOrgaoItem
+            mappedBy: fkTcemgItemRegistroPrecos

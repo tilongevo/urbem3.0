@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Tcemg\ConfiguracaoLoa:
+    type: entity
+    table: tcemg.configuracao_loa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        percentualAberturaCredito:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: percentual_abertura_credito
+        percentualContratacaoCredito:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: percentual_contratacao_credito
+        percentualContratacaoCreditoReceita:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: percentual_contratacao_credito_receita
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcemgConfiguracaoLoas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

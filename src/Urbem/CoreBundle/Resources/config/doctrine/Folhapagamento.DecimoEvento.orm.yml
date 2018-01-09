@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Folhapagamento\DecimoEvento:
+    type: entity
+    table: folhapagamento.decimo_evento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoTipoEventoDecimo:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoDecimo
+            inversedBy: fkFolhapagamentoDecimoEventos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoDecimoEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

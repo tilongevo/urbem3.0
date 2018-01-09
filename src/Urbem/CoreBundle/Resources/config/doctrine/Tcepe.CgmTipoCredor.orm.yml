@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Tcepe\CgmTipoCredor:
+    type: entity
+    table: tcepe.cgm_tipo_credor
+    id:
+        cgmCredor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_credor
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipoCredor:
+            type: integer
+            nullable: false
+            column: cod_tipo_credor
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcepeCgmTipoCredores
+            joinColumns:
+                cgm_credor:
+                    referencedColumnName: numcgm
+        fkTcepeTipoCredor:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\TipoCredor
+            inversedBy: fkTcepeCgmTipoCredores
+            joinColumns:
+                cod_tipo_credor:
+                    referencedColumnName: cod_tipo_credor

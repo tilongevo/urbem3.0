@@ -1,0 +1,93 @@
+<table class="js-table-lista-documentos">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'label.dividaAtivaEmitirDocumento.contribuinte'|trans }}</th>
+            <th>{{ 'label.dividaAtivaEmitirDocumento.inscricaoAno'|trans }}</th>
+            <th>{{ 'label.dividaAtivaEmitirDocumento.cobrancaAno'|trans }}</th>
+            {% if field.data.tipo == 'reemissao' %}
+                <th>{{ 'label.dividaAtivaEmitirDocumento.documento'|trans }}</th>
+            {% endif %}
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for documento in field.data.documentos %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <span>{{ '%d - %s'|format(documento['numcgm'], documento['nom_cgm']) }}</span>
+
+                    <input type="text" name="documentos[{{ loop.index-1 }}][tipo]" value="{{ field.data.tipo }}" readonly hidden>
+
+                    <input type="text" name="documentos[{{ loop.index-1 }}][contribuinte]" value="{{ '%d - %s'|format(documento['numcgm'], documento['nom_cgm']) }}" readonly hidden>
+
+                    {% if field.data.tipo == 'emissao' %}
+                        <input type="number" name="documentos[{{ loop.index-1 }}][codInscricao]" value="{{ documento['cod_inscricao'] }}" readonly hidden>
+                    {% endif %}
+
+                    {% if field.data.tipo == 'reemissao' %}
+                        <input type="number" name="documentos[{{ loop.index-1 }}][numDocumento]" value="{{ documento['num_documento'] }}" readonly hidden>
+                    {% endif %}
+
+                    <input type="number" name="documentos[{{ loop.index-1 }}][numParcelamento]" value="{{ documento['num_parcelamento'] }}" readonly hidden>
+
+                    <input type="number" name="documentos[{{ loop.index-1 }}][codTipoDocumento]" value="{{ documento['cod_tipo_documento'] }}" readonly hidden>
+
+                    <input type="number" name="documentos[{{ loop.index-1 }}][codDocumento]" value="{{ documento['cod_documento'] }}" readonly hidden>
+
+                    <input type="number" name="documentos[{{ loop.index-1 }}][exercicio]" value="{{ documento['exercicio'] }}" readonly hidden>
+                </td>
+                <td>
+                    <span>{{ documento['inscricoes']|raw }}</span>
+                </td>
+                <td>
+                    {% if field.data.tipo == 'emissao' %}
+                        {% if documento['numero_parcelamento']|trim is not empty %}
+                            <span>{{ '%d/%d'|format(documento['numero_parcelamento'], documento['exercicio_cobranca']) }}</span>
+                        {% endif %}
+
+                        {% if documento['numero_parcelamento']|trim is empty %}
+                            <span>/</span>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if field.data.tipo == 'reemissao' %}
+                        {% if documento['cobranca']|trim is not empty %}
+                            <span>{{ documento['cobranca']|raw }}</span>
+                        {% endif %}
+
+                        {% if documento['cobranca']|trim is empty %}
+                            <span>/</span>
+                        {% endif %}
+                    {% endif %}
+                </td>
+                {% if field.data.tipo == 'reemissao' %}
+                    <td>
+                        <span>{{ '%d/%d'|format(documento['num_documento'], documento['exercicio']) }}</span>
+                    </td>
+                {% endif %}
+                <td>
+                    <input type="checkbox" class="js-documento-emitir" name="documentos[{{ loop.index-1 }}][emitir]" value="1">
+                </td>
+            </tr>
+        {% endfor %}
+
+        {% if field.data.documentos|length %}
+            <tr>
+                <td colspan="5" style="text-align:right">
+                    {{ 'label.dividaAtivaEmitirDocumento.selecionarTodos'|trans }}
+                    <input type="checkbox" class="js-documento-selecionar-todos" value="1">
+                </td>
+            </tr>
+        {% endif %}
+
+        {% if not field.data.documentos|length %}
+            <tr>
+                <td colspan="5" style="text-align:center">{{ 'label.dividaAtivaEmitirDocumento.nenhumRegistroEncontrado'|trans }}</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<hr>

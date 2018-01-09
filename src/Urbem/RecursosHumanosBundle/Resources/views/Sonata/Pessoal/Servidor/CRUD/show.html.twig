@@ -1,0 +1,474 @@
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block content %}
+{% set cgmPessoaFisica, conjuge, cid = object.fkSwCgmPessoaFisica, object.fkPessoalServidorConjuges, object.fkPessoalServidorCids %}
+{% set pis, servidorCtps, reservista = object.fkPessoalServidorPisPaseps, object.fkPessoalServidorCtps, object.fkPessoalServidorReservista %}
+{% set dependentes, documentosDigitais = object.fkPessoalServidorDependentes, object.fkPessoalServidorDocumentoDigitais %}
+
+{% macro render_profile_picture(picture, css, style) %}
+    {% set servidorPicturePath = servidorPic.realpath ~ '/' ~ picture %}
+    {% if file_exists(servidorPicturePath) and picture|length != 0 %}
+        <img src="{{ asset('/show/recursoshumanos/servidores/' ~ picture) }}"
+             alt="foto do servidor"
+             class="{{ css }}"
+             style="{{ style }}">
+    {% else %}
+        <img src="{{ asset('/bundles/core/images/avatar-servidor.png') }}"
+             class="{{ css }}"
+             style="{{ style }}">
+    {% endif %}
+
+{% endmacro %}
+
+<div class="row">
+    <div class="col s12 profile-box">
+        <h2 class="blue-text text-darken-4 left" style="margin-top: 10px;">
+            <i class="mdi mdi-face" style="padding: 2px 10px;" aria-hidden="true"></i>
+            <span style="padding-top: 10px;" class="grey-text bold">
+                {{ 'label.servidor.identificacao'|trans }}
+            </span>
+        </h2>
+
+        <a href="{{ path('urbem_recursos_humanos_pessoal_servidor_delete', { 'id': admin.id(object) }) }}"
+           class="serv-btn right">
+            <i class="material-icons right">delete</i>
+        </a>
+
+        <a href="{{ path('urbem_recursos_humanos_pessoal_servidor_edit', { 'id': admin.id(object) }) }}"
+           class="serv-btn right">
+            <i class="material-icons right">edit</i>
+        </a>
+
+        <p class="divider grey col s12"></p>
+
+        <div class="row">
+            <div class="col s2">
+                <div class="row">
+                    <div class="col s12">
+                        {{ _self.render_profile_picture(object.caminhoFoto, 'little-box', 'width: 100% !important; padding-left: 0 !important; padding-right: 0 !important; margin-top: 10px !important;') }}
+                    </div>
+                </div>
+            </div>
+            <div class="col s10">
+                {# CGM #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.codServidor'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.fkSwCgm.nomCgm }}</h6>
+                </div>
+
+                {# Data de Nascimento #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.datanascimento'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if cgmPessoaFisica.dtNascimento %}
+                            {{ cgmPessoaFisica.dtNascimento|date('d/m/Y') }}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    </h6>
+                </div>
+
+                {# Estado Civil #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.estadoCivil'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkCseEstadoCivil.nomEstado }}</h6>
+                </div>
+
+                {# Endereço #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.endereco'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.fkSwCgm.logradouro|nbsp }}</h6>
+                </div>
+
+                {# Bairro #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.bairro'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.fkSwCgm.bairro|nbsp }}</h6>
+                </div>
+
+                {# UF #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.uf'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.fkSwCgm.fkSwMunicipio.fkSwUf.nomUf }}</h6>
+                </div>
+
+                {# Município #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.municipio'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.fkSwCgm.fkSwMunicipio.nomMunicipio }}</h6>
+                </div>
+
+                {# CEP #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.cep'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.fkSwCgm.cep|nbsp }}</h6>
+                </div>
+
+                {# Fone #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.fone'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.fkSwCgm.foneResidencial|nbsp }}</h6>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="blue-text text-darken-4 left" style="margin-top: 10px;">
+            <i class="mdi mdi-account-card-details" style="padding: 2px 10px;" aria-hidden="true"></i>
+            <span style="padding-top: 10px;" class="grey-text bold">
+                {{ 'label.servidor.dadosdocumentacao'|trans }}
+            </span>
+        </h2>
+
+        <p class="divider grey col s12"></p>
+
+        <div class="row">
+            <div class="col s12">
+                {# CPF #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.cpf'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.cpf|cpf }}</h6>
+                </div>
+
+                {# RG #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.rg'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.rg|rg|nbsp }}</h6>
+                </div>
+
+                {# Órgão Emissor #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.orgaoemissor'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.orgaoemissor }}</h6>
+                </div>
+
+                {# PIS/PASEP #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.servidor.pis'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ cgmPessoaFisica.servidorPisPasep|nbsp }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a class="btn-lg tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir" data-original-title="" title="">
+            <i class="fa fa-id-card"></i>
+            {{ 'label.servidor.dadosctps'|trans }}
+        </a>
+    </div>
+    <div class="col s1">
+        <a href="{{ path('urbem_recursos_humanos_pessoal_servidor_ctps_create', {'id': object.codServidor})}}" class="btn-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Incluir">
+            <i class="mdi mdi-plus-circle "></i>
+        </a>
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead>
+            <tr>
+                <th class="th-rh">{{ 'label.servidor.numero'|trans }}</th>
+                <th class="th-rh">{{ 'label.servidor.serie'|trans }}</th>
+                <th class="th-rh">{{ 'label.servidor.dtEmissao'|trans }}</th>
+                <th class="th-rh">{{ 'label.servidor.orgaoExpedidor'|trans }}</th>
+                <th class="th-rh">{{ 'label.servidor.estado'|trans }}</th>
+                <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ctps in servidorCtps %}
+                <tr>
+                    <td>{{ ctps.fkPessoalCtps.numero }}</td>
+                    <td>{{ ctps.fkPessoalCtps.serie }}</td>
+                    <td>{{ ctps.fkPessoalCtps.dtEmissao|date('d/m/Y') }}</td>
+                    <td>{{ ctps.fkPessoalCtps.orgaoExpedidor }}</td>
+                    <td>
+                        {% if ctps.fkPessoalCtps.fkSwUf %}
+                            {{ ctps.fkPessoalCtps.fkSwUf.siglaUf }}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-justified">
+                            <a class="blue-text text-darken-4 tooltipped " data-position="top" data-delay="50" data-tooltip="Editar" data-original-title="Editar" href="{{ path('urbem_recursos_humanos_pessoal_servidor_ctps_edit', { 'id': object.codServidor ~ '~' ~ ctps.codCtps }) }}" >
+                                <i class="fa fa-lg fa-pencil" aria-hidden="true"></i>
+                            </a>
+                            <a class="blue-text text-darken-4 tooltipped " data-position="top" data-delay="50" data-tooltip="Excluir" data-original-title="Excluir" href="{{ path('urbem_recursos_humanos_pessoal_servidor_ctps_delete', { 'id': object.codServidor ~ '~' ~ ctps.codCtps }) }}">
+                                <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a class="btn-lg tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir" data-original-title="" title="">
+            <i class="mdi mdi-book-open-page-variant"></i>
+            {{ 'label.contrato'|trans }}
+        </a>
+    </div>
+    <div class="col s1">
+        <a href="{{ path('urbem_recursos_humanos_pessoal_contrato_servidor_create', {'id': object.codServidor})}}" class="btn-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Incluir">
+            <i class="mdi mdi-plus-circle"></i>
+        </a>
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead>
+            <tr>
+                <th class="th-rh">{{ 'label.numMatricula'|trans }}</th>
+                <th class="th-rh">{{ 'label.dtAdmissao'|trans }}</th>
+                <th class="th-rh">{{ 'label.codCargo'|trans }}</th>
+                <th class="th-rh">{{ 'label.contratoServidor.funcao'|trans }}</th>
+                <th class="th-rh">{{ 'label.contratoServidor.dtRescisao'|trans }}</th>
+                <th class="th-rh">{{ 'label.contratoServidor.situacao'|trans }}</th>
+                <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contratoServidor in object.fkPessoalServidorContratoServidores %}
+                <tr>
+                    <td>{{ contratoServidor.fkPessoalContratoServidor.fkPessoalContrato.registro }}</td>
+                    <td>{{ contratoServidor.fkPessoalContratoServidor.fkPessoalContratoServidorNomeacaoPosses.last.dtAdmissao|date("d/m/Y") }}</td>
+                    <td>{{ contratoServidor.fkPessoalContratoServidor.fkPessoalCargo.descricao }}</td>
+                    <td>{{ contratoServidor.fkPessoalContratoServidor.fkPessoalContratoServidorFuncoes.last.fkPessoalCargo.descricao }}</td>
+                    <td>
+                        {% if contratoServidor.fkPessoalContratoServidor.fkPessoalContratoServidorCasoCausa %}
+                            {{ contratoServidor.fkPessoalContratoServidor.fkPessoalContratoServidorCasoCausa.dtRescisao|date("d/m/Y") }}
+                        {% endif %}
+                    </td>
+                    <td>{{ admin.recuperarSituacaoDoContratoLiteral(contratoServidor.fkPessoalContratoServidor.fkPessoalContrato.codContrato).situacao|nbsp }}</td>
+                    <td>
+                        <div class="btn-group btn-group-justified">
+                            <a href="{{ path('urbem_recursos_humanos_pessoal_contrato_servidor_edit', { 'id': contratoServidor.fkPessoalContratoServidor.fkPessoalContrato.codContrato }) }}" class="blue-text text-darken-4 tooltipped " title="Editar" >
+                                <i class="fa fa-lg fa-pencil" aria-hidden="true"></i>
+                            </a>
+                            {% if contratoServidor.fkPessoalContratoServidor.fkPessoalContratoServidorCasoCausa %}
+                                <a href="{{ path('urbem_recursos_humanos_pessoal_rescisao_delete', {'id': contratoServidor.fkPessoalContratoServidor.fkPessoalContrato.codContrato}) }}" class="blue-text text-darken-4 tooltipped " title="Excluir">
+                                    <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('urbem_recursos_humanos_pessoal_rescisao_create', {'id': contratoServidor.fkPessoalContratoServidor.fkPessoalContrato.codContrato}) }}" class="blue-text text-darken-4 tooltipped " title="Rescindir contrato">
+                                    <i class="mdi mdi-image-broken-variant fa-lg" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a class="btn-lg tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir" data-original-title="" title="">
+            <i class="fa fa-id-card"></i>
+            {{ 'label.servidor.copiasDigitaisDocumentos'|trans }}
+        </a>
+    </div><div class="col s1"><a href="{{ path('urbem_recursos_humanos_pessoal_servidor_documento_digital_create', {'id': object.codServidor})}}" class="btn-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Incluir">
+            <i class="mdi mdi-plus-circle "></i>
+        </a>
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead>
+            <tr>
+                <th class="th-rh" width="1">&nbsp;</th>
+                <th class="th-rh">{{ 'label.tipoDocumento'|trans }}</th>
+                <th class="th-rh">{{ 'label.servidor.nomeArquivo'|trans }}</th>
+                <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for documentoDigital in documentosDigitais %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ documentoDigital.fkPessoalTipoDocumentoDigital.descricao }}</td>
+                    <td>{{ documentoDigital.nomeArquivo }}</td>
+                    <td>
+                        <a class="blue-text text-darken-4 tooltipped " data-position="left" data-delay="50" data-tooltip="Download" target="_blank" href="{{ asset('/show/recursoshumanos/documentosdigitais/' ~ documentoDigital.arquivoDigital) }}">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                        <a class="blue-text text-darken-4 tooltipped " data-position="left" data-delay="50" data-tooltip="Remover" href="{{ path('urbem_recursos_humanos_pessoal_servidor_documento_digital_delete', { 'id': admin.id(documentoDigital) }) }}">
+                            <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col s11 servidor-table">
+        <a class="btn-lg tooltipped" data-position="left" data-delay="50" data-tooltip="Incluir" data-original-title="" title="">
+            <i class="fa fa-child"></i>
+            {{ 'label.servidor.depedentes'|trans }}
+        </a>
+    </div>
+    <div class="col s1">
+        <a href="{{ path('urbem_recursos_humanos_pessoal_servidor_dependente_create', {'id': object.codServidor})}}" class="btn-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Incluir">
+            <i class="mdi mdi-plus-circle "></i>
+        </a>
+    </div>
+
+    <table class="col s12 highlight bordered">
+        <thead>
+            <tr>
+                <th class="th-rh" width="1">&nbsp;</th>
+                <th class="th-rh" width="1">&nbsp;</th>
+                <th class="th-rh">{{ 'label.nome'|trans }}</th>
+                <th class="th-rh">{{ 'label.servidordependente.codGrau'|trans }}</th>
+                <th class="th-rh">{{ 'label.servidor.datanascimento'|trans }}</th>
+                <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dependente in dependentes %}
+                {% set fkPessoalDependenteCarteiraVacinacoes = dependente.fkPessoalDependente.fkPessoalDependenteCarteiraVacinacoes %}
+                {% set fkPessoalDependenteComprovanteMatriculas = dependente.fkPessoalDependente.fkPessoalDependenteComprovanteMatriculas %}
+                <tr>
+                    <td>
+                        <a data-toggle="collapse" data-target="#accordion{{ loop.index }}" role="button" class="mostrar-mais">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ dependente.fkPessoalDependente.fkSwCgmPessoaFisica.fkSwCgm.nomCgm }}</td>
+                    <td class="text-center">{{ dependente.fkPessoalDependente.fkCseGrauParentesco.nomGrau }}</td>
+
+                    {% if dependente.fkPessoalDependente.fkSwCgmPessoaFisica.dtNascimento %}
+                        <td class="text-center">{{ dependente.fkPessoalDependente.fkSwCgmPessoaFisica.dtNascimento|date('d/m/Y') }}</td>
+                    {% else %}
+                        <td class="text-center">Não Informado</td>
+                    {% endif %}
+
+                    <td>
+                        <div class="btn-group btn-group-justified">
+                            <a class="blue-text text-darken-4 tooltipped " data-position="left" data-delay="50" data-tooltip="" data-original-title="Carteira de Vacinação" href="{{ path('urbem_recursos_humanos_pessoal_servidor_dependente_carteira_vacinacao_create', { 'id': dependente.codDependente }) }}">
+                                <i class="fa fa-lg fa-id-card" aria-hidden="true"></i>
+                            </a>
+                            <a class="blue-text text-darken-4 tooltipped " data-position="left" data-delay="50" data-tooltip="" data-original-title="Comprovante de Matrícula" href="{{ path('urbem_recursos_humanos_pessoal_servidor_dependente_comprovante_matricula_create', { 'id': dependente.codDependente }) }}">
+                                <i class="fa fa-lg fa-file-text" aria-hidden="true"></i>
+                            </a>
+                            <a class="blue-text text-darken-4 tooltipped " data-position="left" data-delay="50" data-tooltip="" data-original-title="Editar" href="{{ path('urbem_recursos_humanos_pessoal_servidor_dependente_edit', { 'id': dependente.codDependente }) }}">
+                                <i class="fa fa-lg fa-pencil" aria-hidden="true"></i>
+                            </a>
+                            <a class="blue-text text-darken-4 tooltipped " data-position="left" data-delay="50" data-tooltip="" data-original-title="Excluir" href="{{ path('urbem_recursos_humanos_pessoal_servidor_dependente_delete', { 'id': dependente.codDependente }) }}">
+                                <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 !important;"></td>
+                    <td style="padding: 0 !important;" colspan="5">
+                        <div class="collapsing" id="accordion{{ loop.index }}">
+                            {% if not fkPessoalDependenteCarteiraVacinacoes.isEmpty %}
+                            <table class="col s12 highlight bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="th-rh" colspan="4">{{ 'label.servidordependente.dependenteVacinacao'|trans }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="th-rh" width="1">&nbsp;</th>
+                                        <th class="th-rh">{{ 'label.servidordependente.dtapresentacaoVacinacao'|trans }}</th>
+                                        <th> Apresentada </th>
+                                        <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="carteiras-table">
+                                    {% for carteira in fkPessoalDependenteCarteiraVacinacoes %}
+                                        {% set apresentada = carteira.fkPessoalCarteiraVacinacao.apresentada %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td class="text-center">{{ carteira.fkPessoalCarteiraVacinacao.dtApresentacao|date('d/m/Y') }}</td>
+                                            <td class="text-center checkbox-carteira" data-check="{{ apresentada ? 1 : 0 }}">
+                                                <input type="checkbox"
+                                                       data-id="{{ dependente.codDependente }}"
+                                                       data-cod_documento="{{ carteira.codCarteira }}"
+                                                       data-documento="carteira-vacinacao">
+                                            </td>
+                                            <td>
+                                                <a class="blue-text text-darken-4 tooltipped " data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('urbem_recursos_humanos_pessoal_servidor_dependente_carteira_vacinacao_delete', { 'id': carteira.fkPessoalCarteiraVacinacao.codCarteira }) }}">
+                                                    <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+                            {% if not fkPessoalDependenteComprovanteMatriculas.isEmpty %}
+                            <table class="col s12 highlight bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="th-rh" colspan="4">{{ 'label.servidordependente.dependenteMatricula'|trans }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="th-rh" width="1">&nbsp;</th>
+                                        <th class="th-rh">{{ 'label.servidordependente.dtapresentacaoMatricula'|trans }}</th>
+                                        <th> Apresentada </th>
+                                        <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="matriculas-table">
+                                    {% for matricula in fkPessoalDependenteComprovanteMatriculas %}
+                                        {% set apresentada = matricula.fkPessoalComprovanteMatricula.apresentada %}
+                                    <tr data-cod_documento="{{ matricula.codComprovante }}">
+                                        <td>{{ loop.index }}</td>
+                                        <td class="text-center">{{ matricula.fkPessoalComprovanteMatricula.dtApresentacao|date('d/m/Y') }}</td>
+                                        <td class="text-center checkbox-matricula" data-check="{{ apresentada ? 1 : 0 }}">
+                                            <input type="checkbox"
+                                                   data-id="{{ dependente.codDependente }}"
+                                                   data-cod_documento="{{ matricula.codComprovante }}"
+                                                   data-documento="comprovante-matricula"
+                                            >
+                                        </td>
+                                        <td>
+                                            <a class="blue-text text-darken-4 tooltipped " data-position="left" data-delay="50" data-tooltip="Editar" href="{{ path('urbem_recursos_humanos_pessoal_servidor_dependente_comprovante_matricula_delete', { 'id': matricula.fkPessoalComprovanteMatricula.codComprovante }) }}">
+                                                <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="sonata-ba-form-actions well well-small form-actions row">
+    <div class="col s8 initial">
+        <a href="{{ path('urbem_recursos_humanos_pessoal_servidor_list') }}" class="back btn-floating white-text blue darken-4 btn-success">
+            <i class="material-icons">arrow_back</i>
+        </a>
+    </div>
+</div>
+
+{% endblock content %}

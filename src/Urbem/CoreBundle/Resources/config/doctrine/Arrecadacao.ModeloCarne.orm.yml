@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ModeloCarne:
+    type: entity
+    table: arrecadacao.modelo_carne
+    id:
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+    fields:
+        nomModelo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_modelo
+        nomArquivo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_arquivo
+        codModulo:
+            type: integer
+            nullable: true
+            column: cod_modulo
+        capaPrimeiraFolha:
+            type: boolean
+            nullable: false
+            column: capa_primeira_folha
+    manyToOne:
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkArrecadacaoModeloCarnes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+    oneToMany:
+        fkArrecadacaoAcaoModeloCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AcaoModeloCarne
+            mappedBy: fkArrecadacaoModeloCarne
+        fkArrecadacaoInformacaoAdicionalLayoutCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\InformacaoAdicionalLayoutCarne
+            mappedBy: fkArrecadacaoModeloCarne
+        fkArrecadacaoObservacaoLayoutCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ObservacaoLayoutCarne
+            mappedBy: fkArrecadacaoModeloCarne
+        fkArrecadacaoVariaveisLayoutCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\VariaveisLayoutCarne
+            mappedBy: fkArrecadacaoModeloCarne
+    oneToOne:
+        fkArrecadacaoObservacaoDebitoLayoutCarne:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ObservacaoDebitoLayoutCarne
+            mappedBy: fkArrecadacaoModeloCarne
+            joinColumns:
+                cod_modelo:
+                    referencedColumnName: cod_modelo

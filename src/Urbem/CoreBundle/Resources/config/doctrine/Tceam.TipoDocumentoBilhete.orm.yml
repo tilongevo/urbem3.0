@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Tceam\TipoDocumentoBilhete:
+    type: entity
+    table: tceam.tipo_documento_bilhete
+    id:
+        codTipoDocumentoBilhete:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento_bilhete
+    fields:
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        numero:
+            type: string
+            nullable: true
+            length: 15
+        dtEmissao:
+            type: date
+            nullable: true
+            column: dt_emissao
+        dtSaida:
+            type: date
+            nullable: true
+            column: dt_saida
+        horaSaida:
+            type: time
+            nullable: true
+            column: hora_saida
+        destino:
+            type: string
+            nullable: true
+            length: 25
+        dtChegada:
+            type: date
+            nullable: true
+            column: dt_chegada
+        horaChegada:
+            type: time
+            nullable: true
+            column: hora_chegada
+        motivo:
+            type: string
+            nullable: true
+            length: 120
+    manyToOne:
+        fkTceamDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\Documento
+            inversedBy: fkTceamTipoDocumentoBilhetes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento

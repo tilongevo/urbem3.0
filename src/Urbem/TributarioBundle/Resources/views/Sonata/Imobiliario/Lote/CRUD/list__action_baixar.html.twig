@@ -1,0 +1,26 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% if admin.verificaBaixa(object)  %}
+    <a href="{{ path('urbem_tributario_imobiliario_lote_reativacao_create', { 'codLote': object.codLote }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.imobiliarioLote.reativar.reativarLote'|trans }}">
+        <i class="fa fa-arrow-up fa-lg"></i>
+    </a>
+{% else %}
+    {% if admin.verificaLoteParceladoValidado(object) %}
+        <a href="{{ path('urbem_tributario_imobiliario_lote_baixa_create', { 'codLote': object.codLote }) }}" class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.imobiliarioLote.baixar.baixarLote'|trans }}">
+            <i class="fa fa-arrow-down fa-lg"></i>
+        </a>
+    {% else %}
+        <a href="#" class="grey-text z-depth-0 hide-on-med-and-down tooltipped btn-list" data-toggle="tooltip" data-placement="bottom" title="{{ 'label.imobiliarioLote.baixar.baixarLote'|trans }}">
+            <i class="fa fa-arrow-down fa-lg grey-text"></i>
+        </a>
+    {% endif %}
+{% endif %}

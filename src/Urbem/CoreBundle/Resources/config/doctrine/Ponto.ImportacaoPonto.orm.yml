@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Ponto\ImportacaoPonto:
+    type: entity
+    table: ponto.importacao_ponto
+    id:
+        codPonto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ponto
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codImportacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_importacao
+    fields:
+        codFormato:
+            type: integer
+            nullable: false
+            column: cod_formato
+        dtPonto:
+            type: date
+            nullable: false
+            column: dt_ponto
+    manyToOne:
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkPontoImportacaoPontos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPontoFormatoImportacao:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoImportacao
+            inversedBy: fkPontoImportacaoPontos
+            joinColumns:
+                cod_formato:
+                    referencedColumnName: cod_formato
+    oneToMany:
+        fkPontoImportacaoPontoHorarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ImportacaoPontoHorario
+            mappedBy: fkPontoImportacaoPonto
+    lifecycleCallbacks:
+        prePersist:
+            - generatePkSequence

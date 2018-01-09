@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Patrimonio\Especie:
+    type: entity
+    table: patrimonio.especie
+    id:
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+    fields:
+        nomEspecie:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_especie
+    manyToOne:
+        fkPatrimonioGrupo:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Grupo
+            inversedBy: fkPatrimonioEspecies
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+    oneToMany:
+        fkPatrimonioEspecieAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\EspecieAtributo
+            mappedBy: fkPatrimonioEspecie
+        fkTcmgoBalancoApbaaaaEspecies:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\BalancoApbaaaaEspecie
+            mappedBy: fkPatrimonioEspecie
+        fkPatrimonioBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            mappedBy: fkPatrimonioEspecie

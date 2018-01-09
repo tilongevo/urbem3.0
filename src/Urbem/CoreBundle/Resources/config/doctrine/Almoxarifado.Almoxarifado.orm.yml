@@ -1,0 +1,98 @@
+Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado:
+    type: entity
+    table: almoxarifado.almoxarifado
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\AlmoxarifadoRepository
+    uniqueConstraints:
+        uk_almoxarifado_1:
+            columns:
+                - cgm_almoxarifado
+    id:
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: almoxarifado.almoxarifado_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_almoxarifado
+    fields:
+        cgmResponsavel:
+            type: integer
+            nullable: false
+            column: cgm_responsavel
+        cgmAlmoxarifado:
+            type: integer
+            nullable: false
+            column: cgm_almoxarifado
+    manyToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkAlmoxarifadoAlmoxarifados
+            joinColumns:
+                cgm_responsavel:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkAlmoxarifadoInventarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Inventario
+            mappedBy: fkAlmoxarifadoAlmoxarifado
+        fkAlmoxarifadoEstoqueMateriais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\EstoqueMaterial
+            mappedBy: fkAlmoxarifadoAlmoxarifado
+        fkAlmoxarifadoPedidoTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferencia
+            mappedBy: fkAlmoxarifadoAlmoxarifado
+        fkAlmoxarifadoPedidoTransferencias1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferencia
+            mappedBy: fkAlmoxarifadoAlmoxarifado1
+        fkAlmoxarifadoLocalizacaoFisicas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LocalizacaoFisica
+            mappedBy: fkAlmoxarifadoAlmoxarifado
+        fkAlmoxarifadoPermissaoAlmoxarifados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PermissaoAlmoxarifados
+            mappedBy: fkAlmoxarifadoAlmoxarifado
+        fkComprasSolicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Solicitacao
+            mappedBy: fkAlmoxarifadoAlmoxarifado
+        fkAlmoxarifadoRequisicoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Requisicao
+            mappedBy: fkAlmoxarifadoAlmoxarifado
+    oneToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkAlmoxarifadoAlmoxarifado
+            joinColumns:
+                cgm_almoxarifado:
+                    referencedColumnName: numcgm

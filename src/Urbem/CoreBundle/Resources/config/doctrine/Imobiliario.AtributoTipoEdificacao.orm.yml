@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoEdificacao:
+    type: entity
+    table: imobiliario.atributo_tipo_edificacao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkImobiliarioTipoEdificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoEdificacao
+            inversedBy: fkImobiliarioAtributoTipoEdificacoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkImobiliarioAtributoTipoEdificacoes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+    oneToMany:
+        fkImobiliarioAtributoTipoEdificacaoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoEdificacaoValor
+            mappedBy: fkImobiliarioAtributoTipoEdificacao

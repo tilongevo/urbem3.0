@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.configuracao.modulo'|trans }} list{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <table class="highlight bordered">
+            <thead>
+                <tr>
+                    <th data-field="">{{ 'label.codigo'|trans }}</th>
+                    <th data-field="">{{ 'exercicio'|trans }}</th>
+                    <th data-field="">{{ 'parametro'|trans }}</th>
+                    <th data-field="">{{ 'valor'|trans }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for configuracao in configuracoes %}
+                <tr>
+                    <td><a href="{{ path('administracao_configuracao_show', { 'id': configuracao.id }) }}">{{ configuracao.id }}</a></td>
+                    <td>{{ configuracao.exercicio }}</td>
+                    <td>{{ configuracao.parametro }}</td>
+                    <td>{{ configuracao.valor }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('administracao_configuracao_show', { 'id': configuracao.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('administracao_configuracao_edit', { 'id': configuracao.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="center">
+            {{ knp_pagination_render(configuracoes) }}
+        </div>
+
+        <ul>
+            <li>
+                <a href="{{ path('administracao_configuracao_new') }}">Create a new entry</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+<td class="sonata-ba-list-field sonata-ba-list-field-text" >
+
+{% if object.fkArrecadacaoParcela %}
+    {% if object.fkArrecadacaoParcela.fkArrecadacaoLancamento %}
+        {% if object.fkArrecadacaoParcela.fkArrecadacaoLancamento.fkArrecadacaoLancamentoCalculos.last() %}
+            {% if object.fkArrecadacaoParcela.fkArrecadacaoLancamento.fkArrecadacaoLancamentoCalculos.last().fkArrecadacaoCalculo %}
+                {% if object.fkArrecadacaoParcela.fkArrecadacaoLancamento.fkArrecadacaoLancamentoCalculos.last().fkArrecadacaoCalculo.fkMonetarioCredito %}
+                    {#
+                        {{ object.fkArrecadacaoParcela.fkArrecadacaoLancamento.fkArrecadacaoLancamentoCalculos.last().fkArrecadacaoCalculo.fkArrecadacaoCalculoGrupoCredito.getCodGrupo }}
+                    #}
+                    {{ object.fkArrecadacaoParcela.fkArrecadacaoLancamento.fkArrecadacaoLancamentoCalculos.last().fkArrecadacaoCalculo.fkMonetarioCredito.getCodCredito }}
+                     -
+                    {#
+                        {{ object.fkArrecadacaoParcela.fkArrecadacaoLancamento.fkArrecadacaoLancamentoCalculos.last().fkArrecadacaoCalculo.fkArrecadacaoCalculoGrupoCredito.fkArrecadacaoGrupoCredito.getDescricao() }}
+                    #}
+                    {{ object.fkArrecadacaoParcela.fkArrecadacaoLancamento.fkArrecadacaoLancamentoCalculos.last().fkArrecadacaoCalculo.fkMonetarioCredito.getDescricaoCredito }}
+                {% else %}
+                    {% if object.fkMonetarioConvenio %}
+                        {% if object.fkMonetarioConvenio.fkMonetarioCreditos.last() %}
+                            {{ object.fkMonetarioConvenio.fkMonetarioCreditos.last().getCodCredito() }}
+                             -
+                            {{ object.fkMonetarioConvenio.fkMonetarioCreditos.last().getDescricaoCredito() }}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+</td>

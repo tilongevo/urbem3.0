@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Pessoal\PensaoIncidencia:
+    type: entity
+    table: pessoal.pensao_incidencia
+    id:
+        codPensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pensao
+        codIncidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_incidencia
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkPessoalPensao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensao
+            inversedBy: fkPessoalPensaoIncidencias
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalIncidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Incidencia
+            inversedBy: fkPessoalPensaoIncidencias
+            joinColumns:
+                cod_incidencia:
+                    referencedColumnName: cod_incidencia

@@ -1,0 +1,148 @@
+{% block body %}
+    {% block content %}
+        {% include 'FinanceiroBundle:Empenho/Empenho:headerPdf.html.twig' %}
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th colspan="4">ENTIDADE</th>
+                </tr>
+                <tr>
+                    <td colspan="4">{{ dadosEmpenho.codEntidade }} - {{ dadosEmpenho.nomEntidade }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">ÓRGÃO</th>
+                    <td colspan="2">{{ dadosEmpenho.orgao }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">UNIDADE</th>
+                    <td colspan="2">{{ dadosEmpenho.unidade }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">TIPO</th>
+                    <td colspan="2">{{ dadosEmpenho.tipoEmpenho }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">DOTAÇÃO</th>
+                    <td colspan="2">{{ dadosEmpenho.dotacao }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">CREDOR</th>
+                    <td colspan="2">{{ dadosEmpenho.cgmCredor }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">CGC/CPF</th>
+                    <td colspan="2">{{ dadosEmpenho.cgcCpfCredor }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">CGM</th>
+                    <td colspan="2">{{ dadosEmpenho.numCgmCredor }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">ENDEREÇO</th>
+                    <th>CIDADE</th>
+                    <th>UF</th>
+                </tr>
+                <tr>
+                    <td colspan="2">{{ dadosEmpenho.logradouroCredor }}</td>
+                    <td>{{ dadosEmpenho.municipioCredor }}</td>
+                    <td>{{ dadosEmpenho.ufCredor }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">AUTORIZAÇÃO</th>
+                    <td colspan="2">{{ dadosEmpenho.autorizacao }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">DATA DE EMISSÃO</th>
+                    <th colspan="2">DATA DE VENCIMENTO</th>
+                </tr>
+                <tr>
+                    <td colspan="2">{{ dadosEmpenho.dtEmpenho|date("d/m/Y") }}</td>
+                    <td colspan="2">{{ dadosEmpenho.dtVencimento|date("d/m/Y") }}</td>
+                </tr>
+                <tr>
+                    <th colspan="1">VALOR ORÇADO</th>
+                    <th colspan="1">SALDO ANTERIOR</th>
+                    <th colspan="1">VALOR ANULADO</th>
+                    <th colspan="1">SALDO ATUAL</th>
+                </tr>
+                <tr>
+                    <td colspan="1">{{ dadosEmpenho.vlOrcado|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td colspan="1">{{ dadosEmpenho.setVlSaldoAnterior|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td colspan="1">{{ valorAnulado|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td colspan="1">{{ dadosEmpenho.saldoAtual|number_format_decimal({'fraction_digits': 2}) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>HISTÓRICO</th>
+                    <td>{{ dadosEmpenho.historico }}</td>
+                </tr>
+                <tr>
+                    <th>DESCRIÇÃO DO EMPENHO</th>
+                    <td>{{ dadosEmpenho.descricao }}</td>
+                </tr>
+                {% for atributo in dadosEmpenho.AtributoEmpenhoValor %}
+                    <tr>
+                        <th>{{ atributo.label }}</th>
+                        <td>{{ atributo.value }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th class="text-right">ITEM</th>
+                    <th class="text-right">QUANTIDADE</th>
+                    <th>UNIDADE</th>
+                    <th>ESPECIFICAÇÃO</th>
+                    <th class="text-right">VALOR UNITÁRIO</th>
+                    <th class="text-right">VALOR TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in dadosEmpenho.itemPreEmpenho %}
+                    <tr>
+                        <td class="text-right">{{ item.numItem }}</td>
+                        <td class="text-right">{{ item.quantidade|number_format_decimal({'fraction_digits': 4}) }}</td>
+                        <td>{{ item.siglaUnidade }}</td>
+                        <td>{{ item.nomItem}}</td>
+                        <td class="text-right">{{ (item.vlTotal / item.quantidade)|number_format_decimal({'fraction_digits': 4}) }}</td>
+                        <td class="text-right">{{ item.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="5">RECURSO: {{ dadosEmpenho.despesa.codRecurso }} PAO: {{ dadosEmpenho.pao }}</td>
+                    <td class="text-right">{{ dadosEmpenho.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="bold">Empenho anulado em:</span>
+                        <br/>
+                        {{ empenhoAnulado.timestamp|date("d/m/Y") }}
+                    </td>
+                    <td>
+                        <span class="bold">Motivo: </span>
+                        <br/>
+                        {{ empenhoAnulado.motivo }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock stylesheets %}

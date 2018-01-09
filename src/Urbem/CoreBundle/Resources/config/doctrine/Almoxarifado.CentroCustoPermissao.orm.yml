@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoPermissao:
+    type: entity
+    table: almoxarifado.centro_custo_permissao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\CentroCustoPermissaoRepository
+    id:
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        responsavel:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkAlmoxarifadoCentroCusto:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto
+            inversedBy: fkAlmoxarifadoCentroCustoPermissoes
+            joinColumns:
+                cod_centro:
+                    referencedColumnName: cod_centro
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkAlmoxarifadoCentroCustoPermissoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

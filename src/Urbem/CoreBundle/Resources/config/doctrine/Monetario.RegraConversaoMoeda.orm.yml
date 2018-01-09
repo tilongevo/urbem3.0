@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Monetario\RegraConversaoMoeda:
+    type: entity
+    table: monetario.regra_conversao_moeda
+    id:
+        codMoeda:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_moeda
+    fields:
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+    manyToOne:
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkMonetarioRegraConversaoMoedas
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+    oneToOne:
+        fkMonetarioMoeda:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Moeda
+            inversedBy: fkMonetarioRegraConversaoMoeda
+            joinColumns:
+                cod_moeda:
+                    referencedColumnName: cod_moeda

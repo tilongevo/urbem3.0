@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\GrauEscolar:
+    type: entity
+    table: cse.grau_escolar
+    id:
+        codGrau:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grau
+    fields:
+        nomGrau:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_grau
+    oneToMany:
+        fkCseQualificacaoEscolares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\QualificacaoEscolar
+            mappedBy: fkCseGrauEscolar

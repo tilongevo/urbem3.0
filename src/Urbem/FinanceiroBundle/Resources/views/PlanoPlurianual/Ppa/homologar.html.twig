@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    <div class="container-rh">
+
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="box-header col s12">
+                    <h5 class="col s12 box-title left-align show">
+                        Período Plano Plurianual
+                    </h5>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <input type="hidden" value="{{ ppa.codPpa }}" name="cod_ppa" />
+                <div class="col s3">
+                    <label for="anoInicio" class="control-label required">{{ 'label.ppa.anoInicio'|trans }}</label>
+                    <input class="input-rh" id="anoInicio" name="ppa[anoInicio]" value="{{ ppa.anoInicio }}" disabled="disabled">
+                </div>
+                <div class="col s3">
+                    <label for="anoFinal" class="control-label required">{{ 'label.ppa.anoFim'|trans }}</label>
+                    <input class="input-rh" id="anoFinal" name="ppa[anoFinal]" value="{{ ppa.anoFinal }}" disabled="disabled">
+                </div>
+            </div>
+            <div class="row">
+                <div class="box-header col s12">
+                    <h5 class="col s12 box-title left-align show">
+                        Dados da Primeira Homologação do PPA
+                    </h5>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <div class="col s4 sonata-ba-field sonata-ba-field-standard-natural">
+                    {{ form_label(form.dataEncaminhamentoLegislativo, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    <div class="input-group date datepicker" id="teste">
+                        {{ form_widget(form.dataEncaminhamentoLegislativo, {'attr': {'class': 'our-datepicker sonata-medium-datecampo-sonata form-control input-rh',  'data-provide': 'datepicker', 'name': 'teste'}}) }}
+                        <span class="input-group-addon">
+                            <span class="fa-calendar fa"></span>
+                        </span>
+                    </div>
+                    {{ form_errors(form.dataEncaminhamentoLegislativo) }}
+                </div>
+                <div class="col s4 field-filtro select-filtro">
+                    {{ form_label(form.numeroProtocolo, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.numeroProtocolo, {'attr': {'class': 'white input-rh '}}) }}
+                    {{ form_errors(form.numeroProtocolo) }}
+                </div>
+                <div class="col s4 sonata-ba-field sonata-ba-field-standard-natural">
+                    {{ form_label(form.dataDevExecutivo, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    <div class="input-group date datepicker" id="teste">
+                        {{ form_widget(form.dataDevExecutivo, {'attr': {'class': ' our-datepicker sonata-medium-datecampo-sonata form-control input-rh',  'data-provide': 'datepicker', 'name': 'teste'}}) }}
+                        <span class="input-group-addon">
+                            <span class="fa-calendar fa"></span>
+                        </span>
+                    </div>
+                    {{ form_errors(form.dataDevExecutivo) }}
+                </div>
+                <div class="col s4 field-filtro select-filtro">
+                    {{ form_label(form.nomeVeiculo, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.nomeVeiculo, {'attr': {'class': 'white input-rh-without-border browser-default'}}) }}
+                    {{ form_errors(form.nomeVeiculo) }}
+                </div>
+                <div class="col s4 field-filtro select-filtro">
+                    {{ form_label(form.periodicidadeMetas, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.periodicidadeMetas, {'attr': {'class': 'white input-rh-without-border browser-default'}}) }}
+                    {{ form_errors(form.periodicidadeMetas) }}
+                </div>
+                <div class="col s4 field-filtro select-filtro">
+                    {{ form_label(form.numeroNorma, null, {'label_attr': {'class': 'control-label label-rh'}}) }}
+                    {{ form_widget(form.numeroNorma, {'attr': {'class': 'white input-rh-without-border browser-default'}}) }}
+                    {{ form_errors(form.numeroNorma) }}
+                </div>
+                <div class="col s12 right-align" style="margin-top: 20px">
+                    <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="Homologar">
+                        <i class="material-icons left">assignment_turned_in</i>Homologar
+                    </button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('/bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css') }}">
+    <script src="{{ asset('/bundles/sonatacore/vendor/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/string.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/core/javascripts/urbem-sonata.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('select:not(.select-ano)').select2();
+        });
+    </script>
+{% endblock javascripts %}

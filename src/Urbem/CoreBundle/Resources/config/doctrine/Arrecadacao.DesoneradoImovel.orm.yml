@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Arrecadacao\DesoneradoImovel:
+    type: entity
+    table: arrecadacao.desonerado_imovel
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codDesoneracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_desoneracao
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkArrecadacaoDesonerado:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desonerado
+            inversedBy: fkArrecadacaoDesoneradoImoveis
+            joinColumns:
+                cod_desoneracao:
+                    referencedColumnName: cod_desoneracao
+                numcgm:
+                    referencedColumnName: numcgm
+                ocorrencia:
+                    referencedColumnName: ocorrencia
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkArrecadacaoDesoneradoImoveis
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

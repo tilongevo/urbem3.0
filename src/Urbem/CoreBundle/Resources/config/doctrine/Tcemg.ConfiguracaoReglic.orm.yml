@@ -1,0 +1,93 @@
+Urbem\CoreBundle\Entity\Tcemg\ConfiguracaoReglic:
+    type: entity
+    table: tcemg.configuracao_reglic
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ConfiguracaoReglicRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        regulamentoArt47:
+            type: integer
+            nullable: false
+            column: regulamento_art_47
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        regExclusiva:
+            type: integer
+            nullable: false
+            column: reg_exclusiva
+        artigoRegExclusiva:
+            type: string
+            nullable: true
+            length: 6
+            column: artigo_reg_exclusiva
+        valorLimiteRegExclusiva:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_limite_reg_exclusiva
+        procSubContratacao:
+            type: integer
+            nullable: false
+            column: proc_sub_contratacao
+        artigoProcSubContratacao:
+            type: string
+            nullable: true
+            length: 6
+            column: artigo_proc_sub_contratacao
+        percentualSubContratacao:
+            type: decimal
+            nullable: true
+            precision: 6
+            scale: 2
+            column: percentual_sub_contratacao
+        criterioEmpenhoPagamento:
+            type: integer
+            nullable: false
+            column: criterio_empenho_pagamento
+        artigoEmpenhoPagamento:
+            type: string
+            nullable: true
+            length: 6
+            column: artigo_empenho_pagamento
+        estabeleceuPercContratacao:
+            type: integer
+            nullable: false
+            column: estabeleceu_perc_contratacao
+        artigoPercContratacao:
+            type: string
+            nullable: true
+            length: 6
+            column: artigo_perc_contratacao
+        percentualContratacao:
+            type: decimal
+            nullable: true
+            precision: 6
+            scale: 2
+            column: percentual_contratacao
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcemgConfiguracaoReglics
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcemgConfiguracaoReglic
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

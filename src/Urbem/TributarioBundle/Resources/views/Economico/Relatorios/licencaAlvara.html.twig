@@ -1,0 +1,38 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Economico/Relatorios/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'label.licencaAlvaraReport.numeroLicenca'|trans }}</td>
+                    <td>{{ 'label.licencaAlvaraReport.nroInscricaoEconomica'|trans }}</td>
+                    <td>{{ 'label.licencaAlvaraReport.atividade'|trans }}</td>
+                    <td>{{ 'label.licencaAlvaraReport.documento'|trans }}</td>
+                    <td>{{ 'label.licencaAlvaraReport.dtInicio'|trans }}</td>
+                    <td>{{ 'label.licencaAlvaraReport.dtTermino'|trans }}</td>
+                    <td>{{ 'label.licencaAlvaraReport.situacao'|trans }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.licenca }}</td>
+                        <td>{{ result.inscricao }}</td>
+                        <td>{{ result.atividade }}</td>
+                        <td>{{ result.nome_documento }}</td>
+                        <td>{{ result.dt_inicio }}</td>
+                        <td>{{ result.dt_termino }}</td>
+                        <td>{{ result.situacao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

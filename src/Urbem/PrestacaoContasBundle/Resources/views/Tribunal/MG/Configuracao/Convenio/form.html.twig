@@ -1,0 +1,254 @@
+<form id="form">
+    <div class="box-body no-padding">
+        <table class="table show-table">
+            <tbody>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.fkOrcamentoEntidade) }}</th>
+                    <td>
+                        {{ form_widget(form.fkOrcamentoEntidade) }}
+                        {{ form_errors(form.fkOrcamentoEntidade) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.fkComprasObjeto) }}</th>
+                    <td>
+                        {{ form_widget(form.fkComprasObjeto) }}
+                        {{ form_errors(form.fkComprasObjeto) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.dataAssinatura) }}</th>
+                    <td>
+                        {{ form_widget(form.dataAssinatura) }}
+                        {{ form_errors(form.dataAssinatura) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.dataInicio) }}</th>
+                    <td>
+                        {{ form_widget(form.dataInicio) }}
+                        {{ form_errors(form.dataInicio) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.dataFinal) }}</th>
+                    <td>
+                        {{ form_widget(form.dataFinal) }}
+                        {{ form_errors(form.dataFinal) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.vlConvenio) }}</th>
+                    <td>
+                        {{ form_widget(form.vlConvenio) }}
+                        {{ form_errors(form.vlConvenio) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>{{ form_label(form.vlContraPartida) }}</th>
+                    <td>
+                        {{ form_widget(form.vlContraPartida) }}
+                        {{ form_errors(form.vlContraPartida) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>
+                        Participantes
+                    </th>
+                    <td>
+                        <a href="#" id="add-item_fkTcemgConvenioParticipantes" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Incluir">
+                            <i class="material-icons">add_circle</i>
+                        </a>
+
+                        {% form_theme form.fkTcemgConvenioParticipantes 'PrestacaoContasBundle::Tribunal/MG/Configuracao/Convenio/form_fkTcemgConvenioParticipantes.html.twig' %}
+                        {{ form_widget(form.fkTcemgConvenioParticipantes) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>
+                        Empenhos
+                    </th>
+                    <td>
+                        <a href="#" id="add-item_fkTcemgConvenioEmpenhos" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Incluir">
+                            <i class="material-icons">add_circle</i>
+                        </a>
+
+                        {% form_theme form.fkTcemgConvenioEmpenhos 'PrestacaoContasBundle::Tribunal/MG/Configuracao/Convenio/form_fkTcemgConvenioEmpenhos.html.twig' %}
+                        {{ form_widget(form.fkTcemgConvenioEmpenhos) }}
+                    </td>
+                </tr>
+
+                <tr class="sonata-ba-view-container">
+                    <th>
+                        Aditivos
+                    </th>
+                    <td>
+                        <a href="#" id="add-item_fkTcemgConvenioAditivos" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Incluir">
+                            <i class="material-icons">add_circle</i>
+                        </a>
+
+                        {% form_theme form.fkTcemgConvenioAditivos 'PrestacaoContasBundle::Tribunal/MG/Configuracao/Convenio/form_fkTcemgConvenioAditivos.html.twig' %}
+                        {{ form_widget(form.fkTcemgConvenioAditivos) }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <input type="hidden" name="key" value="{{ key }}" />
+
+    <div class="sonata-ba-collapsed-fields custom-form">
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s12">
+                <div class="col s12 right-align initial">
+                    <button type="submit" class="white-text blue darken-4 btn btn-success save" name="save_update"><i class="material-icons left">input</i>Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+    .custom-form .select2-container {height: 34px !important;}
+</style>
+
+<script>
+    $('select.form-control').select2();
+    $('#form').submit( function(e){
+        e.preventDefault();
+    });
+
+    function Parent() {
+        this.holder = null;
+        this.childTemplate = null;
+        this.choiceBag = [];
+        this.choiceBagIndex = -1;
+    }
+
+    Parent.prototype = {
+        constructor: Parent
+    };
+
+    Parent.prototype.load = function() {
+        var that = this;
+
+        this.holder.find('table').each(function(i) {
+            index = $(this).find('select').attr('id').replace(/[^\d.]/g, '');
+            that.choiceBagIndex = index > that.choiceBagIndex ? index : that.choiceBagIndex;
+
+            var item = new Child(that);
+            item.setIndex(index);
+
+            that.addChoice(item, i);
+        });
+    };
+
+    Parent.prototype.createEmptyChild = function() {
+        this.choiceBagIndex = this.choiceBagIndex + 1;
+
+        template = this.childTemplate.replace(/__name__/g, this.choiceBagIndex);
+
+        this.holder.append(template);
+
+        referenceIndex = this.holder.children().length - 1;
+
+        var item = new Child(this);
+        item.setIndex(this.choiceBagIndex);
+
+        this.addChoice(item, referenceIndex);
+    };
+
+    Parent.prototype.removeItem = function(item) {
+        item.getReference().remove();
+
+        delete this.choiceBag[item.getIndex()];
+
+        var c = 0;
+
+        for(var i = this.choiceBag.length - 1; i >= 0; i--) {
+            if (typeof this.choiceBag[i] !== 'undefined') {
+                c++;
+            }
+        }
+    };
+
+    Parent.prototype.addChoice = function(item, referenceIndex) {
+        item.bind(referenceIndex);
+
+        this.choiceBag[item.getIndex()] = item;
+
+        $('select.form-control').select2();
+    };
+
+    function Child(field) {
+        this.field = field;
+        this.index = null;
+        this.reference = null;
+    }
+
+    Child.prototype = {
+        constructor: Child,
+
+        setIndex: function(index) {
+            this.index = index;
+        },
+
+        getIndex: function() {
+            return this.index;
+        },
+
+        getReference: function() {
+            return this.reference;
+        }
+    };
+
+    Child.prototype.bind = function(referenceIndex) {
+        this.reference = this.field.holder.find("table:eq(" + referenceIndex + ")").parent();
+
+        var that = this;
+
+        // remove button
+        this.reference.find("tr:eq(-1) a").click(function() {
+            that.field.removeItem(that);
+        });
+    };
+
+    var fkTcemgConvenioParticipantes = new Parent();
+    fkTcemgConvenioParticipantes.holder = $('#configuracao_convenio_fkTcemgConvenioParticipantes');
+    fkTcemgConvenioParticipantes.childTemplate = $('#configuracao_convenio_fkTcemgConvenioParticipantes').attr('data-prototype');
+    fkTcemgConvenioParticipantes.load();
+
+    $('#add-item_fkTcemgConvenioParticipantes').click(function(e) {
+        fkTcemgConvenioParticipantes.createEmptyChild();
+        return false;
+    });
+
+    var fkTcemgConvenioEmpenhos = new Parent();
+    fkTcemgConvenioEmpenhos.holder = $('#configuracao_convenio_fkTcemgConvenioEmpenhos');
+    fkTcemgConvenioEmpenhos.childTemplate = $('#configuracao_convenio_fkTcemgConvenioEmpenhos').attr('data-prototype');
+    fkTcemgConvenioEmpenhos.load();
+
+    $('#add-item_fkTcemgConvenioEmpenhos').click(function(e) {
+        fkTcemgConvenioEmpenhos.createEmptyChild();
+        return false;
+    });
+
+    var fkTcemgConvenioAditivos = new Parent();
+    fkTcemgConvenioAditivos.holder = $('#configuracao_convenio_fkTcemgConvenioAditivos');
+    fkTcemgConvenioAditivos.childTemplate = $('#configuracao_convenio_fkTcemgConvenioAditivos').attr('data-prototype');
+    fkTcemgConvenioAditivos.load();
+
+    $('#add-item_fkTcemgConvenioAditivos').click(function(e) {
+        fkTcemgConvenioAditivos.createEmptyChild();
+        return false;
+    });
+
+</script>

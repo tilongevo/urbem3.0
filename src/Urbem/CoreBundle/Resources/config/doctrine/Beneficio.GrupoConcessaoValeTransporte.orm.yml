@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Beneficio\GrupoConcessaoValeTransporte:
+    type: entity
+    table: beneficio.grupo_concessao_vale_transporte
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        codMes:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mes
+        codConcessao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_concessao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkBeneficioGrupoConcessao:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\GrupoConcessao
+            inversedBy: fkBeneficioGrupoConcessaoValeTransportes
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+        fkBeneficioConcessaoValeTransporte:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporte
+            inversedBy: fkBeneficioGrupoConcessaoValeTransportes
+            joinColumns:
+                cod_concessao:
+                    referencedColumnName: cod_concessao
+                cod_mes:
+                    referencedColumnName: cod_mes
+                exercicio:
+                    referencedColumnName: exercicio

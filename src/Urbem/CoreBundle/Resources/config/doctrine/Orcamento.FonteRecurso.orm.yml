@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Orcamento\FonteRecurso:
+    type: entity
+    table: orcamento.fonte_recurso
+    id:
+        codFonte:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fonte
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkOrcamentoEspecificacaoDestinacaoRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\EspecificacaoDestinacaoRecurso
+            mappedBy: fkOrcamentoFonteRecurso
+        fkOrcamentoRecursoDiretos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\RecursoDireto
+            mappedBy: fkOrcamentoFonteRecurso

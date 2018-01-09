@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Arrecadacao\NotaServico:
+    type: entity
+    table: arrecadacao.nota_servico
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkArrecadacaoNota:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Nota
+            inversedBy: fkArrecadacaoNotaServicos
+            joinColumns:
+                cod_nota:
+                    referencedColumnName: cod_nota
+        fkArrecadacaoFaturamentoServico:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FaturamentoServico
+            inversedBy: fkArrecadacaoNotaServicos
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                cod_servico:
+                    referencedColumnName: cod_servico
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+                ocorrencia:
+                    referencedColumnName: ocorrencia

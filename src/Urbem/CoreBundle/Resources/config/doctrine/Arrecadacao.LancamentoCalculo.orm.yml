@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Arrecadacao\LancamentoCalculo:
+    type: entity
+    table: arrecadacao.lancamento_calculo
+    indexes:
+        idx_lancamento_calculo_1:
+            columns:
+                - cod_lancamento
+    id:
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+    fields:
+        dtLancamento:
+            type: date
+            nullable: false
+            column: dt_lancamento
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkArrecadacaoCalculo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Calculo
+            inversedBy: fkArrecadacaoLancamentoCalculos
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo
+        fkArrecadacaoLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lancamento
+            inversedBy: fkArrecadacaoLancamentoCalculos
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+    oneToMany:
+        fkArrecadacaoLancamentoUsaDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoUsaDesoneracao
+            mappedBy: fkArrecadacaoLancamentoCalculo
+        fkArrecadacaoLancamentoConcedeDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoConcedeDesoneracao
+            mappedBy: fkArrecadacaoLancamentoCalculo

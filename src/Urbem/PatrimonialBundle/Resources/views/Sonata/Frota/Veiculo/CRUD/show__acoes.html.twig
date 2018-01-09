@@ -1,0 +1,87 @@
+{% macro action_veiculo_button(text, icon, route = null, route_params = {}, col = 's3') %}
+    <div class="col {{ col|e }} center" style="margin-bottom: 10px">
+        {% if route is null  %}
+            <a class="white-text btn btn-success save grey lighten-2 disabled">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e }}
+            </a>
+        {% else %}
+            <a class="white-text blue darken-4 btn btn-success save"
+               href="{{ path(route, route_params) }}">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e }}
+            </a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+<div class="col s12">
+    <div class="col s12">
+        {% if object.isDisponivelParaAdicao == true %}
+            {{ _self.action_veiculo_button('Adicionar à Veiculo Próprio', 'plus-circle', 'urbem_patrimonial_frota_veiculo_proprio_create', {'id': admin.id(object)}, 's6') }}
+            {{ _self.action_veiculo_button('Adicionar à Veiculo de Terceiros', 'plus-circle', 'urbem_patrimonial_frota_veiculo_terceiro_create', {'id': admin.id(object)}, 's6') }}
+        {% else %}
+            {{ _self.action_veiculo_button('Adicionar à Veiculo Próprio', 'plus-circle', null, {}, 's6') }}
+            {{ _self.action_veiculo_button('Adicionar à Veiculo de Terceiros', 'plus-circle', null, {}, 's6') }}
+        {% endif %}
+        {% if object.proprio or object.terceiros %}
+            {% if object.isDisponivelParaRetorno != true %}
+                {% if object.isBaixado == true %}
+                    {{ _self.action_veiculo_button('Baixar Veículo', 'download') }}
+                    {{ _self.action_veiculo_button('Excluir Baixa', 'ban', 'urbem_patrimonial_frota_excluir_baixa_veiculo_delete', {'id': admin.id(object)}) }}
+                {% elseif object.isDisponivelParaBaixa == true  %}
+                    {{ _self.action_veiculo_button('Baixar Veículo', 'download', 'urbem_patrimonial_frota_excluir_baixa_veiculo_create', {'id': admin.id(object)}) }}
+                    {{ _self.action_veiculo_button('Excluir Baixa', 'ban') }}
+                {% else %}
+                    {% if false == object.utilizacao  and object.fkFrotaVeiculoBaixado is not null%}
+                        {{ _self.action_veiculo_button('Baixar Veículo', 'download') }}
+                        {{ _self.action_veiculo_button('Excluir Baixa', 'ban', 'urbem_patrimonial_frota_excluir_baixa_veiculo_delete', {'id': admin.id(object)}) }}
+                    {% else %}
+                        {{ _self.action_veiculo_button('Baixar Veículo', 'download') }}
+                        {{ _self.action_veiculo_button('Excluir Baixa', 'ban') }}
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                {{ _self.action_veiculo_button('Baixar Veículo', 'download') }}
+                {{ _self.action_veiculo_button('Excluir Baixa', 'ban') }}
+            {% endif %}
+
+            {% if object.isDisponivelParaRetirada == true and object.isBaixado != true %}
+                {{ _self.action_veiculo_button('Retirar Veículo', 'arrow-circle-right', 'urbem_patrimonial_frota_veiculo_retirar_veiculo_create', {'id': admin.id(object)}) }}
+                {{ _self.action_veiculo_button('Excluir Retirada', 'undo') }}
+            {% elseif object.utilizacao != false %}
+                {{ _self.action_veiculo_button('Retirar Veículo', 'arrow-circle-right') }}
+                {% if object.isDisponivelParaBaixa == true %}
+                    {{ _self.action_veiculo_button('Excluir Retirada', 'undo', 'urbem_patrimonial_frota_veiculo_retirar_veiculo_delete', {'id': admin.id(object.utilizacao)}) }}
+                {% elseif object.fkFrotaVeiculoBaixado is not null %}
+                    {% if object.isDisponivelParaRetirada != true and object.isDisponivelParaRetorno != true and object.isBaixado == true %}
+                        {{ _self.action_veiculo_button('Excluir Retirada', 'undo') }}
+                    {% else %}
+                        {{ _self.action_veiculo_button('Excluir Retirada', 'undo', 'urbem_patrimonial_frota_veiculo_retirar_veiculo_delete', {'id': admin.id(object.utilizacao)}) }}
+                    {% endif %}
+                {% else %}
+                    {{ _self.action_veiculo_button('Excluir Retirada', 'undo') }}
+                {% endif %}
+            {% else %}
+                {{ _self.action_veiculo_button('Retirar Veículo', 'arrow-circle-right') }}
+                {{ _self.action_veiculo_button('Excluir Retirada', 'undo') }}
+            {% endif %}
+            {% if object.isDisponivelParaRetorno == true %}
+                {% if object.isBaixado != true %}
+                    {{ _self.action_veiculo_button('Retornar Veículo', 'arrow-circle-left', 'urbem_patrimonial_frota_veiculo_retornar_veiculo_retornar', {'id': admin.id(object.utilizacao)}) }}
+                {% else %}
+                    {{ _self.action_veiculo_button('Retornar Veículo', 'arrow-circle-left') }}
+                {% endif %}
+                {{ _self.action_veiculo_button('Excluir Retorno', 'undo') }}
+            {% elseif object.utilizacao != false %}
+                {{ _self.action_veiculo_button('Retornar Veículo', 'arrow-circle-left') }}
+                {% if object.utilizacao.fkFrotaUtilizacaoRetorno is not null %}
+                    {{ _self.action_veiculo_button('Excluir Retorno', 'undo', 'urbem_patrimonial_frota_veiculo_retornar_veiculo_delete', {'id': admin.id(object.utilizacao.fkFrotaUtilizacaoRetorno)}) }}
+                {% else %}
+                    {{ _self.action_veiculo_button('Excluir Retorno', 'undo') }}
+                {% endif %}
+            {% else %}
+                {{ _self.action_veiculo_button('Retornar Veículo', 'arrow-circle-left') }}
+                {{ _self.action_veiculo_button('Excluir Retorno', 'undo') }}
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

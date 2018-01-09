@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Imobiliario\ImovelConfrontacao:
+    type: entity
+    table: imobiliario.imovel_confrontacao
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+    fields:
+        codLote:
+            type: integer
+            nullable: false
+            column: cod_lote
+        codConfrontacao:
+            type: integer
+            nullable: false
+            column: cod_confrontacao
+    manyToOne:
+        fkImobiliarioConfrontacaoTrecho:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ConfrontacaoTrecho
+            inversedBy: fkImobiliarioImovelConfrontacoes
+            joinColumns:
+                cod_confrontacao:
+                    referencedColumnName: cod_confrontacao
+                cod_lote:
+                    referencedColumnName: cod_lote
+    oneToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkImobiliarioImovelConfrontacao
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

@@ -1,0 +1,102 @@
+Urbem\CoreBundle\Entity\Tcemg\Uniorcam:
+    type: entity
+    table: tcemg.uniorcam
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\UniorcamRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        identificador:
+            type: integer
+            nullable: false
+        cgmOrdenador:
+            type: integer
+            nullable: true
+            column: cgm_ordenador
+        exercicioAtual:
+            type: string
+            nullable: true
+            length: 4
+            column: exercicio_atual
+        numOrgaoAtual:
+            type: integer
+            nullable: true
+            column: num_orgao_atual
+        numUnidadeAtual:
+            type: integer
+            nullable: true
+            column: num_unidade_atual
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcemgUniorcans
+            joinColumns:
+                cgm_ordenador:
+                    referencedColumnName: numcgm
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcemgUniorcans
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkOrcamentoUnidadeAtual:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            joinColumns:
+                exercicio_atual:
+                    referencedColumnName: exercicio
+                num_unidade_atual:
+                    referencedColumnName: num_unidade
+                num_orgao_atual:
+                    referencedColumnName: num_orgao
+        fkOrcamentoOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Orgao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkOrcamentoOrgaoAtual:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Orgao
+            joinColumns:
+                exercicio_atual:
+                    referencedColumnName: exercicio
+                num_orgao_atual:
+                    referencedColumnName: num_orgao
+    oneToMany:
+        fkTcemgArquivoIuocs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ArquivoIuoc
+            mappedBy: fkTcemgUniorcam
+        fkTcemgCronogramaExecucaoMensalDesembolsos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\CronogramaExecucaoMensalDesembolso
+            mappedBy: fkTcemgUniorcam
+        fkTcemgArquivoUocs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ArquivoUoc
+            mappedBy: fkTcemgUniorcam

@@ -1,0 +1,79 @@
+Urbem\CoreBundle\Entity\Compras\SolicitacaoItemAnulacao:
+    type: entity
+    table: compras.solicitacao_item_anulacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSolicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_solicitacao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+    fields:
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 4
+        vlTotal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_total
+    manyToOne:
+        fkComprasSolicitacaoAnulacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoAnulacao
+            inversedBy: fkComprasSolicitacaoItemAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkComprasSolicitacaoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItem
+            inversedBy: fkComprasSolicitacaoItemAnulacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+                cod_centro:
+                    referencedColumnName: cod_centro
+                cod_item:
+                    referencedColumnName: cod_item
+    oneToMany:
+        fkComprasSolicitacaoItemDotacaoAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoItemDotacaoAnulacao
+            mappedBy: fkComprasSolicitacaoItemAnulacao

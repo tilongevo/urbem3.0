@@ -1,0 +1,42 @@
+{% set valores = field.data.valores %}
+
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="addValor" id="addValor" value="Incluir">
+    </div>
+</div>
+<div class="col s12">
+    <h3 class="col s10 box-title left-align show">{{ 'label.tabelaConversao.listaValores'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableValores" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.tabelaConversao.condicaoParametro1'|trans }}</th>
+            <th class="th-rh">{{ 'label.tabelaConversao.condicaoParametro2'|trans }}</th>
+            <th class="th-rh">{{ 'label.tabelaConversao.condicaoParametro3'|trans }}</th>
+            <th class="th-rh">{{ 'label.tabelaConversao.condicaoParametro4'|trans }}</th>
+            <th class="th-rh">{{ 'label.tabelaConversao.valor'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if valores|length > 0 %}
+            {% for valor in valores %}
+                <tr class="tr-rh">
+                    {% set value = valor.parametro1 ~ '__' ~ valor.parametro2 ~ '__' ~ valor.parametro3 ~ '__' ~ valor.parametro4 ~ '__' ~ valor.valor %}
+                    <td style="display: none"><input name="valores[]" type="hidden" value="{{ value }}" /></td>
+                    <td>{{ valor.parametro1 }}</td>
+                    <td>{{ valor.parametro2 }}</td>
+                    <td>{{ valor.parametro3 }}</td>
+                    <td>{{ valor.parametro4 }}</td>
+                    <td>{{ valor.valor }}</td>
+                    <td class="remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="tr-rh empty">
+                <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

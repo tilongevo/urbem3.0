@@ -1,0 +1,255 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+
+    <div class="container-rh">
+        <div class="col s12 profile-box">
+            <h3 class="blue-text text-darken-4 left">
+                <i class="fa fa-table left grey-text"></i>
+                {{ 'label.irrf.dadosTabela'|trans }}
+            </h3>
+            <a href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_edit', {'id': object.tabelaIrrf|objectKey }) }}" class="serv-btn right">
+                <i class="material-icons right">edit</i>
+            </a>
+            <p class="divider grey col s12"></p>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.irrf.vlDependente'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">R$ {{ object.tabelaIrrf.vlDependente }}</h6>
+            </div>
+
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.irrf.eventoDependente'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.eventoDependente.fkFolhapagamentoEvento.descricao }}</h6>
+            </div>
+
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.irrf.vlLimiteIsencao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">R$ {{ object.tabelaIrrf.vlLimiteIsencao }}</h6>
+            </div>
+
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.irrf.eventoDependente'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.eventoIsencao.fkFolhapagamentoEvento.descricao }}</h6>
+            </div>
+
+            {% for evento in object.eventos %}
+                {% if(evento.codTipo != 1 and evento.codTipo != 2) %}
+                    {% set eventoLabel = 'label.irrf.evento' ~ evento.codTipo %}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ eventoLabel|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ evento.fkFolhapagamentoEvento.descricao }}</h6>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table" style="margin-top: 20px;">
+                <a class="btn-lg tooltipped"
+                   href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_cid_create',{'id': admin.getObjectKey(object)}) }}"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-file-document left"></i>
+                    {{ 'label.irrf.cid.title'|trans }}
+                </a>
+            </div>
+            <div class="col s1" style="margin-top: 20px;">
+                    <a href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_cid_create',{'id': admin.getObjectKey(object) }) }}"
+                       class="btn-lg"><i class="mdi mdi-plus-circle left"></i></a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.irrf.cid.codigo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.cid.codigoCid'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.cid.descricao'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in object.tabelaIrrfCids %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ item.codCid }}</td>
+                        <td class="td-rh">{{ item.fkPessoalCid.descricao }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_cid_edit', { 'id': item|objectKey }) }}"
+                                   class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Alterar">
+                                    <i class="material-icons right">edit</i>
+                                </a>
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="right"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_cid_delete',
+                                   {'id': item|objectKey }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col s11 servidor-table" style="margin-top: 20px;">
+                <a class="btn-lg tooltipped"
+                   href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_comprovante_rendimento_create',{'id': admin.getObjectKey(object)}) }}"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-file-document left"></i>
+                    {{ 'label.irrf.comprovanteRendimento.titleList'|trans }}
+                </a>
+            </div>
+            <div class="col s1" style="margin-top: 20px;">
+                <a href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_comprovante_rendimento_create',{'id': admin.getObjectKey(object) }) }}"
+                   class="btn-lg"><i class="mdi mdi-plus-circle left"></i></a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.irrf.cid.codigo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.comprovanteRendimento.codigoEvento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.cid.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.comprovanteRendimento.proventoDesconto'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in object.tabelaIrrfComprovanteRendimentos %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ item.codEvento }}</td>
+                        <td class="td-rh">{{ item.fkFolhapagamentoEvento.descricao }}</td>
+                        <td class="td-rh">{{ (item.fkFolhapagamentoEvento.natureza == 'D') ? 'Desconto' : 'Provendo' }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_comprovante_rendimento_edit', { 'id': item|objectKey }) }}"
+                                   class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Alterar">
+                                    <i class="material-icons right">edit</i>
+                                </a>
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="right"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_comprovante_rendimento_delete',
+                                   {'id': item|objectKey }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col s11 servidor-table" style="margin-top: 20px;">
+                <a class="btn-lg tooltipped"
+                   href="{{ path('urbem_recursos_humanos_folha_pagamento_faixa_desconto_irrf_create',{'id': admin.getObjectKey(object)}) }}"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-file-document left"></i>
+                    {{ 'label.irrf.faixaDesconto.title'|trans }}
+                </a>
+            </div>
+            <div class="col s1" style="margin-top: 20px;">
+                <a href="{{ path('urbem_recursos_humanos_folha_pagamento_faixa_desconto_irrf_create',{'id': admin.getObjectKey(object) }) }}"
+                   class="btn-lg"><i class="mdi mdi-plus-circle left"></i></a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.irrf.cid.codigo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.faixaDesconto.vlInicial'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.faixaDesconto.vlFinal'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.faixaDesconto.aliquota'|trans }}</th>
+                    <th class="th-rh">{{ 'label.irrf.faixaDesconto.deduzir'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in object.faixaDescontoIrrfs %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">R$ {{ item.vlInicial }}</td>
+                        <td class="td-rh">R$ {{ item.vlFinal }}</td>
+                        <td class="td-rh">R$ {{ item.aliquota }}</td>
+                        <td class="td-rh">R$ {{ item.parcelaDeduzir }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a href="{{ path('urbem_recursos_humanos_folha_pagamento_faixa_desconto_irrf_edit', { 'id': item|objectKey }) }}"
+                                   class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Alterar">
+                                    <i class="material-icons right">edit</i>
+                                </a>
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="right"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_recursos_humanos_folha_pagamento_faixa_desconto_irrf_delete',
+                                   {'id': item|objectKey }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_recursos_humanos_folha_pagamento_tabela_irrf_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+                Add a comment to this line
+            </a>
+        </div>
+    </div>
+    {# END BASE #}
+{% endblock show %}

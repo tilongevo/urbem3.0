@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Imobiliario\LoteLoteamento:
+    type: entity
+    table: imobiliario.lote_loteamento
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields:
+        codLoteamento:
+            type: integer
+            nullable: false
+            column: cod_loteamento
+        caucionado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkImobiliarioLoteamento:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Loteamento
+            inversedBy: fkImobiliarioLoteLoteamentos
+            joinColumns:
+                cod_loteamento:
+                    referencedColumnName: cod_loteamento
+    oneToOne:
+        fkImobiliarioLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Lote
+            inversedBy: fkImobiliarioLoteLoteamento
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote

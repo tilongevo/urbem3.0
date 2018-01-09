@@ -1,0 +1,22 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    <table class="bordered highlight">
+        <thead>
+            <tr class="sonata-ba-list-field-header">
+                <th class="sonata-ba-list-field-header-text text-center" style="text-align: center !important;">{{ "label.valorInicial"|trans }}</th>
+                <th class="sonata-ba-list-field-header-text" style="text-align: center !important;">{{ "label.valorFinal"|trans }}</th>
+                <th class="sonata-ba-list-field-header-text" style="text-align: center !important;">{{ "label.percentualDesconto"|trans }}</th>
+            </thead>
+        <tbody>
+
+            {% for faixa in admin.subject.fkBeneficioFaixaDescontos %}
+                <tr>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-integer" style="text-align: right !important;">{{ faixa.vlInicial|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-integer" style="text-align: right !important;">{{ faixa.vlFinal|number_format_decimal({'fraction_digits': 2}) }}</td>
+                    <td class="sonata-ba-list-field sonata-ba-list-field-choice" style="text-align: right !important;">{{ (faixa.percentualDesconto * 100)|number_format_decimal({'fraction_digits': 2}) }} %</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

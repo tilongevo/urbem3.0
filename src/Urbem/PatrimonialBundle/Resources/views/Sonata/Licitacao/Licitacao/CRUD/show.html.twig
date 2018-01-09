@@ -1,0 +1,169 @@
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h3 class="blue-text text-darken-4 left">
+                    <i class="fa fa-file-text-o grey-text left" aria-hidden="true"></i>
+                    <span style="text-transform: capitalize;">
+                        {{ 'label.patrimonial.licitacao.dadoslicitacao'|trans }} : {{ object.licitacao.codLicitacao }}
+                    </span>
+                </h3>
+                <a href="{{ path('urbem_patrimonial_licitacao_licitacao_edit', { 'id': object.licitacao|objectKey }) }}"
+                   class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+
+                <h6 class="divider grey col s12"></h6>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codProcesso'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.codProcesso }} - {{ object.licitacao.fkSwProcesso.codAssunto }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codMapa'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkComprasMapa.exercicio }} | {{ object.licitacao.codMapa }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.codObjeto'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkComprasObjeto }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.registroPrecos'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.licitacao.registroPrecos == 1 %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.entidade'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.timestamp'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.timestamp|date("d/m/Y") }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.vlCotado'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.vlCotado|number_format(2, ',', '.') }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.codCriterio'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkLicitacaoCriterioJulgamento.descricao }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.numOrgao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkOrcamentoUnidade.fkOrcamentoOrgao.nomOrgao }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.numUnidade'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkOrcamentoUnidade }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.chamadaPublica'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkLicitacaoTipoChamadaPublica }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.modalidade'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkComprasModalidade }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.codTipoObjeto'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.fkComprasTipoObjeto }}</h6>
+                </div>
+
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.exercicioProcesso'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.licitacao.exercicioProcesso }}</h6>
+                </div>
+
+                <div class="col s12" style="margin: 15px 0;">
+                    {% if object.passivelAdjudicacao == false %}
+                        <div class="col s3 center" style="margin: 10px 0">
+                            <a class="white-text blue darken-4 btn btn-success save"
+                               href="{{ path('urbem_patrimonial_licitacao_adjudicacao_create',{ 'id': object.licitacao|objectKey}) }}"
+                            >
+                                <i class="mdi mdi-file-document left"></i>Adjudicar
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="col s3 center" style="margin: 10px 0">
+                            <a class="white-text btn btn-success save grey lighten-2 disabled">
+                                <i class="mdi mdi-file-document left"></i>Adjudicar
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    {% if object.passivelHomologacao != false %}
+                        <div class="col s3 center" style="margin: 10px 0">
+                            <a class="white-text blue darken-4 btn btn-success save"
+                               href="{{ path('urbem_patrimonial_licitacao_homologacao_create',{ 'id': object.licitacao|objectKey}) }}"
+                            >
+                                <i class="mdi mdi-file-document left"></i>Homologar
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="col s3 center" style="margin: 10px 0">
+                            <a class="white-text btn btn-success save grey lighten-2 disabled">
+                                <i class="mdi mdi-file-document left"></i>Homologar
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="col s3 center" style="margin: 10px 0">
+                        <a class="white-text btn btn-success save grey lighten-2 disabled">
+                            <i class="mdi mdi-file-document left"></i>Termo de Adjudicação
+                        </a>
+                    </div>
+                    <div class="col s3 center" style="margin: 10px 0">
+                        <a class="white-text btn btn-success save grey lighten-2 disabled">
+                            <i class="mdi mdi-file-document left"></i>Termo de Homologação
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include '@Patrimonial/Sonata/Licitacao/Licitacao/CRUD/show__comissao.html.twig' %}
+
+        {% include '@Patrimonial/Sonata/Licitacao/Licitacao/CRUD/show__membros_adicionais.html.twig' %}
+
+        {% include '@Patrimonial/Sonata/Licitacao/Licitacao/CRUD/show__documentos_exigidos.html.twig' %}
+
+        {% include '@Patrimonial/Sonata/Licitacao/Licitacao/CRUD/show__participantes.html.twig' %}
+
+        {% include '@Patrimonial/Sonata/Licitacao/Licitacao/CRUD/show__documentos_participantes.html.twig' %}
+    </div>
+    <hr>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s8 initial">
+            <a href="{{ path('urbem_patrimonial_licitacao_licitacao_list') }}"
+               class="back btn-floating white-text blue darken-4 btn-success">
+                <i class="material-icons">arrow_back</i>
+                Add a comment to this line
+            </a>
+        </div>
+    </div>
+{% endblock content %}

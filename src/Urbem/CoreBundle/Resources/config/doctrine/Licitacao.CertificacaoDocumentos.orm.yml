@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Licitacao\CertificacaoDocumentos:
+    type: entity
+    table: licitacao.certificacao_documentos
+    id:
+        numCertificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_certificacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        numDocumento:
+            type: string
+            nullable: true
+            length: 30
+            column: num_documento
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+        dtValidade:
+            type: date
+            nullable: false
+            column: dt_validade
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+    manyToOne:
+        fkLicitacaoParticipanteCertificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ParticipanteCertificacao
+            inversedBy: fkLicitacaoCertificacaoDocumentos
+            joinColumns:
+                num_certificacao:
+                    referencedColumnName: num_certificacao
+                exercicio:
+                    referencedColumnName: exercicio
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkLicitacaoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Documento
+            inversedBy: fkLicitacaoCertificacaoDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento

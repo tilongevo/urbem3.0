@@ -1,0 +1,281 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block show %}
+    <div class="sonata-ba-view">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#tab_{{ admin.uniqid }}_1" data-toggle="tab">
+                        <i class="fa fa-exclamation-circle has-errors hide"></i>
+                        {{ admin.trans('label.imobiliarioConsulta.lotes', {}) }}
+                    </a>
+                </li>
+                <li>
+                    <a href="#tab_{{ admin.uniqid }}_2" data-toggle="tab">
+                        <i class="fa fa-exclamation-circle has-errors hide"></i>
+                        {{ admin.trans('label.imobiliarioConsulta.parcelamentos', {}) }}
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab_{{ admin.uniqid }}_1">
+                    <div class="box-body  container-fluid">
+                        <div class="sonata-ba-collapsed-fields">
+                            <div class="box-header col s12">
+                                <h2 class="col s10 box-title left-align show">
+                                    {{ 'label.imobiliarioLote.dados'|trans }}
+                                </h2>
+                            </div>
+                            <div class="box-body  no-padding">
+                                <table class="table show-table">
+                                    <tbody>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.imobiliarioLote.numLote'|trans }}</th>
+                                            <td>{{ object.lote }}</td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.imobiliarioLote.localizacao'|trans }}</th>
+                                            <td>{{ object.localizacao }}</td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.imobiliarioLote.codFaceQuadra'|trans }}</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.imobiliarioLote.area'|trans }}</th>
+                                            <td>{% if object.lote.fkImobiliarioAreaLotes|length %} {{ object.lote.fkImobiliarioAreaLotes.last.areaReal|number_format(2, ',', '.') }} {% endif %}</td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.imobiliarioLote.profundidadeMedia'|trans }}</th>
+                                            <td>{% if object.lote.fkImobiliarioProfundidadeMedias|length %} {{ object.lote.fkImobiliarioProfundidadeMedias.last.vlProfundidadeMedia|number_format(2, ',', '.') }} {% endif %}</td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.imobiliarioLote.dataInscricao'|trans }}</th>
+                                            <td>{{ object.lote.dtInscricao|date('d/m/Y') }}</td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.imobiliarioLote.processo'|trans }}</th>
+                                            <td>{% if object.lote.fkImobiliarioLoteProcessos|length %} {{ object.lote.fkImobiliarioLoteProcessos.last.fkSwProcesso }} {% endif %}</td>
+                                        </tr>
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ 'label.imobiliarioLote.situacao'|trans }}</th>
+                                            <td>{{ 'label.ativo'|trans }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="row">
+                                <h2 class="col s10 box-title left-align show">
+                                    {{ 'label.imobiliarioLote.listaConfrontacoes'|trans }}
+                                </h2>
+
+                                <table class="bordered highlight">
+                                    <thead>
+                                        <tr class="sonata-ba-list-field-header">
+                                            <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.pontoCardeal'|trans }}</th>
+                                            <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.tipo'|trans }}</th>
+                                            <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.descricao'|trans }}</th>
+                                            <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.extensao'|trans }}</th>
+                                            <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.testada'|trans }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if object.lote.fkImobiliarioConfrontacoes|length > 0 %}
+                                        {% for confrontacao in object.lote.fkImobiliarioConfrontacoes %}
+                                            <tr>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                    {{ confrontacao.fkImobiliarioPontoCardeal }}
+                                                </td>
+                                                {% if confrontacao.fkImobiliarioConfrontacaoTrecho|length > 0 %}
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                        {{ 'label.imobiliarioLote.trecho'|trans }}
+                                                    </td>
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                        {{ confrontacao.fkImobiliarioConfrontacaoTrecho.fkImobiliarioTrecho }}
+                                                    </td>
+                                                {% elseif confrontacao.fkImobiliarioConfrontacaoLote|length > 0 %}
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                        {{ 'label.imobiliarioLote.lote'|trans }}
+                                                    </td>
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                        {{ confrontacao.fkImobiliarioConfrontacaoLote.fkImobiliarioLote }}
+                                                    </td>
+                                                {% elseif confrontacao.fkImobiliarioConfrontacaoDiversa|length > 0 %}
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                        {{ 'label.imobiliarioLote.outros'|trans }}
+                                                    </td>
+                                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                        {{ confrontacao.fkImobiliarioConfrontacaoDiversa.descricao }}
+                                                    </td>
+                                                {% endif %}
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                    {{ confrontacao.fkImobiliarioConfrontacaoExtensoes.current.valor|number_format_decimal({'fraction_digits': 2}) }}
+                                                </td>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                    {% if confrontacao.fkImobiliarioConfrontacaoTrecho is not null %}
+                                                        {% if confrontacao.fkImobiliarioConfrontacaoTrecho.principal == true %}
+                                                            {{ 'sim'|trans }}
+                                                        {% else %}
+                                                            {{ 'nao'|trans }}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {{ 'nao'|trans }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr class="tr-rh empty-row">
+                                            <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {% if admin.consultaAtributosLote(object.lote)|length %}
+                                <h2 class="col s10 box-title left-align show">
+                                    {{ 'label.imobiliarioLote.atributosLote'|trans }}
+                                </h2>
+
+                                <table class="table show-table">
+                                    {% for atributo in admin.consultaAtributosLote(object.lote)  %}
+                                        <tr class="sonata-ba-view-container">
+                                            <th>{{ atributo.nomAtributo }}</th>
+                                            <td>
+                                                {% if atributo.valor is defined %}
+                                                    {% for valor in atributo.valor %}
+                                                        <p>{{ valor }}</p>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+
+
+                            <h2 class="col s10 box-title left-align show">
+                                {{ 'label.imobiliarioLote.listaProcessos'|trans }}
+                            </h2>
+
+                            <table class="bordered highlight">
+                                <thead>
+                                    <tr class="sonata-ba-list-field-header">
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.processo'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.data'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.hora'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.detalhe'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% if admin.consultaProcessosLote(object.lote)|length %}
+                                    {% for lista in admin.consultaProcessosLote(object.lote)|sort %}
+                                        <tr>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.fkSwProcesso }}</td>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.timestamp|date('d/m/Y') }}</td>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ lista.processo.timestamp|date('H:i:s') }}</td>
+                                            <td class="sonata-ba-list-field sonata-ba-list-field-text"><i data-lote-processo='{{ lista.processo.timestamp|date('dmYHis') }}' class="material-icons btn_meta blue-text text-darken-4" style="cursor: pointer">add</i></td>
+                                        </tr>
+                                        <tr class="detalhe" id="lote_processo_{{ lista.processo.timestamp|date('dmYHis') }}" style="display:none;">
+                                            <td></td>
+                                            <td colspan="3" class="sonata-ba-list-field sonata-ba-list-field-text">
+                                                {% if lista.atributoDinamico|length > 0 %}
+                                                    <table class="table show-table">
+                                                        {% for atributo in lista.atributoDinamico %}
+                                                            <tr class="sonata-ba-view-container">
+                                                                <td>{{ atributo.nomAtributo }}</td>
+                                                                <td>
+                                                                    {% if atributo.valor is defined %}
+                                                                        {% for valor in atributo.valor %}
+                                                                            <p>{{ valor }}</p>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                {% else %}
+                                                    {{ 'listagemVazia'|trans }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="tab_{{ admin.uniqid }}_2">
+                    <div class="box-body  container-fluid">
+                        <div class="sonata-ba-collapsed-fields">
+                            <div class="row">
+                                <h2 class="col s10 box-title left-align show">
+                                    {{ 'label.imobiliarioLote.listaParcelamentos'|trans }}
+                                </h2>
+
+                                <table class="bordered highlight">
+                                    <thead>
+                                    <tr class="sonata-ba-list-field-header">
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.parcelamento'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.tipo'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.loteOrigem'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.dtParcelamento'|trans }}</th>
+                                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioLote.lotesParticipantes'|trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if object.lote.fkImobiliarioParcelamentoSolos|length %}
+                                        {% for parcelamentoSolo in object.lote.fkImobiliarioParcelamentoSolos|sort %}
+                                            <tr>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ parcelamentoSolo.codParcelamento }}</td>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ parcelamentoSolo.fkImobiliarioTipoParcelamento }}</td>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ parcelamentoSolo.fkImobiliarioLote }}</td>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ parcelamentoSolo.dtParcelamento|date('d/m/Y') }}</td>
+                                                <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ parcelamentoSolo.fkImobiliarioLoteParcelados|join(', ') }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr><td colspan="5">{{ 'listagemVazia'|trans }}</td></tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s12">
+                <div class="col s8 initial">
+                    <a class="btn-floating white-text blue darken-4 btn-success" href="#" onclick="window.history.back();"><i class="material-icons">arrow_back</i>{</a>
+                </div>
+            </div>
+        </div>
+    {{ sonata_block_render_event('sonata.admin.show.bottom', { 'admin': admin, 'object': object }) }}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {% include 'AdministrativoBundle::Protocolo/Processo/detalhe.html.twig' %}
+
+
+        {{ form_start(form) }}
+            <input type="hidden" value="{{ processo.codProcesso }}" name="processo_pai" />
+            <input type="hidden" value="{{ processo.anoExercicio }}" name="exercicio_pai" />
+        <div class="row">
+            <div class="col s12" style="margin-top: 30px">
+                <table>
+                    <tr class="tr-rh">
+                        <th class="th-rh">Código</th>
+                        <th class="th-rh">Classificação</th>
+                        <th class="th-rh">Assunto</th>
+                        <th class="th-rh">Inclusão</th>
+                        <th class="th-rh">Desapensar</th>
+                    </tr>
+                    {% for processoFilho in processos %}
+                    <tr class="tr-rh">
+                        <td class="td-rh">{{ processoFilho.codProcesso }}/{{ processoFilho.anoExercicio }}</td>
+                        <td class="td-rh">{{ processoFilho.nomClassificacao }}</td>
+                        <td class="td-rh">{{ processoFilho.nomAssunto }}</td>
+                        <td class="td-rh">{{ processoFilho.timestamp|date('d/m/Y') }}</td>
+                        <td class="td-rh">
+                            <input type="checkbox" name="processo_filho[{{ processoFilho.codProcesso }}]" value="1">
+                            <input type="hidden" name="exercicio_filho[{{ processoFilho.codProcesso }}]" value="{{ processoFilho.anoExercicio }}">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="col s12 right-align">
+            <button type="submit" class="waves-effect waves-light btn blue darken-4" value="Desapensar"><i class="material-icons left">attachment</i>Desapensar</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}

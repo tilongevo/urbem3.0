@@ -1,0 +1,154 @@
+{% block body %}
+
+    {% block content %}
+
+        {% include 'FinanceiroBundle::Empenho/OrdemPagamento/header.html.twig' %}
+        <table class="table table-bordered" style="margin-top: 10px">
+            <thead>
+                <tr>
+                    <th class="grey">Entidade <br />
+                        {{ object.fkOrcamentoEntidade.codEntidade }} - {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="width: 600px; padding-left: 50px">
+                            <span class="text-center bold">
+                                À TESOURARIA: <br /><br />
+                            </span>
+                            <span style="width: 300px">
+                                Pague-se à {{ credor.nome }}, inscrita no {% if credor.cpf is not null %} CPF sob número {{ credor.cpf }} {% else %} CNPJ sob número {{ credor.cnpj }} {% endif %}, ou à sua ordem a quantia de {{ total|number_format_currency('BRL') }}
+                                <br /><br />
+                            </span>
+                            {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }},{{ dtRecibo }}.<br /><br />
+
+                            {% if assinaturas.visto is not null %}
+                                ______________________________________<br />
+                                {{ assinaturas.visto.nome }}<br />
+                                {{ assinaturas.visto.cargo }}<br />
+                            {% else %}
+                                <br /><br />
+                                ______________________________________<br />
+                                    Visto<br />
+                            {% endif %}
+
+                            {% if assinaturas.ordenadorDespesa is not null %}
+                                <br /><br />
+                                ______________________________________<br />
+                                {{ assinaturas.ordenadorDespesa.nome }}<br />
+                                {{ assinaturas.ordenadorDespesa.cargo }}<br />
+                            {% else %}
+                                <br /><br />
+                                ______________________________________<br />
+                                Ordenador de Despesa<br /><br />
+                            {% endif %}
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                </tr>
+            </thead>
+        </table>
+
+        <table class="table table-bordered" style="margin-top: 10px">
+            <thead>
+            {% for empenho in empenhos %}
+                <tr>
+                    <th class="grey">Empenho</th>
+                    <th class="grey">Valor</th>
+                    <th class="grey">Anulado</th>
+                </tr>
+                <tr>
+                    <td>
+                        {{ empenho.codEmpenho }}/{{ empenho.exercicio }} - {{ empenho.codDespesa }} - {{ empenho.codEstrutural }} - {{ empenho.descricao }}<br />
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <span class="bold">Recurso:</span> {{ empenho.codRecurso }} - {{ empenho.nomRecurso }} / <span class="bold">PAO:</span> {{ empenho.exercicioPao }} - {{ empenho.nomPao }}
+                    </td>
+                    <td></td>
+                    <td></td>
+                <tr>
+                    <td>
+                        <span class="bold">Liquidação:</span>{{ empenho.codLiquidacao }}/{{ empenho.exercicio }} - {{ empenho.dtLiquidacao }}
+                    </td>
+                    <td>{{ empenho.vlPagamento|number_format_currency('BRL') }}</td>
+                    <td>{{ empenho.vlAnulado|number_format_currency('BRL') }}</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <th class="grey text-center">TOTAL</th>
+                    <td colspan="2">{{ total|number_format_currency('BRL') }}</td>
+                </tr>
+            </thead>
+        </table>
+
+        <table class="table table-bordered" style="margin-top: 10px">
+            <tbody>
+                <tr>
+                    <th class="grey text-center">Observações</th>
+                    <th class="grey text-center">Tesouraria</th>
+                </tr>
+                <tr>
+                    <td>{{ object.observacao }}</td>
+                    <td>Banco <br /><br />____________________________________________________________<br />
+                        Documento Número <br /><br />__________________________________________<br />
+                        Cheque <br /><br /> __________________________________________<br />
+                        <br /><br />___/___/______
+                        <br /><br /><br />
+                        {% if assinaturas.tesoureiro is not null %}
+                            _________________________<br />
+                            {{ assinaturas.tesoureiro.nome }}<br />
+                            {{ assinaturas.tesoureiro.cargo }}<br />
+                        {% else %}
+                            _________________________<br />
+                                Tesoureiro
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered" style="margin-top: 60px">
+            <tbody>
+                <tr>
+                    <th class="grey text-center">
+                        Recibo
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="width: 600px; padding-left: 50px">
+                            Declaro que recebi da Prefeitura Municipal de Mariana Pimentel a quantia de {{ total|number_format_currency('BRL') }}.
+                            <br /><br /><br />
+                            {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}, _____ de ____________________ de ________
+                            <br /><br /><br /><br /><br />
+                            <span class="text-center">
+                                _________________________<br />Assinatura do credor
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-s12">
+                <img src="data:image/png;base64,{{ codebar }}" />
+            </div>
+        </div>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Orcamento\ClassificacaoReceita:
+    type: entity
+    table: orcamento.classificacao_receita
+    uniqueConstraints:
+        idx_classificacao_receita:
+            columns:
+                - exercicio
+                - cod_conta
+                - cod_posicao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPosicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_posicao
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        codClassificacao:
+            type: integer
+            nullable: true
+            column: cod_classificacao
+    manyToOne:
+        fkOrcamentoPosicaoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\PosicaoReceita
+            inversedBy: fkOrcamentoClassificacaoReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_posicao:
+                    referencedColumnName: cod_posicao
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkOrcamentoContaReceita:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaReceita
+            inversedBy: fkOrcamentoClassificacaoReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta

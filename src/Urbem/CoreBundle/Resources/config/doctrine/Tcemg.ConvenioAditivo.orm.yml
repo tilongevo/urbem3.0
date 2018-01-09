@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Tcemg\ConvenioAditivo:
+    type: entity
+    table: tcemg.convenio_aditivo
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAditivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_aditivo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 500
+        dataAssinatura:
+            type: date
+            nullable: false
+            column: data_assinatura
+        dataFinal:
+            type: date
+            nullable: true
+            column: data_final
+        vlConvenio:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_convenio
+        vlContra:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_contra
+    manyToOne:
+        fkTcemgConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Convenio
+            inversedBy: fkTcemgConvenioAditivos
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio

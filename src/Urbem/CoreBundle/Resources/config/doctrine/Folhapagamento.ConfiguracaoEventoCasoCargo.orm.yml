@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCasoCargo:
+    type: entity
+    table: folhapagamento.configuracao_evento_caso_cargo
+    id:
+        codCaso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_caso
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoConfiguracaoEventoCaso:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCaso
+            inversedBy: fkFolhapagamentoConfiguracaoEventoCasoCargos
+            joinColumns:
+                cod_caso:
+                    referencedColumnName: cod_caso
+                cod_evento:
+                    referencedColumnName: cod_evento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkFolhapagamentoConfiguracaoEventoCasoCargos
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+    oneToMany:
+        fkFolhapagamentoConfiguracaoEventoCasoEspecialidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCasoEspecialidade
+            mappedBy: fkFolhapagamentoConfiguracaoEventoCasoCargo

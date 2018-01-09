@@ -1,0 +1,108 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="fa fa-book fa-lg" aria-hidden="true"></i>
+                    <span style="padding-top: 10px">{{ 'label.julgamentoProposta.numeroLicitacao'|trans }}:</span>
+                    <span class="grey-text bold" style="padding-top: 10px; font-weight: bold">
+                        {{ object.codLicitacao ~ "/" ~ object.exercicio }}
+                    </span>
+                </h2>
+                <p class="divider grey col s12"></p>
+
+                {# Entidade #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.julgamentoProposta.entidade'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkOrcamentoEntidade  }}
+                    </h6>
+                </div>
+
+                {# Edital #}
+                {% if object.fkLicitacaoEditais.isEmpty() == false %}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                            {{ 'label.julgamentoProposta.edital'|trans }}
+                        </h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            {{ object.fkLicitacaoEditais.last() }}
+                        </h6>
+                    </div>
+                {% endif %}
+
+                {# Mapa de Compras #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.julgamentoProposta.mapaCompras'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkComprasMapa }}
+                    </h6>
+                </div>
+
+                {# Objeto #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.julgamentoProposta.objeto'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkComprasObjeto }}
+                    </h6>
+                </div>
+
+                {# Modalidade #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.julgamentoProposta.modalidade'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkComprasModalidade }}
+                    </h6>
+                </div>
+            </div>
+        </div>
+
+        {% if not object.mapaItem is empty %}
+            {% include 'PatrimonialBundle:Sonata/Licitacao/JulgamentoProposta/CRUD:show__itens.html.twig' %}
+            <hr>
+        {% endif %}
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_patrimonial_licitacao_julgamento_proposta_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

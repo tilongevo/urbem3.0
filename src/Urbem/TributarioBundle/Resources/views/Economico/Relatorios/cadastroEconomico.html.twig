@@ -1,0 +1,243 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Economico/Relatorios/header.html.twig' %}
+
+        {% for result in results %}
+            <p><h3>{{ result.nome }}</h3></p>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%;" class="text_align_left ">
+                            <strong>{{ 'label.cadastroEconomicoReport.entidade'|trans }}: </strong>
+                            {{ result.inscricao_economica }} - {{ result.nome }}
+                        </td>
+                        <td style="width: 50%;" class="text_align_left ">
+                            <strong>{{ 'label.cadastroEconomicoReport.categoria'|trans }}: </strong>
+                            {% if result.categoria is defined %}
+                                {{ result.categoria }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="text_align_left ">
+                            <strong>{{ 'label.cadastroEconomicoReport.inicio'|trans }}: </strong>
+                            {% if result.inicio_br is defined %}
+                                {{ result.inicio_br }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td style="width: 50%;" class="text_align_left ">
+                            <strong>{{ 'label.cadastroEconomicoReport.cpfCnpj'|trans }}: </strong>
+                            {% if (result.categoria is defined and result.cnpj is defined) %}
+                                {{ result.cpf }} {{ result.cnpj }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="text_align_left ">
+                            <strong>{{ 'label.cadastroEconomicoReport.respContabil'|trans }}: </strong>
+                            {% if (result.cgm_contador is defined and result.nom_contador is defined) %}
+                                {{ result.cgm_contador }} {{ result.nom_contador }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td style="width: 50%;" class="text_align_left ">
+                            <strong>{{ 'label.cadastroEconomicoReport.tipoInscricao'|trans }}: </strong>
+                            {% if (result.tipoempresa is defined) %}
+                                {{ result.tipoempresa }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="text_align_left ">
+                            <strong>{{ 'label.cadastroEconomicoReport.domicilioFiscal'|trans }}: </strong>
+                            {% if (result.endereco is defined) %}
+                                {{ result.endereco }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td style="width: 50%;" class="text_align_left ">
+                            <strong>{{ 'label.cadastroEconomicoReport.situacao'|trans }}: </strong>
+                            {% if (result.situacao_cadastro is defined) %}
+                                {{ result.situacao_cadastro }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% if (result.atributos is defined and result.atributos|length > 0) %}
+                <p><strong>{{ 'label.cadastroEconomicoReport.caracteristicas'|trans|upper }}</strong></p>
+                <table class="table table-bordered">
+                    <tbody>
+                        {% for atributo in result.atributos %}
+                            <tr>
+                                <td class="text_align_left ">
+                                    <strong>{{ atributo.nom_atributo }}: </strong>{{ atributo.valor }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+            {% if (result.socios is defined and result.socios|length > 0) %}
+                <p><strong>{{ 'label.cadastroEconomicoReport.listaSocios'|trans|upper }}</strong></p>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td style="width: 50%;">{{ 'label.cadastroEconomicoReport.contribuinte'|trans|upper }}</td>
+                        <td style="width: 50%;">{{ 'label.cadastroEconomicoReport.quota'|trans|upper }}</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for socio in result.socios %}
+                        <tr>
+                            <td class="text_align_left ">{{ socio.socio }}</td>
+                            <td class="text_align_left ">{{ socio.quota_socio }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+            {% if (result.atividades is defined and result.atividades|length > 0) %}
+                <p><strong>{{ 'label.cadastroEconomicoReport.listaAtividades'|trans|upper }}</strong></p>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td style="width: 10%;">{{ 'label.cadastroEconomicoReport.inicio'|trans|upper }}</td>
+                        <td style="width: 28%;">{{ 'label.cadastroEconomicoReport.atividade'|trans|upper }}</td>
+                        <td style="width: 10%;">{{ 'label.cadastroEconomicoReport.modalidade'|trans|upper }}</td>
+                        <td style="width: 10%;">{{ 'label.cadastroEconomicoReport.aliquota'|trans|upper }}</td>
+                        <td style="width: 10%;">{{ 'label.cadastroEconomicoReport.servico'|trans|upper }}</td>
+                        <td style="width: 10%;">{{ 'label.cadastroEconomicoReport.aliquota'|trans|upper }}</td>
+                        <td style="width: 10%;">{{ 'label.cadastroEconomicoReport.numeroLicenca'|trans|upper }}</td>
+                        <td style="width: 12%;">{{ 'label.cadastroEconomicoReport.situacaoAlvara'|trans|upper }}</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for atividade in result.atividades %}
+                        <tr>
+                            <td class="text_align_left ">
+                                {% if (atividade.dt_inicio is defined) %}
+                                    {{ atividade.dt_inicio }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="text_align_left ">
+                                {% if (atividade.cod_estrutural is defined and atividade.nom_atividade) %}
+                                    {{ atividade.cod_estrutural }} - {{ atividade.nom_atividade }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="text_align_left ">
+                                {% if (atividade.modalidade is defined) %}
+                                    {{ atividade.modalidade }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="text_align_left ">
+                                {% if (atividade.aliquota_atividade is defined) %}
+                                    {{ atividade.aliquota_atividade }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="text_align_left ">
+                                {% if (atividade.cod_estrutural_servico is defined and atividade.nom_servico) %}
+                                    {{ atividade.cod_estrutural_servico }} - {{ atividade.nom_servico }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                                </td>
+                            <td class="text_align_left ">
+                                {% if (atividade.aliquota_servico is defined) %}
+                                    {{ atividade.aliquota_servico }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="text_align_left ">
+                                {% if (atividade.cod_licenca is defined and atividade.exercicio) %}
+                                    {{ atividade.cod_licenca }}/{{ atividade.exercicio }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="text_align_left ">
+                                {% if (atividade.situacao is defined) %}
+                                    {{ atividade.situacao }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endfor %}
+
+        <p><strong>{{ 'label.corretagemReport.filtrosUtilizados'|trans }}</strong></p>
+        {% if filtros.inscricaoEconomicaDe is defined and filtros.inscricaoEconomicaDe is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.inscricaoEconomicaDe'|trans }} :</strong>  {{ filtros.inscricaoEconomicaDe }}
+        {% endif %}
+        {% if filtros.inscricaoEconomicaAte is defined and filtros.inscricaoEconomicaAte is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.inscricaoEconomicaAte'|trans }} :</strong>  {{ filtros.inscricaoEconomicaAte }}
+        {% endif %}
+        {% if filtros.atividadeDe is defined and filtros.atividadeDe is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.atividadeDe'|trans }} :</strong>  {{ filtros.atividadeDe }}
+        {% endif %}
+        {% if filtros.atividadeAte is defined and filtros.atividadeAte is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.atividadeAte'|trans }} :</strong>  {{ filtros.atividadeAte }}
+        {% endif %}
+        {% if filtros.codigoLogradouroDe is defined and filtros.codigoLogradouroDe is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.codigoLogradouroDe'|trans }} :</strong>  {{ filtros.codigoLogradouroDe }}
+        {% endif %}
+        {% if filtros.codigoLogradouroAte is defined and filtros.codigoLogradouroAte is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.codigoLogradouroAte'|trans }} :</strong>  {{ filtros.codigoLogradouroAte }}
+        {% endif %}
+        {% if filtros.numeroLicencaDe is defined and filtros.numeroLicencaDe is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.numeroLicencaDe'|trans }} :</strong>  {{ filtros.numeroLicencaDe }}
+        {% endif %}
+        {% if filtros.numeroLicencaAte is defined and filtros.numeroLicencaAte is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.numeroLicencaAte'|trans }} :</strong>  {{ filtros.numeroLicencaAte }}
+        {% endif %}
+        {% if filtros.socio is defined and filtros.socio is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.socio'|trans }} :</strong>  {{ filtros.socio }}
+        {% endif %}
+        {% if filtros.tipoInscricao is defined and filtros.tipoInscricao is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.tipoInscricao'|trans }} :</strong>  {{ filtros.tipoInscricao }}
+        {% endif %}
+        {% if filtros.dtInicio is defined and filtros.dtInicio is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.dtInicio'|trans }} :</strong>  {{ filtros.dtInicio }}
+        {% endif %}
+        {% if filtros.tipoRelatorio is defined and filtros.tipoRelatorio is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.tipoRelatorio'|trans }} :</strong>  {{ filtros.tipoRelatorio }}
+        {% endif %}
+        {% if filtros.situacao is defined and filtros.situacao is not empty %}
+            <p><strong>{{ 'label.cadastroEconomicoReport.situacao'|trans }} :</strong>  {{ filtros.situacao }}
+        {% endif %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

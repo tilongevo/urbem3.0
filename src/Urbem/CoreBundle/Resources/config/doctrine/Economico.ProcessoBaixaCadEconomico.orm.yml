@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Economico\ProcessoBaixaCadEconomico:
+    type: entity
+    table: economico.processo_baixa_cad_economico
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkEconomicoProcessoBaixaCadEconomicos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio:
+                    referencedColumnName: ano_exercicio
+        fkEconomicoBaixaCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaCadastroEconomico
+            inversedBy: fkEconomicoProcessoBaixaCadEconomicos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                dt_inicio:
+                    referencedColumnName: dt_inicio
+                timestamp:
+                    referencedColumnName: timestamp

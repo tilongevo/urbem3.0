@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Tesouraria\Conciliacao:
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\ConciliacaoRepository
+    type: entity
+    table: tesouraria.conciliacao
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        mes:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        dtExtrato:
+            type: date
+            nullable: false
+            column: dt_extrato
+        vlExtrato:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_extrato
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkContabilidadePlanoBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoBanco
+            inversedBy: fkTesourariaConciliacoes
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkTesourariaConciliacaoLancamentoContabiis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoContabil
+            mappedBy: fkTesourariaConciliacao
+        fkTesourariaConciliacaoLancamentoArrecadacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoArrecadacao
+            mappedBy: fkTesourariaConciliacao
+        fkTesourariaConciliacaoLancamentoManuais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoManual
+            mappedBy: fkTesourariaConciliacao
+        fkTesourariaConciliacaoLancamentoArrecadacaoEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoArrecadacaoEstornada
+            mappedBy: fkTesourariaConciliacao

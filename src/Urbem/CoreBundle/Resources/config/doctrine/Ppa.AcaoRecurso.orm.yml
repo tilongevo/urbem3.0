@@ -1,0 +1,86 @@
+Urbem\CoreBundle\Entity\Ppa\AcaoRecurso:
+    type: entity
+    table: ppa.acao_recurso
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+        timestampAcaoDados:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_acao_dados
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+        exercicioRecurso:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_recurso
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkPpaAcaoDados:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            inversedBy: fkPpaAcaoRecursos
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkPpaAcaoRecursos
+            joinColumns:
+                exercicio_recurso:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+    oneToOne:
+        fkPpaAcaoMetaFisicaRealizada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoMetaFisicaRealizada
+            mappedBy: fkPpaAcaoRecurso
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+                exercicio_recurso:
+                    referencedColumnName: exercicio_recurso
+                ano:
+                    referencedColumnName: ano
+        fkPpaAcaoQuantidade:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoQuantidade
+            mappedBy: fkPpaAcaoRecurso
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao
+                timestamp_acao_dados:
+                    referencedColumnName: timestamp_acao_dados
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+                exercicio_recurso:
+                    referencedColumnName: exercicio_recurso
+                ano:
+                    referencedColumnName: ano

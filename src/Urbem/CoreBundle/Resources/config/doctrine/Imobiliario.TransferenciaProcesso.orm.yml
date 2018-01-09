@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Imobiliario\TransferenciaProcesso:
+    type: entity
+    table: imobiliario.transferencia_processo
+    id:
+        codTransferencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transferencia
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkImobiliarioTransferenciaProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkImobiliarioTransferenciaImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaImovel
+            inversedBy: fkImobiliarioTransferenciaProcesso
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia

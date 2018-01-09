@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Almoxarifado\InventarioAnulacao:
+    type: entity
+    table: almoxarifado.inventario_anulacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codInventario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inventario
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+        motivo:
+            type: string
+            nullable: true
+            length: 160
+    oneToOne:
+        fkAlmoxarifadoInventario:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Inventario
+            inversedBy: fkAlmoxarifadoInventarioAnulacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_inventario:
+                    referencedColumnName: cod_inventario

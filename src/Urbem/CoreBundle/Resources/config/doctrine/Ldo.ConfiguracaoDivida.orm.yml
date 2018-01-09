@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Ldo\ConfiguracaoDivida:
+    type: entity
+    table: ldo.configuracao_divida
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkLdoLdo:
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Ldo
+            inversedBy: fkLdoConfiguracaoDividas
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+                ano:
+                    referencedColumnName: ano
+        fkLdoTipoDivida:
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\TipoDivida
+            inversedBy: fkLdoConfiguracaoDividas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoLoa:
+    type: entity
+    table: tcmgo.configuracao_loa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        percentualSuplementacao:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: percentual_suplementacao
+        percentualCreditoInterna:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: percentual_credito_interna
+        percentualCreditoAntecipacaoReceita:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: percentual_credito_antecipacao_receita
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcmgoConfiguracaoLoas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

@@ -1,0 +1,79 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Desonerado:
+    type: entity
+    table: arrecadacao.desonerado
+    id:
+        codDesoneracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_desoneracao
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        dataConcessao:
+            type: date
+            nullable: false
+            column: data_concessao
+        dataProrrogacao:
+            type: date
+            nullable: true
+            column: data_prorrogacao
+        dataRevogacao:
+            type: date
+            nullable: true
+            column: data_revogacao
+    manyToOne:
+        fkArrecadacaoDesoneracao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desoneracao
+            inversedBy: fkArrecadacaoDesonerados
+            joinColumns:
+                cod_desoneracao:
+                    referencedColumnName: cod_desoneracao
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkArrecadacaoDesonerados
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkArrecadacaoAtributoDesoneracaoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoDesoneracaoValor
+            mappedBy: fkArrecadacaoDesonerado
+        fkArrecadacaoDesoneradoImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DesoneradoImovel
+            mappedBy: fkArrecadacaoDesonerado
+        fkArrecadacaoLancamentoUsaDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoUsaDesoneracao
+            mappedBy: fkArrecadacaoDesonerado
+        fkArrecadacaoDesoneradoCadEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DesoneradoCadEconomico
+            mappedBy: fkArrecadacaoDesonerado
+        fkArrecadacaoLancamentoConcedeDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoConcedeDesoneracao
+            mappedBy: fkArrecadacaoDesonerado

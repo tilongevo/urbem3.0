@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ProcessoPagamento:
+    type: entity
+    table: arrecadacao.processo_pagamento
+    id:
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        ocorrenciaPagamento:
+            type: integer
+            nullable: false
+            column: ocorrencia_pagamento
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+        codConvenio:
+            type: integer
+            nullable: false
+            column: cod_convenio
+    manyToOne:
+        fkArrecadacaoPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Pagamento
+            inversedBy: fkArrecadacaoProcessoPagamentos
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                ocorrencia_pagamento:
+                    referencedColumnName: ocorrencia_pagamento
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkArrecadacaoProcessoPagamentos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

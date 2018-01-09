@@ -1,0 +1,44 @@
+{% block content %}
+
+<table class="table table-custom">
+    <thead>
+            <tr>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.numeracao'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.parcela'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.origem'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.vencimento'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.valor'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.valorPago'|trans }}</th>
+                <th class="center">&nbsp;</th>
+            </tr>
+        </thead>
+
+        {% set contribuinte = field.data.contribuinte %}
+        {% set inscricaoEconomica = field.data.inscricaoEconomica %}
+        {% set inscricaoImobiliaria = field.data.inscricaoImobiliaria %}
+
+        {% set parcelas = admin.getParcelasAVencer(contribuinte, inscricaoEconomica, inscricaoImobiliaria) %}
+
+        <tbody>
+
+        {% for parcela in parcelas %}
+
+            <tr>
+                <td class="center">{{ parcela.numeracao }} / {{ parcela.exercicio }}</td>
+                <td class="center">{{ parcela.nr_parcela }}</td>
+                <td class="center">{{ parcela.origem }}</td>
+                <td class="center">{{ parcela.vencimento }}</td>
+                <td class="center js-valor-parcela">{{ parcela.valor_parcela }}</td>
+                <td class="center js-valor-pago">{{ parcela.valor_corrigido }}</td>
+
+                {% set juntaValores = parcela.numeracao ~ '~' ~ parcela.exercicio ~ '~' ~ parcela.valor_parcela ~ '~' ~ parcela.valor_corrigido ~ '~' ~ parcela.cod_convenio ~ '~' ~ parcela.origem ~ '~' ~ parcela.vencimento ~ '~' ~ parcela.nr_parcela %}
+
+                <td class="center"><input type="checkbox" name="parcelaVencer[{{ loop.index0 }}]" class="parcelasAVencer" value="{{ juntaValores }}"></td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+</table>
+
+{% endblock content %}

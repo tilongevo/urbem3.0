@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Orcamento\TipoContaReceita:
+    type: entity
+    table: orcamento.tipo_conta_receita
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkOrcamentoPosicaoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\PosicaoReceita
+            mappedBy: fkOrcamentoTipoContaReceita

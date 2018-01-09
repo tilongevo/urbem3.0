@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoContratacaoObra:
+    type: entity
+    table: tcmba.tipo_contratacao_obra
+    id:
+        codContratacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contratacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkTcmbaObraContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\ObraContratos
+            mappedBy: fkTcmbaTipoContratacaoObra

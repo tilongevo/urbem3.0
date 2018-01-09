@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoCombustivel:
+    type: entity
+    table: tcmba.tipo_combustivel
+    id:
+        codTipoTcm:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_tcm
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    oneToMany:
+        fkTcmbaTipoCombustivelVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoCombustivelVinculo
+            mappedBy: fkTcmbaTipoCombustivel

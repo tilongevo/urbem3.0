@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Empenho\IncorporacaoPatrimonio:
+    type: entity
+    table: empenho.incorporacao_patrimonio
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        codPlanoCredito:
+            type: integer
+            nullable: false
+            column: cod_plano_credito
+        codPlanoDebito:
+            type: integer
+            nullable: false
+            column: cod_plano_debito
+    manyToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkEmpenhoIncorporacaoPatrimonios
+            joinColumns:
+                cod_plano_credito:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkContabilidadePlanoAnalitica1:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkEmpenhoIncorporacaoPatrimonios1
+            joinColumns:
+                cod_plano_debito:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkEmpenhoIncorporacaoPatrimonio
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade

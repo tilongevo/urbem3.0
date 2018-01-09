@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Arrecadacao\TipoDesoneracao:
+    type: entity
+    table: arrecadacao.tipo_desoneracao
+    id:
+        codTipoDesoneracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_desoneracao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkArrecadacaoDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desoneracao
+            mappedBy: fkArrecadacaoTipoDesoneracao

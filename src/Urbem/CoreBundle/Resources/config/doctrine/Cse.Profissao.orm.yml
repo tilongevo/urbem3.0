@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Cse\Profissao:
+    type: entity
+    table: cse.profissao
+    id:
+        codProfissao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_profissao
+    fields:
+        codConselho:
+            type: integer
+            nullable: false
+            column: cod_conselho
+        nomProfissao:
+            type: string
+            nullable: false
+            length: 160
+            column: nom_profissao
+    manyToOne:
+        fkCseConselho:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Conselho
+            inversedBy: fkCseProfissoes
+            joinColumns:
+                cod_conselho:
+                    referencedColumnName: cod_conselho
+    oneToMany:
+        fkCseQualificacaoProfissionais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\QualificacaoProfissional
+            mappedBy: fkCseProfissao
+        fkEconomicoAtividadeProfissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeProfissao
+            mappedBy: fkCseProfissao
+        fkEconomicoEmpresaProfissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\EmpresaProfissao
+            mappedBy: fkCseProfissao
+        fkEconomicoResponsavelTecnicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ResponsavelTecnico
+            mappedBy: fkCseProfissao
+        fkPessoalPensionistas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensionista
+            mappedBy: fkCseProfissao

@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    <table class="js-table-lista-downloads">
+        <thead>
+            <tr>
+                <th>{{ 'label.dividaAtivaEmitirDocumento.arquivo'|trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for documento in documentos %}
+                <tr>
+                    <td>{{ '%s - %s'|format(documento['contribuinte'], documento['modeloDocumento']) }}</td>
+                    <td>
+                        {% set emissaoDocumento = documento['documento'].getFkDividaEmissaoDocumentos().last() %}
+                        <a href="{{ path('urbem_tributario_divida_ativa_emitir_documento_download_documento', { 'id': '%d~%d~%d~%d~%d~%d'|format(emissaoDocumento.getNumParcelamento(), emissaoDocumento.getNumEmissao(), emissaoDocumento.getCodTipoDocumento(), emissaoDocumento.getCodDocumento(), emissaoDocumento.getNumDocumento(), emissaoDocumento.getExercicio()) }) }}" class="waves-effect waves-light btn blue darken-4 btn btn-success">
+                            {{ 'label.dividaAtivaEmitirDocumento.download'|trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {% if not documentos|length %}
+                <tr>
+                    <td colspan="2" style="text-align:center">{{ 'label.dividaAtivaEmitirDocumento.nenhumRegistroEncontrado'|trans }}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock content %}

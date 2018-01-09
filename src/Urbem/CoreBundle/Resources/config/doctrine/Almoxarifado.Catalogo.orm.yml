@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Almoxarifado\Catalogo:
+    type: entity
+    table: almoxarifado.catalogo
+    id:
+        codCatalogo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: almoxarifado.catalogo_cod_catalogo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_catalogo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+        permiteManutencao:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+            column: permite_manutencao
+    oneToMany:
+        fkAlmoxarifadoCatalogoClassificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacao
+            mappedBy: fkAlmoxarifadoCatalogo
+        fkAlmoxarifadoCatalogoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoNiveis
+            mappedBy: fkAlmoxarifadoCatalogo

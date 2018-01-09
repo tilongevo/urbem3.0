@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Tesouraria\ReciboExtraAnulacao:
+    type: entity
+    table: tesouraria.recibo_extra_anulacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codReciboExtra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recibo_extra
+        tipoRecibo:
+            type: string
+            generator:
+                strategy: NONE
+            column: tipo_recibo
+    fields:
+        timestampAnulacao:
+            type: datetimemicrosecondpk
+            nullable: true
+            column: timestamp_anulacao
+    oneToOne:
+        fkTesourariaReciboExtra:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ReciboExtra
+            inversedBy: fkTesourariaReciboExtraAnulacao
+            joinColumns:
+                cod_recibo_extra:
+                    referencedColumnName: cod_recibo_extra
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo_recibo:
+                    referencedColumnName: tipo_recibo

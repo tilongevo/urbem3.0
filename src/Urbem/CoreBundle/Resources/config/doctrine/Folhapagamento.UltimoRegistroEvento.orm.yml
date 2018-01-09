@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEvento:
+    type: entity
+    table: folhapagamento.ultimo_registro_evento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\UltimoRegistroEventoRepository
+    id:
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields: {  }
+    oneToOne:
+        fkFolhapagamentoEventoCalculado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoCalculado
+            mappedBy: fkFolhapagamentoUltimoRegistroEvento
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoLogErroCalculo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\LogErroCalculo
+            mappedBy: fkFolhapagamentoUltimoRegistroEvento
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoRegistroEventoParcela:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoParcela
+            mappedBy: fkFolhapagamentoUltimoRegistroEvento
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoRegistroEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEvento
+            inversedBy: fkFolhapagamentoUltimoRegistroEvento
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_evento:
+                    referencedColumnName: cod_evento

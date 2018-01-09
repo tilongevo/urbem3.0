@@ -1,0 +1,97 @@
+Urbem\CoreBundle\Entity\Frota\Autorizacao:
+    type: entity
+    table: frota.autorizacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Frota\AutorizacaoRepository
+    id:
+        codAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autorizacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codItem:
+            type: integer
+            nullable: false
+            column: cod_item
+        cgmRespAutorizacao:
+            type: integer
+            nullable: false
+            column: cgm_resp_autorizacao
+        cgmFornecedor:
+            type: integer
+            nullable: false
+            column: cgm_fornecedor
+        codVeiculo:
+            type: integer
+            nullable: false
+            column: cod_veiculo
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 4
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        observacao:
+            type: text
+            nullable: true
+        cgmMotorista:
+            type: integer
+            nullable: false
+            column: cgm_motorista
+    manyToOne:
+        fkFrotaItem:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Item
+            inversedBy: fkFrotaAutorizacoes
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFrotaAutorizacoes
+            joinColumns:
+                cgm_resp_autorizacao:
+                    referencedColumnName: numcgm
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaAutorizacoes
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkSwCgm1:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFrotaAutorizacoes1
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: numcgm
+        fkSwCgm2:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFrotaAutorizacoes2
+            joinColumns:
+                cgm_motorista:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkAlmoxarifadoLancamentoAutorizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoAutorizacao
+            mappedBy: fkFrotaAutorizacao
+        fkFrotaEfetivacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Efetivacao
+            mappedBy: fkFrotaAutorizacao

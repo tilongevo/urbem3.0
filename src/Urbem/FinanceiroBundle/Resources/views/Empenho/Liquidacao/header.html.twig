@@ -1,0 +1,122 @@
+{% set empenho = field.data.empenhoInfo.empenho %}
+{% set despesa = field.data.empenhoInfo.despesa %}
+{% set preEmpenho = field.data.empenhoInfo.preEmpenho %}
+{% set atributosDinamicosPreEmpenho = field.data.empenhoInfo.atributosDiamicosPreEmpenho %}
+{% set saldoDotacao = field.data.empenhoInfo.saldoDotacao %}
+{% set tipo = field.data.tipo %}
+{% set totalEmpenho = field.data.totalEmpenho %}
+
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="col s12">
+                <table class="table show-table">
+                    <tbody>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.preEmpenho.numEmpenho'|trans }}</th>
+                        <td>{{ empenho.codEmpenho }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'entidade'|trans }}</th>
+                        <td>{{ empenho.fkOrcamentoEntidade.codEntidade }} - {{ empenho.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.reservaSaldos.dotacaoOrcamentaria'|trans }}</th>
+                        <td>{{ despesa.cod_despesa }} - {{ despesa.descricao }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.ordemPagamento.desdobramento'|trans }}</th>
+                        <td>{{ despesa.mascara_classificacao }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.ordemPagamento.recurso'|trans }}</th>
+                        <td>{{ despesa.cod_recurso }} - {{ despesa.nom_recurso }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.preEmpenho.saldoDotacao'|trans }}</th>
+                        <td>{{ saldoDotacao }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.emitirEmpenhoAutorizacao.numOrgao'|trans }}</th>
+                        <td>{{ despesa.unidadeObject.fkOrcamentoOrgao.numOrgao }} - {{ despesa.unidadeObject.fkOrcamentoOrgao.nomOrgao }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.ordemPagamento.unidade'|trans }}</th>
+                        <td>{{ despesa.unidadeObject.numUnidade}} - {{ despesa.unidadeObject.nomUnidade }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.ordemPagamento.credor'|trans }}</th>
+                        <td>{{ preEmpenho.fkSwCgm.numcgm }} - {{ preEmpenho.fkSwCgm.nomCgm }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.emitirEmpenhoAutorizacao.descricao'|trans }}</th>
+                        <td>{{ preEmpenho.descricao }}</td>
+                    </tr>
+                    {% if tipo == 'liquidar' %}
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoDiversos.dtEmissao'|trans }}</th>
+                            <td>{{ empenho.dtEmpenho|date('d/m/Y') }}</td>
+                        </tr>
+                    {% elseif tipo == 'anular' %}
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoDiversos.dtEmissao'|trans }}</th>
+                            <td>{{ empenho.dtEmpenho|date('d/m/Y') }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoDiversos.dtLiquidacao'|trans }}</th>
+                            <td>{{ empenho.getFkEmpenhoNotaLiquidacoes().last().dtLiquidacao|date('d/m/Y') }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.liquidacaoEmpenho.dtAnulacao'|trans }}</th>
+                            <td><input name="dtAnulacao" type="text" class="col s3" required="required" value="{{ "now"|date("d/m/Y") }}"/></td>
+                        </tr>
+                    {% endif %}
+
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.emitirEmpenhoDiversos.dtVencimento'|trans }}</th>
+                        <td>{{ empenho.dtVencimento|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.emitirEmpenhoAutorizacao.codTipo'|trans }}</th>
+                        <td>{{ preEmpenho.fkEmpenhoTipoEmpenho.codTipo }} - {{ preEmpenho.fkEmpenhoTipoEmpenho.nomTipo }}</td>
+                    </tr>
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.lote.codHistorico'|trans }}</th>
+                        <td>
+                            {% if preEmpenho.fkEmpenhoHistorico is null %}
+                                -
+                            {% else %}
+                                {{ preEmpenho.fkEmpenhoHistorico.codHistorico }} - {{ preEmpenho.fkEmpenhoHistorico.nomHistorico }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="box-header col s12">
+            <h2 class="col s12 box-title left-align show">
+                {{ 'label.emitirEmpenhoAutorizacao.atributos'|trans }}
+            </h2>
+            <div class="divider grey title-divider"></div>
+        </div>
+        <div class="box-body">
+            <div class="col s12">
+                <table class="table show-table">
+                    <tbody>
+                        {% for atributoDinamico in atributosDinamicosPreEmpenho %}
+                            <tr class="sonata-ba-view-container">
+                                <th>{{ atributoDinamico.nom_atributo }}</th>
+                                {% if atributoDinamico.valor is null %}
+                                    <td>-</td>
+                                {% else %}
+                                    <td>{{ atributoDinamico.valor }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

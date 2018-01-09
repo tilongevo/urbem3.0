@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Arrecadacao\TabelaConversao:
+    type: entity
+    table: arrecadacao.tabela_conversao
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\TabelaConversaoRepository
+    id:
+        codTabela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tabela
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        nomeTabela:
+            type: string
+            nullable: false
+            length: 80
+            column: nome_tabela
+        parametro1:
+            type: string
+            nullable: false
+            length: 80
+            column: parametro_1
+        parametro2:
+            type: string
+            nullable: true
+            length: 80
+            column: parametro_2
+        parametro3:
+            type: string
+            nullable: true
+            length: 80
+            column: parametro_3
+        parametro4:
+            type: string
+            nullable: true
+            length: 80
+            column: parametro_4
+    manyToOne:
+        fkArrecadacaoArrecadacaoModulos:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ArrecadacaoModulos
+            inversedBy: fkArrecadacaoTabelaConversoes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+    oneToMany:
+        fkArrecadacaoTabelaConversaoValoreses:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\TabelaConversaoValores
+            mappedBy: fkArrecadacaoTabelaConversao

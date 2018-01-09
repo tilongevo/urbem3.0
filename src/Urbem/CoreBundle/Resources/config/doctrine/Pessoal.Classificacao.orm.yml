@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Pessoal\Classificacao:
+    type: entity
+    table: pessoal.classificacao
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+    fields:
+        descricao:
+            type: text
+            nullable: false
+        nomeClassificacao:
+            type: string
+            nullable: false
+            length: 100
+            column: nome_classificacao
+    oneToMany:
+        fkPessoalClassificacaoEnquadramentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ClassificacaoEnquadramento
+            mappedBy: fkPessoalClassificacao

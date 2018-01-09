@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferencia:
+    type: entity
+    table: almoxarifado.pedido_transferencia
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\PedidoTransferenciaRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTransferencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transferencia
+    fields:
+        cgmAlmoxarife:
+            type: integer
+            nullable: false
+            column: cgm_almoxarife
+        codAlmoxarifadoOrigem:
+            type: integer
+            nullable: false
+            column: cod_almoxarifado_origem
+        observacao:
+            type: string
+            nullable: true
+            length: 160
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        codAlmoxarifadoDestino:
+            type: integer
+            nullable: false
+            column: cod_almoxarifado_destino
+    manyToOne:
+        fkAlmoxarifadoAlmoxarife:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarife
+            inversedBy: fkAlmoxarifadoPedidoTransferencias
+            joinColumns:
+                cgm_almoxarife:
+                    referencedColumnName: cgm_almoxarife
+        fkAlmoxarifadoAlmoxarifado:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado
+            inversedBy: fkAlmoxarifadoPedidoTransferencias
+            joinColumns:
+                cod_almoxarifado_origem:
+                    referencedColumnName: cod_almoxarifado
+        fkAlmoxarifadoAlmoxarifado1:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarifado
+            inversedBy: fkAlmoxarifadoPedidoTransferencias1
+            joinColumns:
+                cod_almoxarifado_destino:
+                    referencedColumnName: cod_almoxarifado
+    oneToMany:
+        fkAlmoxarifadoPedidoTransferenciaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaItem
+            mappedBy: fkAlmoxarifadoPedidoTransferencia
+    oneToOne:
+        fkAlmoxarifadoPedidoTransferenciaAnulacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\PedidoTransferenciaAnulacao
+            mappedBy: fkAlmoxarifadoPedidoTransferencia
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia

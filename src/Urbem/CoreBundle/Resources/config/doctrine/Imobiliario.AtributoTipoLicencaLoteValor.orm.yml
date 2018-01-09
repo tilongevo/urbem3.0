@@ -1,0 +1,70 @@
+Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoLicencaLoteValor:
+    type: entity
+    table: imobiliario.atributo_tipo_licenca_lote_valor
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 500
+    manyToOne:
+        fkImobiliarioLicencaLote:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaLote
+            inversedBy: fkImobiliarioAtributoTipoLicencaLoteValores
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_lote:
+                    referencedColumnName: cod_lote
+        fkImobiliarioAtributoTipoLicenca:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoLicenca
+            inversedBy: fkImobiliarioAtributoTipoLicencaLoteValores
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_modulo:
+                    referencedColumnName: cod_modulo

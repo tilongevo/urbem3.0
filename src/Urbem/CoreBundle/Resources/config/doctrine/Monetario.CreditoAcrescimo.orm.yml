@@ -1,0 +1,79 @@
+Urbem\CoreBundle\Entity\Monetario\CreditoAcrescimo:
+    type: entity
+    table: monetario.credito_acrescimo
+    uniqueConstraints:
+        uk_credito_acrescimo_1:
+            columns:
+                - cod_credito
+                - cod_especie
+                - cod_genero
+                - cod_natureza
+                - cod_tipo
+    id:
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields: {  }
+    manyToOne:
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkMonetarioCreditoAcrescimos
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+        fkMonetarioAcrescimo:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Acrescimo
+            inversedBy: fkMonetarioCreditoAcrescimos
+            joinColumns:
+                cod_acrescimo:
+                    referencedColumnName: cod_acrescimo
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkContabilidadePlanoAnaliticaCreditoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnaliticaCreditoAcrescimo
+            mappedBy: fkMonetarioCreditoAcrescimo
+        fkOrcamentoReceitaCreditoAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReceitaCreditoAcrescimo
+            mappedBy: fkMonetarioCreditoAcrescimo

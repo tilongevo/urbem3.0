@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container">
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ configuracao.id }}</td>
+            </tr>
+            <tr>
+                <th>Exercicio</th>
+                <td>{{ configuracao.exercicio }}</td>
+            </tr>
+            <tr>
+                <th>Parametro</th>
+                <td>{{ configuracao.parametro }}</td>
+            </tr>
+            <tr>
+                <th>Valor</th>
+                <td>{{ configuracao.valor }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('administracao_configuracao_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('administracao_configuracao_edit', { 'id': configuracao.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+</div>
+{% endblock %}

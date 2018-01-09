@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Tcepb\PagamentoOrigemRecursosInterna:
+    type: entity
+    table: tcepb.pagamento_origem_recursos_interna
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        codOrigemRecursos:
+            type: integer
+            nullable: false
+            column: cod_origem_recursos
+        exercicioOrigemRecurso:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_origem_recurso
+    manyToOne:
+        fkTcepbTipoOrigemRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\TipoOrigemRecurso
+            inversedBy: fkTcepbPagamentoOrigemRecursosInternas
+            joinColumns:
+                cod_origem_recursos:
+                    referencedColumnName: cod_tipo
+                exercicio_origem_recurso:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkTesourariaPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Pagamento
+            inversedBy: fkTcepbPagamentoOrigemRecursosInterna
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_nota:
+                    referencedColumnName: cod_nota

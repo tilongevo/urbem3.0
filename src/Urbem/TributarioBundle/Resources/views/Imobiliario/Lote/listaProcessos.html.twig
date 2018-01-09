@@ -1,0 +1,55 @@
+{% block content %}
+
+    {% if field.data.lista is not null %}
+
+        <table class="table show-table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.imobiliarioLote.processo'|trans }}</th>
+                    <th>{{ 'label.imobiliarioLote.data'|trans }}</th>
+                    <th>{{ 'label.imobiliarioLote.hora'|trans }}</th>
+                    <th>{{ 'label.imobiliarioLote.detalhe'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if field.data.lista|length > 0 %}
+                    {% for lista in field.data.lista|sort %}
+                        <tr>
+                            <td>{{ lista.processo.fkSwProcesso }}</td>
+                            <td>{{ lista.processo.timestamp|date('d/m/Y') }}</td>
+                            <td>{{ lista.processo.timestamp|date('H:i:s') }}</td>
+                            <td><i data-lote-processo='{{ lista.processo.timestamp|date('dmYHis') }}' class="material-icons btn_meta blue-text text-darken-4" style="cursor: pointer">add</i></td>
+                        </tr>
+                        <tr class="detalhe" id="lote_processo_{{ lista.processo.timestamp|date('dmYHis') }}" style="display:none;">
+                            <td></td>
+                            <td colspan="3">
+                                {% if lista.atributoDinamico|length > 0 %}
+                                    <table class="table show-table">
+                                    {% for atributo in lista.atributoDinamico %}
+                                            <tr class="sonata-ba-view-container">
+                                                <td>{{ atributo.nomAtributo }}</td>
+                                                <td>
+                                                    {% if atributo.valor is defined %}
+                                                        {% for valor in atributo.valor %}
+                                                            <p>{{ valor }}</p>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                    {% endfor %}
+                                    </table>
+                                {% else %}
+                                    {{ 'listagemVazia'|trans }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="4">{{ 'listagemVazia'|trans }}</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock content %}

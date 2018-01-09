@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcern\DescricaoSiai:
+    type: entity
+    table: tcern.descricao_siai
+    id:
+        codSiai:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_siai
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkTcernSubDivisaoDescricaoSiais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\SubDivisaoDescricaoSiai
+            mappedBy: fkTcernDescricaoSiai

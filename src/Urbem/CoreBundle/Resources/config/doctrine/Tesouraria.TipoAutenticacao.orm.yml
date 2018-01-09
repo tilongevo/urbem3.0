@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tesouraria\TipoAutenticacao:
+    type: entity
+    table: tesouraria.tipo_autenticacao
+    id:
+        codTipoAutenticacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: cod_tipo_autenticacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+    oneToMany:
+        fkTesourariaAutenticacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Autenticacao
+            mappedBy: fkTesourariaTipoAutenticacao

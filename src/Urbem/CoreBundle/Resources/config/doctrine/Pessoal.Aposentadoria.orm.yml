@@ -1,0 +1,83 @@
+Urbem\CoreBundle\Entity\Pessoal\Aposentadoria:
+    type: entity
+    table: pessoal.aposentadoria
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\AposentadoriaRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codEnquadramento:
+            type: integer
+            nullable: false
+            column: cod_enquadramento
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+        dtRequirimento:
+            type: date
+            nullable: false
+            column: dt_requirimento
+        numProcessoTce:
+            type: string
+            nullable: false
+            length: 10
+            column: num_processo_tce
+        dtConcessao:
+            type: date
+            nullable: false
+            column: dt_concessao
+        percentual:
+            type: decimal
+            nullable: false
+            precision: 6
+            scale: 2
+        dtPublicacao:
+            type: date
+            nullable: false
+            column: dt_publicacao
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalAposentadorias
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalClassificacaoEnquadramento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ClassificacaoEnquadramento
+            inversedBy: fkPessoalAposentadorias
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+                cod_enquadramento:
+                    referencedColumnName: cod_enquadramento
+    oneToOne:
+        fkPessoalAposentadoriaEncerramento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AposentadoriaEncerramento
+            mappedBy: fkPessoalAposentadoria
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalAposentadoriaExcluida:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AposentadoriaExcluida
+            mappedBy: fkPessoalAposentadoria
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp_aposentadoria

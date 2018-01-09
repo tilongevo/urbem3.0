@@ -1,0 +1,129 @@
+Urbem\CoreBundle\Entity\SwPreEmpenho:
+    type: entity
+    table: sw_pre_empenho
+    id:
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        cgmBeneficiario:
+            type: integer
+            nullable: false
+            column: cgm_beneficiario
+        codHistorico:
+            type: integer
+            nullable: false
+            column: cod_historico
+        codCategoriaEconomica:
+            type: integer
+            nullable: false
+            column: cod_categoria_economica
+        codGrupoDespesa:
+            type: integer
+            nullable: false
+            column: cod_grupo_despesa
+        codModalidadeAplicacao:
+            type: integer
+            nullable: false
+            column: cod_modalidade_aplicacao
+        codElementoDespesa:
+            type: integer
+            nullable: false
+            column: cod_elemento_despesa
+        codDesdobramento1:
+            type: integer
+            nullable: false
+            column: cod_desdobramento_1
+        codDesdobramento2:
+            type: integer
+            nullable: false
+            column: cod_desdobramento_2
+        codDesdobramento3:
+            type: integer
+            nullable: false
+            column: cod_desdobramento_3
+        codDespesa:
+            type: integer
+            nullable: false
+            column: cod_despesa
+    manyToOne:
+        fkSwHistoricoClassificacao:
+            targetEntity: Urbem\CoreBundle\Entity\SwHistoricoClassificacao
+            inversedBy: fkSwPreEmpenhos
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico_classificacao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwTipoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\SwTipoEmpenho
+            inversedBy: fkSwPreEmpenhos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkSwPreEmpenhos
+            joinColumns:
+                cgm_usuario:
+                    referencedColumnName: numcgm
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkSwPreEmpenhos
+            joinColumns:
+                cgm_beneficiario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkSwAutorizacaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAutorizacaoEmpenho
+            mappedBy: fkSwPreEmpenho
+        fkSwEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwEmpenho
+            mappedBy: fkSwPreEmpenho
+        fkSwValorAtributoPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwValorAtributoPreEmpenho
+            mappedBy: fkSwPreEmpenho
+        fkSwItemPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwItemPreEmpenho
+            mappedBy: fkSwPreEmpenho
+        fkSwPreEmpenhoOrdens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwPreEmpenhoOrdem
+            mappedBy: fkSwPreEmpenho

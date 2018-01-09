@@ -1,0 +1,124 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <thead>
+                <tr class="grey">
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.almoxarifado'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.centroCusto'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.prioridade'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.tipoItem'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.periodo'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.periodoInicial'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.periodoFinal'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.statusSolicitacao'|trans|upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {% if almoxarifado is not empty %}
+                            {{ almoxarifado }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if centroCusto is not empty %}
+                            {{ centroCusto }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if prioridades[filtro['prioridade']['value']] is defined %}
+                            {{ prioridades[filtro['prioridade']['value']] }}</td>
+                        {% else %}
+                            Todas
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if tiposItem[filtro['fkAlmoxarifadoTipoItem']['value']] is defined %}
+                            {{ tiposItem[filtro['fkAlmoxarifadoTipoItem']['value']] }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if periodos[filtro['periodo']['value']] is defined %}
+                            {{ periodos[filtro['periodo']['value']] }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    <td>
+                        {% if periodos[filtro['periodo']['value']] is defined and filtro['periodo']['value'] == periodoDefinir %}
+                            {{ filtro['periodoInicial']['value'] }}</td>
+                        {% else %}
+                            -
+                        {% endif %}
+                    <td>
+                        {% if periodos[filtro['periodo']['value']] is defined and filtro['periodo']['value'] == periodoDefinir %}
+                            {{ filtro['periodoFinal']['value'] }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if statusSolicitacao[filtro['statusSolicitacao']['value']] is defined %}
+                            {{ statusSolicitacao[filtro['statusSolicitacao']['value']] }}</td>
+                        {% else %}
+                            Todos
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+        
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <thead>
+                <tr class="grey">
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.item'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.descricao'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.qtdItensSolicitados'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.valorReservado'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.qtdSolicitacoesAtendidas'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.qtdItensComprados'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.qtdEntrada'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.qtdSaida'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.valorGasto'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.qtdItensAnulados'|trans|upper }}</th>
+                    <th>{{ 'label.comprasRelatoriosCompraEstoque.valorAnulado'|trans|upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for catalogoItem in catalogoItens %}
+                    <tr>
+                        <td>{{ catalogoItem.getCodItem() }}</td>
+                        <td>{{ catalogoItem.getDescricao() }}</td>
+                        <td>{{ admin.getQtdItensSolicitados(catalogoItem)|number_format(0, ',', '.') }}</td>
+                        <td>{{ admin.getValorReservado(catalogoItem)|number_format(2, ',', '.') }}</td>
+                        <td>{{ admin.getQtdSolicitacoesAtendidas(catalogoItem)|number_format(0, ',', '.') }}</td>
+                        <td>{{ admin.getQtdItensComprados(catalogoItem)|number_format(0, ',', '.') }}</td>
+                        <td>{{ admin.getQtdEntrada(catalogoItem)|number_format(0, ',', '.') }}</td>
+                        <td>{{ admin.getQtdSaida(catalogoItem)|abs|number_format(0, ',', '.') }}</td>
+                        <td>{{ admin.getValorGasto(catalogoItem)|number_format(2, ',', '.') }}</td>
+                        <td>{{ admin.getQtdItensAnulados(catalogoItem)|number_format(0, ',', '.') }}</td>
+                        <td>{{ admin.getQtdValorAnulado(catalogoItem)|number_format(2, ',', '.') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+    <style>
+        table td,th{border: 0 !important; text-align:center}
+    </style>
+{% endblock %}

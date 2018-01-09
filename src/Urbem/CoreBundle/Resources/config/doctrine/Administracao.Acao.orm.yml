@@ -1,0 +1,109 @@
+Urbem\CoreBundle\Entity\Administracao\Acao:
+    type: entity
+    table: administracao.acao
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\AcaoRepository
+    id:
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+    fields:
+        codFuncionalidade:
+            type: integer
+            nullable: false
+            column: cod_funcionalidade
+        nomArquivo:
+            type: string
+            nullable: false
+            length: 85
+            column: nom_arquivo
+        parametro:
+            type: string
+            nullable: false
+            length: 15
+        ordem:
+            type: integer
+            nullable: false
+        complementoAcao:
+            type: string
+            nullable: true
+            length: 80
+            column: complemento_acao
+        nomAcao:
+            type: string
+            nullable: false
+            length: 55
+            column: nom_acao
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkAdministracaoFuncionalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcionalidade
+            inversedBy: fkAdministracaoAcoes
+            joinColumns:
+                cod_funcionalidade:
+                    referencedColumnName: cod_funcionalidade
+    oneToMany:
+        fkAdministracaoAuditorias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Auditoria
+            mappedBy: fkAdministracaoAcao
+        fkAdministracaoRelatorioAcoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\RelatorioAcao
+            mappedBy: fkAdministracaoAcao
+        fkArrecadacaoAcaoModeloCarnes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AcaoModeloCarne
+            mappedBy: fkAdministracaoAcao
+        fkProtocoloAssuntoAcoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Protocolo\AssuntoAcao
+            mappedBy: fkAdministracaoAcao
+        fkStnNotaExplicativas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\NotaExplicativa
+            mappedBy: fkAdministracaoAcao
+        fkAdministracaoPermissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Permissao
+            mappedBy: fkAdministracaoAcao
+        fkAdministracaoModeloArquivosDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloArquivosDocumento
+            mappedBy: fkAdministracaoAcao
+    oneToOne:
+        fkContabilidadeNotaExplicativaAcao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\NotaExplicativaAcao
+            mappedBy: fkAdministracaoAcao
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao

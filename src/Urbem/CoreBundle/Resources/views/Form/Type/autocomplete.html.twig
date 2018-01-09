@@ -1,0 +1,146 @@
+{% spaceless %}
+    {% set classCss = "select2-parameters" %}
+    {% if attr.class is defined and attr.class is not empty  %}
+        {% set classCss = attr.class %}
+    {% endif %}
+    <input type="text" id="{{ id }}_autocomplete_input" data-allow-clear="true" class="{{ classCss }}" value="" {%- if read_only is defined and read_only %} readonly="readonly"{% endif -%} {%- if disabled %} disabled="disabled"{% endif -%} {%- if required %} required="required"{% endif %}/>
+
+    <div id="{{ id }}_hidden_inputs_wrap">
+        {% if multiple -%}
+            {%- for idx, val in value if idx~'' != '_labels' -%}
+                <input type="hidden" name="{{ full_name }}[]" {%- if disabled %} disabled="disabled"{% endif %} value="{{ val }}">
+            {%- endfor -%}
+        {% else -%}
+            <input type="hidden" name="{{ full_name }}" {%- if disabled %} disabled="disabled"{% endif %} value="{{ value[0]|default('') }}">
+
+        {% endif -%}
+    </div>
+
+    <script>
+        (function ($) {
+            {% for field in cascade_fields %}
+                {% if field.from_parent is defined %}
+                    {% set fromField = form.parent.vars.id ~ '_' ~ field.from_parent %}
+
+                {% else %}
+                    {% set fromField = field.from_field %}
+                {% endif %}
+
+                window.varJs_{{ field.search_column }} = UrbemSonata.giveMeBackMyField('{{ fromField }}').val();
+                UrbemSonata.giveMeBackMyField('{{ fromField }}').on('change', function () {
+                    window.varJs_{{ field.search_column }} = $(this).val();
+                });
+
+            {% endfor %}
+
+            var autocompleteInput = $('#{{ id }}_autocomplete_input');
+            autocompleteInput.select2({
+                {%- set allowClearPlaceholder = (not multiple and not required) ? ' ' : '' -%}
+                placeholder: '{{ placeholder ?: allowClearPlaceholder }}',
+                allowClear: true,
+                enable: {{ disabled ? 'false' : 'true' }},
+                readonly: {{ read_only is defined and read_only or attr.readonly is defined and attr.readonly ? 'true' : 'false' }},
+                minimumInputLength: {{ minimum_input_length }},
+                multiple: {{ multiple ? 'true' : 'false' }},
+                dropdownAutoWidth: true,
+                containerCssClass: 'select2-v4-parameters form-control',
+                ajax: {
+                    url:  '{{ path(route.name, route.parameters|default([]))|e('js') }}',
+                    dataType: 'json',
+                    quietMillis: {{ quiet_millis }},
+                    data: function (term, page) {
+                        return {
+                            //search term
+                            '{{ req_param_name_search }}': term
+
+                            // other parameters
+                            {% if req_params is not empty %},
+                                {%- for key, value in req_params -%}
+                                    {% if 'varJs' in value %}
+                                        '{{- key|e('js') -}}': {{- value|e('js') -}}
+                                    {% else %}
+                                        '{{- key|e('js') -}}': '{{- value|e('js') -}}'
+                                    {% endif %}
+                                {%- if not loop.last -%}, {% endif -%}
+                                {%- endfor -%}
+                            {% endif %}
+                        };
+                    },
+                    results: function (data, page) {
+                        return {results: data.items};
+                    }
+                },
+                formatResult: function (item) {
+                    return '<div>'+item.label+'<\/div>';
+                },
+                formatSelection: function (item) {
+                    return item.label;
+                },
+                escapeMarkup: function (m) { return m; }
+            });
+
+            autocompleteInput.on('change', function(e) {
+                if (undefined !== e.removed && null !== e.removed) {
+                    var removedItems = e.removed;
+
+                    {% if multiple %}
+                    if(!$.isArray(removedItems)) {
+                        removedItems = [removedItems];
+                    }
+
+                    var length = removedItems.length;
+                    for (var i = 0; i < length; i++) {
+                        el = removedItems[i];
+                        $('#{{ id }}_hidden_inputs_wrap input:hidden[value="'+el.id+'"]').remove();
+                    }
+
+                    {%- else -%}
+                    $('#{{ id }}_hidden_inputs_wrap input:hidden').val('');
+                    {%- endif %}
+                }
+
+                var el = null;
+                if (undefined !== e.added) {
+
+                    var addedItems = e.added;
+
+                    {% if multiple %}
+                        if(!$.isArray(addedItems)) {
+                            addedItems = [addedItems];
+                        }
+
+                        var length = addedItems.length;
+                        for (var i = 0; i < length; i++) {
+                            el = addedItems[i];
+                            $('#{{ id }}_hidden_inputs_wrap').append('<input type="hidden" name="{{ full_name }}[]" value="'+el.id+'" />');
+                        }
+
+                    {%- else -%}
+                        $('#{{ id }}_hidden_inputs_wrap input:hidden').val(addedItems.id);
+                    {%- endif %}
+                }
+                $('input[name="{{ full_name }}"]').trigger('change');
+            });
+
+            var data = [];
+
+            {%- if value is not empty -%}
+            data = {%- if multiple -%}[ {%- endif -%}
+                {%- for idx, val  in value if idx~'' != '_labels' -%}
+                {%- if not loop.first -%}, {% endif -%}
+                {id: '{{ val|e('js') }}', label:'{{ value['_labels'][idx]|e('js') }}'}
+                {%- endfor -%}
+                {%- if multiple -%} ] {%- endif -%};
+            {% endif -%}
+
+            if (undefined==data.length || 0<data.length) {
+                autocompleteInput.select2('data', data);
+            }
+
+            $('#{{ id }}_autocomplete_input').closest('form').submit(function() {
+                $('#{{ id }}_autocomplete_input').remove();
+                return true;
+            });
+        })(jQuery);
+    </script>
+{% endspaceless %}

@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\SwHistoricoArquivamento:
+    type: entity
+    table: sw_historico_arquivamento
+    id:
+        codHistorico:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: sw_historico_arquivamento_cod_historico_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_historico
+    fields:
+        nomHistorico:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_historico
+    oneToMany:
+        fkSwProcessoArquivados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoArquivado
+            mappedBy: fkSwHistoricoArquivamento

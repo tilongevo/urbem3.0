@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Orcamento\ReservaSaldosAnulada:
+    type: entity
+    table: orcamento.reserva_saldos_anulada
+    id:
+        codReserva:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_reserva
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        dtAnulacao:
+            type: date
+            nullable: false
+            column: dt_anulacao
+        motivoAnulacao:
+            type: string
+            nullable: false
+            length: 255
+            column: motivo_anulacao
+    oneToOne:
+        fkOrcamentoReservaSaldos:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ReservaSaldos
+            inversedBy: fkOrcamentoReservaSaldosAnulada
+            joinColumns:
+                cod_reserva:
+                    referencedColumnName: cod_reserva
+                exercicio:
+                    referencedColumnName: exercicio

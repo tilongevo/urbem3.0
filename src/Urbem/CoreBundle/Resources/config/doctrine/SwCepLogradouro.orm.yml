@@ -1,0 +1,83 @@
+Urbem\CoreBundle\Entity\SwCepLogradouro:
+    type: entity
+    table: sw_cep_logradouro
+    indexes:
+        idx_sw_cep_logradouro_1:
+            columns:
+                - cep
+        idx_sw_cep_logradouro_2:
+            columns:
+                - cod_logradouro
+    id:
+        cep:
+            type: string
+            generator:
+                strategy: NONE
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+    fields:
+        numInicial:
+            type: string
+            nullable: true
+            length: 6
+            column: num_inicial
+        numFinal:
+            type: string
+            nullable: true
+            length: 6
+            column: num_final
+        par:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+        impar:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+    manyToOne:
+        fkSwCep:
+            targetEntity: Urbem\CoreBundle\Entity\SwCep
+            inversedBy: fkSwCepLogradouros
+            joinColumns:
+                cep:
+                    referencedColumnName: cep
+        fkSwLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwLogradouro
+            inversedBy: fkSwCepLogradouros
+            joinColumns:
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+    oneToMany:
+        fkSwCgmLogradouroCorrespondencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmLogradouroCorrespondencia
+            mappedBy: fkSwCepLogradouro
+        fkSwCgaLogradouroCorrespondencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaLogradouroCorrespondencia
+            mappedBy: fkSwCepLogradouro
+        fkSwCgmLogradouros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmLogradouro
+            mappedBy: fkSwCepLogradouro
+        fkSwCgaLogradouros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwCgaLogradouro
+            mappedBy: fkSwCepLogradouro

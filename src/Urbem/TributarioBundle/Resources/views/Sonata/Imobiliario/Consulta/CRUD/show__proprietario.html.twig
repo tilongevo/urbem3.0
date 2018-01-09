@@ -1,0 +1,113 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block show %}
+    <div class="sonata-ba-view">
+        <div class="row">
+            <h2 class="col s10 box-title left-align show">
+                {{ 'label.imobiliarioImovel.listaProprietarios'|trans }}
+            </h2>
+
+            <table class="bordered highlight">
+                <thead>
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.cgm'|trans }}</th>
+                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.nome'|trans }}</th>
+                        <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.quota'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if object.fkImobiliarioProprietarios|length > 0 %}
+                    {% for proprietario in object.fkImobiliarioProprietarios|sort %}
+                        {% if proprietario.promitente != true %}
+                            <tr>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                    {{ proprietario.numcgm }}
+                                </td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                    {{ proprietario.fkSwCgm.nomCgm }}
+                                </td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                    {{ proprietario.cota }}%
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr class="tr-rh empty-row">
+                        <td colspan="3">{{ 'listagemVazia'|trans }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+
+            <h2 class="col s10 box-title left-align show">
+                {{ 'label.imobiliarioImovel.listaPromitentes'|trans }}
+            </h2>
+
+            <table class="bordered highlight">
+                <thead>
+                <tr class="sonata-ba-list-field-header">
+                    <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.cgm'|trans }}</th>
+                    <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.nome'|trans }}</th>
+                    <th class="sonata-ba-list-field-header-text">{{ 'label.imobiliarioImovel.quota'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if object.fkImobiliarioProprietarios|length > 0 %}
+                    {% set count = true %}
+                    {% for proprietario in object.fkImobiliarioProprietarios|sort %}
+                        {% if proprietario.promitente == true %}
+                            {% set count = false %}
+                            <tr>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                    {{ proprietario.numcgm }}
+                                </td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                    {{ proprietario.fkSwCgm.nomCgm }}
+                                </td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                    {{ proprietario.cota|number_format(2, ',', '.') }}%
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    {% if count  %}
+                        <tr class="tr-rh empty-row">
+                            <td colspan="3">{{ 'listagemVazia'|trans }}</td>
+                        </tr>
+                    {% endif %}
+                {% else %}
+                    <tr class="tr-rh empty-row">
+                        <td colspan="3">{{ 'listagemVazia'|trans }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s12">
+                <div class="col s8 initial">
+                    <a class="btn-floating white-text blue darken-4 btn-success" href="#" onclick="window.history.back();"><i class="material-icons">arrow_back</i>{</a>
+                </div>
+            </div>
+        </div>
+    {{ sonata_block_render_event('sonata.admin.show.bottom', { 'admin': admin, 'object': object }) }}
+{% endblock %}

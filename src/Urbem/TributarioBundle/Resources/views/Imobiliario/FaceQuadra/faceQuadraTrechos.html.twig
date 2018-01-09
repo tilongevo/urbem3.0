@@ -1,0 +1,37 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="col s12 face-quadra-trecho">
+    <h3 class="col s10 box-title left-align show">{{ 'label.imobiliarioFaceQuadra.listaTrechos'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableFaceQuadraTrechoManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.imobiliarioFaceQuadra.codigo'|trans }}</th>
+            <th class="th-rh">{{ 'label.imobiliarioFaceQuadra.logradouro'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if field.data.faceQuadraTrechos|length > 0 %}
+            {% for faceQuadraTrecho in field.data.faceQuadraTrechos|sort %}
+                <tr class="tr-rh row-face-quadra-trecho">
+                    <td class="td-rh codigo">
+                        <input type="hidden" value="{{ admin.getObjectKey(faceQuadraTrecho) }}" id="faceQuadraTrecho_{{ faceQuadraTrecho.codTrecho }}_{{ faceQuadraTrecho.codLogradouro }}" name="faceQuadraTrecho[{{ faceQuadraTrecho.codTrecho ~ '~' ~ faceQuadraTrecho.codLogradouro }}]" />
+                        {{ faceQuadraTrecho.fkImobiliarioTrecho.getCodigoComposto }}
+                    </td>
+                    <td class="td-rh logradouro">
+                        {{ faceQuadraTrecho.fkImobiliarioTrecho.fkSwLogradouro }}
+                    </td>
+                    <td face-quadra-trecho="{{ faceQuadraTrecho.codTrecho ~ '~' ~ faceQuadraTrecho.codLogradouro }}" class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="tr-rh empty-row-face-quadra-trecho">
+                <td colspan="3">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

@@ -1,0 +1,94 @@
+Urbem\CoreBundle\Entity\Administracao\UnidadeMedida:
+    type: entity
+    table: administracao.unidade_medida
+    id:
+        codUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_unidade
+        codGrandeza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grandeza
+    fields:
+        nomUnidade:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_unidade
+        simbolo:
+            type: string
+            nullable: false
+            length: 10
+    manyToOne:
+        fkAdministracaoGrandeza:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Grandeza
+            inversedBy: fkAdministracaoUnidadeMedidas
+            joinColumns:
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza
+    oneToMany:
+        fkAlmoxarifadoCatalogoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            mappedBy: fkAdministracaoUnidadeMedida
+        fkEmpenhoItemPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            mappedBy: fkAdministracaoUnidadeMedida
+        fkImobiliarioAreaLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AreaLote
+            mappedBy: fkAdministracaoUnidadeMedida
+        fkLdoTipoIndicadoreses:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\TipoIndicadores
+            mappedBy: fkAdministracaoUnidadeMedida
+        fkPpaAcaoDados:
+            cascade:
+                - persist
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\AcaoDados
+            mappedBy: fkAdministracaoUnidadeMedida
+        fkTcmgoObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Obra
+            mappedBy: fkAdministracaoUnidadeMedida
+        fkFiscalizacaoPenalidadeMultas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeMulta
+            mappedBy: fkAdministracaoUnidadeMedida
+        fkPpaProgramaIndicadoreses:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaIndicadores
+            mappedBy: fkAdministracaoUnidadeMedida
+        fkSwItemPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwItemPreEmpenho
+            mappedBy: fkAdministracaoUnidadeMedida

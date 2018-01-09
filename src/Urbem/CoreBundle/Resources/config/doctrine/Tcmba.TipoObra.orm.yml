@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoObra:
+    type: entity
+    table: tcmba.tipo_obra
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkTcmbaObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            mappedBy: fkTcmbaTipoObra

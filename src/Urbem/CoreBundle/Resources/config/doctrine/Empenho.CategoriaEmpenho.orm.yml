@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Empenho\CategoriaEmpenho:
+    type: entity
+    table: empenho.categoria_empenho
+    id:
+        codCategoria:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_categoria
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkEmpenhoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            mappedBy: fkEmpenhoCategoriaEmpenho
+        fkEmpenhoAutorizacaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho
+            mappedBy: fkEmpenhoCategoriaEmpenho

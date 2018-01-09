@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Licitacao\EditalAnulado:
+    type: entity
+    table: licitacao.edital_anulado
+    id:
+        numEdital:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_edital
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        dtAnulacao:
+            type: date
+            nullable: false
+            column: dt_anulacao
+    oneToOne:
+        fkLicitacaoEdital:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Edital
+            inversedBy: fkLicitacaoEditalAnulado
+            joinColumns:
+                num_edital:
+                    referencedColumnName: num_edital
+                exercicio:
+                    referencedColumnName: exercicio

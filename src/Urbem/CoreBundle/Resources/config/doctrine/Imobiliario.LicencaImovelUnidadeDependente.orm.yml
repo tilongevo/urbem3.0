@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Imobiliario\LicencaImovelUnidadeDependente:
+    type: entity
+    table: imobiliario.licenca_imovel_unidade_dependente
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codConstrucaoDependente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao_dependente
+    fields: {  }
+    manyToOne:
+        fkImobiliarioLicencaImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaImovel
+            inversedBy: fkImobiliarioLicencaImovelUnidadeDependentes
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+        fkImobiliarioUnidadeDependente:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\UnidadeDependente
+            inversedBy: fkImobiliarioLicencaImovelUnidadeDependentes
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+                cod_construcao_dependente:
+                    referencedColumnName: cod_construcao_dependente
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_construcao:
+                    referencedColumnName: cod_construcao

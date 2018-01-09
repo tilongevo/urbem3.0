@@ -1,0 +1,92 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\FaturamentoServico:
+    type: entity
+    table: fiscalizacao.faturamento_servico
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+    manyToOne:
+        fkFiscalizacaoProcessoLevantamento:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoLevantamento
+            inversedBy: fkFiscalizacaoFaturamentoServicos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia
+        fkEconomicoServicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ServicoAtividade
+            inversedBy: fkFiscalizacaoFaturamentoServicos
+            joinColumns:
+                cod_servico:
+                    referencedColumnName: cod_servico
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+        fkEconomicoModalidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ModalidadeLancamento
+            inversedBy: fkFiscalizacaoFaturamentoServicos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+    oneToMany:
+        fkFiscalizacaoNotaServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotaServico
+            mappedBy: fkFiscalizacaoFaturamentoServico
+        fkFiscalizacaoServicoComRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ServicoComRetencao
+            mappedBy: fkFiscalizacaoFaturamentoServico
+    oneToOne:
+        fkFiscalizacaoServicoSemRetencao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ServicoSemRetencao
+            mappedBy: fkFiscalizacaoFaturamentoServico
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia
+                cod_servico:
+                    referencedColumnName: cod_servico
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                ocorrencia:
+                    referencedColumnName: ocorrencia

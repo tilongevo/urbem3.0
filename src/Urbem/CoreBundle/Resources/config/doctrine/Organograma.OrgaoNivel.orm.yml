@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Organograma\OrgaoNivel:
+    type: entity
+    table: organograma.orgao_nivel
+    id:
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        codNivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel
+        codOrganograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_organograma
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 30
+    manyToOne:
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkOrganogramaOrgaoNiveis
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+        fkOrganogramaNivel:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Nivel
+            inversedBy: fkOrganogramaOrgaoNiveis
+            joinColumns:
+                cod_nivel:
+                    referencedColumnName: cod_nivel
+                cod_organograma:
+                    referencedColumnName: cod_organograma

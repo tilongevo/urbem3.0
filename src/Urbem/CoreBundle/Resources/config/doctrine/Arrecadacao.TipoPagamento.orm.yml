@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Arrecadacao\TipoPagamento:
+    type: entity
+    table: arrecadacao.tipo_pagamento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: arrecadacao.tipo_pagamento_cod_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_tipo
+        sistema:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+        nomResumido:
+            type: string
+            nullable: false
+            length: 20
+            column: nom_resumido
+        pagamento:
+            type: boolean
+            nullable: false
+    oneToMany:
+        fkArrecadacaoPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Pagamento
+            mappedBy: fkArrecadacaoTipoPagamento

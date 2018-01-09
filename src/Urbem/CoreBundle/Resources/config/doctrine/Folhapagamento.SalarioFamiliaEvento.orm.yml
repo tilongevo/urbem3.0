@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamiliaEvento:
+    type: entity
+    table: folhapagamento.salario_familia_evento
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\SalarioFamiliaEventoRepository
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codRegimePrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_regime_previdencia
+    fields:
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkFolhapagamentoTipoEventoSalarioFamilia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoSalarioFamilia
+            inversedBy: fkFolhapagamentoSalarioFamiliaEventos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoSalarioFamilia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamilia
+            inversedBy: fkFolhapagamentoSalarioFamiliaEventos
+            joinColumns:
+                cod_regime_previdencia:
+                    referencedColumnName: cod_regime_previdencia
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoSalarioFamiliaEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

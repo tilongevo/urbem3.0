@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Pessoal\ConfiguracaoFerias:
+    type: entity
+    table: pessoal.configuracao_ferias
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        faltasInicial:
+            type: integer
+            nullable: false
+            column: faltas_inicial
+        faltasFinal:
+            type: integer
+            nullable: false
+            column: faltas_final
+        diasGozo:
+            type: decimal
+            nullable: false
+            precision: 3
+            scale: 1
+            column: dias_gozo
+        feriasProporcionais:
+            type: integer
+            nullable: false
+            column: ferias_proporcionais
+    oneToMany:
+        fkPessoalConfiguracaoFormaPagamentoFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ConfiguracaoFormaPagamentoFerias
+            mappedBy: fkPessoalConfiguracaoFerias

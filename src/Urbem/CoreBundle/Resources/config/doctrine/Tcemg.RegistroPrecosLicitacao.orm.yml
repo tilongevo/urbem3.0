@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Tcemg\RegistroPrecosLicitacao:
+    type: entity
+    table: tcemg.registro_precos_licitacao
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numeroRegistroPrecos:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numero_registro_precos
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        interno:
+            type: boolean
+            generator:
+                strategy: NONE
+        numcgmGerenciador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numcgm_gerenciador
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidadeLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade_licitacao
+        exercicioLicitacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_licitacao
+    fields: {  }
+    manyToOne:
+        fkComprasModalidade:
+          targetEntity: Urbem\CoreBundle\Entity\Compras\Modalidade
+          joinColumns:
+              cod_modalidade:
+                  referencedColumnName: cod_modalidade
+        fkTcemgRegistroPrecos:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecos
+            inversedBy: fkTcemgRegistroPrecosLicitacoes
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numero_registro_precos:
+                    referencedColumnName: numero_registro_precos
+                exercicio:
+                    referencedColumnName: exercicio
+                numcgm_gerenciador:
+                    referencedColumnName: numcgm_gerenciador
+                interno:
+                    referencedColumnName: interno
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkTcemgRegistroPrecosLicitacoes
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade_licitacao:
+                    referencedColumnName: cod_entidade
+                exercicio_licitacao:
+                    referencedColumnName: exercicio

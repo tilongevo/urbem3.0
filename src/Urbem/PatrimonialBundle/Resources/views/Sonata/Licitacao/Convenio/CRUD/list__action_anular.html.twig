@@ -1,0 +1,48 @@
+{% macro action_link(text, icon, route = null, route_params = {}) %}
+    {% if route is not null %}
+        <a href="{{ path(route, route_params) }}"
+           class="btn-list blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="{{ text|e }}">
+            <i class="{{ icon|e }} fa-lg"></i>
+        </a>
+    {% else %}
+        <a class="btn-list grey-text text-darken-1 transparent z-depth-0 hide-on-med-and-down tooltipped"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="{{ text|e }}">
+            <i class="{{ icon|e }} fa-lg"></i>
+        </a>
+    {% endif %}
+{% endmacro %}
+
+{% if admin.isGranted('DELETE', object) and admin.hasRoute('delete') %}
+    {{ admin.getTotais(object) }}
+
+    {% if object.fkLicitacaoConvenioAnulado is null and object.totais.percentualUsado == 100 %}
+        {% set transMsg = 'anular'|trans %}
+        {{ _self.action_link(transMsg, 'fa fa-ban', 'urbem_patrimonial_licitacao_convenio_anulacao_create', { 'convenio': admin.id(object) }) }}
+    {% elseif object.fkLicitacaoConvenioAnulado is not null %}
+        {% set transMsg = 'anulacao_convenio.errors.whenAnulacaoIsAlreadyAnulado'|trans({}, 'validators') %}
+        {{ _self.action_link(transMsg, 'fa fa-ban') }}
+    {% else %}
+        {% set transMsg = 'anulacao_convenio.errors.whenConvenioNotReach100'|trans({}, 'validators') %}
+        {{ _self.action_link(transMsg, 'fa fa-ban') }}
+    {% endif %}
+
+    {% if object.fkLicitacaoRescisaoConvenio is null and object.fkLicitacaoConvenioAnulado is null and object.totais.percentualUsado == 100 %}
+        {% set transMsg = 'label.convenioAdmin.rescisao'|trans %}
+        {{ _self.action_link(transMsg, 'mdi mdi-image-broken-variant', 'urbem_patrimonial_licitacao_rescisao_convenio_create', { 'convenio': admin.id(object) }) }}
+    {% elseif object.fkLicitacaoConvenioAnulado is not null %}
+        {% set transMsg = 'rescisao_convenio.errors.whenConvenioAnuladoNotRescindido'|trans({}, 'validators') %}
+        {{ _self.action_link(transMsg, 'mdi mdi-image-broken-variant') }}
+    {% elseif object.totais.percentualUsado < 100 %}
+        {% set transMsg = 'anulacao_convenio.errors.whenConvenioNotReach100'|trans({}, 'validators') %}
+        {{ _self.action_link(transMsg, 'mdi mdi-image-broken-variant') }}
+    {% else %}
+        {% set transMsg = 'anulacao_convenio.errors.whenRescisaEfetuada'|trans({}, 'validators') %}
+        {{ _self.action_link(transMsg, 'mdi mdi-image-broken-variant') }}
+    {% endif %}
+{% endif %}
+

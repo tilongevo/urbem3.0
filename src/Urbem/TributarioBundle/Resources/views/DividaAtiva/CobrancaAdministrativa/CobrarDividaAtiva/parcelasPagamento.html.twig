@@ -1,0 +1,19 @@
+<table class="bordered highlight" style="width:100%">
+<tr class="tr-rh">
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.parcela'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.vencimento'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.valor'|trans }}</th>
+</tr>
+
+{% set pagamentos = admin.getPagamentos() %}
+
+{% if pagamentos %}
+    {% for pagamento in pagamentos %}
+        <tr>
+            <td>{{ pagamento.parcela }}</td>
+            <td><input type="text" value="{{ pagamento.dtPagamento }}" class="campo-sonata form-control"></td>
+            <td>{{ pagamento.valor|number_format(2, ',', '.') }}</td>
+        </tr>
+    {% endfor %}
+{% endif %}
+</table>

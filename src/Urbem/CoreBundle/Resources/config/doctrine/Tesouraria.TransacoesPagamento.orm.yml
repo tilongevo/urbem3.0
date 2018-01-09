@@ -1,0 +1,77 @@
+Urbem\CoreBundle\Entity\Tesouraria\TransacoesPagamento:
+    type: entity
+    table: tesouraria.transacoes_pagamento
+    id:
+        codBordero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bordero
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        contaCorrente:
+            type: string
+            nullable: false
+            length: 20
+            column: conta_corrente
+        documento:
+            type: string
+            nullable: true
+            length: 100
+        descricao:
+            type: text
+            nullable: false
+    manyToOne:
+        fkTesourariaBordero:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Bordero
+            inversedBy: fkTesourariaTransacoesPagamentos
+            joinColumns:
+                cod_bordero:
+                    referencedColumnName: cod_bordero
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEmpenhoOrdemPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamento
+            inversedBy: fkTesourariaTransacoesPagamentos
+            joinColumns:
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkTesourariaTransacoesPagamentos
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia

@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Imobiliario\CondominioCgm:
+    type: entity
+    table: imobiliario.condominio_cgm
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codCondominio:
+            type: integer
+            nullable: false
+            column: cod_condominio
+    manyToOne:
+        fkImobiliarioCondominio:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Condominio
+            inversedBy: fkImobiliarioCondominioCgns
+            joinColumns:
+                cod_condominio:
+                    referencedColumnName: cod_condominio
+    oneToOne:
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkImobiliarioCondominioCgm
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

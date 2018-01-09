@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Pessoal\ConfiguracaoFormaPagamentoFerias:
+    type: entity
+    table: pessoal.configuracao_forma_pagamento_ferias
+    id:
+        codRegime:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_regime
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        codForma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_forma
+    fields: {  }
+    manyToOne:
+        fkPessoalRegime:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Regime
+            inversedBy: fkPessoalConfiguracaoFormaPagamentoFerias
+            joinColumns:
+                cod_regime:
+                    referencedColumnName: cod_regime
+        fkPessoalConfiguracaoFerias:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ConfiguracaoFerias
+            inversedBy: fkPessoalConfiguracaoFormaPagamentoFerias
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkPessoalFormaPagamentoFerias:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\FormaPagamentoFerias
+            inversedBy: fkPessoalConfiguracaoFormaPagamentoFerias
+            joinColumns:
+                cod_forma:
+                    referencedColumnName: cod_forma

@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Beneficio\ValeTransporte:
+    type: entity
+    table: beneficio.vale_transporte
+    id:
+        codValeTransporte:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: beneficio.cod_vale_transporte_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_vale_transporte
+    fields:
+        fornecedorValeTransporteFornecedorNumcgm:
+            type: integer
+            nullable: false
+            column: fornecedor_vale_transporte_fornecedor_numcgm
+    manyToOne:
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkBeneficioValeTransportes
+            joinColumns:
+                fornecedor_vale_transporte_fornecedor_numcgm:
+                    referencedColumnName: cgm_fornecedor
+    oneToMany:
+        fkBeneficioConcessaoValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporte
+            mappedBy: fkBeneficioValeTransporte
+        fkBeneficioCustos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Custo
+            mappedBy: fkBeneficioValeTransporte
+    oneToOne:
+        fkBeneficioItinerario:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Itinerario
+            mappedBy: fkBeneficioValeTransporte
+            joinColumns:
+                cod_vale_transporte:
+                    referencedColumnName: vale_transporte_cod_vale_transporte

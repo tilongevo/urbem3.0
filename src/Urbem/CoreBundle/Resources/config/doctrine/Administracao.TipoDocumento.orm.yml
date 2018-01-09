@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Administracao\TipoDocumento:
+    type: entity
+    table: administracao.tipo_documento
+    id:
+        codTipoDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkAdministracaoModeloDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            mappedBy: fkAdministracaoTipoDocumento

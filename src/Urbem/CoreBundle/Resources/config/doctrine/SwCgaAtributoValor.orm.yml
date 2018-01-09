@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\SwCgaAtributoValor:
+    type: entity
+    table: sw_cga_atributo_valor
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkSwAtributoCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoCgm
+            inversedBy: fkSwCgaAtributoValores
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkSwCga:
+            targetEntity: Urbem\CoreBundle\Entity\SwCga
+            inversedBy: fkSwCgaAtributoValores
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+                timestamp:
+                    referencedColumnName: timestamp

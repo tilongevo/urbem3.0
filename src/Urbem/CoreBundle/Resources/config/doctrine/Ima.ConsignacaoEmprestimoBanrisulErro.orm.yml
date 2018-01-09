@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Ima\ConsignacaoEmprestimoBanrisulErro:
+    type: entity
+    table: ima.consignacao_emprestimo_banrisul_erro
+    id:
+        numLinha:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_linha
+        codPeriodoMovimentacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodo_movimentacao
+    fields:
+        codMotivoRejeicao:
+            type: string
+            nullable: false
+            length: 2
+            column: cod_motivo_rejeicao
+        descricaoMotivo:
+            type: string
+            nullable: false
+            length: 200
+            column: descricao_motivo
+    manyToOne:
+        fkImaMotivosRejeicaoConsignacaoEmprestimoBanrisul:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\MotivosRejeicaoConsignacaoEmprestimoBanrisul
+            inversedBy: fkImaConsignacaoEmprestimoBanrisulErros
+            joinColumns:
+                cod_motivo_rejeicao:
+                    referencedColumnName: cod_motivo_rejeicao
+    oneToOne:
+        fkImaConsignacaoEmprestimoBanrisul:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConsignacaoEmprestimoBanrisul
+            inversedBy: fkImaConsignacaoEmprestimoBanrisulErro
+            joinColumns:
+                num_linha:
+                    referencedColumnName: num_linha
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao

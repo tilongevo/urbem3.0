@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Empenho\PermissaoAutorizacao:
+    type: entity
+    table: empenho.permissao_autorizacao
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkEmpenhoPermissaoAutorizacoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkEmpenhoPermissaoAutorizacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao

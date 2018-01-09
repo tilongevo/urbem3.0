@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Frota\ManutencaoEmpenho:
+    type: entity
+    table: frota.manutencao_empenho
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codManutencao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_manutencao
+    fields:
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        exercicioEmpenho:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_empenho
+    manyToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkFrotaManutencaoEmpenhos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio_empenho:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToOne:
+        fkFrotaManutencao:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Manutencao
+            inversedBy: fkFrotaManutencaoEmpenho
+            joinColumns:
+                cod_manutencao:
+                    referencedColumnName: cod_manutencao
+                exercicio:
+                    referencedColumnName: exercicio

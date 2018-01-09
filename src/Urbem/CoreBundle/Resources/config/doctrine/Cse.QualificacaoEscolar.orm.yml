@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Cse\QualificacaoEscolar:
+    type: entity
+    table: cse.qualificacao_escolar
+    id:
+        codGrau:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grau
+        codInstituicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_instituicao
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+        dtCadastro:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_cadastro
+    fields:
+        serie:
+            type: string
+            nullable: false
+            length: 10
+        frequencia:
+            type: string
+            nullable: false
+            length: 10
+    manyToOne:
+        fkCseGrauEscolar:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\GrauEscolar
+            inversedBy: fkCseQualificacaoEscolares
+            joinColumns:
+                cod_grau:
+                    referencedColumnName: cod_grau
+        fkCseInstituicaoEducacional:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\InstituicaoEducacional
+            inversedBy: fkCseQualificacaoEscolares
+            joinColumns:
+                cod_instituicao:
+                    referencedColumnName: cod_instituicao
+        fkCseCidadao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            inversedBy: fkCseQualificacaoEscolares
+            joinColumns:
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao

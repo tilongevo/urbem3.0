@@ -1,0 +1,65 @@
+Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenhoJulgamento:
+    type: entity
+    table: empenho.item_pre_empenho_julgamento
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+    fields:
+        exercicioJulgamento:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_julgamento
+        cgmFornecedor:
+            type: integer
+            nullable: false
+            column: cgm_fornecedor
+        lote:
+            type: integer
+            nullable: false
+        codItem:
+            type: integer
+            nullable: false
+            column: cod_item
+        codCotacao:
+            type: integer
+            nullable: false
+            column: cod_cotacao
+    manyToOne:
+        fkComprasJulgamentoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\JulgamentoItem
+            inversedBy: fkEmpenhoItemPreEmpenhoJulgamentos
+            joinColumns:
+                exercicio_julgamento:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                cod_item:
+                    referencedColumnName: cod_item
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                lote:
+                    referencedColumnName: lote
+    oneToOne:
+        fkEmpenhoItemPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            inversedBy: fkEmpenhoItemPreEmpenhoJulgamento
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item

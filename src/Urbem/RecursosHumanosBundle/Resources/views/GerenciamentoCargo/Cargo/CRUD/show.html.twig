@@ -1,0 +1,74 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+{% block show %}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">Dados do Cargo</span><span class="grey-text bold" style="padding-top: 10px; font-weight: bold">{#{{ object.numConvenio ~ "/" ~ object.exercicio }}#}</span>
+                </h2>
+                <a href="{{ path('urbem_recursos_humanos_pessoal_cargo_edit', { 'id': object.codCargo }) }}" class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.descricao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.descricao }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.cargo.codEscolaridade'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkSwEscolaridade.descricao }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.cargo.cargoCc'|trans }}:
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.cargoCc %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.cargo.funcaoGratificada'|trans }}:
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.funcaoGratificada %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.cargo.codRequisito'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% for requisito in object.fkPessoalCargoRequisitos %}
+                            {{ requisito.fkPessoalRequisito.descricao }}<br>
+                        {% endfor %}
+                    </h6>
+                </div>
+            </div>
+        </div>
+            {% if (object.fkPessoalCargoPadroes()|length) %}
+                {% include 'RecursosHumanosBundle:GerenciamentoCargo/Cargo/CRUD:cargoPadrao.html.twig' %}
+            {%  elseif (object.fkPessoalEspecialidades|length) %}
+                {% include 'RecursosHumanosBundle:GerenciamentoCargo/Cargo/CRUD:especialidadeSubDivisao.html.twig' %}
+            {% else %}
+                <div class="col s12 profile-box center">
+                    <a href="{{ path("urbem_recursos_humanos_pessoal_cargo_padrao_create", {codCargo:object.codCargo}) }}">
+                        Cargo Padrão <i class="mdi mdi-plus-circle small"></i>
+                    </a>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href="{{ path("urbem_recursos_humanos_pessoal_cargo_especialidade_create", {codCargo:object.codCargo}) }}">
+                        Cargo com Especialidade <i class="mdi mdi-plus-circle small"></i>
+                    </a>
+                </div>
+            {%  endif %}
+
+    </div>
+
+{% endblock show %}

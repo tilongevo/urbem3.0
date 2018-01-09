@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Ima\EventoHorasExtras:
+    type: entity
+    table: ima.evento_horas_extras
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields: {  }
+    manyToOne:
+        fkImaConfiguracaoRais:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoRais
+            inversedBy: fkImaEventoHorasExtras
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkImaEventoHorasExtras
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

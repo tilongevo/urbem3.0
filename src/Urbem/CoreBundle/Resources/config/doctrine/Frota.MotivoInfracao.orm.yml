@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Frota\MotivoInfracao:
+    type: entity
+    table: frota.motivo_infracao
+    id:
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        baseLegal:
+            type: string
+            nullable: false
+            length: 20
+            column: base_legal
+        gravidade:
+            type: string
+            nullable: false
+            length: 20
+        responsabilidade:
+            type: string
+            nullable: false
+            length: 20
+        competencia:
+            type: string
+            nullable: false
+            length: 20
+        pontos:
+            type: integer
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    oneToMany:
+        fkFrotaInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Infracao
+            mappedBy: fkFrotaMotivoInfracao

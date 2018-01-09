@@ -1,0 +1,337 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h4 class="grey-text text-darken-1 left">
+                    {{ 'label.patrimonial.licitacao.dadoslicitacao'|trans }}: {{ licitacao.codLicitacao }}
+                </h4>
+                <a href="{{ path('urbem_patrimonial_licitacao_licitacao_edit', { 'id': licitacao|objectKey }) }}"
+                   class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+                <h6 class="divider grey col s12"></h6>
+                <h6 class="col s6 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codProcesso'|trans }}
+                    : {{ licitacao.codProcesso }} - {{ licitacao.fkSwProcesso.codAssunto }}</h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.comprasDireta.codMapa'|trans }}
+                    : {{ licitacao.fkComprasMapa.exercicio }} | {{ licitacao.codMapa }} </h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.codObjeto'|trans }}
+                    : {{ licitacao.codObjeto }}</h6>
+                <h6 class="divider grey col s12"></h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.registroPrecos'|trans }}
+                    :
+                    {% if licitacao.registroPrecos == 1 %}
+                        <span class="label label-success">Sim</span>
+                    {% else %}
+                        <span class="label label-danger">Não</span>
+                    {% endif %}
+                </h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.entidade'|trans }}
+                    : {{ licitacao.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.timestamp'|trans }}
+                    : {{ licitacao.timestamp|date("d/m/Y") }} </h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.vlCotado'|trans }}
+                    : {{ licitacao.vlCotado|number_format(2, ',', '.') }}</h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.codCriterio'|trans }}
+                    : {{ licitacao.fkLicitacaoCriterioJulgamento.descricao }}</h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.numOrgao'|trans }}
+                    : {{ licitacao.orgao }}</h6>
+                <h6 class="col s3 blue-text text-darken-4 profile-titles">{{ 'label.patrimonial.licitacao.numUnidade'|trans }}
+                    : {{ licitacao.fkOrcamentoUnidade }}</h6>
+            </div>
+            <div class="col s12  profile-box">
+                {% if passivelAdjudicacao %}
+                    <div class="col s3 center" style="margin-bottom: 10px">
+                        <a class="btn btn-success btn-sm sonata-ba-action"
+                           href="{{ path('urbem_patrimonial_licitacao_adjudicacao_create',{ 'id': licitacao|objectKey}) }}"
+                                >
+                            <i class="mdi mdi-file-document left"></i>Adjudicar
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="col s3 center" style="margin-bottom: 10px">
+                        <a class="btn btn-success btn-sm sonata-ba-action grey" href="">
+                            <i class="mdi mdi-file-document left"></i>Adjudicar
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if passivelHomologacao %}
+                    <div class="col s3 center" style="margin-bottom: 10px">
+                        <a class="btn btn-success btn-sm sonata-ba-action"
+                           href="{{ path('urbem_patrimonial_licitacao_homologacao_create',{ 'id': licitacao|objectKey}) }}"
+                                >
+                            <i class="mdi mdi-file-document left"></i>Homologar
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="col s3 center" style="margin-bottom: 10px">
+                        <a class="btn btn-success btn-sm sonata-ba-action grey" href="">
+                            <i class="mdi mdi-file-document left"></i>Homologar
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="col s3 center" style="margin-bottom: 10px">
+                    <a class="btn btn-success btn-sm sonata-ba-action grey" href="">
+                        <i class="mdi mdi-file-document left"></i>Termo de Adjudicação
+                    </a>
+                </div>
+                <div class="col s3 center" style="margin-bottom: 10px">
+                    <a class="btn btn-success btn-sm sonata-ba-action grey" href="">
+                        <i class="mdi mdi-file-document left"></i>Termo de Homologação
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-flat tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-source-branch left"></i>
+                    {{ 'label.patrimonial.licitacao.comissao'|trans }}
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.cgm'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.norma'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.modalidade'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comissao in comissoesMembros %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ comissao.fkLicitacaoComissaoMembros.fkSwCgm }}</td>
+                        <td class="td-rh">{{ comissao.fkLicitacaoComissaoMembros.fkNormasNorma }}</td>
+                        <td class="td-rh">{{ comissao.fkLicitacaoComissaoLicitacao.fkLicitacaoLicitacao.fkComprasModalidade }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-flat tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-source-branch left"></i>
+                    {{ 'label.patrimonial.licitacao.comissaoAdicional'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_patrimonial_licitacao_membro_adicional_create',{ 'id':  licitacao|objectKey}) }}"
+                   class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.cgm'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.cargo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.codNatureza'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for membro in membrosAdicionais %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ membro.fkSwCgm.nomcgm }}</td>
+                        <td class="td-rh">{{ membro.cargo }}</td>
+                        <td class="td-rh">{{ membro.fkLicitacaoNaturezaCargo.descricao }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Editar"
+                                   href="{{ path('urbem_patrimonial_licitacao_membro_adicional_edit', { 'id':  membro|objectKey }) }}">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_licitacao_membro_adicional_delete', { 'id':  membro|objectKey }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-flat tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-source-branch left"></i>
+                    {{ 'label.patrimonial.licitacao.documentoExigidos'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_patrimonial_licitacao_documentos_create',{'id':  licitacao|objectKey }) }}"
+                   class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.codModalidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.nomDocumento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.exercicio'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for documento in documentos %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ documento.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}</td>
+                        <td class="td-rh">{{ documento.fkLicitacaoDocumento.nomDocumento }}</td>
+                        <td class="td-rh">{{ documento.fkLicitacaoLicitacao.exercicio }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_licitacao_documentos_delete', { 'id': documento|objectKey }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a class="btn-flat tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-source-branch left"></i>
+                    {{ 'label.patrimonial.licitacao.participantes'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                <a href="{{ path('urbem_patrimonial_licitacao_participante_create',{'id': licitacao|objectKey }) }}"
+                   class="btn-flat"><i class="mdi mdi-plus-circle left"></i></a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.entidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.cgmFornecedor'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.numcgmRepresentante'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.dtInclusao'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for participante in participantes %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ participante.fkLicitacaoLicitacao.fkOrcamentoEntidade }}</td>
+                        <td class="td-rh">{{ participante.fkComprasFornecedor }}</td>
+                        <td class="td-rh">{{ participante.fkSwCgm }}</td>
+                        <td class="td-rh">{{ participante.dtInclusao|date("d/m/Y") }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Excluir"
+                                   href="{{ path('urbem_patrimonial_licitacao_participante_delete', { 'id': participante|objectKey }) }}">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-flat tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Incluir">
+                    <i class="mdi mdi-source-branch left"></i>
+                    {{ 'label.patrimonial.licitacao.documentosparticipantes'|trans }}
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh" width="5%">#</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.cgmFornecedor'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.nomDocumento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.dtEmissao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.dtValidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.patrimonial.licitacao.dtInclusao'|trans }}</th>
+                    <th class="th-rh" width="10%">{{ 'acoes'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for documento in documentoParticipantes %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ documento.fkLicitacaoParticipante.fkComprasFornecedor }}</td>
+                        <td class="td-rh">{{ documento.fkLicitacaoLicitacaoDocumentos.fkLicitacaoDocumento }}</td>
+                        <td class="td-rh">
+                            {% if documento.dtEmissao is null %}
+                                -
+                            {% else %}
+                                {{ documento.dtEmissao|date("d/m/Y") }}
+                            {% endif %}
+                        </td>
+                        <td class="td-rh">
+                            {% if documento.dtValidade is null %}
+                                -
+                            {% else %}
+                                {{ documento.dtValidade|date("d/m/Y") }}
+                            {% endif %}
+                        </td>
+                        <td class="td-rh">{{ documento.timestamp|date("d/m/Y") }}</td>
+                        <td class="td-rh">
+                            <div class="btn-group">
+                                <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                   data-position="left"
+                                   data-delay="50"
+                                   data-tooltip="Editar"
+                                   href="{{ path('urbem_patrimonial_licitacao_participante_documentos_edit', { 'id': documento|objectKey }) }}">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Frota\ManutencaoItem:
+    type: entity
+    table: frota.manutencao_item
+    id:
+        codManutencao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_manutencao
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkFrotaManutencao:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Manutencao
+            inversedBy: fkFrotaManutencaoItens
+            cascade:
+                - persist
+            joinColumns:
+                cod_manutencao:
+                    referencedColumnName: cod_manutencao
+                exercicio:
+                    referencedColumnName: exercicio
+        fkFrotaItem:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Item
+            inversedBy: fkFrotaManutencaoItens
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item

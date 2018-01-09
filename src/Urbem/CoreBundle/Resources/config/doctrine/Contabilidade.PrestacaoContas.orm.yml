@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Contabilidade\PrestacaoContas:
+    type: entity
+    table: contabilidade.prestacao_contas
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        exercicioPrestacaoContas:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_prestacao_contas
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+        numItem:
+            type: integer
+            nullable: false
+            column: num_item
+    manyToOne:
+        fkEmpenhoItemPrestacaoContas:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPrestacaoContas
+            inversedBy: fkContabilidadePrestacaoContas
+            joinColumns:
+                num_item:
+                    referencedColumnName: num_item
+                exercicio_prestacao_contas:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+    oneToOne:
+        fkContabilidadeLancamentoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoEmpenho
+            inversedBy: fkContabilidadePrestacaoContas
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                sequencia:
+                    referencedColumnName: sequencia
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

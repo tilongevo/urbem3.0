@@ -1,0 +1,53 @@
+Urbem\CoreBundle\Entity\Licitacao\PublicacaoConvenio:
+    type: entity
+    table: licitacao.publicacao_convenio
+    indexes:
+        ck_licitacao_publicacao_convenio:
+            columns:
+                - exercicio
+                - numConvenio
+                - numcgm
+                - dtPublicacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        dtPublicacao:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_publicacao
+    fields:
+        numPublicacao:
+            type: integer
+            nullable: true
+            column: num_publicacao
+        observacao:
+            type: string
+            nullable: true
+            length: 80
+    manyToOne:
+        fkLicitacaoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            inversedBy: fkLicitacaoPublicacaoConvenios
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio
+        fkLicitacaoVeiculosPublicidade:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\VeiculosPublicidade
+            inversedBy: fkLicitacaoPublicacaoConvenios
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

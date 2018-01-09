@@ -1,0 +1,165 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">
+                        {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.fichaFinanceira'|trans }}
+                    </span>
+                </h2>
+
+                <p class="divider grey col s12"></p>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.competencia'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.competencia }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.calculadas'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.calculadas }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.calculadasSuccess'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.calculadasSuccess }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.calculadasErrors'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.calculadasErrors }}</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Ficha Financeira">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.contratosCalculadosComSucesso'|trans }}
+                </a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.cgm'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.nomCgm'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.contrato'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.matricula'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.situacao'|trans }}</th>
+                    <th class="th-rh"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if object.contratosSuccess is not empty %}
+                    {% for contrato in object.contratosSuccess %}
+                        <tr>
+                            <td class="td-rh">{{ contrato.numcgm }}</td>
+                            <td class="td-rh">{{ contrato.nom_cgm }}</td>
+                            <td class="td-rh">{{ contrato.cod_contrato }}</td>
+                            <td class="td-rh">{{ contrato.registro}}</td>
+                            <td class="td-rh">{{ contrato.situacao}}</td>
+                            <td>
+                                <a class=""
+                                   href="{{ path('urbem_recursos_humanos_folha_pagamento_folhas_calculo_decimo_gera_relatorio_ficha_financeira',
+                                   {
+                                       'id': 1,
+                                       'stCompetencia': object.competencia,
+                                       'codPeriodoMovimentacao': object.codPeriodoMovimentacao,
+                                       'codContratos': contrato.cod_contrato,
+                                       'inCodConfiguracao': object.inCodConfiguracao,
+                                       'inCodAcao': object.inCodAcao
+                                   })
+                                   }}">
+                                    <i class="fa fa-print center"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td class="td-rh" colspan="5">Não há resultados a serem exibiddos</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Ficha Financeira">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.contratosCalculadosComErro'|trans }}
+                </a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.matricula'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.cgm'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.evento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.erro'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if object.contratosErrors is not empty %}
+                    {% for contrato in object.contratosErrors %}
+                        <tr>
+                            <td class="td-rh">{{ contrato.registro }}</td>
+                            <td class="td-rh">{{ contrato.numcgm~" - "~ contrato.nom_cgm }}</td>
+                            <td class="td-rh">{{ contrato.codigo }}</td>
+                            <td class="td-rh" width="50%">{{ contrato.erro}}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="col s3 right">
+                                <a class="white-text blue darken-4 btn btn-success save right"
+                                   href="{{ path('urbem_recursos_humanos_folha_pagamento_folhas_calculo_salario_recalcular',
+                                   {
+                                       'id': object.codPeriodoMovimentacao,
+                                   })
+                                   }}">
+                                    <i class="fa fa-calculator left"></i>{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.recalcular'|trans }}
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td class="td-rh" colspan="5">Não há resultados a serem exibiddos</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="sonata-ba-form-actions well well-small form-actions row">
+        <div class="col s12">
+            <div class="col s8 initial">
+                {% set link = object.link %}
+                <a class="btn-floating white-text blue darken-4 btn-success" href="{{ path(link) }}"><i class="material-icons">arrow_back</i>{</a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

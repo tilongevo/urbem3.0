@@ -1,0 +1,141 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">{{ 'label.manutencaoProposta.manutencaoProposta'|trans }}</span>
+                </h2>
+                <a href="{{ path('urbem_patrimonial_compras_manutencao_proposta_edit', { 'id': object.codCompraDireta~'~'~object.codEntidade~'~'~object.exercicioEntidade~'~'~object.codModalidade  }) }}" class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.manutencaoProposta.codEntidade'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkOrcamentoEntidade.codEntidade ~ " - " ~ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.manutencaoProposta.codMapa'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkComprasMapa.codMapa ~ '/' ~ object.fkComprasMapa.exercicio }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.manutencaoProposta.codCompraDireta'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.codCompraDireta }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.manutencaoProposta.objeto'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkComprasObjeto.codObjeto ~ ' - ' ~ object.fkComprasObjeto.descricao }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.manutencaoProposta.codModalidade'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkComprasModalidade.codModalidade ~ ' - ' ~ object.fkComprasModalidade.descricao }}</h6>
+                </div>
+                {% if object.fkComprasMapa.fkComprasMapaCotacoes.last %}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.manutencaoProposta.dtManutencao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{object.fkComprasMapa.fkComprasMapaCotacoes.last.fkComprasCotacao.timestamp.format('d/m/Y')}}</h6>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if object.fkComprasMapa.fkComprasMapaCotacoes.last %}
+            <div class="row">
+                <div class="col s11 servidor-table">
+                    <a style="font-size: 16px">
+                        <i class="mdi mdi-file-document"></i>
+                        {{ 'CotacaoFornecedorItem'|trans }}
+                    </a>
+                </div>
+                <div class="col s1">
+                    <a class="tooltipped"
+                       href="{{ path('urbem_patrimonial_compras_cotacao_fornecedor_item_create', {
+                           'codCotacao': object.fkComprasMapa.fkComprasMapaCotacoes.last.fkComprasCotacao.codCotacao,
+                           'exercicioCotacao': object.fkComprasMapa.fkComprasMapaCotacoes.last.fkComprasCotacao.exercicio }
+                       ) }}"
+                       data-toggle="tooltip" data-placement="top" title="{{ "incluir"|trans }}">
+                        <i class="mdi mdi-plus-circle right small"></i>
+                    </a>
+                </div>
+
+                <table class="col s12 highlight bordered">
+                    <thead class="thead-rh">
+                    <th class="th-rh" width="10"></th>
+                    <th class="th-rh">{{ 'label.manutencaoProposta.codItem'|trans }}</th>
+                    <th class="th-rh">{{ 'label.manutencaoProposta.quantidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.manutencaoProposta.participante'|trans }}</th>
+                    <th class="th-rh">{{ 'label.manutencaoProposta.vlUnit'|trans }}</th>
+                    <th class="th-rh">{{ 'label.manutencaoProposta.vlTotal'|trans }}</th>
+                    <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+                    </thead>
+                    <tbody>
+                        {% for item in object.fkComprasMapa.fkComprasMapaCotacoes.last.fkComprasCotacao.fkComprasCotacaoItens %}
+                            {% for itemParticipante in item.fkComprasCotacaoFornecedorItens %}
+                                <tr>
+                                    <td class="td-rh">{{ loop.index }}</td>
+                                    <td class="td-rh">{{ item.fkAlmoxarifadoCatalogoItem.codItem ~ ' - ' ~ item.fkAlmoxarifadoCatalogoItem.descricao }}
+                                    <td class="td-rh">{{ item.quantidade|number_format(4, ',', '.') }}</td></td>
+                                    <td class="td-rh">{{ itemParticipante.fkComprasFornecedor.fkSwCgm.numcgm ~ ' - ' ~ itemParticipante.fkComprasFornecedor.fkSwCgm.nomCgm }}</td></td>
+                                    <td class="td-rh">{{ (itemParticipante.vlCotacao / item.quantidade)|number_format(2, ',', '.') }}</td></td>
+                                    <td class="td-rh">{{ itemParticipante.vlCotacao|number_format(2, ',', '.') }}</td></td>
+                                    <td class="td-rh">
+                                        <div class="btn-group">
+                                            <a href="{{ path('urbem_patrimonial_compras_cotacao_fornecedor_item_edit',
+                                            { 'id': admin.getObjectKey(itemParticipante)}) }}"
+                                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                               data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}">
+                                                <i class="material-icons">edit</i>
+                                            </a>
+                                            <a href="{{ path('urbem_patrimonial_compras_cotacao_fornecedor_item_delete',
+                                            { 'id': admin.getObjectKey(itemParticipante)}) }}"
+                                               class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                               data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                                                <i class="material-icons">delete</i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="sonata-ba-form-actions well well-small form-actions row">
+                <div class="col s8 initial">
+                    <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_list') }}"
+                       class="back btn-floating white-text blue darken-4 btn-success">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock show %}

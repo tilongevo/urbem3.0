@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Ppa\EstimativaOrcamentariaBase:
+    type: entity
+    table: ppa.estimativa_orcamentaria_base
+    id:
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+    fields:
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 30
+            column: cod_estrutural
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+    oneToMany:
+        fkPpaPpaEstimativaOrcamentariaBases:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\PpaEstimativaOrcamentariaBase
+            mappedBy: fkPpaEstimativaOrcamentariaBase

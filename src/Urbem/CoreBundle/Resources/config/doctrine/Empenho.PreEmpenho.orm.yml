@@ -1,0 +1,129 @@
+Urbem\CoreBundle\Entity\Empenho\PreEmpenho:
+    type: entity
+    table: empenho.pre_empenho
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\PreEmpenhoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+    fields:
+        codHistorico:
+            type: integer
+            nullable: true
+            column: cod_historico
+        cgmBeneficiario:
+            type: integer
+            nullable: false
+            column: cgm_beneficiario
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        implantado:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+        descricao:
+            type: text
+            nullable: true
+    manyToOne:
+        fkEmpenhoHistorico:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Historico
+            inversedBy: fkEmpenhoPreEmpenhos
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEmpenhoPreEmpenhos
+            joinColumns:
+                cgm_beneficiario:
+                    referencedColumnName: numcgm
+        fkEmpenhoTipoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\TipoEmpenho
+            inversedBy: fkEmpenhoPreEmpenhos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkEmpenhoPreEmpenhos
+            joinColumns:
+                cgm_usuario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkEmpenhoAtributoEmpenhoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AtributoEmpenhoValor
+            mappedBy: fkEmpenhoPreEmpenho
+        fkEmpenhoItemPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            mappedBy: fkEmpenhoPreEmpenho
+        fkTcemgContratoAditivoItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContratoAditivoItem
+            mappedBy: fkEmpenhoPreEmpenho
+        fkEmpenhoAutorizacaoEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho
+            mappedBy: fkEmpenhoPreEmpenho
+    oneToOne:
+        fkEmpenhoEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            mappedBy: fkEmpenhoPreEmpenho
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+        fkEmpenhoPreEmpenhoDespesa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PreEmpenhoDespesa
+            mappedBy: fkEmpenhoPreEmpenho
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+        fkEmpenhoRestosPreEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\RestosPreEmpenho
+            mappedBy: fkEmpenhoPreEmpenho
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho

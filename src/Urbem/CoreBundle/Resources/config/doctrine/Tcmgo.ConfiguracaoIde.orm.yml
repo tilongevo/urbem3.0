@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoIde:
+    type: entity
+    table: tcmgo.configuracao_ide
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        cgmChefeGoverno:
+            type: integer
+            nullable: false
+            column: cgm_chefe_governo
+        cgmContador:
+            type: integer
+            nullable: false
+            column: cgm_contador
+        cgmControleInterno:
+            type: integer
+            nullable: false
+            column: cgm_controle_interno
+        crcContador:
+            type: integer
+            nullable: false
+            column: crc_contador
+        ufCrcContador:
+            type: integer
+            nullable: false
+            column: uf_crc_contador
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoConfiguracaoIdes
+            joinColumns:
+                cgm_chefe_governo:
+                    referencedColumnName: numcgm
+        fkSwUf:
+            targetEntity: Urbem\CoreBundle\Entity\SwUf
+            inversedBy: fkTcmgoConfiguracaoIdes
+            joinColumns:
+                uf_crc_contador:
+                    referencedColumnName: cod_uf
+        fkSwCgm1:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoConfiguracaoIdes1
+            joinColumns:
+                cgm_contador:
+                    referencedColumnName: numcgm
+        fkSwCgm2:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcmgoConfiguracaoIdes2
+            joinColumns:
+                cgm_controle_interno:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcmgoConfiguracaoIde
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

@@ -1,0 +1,87 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle:Relatorio:header.html.twig' %}
+        <p align="left">
+            <span style="font-size: 13pt"><strong>{{ 'label.arrecadacaoExtratoDebitosReport.modulo' |trans|upper }}</h5></strong></span>
+        </p>
+
+        {% if dados.inscricaoMunicipal != '' %}
+            <h5 class="box-title left-align">
+                {{ 'label.arrecadacaoExtratoDebitosReport.inscricaoImobiliaria'|trans }}
+                : {{ dados.inscricaoMunicipal ~ ' - ' ~ inscricaoLogradouro.endereco }}
+            </h5>
+            <h5 class="box-title left-align">
+                {{ 'label.arrecadacaoExtratoDebitosReport.contribuinte'|trans }} : {{ dados.contribuinte }}
+            </h5>
+        {% elseif dados.inscricaoEconomica != '' %}
+            <h5 class="box-title left-align">{{ 'label.arrecadacaoExtratoDebitosReport.inscricaoEconomica'|trans }}
+                : {{ dados.inscricaoEconomica~' - ' ~dados.contribuinte }}
+            </h5>
+            <h5 class="box-title left-align">
+                {{ 'label.arrecadacaoExtratoDebitosReport.dadosComplementares'|trans }}
+                : {{ inscricaoEndereco.endereco }}
+            </h5>
+        {% elseif dados.contribuinte != '' %}
+            <h5 class="box-title left-align">{{ 'label.arrecadacaoExtratoDebitosReport.contribuinte'|trans }}
+                :{{ dados.numcgm ~ ' - '~ dados.contribuinte }}</h5>
+        {% endif %}
+
+        <table class="table table-bordered">
+            <thead>
+            <tr style="background: #b3b3b3;">
+                <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.exercicio'|trans|upper }}</th>
+                <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.lancCobranca'|trans|upper }}</th>
+                <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.origem'|trans|upper }}</th>
+                <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.parcelas'|trans|upper }}</th>
+                <th style="text-align: center">{{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.total'|trans|upper }}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% set total = 0 %}
+            {% for parcela in listaParcelasEmAberto %}
+                {% set total = total + parcela.valor %}
+                <tr>
+                    <td style="text-align: center">{{ parcela.exercicio }}</td>
+                    <td style="text-align: center">{{ parcela.cod_lancamento }}</td>
+                    <td>{{ parcela.origem }}</td>
+                    <td style="text-align: center">{{ parcela.qtde }}</td>
+                    <td style="text-align: right">{{ parcela.valor|number_format_decimal({'fraction_digits': 2}) }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td style="text-align: right" colspan="4">
+                    {{ 'label.arrecadacaoExtratoDebitosReport.lista.total'|trans|upper }}
+                </td>
+                <td style="text-align: right">{{ total|number_format_decimal({'fraction_digits':2 }) }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <h5 class="box-title left-align">
+            {{ 'label.arrecadacaoExtratoDebitosReport.listaPdf.filtros'|trans }}
+        </h5>
+        {% if dados.inscricaoMunicipal != '' %}
+            <h5 class="box-title left-align">
+                {{ 'label.arrecadacaoExtratoDebitosReport.inscricaoImobiliaria'|trans }}
+                : {{ dados.inscricaoMunicipal ~ ' - ' ~ inscricaoLogradouro.endereco }}
+            </h5>
+        {% elseif dados.inscricaoEconomica != '' %}
+            <h5 class="box-title left-align">{{ 'label.arrecadacaoExtratoDebitosReport.inscricaoEconomica'|trans }}
+                : {{ dados.inscricaoEconomica }}
+            </h5>
+        {% elseif dados.contribuinte != '' %}
+            <h5 class="box-title left-align">{{ 'label.arrecadacaoExtratoDebitosReport.contribuinte'|trans }}
+                :{{ dados.numcgm~' - ' ~dados.contribuinte }}</h5>
+        {% endif %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+{% endblock %}

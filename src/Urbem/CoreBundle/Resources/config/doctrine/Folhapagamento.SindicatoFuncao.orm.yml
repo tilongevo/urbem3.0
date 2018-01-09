@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Folhapagamento\SindicatoFuncao:
+    type: entity
+    table: folhapagamento.sindicato_funcao
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+    manyToOne:
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkFolhapagamentoSindicatoFuncoes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao
+    oneToOne:
+        fkFolhapagamentoSindicato:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Sindicato
+            inversedBy: fkFolhapagamentoSindicatoFuncao
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

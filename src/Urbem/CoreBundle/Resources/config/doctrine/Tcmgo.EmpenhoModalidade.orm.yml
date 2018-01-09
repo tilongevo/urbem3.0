@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Tcmgo\EmpenhoModalidade:
+    type: entity
+    table: tcmgo.empenho_modalidade
+    id:
+        codModalidade:
+            type: string
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+    fields:
+        codFundamentacao:
+            type: string
+            nullable: true
+            length: 2
+            column: cod_fundamentacao
+        justificativa:
+            type: string
+            nullable: true
+            length: 250
+        razaoEscolha:
+            type: string
+            nullable: true
+            length: 245
+            column: razao_escolha
+    manyToOne:
+        fkTcmgoModalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Modalidade
+            inversedBy: fkTcmgoEmpenhoModalidades
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkTcmgoFundamentacaoLegal:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\FundamentacaoLegal
+            inversedBy: fkTcmgoEmpenhoModalidades
+            joinColumns:
+                cod_fundamentacao:
+                    referencedColumnName: cod_fundamentacao
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcmgoEmpenhoModalidades
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

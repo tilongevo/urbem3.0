@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Pessoal\Caged:
+    type: entity
+    table: pessoal.caged
+    id:
+        codCaged:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_caged
+    fields:
+        numCaged:
+            type: integer
+            nullable: false
+            column: num_caged
+        descricao:
+            type: string
+            nullable: false
+            length: 60
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+    oneToMany:
+        fkPessoalCausaRescisaoCageds:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaRescisaoCaged
+            mappedBy: fkPessoalCaged
+        fkPessoalTipoAdmissaoCageds:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TipoAdmissaoCaged
+            mappedBy: fkPessoalCaged

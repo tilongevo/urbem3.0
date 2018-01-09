@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\SwNomeLogradouro:
+    type: entity
+    table: sw_nome_logradouro
+    id:
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        nomLogradouro:
+            type: string
+            generator:
+                strategy: NONE
+            column: nom_logradouro
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        dtInicio:
+            type: date
+            nullable: true
+            column: dt_inicio
+        dtFim:
+            type: date
+            nullable: true
+            column: dt_fim
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+    manyToOne:
+        fkSwLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwLogradouro
+            inversedBy: fkSwNomeLogradouros
+            joinColumns:
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+        fkSwTipoLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwTipoLogradouro
+            inversedBy: fkSwNomeLogradouros
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkSwNomeLogradouros
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

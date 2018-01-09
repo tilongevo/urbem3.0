@@ -1,0 +1,75 @@
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="incluir-membro-btn" id="incluir-membro-btn" value="Incluir">
+    </div>
+</div>
+
+<div class="form_row col s12 campo-sonata">
+    <div class="alert alert-danger js-incluir-membro-errors hidden"></div>
+</div>
+
+<div class="col s12 membros">
+    <h3 class="col s10 box-title left-align show">{{ 'Lista dos Membros da Comissão'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="js-table-lista-membros" class="table table-bordered highlight js-table-lista-membros" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.cgm'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.norma'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.dataComissao'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.vigencia'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.cargo'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.tipo'|trans }}</th>
+            <th class="th-rh">{{ 'label.patrimonial.licitacao.naturezaCargo'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody class="sonata-ba-tbody ui-sortable">
+
+        {% if field.data.membros|length > 0 %}
+            {% for membro in field.data.membros %}
+                <tr class="js-lista-membros-tr" data-index="{{ loop.index }}">
+                    <td class="control-group">
+                        {{ ++loop.index}}
+                    </td>
+                    <td class="control-group">
+                        <input type="hidden" name="membros[{{ loop.index }}][fkSwCgm]" value="{{ membro.getNumcgm }}" readonly>
+                        <input type="hidden" name="membros[{{ loop.index }}][normaMembro]" value="{{ membro.getCodNorma }}" readonly>
+                        <input type="hidden" name="membros[{{ loop.index }}][dataComissaoMembro]" value="{{ membro.getFkNormasNorma.getDtPublicacao|date('d/m/Y') }}" readonly>
+                        <input type="hidden" name="membros[{{ loop.index }}][vigenciaMembro]" value="{{ membro.getFkNormasNorma.getFkNormasNormaDataTermino.getDtTermino|date('d/m/Y') }}" readonly>
+                        <input type="hidden" name="membros[{{ loop.index }}][cargo]" value="{{ membro.getCargo }}" readonly>
+                        <input type="hidden" name="membros[{{ loop.index }}][fkLicitacaoTipoMembro]" value="{{ membro.getCodTipoMembro }}" readonly>
+                        <input type="hidden" name="membros[{{ loop.index }}][fkLicitacaoNaturezaCargo]" value="{{ membro.getNaturezaCargo }}" readonly>
+                        <span>{{ membro.getFkSwCgm }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ membro.getFkNormasNorma}}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ membro.getFkNormasNorma.getDtPublicacao|date('d/m/Y') }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ membro.getFkNormasNorma.getFkNormasNormaDataTermino.getDtTermino|date('d/m/Y') }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ membro.getCargo }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span class="tipoMembro">{{ membro.getFkLicitacaoTipoMembro.getDescricao }}</span>
+                    </td>
+                    <td class="control-group">
+                        <span>{{ membro.getFkLicitacaoNaturezaCargo.getDescricao }}</span>
+                    </td>
+                    <td class="control-group">
+                        <button type="button" class="js-delete-row">Remover</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>

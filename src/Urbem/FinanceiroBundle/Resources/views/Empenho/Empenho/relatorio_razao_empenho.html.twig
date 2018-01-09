@@ -1,0 +1,193 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+        <br>
+        <p align="center">
+            <span style="font-size: 12pt"><strong>{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.dados' |trans|upper }}</h5></strong></span>
+        </p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.numeroEmpenho'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.cod_empenho ~'/'~razaoEmpenho.exercicio }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.emissao'|trans|upper ~ ': ' ~ '' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.dt_empenho }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.validade'|trans|upper ~ ': ' ~ '' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.dt_vencimento }}</th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.entidade'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.cod_entidade }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.nom_entidade }}</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.orgao'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.num_orgao }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.nom_orgao }}</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.unidade'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.num_unidade }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.nom_unidade }}</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.dotacao'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.cod_despesa }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.cod_estrutural_dot }} {{ razaoEmpenho.descricao_dot }}</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.desdobramento'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left"></th>
+                <th style="text-align:left">{{ razaoEmpenho.cod_estrutural_desdobramento }} {{ razaoEmpenho.descricao_desdobramento }}</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.pao'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.num_acao }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.nom_pao }}</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.recurso'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.cod_recurso }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.nom_recurso }}</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoDotacao.historicoPadrao'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.cod_historico }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.nom_historico }}</th>
+                <th colspan="2"></th>
+            </tr>
+            </thead>
+        </table>
+
+        <hr style="height: 2px; border:none; background: #000;">
+
+        <p align="center"><span
+                    style="font-size: 12pt"><strong>{{ 'label.emitirEmpenhoDiversos.empenhoCredor.dados' |trans|upper }}</h5></strong></span>
+        </p>
+        <p><strong>{{ 'label.emitirEmpenhoDiversos.empenhoCredor.credor'|trans }}
+                :</strong> {{ razaoEmpenho.num_cgm ~'-'~razaoEmpenho.nom_fornecedor }}
+        <p><strong>{{ 'label.emitirEmpenhoDiversos.empenhoCredor.endereco'|trans }}
+                :</strong> {{ razaoEmpenho.endereco }}
+        <p><strong>{{ 'label.emitirEmpenhoDiversos.empenhoCredor.municipioUF'|trans }}
+                :</strong> {{ razaoEmpenho.municipio_uf }}
+        <p><strong>{{ 'label.emitirEmpenhoDiversos.empenhoCredor.cepFone'|trans }}
+                :</strong> {{ razaoEmpenho.cep ~'/'~razaoEmpenho.fone }}
+        <p align="center"><span
+                    style="font-size: 12pt"><strong>{{ 'label.emitirEmpenhoDiversos.empenhoValores.dados' |trans|upper }}</h5></strong></span>
+        </p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoValores.autorizacao'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.cod_autorizacao }}</th>
+                <th style="text-align:right">{{ 'label.emitirEmpenhoDiversos.empenhoValores.valorEmpenho'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.vl_empenhado|number_format_decimal({'fraction_digits': 2}) }}</th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoValores.ordemCompra'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left"></th>
+                <th style="text-align:right">{{ 'label.emitirEmpenhoDiversos.empenhoValores.valorAnulado'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.vl_empenhado_anulado|number_format_decimal({'fraction_digits': 2}) }}</th>
+            </tr>
+            <tr>
+                <th style="text-align:left">{{ 'label.emitirEmpenhoDiversos.empenhoValores.licitacao'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left"></th>
+                <th style="text-align:right">{{ 'label.emitirEmpenhoDiversos.empenhoValores.valorLiquido'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.vl_liquidado|number_format_decimal({'fraction_digits': 2}) }}</th>
+            </tr>
+            <tr>
+                <th style="text-align:left"></th>
+                <th style="text-align:left"></th>
+                <th style="text-align:right">{{ 'label.emitirEmpenhoDiversos.empenhoValores.valorPago'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.vl_pago|number_format_decimal({'fraction_digits': 2}) }}</th>
+            </tr>
+            <tr>
+                <th style="text-align:left"></th>
+                <th style="text-align:left"></th>
+                <th style="text-align:right">{{ 'label.emitirEmpenhoDiversos.empenhoValores.saldoAtual'|trans|upper ~ ': ' }}</th>
+                <th style="text-align:left">{{ razaoEmpenho.saldo_atual|number_format_decimal({'fraction_digits': 2}) }}</th>
+            </tr>
+            </thead>
+        </table>
+        <p align="center"><span
+                    style="font-size: 12pt"><strong>{{ 'label.emitirEmpenhoDiversos.empenhoDescricao.dados' |trans|upper }}</h5></strong></span>
+        </p>
+        <h5>{{ razaoEmpenho.descricao }}</h5>
+        <br>
+        <p align="center"><span
+                    style="font-size: 12pt;"><strong>{{ 'label.emitirEmpenhoDiversos.empenhoItens.dados' |trans|upper }}</h5></strong></span>
+        </p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoItens.descricao'|trans|upper }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoItens.empenhado'|trans|upper }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoItens.liquidado'|trans|upper }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if itensPreEmpenho %}
+            {% for item in itensPreEmpenho %}
+                <tr>
+                    <th style="text-align:left">{{ item.nomItem }}</th>
+                    <th>{{ item.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</th>
+                    <th>{{ item.vlTotal|number_format_decimal({'fraction_digits': 2}) }}</th>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <p align="center"><span
+                    style="font-size: 12pt"><strong>{{ 'label.emitirEmpenhoDiversos.empenhoLancamento.dados' |trans|upper }}</h5></strong></span>
+        </p>
+        <table class="table ">
+            <thead>
+            <tr>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoLancamento.data'|trans|upper }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoLancamento.historico'|trans|upper }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoLancamento.complemento'|trans|upper }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoLancamento.valor'|trans|upper }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoLancamento.debito'|trans|upper }}</th>
+                <th>{{ 'label.emitirEmpenhoDiversos.empenhoLancamento.credito'|trans|upper }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if razaoEmpenhoLancamentos %}
+                {% for razaoEmpenhoLancamento in razaoEmpenhoLancamentos %}
+                    <tr>
+                        <th>{{ razaoEmpenhoLancamento.data }}</th>
+                        <th style="text-align:left">{{ razaoEmpenhoLancamento.historico }}</th>
+                        <th>{{ razaoEmpenhoLancamento.complemento }}</th>
+                        <th>{{ razaoEmpenhoLancamento.valor|number_format_decimal({'fraction_digits': 2}) }}</th>
+                        <th>{{ razaoEmpenhoLancamento.debito }}</th>
+                        <th>{{ razaoEmpenhoLancamento.credito }}</th>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+    <style>
+        table td, th {
+            border: 0 !important;
+            text-align: center
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Imobiliario\Loteamento:
+    type: entity
+    table: imobiliario.loteamento
+    repositoryClass: Urbem\CoreBundle\Repository\Imobiliario\LoteamentoRepository
+    id:
+        codLoteamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_loteamento
+    fields:
+        nomLoteamento:
+            type: string
+            nullable: false
+            length: 100
+            column: nom_loteamento
+        areaLogradouro:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: area_logradouro
+        areaComunitaria:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            options:
+                default: 0
+            column: area_comunitaria
+    oneToMany:
+        fkImobiliarioLoteamentoLoteOrigens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteamentoLoteOrigem
+            mappedBy: fkImobiliarioLoteamento
+        fkImobiliarioProcessoLoteamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\ProcessoLoteamento
+            mappedBy: fkImobiliarioLoteamento
+        fkImobiliarioLoteLoteamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LoteLoteamento
+            mappedBy: fkImobiliarioLoteamento
+        fkImobiliarioLicencaLoteLoteamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LicencaLoteLoteamento
+            mappedBy: fkImobiliarioLoteamento

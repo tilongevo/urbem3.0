@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Economico\BaixaEmissao:
+    type: entity
+    table: economico.baixa_emissao
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        numDocumento:
+            type: integer
+            nullable: false
+            column: num_documento
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+    manyToOne:
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkEconomicoBaixaEmissoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToOne:
+        fkEconomicoBaixaCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaCadastroEconomico
+            inversedBy: fkEconomicoBaixaEmissao
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                dt_inicio:
+                    referencedColumnName: dt_inicio
+                timestamp:
+                    referencedColumnName: timestamp

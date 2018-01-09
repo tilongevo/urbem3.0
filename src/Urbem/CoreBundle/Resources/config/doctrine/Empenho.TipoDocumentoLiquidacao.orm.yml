@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Empenho\TipoDocumentoLiquidacao:
+    type: entity
+    table: empenho.tipo_documento_liquidacao
+    id:
+        codTipoDocumentoLiquidacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento_liquidacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 35
+    oneToMany:
+        fkEmpenhoDocumentoLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\DocumentoLiquidacao
+            mappedBy: fkEmpenhoTipoDocumentoLiquidacao

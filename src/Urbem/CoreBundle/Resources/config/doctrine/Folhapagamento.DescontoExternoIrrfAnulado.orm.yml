@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoIrrfAnulado:
+    type: entity
+    table: folhapagamento.desconto_externo_irrf_anulado
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        timestampAnulado:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_anulado
+    oneToOne:
+        fkFolhapagamentoDescontoExternoIrrf:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoIrrf
+            inversedBy: fkFolhapagamentoDescontoExternoIrrfAnulado
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp

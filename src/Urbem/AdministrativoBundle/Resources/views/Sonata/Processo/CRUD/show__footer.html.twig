@@ -1,0 +1,35 @@
+{% macro action_button(text, icon, route = null, route_params = {}, col = 's4') %}
+    <div class="col {{ col|e }} center" style="padding-bottom: 10px">
+        {% if route is null %}
+            <a class="white-text btn btn-success save grey lighten-2 disabled">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e|trans }}
+            </a>
+        {% else %}
+            <a class="white-text blue darken-4 btn btn-success save"
+               href="{{ path(route, route_params) }}">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e|trans }}
+            </a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+<div class="row">
+    <div class="col s12">
+        {# Sessão de botoes de relatorios #}
+        {{ _self.action_button('label.processo.relatorios.salvar', 'print', 'urbem_administrativo_protocolo_processo_relatorio_salvar', swProcessoKeyParam) }}
+
+        {{ _self.action_button('label.processo.relatorios.etiqueta', 'print', 'urbem_administrativo_protocolo_processo_relatorio_etiqueta', swProcessoKeyParam) }}
+
+        {{ _self.action_button('label.processo.relatorios.despachos', 'print', 'urbem_administrativo_protocolo_processo_relatorio_despachos', swProcessoKeyParam) }}
+
+        {% if swProcesso.fkSwDespachado is not null %}
+            {{ _self.action_button('label.processo.relatorios.despacho', 'print', 'urbem_administrativo_protocolo_processo_relatorio_despacho', swProcessoKeyParam) }}
+        {% endif %}
+
+        {% if swProcesso.codSituacao == 5 %}
+            {{ _self.action_button('label.processo.relatorios.arquivamento_temporario', 'print', 'urbem_administrativo_protocolo_processo_relatorio_arquivamento_temporario', swProcessoKeyParam, 's12') }}
+        {% elseif swProcesso.codSituacao == 9 %}
+            {{ _self.action_button('label.processo.relatorios.arquivamento_definitivo', 'print', 'urbem_administrativo_protocolo_processo_relatorio_arquivamento_definitivo', swProcessoKeyParam, 's12') }}
+        {% endif %}
+    </div>
+</div>

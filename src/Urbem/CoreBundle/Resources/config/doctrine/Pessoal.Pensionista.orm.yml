@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Pessoal\Pensionista:
+    type: entity
+    table: pessoal.pensionista
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\PensionistaRepository
+    id:
+        codPensionista:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pensionista
+        codContratoCedente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato_cedente
+    fields:
+        codProfissao:
+            type: integer
+            nullable: false
+            column: cod_profissao
+        numcgm:
+            type: integer
+            nullable: false
+        codGrau:
+            type: integer
+            nullable: false
+            column: cod_grau
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalPensionistas
+            joinColumns:
+                cod_contrato_cedente:
+                    referencedColumnName: cod_contrato
+        fkCseProfissao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Profissao
+            inversedBy: fkPessoalPensionistas
+            joinColumns:
+                cod_profissao:
+                    referencedColumnName: cod_profissao
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkPessoalPensionistas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkCseGrauParentesco:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\GrauParentesco
+            inversedBy: fkPessoalPensionistas
+            joinColumns:
+                cod_grau:
+                    referencedColumnName: cod_grau
+    oneToMany:
+        fkPessoalContratoPensionistas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionista
+            mappedBy: fkPessoalPensionista
+    oneToOne:
+        fkPessoalPensionistaCid:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensionistaCid
+            mappedBy: fkPessoalPensionista
+            joinColumns:
+                cod_pensionista:
+                    referencedColumnName: cod_pensionista
+                cod_contrato_cedente:
+                    referencedColumnName: cod_contrato_cedente

@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Almoxarifado\NaturezaLancamento:
+    type: entity
+    table: almoxarifado.natureza_lancamento
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\NaturezaLancamentoRepository
+    id:
+        exercicioLancamento:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_lancamento
+        numLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_lancamento
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        tipoNatureza:
+            type: string
+            generator:
+                strategy: NONE
+            column: tipo_natureza
+    fields:
+        cgmAlmoxarife:
+            type: integer
+            nullable: false
+            column: cgm_almoxarife
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        numcgmUsuario:
+            type: integer
+            nullable: false
+            column: numcgm_usuario
+    manyToOne:
+        fkAlmoxarifadoNatureza:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Natureza
+            inversedBy: fkAlmoxarifadoNaturezaLancamentos
+            joinColumns:
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                tipo_natureza:
+                    referencedColumnName: tipo_natureza
+        fkAlmoxarifadoAlmoxarife:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Almoxarife
+            inversedBy: fkAlmoxarifadoNaturezaLancamentos
+            joinColumns:
+                cgm_almoxarife:
+                    referencedColumnName: cgm_almoxarife
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkAlmoxarifadoNaturezaLancamentos
+            joinColumns:
+                numcgm_usuario:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkAlmoxarifadoLancamentoMateriais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial
+            mappedBy: fkAlmoxarifadoNaturezaLancamento
+        fkComprasNotaFiscalFornecedores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\NotaFiscalFornecedor
+            mappedBy: fkAlmoxarifadoNaturezaLancamento

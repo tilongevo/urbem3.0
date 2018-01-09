@@ -1,0 +1,28 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% set status = admin.verificaStatus(object) %}
+{% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') and status.totalLiquidar == true %}
+    <a href="{{ admin.generateObjectUrl('edit', object) }}"
+    class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list"
+       data-toggle="tooltip"
+       data-placement="bottom"
+       title="Liquidar empenho">
+        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+    </a>
+{% else %}
+    <a href="{{ admin.generateObjectUrl('edit', object) }}?tipo=detalhe"
+       class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list"
+       data-toggle="tooltip"
+       data-placement="bottom"
+       title="Visualizar Liquidação">
+        <i class="fa fa-search-plus fa-lg" aria-hidden="true"></i>
+    </a>
+{% endif %}

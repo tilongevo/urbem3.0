@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventosDescontoExterno:
+    type: entity
+    table: folhapagamento.configuracao_eventos_desconto_externo
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\ConfiguracaoEventosDescontoExternoRepository
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        eventoDescontoIrrf:
+            type: integer
+            nullable: false
+            column: evento_desconto_irrf
+        eventoBaseIrrf:
+            type: integer
+            nullable: false
+            column: evento_base_irrf
+        eventoDescontoPrevidencia:
+            type: integer
+            nullable: false
+            column: evento_desconto_previdencia
+        eventoBasePrevidencia:
+            type: integer
+            nullable: false
+            column: evento_base_previdencia
+    manyToOne:
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoConfiguracaoEventosDescontoExternos
+            joinColumns:
+                evento_desconto_irrf:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoEvento1:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoConfiguracaoEventosDescontoExternos1
+            joinColumns:
+                evento_base_irrf:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoEvento2:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoConfiguracaoEventosDescontoExternos2
+            joinColumns:
+                evento_desconto_previdencia:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoEvento3:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoConfiguracaoEventosDescontoExternos3
+            joinColumns:
+                evento_base_previdencia:
+                    referencedColumnName: cod_evento

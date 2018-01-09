@@ -1,0 +1,22 @@
+<table class="bordered highlight">
+    <thead>
+    <tr>
+        <th width="3%"></th>
+        <th width="50%">{{ 'label.itens.item'|trans }}</th>
+        <th>{{ 'label.itens.centroCusto'|trans }}</th>
+        <th class="right-align">{{ 'label.itens.qtde'|trans }}</th>
+        <th class="right-align">{{ 'label.itens.valorTotal'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for mapa in mapaItems %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ mapa.nom_item }}</td>
+            <td>{{ mapa.centro_custo }}</td>
+            <td class="right-align">{{ mapa.quantidade_solicitada|number_format(4, ',', '.') }}</td>
+            <td class="right-align">R$ {{  (mapa.vl_total - mapa.valor_anulado)|number_format(2, ',', ' ') }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

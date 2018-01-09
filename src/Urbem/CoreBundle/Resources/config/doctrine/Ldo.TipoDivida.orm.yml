@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Ldo\TipoDivida:
+    type: entity
+    table: ldo.tipo_divida
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 70
+    oneToMany:
+        fkLdoConfiguracaoDividas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\ConfiguracaoDivida
+            mappedBy: fkLdoTipoDivida

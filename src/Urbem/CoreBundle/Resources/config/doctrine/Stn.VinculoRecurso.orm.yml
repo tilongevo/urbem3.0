@@ -1,0 +1,78 @@
+Urbem\CoreBundle\Entity\Stn\VinculoRecurso:
+    type: entity
+    table: stn.vinculo_recurso
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+        codVinculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vinculo
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields: {  }
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkStnVinculoRecursos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkStnVinculoRecursos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkStnVinculoRecursos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkStnVinculoStnRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\VinculoStnRecurso
+            inversedBy: fkStnVinculoRecursos
+            joinColumns:
+                cod_vinculo:
+                    referencedColumnName: cod_vinculo
+        fkStnTipoVinculoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\TipoVinculoRecurso
+            inversedBy: fkStnVinculoRecursos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo

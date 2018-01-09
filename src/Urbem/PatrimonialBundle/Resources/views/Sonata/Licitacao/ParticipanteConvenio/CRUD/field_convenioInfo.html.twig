@@ -1,0 +1,65 @@
+{% set convenio = field.data.convenio %}
+
+{% if convenio is not null %}
+    <div class="row">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="col s12">
+                    <table class="table show-table">
+                        <tbody>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.numConvenio'|trans }}</th>
+                            <td>{{ convenio.numConvenio ~ "/" ~ convenio.exercicio }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.codObjeto'|trans }}</th>
+                            <td>{{ convenio.fkComprasObjeto.descricao }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.codTipoConvenio'|trans }}</th>
+                            <td>{{ convenio.fkLicitacaoTipoConvenio.descricao }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.cgmResponsavel'|trans }}</th>
+                            <td>{{ convenio.fkSwCgm }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.dtAssinatura'|trans }}</th>
+                            <td>{{ convenio.dtAssinatura|date('d/m/Y') }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.vencimento'|trans }}</th>
+                            <td>{{ convenio.dtVigencia|date('d/m/Y') }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.valor'|trans }}</th>
+                            <td>R$ {{ convenio.valor|number_format(2, ',', '.') }}</td>
+                        </tr>
+                        {% if convenio.totais is defined %}
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.valorDisponivel'|trans }}</th>
+                            <td>R$ {{ convenio.totais.valorDisponivel|number_format(2, ',', '.') }}</td>
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.convenioAdmin.percentualUsado'|trans }}</th>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar"
+                                         role="progressbar"
+                                         aria-valuenow="{{ convenio.totais.percentualUsado }}"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100"
+                                         style="width: {{ convenio.totais.percentualUsado }}%;">
+                                        {{ 'label.convenioAdmin.participantes.percentualUsado'|trans({ '%percentual%': convenio.totais.percentualUsado }) }}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

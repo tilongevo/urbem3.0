@@ -1,0 +1,154 @@
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-header col s12">
+            <h2 class="col s10 box-title left-align show">
+                {{ "empenhoConvenio.empenhosVinculados" | trans}}
+                <a href="#" id="add-item" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Incluir">
+                    <i class="material-icons">add_circle</i>
+                </a>
+            </h2>
+        </div>
+        <div class="sonata-ba-form">
+            <form method="post" action="{{ path('urbem_financeiro_empenho_empenho_convenio_criar_vinculo', {id: id}) }}">
+                {% form_theme form.fkEmpenhoEmpenhoConvenios 'FinanceiroBundle:Empenho/Empenho/Convenio:detalhe_form_empenho_convenio.html.twig' %}
+                {{ form_widget(form.fkEmpenhoEmpenhoConvenios) }}
+                {{ form_rest(form) }}
+                <div id="_message">
+                    {% if form.vars.value.fkEmpenhoEmpenhoConvenios.count == 0 %}
+                        <div class="box-body  no-padding">
+                            <table class="table show-table">
+                                <tbody>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <td>{{ "empenhoConvenio.nenhumEmpenho" | trans}}</td>
+                                    </tr>
+                                    <tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+                    <div class="col s12">
+                        <div class="col right-align initial">
+                            <button type="submit" class="white-text blue darken-4 btn btn-success save" name="btn_create_and_list"><i class="material-icons left">save</i>{{ "salvar" | trans }}</button>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        function Parent() {
+            this.holder = null;
+            this.childTemplate = null;
+            this.choiceBag = [];
+            this.choiceBagIndex = -1;
+        };
+
+        Parent.prototype = {
+            constructor: Parent
+        };
+
+        Parent.prototype.load = function() {
+            var that = this;
+
+            this.holder.find('table').each(function(i) {
+                index = $(this).find('select').attr('id').replace(/[^\d.]/g, '');
+                that.choiceBagIndex = index > that.choiceBagIndex ? index : that.choiceBagIndex;
+
+                var item = new Child(that);
+                item.setIndex(index);
+
+                that.addChoice(item, i);
+            });
+        };
+
+        Parent.prototype.createEmptyChild = function() {
+            this.choiceBagIndex = this.choiceBagIndex + 1;
+
+            template = this.childTemplate.replace(/__name__/g, this.choiceBagIndex);
+
+            this.holder.append(template);
+
+            referenceIndex = this.holder.children().length - 1;
+
+            var item = new Child(this);
+            item.setIndex(this.choiceBagIndex);
+
+            this.addChoice(item, referenceIndex);
+        };
+
+        Parent.prototype.removeItem = function(item) {
+            item.getReference().remove();
+
+            delete this.choiceBag[item.getIndex()];
+
+            var c = 0;
+
+            for(var i = this.choiceBag.length - 1; i >= 0; i--) {
+                if (typeof this.choiceBag[i] !== 'undefined') {
+                    c++;
+                }
+            }
+
+            if (c === 0) {
+                $('#_message').show();
+            }
+        };
+
+        Parent.prototype.addChoice = function(item, referenceIndex) {
+            item.bind(referenceIndex);
+
+            this.choiceBag[item.getIndex()] = item;
+
+            $('.select2-parameters').select2();
+        };
+
+        function Child(field) {
+            this.field = field;
+            this.index = null;
+            this.reference = null;
+        };
+
+        Child.prototype = {
+            constructor: Child,
+
+            setIndex: function(index) {
+                this.index = index;
+            },
+
+            getIndex: function() {
+                return this.index;
+            },
+
+            getReference: function() {
+                return this.reference;
+            }
+        };
+
+        Child.prototype.bind = function(referenceIndex) {
+            this.reference = this.field.holder.find("table:eq(" + referenceIndex + ")").parent();
+
+            var that = this;
+
+            // remove button
+            this.reference.find("tr:eq(-1) a").click(function() {
+                that.field.removeItem(that);
+            });
+        }
+
+        var item = new Parent();
+        item.holder = $('#convenio_fkEmpenhoEmpenhoConvenios');
+        item.childTemplate = $('#convenio_fkEmpenhoEmpenhoConvenios').attr('data-prototype');
+        item.load();
+
+        $('#add-item').click(function(e) {
+            item.createEmptyChild();
+            $('#_message').hide();
+            return false;
+        });
+    })
+
+
+</script>

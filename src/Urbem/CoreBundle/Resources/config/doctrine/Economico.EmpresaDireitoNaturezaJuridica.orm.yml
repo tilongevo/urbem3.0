@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Economico\EmpresaDireitoNaturezaJuridica:
+    type: entity
+    table: economico.empresa_direito_natureza_juridica
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codNatureza:
+            type: integer
+            nullable: false
+            column: cod_natureza
+    manyToOne:
+        fkEconomicoCadastroEconomicoEmpresaDireito:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaDireito
+            inversedBy: fkEconomicoEmpresaDireitoNaturezaJuridicas
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkEconomicoNaturezaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\NaturezaJuridica
+            inversedBy: fkEconomicoEmpresaDireitoNaturezaJuridicas
+            joinColumns:
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+    oneToMany:
+        fkEconomicoProcessoEmpDireitoNatJuridicas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoEmpDireitoNatJuridica
+            mappedBy: fkEconomicoEmpresaDireitoNaturezaJuridica

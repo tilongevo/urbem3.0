@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Tceam\ElencoContasTce:
+    type: entity
+    table: tceam.elenco_contas_tce
+    id:
+        codElenco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_elenco
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        seq:
+            type: integer
+            nullable: false
+        codContaTce:
+            type: string
+            nullable: false
+            length: 25
+            column: cod_conta_tce
+        descricao:
+            type: string
+            nullable: false
+        nivel:
+            type: string
+            nullable: false
+            length: 1
+    oneToMany:
+        fkTceamVinculoElencoPlanoContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceam\VinculoElencoPlanoContas
+            mappedBy: fkTceamElencoContasTce

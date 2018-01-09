@@ -1,0 +1,49 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+
+        {{ form_start(form) }}
+            {% if tipo == 'cancelamento' %}
+                <div class="box-header col s12">
+                    <h5 class="col s12 box-title left-align show">
+                        Cancelar Encerramento de Conta
+                    </h5>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <input type="hidden" name="codConta" value="{{ planoconta.codConta }}">
+                <input type="hidden" name="exercicio" value="{{ planoconta.exercicio }}">
+                <div class="col s12 right-align">
+                    <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="Encerrar">
+                        <i class="material-icons left">monetization_on</i>
+                        Cancelar Encerramento
+                    </button>
+                </div>
+            {% else %}
+                <div class="box-header col s12">
+                    <h5 class="col s12 box-title left-align show">
+                        Encerramento de Conta
+                    </h5>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <input type="hidden" name="codConta" value="{{ planoconta.codConta }}">
+                <input type="hidden" name="exercicio" value="{{ planoconta.exercicio }}">
+
+                {{ form_widget(form) }}
+
+                <div class="col s12 right-align">
+                    <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="Encerrar">
+                        <i class="material-icons left">money_off</i>
+                        Encerrar
+                    </button>
+                </div>
+            {% endif %}
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}

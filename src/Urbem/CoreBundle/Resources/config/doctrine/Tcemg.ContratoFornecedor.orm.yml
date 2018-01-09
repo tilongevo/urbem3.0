@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Tcemg\ContratoFornecedor:
+    type: entity
+    table: tcemg.contrato_fornecedor
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        cgmRepresentante:
+            type: integer
+            nullable: false
+            column: cgm_representante
+    manyToOne:
+        fkTcemgContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Contrato
+            inversedBy: fkTcemgContratoFornecedores
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkTcemgContratoFornecedores
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcemgContratoFornecedores
+            joinColumns:
+                cgm_representante:
+                    referencedColumnName: numcgm

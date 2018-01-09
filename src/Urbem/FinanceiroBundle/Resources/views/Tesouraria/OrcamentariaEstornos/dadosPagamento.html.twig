@@ -1,0 +1,90 @@
+<table class="bordered highlight col s12">
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.entidade'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{{ field.data.fkEmpenhoEmpenho.fkOrcamentoEntidade }}</td>
+    </tr>
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.ordemPagamento'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{{ field.data.ordemPagamentoEstorno }}</td>
+    </tr>
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.dtEmissao'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{% if field.data.ordemPagamentoEstorno is not null %} {{ field.data.ordemPagamentoEstorno.dtEmissao|date('d/m/Y') }} {% endif %}</td>
+    </tr>
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.credor'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{{ field.data.credor }}</td>
+    </tr>
+    <tr style="text-align: left">
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.vlPago'|trans }}</th>
+        <td class="td-rh" style="text-align: left">
+            {{ field.data.vlPago|number_format_currency('BRL') }}
+        </td>
+    </tr>
+    {% if field.data.ordemPagamentoEstorno.fkEmpenhoOrdemPagamentoRetencoes|length > 0 %}
+        <tr>
+            <th class="th-rh">{{ 'label.orcamentariaEstornos.valorRetencao'|trans }}</th>
+            {% set totalRetencao = 0 %}
+            {% for retencao in field.data.ordemPagamentoEstorno.fkEmpenhoOrdemPagamentoRetencoes %}
+                {% set totalRetencao = totalRetencao + retencao.vlRetencao %}
+            {% endfor %}
+            <td class="td-rh" style="text-align: left">{{ totalRetencao|number_format_currency('BRL') }}</td>
+        </tr>
+        <tr>
+            <th class="th-rh">{{ 'label.orcamentariaEstornos.valorLiquidoOP'|trans }}</th>
+            <td class="td-rh" style="text-align: left">{{ (field.data.vlPago - totalRetencao)|number_format_currency('BRL') }}</td>
+        </tr>
+    {% endif %}
+    <tr>
+        <th class="th-rh">{{ 'label.orcamentariaEstornos.recursoDespesa'|trans }}</th>
+        <td class="td-rh" style="text-align: left">{{ field.data.recursoDespesa }}</td>
+    </tr>
+</table>
+
+{% if field.data.ordemPagamentoEstorno.fkEmpenhoOrdemPagamentoRetencoes|length > 0 %}
+    <h3 class="col s12 box-title left-align show">
+        {{ 'label.orcamentariaEstornos.retencaoOrcamentaria'|trans }}
+    </h3>
+    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+    <table class="bordered highlight" style="width:100%">
+        <thead>
+            <tr class="tr-rh">
+                <th class="th-rh" style="width:70%">{{ 'label.orcamentariaEstornos.contaRetencao'|trans }}</th>
+                <th class="th-rh" style="width:30%">{{ 'label.orcamentariaEstornos.valorRetencao'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for retencao in field.data.ordemPagamentoEstorno.fkEmpenhoOrdemPagamentoRetencoes %}
+                {% if retencao.codReceita is not null %}
+                    <tr class="tr-rh">
+                        <td class="td-rh">{{ retencao.fkOrcamentoReceita }}</td>
+                        <td class="td-rh">{{ retencao.vlRetencao|number_format_currency('BRL') }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="col s12 box-title left-align show">
+        {{ 'label.orcamentariaEstornos.retencaoExtraOrcamentaria'|trans }}
+    </h3>
+    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+    <table class="bordered highlight" style="width:100%">
+        <thead>
+            <tr class="tr-rh">
+                <th class="th-rh" style="width:70%">{{ 'label.orcamentariaEstornos.contaRetencao'|trans }}</th>
+                <th class="th-rh" style="width:30%">{{ 'label.orcamentariaEstornos.valorRetencao'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for retencao in field.data.ordemPagamentoEstorno.fkEmpenhoOrdemPagamentoRetencoes %}
+                {% if retencao.codReceita is null %}
+                    <tr class="tr-rh">
+                        <td class="td-rh">{{ retencao.fkContabilidadePlanoAnalitica }}</td>
+                        <td class="td-rh">{{ retencao.vlRetencao|number_format_currency('BRL') }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

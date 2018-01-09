@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TcmbaCargoServidor:
+    type: entity
+    table: folhapagamento.tcmba_cargo_servidor
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codTipoFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_funcao
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+    fields: {  }
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkFolhapagamentoTcmbaCargoServidores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTcmbaTipoFuncaoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoFuncaoServidor
+            inversedBy: fkFolhapagamentoTcmbaCargoServidores
+            joinColumns:
+                cod_tipo_funcao:
+                    referencedColumnName: cod_tipo_funcao
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkFolhapagamentoTcmbaCargoServidores
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo

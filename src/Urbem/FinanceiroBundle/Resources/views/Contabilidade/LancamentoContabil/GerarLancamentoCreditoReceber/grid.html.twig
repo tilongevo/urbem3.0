@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <form name="form" method="post" action="{{ path('contabilidade_lancamento_contabil_gerar_lancamento_credito_receber_gravar')}}">
+        <input type="hidden" value="{{ entidade }}" name="entidade" />
+        <input type="hidden" value="{{ exercicio }}" name="exercicio" />
+        <div class="container">
+            <div class="row">
+                <div class="box-header col s12">
+                    <h5 class="col s12 box-title left-align show">
+                        Gerar Lançamentos Créditos a Receber - Registros
+                    </h5>
+                    <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                </div>
+                <div class="">
+                    <div class="box box-primary col s12">
+                        <table class="bordered highlight">
+                            <tr class="tr-rh">
+                                <th class="th-rh">{{ 'label.implantacaoSaldo.codigoEstrutural'|trans }}</th>
+                                <th class="th-rh">{{ 'label.descricao'|trans }}</th>
+                                <th class="th-rh">{{ 'label.contaCreditoTributario'|trans }}</th>
+                                <th class="th-rh">{{ 'label.valorOriginal'|trans }}</th>
+                            </tr>
+                            {% if contas|length > 0 %}
+                                {% for conta in contas %}
+                                    <tr class="tr-rh">
+                                        <td class="td-rh">{{ conta.cod_estrutural }}</td>
+                                        <td class="td-rh">{{ conta.descricao }}</td>
+                                        <td class="td-rh">{{ conta.cod_estrutural_credito }} - {{ conta.nom_conta }}</td>
+                                        <td class="td-rh">{{ conta.vl_original }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Não existem registros a serem exibidos!</td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% if contas|length > 0 %}
+                <div class="col s12 right-align">
+                    <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="LancamentoCredito"><i class="material-icons left">save</i>Salvar</button>
+                </div>
+            {% endif %}
+        </div>
+    </form>
+{% endblock content %}
+{% block javascripts %}
+    <script src="/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+{% endblock javascripts %}

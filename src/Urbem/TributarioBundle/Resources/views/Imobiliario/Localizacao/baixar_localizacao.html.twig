@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+
+        {{ form_start(form) }}
+
+        <input type="hidden" name="codLocalizacao" value="{{ localizacao.codLocalizacao }}">
+
+        <div class="row col s12">
+            <div class="box-header">
+                <h2 class="box-title left-align">
+                    {{ 'label.imobiliarioLocalizacao.baixarLocalizacao'|trans }}
+                </h2>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+
+            <table class="table show-table">
+                <tbody>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioLocalizacao.nivel'|trans }}</th>
+                    <td>{{ data.nivel }}</td>
+
+                </tr>
+                {% if data.superior is not null %}
+                    <tr class="sonata-ba-view-container">
+                        <th>{{ 'label.imobiliarioLocalizacao.localizacaoSuperior'|trans }}</th>
+                        <td>{{ data.superior }}</td>
+
+                    </tr>
+                {% endif %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioLocalizacao.codLocalizacao'|trans }}</th>
+                    <td>{{ data.codigo }}</td>
+
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioLocalizacao.nomLocalizacao'|trans }}</th>
+                    <td>{{ localizacao.nomLocalizacao }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <div class="row col s12">
+            {{ form_widget(form) }}
+        </div>
+
+        <div class="row col s12">
+            <div class="sonata-ba-form-actions form-actions row">
+                <div class="col s8 initial left-align">
+                    <a class="back btn-floating white-text blue darken-4 btn-success" href="{{ admin.generateUrl('list') }}">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+
+                <div class="col s2 right-align deletar"></div>
+
+                <div class="col s2 right-align right">
+                    <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="Encerrar">
+                        <i class="mdi mdi-arrow-down-bold left"></i>
+                        {{ 'label.imobiliarioLocalizacao.baixar'|trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}

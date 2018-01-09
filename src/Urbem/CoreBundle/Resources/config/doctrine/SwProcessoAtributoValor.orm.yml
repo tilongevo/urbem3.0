@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\SwProcessoAtributoValor:
+    type: entity
+    table: sw_processo_atributo_valor
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        valor:
+            type: text
+            nullable: true
+    manyToOne:
+        fkSwAtributoProtocolo:
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoProtocolo
+            inversedBy: fkSwProcessoAtributoValores
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkSwProcessoAtributoValores
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

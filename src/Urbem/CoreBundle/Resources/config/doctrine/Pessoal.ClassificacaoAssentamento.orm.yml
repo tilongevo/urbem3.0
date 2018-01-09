@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Pessoal\ClassificacaoAssentamento:
+    type: entity
+    table: pessoal.classificacao_assentamento
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\ClassificacaoAssentamentoRepository
+    uniqueConstraints:
+        uk_classificacao_assentamento_1:
+            columns:
+                - descricao
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            column: cod_classificacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkPessoalTipoClassificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TipoClassificacao
+            inversedBy: fkPessoalClassificacaoAssentamentos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkPessoalAssentamentoAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            mappedBy: fkPessoalClassificacaoAssentamento

@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Imobiliario\AreaUnidadeAutonoma:
+    type: entity
+    table: imobiliario.area_unidade_autonoma
+    indexes:
+        idx_area_unidade_autonoma:
+            columns:
+                - cod_construcao
+                - inscricao_municipal
+                - timestamp
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codConstrucao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_construcao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        area:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    manyToOne:
+        fkImobiliarioUnidadeAutonoma:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\UnidadeAutonoma
+            inversedBy: fkImobiliarioAreaUnidadeAutonomas
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_construcao:
+                    referencedColumnName: cod_construcao

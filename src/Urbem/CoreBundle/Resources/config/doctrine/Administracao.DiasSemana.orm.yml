@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Administracao\DiasSemana:
+    type: entity
+    table: administracao.dias_semana
+    id:
+        codDia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dia
+    fields:
+        nomDia:
+            type: string
+            nullable: false
+            length: 20
+            column: nom_dia
+    oneToMany:
+        fkBeneficioConcessaoValeTransporteSemanais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporteSemanal
+            mappedBy: fkAdministracaoDiasSemana
+        fkEconomicoLicencaDiasSemanas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiasSemana
+            mappedBy: fkAdministracaoDiasSemana
+        fkEconomicoDiasCadastroEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\DiasCadastroEconomico
+            mappedBy: fkAdministracaoDiasSemana
+        fkPontoConfiguracaoParametrosGerais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoParametrosGerais
+            mappedBy: fkAdministracaoDiasSemana

@@ -1,0 +1,78 @@
+Urbem\CoreBundle\Entity\Tesouraria\Autenticacao:
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\AutenticacaoRepository
+    type: entity
+    table: tesouraria.autenticacao
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\AutenticacaoRepository
+    id:
+        codAutenticacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autenticacao
+        dtAutenticacao:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: dt_autenticacao
+    fields:
+        tipo:
+            type: string
+            nullable: false
+            length: 2
+    manyToOne:
+        fkTesourariaTipoAutenticacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TipoAutenticacao
+            inversedBy: fkTesourariaAutenticacoes
+            joinColumns:
+                tipo:
+                    referencedColumnName: cod_tipo_autenticacao
+    oneToMany:
+        fkTesourariaArrecadacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao
+            mappedBy: fkTesourariaAutenticacao
+        fkTesourariaBorderos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Bordero
+            mappedBy: fkTesourariaAutenticacao
+        fkTesourariaPagamentoEstornados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\PagamentoEstornado
+            mappedBy: fkTesourariaAutenticacao
+        fkTesourariaTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            mappedBy: fkTesourariaAutenticacao
+        fkTesourariaTransferenciaEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornada
+            mappedBy: fkTesourariaAutenticacao
+        fkTesourariaPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Pagamento
+            mappedBy: fkTesourariaAutenticacao
+        fkTesourariaArrecadacaoEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornada
+            mappedBy: fkTesourariaAutenticacao

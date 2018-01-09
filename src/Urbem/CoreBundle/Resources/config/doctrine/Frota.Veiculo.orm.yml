@@ -1,0 +1,259 @@
+Urbem\CoreBundle\Entity\Frota\Veiculo:
+    type: entity
+    table: frota.veiculo
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Frota\VeiculoRepository
+    id:
+        codVeiculo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: frota.veiculo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_veiculo
+    fields:
+        codMarca:
+            type: integer
+            nullable: false
+            column: cod_marca
+        codModelo:
+            type: integer
+            nullable: false
+            column: cod_modelo
+        codTipoVeiculo:
+            type: integer
+            nullable: false
+            column: cod_tipo_veiculo
+        codCategoria:
+            type: integer
+            nullable: false
+            column: cod_categoria
+        prefixo:
+            type: string
+            nullable: false
+            length: 15
+        chassi:
+            type: string
+            nullable: false
+            length: 30
+        dtAquisicao:
+            type: date
+            nullable: false
+            column: dt_aquisicao
+        kmInicial:
+            type: float
+            nullable: true
+            column: km_inicial
+        numCertificado:
+            type: string
+            nullable: true
+            length: 14
+            column: num_certificado
+        placa:
+            type: string
+            nullable: false
+            length: 7
+        anoFabricacao:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_fabricacao
+        anoModelo:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_modelo
+        categoria:
+            type: string
+            nullable: false
+            length: 20
+        cor:
+            type: string
+            nullable: false
+            length: 20
+        capacidade:
+            type: string
+            nullable: false
+            length: 20
+        potencia:
+            type: string
+            nullable: false
+            length: 20
+        cilindrada:
+            type: string
+            nullable: false
+            length: 20
+        notaFiscal:
+            type: string
+            nullable: true
+            length: 20
+            column: nota_fiscal
+        numPassageiro:
+            type: integer
+            nullable: true
+            column: num_passageiro
+        capacidadeTanque:
+            type: integer
+            nullable: true
+            column: capacidade_tanque
+    manyToOne:
+        fkFrotaModelo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Modelo
+            inversedBy: fkFrotaVeiculos
+            joinColumns:
+                cod_modelo:
+                    referencedColumnName: cod_modelo
+                cod_marca:
+                    referencedColumnName: cod_marca
+        fkFrotaTipoVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\TipoVeiculo
+            inversedBy: fkFrotaVeiculos
+            joinColumns:
+                cod_tipo_veiculo:
+                    referencedColumnName: cod_tipo
+        fkSwCategoriaHabilitacao:
+            targetEntity: Urbem\CoreBundle\Entity\SwCategoriaHabilitacao
+            inversedBy: fkFrotaVeiculos
+            joinColumns:
+                cod_categoria:
+                    referencedColumnName: cod_categoria
+        fkFrotaMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Marca
+            joinColumns:
+                cod_marca:
+                  referencedColumnName: cod_marca
+    oneToMany:
+        fkFrotaManutencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Manutencao
+            mappedBy: fkFrotaVeiculo
+        fkFrotaInfracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Infracao
+            mappedBy: fkFrotaVeiculo
+        fkFrotaUtilizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Utilizacao
+            mappedBy: fkFrotaVeiculo
+        fkFrotaVeiculoCombustiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoCombustivel
+            mappedBy: fkFrotaVeiculo
+        fkFrotaVeiculoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoDocumento
+            mappedBy: fkFrotaVeiculo
+        fkFrotaVeiculoLocacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoLocacao
+            mappedBy: fkFrotaVeiculo
+        fkFrotaVeiculoPropriedades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoPropriedade
+            mappedBy: fkFrotaVeiculo
+        fkFrotaTransporteEscolares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\TransporteEscolar
+            mappedBy: fkFrotaVeiculo
+        fkTcemgArquivoCvcs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ArquivoCvc
+            mappedBy: fkFrotaVeiculo
+        fkFrotaAutorizacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Autorizacao
+            mappedBy: fkFrotaVeiculo
+        fkFrotaAbastecimentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Abastecimento
+            mappedBy: fkFrotaVeiculo
+        fkFrotaMotoristaVeiculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\MotoristaVeiculo
+            mappedBy: fkFrotaVeiculo
+        fkFrotaControleInternos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\ControleInterno
+            mappedBy: fkFrotaVeiculo
+        fkFrotaVeiculoCessoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoCessao
+            mappedBy: fkFrotaVeiculo
+        fkFrotaVeiculoTerceirosResponsaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoTerceirosResponsavel
+            mappedBy: fkFrotaVeiculo
+    oneToOne:
+        fkFrotaVeiculoBaixado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Frota\VeiculoBaixado
+            mappedBy: fkFrotaVeiculo
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkPatrimonioVeiculoUniorcam:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\VeiculoUniorcam
+            mappedBy: fkFrotaVeiculo
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkTcernVeiculoCategoriaVinculo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\VeiculoCategoriaVinculo
+            mappedBy: fkFrotaVeiculo
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo

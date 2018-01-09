@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirfIrrfContaReceita:
+    type: entity
+    table: ima.configuracao_dirf_irrf_conta_receita
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+    fields: {  }
+    manyToOne:
+        fkImaConfiguracaoDirf:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoDirf
+            inversedBy: fkImaConfiguracaoDirfIrrfContaReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkOrcamentoContaReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaReceita
+            inversedBy: fkImaConfiguracaoDirfIrrfContaReceita
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta:
+                    referencedColumnName: cod_conta

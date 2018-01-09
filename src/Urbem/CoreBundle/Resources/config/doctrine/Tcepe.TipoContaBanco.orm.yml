@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcepe\TipoContaBanco:
+    type: entity
+    table: tcepe.tipo_conta_banco
+    id:
+        codTipoContaBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_conta_banco
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkTcepePlanoBancoTipoContaBancos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\PlanoBancoTipoContaBanco
+            mappedBy: fkTcepeTipoContaBanco

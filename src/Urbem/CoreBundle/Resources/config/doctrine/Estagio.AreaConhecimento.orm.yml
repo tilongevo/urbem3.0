@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Estagio\AreaConhecimento:
+    type: entity
+    table: estagio.area_conhecimento
+    id:
+        codAreaConhecimento:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: estagio.cod_area_conhecimento_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_area_conhecimento
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkEstagioCursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\Curso
+            mappedBy: fkEstagioAreaConhecimento

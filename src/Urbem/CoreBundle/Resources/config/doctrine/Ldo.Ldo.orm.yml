@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Ldo\Ldo:
+    type: entity
+    table: ldo.ldo
+    repositoryClass: Urbem\CoreBundle\Repository\Ldo\LdoRepository
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ppa
+        ano:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkPpaPpa:
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\Ppa
+            inversedBy: fkLdoLdos
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa
+    oneToMany:
+        fkLdoCompensacaoRenuncias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\CompensacaoRenuncia
+            mappedBy: fkLdoLdo
+        fkLdoConfiguracaoDividas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\ConfiguracaoDivida
+            mappedBy: fkLdoLdo
+        fkLdoConfiguracaoEvolucaoPatrimonioLiquidos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\ConfiguracaoEvolucaoPatrimonioLiquido
+            mappedBy: fkLdoLdo
+        fkLdoConfiguracaoReceitaDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\ConfiguracaoReceitaDespesa
+            mappedBy: fkLdoLdo
+        fkLdoHomologacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Homologacao
+            mappedBy: fkLdoLdo

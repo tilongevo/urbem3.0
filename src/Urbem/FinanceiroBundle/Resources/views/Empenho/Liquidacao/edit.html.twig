@@ -1,0 +1,33 @@
+<table class="bordered highlight" style="width:100%">
+    <tr class="tr-rh">
+        <th class="th-rh"></th>
+        <th class="th-rh">{{ 'label.descricao'|trans }}</th>
+        <th class="th-rh">{{ 'label.empenhado'|trans }}</th>
+        <th class="th-rh">{{ 'label.liquidado'|trans }}</th>
+        {% if field.data.tipo == 'anular' %}
+            <th class="th-rh">{{ 'label.saldoAnular'|trans }}</th>
+            <th class="th-rh">{{ 'label.aAnular'|trans }}</th>
+        {% elseif field.data.tipo == 'liquidar' %}
+            <th class="th-rh">{{ 'label.aLiquidar'|trans }}</th>
+        {% endif %}
+    </tr>
+    {% for item in field.data.itens %}
+        <tr>
+            <td class="td-rh">{{ loop.index }}</td>
+            <td class="td-rh">{{ item.nom_item }}</td>
+            <td class="td-rh">{{ item.vl_total|number_format(2, ',', '.') }}</td>
+            <td class="td-rh">{{ (item.vl_liquidado-item.vl_liquidado_anulado)|number_format(2, ',', '.') }}</td>
+
+            {% if field.data.tipo == 'anular' %}
+                <td class="td-rh">{{ item.valor_restante_anular|number_format(2, ',', '.') }}</td>
+                <td class="td-rh">
+                    <input type="number" class="{{ item.error }} input-rh-table-anular" name="itensEmpenho[{{ item.num_item }}]" step="any" min="0" />
+                </td>
+            {% elseif field.data.tipo == 'liquidar' %}
+                <td class="td-rh">
+                    <input type="number" name="itensEmpenho[{{ item.num_item }}]" value="{{ item.vl_a_liquidar }}" class="input-rh-table-liquidar" step="any" min="0" />
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+</table>

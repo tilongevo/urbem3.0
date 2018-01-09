@@ -1,0 +1,95 @@
+Urbem\CoreBundle\Entity\Contabilidade\Lote:
+    type: entity
+    table: contabilidade.lote
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\LoteRepository
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        nomLote:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_lote
+        dtLote:
+            type: date
+            nullable: false
+            column: dt_lote
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkContabilidadeLotes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToMany:
+        fkTesourariaBoletimLiberadoLotes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberadoLote
+            mappedBy: fkContabilidadeLote
+        fkTesourariaTransferenciaEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornada
+            mappedBy: fkContabilidadeLote
+        fkContabilidadeLoteNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LoteNorma
+            mappedBy: fkContabilidadeLote
+        fkContabilidadeLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            orderBy: { 'sequencia': 'ASC' }
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lancamento
+            mappedBy: fkContabilidadeLote
+        fkTesourariaDoteProcessados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\DoteProcessado
+            mappedBy: fkContabilidadeLote
+    oneToOne:
+        fkTesourariaTransferencia:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            mappedBy: fkContabilidadeLote
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                tipo:
+                    referencedColumnName: tipo
+                cod_entidade:
+                    referencedColumnName: cod_entidade

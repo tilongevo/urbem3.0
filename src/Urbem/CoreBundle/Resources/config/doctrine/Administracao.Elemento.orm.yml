@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Administracao\Elemento:
+    type: entity
+    table: administracao.elemento
+    id:
+        codElemento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_elemento
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomElemento:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_elemento
+    manyToOne:
+        fkAdministracaoTipoElemento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\TipoElemento
+            inversedBy: fkAdministracaoElementos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkAdministracaoFormulaElementos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\FormulaElemento
+            mappedBy: fkAdministracaoElemento

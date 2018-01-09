@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <form name="form" method="post" action="/financeiro/contabilidade/lancamento-contabil/implantacao-saldo/gravar">
+        <input type="hidden" value="{{ entidade.codEntidade }}" name="codEntidade" />
+        <input type="hidden" value="{{ entidade.exercicio }}" name="exercicio" />
+        <input type="hidden" value="{{ codGrupo }}" name="codGrupo" />
+        <input type="hidden" value="{{ codContaDe }}" name="codContaDe" />
+        <input type="hidden" value="{{ codContaAte }}" name="codContaAte" />
+        <div class="container">
+            <div class="row">
+                <div class="">
+                    <div class="box box-primary">
+                        <div class="box-header col s12 blue-text text-darken-4">
+                            <h6><span style="font-weight: bold">Entidade:</span> {{ entidade.codEntidade ~ ' - ' ~ entidade.fkSwCgm.nomCgm }}</h6>
+                            <h6><span style="font-weight: bold">Data do Lançamento:</span> {{ dtLancamento }}</h6>
+                        </div>
+                        <table class="bordered highlight">
+                            <tr class="tr-rh">
+                                <th class="th-rh">{{ 'label.implantacaoSaldo.codigoEstrutural'|trans }}</th>
+                                <th class="th-rh">{{ 'label.implantacaoSaldo.reduzido'|trans }}</th>
+                                <th class="th-rh">{{ 'label.implantacaoSaldo.descricaoConta'|trans }}</th>
+                                <th class="th-rh">{{ 'label.implantacaoSaldo.tipo'|trans }}</th>
+                                <th class="th-rh">{{ 'label.implantacaoSaldo.valor'|trans }}</th>
+                            </tr>
+                            {% if contas|length > 0 %}
+                                {% for conta in contas %}
+                                    <tr class="tr-rh">
+                                        <td class="td-rh">{{ conta.cod_estrutural }}</td>
+                                        <td class="td-rh">{{ conta.cod_conta }}</td>
+                                        <td class="td-rh">{{ conta.nom_conta }}</td>
+                                        <td class="td-rh">
+                                            <label><input class="checkbox" type="radio" name="tipo[{{ conta.cod_plano }}]" value="D" required{% if conta.vl_lancamento >= 0 or conta.vl_lancamento == null %} checked{% endif %}> Débito</label>
+                                            <label><input class="checkbox" type="radio" name="tipo[{{ conta.cod_plano }}]" value="C" required{% if conta.vl_lancamento < 0 %} checked{% endif %}> Crédito</label>
+                                        </td>
+                                        <td class="td-rh">
+                                            <div class="input-group">
+                                                <input
+                                                        type="text"
+                                                        class="input-rh money"
+                                                        id="valor_{{ conta.cod_plano }}"
+                                                        name="valor[{{ conta.cod_plano }}]"
+                                                        value="{% if conta.vl_lancamento != null %}{{ conta.vl_lancamento|trim('-') }}{% endif %}"
+                                                >
+                                                <span class="input-group-addon">
+                                                    <span class="fa-usd fa"></span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Não existem registros a serem exibidos!</td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 right-align">
+            <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="ReceitaDespesa"><i class="material-icons left">save</i>Registrar Saldos</button>
+        </div>
+    </form>
+{% endblock content %}
+{% block javascripts %}
+    <script src="/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+{% endblock javascripts %}

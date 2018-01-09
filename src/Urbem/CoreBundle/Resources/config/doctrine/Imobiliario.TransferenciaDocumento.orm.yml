@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Imobiliario\TransferenciaDocumento:
+    type: entity
+    table: imobiliario.transferencia_documento
+    id:
+        codTransferencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_transferencia
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+    fields:
+        dtEntrega:
+            type: datetime
+            nullable: false
+            column: dt_entrega
+    manyToOne:
+        fkImobiliarioTransferenciaImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TransferenciaImovel
+            inversedBy: fkImobiliarioTransferenciaDocumentos
+            joinColumns:
+                cod_transferencia:
+                    referencedColumnName: cod_transferencia
+        fkImobiliarioDocumentoNatureza:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\DocumentoNatureza
+            inversedBy: fkImobiliarioTransferenciaDocumentos
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento

@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Imobiliario\TipoLicenca:
+    type: entity
+    table: imobiliario.tipo_licenca
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_tipo
+    oneToMany:
+        fkImobiliarioAtributoTipoLicencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoTipoLicenca
+            mappedBy: fkImobiliarioTipoLicenca
+        fkImobiliarioTipoLicencaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\TipoLicencaDocumento
+            mappedBy: fkImobiliarioTipoLicenca
+        fkImobiliarioPermissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Permissao
+            mappedBy: fkImobiliarioTipoLicenca

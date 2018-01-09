@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Orcamento\ReceitaCreditoTributario:
+    type: entity
+    table: orcamento.receita_credito_tributario
+    id:
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codConta:
+            type: integer
+            nullable: false
+            column: cod_conta
+    manyToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkOrcamentoReceitaCreditoTributarios
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToOne:
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkOrcamentoReceitaCreditoTributario
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita

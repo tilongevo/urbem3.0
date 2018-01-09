@@ -1,0 +1,144 @@
+{% extends "base.html.twig" %}
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+    <div class="tab-pane fade active in" id="tab_dados_consulta">
+        <div class="box-body  container-fluid">
+            <div class="sonata-ba-collapsed-fields">
+                <div class="row">
+                    <div class="">
+                        <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                        <table class="table show-table">
+                            <tbody>
+                            {% if dados.inscricaoMunicipal != '' %}
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.arrecadacaoExtratoDebitosReport.inscricaoImobiliaria'|trans }}</th>
+                                    <td>
+                                        {{ dados.inscricaoMunicipal ~ ' - ' ~ inscricaoLogradouro.endereco }}
+                                    </td>
+                                </tr>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.arrecadacaoExtratoDebitosReport.contribuinte'|trans }}</th>
+                                    <td>
+                                        {{ dados.contribuinte }}
+                                    </td>
+                                </tr>
+                            {% elseif dados.inscricaoEconomica != '' %}
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.arrecadacaoExtratoDebitosReport.inscricaoEconomica'|trans }}</th>
+                                    <td>
+                                        {{ dados.inscricaoEconomica ~ ' - ' ~ dados.contribuinte}}
+                                    </td>
+                                </tr>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.arrecadacaoExtratoDebitosReport.dadosComplementares'|trans }}</th>
+                                    <td>
+                                        {{ inscricaoEndereco.endereco }}
+                                    </td>
+                                </tr>
+                            {% elseif dados.contribuinte != '' %}
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.arrecadacaoExtratoDebitosReport.contribuinte'|trans }}</th>
+                                    <td>
+                                        {{ dados.numcgm ~' - '~ dados.contribuinte }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box-header">
+                        <h5 class="box-title left-align">
+                            {{ 'label.arrecadacaoExtratoDebitosReport.lista.dados'|trans }}
+                        </h5>
+                        <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr class="sonata-ba-list-field-header">
+                            <th class="sonata-ba-list-field-header-text"></th>
+                            <th class="sonata-ba-list-field-header-text">{{ 'label.arrecadacaoExtratoDebitosReport.lista.exercicio'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text">{{ 'label.arrecadacaoExtratoDebitosReport.lista.lancamento'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text">{{ 'label.arrecadacaoExtratoDebitosReport.lista.origem'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text">{{ 'label.arrecadacaoExtratoDebitosReport.lista.qtde'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text">{{ 'label.arrecadacaoExtratoDebitosReport.lista.total'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set total = 0 %}
+                        {% if listaParcelasEmAberto|length == 0 %}
+                            <tr>
+                                <td colspan="6" style="text-align: center">Nenhum registro encontrado!</td>
+                            </tr>
+                        {% endif %}
+                        {% for parcela in listaParcelasEmAberto %}
+                            {% set total = total + parcela.valor %}
+                            <tr>
+                                <td style="text-align: center">{{ loop.index }}</td>
+                                <td style="text-align: center">{{ parcela.exercicio }}</td>
+                                <td style="text-align: center">{{ parcela.cod_lancamento }}</td>
+                                <td>{{ parcela.origem }}</td>
+                                <td style="text-align: center">{{ parcela.qtde }}</td>
+                                <td style="text-align: right">{{ parcela.valor|number_format_decimal({'fraction_digits': 2}) }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td style="text-align: right" colspan="5">
+                                {{ 'label.arrecadacaoExtratoDebitosReport.lista.total'|trans }}
+                            </td>
+                            <td style="text-align: right">{{ total|number_format_decimal({'fraction_digits':2 }) }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <form name="form" method="post" action="{{ path('urbem_tributario_arrecadacao_relatorio_extrato_debitos_relatorio')}}">
+                    <div class="row">
+                        <div class="box-header">
+                            <table class="table show-table">
+                                <tbody>
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'label.arrecadacaoExtratoDebitosReport.tipoRelatorio'|trans }}</th>
+                                    <td>
+                                        <input type="hidden" name="numcgm" id="numcgm" value="{{ dados.numcgm }}" />
+                                        <input type="hidden" name="contribuinte" id="contribuinte" value="{{ dados.contribuinte }}" />
+                                        <input type="hidden" name="inscricaoEconomica" id="inscricaoEconomica" value="{{ dados.inscricaoEconomica }}" />
+                                        <input type="hidden" name="inscricaoMunicipal" id="inscricaoMunicipal" value="{{ dados.inscricaoMunicipal }}" />
+                                        <input type="hidden" name="exercicio" id="exercicio" value="{{ dados.exercicio }}" />
+                                        <label>{{ 'label.arrecadacaoExtratoDebitosReport.simples'|trans }}<input type="radio" name="tipoRelatorio" id="tipoRelatorio1"
+                                                               value="sintetico" checked="checked"/></label>
+                                        <label>{{ 'label.arrecadacaoExtratoDebitosReport.detalhado'|trans }}<input type="radio" name="tipoRelatorio" id="tipoRelatorio2"
+                                                               value="analitico"/></label>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <a class="btn-floating white-text blue darken-4"
+                               href="{{ path('urbem_tributario_arrecadacao_relatorio_extrato_debitos_create') }}"><i
+                                        class="material-icons">arrow_back</i></a>
+                        </div>
+                        <div class="col s6">
+                            <div class="box-header">
+                                <button type="submit" name="relatorio-btn" class="waves-effect waves-light btn blue darken-4 btn btn-success">
+                                    <i class="fa fa-print fa-sm"></i> Relatório
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script src="/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/moment/min/moment.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/moment/locale/pt-br.js"></script>
+{% endblock javascripts %}

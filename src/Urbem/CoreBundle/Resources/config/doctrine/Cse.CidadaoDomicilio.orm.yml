@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Cse\CidadaoDomicilio:
+    type: entity
+    table: cse.cidadao_domicilio
+    id:
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+        codDomicilio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_domicilio
+        dtInclusao:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inclusao
+    fields: {  }
+    manyToOne:
+        fkCseCidadao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            inversedBy: fkCseCidadaoDomicilios
+            joinColumns:
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao
+        fkCseDomicilio:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            inversedBy: fkCseCidadaoDomicilios
+            joinColumns:
+                cod_domicilio:
+                    referencedColumnName: cod_domicilio
+    oneToOne:
+        fkCseResponsavel:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Responsavel
+            mappedBy: fkCseCidadaoDomicilio
+            joinColumns:
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao
+                cod_domicilio:
+                    referencedColumnName: cod_domicilio
+                dt_inclusao:
+                    referencedColumnName: dt_inclusao

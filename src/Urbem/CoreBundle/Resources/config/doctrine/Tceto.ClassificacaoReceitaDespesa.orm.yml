@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tceto\ClassificacaoReceitaDespesa:
+    type: entity
+    table: tceto.classificacao_receita_despesa
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkTcetoPlanoAnaliticaClassificacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceto\PlanoAnaliticaClassificacao
+            mappedBy: fkTcetoClassificacaoReceitaDespesa

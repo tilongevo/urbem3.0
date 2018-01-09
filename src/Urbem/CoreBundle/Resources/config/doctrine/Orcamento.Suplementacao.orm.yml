@@ -1,0 +1,86 @@
+Urbem\CoreBundle\Entity\Orcamento\Suplementacao:
+    type: entity
+    table: orcamento.suplementacao
+    repositoryClass: Urbem\CoreBundle\Repository\Orcamento\SuplementacaoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codSuplementacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_suplementacao
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        motivo:
+            type: text
+            nullable: true
+        dtSuplementacao:
+            type: date
+            nullable: false
+            column: dt_suplementacao
+    manyToOne:
+        fkContabilidadeTipoTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\TipoTransferencia
+            inversedBy: fkOrcamentoSuplementacoes
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                exercicio:
+                    referencedColumnName: exercicio
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkOrcamentoSuplementacoes
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkContabilidadeTransferenciaDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\TransferenciaDespesa
+            mappedBy: fkOrcamentoSuplementacao
+        fkOrcamentoSuplementacaoSuplementadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\SuplementacaoSuplementada
+            mappedBy: fkOrcamentoSuplementacao
+        fkOrcamentoSuplementacaoReducoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\SuplementacaoReducao
+            mappedBy: fkOrcamentoSuplementacao
+        fkOrcamentoSuplementacaoAnuladas1:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\SuplementacaoAnulada
+            mappedBy: fkOrcamentoSuplementacao1
+    oneToOne:
+        fkOrcamentoSuplementacaoAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\SuplementacaoAnulada
+            mappedBy: fkOrcamentoSuplementacao
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_suplementacao:
+                    referencedColumnName: cod_suplementacao

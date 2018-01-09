@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Ponto\ConfiguracaoBancoHoras:
+    type: entity
+    table: ponto.configuracao_banco_horas
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        ativarBanco:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: ativar_banco
+        contagemLimites:
+            type: string
+            nullable: false
+            length: 1
+            column: contagem_limites
+        horasExcesso:
+            type: string
+            nullable: false
+            length: 1
+            column: horas_excesso
+    manyToOne:
+        fkPontoConfiguracaoRelogioPonto:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoRelogioPonto
+            inversedBy: fkPontoConfiguracaoBancoHoras
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+    oneToMany:
+        fkPontoBancoHorasDias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\BancoHorasDias
+            mappedBy: fkPontoConfiguracaoBancoHoras
+    oneToOne:
+        fkPontoBancoHorasMaximoDebito:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\BancoHorasMaximoDebito
+            mappedBy: fkPontoConfiguracaoBancoHoras
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoBancoHorasMaximoExtras:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\BancoHorasMaximoExtras
+            mappedBy: fkPontoConfiguracaoBancoHoras
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp

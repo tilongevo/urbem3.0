@@ -1,0 +1,61 @@
+{% block content %}
+
+{% set origemCompensacao = field.data.origemCompensacao %}
+
+<table class="table table-custom">
+        <thead>
+            <tr>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.numeracao'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.parcela'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.origem'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.vencimento'|trans }}</th>
+                <th class="center">{{ 'label.arrecadacaoCompensarPagamento.valor'|trans }}</th>
+                <th class="center">{% if origemCompensacao=='duplicado' %}{{ 'label.arrecadacaoCompensarPagamento.valorPago'|trans }}{% else %}{{ 'label.arrecadacaoCompensarPagamento.valorExcedente'|trans }}{% endif %}</th>
+                <th class="center">&nbsp;</th>
+            </tr>
+        </thead>
+
+        {% set contribuinte = field.data.contribuinte %}
+        {% set exercicioIni = field.data.exercicioIni %}
+        {% set exercicioEnd = field.data.exercicioEnd %}
+        {% set inscricaoEconomica = field.data.inscricaoEconomica %}
+        {% set inscricaoImobiliaria = field.data.inscricaoImobiliaria %}
+
+        {% if origemCompensacao=='duplicado' %}
+            {% set parcelas = admin.getParcelasPagasEmDuplicidade(contribuinte, exercicioIni, exercicioEnd, inscricaoEconomica, inscricaoImobiliaria) %}
+        {% else %}
+            {% set parcelas = admin.getParcelasComDiferencaPagas(contribuinte, exercicioIni, exercicioEnd, inscricaoEconomica, inscricaoImobiliaria) %}
+        {% endif %}
+
+        <tbody>
+
+        {% if parcelas|length > 0 %}
+
+            {% for parcela in parcelas %}
+
+                <tr>
+                    <td class="center">{{ parcela.numeracao }} / {{ parcela.exercicio }}</td>
+                    <td class="center">{{ parcela.nr_parcela }}</td>
+                    <td class="center">{{ parcela.origem }}</td>
+                    <td class="center">{{ parcela.vencimento }}</td>
+                    <td class="center js-valor-parcela">{{ parcela.valor_parcela }}</td>
+                    <td class="center">{{ parcela.valor_pago }}</td>
+
+                    {%
+                        set juntaValores = parcela.numeracao ~ '~' ~ parcela.exercicio ~ '~' ~ parcela.valor_parcela ~ '~' ~ parcela.valor_pago ~ '~' ~
+                        parcela.ocorrencia_pagamento ~ '~' ~ parcela.cod_convenio ~ '~' ~ parcela.origem ~ '~' ~ parcela.vencimento ~ '~' ~ parcela.nr_parcela
+                    %}
+
+                    <td class="center"><input type="checkbox" name="parcelaPaga[{{ loop.index0 }}]" class="pagasDuplicidades" value="{{ juntaValores }}"></td>
+                </tr>
+
+            {% endfor %}
+
+        {% else %}
+            <tr><td colspan="6" class="center">{{ 'label.arrecadacaoCompensarPagamento.nenhumRegistro'|trans }}</td></tr>
+        {% endif %}
+
+        </tbody>
+</table>
+
+{% endblock content %}

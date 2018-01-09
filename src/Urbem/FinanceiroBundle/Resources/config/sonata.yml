@@ -1,0 +1,800 @@
+sonata_core:
+    flashmessage:
+        error:
+            #css_class: error_msg # optionally, a CSS class can be defined
+            types:
+                - { type: recurso_existente, domain: FinanceiroBundle }
+                - { type: destinacao_existente, domain: FinanceiroBundle }
+                - { type: programa_existente, domain: FinanceiroBundle }
+                - { type: erro_custom, domain: FinanceiroBundle }
+
+services:
+    financeiro.admin.regiao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\RegiaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\Regiao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Região }
+
+    financeiro.admin.orgao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\OrgaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Orgao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: OrgaoOrcamentario }
+
+    financeiro.admin.unidade:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\UnidadeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Unidade, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: unidadeOrcamentario }
+
+    financeiro.admin.produto:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\ProdutoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\Produto, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Produto }
+
+    financeiro.admin.recurso:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\RecursoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Recurso, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Recurso }
+            
+    financeiro.admin.responsavel_tecnico:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\ResponsavelTecnicoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Economico\ResponsavelTecnico, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Responsável Técnico }
+
+    financeiro.admin.recurso:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\RecursoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Recurso, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Recurso }
+
+    financeiro.admin.ppa:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\PpaAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Ppa\Ppa, FinanceiroBundle:Ppa\PpaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PPA }
+
+    financeiro.admin.recurso_direto:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\RecursoDiretoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\RecursoDireto, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RecursoDireto }
+
+    financeiro.admin.funcao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\FuncaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Funcao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Funcao }
+
+    financeiro.admin.subfuncao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\SubfuncaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Subfuncao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Subfuncao }
+
+    financeiro.admin.macro_objetivo:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\MacroObjetivoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\MacroObjetivo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: MacroObjetivo }
+
+    financeiro.admin.programa_setorial:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\ProgramaSetorialAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\ProgramaSetorial, FinanceiroBundle:Ppa\ProgramaSetorialAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ProgramaSetorial }
+
+    financeiro.admin.conta_receita:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\ContaReceitaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\ContaReceita, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Classificação da Receita }
+
+    financeiro.admin.conta_receita_dedutora:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\ContaReceitaDedutoraAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\ContaReceita, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Classificação da Receita Dedutora }
+
+    financeiro.admin.conta_despesa:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\ContaDespesaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\ContaDespesa, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Rubrica de Despesa }
+
+    financeiro.admin.programa:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\ProgramaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\Programa, FinanceiroBundle:Ppa\ProgramaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Programa }
+
+    financeiro.admin.destinacao_recurso:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\DestinacaoRecursoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\DestinacaoRecurso, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Destinação Recurso }
+
+    financeiro.admin.programa_indicadores:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\ProgramaIndicadoresAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\ProgramaIndicadores, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ProgramaIndicadores }
+
+    financeiro.admin.classificacao_contabil:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ClassificacaoContabilAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\ClassificacaoContabil, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Classificação Contábil }
+
+    financeiro.admin.sistema_contabil:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\SistemaContabilAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\SistemaContabil, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Sistema Contábil }
+
+    financeiro.admin.encerramento_mes:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\EncerramentoMesAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\EncerramentoMes, FinanceiroBundle:Contabilidade\EncerramentoMesAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Encerramento de Mês }
+
+    financeiro.admin.reabrir_mes_encerrado:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ReabrirMesEncerradoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\EncerramentoMes, FinanceiroBundle:Contabilidade\ReabrirMesEncerradoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Reabrir Mês Encerrado }
+
+    financeiro.admin.conta_contabil_rp_np:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ContaContabilRpNpAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\ContaContabilRpNp, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configurar Conta Contábil Restos a Pagar NP }
+
+    financeiro.admin.acao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\AcaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\Acao, FinanceiroBundle:Ppa\AcaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Ação }
+
+    financeiro.admin.configurar_lancamento_despesa:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ConfigurarLancamentoDespesaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\ConfigurarLancamentoDespesa, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configurar Lancamentos de Despesa }
+
+    financeiro.admin.tipo_indicadores:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ldo\TipoIndicadoresAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ldo\TipoIndicadores, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TipoIndicadores }
+
+    financeiro.admin.indicadores:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ldo\IndicadoresAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ldo\Indicadores, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Indicadores }
+
+    financeiro.admin.historico_contabil:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\HistoricoContabilAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\HistoricoContabil, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Histórico Contábil }
+
+    financeiro.admin.acao_quantidade:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ldo\AcaoQuantidadeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\AcaoQuantidade, FinanceiroBundle:Ldo\AcaoQuantidadeAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AcaoQuantidade }
+
+    financeiro.admin.desdobramento_receita:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\DesdobramentoReceitaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\DesdobramentoReceita, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Desdobramento da Receita }
+
+    financeiro.admin.identificador_uso:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\IdentificadorUsoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\IdentificadorUso, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: IdentificadorUso }
+
+    financeiro.admin.historico:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\HistoricoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\Historico, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Histórico Empenho }
+
+    financeiro.admin.especificacao_destinacao_recurso:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\EspecificacaoDestinacaoRecursoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\EspecificacaoDestinacaoRecurso, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EspecificacaoDestinacaoRecurso }
+
+    financeiro.admin.detalhamento_destinacao_recurso:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\DetalhamentoDestinacaoRecursoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\DetalhamentoDestinacaoRecurso, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: DetalhamentoDestinacaoRecurso }
+
+    financeiro.admin.compensacao_renuncia:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ldo\CompensacaoRenunciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ldo\CompensacaoRenuncia, FinanceiroBundle:Ldo\CompensacaoRenunciaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CompensacaoRenuncia }
+
+    financeiro.admin.homologacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ldo\HomologacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ldo\Homologacao, FinanceiroBundle:Ldo\HomologacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Homologacao }
+
+    financeiro.admin.configuracao_lancamento_receita:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ConfiguracaoLancamentoReceitaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoReceita, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Configurar Lançamentos de Receita }
+
+    financeiro.admin.lote:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\LoteAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\Lote, FinanceiroBundle:Contabilidade\LoteAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Lote }
+
+    financeiro.admin.responsavel_adiantamento:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ResponsavelAdiantamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\ResponsavelAdiantamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Adiantamento / Subvenções }
+
+    financeiro.admin.contrapartida_responsavel:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ContrapartidaResponsavelAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\ContrapartidaResponsavel, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contrapartida Responsável }
+
+    financeiro.admin.suplementacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\Suplementacao\SuplementacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Suplementacao, FinanceiroBundle:Orcamento\Suplementacao\SuplementacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Suplementação }
+
+    financeiro.admin.suplementacao_suplementada:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\Suplementacao\SuplementacaoSuplementadaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\SuplementacaoSuplementada, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SuplementacaoSuplementada }
+
+    financeiro.admin.suplementacao_reducao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\Suplementacao\SuplementacaoReducaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\SuplementacaoReducao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SuplementacaoReducao }
+
+    financeiro.admin.permissao_autorizacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\PermissaoAutorizacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\PermissaoAutorizacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PermissaoAutorizacao }
+
+    financeiro.admin.entidade:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\EntidadeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Entidade, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Entidade }
+
+    financeiro.admin.pre_empenho:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\PreEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\PreEmpenho, FinanceiroBundle:Empenho\PreEmpenhoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Autorização de Empenho }
+        calls:
+            - [ setTemplate, [show, FinanceiroBundle:Sonata\Empenho\PreEmpenho\CRUD:show.html.twig]]
+
+    financeiro.admin.resumo_despesas_programas_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\ResumoDespesasProgramasReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\ResumoDespesasProgramasReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Resumo Despesas por Programas }
+
+    financeiro.admin.estimativa_receita_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\EstimativaReceitaReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\EstimativaReceitaReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Estimativa da Receita }
+
+    financeiro.admin.programas_macro_objetivo_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\ProgramasMacroObjetivoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\ProgramasMacroObjetivoReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Programas por Macro Objetivo }
+
+    financeiro.admin.despesas_previstas_funcao_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\DespesasPrevistasFuncaoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\DespesasPrevistasFuncaoReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Despesas Previstas por Função }
+
+    financeiro.admin.acoes_nao_orcamentarias_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\AcoesNaoOrcamentariasReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ppa\AcoesNaoOrcamentariasReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Ações Não Orçamentárias }
+
+    financeiro.admin.despesa_fonte_recurso_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ppa\DespesaFonteRecursoReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Despesa por Fonte de Recurso }
+
+    financeiro.admin.plano_conta:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\PlanoContaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\PlanoConta, FinanceiroBundle:Contabilidade\PlanoContaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Plano de Conta }
+
+    financeiro.admin.item_pre_empenho:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ItemPreEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ItemPreEmpenho }
+
+    financeiro.admin.autorizacao_anulada:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\AutorizacaoAnuladaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\AutorizacaoAnulada, FinanceiroBundle:Empenho\AutorizacaoAnuladaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Anular Autorização }
+
+    tesouraria.admin.implantar_saldo_inicial:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\SaldoTesourariaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\SaldoTesouraria, FinanceiroBundle:Tesouraria\SaldoTesourariaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Implantar saldos iniciais }
+
+    financeiro.admin.emitir_empenho_autorizacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\EmitirEmpenhoAutorizacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\PreEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Emitir Empenho por Autorização }
+
+    financeiro.admin.metas_prioridades_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Ldo\MetasPrioridadesReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Ldo\MetasPrioridadesReport, FinanceiroBundle:Ldo\MetasPrioridadesReportAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Anexo I | Metas e prioridades }
+
+    financeiro.admin.reserva_saldos:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\ReservaSaldosAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Orcamento\ReservaSaldos, FinanceiroBundle:Orcamento\ReservaSaldosAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ReservaSaldos }
+
+    financeiro.admin.boletim:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\BoletimAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\Boletim, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Abrir Boletim}
+
+    financeiro.admin.emitir_empenho_diversos:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\EmitirEmpenhoDiversosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\PreEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PreEmpenho }
+        calls:
+            - [ setTemplate, [show, FinanceiroBundle:Sonata\Empenho\PreEmpenho\CRUD:emitirEmpenhoDiversos.html.twig]]
+
+    financeiro.admin.recibo_extra:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ReciboExtraAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\ReciboExtra, FinanceiroBundle:Tesouraria\ReciboExtraAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ReciboExtra }
+
+    financeiro.admin.item_empenho_diversos:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ItemEmpenhoDiversosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ItemPreEmpenho }
+            
+    financeiro.admin.gerar_restos_a_pagar:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\GerarRestosPagarReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\GerarRestosPagarReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Gerar Restos a Pagar}
+
+    financeiro.admin.emitir_empenho_complementar:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\EmitirEmpenhoComplementarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\PreEmpenho, FinanceiroBundle:Empenho\EmitirEmpenhoComplementarAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PreEmpenho }
+        calls:
+            - [ setTemplate, [show, FinanceiroBundle:Sonata\Empenho\PreEmpenho\CRUD:emitirEmpenhoComplementar.html.twig]]
+
+    financeiro.admin.classificacao_institucional:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\ClassificacaoInstitucionalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Entidade, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Entidade }
+
+    financeiro.admin.terminal:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\TerminalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\Terminal, FinanceiroBundle:Tesouraria\TerminalAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Terminal }
+
+    financeiro.admin.item_empenho_complementar:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ItemEmpenhoComplementarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ItemPreEmpenho }
+
+    financeiro.admin.empenho_assinatura:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\EmpenhoAssinaturaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\EmpenhoAssinatura, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EmpenhoAssinatura }
+
+    financeiro.admin.reemitir_empenho:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ReemitirEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\PreEmpenho, FinanceiroBundle:Empenho\ReemitirEmpenhoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PreEmpenho }
+
+    financeiro.admin.usuario_terminal:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\UsuarioTerminalAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: UsuarioTerminal }
+
+    financeiro.admin.ordem_pagamento:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\OrdemPagamentoAdmin
+        arguments: [null, Urbem\CoreBundle\Entity\Empenho\OrdemPagamento, FinanceiroBundle:Empenho\OrdemPagamentoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: OrdemPagamento }
+
+    financeiro.admin.pagamento_liquidacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\PagamentoLiquidacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\PagamentoLiquidacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PagamentoLiquidacao }
+
+    financeiro.admin.ordem_pagamento_assinatura:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\OrdemPagamentoAssinaturaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoAssinatura, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: OrdemPagamentoAssinatura }
+
+    financeiro.admin.ordem_pagamento_retencao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\OrdemPagamentoRetencaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoRetencao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: OrdemPagamentoRetencao }
+
+    financeiro.admin.liquidar_empenho:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\LiquidarEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\Empenho, FinanceiroBundle:Empenho\LiquidarEmpenhoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Liquidar Empenho }
+
+    financeiro.admin.saldo_dotacao_view:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\SaldoDotacaoViewAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\SaldoDotacaoView, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SaldoDotacaoView }
+
+    financeiro.admin.ordem_pagamento_anulada:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\OrdemPagamentoAnuladaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoAnulada, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: OrdemPagamentoAnulada }
+
+    financeiro.admin.cheque:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ChequeAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\Cheque, FinanceiroBundle:Tesouraria\ChequeAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Emissão e Controle de Cheques }
+
+    financeiro.admin.registros_metas_arrecadacao_receita_view:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\RegistrosMetasArrecadacaoReceitaViewAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\RegistrosMetasArrecadacaoReceitaView, FinanceiroBundle:Orcamento\RegistrosMetasArrecadacaoReceitaViewAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RegistrosMetasArrecadacaoReceitaView }
+
+    financeiro.admin.consultar_empenho:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ConsultarEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\Empenho, FinanceiroBundle:Empenho\ConsultarEmpenhoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Consultar Empenho }
+        calls:
+            - [ setTemplate, [show, FinanceiroBundle:Sonata\Empenho\Empenho\CRUD:consultarEmpenho.html.twig]]
+
+    financeiro.admin.arrecadacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ArrecadacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao, FinanceiroBundle:Tesouraria\ArrecadacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Arrecadacao }
+
+    financeiro.admin.cheque_emissao_ordem_pagamento:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ChequeEmissaoOrdemPagamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\OrdemPagamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ChequeEmissaoOrdemPagamento }
+
+    financeiro.admin.cheque_emissao_ordem_pagamento_collection:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ChequeEmissaoOrdemPagamentoCollectionAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoOrdemPagamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ChequeEmissaoOrdemPagamento }
+
+    financeiro.admin.extra_pagamento:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ExtraPagamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\VwTransferenciaView, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Transferencia }
+
+    financeiro.admin.extra_estorno:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ExtraEstornoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\VwTransferenciaView, SonataAdminBundle:CRUD ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ExtraEstorno }
+
+    financeiro.admin.arrecadacao_extra:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ArrecadacaoExtraAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\VwTransferenciaView, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Transferencia }
+
+    financeiro.admin.arrecadacao_devolucao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ArrecadacaoDevolucaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Arrecadacao }
+
+    financeiro.admin.anular_empenho:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\AnularEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\Empenho, FinanceiroBundle:Empenho\AnularEmpenhoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Anular Empenho }
+            
+    financeiro.admin.nota_explicativa:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\NotaExplicativaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\NotaExplicativa, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NotaExplicativa }
+
+    financeiro.admin.bordero:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\BorderoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\Bordero, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Bordero }
+
+    financeiro.admin.transacoes_pagamento:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\TransacoesPagamentoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\TransacoesPagamento, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TransacoesPagamento }
+
+    financeiro.admin.conciliacao_lancamento_manual:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ConciliacaoLancamentoManualAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoManual, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ConciliacaoLancamentoManual }
+
+    financeiro.admin.cheque_emissao_recibo_extra:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ChequeEmissaoReciboExtraAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\ReciboExtra, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Cheque emissão despesa extra }
+
+    financeiro.admin.cheque_emissao_recibo_extra_collection:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ChequeEmissaoReciboExtraCollectionAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoReciboExtra, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ChequeEmissaoReciboExtra }
+
+    financeiro.admin.cheque_emissao_transferencia:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ChequeEmissaoTransferenciaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\Transferencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Cheque emissão transferencia }
+
+    financeiro.admin.cheque_emissao_transferencia_collection:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ChequeEmissaoTransferenciaCollectionAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\ChequeEmissaoTransferencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ChequeEmissaoTransferencia }
+
+    financeiro.admin.transferencia_estornada:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\TransferenciaEstornadaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornada, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TransferenciaEstornada }
+
+    financeiro.admin.reemitir_anulacao_empenho:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ReemitirAnulacaoEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\Empenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Reemitir Anulação Empenho }
+
+    financeiro.admin.aplicacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\AplicacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\VwTransferenciaView, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TransferenciaView }
+
+    financeiro.admin.tesouraria_resgate:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ResgateAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\VwTransferenciaView, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TransferenciaView }
+
+    financeiro.admin.cancelar_abertura_restos_a_pagar:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\CancelarAberturaRestosAPagarAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\Lote, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Lote }
+        calls:
+            - [ setTemplate, [list, FinanceiroBundle:Sonata\Contabilidade\Lote\CRUD:show.html.twig]]
+
+    financeiro.admin.tesouraria_deposito:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\DepositoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\VwTransferenciaView, FinanceiroBundle:Tesouraria\DepositoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TransferenciaView }
+
+    financeiro.admin.empenho.convenio:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\EmpenhoConvenioAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Convenio, FinanceiroBundle:Empenho\EmpenhoConvenio]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Vincular Empenho a um Convênio }
+
+    financeiro.admin.nota_liquidacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\NotaLiquidacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NotaLiquidacao }
+
+    financeiro.admin.conciliar_conta:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ConciliarContaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica, FinanceiroBundle:Tesouraria\ConciliarContaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PlanoAnalitica }
+
+    financeiro.admin.orcamentaria_pagamentos:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\OrcamentariaPagamentosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao, FinanceiroBundle:Tesouraria\OrcamentariaPagamentosAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NotaLiquidacao }
+
+    financeiro.admin.empenho_contrato:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\EmpenhoContratoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Licitacao\Contrato, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Vincular Empenho a um Contrato }
+
+    financeiro.admin.receita:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\ReceitaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Receita, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Receita }
+
+    financeiro.admin.arrecadacao_extra_estornos:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\ArrecadacaoExtraEstornosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Tesouraria\Transferencia, FinanceiroBundle:Tesouraria\ArrecadacaoExtraEstornosAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Transferencia }
+
+    financeiro.admin.duplicar_autorizacao_empenho:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\DuplicarAutorizacaoEmpenhoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Duplicar Autorização de Empenho }
+
+    financeiro.admin.orcamentaria_estornos:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\OrcamentariaEstornosAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao, FinanceiroBundle:Tesouraria\OrcamentariaEstornosAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NotaLiquidacao }
+
+    financeiro.admin.reemitir_autorizacao:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Empenho\ReemitirAutorizacaoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Empenho\AutorizacaoEmpenho, FinanceiroBundle:Empenho\ReemitirAutorizacaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PreEmpenho }
+
+    financeiro.admin.mapa_recurso:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\MapaRecursoAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório Mapa de Recursos }
+
+    financeiro.admin.configuracao_lancamento_despesa_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ConfiguracaoLancamentoDespesaReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Configuração do Lançamento Despesa }
+
+    financeiro.admin.diario_geral_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\DiarioGeralReportAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatórios Diário Geral }
+
+    financeiro.admin.configuracao_lancamento_receita_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ConfiguracaoLancamentoReceitaReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Configuração do Lançamento Receita }
+
+    financeiro.admin.balanco_patrimonial_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\BalancoPatrimonialReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Balanço Patrimonial }
+
+    financeiro.admin.configuracao_lancamento_despesa_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ConfiguracaoLancamentoDespesaReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Configuração do Lançamento Despesa }
+
+    financeiro.admin.balanco_orcamentario_report:
+            class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\BalancoOrcamentarioReportAdmin
+            arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Balanço Orçamentário }
+
+    financeiro.admin.historico_padrao_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\HistoricoPadraoReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Histórico Padrão }
+
+    financeiro.admin.razao_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\RazaoReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Razão }
+
+    financeiro.admin.demonstrativo_fluxo_caixa:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\DemonstrativoFluxoCaixaReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório Demonstrativo de Fluxo de Caixa}
+
+    financeiro.admin.consistencia_pcasp_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\ConsistenciaPcaspReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Consistência PCASP }
+
+    financeiro.admin.demonstrativo_mutacoes_patrimonio_liquido:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\DemonstrativoMutacoesPatrimonioLiquidoReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Demonst. Mutacoes do Patrimônio Líquido}
+
+    financeiro.admin.balanco_financeiro:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Contabilidade\BalancoFinanceiroReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Balanço Financeiro}
+
+    financeiro.admin.relacao_despesa_extra_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\RelacaoDespesaExtraReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Relação de Despesa Extra }
+
+    financeiro.admin.relacao_receita_extra_report:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Tesouraria\RelacaoReceitaExtraReportAdmin
+        arguments: [~, \Urbem\CoreBundle\Entity\SonataReport, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Relatório de Relação de Receita Extra }
+
+    financeiro.admin.despesa:
+        class: Urbem\FinanceiroBundle\Resources\config\Sonata\Orcamento\DespesaAdmin
+        arguments: [~, Urbem\CoreBundle\Entity\Orcamento\Despesa, FinanceiroBundle:Orcamento\DespesaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Despesa }

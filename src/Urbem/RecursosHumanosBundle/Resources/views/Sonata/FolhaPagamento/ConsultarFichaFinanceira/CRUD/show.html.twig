@@ -1,0 +1,205 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">
+                        {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.fichaFinanceira'|trans }}
+                    </span>
+                </h2>
+
+                <p class="divider grey col s12"></p>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.competencia'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.competencia }}</h6>
+                </div>
+
+                <div class="col s6 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.matricula'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.matricula }}</h6>
+                </div>
+
+                <div class="col s3 right">
+                    <a class="white-text blue darken-4 btn btn-success save right"
+                       href="{{ path('urbem_recursos_humanos_folha_pagamento_consulta_ficha_financeira_gerar_relatorio',
+                       {
+                           'id': admin.getObjectKey(object),
+                           'tipoCalculo': object.codConfiguracao,
+                           'codMes': object.codMes,
+                           'codAno': object.codAno
+                       })
+                       }}">
+                        <i class="fa fa-print left"></i>{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.imprimir'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Ficha Financeira">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.eventosCalculados'|trans }}
+                </a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.evento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.desdobramento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.quantidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.proventos'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descontos'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for calculado in object.eventosCalculados %}
+                    <tr>
+                        <td class="td-rh">{{ calculado.codigo }}</td>
+                        <td class="td-rh">{{ calculado.descricao }}</td>
+                        <td class="td-rh">{{ calculado.desdobramento }}</td>
+                        <td class="td-rh">{{ calculado.quantidade|number_format(2, ',', '.') }}</td>
+                        <td class="td-rh">{{ calculado.proventos|number_format(2, ',', '.') }}</td>
+                        <td class="td-rh">{{ calculado.descontos|number_format(2, ',', '.') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Ficha Financeira">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.basesCaculos'|trans }}
+                </a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.evento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.desdobramento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.quantidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valor'|trans }}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for bases in object.basesCalculos %}
+                    <tr>
+                        <td class="td-rh">{{ bases.codigo }}</td>
+                        <td class="td-rh">{{ bases.descricao }}</td>
+                        <td class="td-rh">{{ bases.desdobramento }}</td>
+                        <td class="td-rh">{{ bases.quantidade|number_format(2, ',', '.') }}</td>
+                        <td class="td-rh">{{ bases.valor|number_format(2, ',', '.') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Ficha Financeira">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.eventosInformativos'|trans }}
+                </a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.evento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.desdobramento'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.quantidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valor'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for informativos in object.eventosInformativos %}
+                    <tr>
+                        <td class="td-rh">{{ informativos.codigo }}</td>
+                        <td class="td-rh">{{ informativos.descricao }}</td>
+                        <td class="td-rh">{{ informativos.desdobramento }}</td>
+                        <td class="td-rh">{{ informativos.quantidade|number_format(2, ',', '.') }}</td>
+                        <td class="td-rh">{{ informativos.valor|number_format(2, ',', '.') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Ficha Financeira">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.totaisCalculados'|trans }}
+                </a>
+            </div>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.tipo'|trans }}</th>
+                    <th class="th-rh" colspan="2">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valores'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for totaisCalculados in object.totaisCalculados %}
+                    <tr>
+                        <td class="td-rh">{{ totaisCalculados.descricao }}</td>
+                        {% if 'proventos' in totaisCalculados|keys %}
+                        <td class="td-rh">
+                            {{ totaisCalculados.proventos }}
+                        </td>
+                        <td class="td-rh"></td>
+                            {% else %}
+                                <td class="td-rh"></td>
+                                <td class="td-rh">
+                                    {{ totaisCalculados.descontos }}
+                                </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if object.codConfiguracao != 3 %}
+            {% include 'RecursosHumanosBundle:Sonata/FolhaPagamento/ConsultarFichaFinanceira/CRUD:show_valores.html.twig' %}
+        {% endif %}
+
+    </div>
+{% endblock show %}

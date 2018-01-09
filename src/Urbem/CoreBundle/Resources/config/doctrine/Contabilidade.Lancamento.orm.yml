@@ -1,0 +1,142 @@
+Urbem\CoreBundle\Entity\Contabilidade\Lancamento:
+    type: entity
+    table: contabilidade.lancamento
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\LancamentoRepository
+    id:
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        codHistorico:
+            type: integer
+            nullable: false
+            column: cod_historico
+        complemento:
+            type: string
+            nullable: false
+            length: 400
+    manyToOne:
+        fkContabilidadeLote:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lote
+            inversedBy: fkContabilidadeLancamentos
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                tipo:
+                    referencedColumnName: tipo
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkContabilidadeHistoricoContabil:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\HistoricoContabil
+            inversedBy: fkContabilidadeLancamentos
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkContabilidadeLancamentoBaixaPatrimonios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoBaixaPatrimonio
+            mappedBy: fkContabilidadeLancamento
+        fkContabilidadeLancamentoBaixaPatrimonioAlienacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoBaixaPatrimonioAlienacao
+            mappedBy: fkContabilidadeLancamento
+        fkContabilidadeLancamentoBaixaPatrimonioDepreciacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoBaixaPatrimonioDepreciacao
+            mappedBy: fkContabilidadeLancamento
+        fkContabilidadeLancamentoDepreciacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoDepreciacao
+            mappedBy: fkContabilidadeLancamento
+        fkContabilidadeLancamentoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoReceita
+            mappedBy: fkContabilidadeLancamento
+        fkContabilidadeValorLancamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\ValorLancamento
+            mappedBy: fkContabilidadeLancamento
+        fkContabilidadeLancamentoTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoTransferencia
+            mappedBy: fkContabilidadeLancamento
+    oneToOne:
+        fkContabilidadeLancamentoRetencao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoRetencao
+            mappedBy: fkContabilidadeLancamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkContabilidadeLancamentoEmpenho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\LancamentoEmpenho
+            mappedBy: fkContabilidadeLancamento
+            joinColumns:
+                sequencia:
+                    referencedColumnName: sequencia
+                cod_lote:
+                    referencedColumnName: cod_lote
+                tipo:
+                    referencedColumnName: tipo
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

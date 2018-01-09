@@ -1,0 +1,76 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoInfracao:
+    type: entity
+    table: fiscalizacao.notificacao_infracao
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+        codInfracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_infracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        observacao:
+            type: text
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        baseCalculo:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: base_calculo
+    manyToOne:
+        fkFiscalizacaoNotificacaoFiscalizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\NotificacaoFiscalizacao
+            inversedBy: fkFiscalizacaoNotificacaoInfracoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkFiscalizacaoInfracaoPenalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\InfracaoPenalidade
+            inversedBy: fkFiscalizacaoNotificacaoInfracoes
+            joinColumns:
+                cod_infracao:
+                    referencedColumnName: cod_infracao
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+                timestamp:
+                    referencedColumnName: timestamp
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkFiscalizacaoNotificacaoInfracoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento

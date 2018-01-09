@@ -1,0 +1,165 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    {{ admin.getTotais(object) }}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="fa fa-retweet left grey-text medium" aria-hidden="true"></i>
+                    <span style="padding-top: 10px">{{ 'label.convenio'|trans }}:</span><span class="grey-text bold" style="padding-top: 10px; font-weight: bold">{{ object.numConvenio ~ "/" ~ object.exercicio }}</span>
+                </h2>
+
+                {% if object.fkLicitacaoConvenioAnulado is null and object.fkLicitacaoRescisaoConvenio is null %}
+                    <a href="{{ path('urbem_patrimonial_licitacao_convenio_edit', { 'id': object.numConvenio ~ "~" ~ object.exercicio }) }}" class="serv-btn right">
+                        <i class="material-icons right">edit</i>
+                    </a>
+                {% endif %}
+
+                <p class="divider grey col s12"></p>
+
+                <div class="row">
+                    {# Numero do Convenio #}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.numConvenio'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.numConvenio ~ "/" ~ object.exercicio }}</h6>
+                    </div>
+
+                    {# Tipo de Convenio #}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.codTipoConvenio'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.fkLicitacaoTipoConvenio.descricao }}</h6>
+                    </div>
+
+                    {# Responsavel Juridico #}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.cgmResponsavel'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.fkSwCgm.nomCgm }}</h6>
+                    </div>
+
+                    {# Valor do Convenio #}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.valor'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.valor|number_format(2, ',', '.') }}</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.dtAssinatura'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.dtAssinatura|date('d/m/Y') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.inicioExecucao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.inicioExecucao|date('d/m/Y') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.dtVigencia'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.dtVigencia|date('d/m/Y') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.codObjeto'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.fkComprasObjeto.descricao }}</h6>
+                    </div>
+                    {# Status se anulado ou não #}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                            {{ 'label.almoxarifado.requisicao.status'|trans }}:
+                        </h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            {% if object.fkLicitacaoConvenioAnulado is null and object.fkLicitacaoRescisaoConvenio is null %}
+                                <span class="label label-success">Ativo</span>
+                            {% else %}
+                                {% if object.fkLicitacaoConvenioAnulado is not null %}
+                                    <span class="label label-danger">{{ 'label.convenioAdmin.anulado.anulado'|trans }}</span>
+                                {% elseif object.fkLicitacaoRescisaoConvenio is not null %}
+                                    <span class="label label-danger">{{ 'label.convenioAdmin.rescisaoConvenio.rescindido'|trans }}</span>
+                                {% endif %}
+                            {% endif %}
+                        </h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    {# Barra de percentual do Convenio usado #}
+                    <div class="little1-box col s6">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.percentualUsado'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ object.totais.percentualUsado }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ object.totais.percentualUsado }}%;">
+                                    {{ 'label.convenioAdmin.participantes.percentualUsado'|trans({ '%percentual%': object.totais.percentualUsado }) }}
+                                </div>
+                            </div>
+                        </h6>
+                    </div>
+                    <div class="little1-box col s6">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.convenioAdmin.observacao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.observacao }}</h6>
+                    </div>
+                </div>
+
+                <div class="">
+                    {% if object.fkLicitacaoConvenioAnulado is null and object.totais.percentualUsado == 100 %}
+                        <a href="{{ path('urbem_patrimonial_licitacao_convenio_gerar_relatorio', { 'id': admin.getObjectKey(object) }) }}" class="white-text btn save lighten-2 gerardocumento serv-btn right">
+                            <i class="mdi mdi-file-document left"></i>Gerar Documento
+                        </a>
+                    {% else %}
+                        <a href="" class="white-text btn grey lighten-2 disabled gerardocumento serv-btn right">
+                            <i class="mdi mdi-file-document left"></i>Gerar Documento
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% include 'PatrimonialBundle:Sonata/Licitacao/Convenio/CRUD:publicacoes.html.twig' %}
+
+        <hr>
+
+        {% include 'PatrimonialBundle:Sonata/Licitacao/Convenio/CRUD:participantes.html.twig' %}
+
+        <hr>
+
+        {% include 'PatrimonialBundle:Sonata/Licitacao/Convenio/CRUD:show__aditivos.html.twig' %}
+
+        {% include 'PatrimonialBundle:Sonata/Licitacao/Convenio/CRUD:rescisao.html.twig' %}
+
+        {% include 'PatrimonialBundle:Sonata/Licitacao/Convenio/CRUD:anulado.html.twig' %}
+
+        <hr>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_patrimonial_licitacao_convenio_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

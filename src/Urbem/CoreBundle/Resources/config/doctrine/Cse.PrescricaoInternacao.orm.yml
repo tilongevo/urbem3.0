@@ -1,0 +1,66 @@
+Urbem\CoreBundle\Entity\Cse\PrescricaoInternacao:
+    type: entity
+    table: cse.prescricao_internacao
+    id:
+        codInternacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_internacao
+        codInstituicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_instituicao
+        codPrescricao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_prescricao
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+    fields:
+        dtBaixa:
+            type: date
+            nullable: false
+            column: dt_baixa
+        dtAlta:
+            type: date
+            nullable: true
+            column: dt_alta
+        motivo:
+            type: string
+            nullable: false
+            length: 240
+    manyToOne:
+        fkCseInstituicaoSaude:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\InstituicaoSaude
+            inversedBy: fkCsePrescricaoInternacoes
+            joinColumns:
+                cod_instituicao:
+                    referencedColumnName: cod_instituicao
+        fkCsePrescricao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Prescricao
+            inversedBy: fkCsePrescricaoInternacoes
+            joinColumns:
+                cod_prescricao:
+                    referencedColumnName: cod_prescricao
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao

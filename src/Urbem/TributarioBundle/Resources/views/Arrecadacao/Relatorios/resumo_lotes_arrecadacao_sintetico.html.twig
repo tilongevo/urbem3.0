@@ -1,0 +1,120 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Arrecadacao/Relatorios/header.html.twig' %}
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.loteInicial'|trans|upper ~ ': ' ~ lotes|first.cod_lote }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.dataLote'|trans|upper ~ ': ' ~ lotes|first.data_lote }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.dataBaixa'|trans|upper ~ ': ' ~ lotes|first.data_baixa }}</th>
+            </tr>
+            <tr>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.loteFinal'|trans|upper ~ ': ' ~ lotes|last.cod_lote }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.dataLote'|trans|upper ~ ': ' ~ lotes|last.data_lote }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.dataBaixa'|trans|upper ~ ': ' ~ lotes|last.data_baixa }}</th>
+            </tr>
+            </thead>
+        </table>
+        {% for titulo in listaOrigem %}
+            <table class="table table-bordered">
+                <h5 class="col s12 box-title center-align show">
+                    <strong>{{ titulo.origem ~ ' - ' ~ titulo.descricao }}</strong>
+                </h5>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.valor'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.juros'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.multa'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.diff'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.correcao'|trans|upper }}</th>
+                    <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.total'|trans|upper }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.totalNormal'|trans|upper }}</th>
+                    <th>{{ somatoriosNormais[titulo.origem].somaNormal|number_format_decimal({'fraction_digits': 2}) }}</th>
+                    <th>{{ somatoriosNormais[titulo.origem].somaJuros|number_format_decimal({'fraction_digits': 2}) }}</th>
+                    <th>{{ somatoriosNormais[titulo.origem].somaMulta|number_format_decimal({'fraction_digits': 2}) }}</th>
+                    <th>{{ somatoriosNormais[titulo.origem].somaDiff|number_format_decimal({'fraction_digits': 2}) }}</th>
+                    <th>{{ somatoriosNormais[titulo.origem].somaCorrecao|number_format_decimal({'fraction_digits': 2}) }}</th>
+                    <th>{{ somatoriosNormais[titulo.origem].somaTotal|number_format_decimal({'fraction_digits': 2}) }}</th>
+                </tr>
+                <tr>
+                    <th colspan="4"
+                        style="text-align:right">{{ 'label.arrecadacaoResumoLotesReport.pdf.totalCreditoGrupo'|trans|upper }}</th>
+                    <th colspan="3"
+                        style="text-align:left">{{ somatoriosNormais[titulo.origem].somaTotal|number_format_decimal({'fraction_digits': 2}) }}</th>
+                </tr>
+                </tbody>
+            </table>
+        {% endfor %}
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.totaisRelatorio'|trans|upper }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.valor'|trans|upper }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.juros'|trans|upper }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.multa'|trans|upper }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.diff'|trans|upper }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.correcao'|trans|upper }}</th>
+                <th>{{ 'label.arrecadacaoResumoLotesReport.pdf.total'|trans|upper }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th></th>
+                <th>{{ totaisRelatorio.somaNormal|number_format_decimal({'fraction_digits': 2}) }}</th>
+                <th>{{ totaisRelatorio.somaJuros|number_format_decimal({'fraction_digits': 2}) }}</th>
+                <th>{{ totaisRelatorio.somaMulta|number_format_decimal({'fraction_digits': 2}) }}</th>
+                <th>{{ totaisRelatorio.somaDiff|number_format_decimal({'fraction_digits': 2}) }}</th>
+                <th>{{ totaisRelatorio.somaCorrecao|number_format_decimal({'fraction_digits': 2}) }}</th>
+                <th>{{ totaisRelatorio.somaTotal|number_format_decimal({'fraction_digits': 2}) }}</th>
+            </tr>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="3"
+                    style="text-align:right">{{ 'label.arrecadacaoResumoLotesReport.pdf.totalInconsistente'|trans|upper }}
+                    :
+                </th>
+                <th>{{ inconsistenteDividaAtiva.total|number_format_decimal({'fraction_digits': 2}) }}</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="3"
+                    style="text-align:right">{{ 'label.arrecadacaoResumoLotesReport.pdf.totalInconsistenteSemVinculo'|trans|upper }}
+                    :
+                </th>
+                <th>{{ inconsistenteSemVinculo.total|number_format_decimal({'fraction_digits': 2}) }}</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="3"
+                    style="text-align:right">{{ 'label.arrecadacaoResumoLotesReport.pdf.totalGeral'|trans|upper }}</th>
+                <th>{{ ( totaisRelatorio.somaTotal + inconsistenteDividaAtiva.total + inconsistenteSemVinculo.total)|number_format_decimal({'fraction_digits': 2}) }}</th>
+                <th></th>
+            </tr>
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+    <style>
+        table td, th {
+            border: 0 !important;
+            text-align: center
+        }
+    </style>
+{% endblock %}

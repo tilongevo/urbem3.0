@@ -1,0 +1,54 @@
+{% set parcelas = field.data.parcelas %}
+
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button"
+               name="addParcela" id="addParcela" value="Incluir">
+    </div>
+</div>
+<div class="col s12">
+    <h3 class="col s10 box-title left-align show">{{ 'label.definirVencimentos.listaVencimentos'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableParcelas" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.definirVencimentos.vencimento'|trans }}</th>
+            <th class="th-rh">{{ 'label.definirVencimentos.desconto'|trans }}</th>
+            <th class="th-rh">{{ 'label.definirVencimentos.vencimentoDesconto'|trans }}</th>
+            <th class="th-rh">{{ 'label.definirVencimentos.formaDesconto'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if parcelas|length > 0 %}
+            {% for parcela in parcelas %}
+                {% if parcela.percentual == true %}
+                    {% set percentual = 'perparc' %}
+                {% else %}
+                    {% set percentual = 'absparc' %}
+                {% endif %}
+                {% set value = parcela.dataVencimento|date('d/m/Y') ~ '__' ~ parcela.valor
+                    ~ '__' ~ parcela.dataVencimentoDesconto|date('d/m/Y') ~ '__' ~ percentual
+                    ~ '__' %}
+                <tr class="tr-rh">
+                    <td style="display: none"><input name="parcelas[]" type="hidden" value="{{ value }}" /></td>
+                    <td>{{ parcela.dataVencimento|date('d/m/Y') }}</td>
+                    <td>{{ parcela.valor }}</td>
+                    <td>{{ parcela.dataVencimentoDesconto|date('d/m/Y') }}</td>
+                    <td>
+                        {% if parcela.percentual == true %}
+                            {{ 'label.definirVencimentos.percentual'|trans }}
+                        {% else %}
+                            {{ 'label.definirVencimentos.valorAbsoluto'|trans }}
+                        {% endif %}
+                    </td>
+                    <td class="remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="tr-rh empty">
+                <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

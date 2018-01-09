@@ -1,0 +1,107 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    {{ admin.configureCustomData(object) }}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">
+                        {{ 'label.saidaEstorno.dadosEntrada'|trans }}
+                    </span>
+                </h2>
+
+                <h6 class="divider grey col s12"></h6>
+
+                {# Exercicio #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.exercicio'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.exercicioLancamento }}
+                    </h6>
+                </div>
+
+                {# Almoxarifado #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.saidaEstorno.almoxarifado'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkAlmoxarifadoAlmoxarifado }}
+                    </h6>
+                </div>
+
+                {# Almoxarife #}
+                {% if object.nomAlmoxarife is not empty %}
+                    <div class="col s3 little3-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                            {{ 'label.saidaEstorno.almoxarife'|trans }}
+                        </h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            {{ object.nomAlmoxarife }}
+                        </h6>
+                    </div>
+                {% endif %}
+
+                {# Numero do Lancamento #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.saidaEstorno.numLancamento'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.numLancamento }}
+                    </h6>
+                </div>
+
+                {# Data do Lancamento #}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.saidaEstorno.dtLancamento'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.timestamp|date('d/m/Y') }}
+                    </h6>
+                </div>
+            </div>
+        </div>
+
+        {% include 'PatrimonialBundle:Sonata/Almoxarifado/SaidaEstorno/CRUD:show__itens.html.twig' %}
+
+        <div class="row">
+            <div class="col s12 add space">
+                <a class="btn-floating white-text blue darken-4 btn-success"
+                   href="{{ path('urbem_patrimonial_almoxarifado_saida_estorno_list') }}">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

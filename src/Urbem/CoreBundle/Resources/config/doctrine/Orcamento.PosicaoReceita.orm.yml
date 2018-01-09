@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Orcamento\PosicaoReceita:
+    type: entity
+    table: orcamento.posicao_receita
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPosicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_posicao
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        mascara:
+            type: string
+            nullable: false
+            length: 10
+    manyToOne:
+        fkOrcamentoTipoContaReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\TipoContaReceita
+            inversedBy: fkOrcamentoPosicaoReceitas
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkOrcamentoClassificacaoReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ClassificacaoReceita
+            mappedBy: fkOrcamentoPosicaoReceita

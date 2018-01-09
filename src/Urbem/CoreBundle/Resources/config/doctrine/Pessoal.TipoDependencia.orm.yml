@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\TipoDependencia:
+    type: entity
+    table: pessoal.tipo_dependencia
+    id:
+        codDependencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_dependencia
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalContratoPensionistas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoPensionista
+            mappedBy: fkPessoalTipoDependencia

@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Tcemg\OperacaoCreditoAro:
+    type: entity
+    table: tcemg.operacao_credito_aro
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\OperacaoCreditoAroRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        dtContratacao:
+            type: date
+            nullable: false
+            column: dt_contratacao
+        vlContratado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_contratado
+        dtPrincipal:
+            type: date
+            nullable: false
+            column: dt_principal
+        dtJuros:
+            type: date
+            nullable: false
+            column: dt_juros
+        dtEncargos:
+            type: date
+            nullable: false
+            column: dt_encargos
+        vlLiquidacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_liquidacao
+    oneToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcemgOperacaoCreditoAro
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

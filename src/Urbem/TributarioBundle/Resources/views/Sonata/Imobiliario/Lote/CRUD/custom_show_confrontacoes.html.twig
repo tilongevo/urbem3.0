@@ -1,0 +1,68 @@
+<th{% if(is_diff|default(false)) %} class="diff"{% endif %}>{% block name %}{{ admin.trans(field.label, {}, field.translationDomain) }}{% endblock %}</th>
+<td>
+            <table class="table show-table">
+                <thead>
+                <tr>
+                    <th>{{ 'label.imobiliarioLote.pontoCardeal'|trans }}</th>
+                    <th>{{ 'label.imobiliarioLote.tipo'|trans }}</th>
+                    <th>{{ 'label.imobiliarioLote.descricao'|trans }}</th>
+                    <th>{{ 'label.imobiliarioLote.extensao'|trans }}</th>
+                    <th>{{ 'label.imobiliarioLote.testada'|trans }}</th>
+                </tr>
+                {% if field.options.data|length > 0 %}
+                    {% for confrontacao in field.options.data %}
+                        <tr class="tr-rh row-confrontacoes">
+                            <td class="td-rh ponto-cardeal">
+                                <input type="hidden" value="{{ admin.getObjectKey(confrontacao) }}" name="confrontacoes_old[]" />
+                                {{ confrontacao.fkImobiliarioPontoCardeal }}
+                            </td>
+                            {% if confrontacao.fkImobiliarioConfrontacaoTrecho|length > 0 %}
+                                <td class="td-rh tipo {% if confrontacao.fkImobiliarioConfrontacaoTrecho.principal == true %} confrontacoes-principal {% endif %}">
+                                    {{ 'label.imobiliarioLote.trecho'|trans }}
+                                </td>
+                                <td class="td-rh descricao">
+                                    {{ confrontacao.fkImobiliarioConfrontacaoTrecho.fkImobiliarioTrecho }}
+                                </td>
+                            {% elseif confrontacao.fkImobiliarioConfrontacaoLote|length > 0 %}
+                                <td class="td-rh tipo">
+                                    {{ 'label.imobiliarioLote.lote'|trans }}
+                                    {{ 'label.imobiliarioLote.lote'|trans }}
+                                </td>
+                                <td class="td-rh descricao">
+                                    {{ confrontacao.fkImobiliarioConfrontacaoLote.fkImobiliarioLote }}
+                                </td>
+                            {% elseif confrontacao.fkImobiliarioConfrontacaoDiversa|length > 0 %}
+                                <td class="td-rh tipo">
+                                    {{ 'label.imobiliarioLote.outros'|trans }}
+                                </td>
+                                <td class="td-rh descricao">
+                                    {{ confrontacao.fkImobiliarioConfrontacaoDiversa.descricao }}
+                                </td>
+                            {% endif %}
+                            <td class="td-rh extensao">
+                                {{ confrontacao.fkImobiliarioConfrontacaoExtensoes.current.valor|number_format_decimal({'fraction_digits': 2}) }}
+                            </td>
+                            <td class="td-rh testada">
+                                {% if confrontacao.fkImobiliarioConfrontacaoTrecho is not null %}
+                                    {% if confrontacao.fkImobiliarioConfrontacaoTrecho.principal == true %}
+                                        {{ 'sim'|trans }}
+                                    {% else %}
+                                        {{ 'nao'|trans }}
+                                    {% endif %}
+
+                                {% else %}
+                                    {{ 'nao'|trans }}
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr class="tr-rh empty-row-confrontacoes">
+                        <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+
+</td>

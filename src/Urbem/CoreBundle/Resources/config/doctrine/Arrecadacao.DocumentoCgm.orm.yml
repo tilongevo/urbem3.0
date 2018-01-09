@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Arrecadacao\DocumentoCgm:
+    type: entity
+    table: arrecadacao.documento_cgm
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        numDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_documento
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkArrecadacaoDocumentoCgns
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkArrecadacaoDocumentoEmissao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoEmissao
+            inversedBy: fkArrecadacaoDocumentoCgns
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                num_documento:
+                    referencedColumnName: num_documento
+                exercicio:
+                    referencedColumnName: exercicio

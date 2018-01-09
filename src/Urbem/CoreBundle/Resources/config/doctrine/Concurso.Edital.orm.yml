@@ -1,0 +1,85 @@
+Urbem\CoreBundle\Entity\Concurso\Edital:
+    type: entity
+    table: concurso.edital
+    repositoryClass: Urbem\CoreBundle\Repository\Concurso\EditalRepository
+    id:
+        codEdital:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_edital
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtAplicacao:
+            type: date
+            nullable: false
+            column: dt_aplicacao
+        dtProrrogacao:
+            type: date
+            nullable: true
+            column: dt_prorrogacao
+        notaMinima:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 2
+            column: nota_minima
+        mesesValidade:
+            type: integer
+            nullable: false
+            column: meses_validade
+        avaliaTitulacao:
+            type: boolean
+            nullable: false
+            column: avalia_titulacao
+        tipoProva:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_prova
+    manyToOne:
+        fkNormasNorma1:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkConcursoEditais1
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+    oneToMany:
+        fkConcursoConcursoCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\ConcursoCargo
+            mappedBy: fkConcursoEdital
+        fkConcursoAtributoConcursoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\AtributoConcursoValor
+            mappedBy: fkConcursoEdital
+        fkConcursoConcursoCandidatos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\ConcursoCandidato
+            mappedBy: fkConcursoEdital
+        fkConcursoHomologacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\Homologacao
+            mappedBy: fkConcursoEdital
+    oneToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkConcursoEdital
+            joinColumns:
+                cod_edital:
+                    referencedColumnName: cod_norma

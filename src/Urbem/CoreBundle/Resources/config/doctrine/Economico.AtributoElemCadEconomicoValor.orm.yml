@@ -1,0 +1,79 @@
+Urbem\CoreBundle\Entity\Economico\AtributoElemCadEconomicoValor:
+    type: entity
+    table: economico.atributo_elem_cad_economico_valor
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        codElemento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_elemento
+        ocorrenciaElemento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_elemento
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        ocorrenciaAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_atividade
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkEconomicoElementoAtivCadEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoAtivCadEconomico
+            inversedBy: fkEconomicoAtributoElemCadEconomicoValores
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                ocorrencia_atividade:
+                    referencedColumnName: ocorrencia_atividade
+                cod_elemento:
+                    referencedColumnName: cod_elemento
+                ocorrencia_elemento:
+                    referencedColumnName: ocorrencia_elemento
+        fkEconomicoAtributoElemento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoElemento
+            inversedBy: fkEconomicoAtributoElemCadEconomicoValores
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_elemento:
+                    referencedColumnName: cod_elemento
+                cod_modulo:
+                    referencedColumnName: cod_modulo

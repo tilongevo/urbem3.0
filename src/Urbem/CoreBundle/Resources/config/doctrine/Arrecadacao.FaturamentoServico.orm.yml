@@ -1,0 +1,92 @@
+Urbem\CoreBundle\Entity\Arrecadacao\FaturamentoServico:
+    type: entity
+    table: arrecadacao.faturamento_servico
+    id:
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+    manyToOne:
+        fkEconomicoServicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ServicoAtividade
+            inversedBy: fkArrecadacaoFaturamentoServicos
+            joinColumns:
+                cod_servico:
+                    referencedColumnName: cod_servico
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+        fkArrecadacaoCadastroEconomicoFaturamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoFaturamento
+            inversedBy: fkArrecadacaoFaturamentoServicos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+        fkEconomicoModalidadeLancamento:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ModalidadeLancamento
+            inversedBy: fkArrecadacaoFaturamentoServicos
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+    oneToMany:
+        fkArrecadacaoNotaServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\NotaServico
+            mappedBy: fkArrecadacaoFaturamentoServico
+        fkArrecadacaoServicoComRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ServicoComRetencao
+            mappedBy: fkArrecadacaoFaturamentoServico
+    oneToOne:
+        fkArrecadacaoServicoSemRetencao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ServicoSemRetencao
+            mappedBy: fkArrecadacaoFaturamentoServico
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                cod_servico:
+                    referencedColumnName: cod_servico
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+                ocorrencia:
+                    referencedColumnName: ocorrencia

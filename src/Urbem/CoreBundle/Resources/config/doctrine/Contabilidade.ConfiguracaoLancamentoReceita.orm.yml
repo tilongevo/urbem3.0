@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Contabilidade\ConfiguracaoLancamentoReceita:
+    type: entity
+    table: contabilidade.configuracao_lancamento_receita
+    repositoryClass: Urbem\CoreBundle\Repository\Contabilidade\ConfiguracaoLancamentoReceitaRepository
+    id:
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codContaReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_receita
+        estorno:
+            type: boolean
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkContabilidadeConfiguracaoLancamentoReceitas
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio
+        fkOrcamentoContaReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\ContaReceita
+            inversedBy: fkContabilidadeConfiguracaoLancamentoReceitas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_conta_receita:
+                    referencedColumnName: cod_conta

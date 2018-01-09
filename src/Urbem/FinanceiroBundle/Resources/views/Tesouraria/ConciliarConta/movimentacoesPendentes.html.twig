@@ -1,0 +1,154 @@
+<div id="accordion" class="col s12">
+    <h3>{{ 'label.conciliarConta.entradaBanco'|trans }}</h3>
+    <div>
+        <p>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="th-rh">{{ 'label.conciliarConta.data'|trans }}</th>
+                        <th class="th-rh">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                        <th class="th-rh">{{ 'label.conciliarConta.valor'|trans }}</th>
+                        <th class="th-rh">{{ 'label.conciliarConta.dataConciliacao'|trans }}</th>
+                        <th class="th-rh">{{ 'label.conciliarConta.conciliar'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if field.data.entradaBanco|length > 0 %}
+                        {% for entradaBanco in field.data.entradaBanco %}
+                            <tr>
+                                <td style="display: none"><input name="movimentacoes_pendentes[]" type="hidden" value="{{ entradaBanco.cod_lote ~ '~' ~ entradaBanco.tipo ~ '~' ~ entradaBanco.sequencia ~ '~' ~ entradaBanco.cod_entidade ~ '~' ~ entradaBanco.tipo_valor ~ '~' ~ entradaBanco.cod_arrecadacao ~ '~' ~ entradaBanco.timestamp_arrecadacao ~ '~' ~ entradaBanco.timestamp_estornada ~ '~' ~ entradaBanco.mes ~ '~' ~ entradaBanco.exercicio_conciliacao  }}"/></td>
+                                <td class="td-rh">{{ entradaBanco.dt_lancamento }}</td>
+                                <td class="td-rh">{{ entradaBanco.descricao }}</td>
+                                <td class="td-rh">{{ entradaBanco.vl_lancamento|number_format_currency('BRL') }}</td>
+                                <td class="td-rh">{{ entradaBanco.dt_conciliacao }}</td>
+                                <td class="td-rh">
+                                    {% if entradaBanco.conciliar == 'true' %}
+                                        <input data-custom="{{ entradaBanco.vl_lancamento }}" class="conciliar" type="checkbox" name="movimentacoes_pendentesConciliado[]" value="{{ entradaBanco.cod_lote ~ '~' ~ entradaBanco.tipo ~ '~' ~ entradaBanco.sequencia ~ '~' ~ entradaBanco.cod_entidade ~ '~' ~ entradaBanco.tipo_valor ~ '~' ~ entradaBanco.cod_arrecadacao ~ '~' ~ entradaBanco.timestamp_arrecadacao ~ '~' ~ entradaBanco.timestamp_estornada ~ '~' ~ entradaBanco.mes ~ '~' ~ entradaBanco.exercicio_conciliacao  }}" checked="checked"/>
+                                    {% else %}
+                                        <input data-custom="{{ entradaBanco.vl_lancamento }}" class="conciliar" type="checkbox" name="movimentacoes_pendentesConciliado[]" value="{{ entradaBanco.cod_lote ~ '~' ~ entradaBanco.tipo ~ '~' ~ entradaBanco.sequencia ~ '~' ~ entradaBanco.cod_entidade ~ '~' ~ entradaBanco.tipo_valor ~ '~' ~ entradaBanco.cod_arrecadacao ~ '~' ~ entradaBanco.timestamp_arrecadacao ~ '~' ~ entradaBanco.timestamp_estornada ~ '~' ~ entradaBanco.mes ~ '~' ~ entradaBanco.exercicio_conciliacao  }}"/>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="5" class="td-rh">{{ 'listagemVazia'|trans }}</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </p>
+    </div>
+    <h3>{{ 'label.conciliarConta.entradaTesouraria'|trans }}</h3>
+    <div>
+        <p>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="th-rh">{{ 'label.conciliarConta.data'|trans }}</th>
+                        <th class="th-rh">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                        <th class="th-rh">{{ 'label.conciliarConta.valor'|trans }}</th>
+                        <th class="th-rh">{{ 'label.conciliarConta.dataConciliacao'|trans }}</th>
+                        <th class="th-rh">{{ 'label.conciliarConta.conciliar'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if field.data.entradaTesouraria|length > 0 %}
+                    {% for entradaTesouraria in field.data.entradaTesouraria %}
+                        <tr>
+                            <td style="display: none"><input name="movimentacoes_pendentes[]" type="hidden" value="{{ entradaTesouraria.cod_lote ~ '~' ~ entradaTesouraria.tipo ~ '~' ~ entradaTesouraria.sequencia ~ '~' ~ entradaTesouraria.cod_entidade ~ '~' ~ entradaTesouraria.tipo_valor ~ '~' ~ entradaTesouraria.cod_arrecadacao ~ '~' ~ entradaTesouraria.timestamp_arrecadacao ~ '~' ~ entradaTesouraria.timestamp_estornada ~ '~' ~ entradaTesouraria.mes ~ '~' ~ entradaTesouraria.exercicio_conciliacao  }}"/></td>
+                            <td class="td-rh">{{ entradaTesouraria.dt_lancamento }}</td>
+                            <td class="td-rh">{{ entradaTesouraria.descricao }}</td>
+                            <td class="td-rh">{{ entradaTesouraria.vl_lancamento|number_format_currency('BRL') }}</td>
+                            <td class="td-rh">{{ entradaTesouraria.dt_conciliacao }}</td>
+                            <td class="td-rh">
+                                {% if entradaTesouraria.conciliar == 'true' %}
+                                    <input class="conciliar" type="checkbox" data-custom="{{ entradaTesouraria.vl_lancamento }}" name="movimentacoes_pendentesConciliado[]" value="{{ entradaTesouraria.cod_lote ~ '~' ~ entradaTesouraria.tipo ~ '~' ~ entradaTesouraria.sequencia ~ '~' ~ entradaTesouraria.cod_entidade ~ '~' ~ entradaTesouraria.tipo_valor ~ '~' ~ entradaTesouraria.cod_arrecadacao ~ '~' ~ entradaTesouraria.timestamp_arrecadacao ~ '~' ~ entradaTesouraria.timestamp_estornada ~ '~' ~ entradaTesouraria.mes ~ '~' ~ entradaTesouraria.exercicio_conciliacao  }}" checked="checked"/>
+                                {% else %}
+                                    <input class="conciliar" type="checkbox" data-custom="{{ entradaTesouraria.vl_lancamento }}" name="movimentacoes_pendentesConciliado[]" value="{{ entradaTesouraria.cod_lote ~ '~' ~ entradaTesouraria.tipo ~ '~' ~ entradaTesouraria.sequencia ~ '~' ~ entradaTesouraria.cod_entidade ~ '~' ~ entradaTesouraria.tipo_valor ~ '~' ~ entradaTesouraria.cod_arrecadacao ~ '~' ~ entradaTesouraria.timestamp_arrecadacao ~ '~' ~ entradaTesouraria.timestamp_estornada ~ '~' ~ entradaTesouraria.mes ~ '~' ~ entradaTesouraria.exercicio_conciliacao  }}"/>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="5" class="td-rh">{{ 'listagemVazia'|trans }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </p>
+    </div>
+    <h3>{{ 'label.conciliarConta.saidaBanco'|trans }}</h3>
+    <div>
+        <p>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.conciliarConta.data'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.valor'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.dataConciliacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.conciliar'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if field.data.saidaBanco|length > 0 %}
+                    {% for saidaBanco in field.data.saidaBanco %}
+                        <tr>
+                            <td style="display: none"><input name="movimentacoes_pendentes[]" type="hidden" value="{{ saidaBanco.cod_lote ~ '~' ~ saidaBanco.tipo ~ '~' ~ saidaBanco.sequencia ~ '~' ~ saidaBanco.cod_entidade ~ '~' ~ saidaBanco.tipo_valor ~ '~' ~ saidaBanco.cod_arrecadacao ~ '~' ~ saidaBanco.timestamp_arrecadacao ~ '~' ~ saidaBanco.timestamp_estornada ~ '~' ~ saidaBanco.mes ~ '~' ~ saidaBanco.exercicio_conciliacao  }}"/></td>
+                            <td class="td-rh">{{ saidaBanco.dt_lancamento }}</td>
+                            <td class="td-rh">{{ saidaBanco.descricao }}</td>
+                            <td class="td-rh">{{ saidaBanco.vl_lancamento|number_format_currency('BRL') }}</td>
+                            <td class="td-rh">{{ saidaBanco.dt_conciliacao }}</td>
+                            <td class="td-rh">
+                                {% if saidaBanco.conciliar == 'true' %}
+                                    <input class="conciliar" type="checkbox" data-custom="{{ saidaBanco.vl_lancamento }}" name="movimentacoes_pendentesConciliado[]" value="{{ saidaBanco.cod_lote ~ '~' ~ saidaBanco.tipo ~ '~' ~ saidaBanco.sequencia ~ '~' ~ saidaBanco.cod_entidade ~ '~' ~ saidaBanco.tipo_valor ~ '~' ~ saidaBanco.cod_arrecadacao ~ '~' ~ saidaBanco.timestamp_arrecadacao ~ '~' ~ saidaBanco.timestamp_estornada ~ '~' ~ saidaBanco.mes ~ '~' ~ saidaBanco.exercicio_conciliacao  }}" checked="checked"/>
+                                {% else %}
+                                    <input class="conciliar" type="checkbox" data-custom="{{ saidaBanco.vl_lancamento }}" name="movimentacoes_pendentesConciliado[]" value="{{ saidaBanco.cod_lote ~ '~' ~ saidaBanco.tipo ~ '~' ~ saidaBanco.sequencia ~ '~' ~ saidaBanco.cod_entidade ~ '~' ~ saidaBanco.tipo_valor ~ '~' ~ saidaBanco.cod_arrecadacao ~ '~' ~ saidaBanco.timestamp_arrecadacao ~ '~' ~ saidaBanco.timestamp_estornada ~ '~' ~ saidaBanco.mes ~ '~' ~ saidaBanco.exercicio_conciliacao  }}"/>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="5" class="td-rh">{{ 'listagemVazia'|trans }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </p>
+    </div>
+    <h3>{{ 'label.conciliarConta.saidaTesouraria'|trans }}</h3>
+    <div>
+        <p>
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.conciliarConta.data'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.valor'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.dataConciliacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.conciliar'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if field.data.saidaTesouraria|length > 0 %}
+                    {% for saidaTesouraria in field.data.saidaTesouraria %}
+                        <tr>
+                            <td style="display: none"><input name="movimentacoes_pendentes[]" type="hidden" value="{{ saidaTesouraria.cod_lote ~ '~' ~ saidaTesouraria.tipo ~ '~' ~ saidaTesouraria.sequencia ~ '~' ~ saidaTesouraria.cod_entidade ~ '~' ~ saidaTesouraria.tipo_valor ~ '~' ~ saidaTesouraria.cod_arrecadacao ~ '~' ~ saidaTesouraria.timestamp_arrecadacao ~ '~' ~ saidaTesouraria.timestamp_estornada ~ '~' ~ saidaTesouraria.mes ~ '~' ~ saidaTesouraria.exercicio_conciliacao  }}"/></td>
+                            <td class="td-rh">{{ saidaTesouraria.dt_lancamento }}</td>
+                            <td class="td-rh">{{ saidaTesouraria.descricao }}</td>
+                            <td class="td-rh">{{ saidaTesouraria.vl_lancamento|number_format_currency('BRL') }}</td>
+                            <td class="td-rh">{{ saidaTesouraria.dt_conciliacao }}</td>
+                            <td class="td-rh">
+                                {% if saidaTesouraria.conciliar == 'true' %}
+                                    <input class="conciliar" type="checkbox" data-custom="{{ saidaTesouraria.vl_lancamento }}" name="movimentacoes_pendentesConciliado[]" value="{{ saidaTesouraria.cod_lote ~ '~' ~ saidaTesouraria.tipo ~ '~' ~ saidaTesouraria.sequencia ~ '~' ~ saidaTesouraria.cod_entidade ~ '~' ~ saidaTesouraria.tipo_valor ~ '~' ~ saidaTesouraria.cod_arrecadacao ~ '~' ~ saidaTesouraria.timestamp_arrecadacao ~ '~' ~ saidaTesouraria.timestamp_estornada ~ '~' ~ saidaTesouraria.mes ~ '~' ~ saidaTesouraria.exercicio_conciliacao  }}" checked="checked"/>
+                                {% else %}
+                                    <input class="conciliar" type="checkbox" data-custom="{{ saidaTesouraria.vl_lancamento }}" name="movimentacoes_pendentesConciliado[]" value="{{ saidaTesouraria.cod_lote ~ '~' ~ saidaTesouraria.tipo ~ '~' ~ saidaTesouraria.sequencia ~ '~' ~ saidaTesouraria.cod_entidade ~ '~' ~ saidaTesouraria.tipo_valor ~ '~' ~ saidaTesouraria.cod_arrecadacao ~ '~' ~ saidaTesouraria.timestamp_arrecadacao ~ '~' ~ saidaTesouraria.timestamp_estornada ~ '~' ~ saidaTesouraria.mes ~ '~' ~ saidaTesouraria.exercicio_conciliacao  }}"/>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="5" class="td-rh">{{ 'listagemVazia'|trans }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </p>
+    </div>
+</div>

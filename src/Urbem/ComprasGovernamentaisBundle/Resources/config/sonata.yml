@@ -1,0 +1,26 @@
+services:
+    compras_governamentais.admin.catalogo_item:
+        class: Urbem\ComprasGovernamentaisBundle\Resources\config\Sonata\CatalogoItemAdmin
+        arguments: [~, ~, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Itens }
+
+    compras_governamentais.admin.requisicao:
+        class: Urbem\ComprasGovernamentaisBundle\Resources\config\Sonata\Requisicao\RequisicaoAdmin
+        arguments: [~, ~, ComprasGovernamentaisBundle:RequisicaoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Requisições }
+        calls:
+            - [ setTemplate, [show, ComprasGovernamentaisBundle:Sonata\Requisicao\CRUD:show.html.twig]]
+
+    compras_governamentais.admin.requisicao_item:
+        class: Urbem\ComprasGovernamentaisBundle\Resources\config\Sonata\Requisicao\RequisicaoItemAdmin
+        arguments: [~, ~, ComprasGovernamentaisBundle:RequisicaoItemAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Requisição Item }
+
+    compras_governamentais.admin.controle_itens:
+        class: Urbem\ComprasGovernamentaisBundle\Resources\config\Sonata\ControleItensAdmin
+        arguments: [~, ~, ComprasGovernamentaisBundle:ControleItensAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Controle de Itens }

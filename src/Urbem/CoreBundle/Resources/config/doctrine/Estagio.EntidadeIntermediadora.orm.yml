@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Estagio\EntidadeIntermediadora:
+    type: entity
+    table: estagio.entidade_intermediadora
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        percentualAtual:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            column: percentual_atual
+    oneToMany:
+        fkEstagioEntidadeContribuicoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EntidadeContribuicao
+            mappedBy: fkEstagioEntidadeIntermediadora
+        fkEstagioInstituicaoEntidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\InstituicaoEntidade
+            mappedBy: fkEstagioEntidadeIntermediadora
+        fkEstagioEntidadeIntermediadoraEstagios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EntidadeIntermediadoraEstagio
+            mappedBy: fkEstagioEntidadeIntermediadora
+    oneToOne:
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkEstagioEntidadeIntermediadora
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

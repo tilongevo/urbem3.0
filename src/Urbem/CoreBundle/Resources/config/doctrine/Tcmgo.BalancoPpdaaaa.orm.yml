@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Tcmgo\BalancoPpdaaaa:
+    type: entity
+    table: tcmgo.balanco_ppdaaaa
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        tipoLancamento:
+            type: integer
+            nullable: false
+            column: tipo_lancamento
+    oneToMany:
+        fkTcmgoGrupoPlanoAnaliticaLeis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\GrupoPlanoAnaliticaLei
+            mappedBy: fkTcmgoBalancoPpdaaaa
+    oneToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTcmgoBalancoPpdaaaa
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

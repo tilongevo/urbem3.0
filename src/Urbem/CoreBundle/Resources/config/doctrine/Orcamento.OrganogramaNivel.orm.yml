@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Orcamento\OrganogramaNivel:
+    type: entity
+    table: orcamento.organograma_nivel
+    uniqueConstraints:
+        uk_organograma_nivel_1:
+            columns:
+                - cod_organograma
+                - tipo
+                - timestamp
+    id:
+        codOrganograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_organograma
+        codNivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+    manyToOne:
+        fkOrganogramaOrganograma:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Organograma
+            inversedBy: fkOrcamentoOrganogramaNiveis
+            joinColumns:
+                cod_organograma:
+                    referencedColumnName: cod_organograma
+        fkOrganogramaNivel:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Nivel
+            inversedBy: fkOrcamentoOrganogramaNiveis
+            joinColumns:
+                cod_nivel:
+                    referencedColumnName: cod_nivel
+                cod_organograma:
+                    referencedColumnName: cod_organograma

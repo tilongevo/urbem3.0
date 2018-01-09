@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Arrecadacao\Nota:
+    type: entity
+    table: arrecadacao.nota
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        valorNota:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_nota
+    oneToMany:
+        fkArrecadacaoNotaServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\NotaServico
+            mappedBy: fkArrecadacaoNota
+    oneToOne:
+        fkArrecadacaoNotaAvulsa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\NotaAvulsa
+            mappedBy: fkArrecadacaoNota
+            joinColumns:
+                cod_nota:
+                    referencedColumnName: cod_nota
+        fkArrecadacaoNotaFiscal:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\NotaFiscal
+            mappedBy: fkArrecadacaoNota
+            joinColumns:
+                cod_nota:
+                    referencedColumnName: cod_nota

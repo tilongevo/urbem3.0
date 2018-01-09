@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Frota\Efetivacao:
+    type: entity
+    table: frota.efetivacao
+    id:
+        codAutorizacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_autorizacao
+        codManutencao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_manutencao
+        exercicioAutorizacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_autorizacao
+        exercicioManutencao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_manutencao
+    fields: {  }
+    manyToOne:
+        fkFrotaAutorizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Autorizacao
+            inversedBy: fkFrotaEfetivacoes
+            joinColumns:
+                cod_autorizacao:
+                    referencedColumnName: cod_autorizacao
+                exercicio_autorizacao:
+                    referencedColumnName: exercicio
+        fkFrotaManutencao:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Manutencao
+            inversedBy: fkFrotaEfetivacoes
+            joinColumns:
+                cod_manutencao:
+                    referencedColumnName: cod_manutencao
+                exercicio_manutencao:
+                    referencedColumnName: exercicio

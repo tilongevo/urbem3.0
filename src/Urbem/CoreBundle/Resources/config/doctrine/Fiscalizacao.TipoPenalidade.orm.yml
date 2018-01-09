@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\TipoPenalidade:
+    type: entity
+    table: fiscalizacao.tipo_penalidade
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkFiscalizacaoPenalidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\Penalidade
+            mappedBy: fkFiscalizacaoTipoPenalidade

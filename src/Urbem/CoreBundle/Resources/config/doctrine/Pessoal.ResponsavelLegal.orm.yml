@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Pessoal\ResponsavelLegal:
+    type: entity
+    table: pessoal.responsavel_legal
+    id:
+        codPensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pensao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkPessoalResponsavelLegais
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkPessoalPensao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensao
+            inversedBy: fkPessoalResponsavelLegal
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp

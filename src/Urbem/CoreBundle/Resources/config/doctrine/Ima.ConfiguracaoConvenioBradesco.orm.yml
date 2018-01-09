@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoConvenioBradesco:
+    type: entity
+    table: ima.configuracao_convenio_bradesco
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        codEmpresa:
+            type: integer
+            nullable: false
+            column: cod_empresa
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            nullable: false
+            column: cod_conta_corrente
+    manyToOne:
+        fkMonetarioContaCorrente:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrente
+            inversedBy: fkImaConfiguracaoConvenioBradescos
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente

@@ -1,0 +1,56 @@
+{% set metasArrecadacao = field.data.metasInfo %}
+{% set previsoesArrecadacao = field.data.previsoesInfo %}
+{% set periodosDisponiveis = field.data.periodosInfo %}
+
+{% if (metasArrecadacao|length == 0) %}
+    <div>
+        <div class="info-box">
+            <div class="info-box-content">
+                <span class="info-box-text grey-text">
+                    <h4>
+                        <i class="material-icons">warning</i>
+                        Nenhum resultado
+                    </h4>
+                </span>
+                <div class="divider">
+                    <p></p>
+                </div>
+            </div><!-- /.info-box-content -->
+        </div>
+    </div>
+{% else %}
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="col s12">
+                <table class="table show-table">
+                    <tr>
+                        <td></td>
+                        <td colspan="{{ periodosDisponiveis|length }}" class="center">Períodos</td>
+                    </tr>
+                    <tr>
+                        <td>Receitas</td>
+                        {% for periodo in periodosDisponiveis %}
+                            <td align="center">{{ periodo }}º</td>
+                        {% endfor %}
+                    </tr>
+                    {% for meta in metasArrecadacao %}
+                        <tr class="sonata-ba-view-container">
+                            <td>{{ meta.descricao }}</td>
+                            {% if (meta.previsoes|length > 0) %}
+                                {% for metaPeriodo in meta.previsoes %}
+                                    <td><input type="number" name="cod_receita[{{ meta.codReceita }}][{{ loop.index }}]" value="{{ metaPeriodo.vlPeriodo }}"></td>
+                                {% endfor %}
+                            {% else %}
+                                {% for periodo in periodosDisponiveis %}
+                                    <td><input type="number" name="cod_receita[{{ meta.codReceita }}][{{ periodo }}]" value="0.00"></td>
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

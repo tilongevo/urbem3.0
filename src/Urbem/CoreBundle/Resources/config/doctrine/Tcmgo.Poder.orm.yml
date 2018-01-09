@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Tcmgo\Poder:
+    type: entity
+    table: tcmgo.poder
+    id:
+        codPoder:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_poder
+    fields:
+        nomPoder:
+            type: string
+            nullable: false
+            length: 20
+            column: nom_poder
+    oneToMany:
+        fkTcmgoConfiguracaoOrgaoUnidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoOrgaoUnidade
+            mappedBy: fkTcmgoPoder

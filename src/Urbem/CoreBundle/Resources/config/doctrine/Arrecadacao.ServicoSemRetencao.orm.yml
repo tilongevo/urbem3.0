@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ServicoSemRetencao:
+    type: entity
+    table: arrecadacao.servico_sem_retencao
+    id:
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+        codServico:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servico
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        valorDeclarado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_declarado
+        valorDeducao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_deducao
+        valorLancado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_lancado
+        aliquota:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        valorDeducaoLegal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_deducao_legal
+    oneToOne:
+        fkArrecadacaoFaturamentoServico:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\FaturamentoServico
+            inversedBy: fkArrecadacaoServicoSemRetencao
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade
+                cod_servico:
+                    referencedColumnName: cod_servico
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+                ocorrencia:
+                    referencedColumnName: ocorrencia

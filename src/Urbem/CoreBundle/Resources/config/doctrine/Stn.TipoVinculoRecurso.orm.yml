@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Stn\TipoVinculoRecurso:
+    type: entity
+    table: stn.tipo_vinculo_recurso
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkStnVinculoRecursos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\VinculoRecurso
+            mappedBy: fkStnTipoVinculoRecurso

@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoDecreto:
+    type: entity
+    table: tcemg.tipo_decreto
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\TipoDecretoRepository
+    id:
+        codTipoDecreto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_decreto
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 70
+    oneToMany:
+        fkTcemgTipoRegistroPrecos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoRegistroPreco
+            mappedBy: fkTcemgTipoDecreto

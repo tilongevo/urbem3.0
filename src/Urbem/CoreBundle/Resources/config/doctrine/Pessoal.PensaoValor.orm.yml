@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Pessoal\PensaoValor:
+    type: entity
+    table: pessoal.pensao_valor
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codPensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pensao
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    oneToOne:
+        fkPessoalPensao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensao
+            inversedBy: fkPessoalPensaoValor
+            joinColumns:
+                cod_pensao:
+                    referencedColumnName: cod_pensao
+                timestamp:
+                    referencedColumnName: timestamp

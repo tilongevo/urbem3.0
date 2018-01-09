@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Folhapagamento\PensaoEvento:
+    type: entity
+    table: folhapagamento.pensao_evento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\PensaoEventoRepository
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codConfiguracaoPensao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao_pensao
+    fields:
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkFolhapagamentoPensaoFuncaoPadrao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PensaoFuncaoPadrao
+            inversedBy: fkFolhapagamentoPensaoEventos
+            joinColumns:
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_configuracao_pensao:
+                    referencedColumnName: cod_configuracao_pensao
+        fkFolhapagamentoTipoEventoPensao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoPensao
+            inversedBy: fkFolhapagamentoPensaoEventos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoPensaoEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

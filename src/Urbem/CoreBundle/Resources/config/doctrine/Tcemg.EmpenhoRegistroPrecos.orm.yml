@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Tcemg\EmpenhoRegistroPrecos:
+    type: entity
+    table: tcemg.empenho_registro_precos
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numeroRegistroPrecos:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numero_registro_precos
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        exercicioEmpenho:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_empenho
+        interno:
+            type: boolean
+            generator:
+                strategy: NONE
+        codEntidadeEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade_empenho
+        numcgmGerenciador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: numcgm_gerenciador
+    fields: {  }
+    manyToOne:
+        fkTcemgRegistroPrecos:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\RegistroPrecos
+            inversedBy: fkTcemgEmpenhoRegistroPrecos
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                numero_registro_precos:
+                    referencedColumnName: numero_registro_precos
+                exercicio:
+                    referencedColumnName: exercicio
+                numcgm_gerenciador:
+                    referencedColumnName: numcgm_gerenciador
+                interno:
+                    referencedColumnName: interno
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcemgEmpenhoRegistroPrecos
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio_empenho:
+                    referencedColumnName: exercicio
+                cod_entidade_empenho:
+                    referencedColumnName: cod_entidade

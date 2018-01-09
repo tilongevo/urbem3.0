@@ -1,0 +1,379 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidor:
+    type: entity
+    table: pessoal.contrato_servidor
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        codTipoPagamento:
+            type: integer
+            nullable: false
+            column: cod_tipo_pagamento
+        codTipoSalario:
+            type: integer
+            nullable: false
+            column: cod_tipo_salario
+        codTipoAdmissao:
+            type: integer
+            nullable: false
+            column: cod_tipo_admissao
+        codCategoria:
+            type: integer
+            nullable: false
+            column: cod_categoria
+        codVinculo:
+            type: integer
+            nullable: false
+            column: cod_vinculo
+        codCargo:
+            type: integer
+            nullable: false
+            column: cod_cargo
+        codRegime:
+            type: integer
+            nullable: false
+            column: cod_regime
+        codSubDivisao:
+            type: integer
+            nullable: false
+            column: cod_sub_divisao
+        nrCartaoPonto:
+            type: string
+            nullable: true
+            length: 10
+            column: nr_cartao_ponto
+        ativo:
+            type: boolean
+            nullable: false
+        dtOpcaoFgts:
+            type: date
+            nullable: true
+            column: dt_opcao_fgts
+        adiantamento:
+            type: boolean
+            nullable: false
+        codGrade:
+            type: integer
+            nullable: false
+            column: cod_grade
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkPessoalTipoPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TipoPagamento
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_tipo_pagamento:
+                    referencedColumnName: cod_tipo_pagamento
+        fkPessoalTipoAdmissao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TipoAdmissao
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_tipo_admissao:
+                    referencedColumnName: cod_tipo_admissao
+        fkPessoalCategoria:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Categoria
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_categoria:
+                    referencedColumnName: cod_categoria
+        fkPessoalVinculoEmpregaticio:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\VinculoEmpregaticio
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_vinculo:
+                    referencedColumnName: cod_vinculo
+        fkPessoalCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Cargo
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_cargo:
+                    referencedColumnName: cod_cargo
+        fkPessoalRegime:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Regime
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_regime:
+                    referencedColumnName: cod_regime
+        fkPessoalSubDivisao:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_sub_divisao:
+                    referencedColumnName: cod_sub_divisao
+        fkPessoalGradeHorario:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\GradeHorario
+            inversedBy: fkPessoalContratoServidores
+            joinColumns:
+                cod_grade:
+                    referencedColumnName: cod_grade
+    oneToMany:
+        fkBeneficioContratoServidorGrupoConcessaoValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ContratoServidorGrupoConcessaoValeTransporte
+            mappedBy: fkPessoalContratoServidor
+        fkBeneficioContratoServidorConcessaoValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ContratoServidorConcessaoValeTransporte
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalAposentadorias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Aposentadoria
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalAdidoCedidos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AdidoCedido
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalAtributoContratoServidorValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AtributoContratoServidorValor
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorEspecialidadeFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorEspecialidadeFuncao
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorEspecialidadeCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorEspecialidadeCargo
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorExameMedicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorExameMedico
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorContaSalarioHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorContaSalarioHistorico
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorHistoricoFuncionais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorHistoricoFuncional
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorFuncao
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorInicioProgressoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorInicioProgressao
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorNivelPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorNivelPadrao
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorLocal
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorPrevidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorPrevidencia
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorOrgoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorOrgao
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorNomeacaoPosses:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorNomeacaoPosse
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorOcorrencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorOcorrencia
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorRegimeFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorRegimeFuncao
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorSalarios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSalario
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorSubDivisaoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSubDivisaoFuncao
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorValetransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorValetransporte
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Ferias
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalPensionistas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Pensionista
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalServidorContratoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorContratoServidor
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorFormaPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorFormaPagamento
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorLocalHistoricos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorLocalHistorico
+            mappedBy: fkPessoalContratoServidor
+        fkPessoalContratoServidorPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorPadrao
+            mappedBy: fkPessoalContratoServidor
+    oneToOne:
+        fkPessoalContratoServidorCasoCausa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausa
+            mappedBy: fkPessoalContratoServidor
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoServidorCedencia:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCedencia
+            mappedBy: fkPessoalContratoServidor
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoServidorConselho:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorConselho
+            mappedBy: fkPessoalContratoServidor
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoServidorContaFgts:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorContaFgts
+            mappedBy: fkPessoalContratoServidor
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoServidorSindicato:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorSindicato
+            mappedBy: fkPessoalContratoServidor
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoServidorContaSalario:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorContaSalario
+            mappedBy: fkPessoalContratoServidor
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Contrato
+            inversedBy: fkPessoalContratoServidor
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

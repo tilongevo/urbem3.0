@@ -1,0 +1,52 @@
+Urbem\CoreBundle\Entity\Tcmba\PagamentoTipoDocumentoPagamento:
+    type: entity
+    table: tcmba.pagamento_tipo_documento_pagamento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        numDocumento:
+            type: string
+            nullable: true
+            length: 8
+            column: num_documento
+    manyToOne:
+        fkTcmbaTipoDocumentoPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoDocumentoPagamento
+            inversedBy: fkTcmbaPagamentoTipoDocumentoPagamentos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkTesourariaPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Pagamento
+            inversedBy: fkTcmbaPagamentoTipoDocumentoPagamentos
+            joinColumns:
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_nota:
+                    referencedColumnName: cod_nota

@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Tcepe\FonteRecurso:
+    type: entity
+    table: tcepe.fonte_recurso
+    id:
+        codFonte:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fonte
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkTcepeFonteRecursoLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\FonteRecursoLocal
+            mappedBy: fkTcepeFonteRecurso
+        fkTcepeFonteRecursoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\FonteRecursoLotacao
+            mappedBy: fkTcepeFonteRecurso

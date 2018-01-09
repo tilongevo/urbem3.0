@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcepb\TipoObjetivoMilenio:
+    type: entity
+    table: tcepb.tipo_objetivo_milenio
+    id:
+        codTipoObjetivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_objetivo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkTcepbProgramaObjetivoMilenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\ProgramaObjetivoMilenio
+            mappedBy: fkTcepbTipoObjetivoMilenio

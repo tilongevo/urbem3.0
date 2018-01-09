@@ -1,0 +1,112 @@
+Urbem\CoreBundle\Entity\Tcern\Convenio:
+    type: entity
+    table: tcern.convenio
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        exercicioProcesso:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_processo
+        numcgmRecebedor:
+            type: integer
+            nullable: false
+            column: numcgm_recebedor
+        codObjeto:
+            type: integer
+            nullable: false
+            column: cod_objeto
+        codRecurso1:
+            type: integer
+            nullable: true
+            column: cod_recurso_1
+        codRecurso2:
+            type: integer
+            nullable: true
+            column: cod_recurso_2
+        codRecurso3:
+            type: integer
+            nullable: true
+            column: cod_recurso_3
+        valorRecurso1:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_recurso_1
+        valorRecurso2:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_recurso_2
+        valorRecurso3:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_recurso_3
+        dtInicioVigencia:
+            type: date
+            nullable: false
+            column: dt_inicio_vigencia
+        dtTerminoVigencia:
+            type: date
+            nullable: false
+            column: dt_termino_vigencia
+        dtAssinatura:
+            type: date
+            nullable: false
+            column: dt_assinatura
+        dtPublicacao:
+            type: date
+            nullable: false
+            column: dt_publicacao
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkTcernConvenios
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio_processo:
+                    referencedColumnName: ano_exercicio
+        fkComprasObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Objeto
+            inversedBy: fkTcernConvenios
+            joinColumns:
+                cod_objeto:
+                    referencedColumnName: cod_objeto
+    oneToMany:
+        fkTcernContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\Contrato
+            mappedBy: fkTcernConvenio
+        fkTcernContratoAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\ContratoAditivo
+            mappedBy: fkTcernConvenio

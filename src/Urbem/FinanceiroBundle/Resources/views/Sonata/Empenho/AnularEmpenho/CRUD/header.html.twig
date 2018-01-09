@@ -1,0 +1,187 @@
+{% if app.request.get('_route') == 'urbem_financeiro_empenho_anular_empenho_edit' %}
+{% set atributos = null %}
+{% set itemPreEmpenho = null %}
+{% if object is defined %}
+    {% set atributos = admin.getAtributos() %}
+    {% set itemPreEmpenho = admin.getItemPreEmpenho() %}
+{% endif %}
+{% if app.session.flashBag.has('error') %}
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        {% for msg in app.session.flashBag.get('error') %}
+            {{ msg }}
+        {% endfor %}
+    </div>
+{% endif %}
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-header col s12">
+            <h2 class="col s12 box-title left-align show">
+                {{ 'label.emitirEmpenhoAutorizacao.dadosEmpenho'|trans }}
+            </h2>
+            <div class="divider grey title-divider"></div>
+        </div>
+        <div class="box-body">
+            <div class="col s12">
+                <table class="table show-table">
+                    <tbody>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.preEmpenho.numEmpenho'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ object.codEmpenho }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.preEmpenho.codEntidade'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ object.codEntidade ~ " - " ~ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.preEmpenho.codDespesa'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ admin.despesa.codDespesa }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.preEmpenho.codClassificacao'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ admin.despesa.codClassificacao }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoAutorizacao.saldoAnterior'|trans }}</th>
+                            {% if object is defined and admin.saldosEmpenho %}
+                                <td>{{ admin.saldosEmpenho.vl_saldo_anterior|number_format_currency('BRL') }}</td>
+                            {% else %}
+                                <td>{{ "0"|number_format_currency('BRL')}}</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoAutorizacao.numOrgao'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ admin.despesa.numOrgao }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoAutorizacao.numUnidade'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ admin.despesa.numUnidade }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoAutorizacao.cgmBeneficiario'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ object.fkEmpenhoPreEmpenho.fkSwCgm.numCgm ~ " - " ~ object.fkEmpenhoPreEmpenho.fkSwCgm.nomCgm }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.consultarEmpenho.codCategoria'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ object.fkEmpenhoCategoriaEmpenho.descricao}}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.consultarEmpenho.dtEmpenho'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ object.dtEmpenho|date("d/m/Y") }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoDiversos.dtVencimento'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ object.dtVencimento|date("d/m/Y") }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.emitirEmpenhoDiversos.codTipo'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ object.fkEmpenhoPreEmpenho.fkEmpenhoTipoEmpenho.codTipo ~ " - "  ~ object.fkEmpenhoPreEmpenho.fkEmpenhoTipoEmpenho.nomTipo }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="sonata-ba-view-container">
+                            <th>{{ 'label.preEmpenho.codHistorico'|trans }}</th>
+                            {% if object is defined %}
+                                <td>{{ object.fkEmpenhoPreEmpenho.fkEmpenhoHistorico.codHistorico ~ " - " ~ object.fkEmpenhoPreEmpenho.fkEmpenhoHistorico.nomHistorico }}</td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="box-header col s12">
+            <h2 class="col s12 box-title left-align show">
+                {{ 'label.emitirEmpenhoAutorizacao.atributos'|trans }}
+            </h2>
+            <div class="divider grey title-divider"></div>
+        </div>
+        <div class="box-body">
+            <div class="col s12">
+                <table class="table show-table">
+                    <tbody>
+                        {% for atributo in atributos %}
+                            <tr class="sonata-ba-view-container">
+                                <th>{{ atributo.label }}</th>
+                                <td>{{ atributo.data }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <table class="col s12 highlight bordered">
+            <thead>
+                <th class="th-rh" width="10"></th>
+                <th class="th-rh">{{ 'label.itemPreEmpenho.nomItem'|trans }}</th>
+                <th class="th-rh">{{ 'label.itemPreEmpenho.vlUnitario'|trans }}</th>
+                <th class="th-rh">{{ 'label.itemPreEmpenho.quantidade'|trans }}</th>
+                <th class="th-rh">{{ 'label.itemPreEmpenho.vlTotal'|trans }}</th>
+            </thead>
+            <tbody>
+                {% for itemPreEmpenho in admin.itemPreEmpenho %}
+                    <tr>
+                        <td class="td-rh">{{ itemPreEmpenho.numItem }}</td>
+                        <td class="td-rh">{{ itemPreEmpenho.nomItem }}</td>
+                        <td class="td-rh text-right">{{ itemPreEmpenho.vlUnitario|number_format_currency('BRL') }}</td>
+                        <td class="td-rh text-right">{{ itemPreEmpenho.quantidade|number_format_currency('BRL') }}</td>
+                        <td class="td-rh text-right">{{ itemPreEmpenho.vlTotal|number_format_currency('BRL') }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td class="td-rh text-right" colspan="4"><strong>{{ 'label.anularEmpenho.totalEmpenhado'|trans }}</strong></td>
+                    {% if admin.saldosEmpenho %}
+                        <td class="td-rh text-right">{{ admin.saldosEmpenho.vl_empenhado|number_format_currency('BRL') }}</td>
+                    {% else %}
+                        <td class="td-rh text-right">{{ "0"|number_format_currency('BRL') }}</td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}

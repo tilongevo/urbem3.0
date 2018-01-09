@@ -1,0 +1,35 @@
+{% block field %}
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="col s12">
+                <table class="table show-table">
+                    <tbody>
+                    <th>Regime</th>
+                    <th>Subdivisão</th>
+                    {% if admin.adminRequestId is not empty %}
+                        <th>Vagas Atuais</th>
+                        <th>Vagas Ocupadas</th>
+                        <th>Vagas Disponiveis</th>
+                    {% endif %}
+                    <th>Vagas</th>
+
+                    {% for fieldName in field.data%}
+                        <tr>
+                            <td>{{ fieldName.regime.codRegime }} - {{ fieldName.regime.descricao }}</td>
+                            <td>{{ fieldName.descricao }}</td>
+                            {% if admin.adminRequestId is not empty %}
+                                <td>{{ fieldName.nroVagaCriada }}</td>
+                                <td>{{ fieldName.vagasOcupadas }}</td>
+                                <td>{{ fieldName.nroVagaCriada -  fieldName.vagasOcupadas}}</td>
+                            {% endif %}
+                            <td><input type="text" class="numeric" value="{{ fieldName.nroVagaCriada }}" name="codSubDivisao[{{ fieldName.codSubDivisao }}]"></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock field %}

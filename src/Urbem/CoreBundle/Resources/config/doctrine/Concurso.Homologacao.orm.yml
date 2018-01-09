@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Concurso\Homologacao:
+    type: entity
+    table: concurso.homologacao
+    id:
+        codEdital:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_edital
+    fields:
+        codHomologacao:
+            type: integer
+            nullable: false
+            column: cod_homologacao
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkConcursoHomologacoes
+            joinColumns:
+                cod_homologacao:
+                    referencedColumnName: cod_norma
+        fkConcursoEdital:
+            targetEntity: Urbem\CoreBundle\Entity\Concurso\Edital
+            inversedBy: fkConcursoHomologacoes
+            joinColumns:
+                cod_edital:
+                    referencedColumnName: cod_edital

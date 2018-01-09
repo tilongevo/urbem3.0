@@ -1,0 +1,47 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+ {% for condominio in condominios %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td class="text_align_left bold" colspan="7"><h4>{{ 'label.imobiliarioRelatorios.condominio.modulo'|trans|upper }} {{ condominio.nom_condominio|upper }}</h4></td>
+                </tr>
+                <tr>
+                    <td class="text_align_left bold">{{ 'label.imobiliarioRelatorios.condominio.inscricao'|trans|upper }}</td>
+                    <td class="text_align_left bold">{{ 'label.imobiliarioRelatorios.condominio.contribuinte'|trans|upper }}</td>
+                    <td class="text_align_left bold">{{ 'label.imobiliarioRelatorios.condominio.logradouro'|trans|upper }}</td>
+                    {% if condominio.contribuintes|last.atributos is defined %}
+                        {% for atributo in condominio.contribuintes|last.atributos %}
+                            <td class="text_align_left bold">{{ atributo.nom_atributo|upper }}</td>
+                        {% endfor %}
+                    {% endif %}
+              </tr>
+            </thead>
+            <tbody>
+                {% for contribuinte in condominio.contribuintes %}
+                    <tr>
+                        <td class="text_align_left ">{{ contribuinte.inscricao_municipal }}</td>
+                        <td class="text_align_left ">{{ contribuinte.nomcgm_proprietario }}</td>
+                        <td class="text_align_left ">{{ contribuinte.logradouro }}</td>
+                        {% if contribuinte.atributos is defined %}
+                            {% for atributo in contribuinte.atributos %}
+                                <td class="text_align_left ">
+                                    {{ atributo.valorDescricao }}
+                                </td>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p><h6><strong>{{ 'label.imobiliarioRelatorios.condominio.totalImoveis'|trans }} :</strong> {{ condominio.contribuintes|length }}</h6><p></p>
+ {% endfor %}
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

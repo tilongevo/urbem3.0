@@ -1,0 +1,114 @@
+<div class="form_row col s3 campo-sonata" id="sonata-ba-field-container-manuais_data">
+    <label class=" control-label required" for="manuais_dtMovimentacao">
+        {{ 'label.conciliarConta.data'|trans }}
+    </label>
+    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+        <div class="input-group date">
+            <input type="text" id="manuais_dtMovimentacao" name="manuais_dtMovimentacao" class="our-datepicker sonata-medium-datecampo-sonata form-control" data-date-format="DD/MM/YYYY" value="{{ field.data.dtExtrato }}"/>
+            <span class="input-group-addon">
+                <span class="fa-calendar fa"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="form_row col s3 campo-sonata" id="sonata-ba-field-container-manuais_valor">
+    <label class="control-label required" for="manuais_vlMovimentacao">
+        {{ 'label.conciliarConta.valor'|trans }}
+    </label>
+    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+        <div class="input-group">
+            <span class="input-group-addon">R$</span>
+            <input type="text" id="manuais_vlMovimentacao" name="manuais_vlMovimentacao" class="money campo-sonata form-control" value="0,00">
+        </div>
+    </div>
+</div>
+
+<div class="form_row col s3 campo-sonata">
+    <label class="checkbox-sonata control-label required">
+        {{ 'label.conciliarConta.tipoMovimentacao'|trans }}
+    </label>
+    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+        <div class="col s12">
+            <ul id="manuais_tipoMovimentacao" class="checkbox-sonatalist-check-sonata list-unstyled">
+                <li>
+                    <label class="required">
+                        <div class="iradio_square-blue" style="position: relative;">
+                            <input type="radio" id="manuais_tipoMovimentacao_0" name="manuais_tipoMovimentacao" value="C" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                        </div>
+                        <span class="control-label__text">{{ 'label.conciliarConta.entradas'|trans }}</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="required">
+                        <div class="iradio_square-blue" style="position: relative;">
+                            <input type="radio" id="manuais_tipoMovimentacao_1" name="manuais_tipoMovimentacao" value="D" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                        </div>
+                        <span class="control-label__text">{{ 'label.conciliarConta.saidas'|trans }}</span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="form_row col s3 campo-sonata">
+    <label class="control-label required" for="manuais_descricao">
+        {{ 'label.conciliarConta.descricao'|trans }}
+    </label>
+    <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+        <textarea id="manuais_descricao" name="manuais_descricao" class=" form-control"></textarea>
+    </div>
+</div>
+
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button" name="manuais" id="manuais" value="Incluir">
+    </div>
+</div>
+<div class="row">
+    <h3 class="col s10 box-title left-align show">{{ 'label.conciliarConta.movimentacaoPendente'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableLancamentoManuais" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.conciliarConta.data'|trans }}</th>
+            <th class="th-rh">{{ 'label.conciliarConta.descricao'|trans }}</th>
+            <th class="th-rh">{{ 'label.conciliarConta.valor'|trans }}</th>
+            <th class="th-rh">{{ 'label.conciliarConta.dataConciliacao'|trans }}</th>
+            <th class="th-rh">{{ 'label.conciliarConta.conciliar'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if field.data|length > 0 %}
+            {% for lancamentoManual in field.data.lancamentos %}
+                <tr>
+                    <td style="display: none"><input name="manuais_lancamentos[]" type="hidden" value="{{ lancamentoManual.dtLancamento|date('d/m/Y') ~ '~' ~ lancamentoManual.tipoValor ~ '~' ~ lancamentoManual.vlLancamento ~ '~' ~ lancamentoManual.descricao ~ '~' ~ lancamentoManual.conciliado  }}"/></td>
+                    <td class="td-rh">{{ lancamentoManual.dtLancamento|date('d/m/Y') }}</td>
+                    <td class="td-rh">{{ lancamentoManual.descricao }}</td>
+                    <td class="td-rh">{{ lancamentoManual.vlLancamento|number_format_currency('BRL') }}</td>
+                    <td class="td-rh">{{ lancamentoManual.dtConciliacao|date('d/m/Y') }}</td>
+                    <td class="td-rh">
+                        {% if lancamentoManual.conciliado %}
+                            <input class="conciliar" data-custom="{{ lancamentoManual.vlLancamento }}" type="checkbox" name="manuais_lancamentosConciliado[]" value="{{ lancamentoManual.dtLancamento|date('d/m/Y') ~ '~' ~ lancamentoManual.tipoValor ~ '~' ~ lancamentoManual.vlLancamento ~ '~' ~ lancamentoManual.descricao ~ '~' ~ lancamentoManual.conciliado  }}" checked="checked" disabled="disabled" />
+                        {% else %}
+                            <input class="conciliar" data-custom="{{ lancamentoManual.vlLancamento }}" type="checkbox" name="manuais_lancamentosConciliado[]" value="{{ lancamentoManual.dtLancamento|date('d/m/Y') ~ '~' ~ lancamentoManual.tipoValor ~ '~' ~ lancamentoManual.vlLancamento ~ '~' ~ lancamentoManual.descricao ~ '~' ~ lancamentoManual.conciliado  }}" />
+                        {% endif %}
+                    </td>
+                    <td class="td-rh remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td class="td-rh listagem-vazia" colspan="6">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>
+
+<script>
+    jQuery(function ($) {
+        $('.our-datepicker').datetimepicker({"pickTime":false,"useCurrent":true,"minDate":"1\/1\/1900","maxDate":null,"showToday":true,"language":"pt_BR","defaultDate":"","disabledDates":[],"enabledDates":[],"icons":{"time":"fa fa-clock-o","date":"fa fa-calendar","up":"fa fa-chevron-up","down":"fa fa-chevron-down"},"useStrict":false,"sideBySide":false,"daysOfWeekDisabled":[],"useSeconds":false});
+    });
+</script>

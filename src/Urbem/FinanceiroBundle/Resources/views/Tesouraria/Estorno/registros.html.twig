@@ -1,0 +1,39 @@
+<div class="sonata-ba-show col s12">
+    <div class="sonata-ba-view">
+        <div class="row">
+            <h3 class="col s10 box-title left-align show">Registros</h3>
+            <div class="divider grey lighten-1  title-divider"></div>
+            <table class="bordered highlight" style="width:100%">
+                <thead>
+                <th class="th-rh">{{ 'label.orcamentariaPagamentos.empenho'|trans }}</th>
+                <th class="th-rh">{{ 'label.orcamentariaPagamentos.dtEmpenho'|trans }}</th>
+                <th class="th-rh">{{ 'label.orcamentariaPagamentos.liquidacao'|trans }}</th>
+                <th class="th-rh">{{ 'label.orcamentariaPagamentos.dtLiquidacao'|trans }}</th>
+                <th class="th-rh">{{ 'label.orcamentariaPagamentos.vlPagamento'|trans }}</th>
+                </thead>
+                <tbody>
+                {% for registro in field.data %}
+                    <tr>
+                        <td>{{ registro.codEmpenho ~ "/" ~ registro.exEmpenho }}</td>
+                        <td>{{ registro.dtEmpenho }}</td>
+                        <td>{{ registro.codNota ~ "/" ~ registro.exNota }}</td>
+                        <td>{{ registro.dtNota }}</td>
+                        <td>
+                            <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                                <div class="input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <input type="text" id="vlAnulacao_{{ registro.codNota }}"
+                                           name="vlAnulacao[{{ registro.codNota }}]"
+                                           readonly
+                                           class="money campo-sonata form-control"
+                                           value="{{ registro.vlPagamento|number_format_decimal({'fraction_digits': 2}) }}"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

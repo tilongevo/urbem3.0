@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Pessoal\ServidorCtps:
+    type: entity
+    table: pessoal.servidor_ctps
+    id:
+        codServidor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_servidor
+        codCtps:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ctps
+    fields: {  }
+    manyToOne:
+        fkPessoalServidor:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Servidor
+            inversedBy: fkPessoalServidorCtps
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor
+        fkPessoalCtps:
+            cascade:
+                - persist
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Ctps
+            inversedBy: fkPessoalServidorCtps
+            joinColumns:
+                cod_ctps:
+                    referencedColumnName: cod_ctps

@@ -1,0 +1,185 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">{{ 'label.pedidoTransferencia.nota'|trans }}: </span>
+                    <span class="grey-text bold" style="padding-top: 10px; font-weight: bold">
+                        {{ object.codTransferencia ~ "/" ~ object.exercicio }}
+                    </span>
+                </h2>
+                {% if object.fkAlmoxarifadoPedidoTransferenciaAnulacao|length == 0 %}
+                    <a class="serv-btn right"
+                       href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_edit', {
+                           'id': admin.adminRequestId
+                       }) }}">
+                        <i class="material-icons right">edit</i>
+                    </a>
+                {% endif %}
+
+                <p class="divider grey col s12"></p>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.pedidoTransferencia.nota'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.codTransferencia ~ "/" ~ object.exercicio }}
+                    </h6>
+                </div>
+
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.pedidoTransferencia.codAlmoxarifadoOrigem'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkAlmoxarifadoAlmoxarifado.fkSwCgm.nomCgm }}
+                    </h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.pedidoTransferencia.codAlmoxarifadoDestino'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkAlmoxarifadoAlmoxarifado1.fkSwCgm.nomCgm }}
+                    </h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.pedidoTransferencia.observacao'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.observacao }}
+                    </h6>
+                </div>
+                {# Status se anulado ou não #}
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.almoxarifado.requisicao.status'|trans }}:
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.fkAlmoxarifadoPedidoTransferenciaAnulacao|length == 0 %}
+                            <span class="label label-success">Ativo</span>
+                        {% else %}
+                            <span class="label label-danger">Anulado</span>
+                        {% endif %}
+                    </h6>
+                </div>
+
+                <div class="col s9" style="margin-top: 30px">
+                {% if object.fkAlmoxarifadoPedidoTransferenciaAnulacao|length == 0 %}
+                    <div class="col s12 center" style="margin-bottom: 10px">
+                        <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_anular_pedido_transferencia', {
+                                'id': admin.adminRequestId
+                            }) }}"
+                            class="white-text blue darken-4 btn btn-success gerardocumento">
+                            <i class="fa fa-ban left"></i>Anular Pedido de Transferência
+                        </a>
+                    </div>
+                {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s11 servidor-table">
+                <a style="font-size: 16px">
+                    <i class="mdi mdi-file-document"></i>
+                    {{ 'label.pedidoTransferencia.pedidoTransferenciaItem'|trans }}
+                </a>
+            </div>
+            <div class="col s1">
+                {% if object.fkAlmoxarifadoPedidoTransferenciaAnulacao|length == 0 %}
+                    <a class="tooltipped"
+                       href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_item_create', {
+                           'codTransferencia': admin.adminRequestId
+                       }) }}"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="{{ "incluir"|trans }}">
+                        <i class="mdi mdi-plus-circle right small"></i>
+                    </a>
+                {% endif %}
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <th class="th-rh" width="10"></th>
+                <th class="th-rh">{{ 'label.pedidoTransferencia.codItem'|trans }}</th>
+                <th class="th-rh">{{ 'label.pedidoTransferencia.quantidade'|trans }}</th>
+                <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+                </thead>
+                <tbody>
+                {% for item in object.fkAlmoxarifadoPedidoTransferenciaItens %}
+                    <tr>
+                        <td class="td-rh">{{ loop.index }}</td>
+                        <td class="td-rh">{{ item.fkAlmoxarifadoCatalogoItem }}</td>
+                        <td class="td-rh">{{ item.quantidade|number_format(4, ',') }}</td>
+                        <td class="td-rh">
+                            {% if object.fkAlmoxarifadoPedidoTransferenciaAnulacao|length == 0 %}
+                                <div class="btn-group">
+                                    <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_item_edit', {
+                                        'id': item.objectId
+                                    }) }}"
+                                       class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                       data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_item_delete', {
+                                        'id': item.objectId
+                                    }) }}"
+                                       class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                       data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span class="label label-danger">{{ 'label.pedidoTransferencia.anulado.unavalable'|trans }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

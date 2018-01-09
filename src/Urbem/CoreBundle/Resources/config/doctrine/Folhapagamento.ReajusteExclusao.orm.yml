@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ReajusteExclusao:
+    type: entity
+    table: folhapagamento.reajuste_exclusao
+    id:
+        codReajuste:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_reajuste
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkFolhapagamentoReajusteExclusoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkFolhapagamentoReajuste:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Reajuste
+            inversedBy: fkFolhapagamentoReajusteExclusao
+            joinColumns:
+                cod_reajuste:
+                    referencedColumnName: cod_reajuste

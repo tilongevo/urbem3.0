@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEventoRescisao:
+    type: entity
+    table: folhapagamento.reajuste_registro_evento_rescisao
+    id:
+        codReajuste:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_reajuste
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoReajuste:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Reajuste
+            inversedBy: fkFolhapagamentoReajusteRegistroEventoRescisoes
+            joinColumns:
+                cod_reajuste:
+                    referencedColumnName: cod_reajuste
+        fkFolhapagamentoRegistroEventoRescisao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoRescisao
+            inversedBy: fkFolhapagamentoReajusteRegistroEventoRescisoes
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                desdobramento:
+                    referencedColumnName: desdobramento
+                cod_evento:
+                    referencedColumnName: cod_evento

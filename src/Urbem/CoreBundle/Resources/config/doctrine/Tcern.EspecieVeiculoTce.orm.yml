@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Tcern\EspecieVeiculoTce:
+    type: entity
+    table: tcern.especie_veiculo_tce
+    id:
+        codEspecieTce:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie_tce
+    fields:
+        nomEspecieTce:
+            type: string
+            nullable: false
+            length: 20
+            column: nom_especie_tce
+    oneToMany:
+        fkTcernTipoVeiculoVinculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\TipoVeiculoVinculo
+            mappedBy: fkTcernEspecieVeiculoTce

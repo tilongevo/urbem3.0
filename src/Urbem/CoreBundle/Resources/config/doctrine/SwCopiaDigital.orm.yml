@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\SwCopiaDigital:
+    type: entity
+    table: public.sw_copia_digital
+    repositoryClass: Urbem\CoreBundle\Repository\SwCopiaDigitalRepository
+    id:
+        codCopia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_copia
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        imagem:
+            type: boolean
+            nullable: false
+        anexo:
+            type: text
+            nullable: false
+    manyToOne:
+        fkSwDocumentoProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwDocumentoProcesso
+            inversedBy: fkSwCopiaDigitais
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_processo:
+                    referencedColumnName: cod_processo
+                exercicio:
+                    referencedColumnName: exercicio

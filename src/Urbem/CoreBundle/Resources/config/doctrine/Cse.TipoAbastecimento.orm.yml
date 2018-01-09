@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\TipoAbastecimento:
+    type: entity
+    table: cse.tipo_abastecimento
+    id:
+        codAbastecimento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_abastecimento
+    fields:
+        nomAbastecimento:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_abastecimento
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkCseTipoAbastecimento

@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Administracao\Mes:
+    type: entity
+    table: administracao.mes
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\MesRepository
+    id:
+        codMes:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mes
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkBeneficioConcessaoValeTransportes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\ConcessaoValeTransporte
+            mappedBy: fkAdministracaoMes
+        fkEstagioCursoInstituicaoEnsinoMeses:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\CursoInstituicaoEnsinoMes
+            mappedBy: fkAdministracaoMes
+        fkFrotaTransporteEscolares:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\TransporteEscolar
+            mappedBy: fkAdministracaoMes
+        fkTcemgExecucaoVariacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ExecucaoVariacao
+            mappedBy: fkAdministracaoMes
+        fkTcemgMedidas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\Medidas
+            mappedBy: fkAdministracaoMes

@@ -1,0 +1,129 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento:
+    type: entity
+    table: pessoal.assentamento_assentamento
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\AssentamentoAssentamentoRepository
+    id:
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.cod_assentamento_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_assentamento
+    fields:
+        codClassificacao:
+            type: integer
+            nullable: false
+            column: cod_classificacao
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        codOperador:
+            type: integer
+            nullable: false
+            column: cod_operador
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        sigla:
+            type: string
+            nullable: false
+            length: 10
+        codRegimePrevidencia:
+            type: integer
+            nullable: false
+            column: cod_regime_previdencia
+        codMotivo:
+            type: integer
+            nullable: false
+            column: cod_motivo
+        abreviacao:
+            type: string
+            nullable: true
+            length: 3
+    manyToOne:
+        fkPessoalClassificacaoAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ClassificacaoAssentamento
+            inversedBy: fkPessoalAssentamentoAssentamentos
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkPessoalAssentamentoAssentamentos
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkPessoalAssentamentoOperador:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoOperador
+            inversedBy: fkPessoalAssentamentoAssentamentos
+            joinColumns:
+                cod_operador:
+                    referencedColumnName: cod_operador
+        fkFolhapagamentoRegimePrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegimePrevidencia
+            inversedBy: fkPessoalAssentamentoAssentamentos
+            joinColumns:
+                cod_regime_previdencia:
+                    referencedColumnName: cod_regime_previdencia
+        fkPessoalAssentamentoMotivo:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoMotivo
+            inversedBy: fkPessoalAssentamentoAssentamentos
+            joinColumns:
+                cod_motivo:
+                    referencedColumnName: cod_motivo
+    oneToMany:
+        fkPessoalAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            orderBy: { 'timestamp': 'ASC' }
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Assentamento
+            mappedBy: fkPessoalAssentamentoAssentamento
+        fkPessoalAssentamentoVinculados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoVinculado
+            mappedBy: fkPessoalAssentamentoAssentamento
+        fkPessoalCondicaoAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CondicaoAssentamento
+            mappedBy: fkPessoalAssentamentoAssentamento
+        fkTcealOcorrenciaFuncionalAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tceal\OcorrenciaFuncionalAssentamento
+            mappedBy: fkPessoalAssentamentoAssentamento
+        fkPessoalAssentamentoGerados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoGerado
+            mappedBy: fkPessoalAssentamentoAssentamento
+        fkPessoalTcmbaAssentamentoAtoPessoais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\TcmbaAssentamentoAtoPessoal
+            mappedBy: fkPessoalAssentamentoAssentamento
+        fkTcescMotivoLicencaEsfingeSws:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcesc\MotivoLicencaEsfingeSw
+            mappedBy: fkPessoalAssentamentoAssentamento

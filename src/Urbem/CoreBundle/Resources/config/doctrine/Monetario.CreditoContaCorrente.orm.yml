@@ -1,0 +1,67 @@
+Urbem\CoreBundle\Entity\Monetario\CreditoContaCorrente:
+    type: entity
+    table: monetario.credito_conta_corrente
+    id:
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+    fields:
+        codConvenio:
+            type: integer
+            nullable: false
+            column: cod_convenio
+        codBanco:
+            type: integer
+            nullable: false
+            column: cod_banco
+        codAgencia:
+            type: integer
+            nullable: false
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            nullable: false
+            column: cod_conta_corrente
+    manyToOne:
+        fkMonetarioContaCorrenteConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\ContaCorrenteConvenio
+            inversedBy: fkMonetarioCreditoContaCorrentes
+            joinColumns:
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+    oneToOne:
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkMonetarioCreditoContaCorrente
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie

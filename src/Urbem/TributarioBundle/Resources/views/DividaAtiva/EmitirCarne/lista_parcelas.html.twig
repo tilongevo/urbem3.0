@@ -1,0 +1,55 @@
+<table class="js-table-lista-parcelas">
+    <thead>
+        <tr>
+            <th>{{ 'label.dividaAtivaEmitirCarne.numeracao'|trans }}</th>
+            <th>{{ 'label.dividaAtivaEmitirCarne.parcela'|trans }}</th>
+            <th>{{ 'label.dividaAtivaEmitirCarne.contribuinte'|trans }}</th>
+            <th>{{ 'label.dividaAtivaEmitirCarne.cobranca'|trans }}</th>
+            <th>{{ 'label.dividaAtivaEmitirCarne.valor'|trans }}</th>
+            <th>{{ 'label.dividaAtivaEmitirCarne.vencimento'|trans }}</th>
+            <th>{{ 'label.dividaAtivaEmitirCarne.reemitir'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for parcela in field.data.parcelas %}
+            <tr>
+                <td>
+                    <span>{{ parcela['numeracao'] }}</span>
+                    <input type="hidden" name="parcelas[{{ loop.index-1 }}][tipo]" value="{{ field.data.tipo }}" readonly>
+                    <input type="hidden" name="parcelas[{{ loop.index-1 }}][codParcela]" value="{{ parcela['cod_parcela'] }}" readonly>
+                </td>
+                <td>
+                    <span>{{ parcela['info_parcela'] }}</span>
+                </td>
+                <td>
+                    <span>{{ parcela['nom_cgm'] }}</span>
+                </td>
+                <td>
+                    <span>{{ '%s/%s'|format(parcela['numero_parcelamento'], parcela['exercicio']) }}</span>
+                </td>
+                <td>
+                    <span>{{ parcela['valor_parcela']|number_format(2, ',', '.') }}</span>
+                    <input type="hidden" name="parcelas[{{ loop.index-1 }}][valor]" value="{{ parcela['valor_parcela'] }}" readonly>
+                </td>
+                <td>
+                    <input type="input" class="js-parcela-dt-vencimento" name="parcelas[{{ loop.index-1 }}][vencimento]">
+                </td>
+                <td>
+                    <input type="checkbox" class="js-parcela-reemitir" name="parcelas[{{ loop.index-1 }}][reemitir]" value="1" readonly disabled>
+                </td>
+            </tr>
+        {% endfor %}
+
+        {% if not field.data.parcelas|length %}
+            <tr>
+                <td colspan="7" style="text-align:center">{{ 'label.dividaAtivaEmitirCarne.nenhumRegistroEncontrado'|trans }}</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<hr>
+
+<script>
+    $('.js-parcela-dt-vencimento').datetimepicker({"pickTime":false,"useCurrent":true,"minDate":"1\/1\/1900","maxDate":null,"showToday":true,"language":"pt_BR","disabledDates":[],"enabledDates":[],"icons":{"time":"fa fa-clock-o","date":"fa fa-calendar","up":"fa fa-chevron-up","down":"fa fa-chevron-down"},"useStrict":false,"sideBySide":false,"daysOfWeekDisabled":[],"collapse":true,"calendarWeeks":false,"viewMode":"days","useSeconds":false});
+</script>

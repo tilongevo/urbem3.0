@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoDocumento:
+    type: entity
+    table: tcemg.tipo_documento
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 35
+    oneToMany:
+        fkTcemgPagamentoTipoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\PagamentoTipoDocumento
+            mappedBy: fkTcemgTipoDocumento

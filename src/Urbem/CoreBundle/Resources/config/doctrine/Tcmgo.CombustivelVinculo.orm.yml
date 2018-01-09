@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Tcmgo\CombustivelVinculo:
+    type: entity
+    table: tcmgo.combustivel_vinculo
+    uniqueConstraints:
+        uk_tcmgo_combustivel_vinculo_1:
+            columns:
+                - cod_item
+    id:
+        codCombustivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_combustivel
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+    fields: {  }
+    manyToOne:
+        fkTcmgoCombustivel:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Combustivel
+            inversedBy: fkTcmgoCombustivelVinculos
+            joinColumns:
+                cod_combustivel:
+                    referencedColumnName: cod_combustivel
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+    oneToOne:
+        fkFrotaItem:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Item
+            inversedBy: fkTcmgoCombustivelVinculo
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item

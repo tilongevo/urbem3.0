@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Folhapagamento\Vinculo:
+    type: entity
+    table: folhapagamento.vinculo
+    id:
+        codVinculo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: folhapagamento.vinculo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_vinculo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkFolhapagamentoPrevidencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Previdencia
+            mappedBy: fkFolhapagamentoVinculo

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoPrevidencia:
+    type: entity
+    table: folhapagamento.tipo_evento_previdencia
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkFolhapagamentoPrevidenciaEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PrevidenciaEvento
+            mappedBy: fkFolhapagamentoTipoEventoPrevidencia

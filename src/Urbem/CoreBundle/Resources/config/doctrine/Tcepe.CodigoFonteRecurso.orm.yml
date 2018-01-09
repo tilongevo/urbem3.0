@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Tcepe\CodigoFonteRecurso:
+    type: entity
+    table: tcepe.codigo_fonte_recurso
+    id:
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codFonte:
+            type: integer
+            nullable: false
+            column: cod_fonte
+    manyToOne:
+        fkTcepeCodigoFonteTce:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\CodigoFonteTce
+            inversedBy: fkTcepeCodigoFonteRecursos
+            joinColumns:
+                cod_fonte:
+                    referencedColumnName: cod_fonte
+    oneToOne:
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkTcepeCodigoFonteRecurso
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso

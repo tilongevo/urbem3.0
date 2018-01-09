@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Cse\CidadaoPrograma:
+    type: entity
+    table: cse.cidadao_programa
+    id:
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codCidadao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cidadao
+    fields:
+        dtInclusao:
+            type: date
+            nullable: false
+            column: dt_inclusao
+        vlBeneficio:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            column: vl_beneficio
+        prioritario:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkCseProgramaSocial:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\ProgramaSocial
+            inversedBy: fkCseCidadaoProgramas
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+                exercicio:
+                    referencedColumnName: exercicio
+        fkCseCidadao:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            inversedBy: fkCseCidadaoProgramas
+            joinColumns:
+                cod_cidadao:
+                    referencedColumnName: cod_cidadao

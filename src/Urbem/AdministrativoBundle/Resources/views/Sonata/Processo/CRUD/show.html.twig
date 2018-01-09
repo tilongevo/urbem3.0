@@ -1,0 +1,67 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.almoxarifado.requisicao.requisicao'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    {% set swProcesso = object %}
+    {% set swProcessoKeyParam = {'id': admin.id(swProcesso)} %}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box-processo">
+
+                {% include '@Administrativo/Sonata/Processo/CRUD/show__header.html.twig' %}
+
+                {% include '@Administrativo/Sonata/Processo/CRUD/show__buttons.html.twig' %}
+
+            </div>
+        </div>
+
+        {% include '@Administrativo/Sonata/Processo/CRUD/show__interessados.html.twig' %}
+
+        <div class="row">
+            {% include '@Administrativo/Sonata/Processo/CRUD/show__acoes.html.twig' %}
+            {% include '@Administrativo/Sonata/Processo/CRUD/show__atributos.html.twig' %}
+        </div>
+
+        {% include '@Administrativo/Sonata/Processo/CRUD/show__documentos.html.twig' %}
+
+        {% include '@Administrativo/Sonata/Processo/CRUD/show__despacho.html.twig' %}
+
+        {% if swProcesso.fkSwProcessoArquivado %}
+            {% include '@Administrativo/Sonata/Processo/CRUD/show__arquivado.html.twig' %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col s12 profile-box-processo" style="padding-top: 20px">
+
+                {% include '@Administrativo/Sonata/Processo/CRUD/show__footer.html.twig' %}
+
+            </div>
+        </div>
+
+        <div class="sonata-ba-form-actions form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_administrativo_protocolo_processo_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

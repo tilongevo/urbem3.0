@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Arrecadacao\AtributoDesoneracaoValor:
+    type: entity
+    table: arrecadacao.atributo_desoneracao_valor
+    id:
+        codDesoneracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_desoneracao
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkArrecadacaoAtributoDesoneracao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoDesoneracao
+            inversedBy: fkArrecadacaoAtributoDesoneracaoValores
+            joinColumns:
+                cod_desoneracao:
+                    referencedColumnName: cod_desoneracao
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkArrecadacaoDesonerado:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desonerado
+            inversedBy: fkArrecadacaoAtributoDesoneracaoValores
+            joinColumns:
+                cod_desoneracao:
+                    referencedColumnName: cod_desoneracao
+                numcgm:
+                    referencedColumnName: numcgm
+                ocorrencia:
+                    referencedColumnName: ocorrencia

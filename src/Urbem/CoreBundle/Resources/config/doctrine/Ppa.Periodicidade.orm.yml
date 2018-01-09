@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Ppa\Periodicidade:
+    type: entity
+    table: ppa.periodicidade
+    id:
+        codPeriodicidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_periodicidade
+    fields:
+        nomPeriodicidade:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_periodicidade
+    oneToMany:
+        fkLdoHomologacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Homologacao
+            mappedBy: fkPpaPeriodicidade
+        fkPpaPpaEncaminhamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\PpaEncaminhamento
+            mappedBy: fkPpaPeriodicidade
+        fkPpaProgramaIndicadoreses:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\ProgramaIndicadores
+            mappedBy: fkPpaPeriodicidade

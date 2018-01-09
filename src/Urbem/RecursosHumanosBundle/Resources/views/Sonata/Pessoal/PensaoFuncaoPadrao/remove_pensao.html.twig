@@ -1,0 +1,32 @@
+{% if admin.isGranted('DELETE', object) and admin.hasRoute('delete') %}
+    {% if object.fkPessoalPensoes.last %}
+        {% if object.fkPessoalPensoes.last.fkPessoalPensaoExcluida %}
+            <a href="#"
+               class="grey-text transparent z-depth-0 hide-on-med-and-down tooltipped btn-list"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="Não é possível realizar a exclusão"
+            >
+                <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+            </a>
+        {% else %}
+            <a href="{{ admin.generateObjectUrl('inativar', object) }}"
+               class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="Excluir"
+            >
+                <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+            </a>
+        {% endif %}
+    {% else %}
+        <a href="#"
+           class="grey-text transparent z-depth-0 hide-on-med-and-down tooltipped btn-list"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="Não é possível realizar a exclusão"
+        >
+            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+        </a>
+    {% endif %}
+{% endif %}

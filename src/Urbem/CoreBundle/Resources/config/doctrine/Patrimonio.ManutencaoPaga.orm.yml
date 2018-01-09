@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Patrimonio\ManutencaoPaga:
+    type: entity
+    table: patrimonio.manutencao_paga
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+        dtAgendamento:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_agendamento
+    fields:
+        codEmpenho:
+            type: integer
+            nullable: true
+            column: cod_empenho
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: true
+            column: cod_entidade
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+    oneToOne:
+        fkPatrimonioManutencao:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Manutencao
+            inversedBy: fkPatrimonioManutencaoPaga
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem
+                dt_agendamento:
+                    referencedColumnName: dt_agendamento

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcepe\TipoRetencao:
+    type: entity
+    table: tcepe.tipo_retencao
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkTcepePlanoAnaliticaTipoRetencoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\PlanoAnaliticaTipoRetencao
+            mappedBy: fkTcepeTipoRetencao

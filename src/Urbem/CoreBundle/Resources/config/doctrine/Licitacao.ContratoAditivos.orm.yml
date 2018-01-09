@@ -1,0 +1,130 @@
+Urbem\CoreBundle\Entity\Licitacao\ContratoAditivos:
+    type: entity
+    table: licitacao.contrato_aditivos
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\ContratoAditivoRepository
+    id:
+        exercicioContrato:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_contrato
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numAditivo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_aditivo
+    fields:
+        responsavelJuridico:
+            type: integer
+            nullable: false
+            column: responsavel_juridico
+        dtVencimento:
+            type: date
+            nullable: false
+            column: dt_vencimento
+        dtAssinatura:
+            type: date
+            nullable: false
+            column: dt_assinatura
+        inicioExecucao:
+            type: date
+            nullable: false
+            column: inicio_execucao
+        valorContratado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_contratado
+        objeto:
+            type: text
+            nullable: false
+        fundamentacao:
+            type: string
+            nullable: false
+            length: 100
+        fimExecucao:
+            type: date
+            nullable: true
+            column: fim_execucao
+        justificativa:
+            type: string
+            nullable: true
+            length: 250
+        tipoTermoAditivo:
+            type: integer
+            nullable: true
+            column: tipo_termo_aditivo
+        tipoValor:
+            type: integer
+            nullable: true
+            column: tipo_valor
+    manyToOne:
+        fkLicitacaoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            inversedBy: fkLicitacaoContratoAditivos
+            joinColumns:
+                exercicio_contrato:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoContratoAditivos
+            joinColumns:
+                responsavel_juridico:
+                    referencedColumnName: numcgm
+        fkLicitacaoTipoTermoAditivo:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoTermoAditivo
+            inversedBy: fkLicitacaoContratoAditivos
+            joinColumns:
+                tipo_termo_aditivo:
+                    referencedColumnName: cod_tipo
+        fkLicitacaoTipoAlteracaoValor:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoAlteracaoValor
+            inversedBy: fkLicitacaoContratoAditivos
+            joinColumns:
+                tipo_valor:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkLicitacaoPublicacaoContratoAditivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PublicacaoContratoAditivos
+            mappedBy: fkLicitacaoContratoAditivos
+    oneToOne:
+        fkLicitacaoContratoAditivosAnulacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoAditivosAnulacao
+            mappedBy: fkLicitacaoContratoAditivos
+            joinColumns:
+                exercicio_contrato:
+                    referencedColumnName: exercicio_contrato
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato
+                exercicio:
+                    referencedColumnName: exercicio
+                num_aditivo:
+                    referencedColumnName: num_aditivo

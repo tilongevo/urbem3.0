@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Cse\Conselho:
+    type: entity
+    table: cse.conselho
+    id:
+        codConselho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conselho
+    fields:
+        nomConselho:
+            type: string
+            nullable: false
+            length: 180
+            column: nom_conselho
+        nomRegistro:
+            type: string
+            nullable: false
+            length: 25
+            column: nom_registro
+    oneToMany:
+        fkCseProfissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Profissao
+            mappedBy: fkCseConselho

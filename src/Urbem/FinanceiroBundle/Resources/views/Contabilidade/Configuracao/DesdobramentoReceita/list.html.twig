@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+                <h5 class="col s12 box-title left-align show">Desdobramento Receita</h5>
+                <div class="divider grey title-divider"><p>1</p></div>
+            <div class="col s12 left show" style="margin-top: 10px; margin-bottom: 10px;">
+                <a class="btn btn-success btn-sm sonata-ba-action"
+                   href="{{ path('urbem_financeiro_contabilidade_configuracao_desdobramento_receita_create') }}">
+                    <i class="material-icons left">add</i>Incluir
+                </a>
+            </div>
+
+            <table class="highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.receitaPrincipal'|trans }}</th>
+                    <th class="th-rh">{{ 'label.receitaSecundaria'|trans }}</th>
+                    <th class="th-rh">{{ 'label.percentual'|trans }}</th>
+                    <th class="th-rh"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for desdobramento in desdobramentos %}
+                    <tr>
+                        <td>{{ desdobramento.receitaprincipal }}</td>
+                        <td>{{ desdobramento.receitasecundaria }}</td>
+                        <td>{{ desdobramento.percentual}}</td>
+                        {#<td class="center">#}
+                            {#<a class="hide-on-med-and-down blue-text text-darken-4 tooltipped"#}
+                               {#data-position="left"#}
+                               {#data-delay="50"#}
+                               {#data-tooltip="Detalhe"#}
+                               {#href="{{ path('urbem_financeiro_contabilidade_configuracao_desdobramento_receita_show', { 'id': desdobramento.id }) }}">#}
+                                {#<i class="fa fa-search-plus" aria-hidden="true"></i>#}
+                            {#</a>#}
+                        {#</td>#}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

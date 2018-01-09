@@ -1,0 +1,214 @@
+Urbem\CoreBundle\Entity\Administracao\Funcao:
+    type: entity
+    table: administracao.funcao
+    repositoryClass: Urbem\CoreBundle\Repository\Administracao\FuncaoRepository
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_biblioteca
+        codFuncao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_funcao
+    fields:
+        codTipoRetorno:
+            type: integer
+            nullable: false
+            column: cod_tipo_retorno
+        nomFuncao:
+            type: string
+            nullable: true
+            length: 255
+            column: nom_funcao
+    manyToOne:
+        fkAdministracaoBiblioteca:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Biblioteca
+            inversedBy: fkAdministracaoFuncoes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+        fkAdministracaoTipoPrimitivo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\TipoPrimitivo
+            inversedBy: fkAdministracaoFuncoes
+            joinColumns:
+                cod_tipo_retorno:
+                    referencedColumnName: cod_tipo
+    oneToMany:
+        fkAdministracaoAtributoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoFuncao
+            mappedBy: fkAdministracaoFuncao
+        fkAdministracaoFuncaoReferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\FuncaoReferencia
+            mappedBy: fkAdministracaoFuncao
+        fkAdministracaoVariaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Variavel
+            mappedBy: fkAdministracaoFuncao
+        fkArrecadacaoDesoneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desoneracao
+            mappedBy: fkAdministracaoFuncao
+        fkArrecadacaoParametroCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ParametroCalculo
+            mappedBy: fkAdministracaoFuncao
+        fkArrecadacaoRegraDesoneracaoGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\RegraDesoneracaoGrupo
+            mappedBy: fkAdministracaoFuncao
+        fkDividaModalidadeAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeAcrescimo
+            mappedBy: fkAdministracaoFuncao
+        fkDividaModalidadeReducoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeReducao
+            mappedBy: fkAdministracaoFuncao
+        fkDividaModalidadeVigencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            mappedBy: fkAdministracaoFuncao
+        fkFolhapagamentoBaseses:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Bases
+            mappedBy: fkAdministracaoFuncao
+        fkFolhapagamentoConfiguracaoEventoCasos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEventoCaso
+            mappedBy: fkAdministracaoFuncao
+        fkFolhapagamentoPensaoFuncaoPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PensaoFuncaoPadrao
+            mappedBy: fkAdministracaoFuncao
+        fkFolhapagamentoSindicatoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SindicatoFuncao
+            mappedBy: fkAdministracaoFuncao
+        fkFolhapagamentoTipoMedias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoMedia
+            mappedBy: fkAdministracaoFuncao
+        fkMonetarioTipoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\TipoConvenio
+            mappedBy: fkAdministracaoFuncao
+        fkMonetarioRegraDesoneracaoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\RegraDesoneracaoCredito
+            mappedBy: fkAdministracaoFuncao
+        fkMonetarioFormulaIndicadores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\FormulaIndicador
+            mappedBy: fkAdministracaoFuncao
+        fkMonetarioRegraConversaoMoedas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\RegraConversaoMoeda
+            mappedBy: fkAdministracaoFuncao
+        fkMonetarioFormulaAcrescimos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\FormulaAcrescimo
+            mappedBy: fkAdministracaoFuncao
+        fkPessoalPensaoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PensaoFuncao
+            mappedBy: fkAdministracaoFuncao
+        fkPessoalAssentamentoVinculadoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoVinculadoFuncao
+            mappedBy: fkAdministracaoFuncao
+        fkFiscalizacaoPenalidadeMultas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeMulta
+            mappedBy: fkAdministracaoFuncao
+    oneToOne:
+        fkAdministracaoFuncaoExterna:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\FuncaoExterna
+            mappedBy: fkAdministracaoFuncao
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao

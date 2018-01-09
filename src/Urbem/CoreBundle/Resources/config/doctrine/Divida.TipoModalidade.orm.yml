@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Divida\TipoModalidade:
+    type: entity
+    table: divida.tipo_modalidade
+    id:
+        codTipoModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_modalidade
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 30
+    oneToMany:
+        fkDividaModalidadeVigencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\ModalidadeVigencia
+            mappedBy: fkDividaTipoModalidade

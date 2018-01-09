@@ -1,0 +1,45 @@
+{% macro action_button(text, icon, route = null, route_params = {}, col = 's3') %}
+    <div class="col {{ col|e }} center" style="margin-bottom: 10px">
+        {% if route is null  %}
+            <a class="white-text btn btn-success save grey lighten-2 disabled">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e }}
+            </a>
+        {% else %}
+            <a class="white-text blue darken-4 btn btn-success save"
+               href="{{ path(route, route_params) }}">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e }}
+            </a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+<div class="col s12">
+    <div class="row">
+        {# Botao de Anular Requisicao #}
+        {% if object.isPassivelAnularRequisicao == true%}
+            {{ _self.action_button('Anular Requisição', 'ban', 'urbem_patrimonial_almoxarifado_requisicao_anulacao_edit', { 'id': admin.objectKey(object) }) }}
+        {% else %}
+            {{ _self.action_button('Anular Requisição', 'ban') }}
+        {% endif %}
+
+        {# Botao de Homologar Requisicao #}
+        {% if object.isPassivelHomologacao == true %}
+            {{ _self.action_button('Homologar', 'check-square-o', 'urbem_patrimonial_almoxarifado_requisicao_homologar', { 'id': admin.objectKey(object) }) }}
+        {% else %}
+            {{ _self.action_button('Homologar', 'check-square-o') }}
+        {% endif %}
+
+        {# Botao de Anular Homologacao #}
+        {% if object.isPassivelAnulacaoHomologacao == true %}
+            {{ _self.action_button('Anular Homologacão', 'ban', 'urbem_patrimonial_almoxarifado_requisicao_anular_homologacao', { 'id': admin.objectKey(object) }) }}
+        {% else %}
+            {{ _self.action_button('Anular Homologacão', 'ban') }}
+        {% endif %}
+
+        {# Botao de Gerar Relatorio #}
+        {# @TODO aguardando liberar a APIService para gerar relatorios #}
+        {#{{ _self.action_button('Gerar Relatório', 'file-text-o', 'urbem_patrimonial_almoxarifado_requisicao_gerar_relatorio', { 'id': admin.objectKey(object) }) }}#}
+        {{ _self.action_button('Gerar Relatório', 'file-text-o') }}
+    </div>
+    <div class="row"></div>
+</div>

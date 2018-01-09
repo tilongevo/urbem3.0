@@ -1,0 +1,47 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% set codCaged = object.fkPessoalCausaRescisaoCageds %}
+
+{% block show %}
+<div class="container-rh">
+    <div class="row">
+        <div class="col s12 profile-box">
+            <h2 class="blue-text text-darken-4 left">
+                <span style="padding-top: 10px">{{ 'label.causaRescisao.modulo'|trans }}:</span><span class="grey-text bold" style="padding-top: 10px; font-weight: bold">{#{{ object.numConvenio ~ "/" ~ object.exercicio }}#}</span>
+            </h2>
+            <a href="{{ path('urbem_recursos_humanos_pessoal_causa_rescisao_edit', { 'id': object.codCausaRescisao }) }}" class="serv-btn right">
+                <i class="material-icons right">edit</i>
+            </a>
+            <p class="divider grey col s12"></p>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.codigo'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.numCausa }}</h6>
+            </div>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.causaRescisao.descricao'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.descricao }}</h6>
+            </div>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.causaRescisao.sefip'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.fkPessoalMovSefipSaida.fkPessoalSefip.numSefip ~ ' - ' ~ object.fkPessoalMovSefipSaida.fkPessoalSefip.descricao }}</h6>
+            </div>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.causaRescisao.caged'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">
+                    {% if not codCaged.isEmpty %}
+                        {{ codCaged.last.fkPessoalCaged.numCaged ~ ' - ' ~  codCaged.last.fkPessoalCaged.descricao }}
+                    {% else %}
+                        &nbsp;
+                    {% endif %}
+                </h6>
+            </div>
+            <div class="col s3 little-box">
+                <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.causaRescisao.causa'|trans }}</h6>
+                <h6 class="col s12 grey-text text-darken-1">{{ object.fkPessoalCausaAfastamentoMte.codCausaAfastamento ~ ' - ' ~  object.fkPessoalCausaAfastamentoMte.nomCausaAfastamento }}</h6>
+            </div>
+        </div>
+    </div>
+    {% include 'RecursosHumanosBundle:Pessoal/Rescisao/CausaRescisao/CRUD:casoCausaRescisao.html.twig' %}
+</div>
+
+{% endblock show %}

@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Pessoal\MovSefipSaidaMovSefipRetorno:
+    type: entity
+    table: pessoal.mov_sefip_saida_mov_sefip_retorno
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\MovSefipSaidaMovSefipRetornoRepository
+    id:
+        codSefipSaida:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_sefip_saida
+    fields:
+        codSefipRetorno:
+            type: integer
+            nullable: false
+            column: cod_sefip_retorno
+    manyToOne:
+        fkPessoalMovSefipRetorno:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipRetorno
+            inversedBy: fkPessoalMovSefipSaidaMovSefipRetornos
+            joinColumns:
+                cod_sefip_retorno:
+                    referencedColumnName: cod_sefip_retorno
+    oneToOne:
+        fkPessoalMovSefipSaida:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\MovSefipSaida
+            inversedBy: fkPessoalMovSefipSaidaMovSefipRetorno
+            joinColumns:
+                cod_sefip_saida:
+                    referencedColumnName: cod_sefip_saida

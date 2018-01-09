@@ -1,0 +1,529 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+        <table class="table table-condensed table-custom" style="margin-top: 10px">
+            <tbody>
+                <tr>
+                    <td colspan="16" class="grey text-align-center">
+                        <h4><strong>{{ 'Relatório Servidor'|trans|upper }}</strong></h4>
+                    </td>
+                </tr>
+
+                <tr><td colspan="16" class="border-right-none border-left-none border-bottom-none border-top-none"></td></tr>
+
+                {% for servidor in servidores %}
+
+                    {% if visualizacao.local is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-right">
+                                <h6><strong>{{ 'Local: '|trans|upper }} {{ servidor.local|upper }}</strong></h6>
+                            </td>
+                        </tr>
+                    {% endif %}
+
+                    {% if visualizacao.codLotacao is defined %}
+                    <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                    <tr>
+                        <td colspan="16" class="grey text-align-right">
+                            <h6><strong>{{ 'Lotação: '|trans|upper }} {{ servidor.cod_orgao|upper }}</strong></h6>
+                        </td>
+                    </tr>
+                    {% endif %}
+
+                    <tr>
+                        <td colspan="12" class="border-right-none border-bottom-none border-left-none">
+                            <h6><strong>{{ 'matrícula'|upper }}: {{ servidor.registro}} - {{ servidor.nom_cgm|upper }}</strong></h6>
+                        </td>
+                    </tr>
+
+                    {% if visualizacao.foto is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        {% if servidor.caminho_foto is defined and servidor.caminho_foto is not empty %}
+                            <tr>
+                                <td colspan="16" class="text-align-center">
+                                    <img class="responsive-img" src="{{ servidor.caminho_foto }}" style="height: 45px;">
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if visualizacao.identificacao is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center">
+                                <h6><strong>{{ 'Dados de Identificação'|trans|upper }}</strong></h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Data de Nascimento: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.dt_nascimento|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Sexo: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">
+                            {% if servidor.sexo|upper == 'F'%}
+                                FEMININO
+                            {% else %}
+                                MASCULINO
+                            {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Escolaridade: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.escolaridade|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Nome do Pai: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.nome_pai|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Nome da Mãe: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.nome_mae|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Estado Civil: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.nomEstadoCivil|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Raça/Cor: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.nomRaca|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Cid: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.sigla|upper }}/{{ servidor.descricao|trans|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Nacionalidade: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.nacionalidade|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Município de Naturalidade/UF: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.nom_municipio|upper }}/{{ servidor.sigla_uf|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Endereço: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.tipo_logradouro|upper }} {{ servidor.logradouro|upper }}, {{ servidor.numero|trans|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Complemento do Endereço: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.complemento|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Bairro: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.bairro|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'CEP: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.cep|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Cidade/UF: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.nom_municipio|upper }}/{{ servidor.sigla_uf|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Fone Residencial/Celular: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.fone_residencial|upper }}/{{ servidor.fone_celular|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none">{{ 'Email: '|trans|upper }}</td>
+                            <td colspan="14">{{ servidor.e_mail|upper }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if visualizacao.documentacao is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center">
+                                <h6><strong>{{ 'Dados de Documentação'|trans|upper }}</strong></h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'cpf: '|trans|upper }}{{ servidor.cpf|upper }}</td>
+                            <td colspan="4" class="border-right-none text-center border-bottom-none">{{ 'rg: '|trans|upper }}{{ servidor.rg|upper }}</td>
+                            <td colspan="4" class="border-right-none text-center border-bottom-none">{{ 'Data Emissão rg: '|trans|upper }}{{ servidor.dt_emissao_rg|upper }}</td>
+                            <td colspan="6" class="text-center border-bottom-none">{{ 'Órgão Emissão RG/UF: '|trans|upper }}{{ servidor.orgao_emissor|upper }}/{{ servidor.sigla_uf|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'PIS/PASEP: '|trans|upper }}{{ servidor.servidor_pis_pasep|upper }}</td>
+                            <td colspan="4" class="border-right-none border-bottom-none text-center">{{ 'Cadastro Pis/Pasep: '|trans|upper }}{{ servidor.dt_pis_pasep|upper }}</td>
+                            <td colspan="4" class="border-right-none border-bottom-none text-center">{{ 'Titulo Eleitor: '|trans|upper }}{{ servidor.nr_titulo_eleitor|upper }}</td>
+                            <td class="border-right-none border-bottom-none text-center">
+                                <td class="border-right-none border-bottom-none text-left">{{ 'Zona: '|trans|upper }}{{ servidor.zona_titulo|upper }}</td>
+                                <td colspan="4" class="text-center border-bottom-none">{{ 'Seção: '|trans|upper }}{{ servidor.secao_titulo|upper }}</td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Número CNH: '|trans|upper }}{{ servidor.num_cnh|upper }}</td>
+                            <td colspan="4" class="border-right-none text-center border-bottom-none">{{ 'Categoria: '|trans|upper }}{{ servidor.nom_categoria|upper }}</td>
+                            <td colspan="4" class="text-center border-bottom-none border-right-none">{{ 'Validade CNH: '|trans|upper }}{{ servidor.dt_validade_cnh|upper }}</td>
+                            <td colspan="6" class="text-center border-bottom-none"></td>
+                        </tr>
+                        <tr>
+                            {% if servidor.ctps != null %}
+                                    <td colspan="2" class="border-right-none border-bottom-none">{{ 'CTPS: '|trans|upper }}{{ servidor.ctps.numero|upper }}</td>
+                                    <td colspan="4" class="border-right-none text-center border-bottom-none">{{ 'Série: '|trans|upper }}{{ servidor.ctps.serie|upper }}</td>
+                                    <td colspan="4" class="border-right-none text-center border-bottom-none">{{ 'DataEmissão: '|trans|upper }}{{ servidor.ctps.dtEmissao|upper }}</td>
+                                    <td colspan="6" class="text-center border-bottom-none">{{ 'Orgão/UF Expedidor: '|trans|upper }}{{ servidor.ctps.orgaoExpedidor|upper }}/{{ servidor.ctps.ufExpedicao|upper }}</td>
+                                {% else %}
+                                    <td colspan="2" class="border-right-none border-bottom-none">{{ 'CTPS: '|trans|upper }}</td>
+                                    <td colspan="4" class="border-right-none text-center border-bottom-none">{{ 'Série: '|trans|upper }}</td>
+                                    <td colspan="4" class="border-right-none text-center border-bottom-none">{{ 'DataEmissão: '|trans|upper }}</td>
+                                    <td colspan="6" class="text-center border-bottom-none">{{ 'Orgão/UF Expedidor: '|trans|upper }}/{{ servidor.sigla_uf|upper }}</td>
+                            {% endif %}
+
+                        </tr>
+                        <tr>
+                            <td colspan="16" class="text-left border-bottom-none">{{ 'Certificado Reservista: '|trans|upper }}{{ servidor.nr_carteira_res|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none">{{ 'Conselho Profissional: '|trans|upper }}{{ servidor.sigla_conselho|upper }}</td>
+                            <td colspan="4" class="border-right-none text-center"></td>
+                            <td colspan="4" class="border-right-none text-center">{{ 'Número: '|trans|upper }}{{ servidor.nr_conselho|upper }}</td>
+                            <td colspan="6" class="text-center">{{ 'Data Validade: '|trans|upper }}{{ servidor.dt_validade_conselho|upper }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if visualizacao.contratuais is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center"><h6><strong>{{ 'Informações Contratuais'|trans|upper }}</strong></h6></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Situação: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.documentacao.situacao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Data Nomeação: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.documentacao.dt_nomeacao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Portaria de Nomeação: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.portaria|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Data Posse: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.documentacao.dt_posse|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Data Admissão: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.documentacao.dt_admissao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Data Recisão/Exoneração: '|trans|upper }}</td>
+                            {% if servidor.documentacao.dt_rescisao is defined %}
+                                    <td colspan="14" class="border-bottom-none">{{ servidor.documentacao.dt_rescisao|upper }}</td>
+                                {% else %}
+                                    <td colspan="14" class="border-bottom-none"></td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Motivo: '|trans|upper }}</td>
+                            {% if servidor.documentacao.motivo is defined %}
+                                <td colspan="14" class="border-bottom-none">{{ servidor.documentacao.motivo|upper }}</td>
+                            {% else %}
+                                <td colspan="14" class="border-bottom-none"></td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Regime/Subdivisão Cargo: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.regime|upper }} / {{ servidor.subDivisao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Cargo/Especialidade: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.cargo|upper }} /</td>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Regime/Subdivisão Cargo: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.regime|upper }} / {{ servidor.subDivisao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Função/Especialidade: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.documentacao.funcao|upper }} /</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Última Alteração Função: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.documentacao.dt_alteracao_funcao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Tipo Admissão: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.tipoAdmissao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Vínculo Empregatício: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.vinculoEmpregaticio|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Categoria: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.categoria|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none">{{ 'Validade Exame Médico: '|trans|upper }}</td>
+                            <td colspan="14" >{{ servidor.contratoMedico|upper }}</td>
+                        </tr>
+                    {% endif %}
+
+                    {% if visualizacao.salariais is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center"><h6><strong>{{ 'Informações Salariais'|trans|upper }}</strong></h6></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Carga Horária Mensal: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.cargaHoraria.horasMensais|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Carga Horária Semanal: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.cargaHoraria.horasSemanais|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Padrão Salarial: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.cargaHoraria.descricao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Data Início Progressão: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.contratoMedico|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Progressão: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.progressao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Salário/Vencimento Base: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.salario.salario|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none">{{ 'Tipo de Pagamento: '|trans|upper }}</td>
+                            <td colspan="14" >{{ servidor.tipoPagamento|upper }}</td>
+                        </tr>
+                    {% endif %}
+
+                    {% if visualizacao.bancarias is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center">
+                                <h6><strong>{{ 'Informações Bancárias'|trans|upper }}</strong></h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Forma de Pagamento: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.formaPagamento|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Banco: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.contaSalario.banco|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Agência: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.contaSalario.agencia|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none">{{ 'Conta: '|trans|upper }}</td>
+                            <td colspan="14">{{ servidor.contaSalario.numeroConta|upper }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if visualizacao.lotacao is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center">
+                                <h6><strong>{{ 'Informações de Localização'|trans|upper }}</strong></h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none border-bottom-none">{{ 'Lotação: '|trans|upper }}</td>
+                            <td colspan="14" class="border-bottom-none">{{ servidor.lotacao|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border-right-none">{{ 'Local de Trabalho: '|trans|upper }}</td>
+                            <td colspan="14" >{{ servidor.local|upper }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if visualizacao.previdencia is defined %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        {% if servidor.previdencia is defined  %}
+                            <tr>
+                                <td colspan="16" class="grey text-align-center">
+                                    <h6><strong>{{ 'Informações de Previdência'|trans|upper }}</strong></h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none">{{ 'Regime de Previdência Oficial: '|trans|upper }}</td>
+                                <td colspan="14" >{{ servidor.previdencia.descricao|upper }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                    {% if visualizacao.ferias is defined and servidor.ferias is not empty %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center">
+                                <h6><strong>{{ 'Informações de Férias'|trans|upper }}</strong></h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="text-align-center">
+                                <strong>{{ 'Nro '|trans|upper }}</strong>
+                            </td>
+                            <td colspan="4" class="text-align-center">
+                                <strong>{{ 'Período Aquisitivo '|trans|upper }}</strong>
+                            </td>
+                            <td colspan="3" class="text-align-center">
+                                <strong>{{ 'Período Gozo '|trans|upper }}</strong>
+                            </td>
+                            <td colspan="1" class="text-align-center">
+                                <strong>{{ 'Faltas'|trans|upper }}</strong>
+                            </td>
+                            <td colspan="1" class="text-align-center">
+                                <strong>{{ 'Férias'|trans|upper }}</strong>
+                            </td>
+                            <td colspan="1" class="text-align-center">
+                                <strong>{{ 'Abono'|trans|upper }}</strong>
+                            </td>
+                            <td colspan="1" class="text-align-center">
+                                <strong>{{ 'Mês Pagto'|trans|upper }}</strong>
+                            </td>
+                            <td colspan="2" class="text-align-center">
+                                <strong>{{ 'Folha'|trans|upper }}</strong>
+                            </td>
+                            <td colspan="1" class="text-align-center">
+                                <strong>{{ 'Somente 1/3'|trans|upper }}</strong>
+                            </td>
+                        </tr>
+                        {% for ferias in servidor.ferias %}
+                            <tr>
+                                <td colspan="1" class="text-align-center">{{ loop.index }}</td>
+                                <td colspan="4" class="text-align-center">
+                                    {{ ferias.dt_inicial_aquisitivo|upper }} A {{ ferias.dt_final_aquisitivo|upper }}
+                                </td>
+                                <td colspan="3" class="text-align-center">
+                                    {{ ferias.dt_inicial_gozo|upper }} A {{ ferias.dt_final_gozo|upper }}
+                                </td>
+                                <td colspan="1" class="text-align-center">
+                                    {{ ferias.faltas|upper }}
+                                </td>
+                                <td colspan="1" class="text-align-center">
+                                    {{ ferias.ferias|upper }}
+                                </td>
+                                <td colspan="1" class="text-align-center">
+                                    {{ ferias.abono|upper }}
+                                </td>
+                                <td colspan="1" class="text-align-center">
+                                    {{ ferias.mes_pagamento|upper }}
+                                </td>
+                                <td colspan="2" class="text-align-center">
+                                    {{ ferias.ferias|upper }}
+                                </td>
+                                <td colspan="1" class="text-align-center">
+                                    {{ ferias.pagar_13|upper }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    {% if visualizacao.atributos is defined and servidor.atributos is not empty %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center">
+                                <h6><strong>{{ 'Outras Informações - Atributos Dinâmicos'|trans|upper }}</strong></h6>
+                            </td>
+                        </tr>
+
+                        {% for atributo in servidor.atributos %}
+                            <tr>
+                                <td colspan="2" class="border-right-none">
+                                    {{ atributo.nom_atributo|trans|upper }}:
+                                </td>
+
+                                <td colspan="14">
+                                    {{ atributo.valor|upper }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    {% endif %}
+                    {% if visualizacao.dependentes is defined and servidor.dependentes is not empty %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center">
+                                <h6><strong>{{ 'Dependentes'|trans|upper }}</strong></h6>
+                            </td>
+                        </tr>
+                        {% for dependente in servidor.dependentes %}
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Nome: '|trans|upper }}</td>
+                                <td colspan="14" class="border-bottom-none">{{ dependente.nom_cgm|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Data Nascimento: '|trans|upper }}</td>
+                                <td colspan="6" class="border-right-none border-bottom-none">{{ dependente.dt_nascimento|upper }}</td>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'CID: '|trans|upper }}</td>
+                                <td colspan="6" class="border-bottom-none">{{ dependente.descricao_cid|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Grau de Parentesco: '|trans|upper }}</td>
+                                <td colspan="6" class="border-right-none border-bottom-none">{{ dependente.nom_grau_parentesco|upper }}</td>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Sexo: '|trans|upper }}</td>
+                                <td colspan="6" class="border-bottom-none">{{ dependente.sexo|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Escolaridade: '|trans|upper }}</td>
+                                <td colspan="14" class="border-bottom-none">{{ dependente.escolaridade|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Dependência Salário Família: '|trans|upper }}</td>
+                                <td colspan="6" class="border-right-none border-bottom-none">
+                                    {% if dependente.dependente_sal_familia|upper == true %}
+                                        SIM
+                                    {% else %}
+                                        NÃO
+                                    {% endif %}
+                                </td>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Limite Salário Família: '|trans|upper }}</td>
+                                <td colspan="6" class="border-bottom-none">{{ dependente.limite_salario_familia|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none">{{ 'Dependência IRRF: '|trans|upper }}</td>
+                                <td colspan="14">{{ dependente.descricao_vinculo|upper }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    {% if visualizacao.assentamentos is defined and servidor.assentamentos is not empty %}
+                        <tr><td colspan="16" class="border-right-none border-left-none border-top-none"></td></tr>
+                        <tr>
+                            <td colspan="16" class="grey text-align-center">
+                                <h6><strong>{{ 'Assentamentos'|trans|upper }}</strong></h6>
+                            </td>
+                        </tr>
+                        {% for assentamento in servidor.assentamentos %}
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Classificação: '|trans|upper }}</td>
+                                <td colspan="14" class="border-bottom-none">{{ assentamento.classificacao|trans|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Assentamento: '|trans|upper }}</td>
+                                <td colspan="14" class="border-bottom-none">{{ assentamento.assentamento|trans|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Período: '|trans|upper }}</td>
+                                <td colspan="14" class="border-bottom-none">{{ assentamento.periodo|trans|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Quantidade de Dias: '|trans|upper }}</td>
+                                <td colspan="14" class="border-bottom-none">{{ assentamento.dias|trans|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none border-bottom-none">{{ 'Normas: '|trans|upper }}</td>
+                                <td colspan="14" class="border-bottom-none">{{ assentamento.norma|trans|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-right-none">{{ 'Observações: '|trans|upper }}</td>
+                                <td colspan="14" >{{ assentamento.observacao|trans|upper }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

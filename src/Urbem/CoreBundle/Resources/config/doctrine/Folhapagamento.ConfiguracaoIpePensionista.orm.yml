@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpePensionista:
+    type: entity
+    table: folhapagamento.configuracao_ipe_pensionista
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        vigencia:
+            type: datepk
+            generator:
+                strategy: NONE
+    fields:
+        codAtributoData:
+            type: integer
+            nullable: false
+            column: cod_atributo_data
+        codModuloData:
+            type: integer
+            nullable: false
+            column: cod_modulo_data
+        codCadastroData:
+            type: integer
+            nullable: false
+            column: cod_cadastro_data
+        codAtributoMat:
+            type: integer
+            nullable: false
+            column: cod_atributo_mat
+        codModuloMat:
+            type: integer
+            nullable: false
+            column: cod_modulo_mat
+        codCadastroMat:
+            type: integer
+            nullable: false
+            column: cod_cadastro_mat
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkFolhapagamentoConfiguracaoIpePensionistas
+            joinColumns:
+                cod_modulo_data:
+                    referencedColumnName: cod_modulo
+                cod_cadastro_data:
+                    referencedColumnName: cod_cadastro
+                cod_atributo_data:
+                    referencedColumnName: cod_atributo
+        fkAdministracaoAtributoDinamico1:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkFolhapagamentoConfiguracaoIpePensionistas1
+            joinColumns:
+                cod_modulo_mat:
+                    referencedColumnName: cod_modulo
+                cod_cadastro_mat:
+                    referencedColumnName: cod_cadastro
+                cod_atributo_mat:
+                    referencedColumnName: cod_atributo
+    oneToOne:
+        fkFolhapagamentoConfiguracaoIpe:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoIpe
+            inversedBy: fkFolhapagamentoConfiguracaoIpePensionista
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                vigencia:
+                    referencedColumnName: vigencia

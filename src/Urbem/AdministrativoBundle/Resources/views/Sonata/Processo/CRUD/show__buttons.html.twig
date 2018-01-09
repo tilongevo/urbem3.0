@@ -1,0 +1,62 @@
+{% macro action_button(text, icon, route = null, route_params = {}, col = 's4') %}
+    <div class="col {{ col|e }} center" style="padding-bottom: 10px">
+        {% if route is null %}
+            <a class="white-text btn btn-success save grey lighten-2 disabled">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e|trans }}
+            </a>
+        {% else %}
+            <a class="white-text blue darken-4 btn btn-success save"
+               href="{{ path(route, route_params) }}">
+                <i class="fa fa-{{ icon|e }} left"></i>{{ text|e|trans }}
+            </a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+<div class="row">
+    <div class="col s12">
+        {# Receber Processos #}
+        {% if swProcesso.codSituacao == 2 %}
+            {{ _self.action_button('label.processo.receber', 'arrow-down', 'urbem_administrativo_protocolo_processo_etapa_receber', swProcessoKeyParam) }}
+        {% else %}
+            {{ _self.action_button('label.processo.recebido', 'arrow-down') }}
+        {% endif %}
+
+        {# Encaminhar\Cancelar Encaminhamento de Processos #}
+        {% if not swProcesso.encaminhado %}
+            {{ _self.action_button('label.processo.encaminhar', 'share', 'urbem_administrativo_protocolo_processo_etapa_encaminhar', swProcessoKeyParam) }}
+        {% else %}
+            {{ _self.action_button('label.processo.cancelarEncaminhamento', 'ban', 'urbem_administrativo_protocolo_processo_etapa_cancelar_encaminhamento', swProcessoKeyParam) }}
+        {% endif %}
+
+        {# Arquivar/Desarquivar Processos #}
+        {% if swProcesso.codSituacao == 3 %}
+            {{ _self.action_button('label.processo.arquivamento.arquivar', 'archive', 'urbem_administrativo_protocolo_processo_etapa_arquivar', swProcessoKeyParam) }}
+        {% elseif swProcesso.codSituacao == 5 %}
+            {{ _self.action_button('label.processo.arquivamento.desarquivar', 'ban', 'urbem_administrativo_protocolo_processo_etapa_desarquivar', swProcessoKeyParam) }}
+        {% else %}
+            {{ _self.action_button('label.processo.arquivamento.arquivar', 'ban') }}
+        {% endif %}
+
+
+        {# Apensar/Desapensar Processos #}
+        {% if swProcesso.codSituacao == 3 %}
+            {{ _self.action_button('label.processo.apensar.apensar', 'paperclip', 'urbem_administrativo_protocolo_processo_etapa_apensar', swProcessoKeyParam) }}
+        {% else %}
+            {{ _self.action_button('label.processo.apensar.apensar', 'paperclip') }}
+        {% endif %}
+
+        {% if swProcesso.apensado %}
+            {{ _self.action_button('label.processo.apensar.desapensar', 'paperclip', 'urbem_administrativo_protocolo_processo_etapa_desapensar', swProcessoKeyParam) }}
+        {% else %}
+            {{ _self.action_button('label.processo.apensar.desapensar', 'paperclip') }}
+        {% endif %}
+
+        {# Despachar Processos #}
+        {% if swProcesso.fkSwDespachado is null %}
+            {{ _self.action_button('label.processo.despachar', 'send', 'urbem_administrativo_protocolo_processo_etapa_despachar', swProcessoKeyParam) }}
+        {% else %}
+            {{ _self.action_button('label.processo.despachado', 'send') }}
+        {% endif %}
+    </div>
+</div>

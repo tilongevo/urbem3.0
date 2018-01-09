@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\SwInflator:
+    type: entity
+    table: sw_inflator
+    id:
+        codInflator:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_inflator
+    fields:
+        nomInflator:
+            type: string
+            nullable: false
+            length: 10
+            column: nom_inflator
+        descricao:
+            type: string
+            nullable: false
+            length: 60
+        numDecimais:
+            type: integer
+            nullable: false
+            column: num_decimais
+        formulaCalculo:
+            type: integer
+            nullable: false
+            column: formula_calculo
+        periodoCorrecao:
+            type: string
+            nullable: false
+            length: 1
+            column: periodo_correcao
+    manyToOne:
+        fkSwCalculoInflator:
+            targetEntity: Urbem\CoreBundle\Entity\SwCalculoInflator
+            inversedBy: fkSwInflatores
+            joinColumns:
+                formula_calculo:
+                    referencedColumnName: cod_calculo
+    oneToMany:
+        fkSwValorInflatores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwValorInflator
+            mappedBy: fkSwInflator

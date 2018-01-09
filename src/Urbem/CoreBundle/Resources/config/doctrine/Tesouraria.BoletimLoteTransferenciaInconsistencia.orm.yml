@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteTransferenciaInconsistencia:
+    type: entity
+    table: tesouraria.boletim_lote_transferencia_inconsistencia
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codLoteArrecadacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote_arrecadacao
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkArrecadacaoLote:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lote
+            inversedBy: fkTesourariaBoletimLoteTransferenciaInconsistencias
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_lote_arrecadacao:
+                    referencedColumnName: cod_lote
+        fkTesourariaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            inversedBy: fkTesourariaBoletimLoteTransferenciaInconsistencias
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo

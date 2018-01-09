@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Tcepe\AgenteEletivo:
+    type: entity
+    table: tcepe.agente_eletivo
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codCargo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cargo
+    fields:
+        codTipoRemuneracao:
+            type: integer
+            nullable: false
+            column: cod_tipo_remuneracao
+        codTipoNorma:
+            type: integer
+            nullable: false
+            column: cod_tipo_norma
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcepeAgenteEletivos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcepeAgenteEletivos
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

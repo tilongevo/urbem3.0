@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Beneficio\BeneficiarioLancamento:
+    type: entity
+    table: beneficio.beneficiario_lancamento
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codTipoConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_convenio
+        codigoUsuario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: codigo_usuario
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        timestampLancamento:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_lancamento
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        codPeriodoMovimentacao:
+            type: integer
+            nullable: false
+            column: cod_periodo_movimentacao
+    manyToOne:
+        fkBeneficioBeneficiario:
+            targetEntity: Urbem\CoreBundle\Entity\Beneficio\Beneficiario
+            inversedBy: fkBeneficioBeneficiarioLancamentos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_tipo_convenio:
+                    referencedColumnName: cod_tipo_convenio
+                timestamp:
+                    referencedColumnName: timestamp
+                codigo_usuario:
+                    referencedColumnName: codigo_usuario
+        fkFolhapagamentoPeriodoMovimentacao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\PeriodoMovimentacao
+            inversedBy: fkBeneficioBeneficiarioLancamentos
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao

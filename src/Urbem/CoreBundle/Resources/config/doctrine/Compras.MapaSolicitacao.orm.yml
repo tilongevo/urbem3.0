@@ -1,0 +1,67 @@
+Urbem\CoreBundle\Entity\Compras\MapaSolicitacao:
+    type: entity
+    table: compras.mapa_solicitacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\MapaSolicitacaoRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codMapa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mapa
+        exercicioSolicitacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_solicitacao
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codSolicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_solicitacao
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+    manyToOne:
+        fkComprasMapa:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Mapa
+            inversedBy: fkComprasMapaSolicitacoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa
+        fkComprasSolicitacaoHomologada:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\SolicitacaoHomologada
+            inversedBy: fkComprasMapaSolicitacoes
+            joinColumns:
+                exercicio_solicitacao:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_solicitacao:
+                    referencedColumnName: cod_solicitacao
+    oneToMany:
+        fkComprasMapaSolicitacaoAnulacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaSolicitacaoAnulacao
+            mappedBy: fkComprasMapaSolicitacao
+        fkComprasMapaItens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\MapaItem
+            mappedBy: fkComprasMapaSolicitacao

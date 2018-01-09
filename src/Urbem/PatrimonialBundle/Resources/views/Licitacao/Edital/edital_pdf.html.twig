@@ -1,0 +1,720 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="grey text-center"
+                    colspan="3"> {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}</th>
+            </tr>
+            <tr>
+                <td> Processo Nº.: {{ object.fkLicitacaoLicitacao.fkSwProcesso }}</td>
+                <td> {{ object.fkLicitacaoLicitacao.fkComprasModalidade }} Nº.: {{ object.fkLicitacaoLicitacao }}</td>
+                <td> Valor {{ object.fkLicitacaoLicitacao.vlCotado|number_format(2, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <th class="grey text-center" colspan="3">Dotação</th>
+            </tr>
+            {% for solicitacoes in object.fkLicitacaoLicitacao.fkComprasMapa.fkComprasMapaSolicitacoes %}
+                {% for itens in solicitacoes.fkComprasMapaItens %}
+                    {% for dotacoes in itens.fkComprasMapaItemDotacoes %}
+                        <tr>
+                            <td> {{ dotacoes.fkComprasSolicitacaoItemDotacao.fkOrcamentoContaDespesa.codEstrutural }}</td>
+                            <td> {{ dotacoes.fkComprasSolicitacaoItemDotacao.fkOrcamentoContaDespesa.descricao }}</td>
+                            <td> {{ dotacoes.fkComprasSolicitacaoItemDotacao.fkOrcamentoDespesa.fkOrcamentoPao.nomPao }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+            </thead>
+        </table>
+        <div class="divider">
+            <p></p>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 1 - DA LICITAÇÃO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    A {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }} com sede
+                    na {{ object.fkOrcamentoEntidade.fkSwCgm.logradouro }}
+                    , {{ object.fkOrcamentoEntidade.fkSwCgm.fkSwMunicipio }}
+                    , {{ object.fkOrcamentoEntidade.fkSwCgm.fkSwMunicipio.fkSwUf }}
+                    - CEP {{ object.fkOrcamentoEntidade.fkSwCgm.cep }}, CONVIDA esta empresa a apresentar cotação para o
+                    objeto
+                    desta LICITAÇÃO, referente ao processo nº. {{ object.fkLicitacaoLicitacao.fkSwProcesso }},
+                    de conformidade com a Lei 8.666 de 21 de Junho de 1993 e as condições deste , com vencimento
+                    previsto para a
+                    entrega dos envelopes, contendo os documentos para habilitação e proposta
+                    na {{ object.localEntregaPropostas }}, para o dia {{ object.dtEntregaPropostas.format('d/m/Y') }},
+                    às {{ object.horaEntregaPropostas }} horas, e a abertura do invólucro da documentação de habilitação
+                    a
+                    realizar-se no
+                    dia {{ object.dtAberturaPropostas.format('d/m/Y') }} às {{ object.horaAberturaPropostas }} horas,
+                    na {{ object.localAberturaPropostas }}.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Modalidade: {{ object.fkLicitacaoLicitacao.fkComprasModalidade }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Esta Licitação reger-se-á pelo Tipo
+                    de: {{ object.fkLicitacaoLicitacao.fkLicitacaoCriterioJulgamento }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Forma/Regime de Execução: {{ object.fkLicitacaoLicitacao.exercicio }}.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 2 - DO OBJETO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    A presente licitação tem por objeto {{ object.fkLicitacaoLicitacao.fkComprasObjeto }} de acordo com
+                    as
+                    especificações constantes na Lista de Itens Anexa, a
+                    este {{ object.fkLicitacaoLicitacao.fkComprasModalidade }}.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 3 - DA HABILITAÇÃO (ENVELOPE N°1)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    3.1. A empresa CONVIDADA a participar da presente licitação deverá apresentar os seguintes
+                    documentos:
+                    {{ object.fkAdministracaoModeloDocumento }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    3.2. Os documentos para habilitação deverão ser apresentados em 01 (uma) via, em envelope fechado,
+                    constando
+                    na parte frontal, as seguintes indicações:<br>
+                    ENVELOPE N°. 01<br>
+                    DA: (EMPRESA)<br>
+                    À: {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}<br>
+                    PROCESSO Nº.: {{ object.fkLicitacaoLicitacao.fkSwProcesso }} - LICITAÇÃO
+                    Nº.: {{ object.fkLicitacaoLicitacao }}<br>
+                    ABERTURA: às {{ object.horaAberturaPropostas }} HORAS DO
+                    DIA {{ object.dtAberturaPropostas.format('d/m/Y') }}<br>
+                    ENVELOPE “HABILITAÇÃO”
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    3.3. Toda a Documentação exigida para Habilitação deverá ser apresentada no Original, em fotocópia
+                    autenticada por cartório competente ou servidor da administração, ou publicação em Órgão da Imprensa
+                    Oficial.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    3.4. Os documentos sem validade expressa, considerar-se-á como sendo 180 (cento e oitenta) dias da
+                    data de
+                    sua emissão.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 4 - DA PROPOSTA (ENVELOPE N°02)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    4.1. A proposta deverá ser apresentada por item, datilografada ou preenchida com letra legível,
+                    datada,
+                    carimbada e assinada, sem emendas, rasuras ou entrelinhas, em envelope fechado, de forma a não
+                    permitir sua
+                    violação, constando na parte externa as seguintes indicações:<br>
+                    ENVELOPE N°. 02<br>
+                    DA: (EMPRESA)<br>
+                    À: {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}<br>
+                    PROCESSO Nº.: {{ object.fkLicitacaoLicitacao.fkSwProcesso }} - LICITAÇÃO
+                    Nº.: {{ object.fkLicitacaoLicitacao }}<br>
+                    ABERTURA: às {{ object.horaAberturaPropostas }} HORAS DO
+                    DIA {{ object.dtAberturaPropostas.format('d/m/Y') }}<br>
+                    ENVELOPE “PROPOSTA”
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    4.2. A proposta deverá ser feita por item, indicando valores unitários e total conforme discriminado
+                    na
+                    Lista de Itens (ANEXO I) deste {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 5 - DA VALIDADE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    5.1. O prazo de validade da proposta deverá ser no mínimo de {{ object.diasValidade }} dia(s),
+                    contados
+                    do dia
+                    da entrega do envelope contendo a mesma.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    5.2. Em caso de omissão do prazo de validade na proposta, será implicitamente considerado o prazo
+                    acima.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 6 - DO PREÇO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    6.1. Deverá ser cotado em moeda nacional.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    6.2. O preço ofertado será líquido, já inclusos todos os impostos fretes, embalagens e demais
+                    encargos,
+                    devendo ser discriminado numericamente com no máximo duas casas decimais.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    6.3. Havendo discordância entre preços unitários e totais, resultantes de cada item, prevalecerão os
+                    primeiros.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    6.4. Deverá ser indicada a marca e outros elementos necessários a sua perfeita identificação do
+                    Objeto
+                    licitado.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    6.5. Transcorrido a fase de habilitação, a proposta entregue é irretratável e irrenunciável.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    6.6. Após conhecido o Resultado da Licitação, a {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}
+                    emitirá,
+                    à(s) proponente(s) vencedora(s), a Autorização de Fornecimento, que será enviada via Fac-Símile ou
+                    retirada
+                    pela empresa em até 3 (três) dias úteis após sua convocação, permitindo a prorrogação por igual
+                    período na
+                    forma do §1° do art. 64 da Lei 8.666/93.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 7 - DAS AMOSTRAS E PROSPECTOS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    7.1. A Comissão Permanente de Licitação, quando julgar necessário, solicitará amostra e/ou
+                    prospectos a fim
+                    de obter maiores esclarecimentos sobre o Objeto ofertado, o que deverá ser providenciado dentro dos
+                    03
+                    (três) dias úteis, após o recebimento da solicitação.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 8 - DA ENTREGA E/OU CONTRATO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    8.1. O Contrato terá a vigência até ___________________, podendo ser prorrogado, mediante termo
+                    aditivo,
+                    desde que seja acordado entre as partes, e de conformidade com o estabelecido nas Leis Nº. 8.666/93
+                    e
+                    8.883/94.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 9 - DO REAJUSTE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    9.1. Será adotado o seguinte critério de
+                    reajuste: {{ object.fkLicitacaoLicitacao.fkComprasObjeto.descricao }}
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 10 - DO PAGAMENTO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    10.1. A {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }} se compromete a efetuar o pagamento em
+                    {{ object.condicoesPagamento }}
+                    após a entrega do Objeto licitado pelo Proponente, mediante apresentação de nota fiscal, devidamente
+                    recebida e aceita pela {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 11 - DO JULGAMENTO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    11.1. A presente licitação, para efeito de julgamento, será do
+                    tipo {{ object.fkLicitacaoLicitacao.fkLicitacaoCriterioJulgamento }}.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    11.2. Serão consideradas vencedoras aquelas empresas que tendo cumprido as exigências deste
+                    {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}, conforme prescreve o art. 45, § 1°
+                    da Lei 8.666/93 e apresentar
+                    o {{ object.fkLicitacaoLicitacao.fkLicitacaoCriterioJulgamento.descricao }}.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    11.3. A Comissão Permanente de Licitação poderá, a seu exclusivo critério, solicitar informações
+                    complementares, para efeito de julgamento das Propostas, caso a Proponente não atender com clareza o
+                    solicitado em {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}, conforme determina o
+                    art. 43, § 3°, da Lei 8.666/93.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    11.4. Será desconsiderada os itens proposta que contiver emendas, rasuras ou borrões, salvo quando a
+                    empresa
+                    fizer acompanhar uma errata, devidamente assinada pelo proponente ou seu representante legal.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 11 - DO JULGAMENTO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    11.5. Serão desclassificadas:<br>
+                    11.5.1. As propostas que não atenderem as exigências do ato convocatório.<br>
+                    11.5.2. As propostas ou itens com preços excessivos ou manifestante inexeqüíveis
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    11.6. No caso de empate de duas ou mais propostas, far-se-á sorteio, em ato público, observados o
+                    disposto
+                    no § 2°, do art. 3°, da Lei n° 8.666/93.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 12 - DOS RECURSOS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    12.1. Caberá junto à {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}, recurso, com efeito
+                    suspensivo, no
+                    prazo máximo de 02 (dois) dias úteis a contar da intimação do ato ou lavratura da ata, nos casos de:<br>
+                    12.1.1. Habilitação ou Inabilitação do Licitante<br>
+                    12.1.2. Do Julgamento das Propostas.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 13 - DAS PENALIDADES</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    13.1. A recusa da encomenda dentro do prazo de validade das propostas, a não entrega do Objeto
+                    licitado, a
+                    entrega fora das especificações predeterminada, implicam nas sanções prevista no item 13.3, além do
+                    fornecedor arcar com todas as despesas provenientes da devolução dos materiais.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    13.2. Se o licitante vencedor não assinar o contrato no prazo estabelecido,
+                    a {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }} poderá convocar os licitantes remanescentes, na
+                    ordem de
+                    classificação, para assiná-lo em igual prazo e nas mesmas condições propostas pela vencedora,
+                    mediante
+                    atualização dos preços pelo índice previsto no item 9
+                    deste {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    13.3. Decorridos 30 (trinta) dias de atraso na entrega do objeto da presente licitação, poderá a
+                    {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }} cancelar a Nota de Compra - NC, sujeitando-se a
+                    proponente ao pagamento de
+                    multa
+                    prevista no item 13.4.1., deste {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}, sem
+                    ônus da ação cabível para ressarcimento de
+                    prejuízo
+                    decorrente da inadimplência.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    13.4. Ressalvados os casos de forma maior, ou caso fortuito, devidamente comprovados, serão
+                    aplicadas, a
+                    critério da {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}, as seguintes penalidades à proponente,
+                    no caso de inadimplência
+                    contratual:<br>
+                    13.4.1. Multa na ordem de 0,3% (três décimos por cento) por dia de atraso calculado sobre o valor
+                    total do
+                    Objeto licitado com atraso, até o limite de 6% (seis por cento).
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    13.4. Ressalvados os casos de forma maior, ou caso fortuito, devidamente comprovados, serão
+                    aplicadas, a
+                    critério da {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}, as seguintes penalidades à proponente,
+                    no caso
+                    de inadimplência contratual:<br>
+                    13.4.1. Multa na ordem de 0,3% (três décimos por cento) por dia de atraso calculado sobre o valor
+                    total do
+                    Objeto licitado com atraso, até o limite de 6% (seis por cento).<br>
+                    13.4.2. Em caso de tolerância, após os primeiros 30 (trinta) dias de atraso, e não rescindido o
+                    contrato, se
+                    este atraso for repetido, a {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }} poderá aplicar a multa
+                    em dobro da, forma do item
+                    13.4.1.<br>
+                    13.4.3. Advertência<br>
+                    13.4.4. Suspensão do direito de licitar, junto à {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}
+                    .<br>
+                    13.4.5. Declaração de inidoneidade, de lavra do Prefeito Municipal Sr. {{ object.prefeito.nomCgm }},
+                    para licitar
+                    ou
+                    contratar com a Administração Pública, enquanto pendurar os motivos da punição.<br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    13.5. O atraso para efeito de cálculo da multa prevista nos itens 13.4.1. e 13.4.2. será contados em
+                    dias
+                    corridos, a partir do vencimento do prazo estipulado da entrega até a data de entrega do Objeto da
+                    presente
+                    Licitação.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    13.6. Nenhum pagamento será processado à Proponente penalizada, sem que antes, esta tenha pago ou
+                    lhe seja
+                    relevada a multa imposta.
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th class="grey text-center" colspan="3"> 14 - DAS DISPOSIÇÕES FINAIS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    14.1. A {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }} reserva-se o direito de transferir ou
+                    revogar a
+                    presente licitação, no todo ou parcialmente, mediante razões de conveniência administrativa e do
+                    interesse
+                    público, nos termos do art. 49 da Lei 8.666/93.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    14.2. No caso de não haver expediente para a data fixada a entrega e abertura dos envelopes contendo
+                    os
+                    documentos de habilitação e/ou proposta realizar-se-á as {{ object.horaAberturaPropostas }} horas do
+                    primeiro dia útil, após a data anteriormente marcada.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    14.3. Faz parte integrante deste {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}
+                    :<br>
+                    14.3.1. Lista de Itens do Objeto desta Licitação.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    14.4. A presente licitação é regida pelas disposições da Lei n° 8.666/93 de 21 de junho de 1993.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    14.5. Maiores informações poderão ser obtidas na {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }} ou
+                    pelo
+                    telefone {{ object.fone }}.
+                    {{ object.fkOrcamentoEntidade.fkSwCgm.fkSwMunicipio }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table width="100%">
+            <tr>
+                <td class="text-center">
+                    ______________________________________<br>
+                    {{ object.prefeito.nomCgm }}<br>
+                    PREFEITO MUNICIPAL
+                </td>
+            </tr>
+        </table>
+        <table width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    {{ object.fkSwCgm.fkSwMunicipio.fkSwUf.nomUf }}<br>
+                    {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}<br>
+                    Departamento Jurídico
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    Parecer Jurídico
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <b>Motivo....: VERIFICAÇÃO DE REGULARIDADE</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <b>Descrição: O PROCEDIMENTO ESTÁ DE ACORDO COM AS EXIGÊNCIAS LEGAIS.</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    {{ object.fkSwCgm.fkSwMunicipio.nomMunicipio }}
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center"><br><br><br>
+                    _______________________________<br>
+                    {{ object.fkSwCgm.nomCgm }}<br>
+                    Responsável Jurídico
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    {{ object.fkSwCgm.fkSwMunicipio.fkSwUf.nomUf }}<br>
+                    {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}<br>
+                    Departamento Jurídico
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}
+                    Nº. {{ object.fkLicitacaoLicitacao }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    A {{ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}, sito
+                    à {{ object.fkOrcamentoEntidade.fkSwCgm.logradouro }},
+                    torna público o {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }},
+                    tipo {{ object.fkLicitacaoLicitacao.fkLicitacaoCriterioJulgamento.descricao }},
+                    autorizado no Processo Administrativo Nº. {{ object.fkLicitacaoLicitacao.fkSwProcesso }}, regido
+                    pela Lei Federal Nº. 8.666/93, e legislação pertinente.
+                    Receberá os envelopes contendo a documentação e a proposta até as {{ object.horaEntregaPropostas }}
+                    do dia {{ object.dtEntregaPropostas.format('d/m/Y') }},
+                    na {{ object.localEntregaPropostas }} e abrirá os envelopes às {{ object.horaAberturaPropostas }} do
+                    dia {{ object.dtAberturaPropostas.format('d/m/Y') }}, na {{ object.localAberturaPropostas }} em ato
+                    público,
+                    quando será dado início ao processo licitatório.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    {{ object.fkSwCgm.fkSwMunicipio.nomMunicipio }}
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center"><br><br><br>
+                    _______________________________<br>
+                    {{ object.prefeito.nomCgm }}<br>
+                    <b>PREFEITO MUNICIPAL</b>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br><br><br>
+        <table width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    Objeto.:{{ object.fkLicitacaoLicitacao.fkComprasObjeto.descricao }}<br>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    <b>***Os valores deverão ser cotados por preços unitários***</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="grey text-center"> Item</th>
+                            <th class="grey text-center"> Descrição</th>
+                            <th class="grey text-center"> Unidade</th>
+                            <th class="grey text-center"> Quantidade</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in object.itens %}
+                            <tr>
+                                <td>{{ item.cod_item }}</td>
+                                <td>{{ item.descricao }}</td>
+                                <td>{{ item.nom_unidade }}</td>
+                                <td>{{ item.quantidade }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><br>Fornecemos os materiais e/ou serviços solicitados nos preços acima especificados e
+                    concordamos com as condições do {{ object.fkLicitacaoLicitacao.fkComprasModalidade.descricao }}.
+                    A Proposta vigorará pelo prazo mínimo de {{ object.dtValidadeProposta.format('d/m/Y') }}.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right"><br><br><br>
+                    ________________________________________(Local e Data)
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td><br><br><br>____________________________________________<br>
+                    Assinatura e Carimbo do Proponente
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br><br><br><br><br><br>
+        <table width="100%">
+            <tbody>
+            <tr>
+                <td><b>ANEXO</b></td>
+            </tr>
+            <tr>
+                <td>
+                    MODELO “A”: EMPREGADOR PESSOA JURÍDICA
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <b>DECLARAÇÃO</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Ref.: (identificação da licitação)
+                    ..................................., inscrito no CNPJ
+                    n.º .............................., por intermédio de seu representante legal o(a)
+                    Sr(a).................................., portador(a) da Carteira de Identidade <
+                    n.º .............................. e do CPF n.º ...................................., <b>DECLARA</b>,
+                    para fins do disposto no inciso V do art. 27 da Lei n.º 8.666, de 21 de junho de 1993,
+                    acrescido pela Lei n.º 9.854, de 27 de outubro de 1999, que
+                    não emprega menor de dezoito anos em trabalho noturno, perigoso ou
+                    insalubre e não emprega menor de dezesseis anos.<br><br>
+
+                    Ressalva: emprega menor, a partir de quatorze anos, na condição de aprendiz ( ).
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <br><br><br><br>
+                    .........................................................<br>
+                    (data)
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <br><br><br><br>
+                    ...................................................................................<br>
+                    (representante legal)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>(Observação: em caso afirmativo, assinalar a ressalva acima)
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+    {% block stylesheets %}
+        <link type="text/css" rel="stylesheet"
+              href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+              media="screen, projection"/>
+        <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+              type="text/css">
+        <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+              type="text/css">
+    {% endblock %}

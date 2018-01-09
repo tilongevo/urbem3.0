@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Pessoal\AvisoPrevio:
+    type: entity
+    table: pessoal.aviso_previo
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        avisoPrevio:
+            type: string
+            nullable: false
+            length: 1
+            column: aviso_previo
+        dtAviso:
+            type: date
+            nullable: true
+            column: dt_aviso
+    oneToOne:
+        fkPessoalContratoServidorCasoCausa:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausa
+            inversedBy: fkPessoalAvisoPrevio
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

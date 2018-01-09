@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Imobiliario\BairroValorM2:
+    type: entity
+    table: imobiliario.bairro_valor_m2
+    id:
+        codBairro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bairro
+        codMunicipio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_municipio
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        dtVigencia:
+            type: date
+            nullable: false
+            column: dt_vigencia
+        valorM2Territorial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_m2_territorial
+        valorM2Predial:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_m2_predial
+    manyToOne:
+        fkSwBairro:
+            targetEntity: Urbem\CoreBundle\Entity\SwBairro
+            inversedBy: fkImobiliarioBairroValorM2s
+            joinColumns:
+                cod_bairro:
+                    referencedColumnName: cod_bairro
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkImobiliarioBairroValorM2s
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

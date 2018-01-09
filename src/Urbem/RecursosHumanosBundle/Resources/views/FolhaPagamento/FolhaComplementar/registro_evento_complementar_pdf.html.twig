@@ -1,0 +1,82 @@
+{% block body %}
+    {% block content %}
+        {% include 'RecursosHumanosBundle:FolhaPagamento/FolhaSalario/ConsultarFichaFinanceira:header.html.twig' %}
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="grey"> {{ 'cgm'|trans }}</th>
+                <td>{{ object.servidor }}</td>
+                <th class="grey"> {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.matricula'|trans }}</th>
+                <td>{{ object.codRegistro }}</td>
+            </tr>
+            <tr>
+                <th class="grey"> {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.competencia'|trans }}</th>
+                <td>{{ object.competencia }}</td>
+                <th class="grey"> {{ 'Complementar'|trans }}</th>
+                <td>{{ object.codComplementar }}</td>
+            </tr>
+            </thead>
+        </table>
+        <div class="divider">
+            <p></p>
+        </div>
+
+        <h2>Eventos Cadastrados</h2>
+        <table class="table table-bordered" style="margin-top: 10px">
+            <thead class="thead-rh">
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.codigo'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valor'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.quantidade'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if object.eventos is not null %}
+                {% for evento in object.eventos %}
+                    <tr>
+                        <td class="td-rh">{{ evento.codigo }}</td>
+                        <td class="td-rh">{{ evento.descricao }}</td>
+                        <td class="td-rh">{{ evento.valor|number_format(2, ',') }}</td>
+                        <td class="td-rh">{{ evento.quantidade }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+
+        <h2>Base de Cálculo</h2>
+        <table class="table table-bordered" style="margin-top: 10px">
+            <thead class="thead-rh">
+            <tr class="sonata-ba-list-field-header">
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.codigo'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.descricao'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.valor'|trans }}</th>
+                <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.quantidade'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if object.bases is not null %}
+                {% for bases in object.bases %}
+                    <tr>
+                        <td class="td-rh">{{ base.codigo }}</td>
+                        <td class="td-rh">{{ base.descricao }}</td>
+                        <td class="td-rh">{{ base.valor|number_format(2, ',') }}</td>
+                        <td class="td-rh">{{ base.quantidade }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet"
+          href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}"
+          media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print"
+          type="text/css">
+{% endblock %}

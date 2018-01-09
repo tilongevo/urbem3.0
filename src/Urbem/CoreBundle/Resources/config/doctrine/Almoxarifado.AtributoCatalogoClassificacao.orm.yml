@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoClassificacao:
+    type: entity
+    table: almoxarifado.atributo_catalogo_classificacao
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codCatalogo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_catalogo
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkAlmoxarifadoAtributoCatalogoClassificacoes
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkAlmoxarifadoCatalogoClassificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoClassificacao
+            inversedBy: fkAlmoxarifadoAtributoCatalogoClassificacoes
+            joinColumns:
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+                cod_catalogo:
+                    referencedColumnName: cod_catalogo
+    oneToMany:
+        fkAlmoxarifadoAtributoCatalogoClassificacaoItemValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoClassificacaoItemValor
+            mappedBy: fkAlmoxarifadoAtributoCatalogoClassificacao

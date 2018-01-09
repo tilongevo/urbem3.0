@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoPrevidenciaAnulado:
+    type: entity
+    table: folhapagamento.desconto_externo_previdencia_anulado
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        timestampAnulado:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_anulado
+    oneToOne:
+        fkFolhapagamentoDescontoExternoPrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\DescontoExternoPrevidencia
+            inversedBy: fkFolhapagamentoDescontoExternoPrevidenciaAnulado
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                timestamp:
+                    referencedColumnName: timestamp

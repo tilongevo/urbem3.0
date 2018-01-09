@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Administracao\SchemaRh:
+    type: entity
+    table: administracao.schema_rh
+    uniqueConstraints:
+        uk_schema_rh_1:
+            columns:
+                - schema_nome
+    id:
+        schemaCod:
+            type: integer
+            generator:
+                strategy: NONE
+            column: schema_cod
+    fields:
+        schemaNome:
+            type: string
+            nullable: false
+            length: 100
+            column: schema_nome
+    oneToMany:
+        fkAdministracaoEntidadeRhs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\EntidadeRh
+            mappedBy: fkAdministracaoSchemaRh
+        fkAdministracaoTabelasRhs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\TabelasRh
+            mappedBy: fkAdministracaoSchemaRh

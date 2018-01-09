@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\NaturezaFiscalizacao:
+    type: entity
+    table: fiscalizacao.natureza_fiscalizacao
+    id:
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkFiscalizacaoProcessoFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            mappedBy: fkFiscalizacaoNaturezaFiscalizacao

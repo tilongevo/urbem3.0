@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\Folhapagamento\EventoCalculado:
+    type: entity
+    table: folhapagamento.evento_calculado
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\EventoCalculadoRepository
+    id:
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestampRegistro:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_registro
+    fields:
+        valor:
+            type: decimal
+            nullable: false
+            precision: 15
+            scale: 2
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 15
+            scale: 2
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        desdobramento:
+            type: string
+            nullable: true
+            length: 1
+    oneToMany:
+        fkFolhapagamentoEventoCalculadoDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoCalculadoDependente
+            mappedBy: fkFolhapagamentoEventoCalculado
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEvento
+            inversedBy: fkFolhapagamentoEventoCalculado
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp_registro:
+                    referencedColumnName: timestamp
+                cod_evento:
+                    referencedColumnName: cod_evento

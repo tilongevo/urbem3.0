@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\TipoCedencia:
+    type: entity
+    table: pessoal.tipo_cedencia
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: true
+            length: 80
+    oneToMany:
+        fkPessoalContratoServidorCedencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCedencia
+            mappedBy: fkPessoalTipoCedencia

@@ -1,0 +1,90 @@
+Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoFerias:
+    type: entity
+    table: folhapagamento.registro_evento_ferias
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\RegistroEventoFeriasRepository
+    id:
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codContrato:
+            type: integer
+            nullable: false
+            column: cod_contrato
+        codPeriodoMovimentacao:
+            type: integer
+            nullable: false
+            column: cod_periodo_movimentacao
+        valor:
+            type: decimal
+            nullable: true
+            precision: 15
+            scale: 2
+            options:
+                default: 0
+        quantidade:
+            type: decimal
+            nullable: true
+            precision: 15
+            scale: 2
+            options:
+                default: 0
+        automatico:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    manyToOne:
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoRegistroEventoFerias
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoContratoServidorPeriodo:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ContratoServidorPeriodo
+            inversedBy: fkFolhapagamentoRegistroEventoFerias
+            joinColumns:
+                cod_periodo_movimentacao:
+                    referencedColumnName: cod_periodo_movimentacao
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+    oneToMany:
+        fkFolhapagamentoReajusteRegistroEventoFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ReajusteRegistroEventoFerias
+            mappedBy: fkFolhapagamentoRegistroEventoFerias
+    oneToOne:
+        fkFolhapagamentoUltimoRegistroEventoFerias:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEventoFerias
+            mappedBy: fkFolhapagamentoRegistroEventoFerias
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_evento:
+                    referencedColumnName: cod_evento
+                desdobramento:
+                    referencedColumnName: desdobramento

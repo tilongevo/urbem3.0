@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Tcemg\TipoAplicacao:
+    type: entity
+    table: tcemg.tipo_aplicacao
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\TipoAplicacaoRepository
+    id:
+        codTipoAplicacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_aplicacao
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 70
+    oneToMany:
+        fkTcemgContaBancarias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ContaBancaria
+            mappedBy: fkTcemgTipoAplicacao

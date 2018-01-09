@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Arrecadacao\CarneDevolucao:
+    type: entity
+    table: arrecadacao.carne_devolucao
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\CarneDevolucaoRepository
+    id:
+        numeracao:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+    fields:
+        codMotivo:
+            type: integer
+            nullable: false
+            column: cod_motivo
+        dtDevolucao:
+            type: date
+            nullable: false
+            column: dt_devolucao
+    manyToOne:
+        fkArrecadacaoCarne:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Carne
+            inversedBy: fkArrecadacaoCarneDevolucoes
+            joinColumns:
+                numeracao:
+                    referencedColumnName: numeracao
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+        fkArrecadacaoMotivoDevolucao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\MotivoDevolucao
+            inversedBy: fkArrecadacaoCarneDevolucoes
+            joinColumns:
+                cod_motivo:
+                    referencedColumnName: cod_motivo

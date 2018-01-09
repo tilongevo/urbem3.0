@@ -1,0 +1,236 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        {{ form_start(form) }}
+
+        <input type="hidden" name="codTransferencia" value="{{ transferenciaImovel.codTransferencia }}">
+
+        <div class="row col s12">
+            <div class="box-header">
+                <h2 class="box-title left-align">
+                    {{ 'label.imobiliarioTransferenciaPropriedade.dados'|trans }}
+                </h2>
+                <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+            </div>
+
+            <table class="table show-table">
+                <tbody>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.inscricaoImobiliaria'|trans }}</th>
+                    <td>{{ transferenciaImovel.inscricaoMunicipal }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.naturezaTransferencia'|trans }}</th>
+                    <td>
+                    {% if transferenciaImovel.fkImobiliarioNaturezaTransferencia|length %}
+                        {{ transferenciaImovel.fkImobiliarioNaturezaTransferencia.getDescricao }}
+                    {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.processo'|trans }}</th>
+                    <td>
+                    {% if transferenciaImovel.fkImobiliarioTransferenciaProcesso is not null and transferenciaImovel.fkImobiliarioTransferenciaProcesso.fkSwProcesso is not null %}
+                       {{ transferenciaImovel.fkImobiliarioTransferenciaProcesso.fkSwProcesso }}
+                    {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.creci'|trans }}</th>
+                    <td>
+                    {% if transferenciaImovel.fkImobiliarioTransferenciaCorretagem|length %}
+                        {{ transferenciaImovel.getFkImobiliarioTransferenciaCorretagem.getFkImobiliarioCorretagem }} - {{ transferenciaImovel.getFkImobiliarioTransferenciaCorretagem.getFkImobiliarioCorretagem.getFkImobiliarioCorretor.getFkSwCgmPessoaFisica.getFkSwcgm.getNomcgm }}
+                    {% endif %}
+                    </td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioTransferenciaPropriedade.matriculaImovel'|trans }}</th>
+                    <td>
+                    {% if transferenciaImovel.fkImobiliarioMatriculaImovelTransferencia|length %}
+                        {{ transferenciaImovel.fkImobiliarioMatriculaImovelTransferencia }}
+                    {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="row col s12">
+            <div class="row col s3">
+                {{ form_label(form.dtEfetivacao, null, {'label_attr': {'class': 'control-label '}}) }}
+                <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                    <div>
+                        <div class="input-group date our-datepicker" id="dtEfetivacao">
+                            {{ form_widget(form.dtEfetivacao, {'attr': {'class': 'white input-rh browser-default dt-efetivacao', 'data-date-format': 'DD/MM/YYYY'}}) }}
+                            {{ form_errors(form.dtEfetivacao) }}
+                            <span class="input-group-addon"><span class="fa-calendar fa"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s3">
+                <div class="sonata-ba-field sonata-collection-row-without-label fix-admin sonata-ba-field-standard-natural " id="sonata-ba-field-container-observacoes">
+                    {{ form_label(form.observacoes, null, {'label_attr': {'class': 'control-label '}}) }}
+                    {{ form_widget(form.observacoes) }}
+                    {{ form_errors(form.observacoes) }}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col s12">
+            <h2 class="col s10 box-title left-align show">{{ 'label.imobiliarioTransferenciaPropriedade.listaProprietarios'|trans }}</h2>
+            <div class="divider grey lighten-1  title-divider"></div>
+            <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>CGM</th>
+                                <th>{{ 'label.nome'|trans }}</th>
+                                <th>{{ 'label.imobiliarioTransferenciaPropriedade.quotaAtual'|trans }} (%)</th>
+                            <tr>
+                        </thead>
+                        <tbody class="sonata-ba-tbody ui-sortable">
+                            {% if proprietarios|length > 0 %}
+
+                            {% for proprietario in proprietarios %}
+                                <tr class="tr-rh">
+                                    <td class="control-group">
+                                    {{ proprietario.numCgm }}
+                                    </td>
+                                    <td class="control-group">
+                                    {{ proprietario.getFkSwCgm }}
+                                    </td>
+                                    <td class="control-group">
+                                    {{ proprietario.cota }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            {% endif %}
+                        </tbody>
+            </table>
+        </div>
+
+        <div class="col s12">
+            <h2 class="col s10 box-title left-align show">{{ 'label.imobiliarioTransferenciaPropriedade.documentosApresentados'|trans }}</h2>
+            <div class="divider grey lighten-1  title-divider"></div>
+            <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>Entregue</th>
+                                <th>{{ 'label.imobiliarioTransferenciaPropriedade.documento'|trans }}</th>
+                                <th>{{ 'label.imobiliarioTransferenciaPropriedade.obrigatorio'|trans }}</th>
+                            <tr>
+                        </thead>
+                        <tbody class="sonata-ba-tbody ui-sortable">
+                            {% if documentos|length > 0 %}
+                            {% set index=1 %}
+                            {% for documento in documentos %}
+                                <tr class="tr-rh">
+                                    <td class="control-group">
+                                    {{ index }}
+                                    </td>
+                                    <td class="control-group">
+                                    <input type="checkbox" name="documentos[{{ index }}][codDocumento]" value="{{ documento.codDocumento }}" checked {% if documento.transferencia %} disabled {% endif %}>
+                                    </td>
+                                    <td class="control-group">
+                                    {{ documento.nomDocumento }}
+                                    </td>
+                                    <td class="control-group">
+                                    {% if documento.cadastro %} {{ 'label.cadastro'|trans }} {% elseif documento.transferencia %} {{ 'label.ImobiliarioNaturezaTransferencia.efetivacao'|trans }} {% else %} {{ 'nao'|trans }} {% endif %}
+                                    </td>
+                                </tr>
+                            {% set index=index+1 %}
+                            {% endfor %}
+
+                            {% endif %}
+                        </tbody>
+            </table>
+        </div>
+
+        <div class="col s12">
+                    <h2 class="col s10 box-title left-align show">{{ 'label.imobiliarioTransferenciaPropriedade.listaAdquirentes'|trans }}</h2>
+                    <div class="divider grey lighten-1  title-divider"></div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>CGM</th>
+                                <th>{{ 'label.nome'|trans }}</th>
+                                <th>{{ 'label.imobiliarioTransferenciaPropriedade.quotaAtual'|trans }} (%)</th>
+                                <th>{{ 'label.imobiliarioTransferenciaPropriedade.quotaFutura'|trans }} (%)</th>
+                            <tr>
+                        </thead>
+                        <tbody class="sonata-ba-tbody ui-sortable">
+                            {% if adquirentes|length > 0 %}
+
+                                {% for adquirente in adquirentes %}
+                                    <tr class="tr-rh">
+                                        <td class="control-group">
+                                        </td>
+                                        <td class="control-group">
+                                        {{ adquirente.numCgm }}
+                                        </td>
+                                        <td class="control-group">
+                                        {{ adquirente.getFkSwCgm }}
+                                        </td>
+                                        <td class="control-group">
+                                        </td>
+                                        <td class="control-group">
+                                        {{ adquirente.cota }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                            {% endif %}
+                        </tbody>
+                    </table>
+        </div>
+
+        <div class="row col s12">
+            <div class="sonata-ba-form-actions form-actions row">
+                <div class="col s8 initial left-align">
+                    <a class="back btn-floating white-text blue darken-4 btn-success" href="{{ admin.generateUrl('list') }}">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+
+                <div class="col s2 right-align deletar"></div>
+
+                <div class="col s2 right-align right">
+                    <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="{{ 'label.imobiliarioTransferenciaPropriedade.efetivar'|trans }}">
+                        <i class="mdi mdi-check-bold left"></i>
+                        {{ 'label.imobiliarioTransferenciaPropriedade.efetivar'|trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script src="/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/moment/min/moment.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/moment/locale/pt-br.js"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/tributario/javascripts/arrecadacao/consulta-escrituracao.js') }}"></script>
+    <script>
+        $(function ($) {
+            var inputDtEfetivacao = $('#dtEfetivacao').find('.dt-efetivacao'),
+                spanDtEfetivacao = $('#dtEfetivacao').find('.input-group-addon');
+            $('#dtEfetivacao').html('').append(inputDtEfetivacao).append(spanDtEfetivacao);
+            $('.our-datepicker').datetimepicker({"pickTime":false,"useCurrent":true,"minDate":"1\/1\/1900","maxDate":null,"showToday":true,"language":"pt_BR","defaultDate":"","disabledDates":[],"enabledDates":[],"icons":{"time":"fa fa-clock-o","date":"fa fa-calendar","up":"fa fa-chevron-up","down":"fa fa-chevron-down"},"useStrict":false,"sideBySide":false,"daysOfWeekDisabled":[],"useSeconds":false});
+        });
+    </script>
+{% endblock javascripts %}

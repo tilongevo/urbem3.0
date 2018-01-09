@@ -1,0 +1,33 @@
+Urbem\CoreBundle\Entity\Contabilidade\PlanoContaEncerrada:
+    type: entity
+    table: contabilidade.plano_conta_encerrada
+    id:
+        codConta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        dtEncerramento:
+            type: date
+            nullable: false
+            column: dt_encerramento
+        motivo:
+            type: text
+            nullable: false
+    oneToOne:
+        fkContabilidadePlanoConta:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            inversedBy: fkContabilidadePlanoContaEncerrada
+            joinColumns:
+                cod_conta:
+                    referencedColumnName: cod_conta
+                exercicio:
+                    referencedColumnName: exercicio

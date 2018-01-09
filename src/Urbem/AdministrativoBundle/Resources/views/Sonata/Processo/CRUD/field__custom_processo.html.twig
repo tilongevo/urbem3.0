@@ -1,0 +1,27 @@
+{% set swProcesso = field.data.swProcesso %}
+
+<table class="table show-table col s12">
+    <tbody>
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.codigo'|trans }}</th>
+        <td>{{ admin.mascaraDoProcesso(swProcesso) }}</td>
+    </tr>
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.classificacao'|trans }}</th>
+        <td>{{ swProcesso.fkSwAssunto.fkSwClassificacao.nomClassificacao }}</td>
+    </tr>
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.assunto'|trans }}</th>
+        <td>{{ swProcesso.fkSwAssunto.nomAssunto }}</td>
+    </tr>
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.processo.confidencial'|trans }}</th>
+        <td>{% if swProcesso.confidencial %}
+                <span class="label label-success">{{ 'sim'|trans }}</span>
+            {% else %}
+                <span class="label label-danger">{{ 'nao'|trans }}</span>
+            {% endif %}
+        </td>
+    </tr>
+    </tbody>
+</table>

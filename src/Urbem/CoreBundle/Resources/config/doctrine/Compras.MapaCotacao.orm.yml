@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Compras\MapaCotacao:
+    type: entity
+    table: compras.mapa_cotacao
+    id:
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+        codMapa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_mapa
+        exercicioCotacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_cotacao
+        exercicioMapa:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_mapa
+    fields: {  }
+    manyToOne:
+        fkComprasCotacao:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Cotacao
+            inversedBy: fkComprasMapaCotacoes
+            joinColumns:
+                exercicio_cotacao:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+        fkComprasMapa:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Mapa
+            inversedBy: fkComprasMapaCotacoes
+            joinColumns:
+                exercicio_mapa:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa

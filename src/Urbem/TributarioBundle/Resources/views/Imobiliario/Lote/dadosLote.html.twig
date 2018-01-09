@@ -1,0 +1,32 @@
+{% block content %}
+
+    {% if field.data.lote is not null %}
+
+        <table class="table show-table">
+            <tbody>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.numLote'|trans }}</th>
+                <td>{{ field.data.lote }}</td>
+
+            </tr>
+            <tr class="sonata-ba-view-container">
+                <th>{{ 'label.imobiliarioLote.localizacao'|trans }}</th>
+                <td>{{ field.data.lote.fkImobiliarioLoteLocalizacao.fkImobiliarioLocalizacao }}</td>
+            </tr>
+            {% if field.data.lote.fkImobiliarioBaixaLotes|length > 0 %}
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioLote.baixar.dataBaixa'|trans }}</th>
+                    <td>{{ field.data.lote.fkImobiliarioBaixaLotes.last.dtInicio|date('d/m/Y') }}</td>
+                </tr>
+                <tr class="sonata-ba-view-container">
+                    <th>{{ 'label.imobiliarioLote.baixar.motivo'|trans }}</th>
+                    <td>{{ field.data.lote.fkImobiliarioBaixaLotes.last.justificativa }}</td>
+                </tr>
+
+            {% endif %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ParametroCalculo:
+    type: entity
+    table: arrecadacao.parametro_calculo
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\ParametroCalculoRepository
+    id:
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        ocorrenciaCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: ocorrencia_credito
+    fields:
+        codFuncao:
+            type: integer
+            nullable: false
+            column: cod_funcao
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        codBiblioteca:
+            type: integer
+            nullable: false
+            column: cod_biblioteca
+        valorCorrespondente:
+            type: string
+            nullable: true
+            length: 20
+            column: valor_correspondente
+    manyToOne:
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkArrecadacaoParametroCalculos
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie
+        fkAdministracaoFuncao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Funcao
+            inversedBy: fkArrecadacaoParametroCalculos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_biblioteca:
+                    referencedColumnName: cod_biblioteca
+                cod_funcao:
+                    referencedColumnName: cod_funcao

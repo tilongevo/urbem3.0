@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Economico\AtividadeCnaeFiscal:
+    type: entity
+    table: economico.atividade_cnae_fiscal
+    id:
+        codAtividade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atividade
+    fields:
+        codCnae:
+            type: integer
+            nullable: false
+            column: cod_cnae
+    manyToOne:
+        fkEconomicoCnaeFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CnaeFiscal
+            inversedBy: fkEconomicoAtividadeCnaeFiscais
+            joinColumns:
+                cod_cnae:
+                    referencedColumnName: cod_cnae
+    oneToOne:
+        fkEconomicoAtividade:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Atividade
+            inversedBy: fkEconomicoAtividadeCnaeFiscal
+            joinColumns:
+                cod_atividade:
+                    referencedColumnName: cod_atividade

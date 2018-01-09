@@ -1,0 +1,356 @@
+{% set fkPessoalAssentamentoAfastamentoTemporario = object.fkPessoalAssentamentos.last.fkPessoalAssentamentoAfastamentoTemporario %}
+{% set fkPessoalAssentamentoVantagem = object.fkPessoalAssentamentos.last.fkPessoalAssentamentoVantagem %}
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock actions %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock tab_menu %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="col s12 profile-box">
+            <div class="row">
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.assentamento.dadosAssentamento'|trans }}</span>
+                </h2>
+                <a href="{{ path('urbem_recursos_humanos_assentamento_configuracao_edit', { 'id': object.codAssentamento })}}" class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.classificacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkPessoalClassificacaoAssentamento.codClassificacao ~ ' - ' ~ object.fkPessoalClassificacaoAssentamento.descricao }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.descricao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.descricao }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.sigla'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.sigla }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.abreviacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.abreviacao }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.regimePrevidencia'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkFolhapagamentoRegimePrevidencia.descricao }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.assentamentoInicio'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.FkPessoalAssentamentos.last.assentamentoInicio %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.gradeEfetividade'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.FkPessoalAssentamentos.last.gradeEfetividade %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.relFuncaoGratificada'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.FkPessoalAssentamentos.last.relFuncaoGratificada %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.gerarAssentamento.codTipoNorma'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkNormasNorma.codTipoNorma ~ ' - ' ~ object.fkNormasNorma.fkNormasTipoNorma.nomTipoNorma }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.gerarAssentamento.stCodNorma'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkNormasNorma.codNorma ~ ' - ' ~ object.fkNormasNorma.nomNorma }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.assentamentoSubDivisao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% for subDivisao in object.fkPessoalAssentamentos.last.fkPessoalAssentamentoSubDivisoes %}
+                            <ul>
+                                <li>{{ subDivisao.fkPessoalSubDivisao.descricao }}</li>
+                            </ul>
+                        {% endfor %}
+                    </h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.esfera'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkPessoalAssentamentos.last.codEsfera ~ ' - ' ~ object.fkPessoalAssentamentos.last.fkPessoalEsferaOrigem.descricao }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.operador'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkPessoalAssentamentoOperador.codOperador ~ ' - ' ~ object.fkPessoalAssentamentoOperador.descricao }}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 profile-box" style="margin-top:10px;">
+            <div class="row">
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.assentamento.periodoValidade'|trans }}</span>
+                </h2>
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.dtInicial'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkPessoalAssentamentos.last.fkPessoalAssentamentoValidade.dtInicial|date("d/m/Y") }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.dtFinal'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkPessoalAssentamentos.last.fkPessoalAssentamentoValidade.dtFinal|date("d/m/Y") }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.cancelarDireito'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.fkPessoalAssentamentos.last.fkPessoalAssentamentoValidade.cancelarDireito %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 profile-box" style="margin-top:10px;">
+            <div class="row">
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.assentamento.proporcaoEventos'|trans }}</span>
+                </h2>
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.eventoAutomatico'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if not object.fkPessoalAssentamentos.last.fkPessoalAssentamentoEventos.isEmpty %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+                {% if not object.fkPessoalAssentamentos.last.fkPessoalAssentamentoEventos.isEmpty %}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.evento'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% for evento in object.fkPessoalAssentamentos.last.fkPessoalAssentamentoEventos %}
+                            <ul>
+                                <li>{{ evento.fkFolhapagamentoEvento.descricao }}</li>
+                            </ul>
+                        {% endfor %}
+                    </h6>
+                </div>
+                {% endif %}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.informarEventosProporcionalizacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if not object.fkPessoalAssentamentos.last.fkPessoalAssentamentoEventoProporcionais.isEmpty %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+                {% if not object.fkPessoalAssentamentos.last.fkPessoalAssentamentoEventoProporcionais.isEmpty %}
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.evento'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% for eventoProporcional in object.fkPessoalAssentamentos.last.fkPessoalAssentamentoEventoProporcionais %}
+                            <ul>
+                                <li>{{ eventoProporcional.fkFolhapagamentoEvento.descricao }}</li>
+                            </ul>
+                        {% endfor %}
+                    </h6>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col s12 profile-box" style="margin-top:10px;">
+            <div class="row">
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.assentamento.comportamento'|trans }}</span>
+                </h2>
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.motivo'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkPessoalAssentamentoMotivo.descricao }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.assentamento.assentamentoAutomatico'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {% if object.fkPessoalAssentamentos.last.assentamentoAutomatico %}
+                            <span class="label label-success">Sim</span>
+                        {% else %}
+                            <span class="label label-danger">Não</span>
+                        {% endif %}
+                    </h6>
+                </div>
+            </div>
+        </div>
+        
+        {% if object.fkPessoalClassificacaoAssentamento.codTipo == 2 %}
+            <div class="row cursor-pointer">
+                <div class="col s11 servidor-table" style="margin-top: 20px">
+                    <a style="font-size: 16px">
+                        <i class="mdi mdi-newspaper"></i>
+                        {{ 'label.assentamento.afastamentoTemporario'|trans }}
+                    </a>
+                </div>
+                <div class="col s1" style="margin-top: 20px">
+                    {% if fkPessoalAssentamentoAfastamentoTemporario %}
+                    <a class="tooltipped incluir"
+                       href="{{ path('urbem_recursos_humanos_assentamento_configuracao_afastamento_temporario_edit', { 'id': fkPessoalAssentamentoAfastamentoTemporario.codAssentamento ~ '~' ~ fkPessoalAssentamentoAfastamentoTemporario.timestamp|date("Y-m-d H:i:s.u") }) }}">
+                        {% if not fkPessoalAssentamentoAfastamentoTemporario.fkPessoalAssentamentoMovSefipSaida %}
+                            <i class="mdi mdi-plus-circle right small"></i>
+                        {% else %}
+                            <i class="mdi mdi-pencil right small"></i>
+                        {% endif %}
+                    </a>
+                    {% else %}
+                    <a class="tooltipped incluir"
+                       href="{{ path('urbem_recursos_humanos_assentamento_configuracao_afastamento_temporario_create', { id: object.fkPessoalAssentamentos.last.codAssentamento }) }}">
+                            <i class="mdi mdi-plus-circle right small"></i>
+                    </a>
+                    {% endif %}
+                </div>
+                {% if fkPessoalAssentamentoAfastamentoTemporario %}
+                <table class="col s12 highlight bordered">
+                    <thead>
+                        <tr>
+                            <th class="th-rh">{{ 'label.assentamento.movSefipSaida'|trans }}</th>
+                            <th class="th-rh">{{ 'label.assentamento.raisAfastamento'|trans }}</th>
+                            <th class="th-rh">{{ 'label.assentamento.qtdeDias'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-rh">{{ fkPessoalAssentamentoAfastamentoTemporario.fkPessoalAssentamentoMovSefipSaida.fkPessoalMovSefipSaida.fkPessoalSefip.numSefip ~ ' - ' ~ fkPessoalAssentamentoAfastamentoTemporario.fkPessoalAssentamentoMovSefipSaida.fkPessoalMovSefipSaida.fkPessoalSefip.descricao }}</td>
+                            <td class="td-rh">{{ fkPessoalAssentamentoAfastamentoTemporario.fkPessoalAssentamentoRaisAfastamento.fkPessoalRaisAfastamento.codRais ~ ' - ' ~ fkPessoalAssentamentoAfastamentoTemporario.fkPessoalAssentamentoRaisAfastamento.fkPessoalRaisAfastamento.descricao }}</td>
+                            <td class="td-rh">{{ fkPessoalAssentamentoAfastamentoTemporario.fkPessoalAssentamentoAfastamentoTemporarioDuracao.dia }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if object.fkPessoalClassificacaoAssentamento.codTipo == 3 %}
+            <div class="row cursor-pointer">
+                <div class="col s11 servidor-table" style="margin-top: 20px">
+                    <a style="font-size: 16px">
+                        <i class="mdi mdi-newspaper"></i>
+                        {{ 'label.assentamento.afastamentoPermanente'|trans }}
+                    </a>
+                </div>
+                <div class="col s1" style="margin-top: 20px">
+                    {% if fkPessoalAssentamentoAfastamentoTemporario %}
+                    <a class="tooltipped incluir"
+                       href="{{ path('urbem_recursos_humanos_assentamento_configuracao_afastamento_permanente_edit', { 'id': fkPessoalAssentamentoAfastamentoTemporario.codAssentamento ~ '~' ~ fkPessoalAssentamentoAfastamentoTemporario.timestamp|date("Y-m-d H:i:s.u") }) }}">
+                        {% if object.fkPessoalAssentamentos.last.fkPessoalAssentamentoCausaRescisoes.isEmpty %}
+                            <i class="mdi mdi-plus-circle right small"></i>
+                        {% else %}
+                            <i class="mdi mdi-pencil right small"></i>
+                        {% endif %}
+                    </a>
+                    {% else %}
+                    <a class="tooltipped incluir"
+                       href="{{ path('urbem_recursos_humanos_assentamento_configuracao_afastamento_permanente_create', { id: object.fkPessoalAssentamentos.last.codAssentamento }) }}">
+                        {% if object.fkPessoalAssentamentos.last.fkPessoalAssentamentoCausaRescisoes.isEmpty %}
+                            <i class="mdi mdi-plus-circle right small"></i>
+                        {% else %}
+                            <i class="mdi mdi-pencil right small"></i>
+                        {% endif %}
+                    </a>
+                    {% endif %}
+                </div>
+              
+                <table class="col s12 highlight bordered">
+                    <thead>
+                        <th class="th-rh">{{ 'label.codigo'|trans }}</th>
+                        <th class="th-rh">{{ 'label.descricao'|trans }}</th>
+                    </thead>
+                    <tbody>
+                        {% for assentamentoCausaRescisao in object.fkPessoalAssentamentos.last.fkPessoalAssentamentoCausaRescisoes %}
+                            <tr>
+                              <td class="td-rh">{{ assentamentoCausaRescisao.fkPessoalCausaRescisao.codCausaRescisao }}</td>
+                              <td class="td-rh">{{ assentamentoCausaRescisao.fkPessoalCausaRescisao.descricao }}</td>
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        
+        {% if object.fkPessoalClassificacaoAssentamento.codTipo == 4 %}
+            <div class="row cursor-pointer">
+                <div class="col s11 servidor-table" style="margin-top: 20px">
+                    <a style="font-size: 16px">
+                      <i class="mdi mdi-newspaper"></i>
+                      {{ 'label.assentamento.vantagem'|trans }}
+                    </a>
+                </div>
+              <div class="col s1" style="margin-top: 20px">
+                  {% if fkPessoalAssentamentoVantagem %}
+                      <a class="tooltipped incluir"
+                          href="{{ path('urbem_recursos_humanos_assentamento_configuracao_afastamento_vantagem_edit', { 'id': fkPessoalAssentamentoVantagem.codAssentamento ~ '~' ~ fkPessoalAssentamentoVantagem.timestamp|date("Y-m-d H:i:s.u") }) }}">
+                      {% if fkPessoalAssentamentoVantagem.fkPessoalAssentamentoFaixaCorrecoes.isEmpty %}
+                          <i class="mdi mdi-plus-circle right small"></i>
+                      {% else %}
+                          <i class="mdi mdi-pencil right small"></i>
+                      {% endif %}
+                      </a>
+                  {% else %}
+                      <a class="tooltipped incluir"
+                          href="{{ path('urbem_recursos_humanos_assentamento_configuracao_afastamento_vantagem_create', { id: object.fkPessoalAssentamentos.last.codAssentamento }) }}">
+                          <i class="mdi mdi-plus-circle right small"></i>
+                      </a>
+                  {% endif %}
+              </div>
+          
+              <table class="col s12 highlight bordered">
+                  <thead>
+                      <th class="th-rh">{{ 'label.dtInicial'|trans }}</th>
+                      <th class="th-rh">{{ 'label.dtFinal'|trans }}</th>
+                      <th class="th-rh">{{ 'label.assentamento.quantMeses'|trans }}</th>
+                      <th class="th-rh">{{ 'label.assentamento.percentualCorrecao'|trans }}</th>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td class="td-rh">{{ fkPessoalAssentamentoVantagem.dtInicial|date("d/m/Y") }}</td>
+                          <td class="td-rh">{{ fkPessoalAssentamentoVantagem.dtFinal|date("d/m/Y") }}</td>
+                          <td class="td-rh">{{ fkPessoalAssentamentoVantagem.fkPessoalAssentamentoFaixaCorrecoes.last.quantMeses }}</td>
+                          <td class="td-rh">{{ fkPessoalAssentamentoVantagem.fkPessoalAssentamentoFaixaCorrecoes.last.percentualCorrecao|number_format_decimal({'fraction_digits': 2}) }}</td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+        {% endif %}
+
+        <hr>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="left">
+                <a href="{{ path('urbem_financeiro_empenho_autorizacao_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Patrimonio\BemMarca:
+    type: entity
+    table: patrimonio.bem_marca
+    id:
+        codBem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bem
+    fields:
+        codMarca:
+            type: integer
+            nullable: false
+            column: cod_marca
+    manyToOne:
+        fkAlmoxarifadoMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\Marca
+            inversedBy: fkPatrimonioBemMarcas
+            joinColumns:
+                cod_marca:
+                    referencedColumnName: cod_marca
+    oneToOne:
+        fkPatrimonioBem:
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\Bem
+            inversedBy: fkPatrimonioBemMarca
+            joinColumns:
+                cod_bem:
+                    referencedColumnName: cod_bem

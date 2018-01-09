@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\GrupoPeriodo:
+    type: entity
+    table: pessoal.grupo_periodo
+    id:
+        codGrupoPeriodo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo_periodo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalPeriodoCasos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\PeriodoCaso
+            mappedBy: fkPessoalGrupoPeriodo

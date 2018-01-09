@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Normas\AtributoTipoNorma:
+    type: entity
+    table: normas.atributo_tipo_norma
+    id:
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codTipoNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_norma
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkAdministracaoCadastro:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Cadastro
+            inversedBy: fkNormasAtributoTipoNormas
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkNormasAtributoTipoNormas
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkNormasTipoNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\TipoNorma
+            inversedBy: fkNormasAtributoTipoNormas
+            joinColumns:
+                cod_tipo_norma:
+                    referencedColumnName: cod_tipo_norma
+    oneToMany:
+        fkNormasAtributoNormaValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\AtributoNormaValor
+            mappedBy: fkNormasAtributoTipoNorma

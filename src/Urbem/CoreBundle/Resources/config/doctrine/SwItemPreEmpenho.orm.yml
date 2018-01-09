@@ -1,0 +1,83 @@
+Urbem\CoreBundle\Entity\SwItemPreEmpenho:
+    type: entity
+    table: sw_item_pre_empenho
+    id:
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+    fields:
+        codGrandeza:
+            type: integer
+            nullable: false
+            column: cod_grandeza
+        codUnidade:
+            type: integer
+            nullable: false
+            column: cod_unidade
+        quantidade:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 4
+        nomUnidade:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_unidade
+        vlTotal:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_total
+        nomItem:
+            type: string
+            nullable: false
+            length: 160
+            column: nom_item
+        complemento:
+            type: string
+            nullable: false
+            length: 480
+    manyToOne:
+        fkSwPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\SwPreEmpenho
+            inversedBy: fkSwItemPreEmpenhos
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+        fkAdministracaoUnidadeMedida:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\UnidadeMedida
+            inversedBy: fkSwItemPreEmpenhos
+            joinColumns:
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                cod_grandeza:
+                    referencedColumnName: cod_grandeza
+    oneToOne:
+        fkSwItemPreEmpenhoCompra:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwItemPreEmpenhoCompra
+            mappedBy: fkSwItemPreEmpenho
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item

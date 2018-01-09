@@ -1,0 +1,64 @@
+{% block body %}
+    {% block content %}
+        {% include 'CoreBundle::Relatorio/header.html.twig' %}
+
+        <table class="table table-bordered table-custom" style="margin-top: 10px">
+            <thead>
+                <tr>
+                    <th>{{ 'label.imobiliarioRelatorios.alteracaoCadastral.inscricao'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.alteracaoCadastral.localizacao'|trans|upper }}</th>
+                    <th>{{ 'label.imobiliarioRelatorios.alteracaoCadastral.lote'|trans|upper }}</th>
+                        {% for atributoFiltro in atributos %}
+                            <th>{{ atributoFiltro.getNomAtributo()|upper }}</th>
+                        {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                    {% for imovel in imoveis %}
+                        <tr>
+                            <td>{{ imovel.inscricao_municipal }}</td>
+                            <td>{{ imovel.localizacao }}</td>
+                            <td>{{ imovel.cod_lote }} - {{ imovel.tipo_lote }}</td>
+
+                            {% set atributosImovel = admin.getAtributosByImovel(imovel.inscricao_municipal) %}
+
+                            {% for atributoFiltro in atributos %}
+                                {% set atributoFiltroId = '%d~%d~%d'|format(atributoFiltro.getCodModulo(), atributoFiltro.getCodCadastro(), atributoFiltro.getCodAtributo()) %}
+
+                                {% for atributoImovelId, atributoImovel in atributosImovel %}
+                                    {% if atributoImovelId == atributoFiltroId %}
+                                        {% if atributoImovel['cod_tipo'] in [3, 4] %}
+                                            {% set atributoImovelValores = atributoImovel['valor_padrao']|split(',') %}
+                                            {% set atributoImovelValorLabel = atributoImovel['valor_padrao_desc']|split('[][][]') %}
+
+                                            {% if atributoImovel['valor'] in atributoImovelValores %}
+                                                {% for atributoImovelValorIndex, atributoImovelValor in atributoImovelValores %}
+                                                    {% if atributoImovelValor == atributoImovel['valor'] %}
+                                                        <td>{{ atributoImovelValorLabel[atributoImovelValorIndex] }}</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                <td></td>
+                                            {% endif %}
+                                        {% else %}
+                                            <td>{{ atributoImovel.valor }}</td>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+
+        {% include 'TributarioBundle::Imobiliario/Relatorios/alteracaoCadastral_details.html.twig' %}
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

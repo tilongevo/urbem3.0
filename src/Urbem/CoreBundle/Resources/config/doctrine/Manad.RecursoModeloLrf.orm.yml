@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Manad\RecursoModeloLrf:
+    type: entity
+    table: manad.recurso_modelo_lrf
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+        codQuadro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_quadro
+        codRecurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_recurso
+    fields:
+        ordem:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkOrcamentoRecurso:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Recurso
+            inversedBy: fkManadRecursoModeloLrfs
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_recurso:
+                    referencedColumnName: cod_recurso
+        fkManadQuadroModeloLrf:
+            targetEntity: Urbem\CoreBundle\Entity\Manad\QuadroModeloLrf
+            inversedBy: fkManadRecursoModeloLrfs
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_modelo:
+                    referencedColumnName: cod_modelo
+                cod_quadro:
+                    referencedColumnName: cod_quadro
+    oneToMany:
+        fkManadAjusteRecursoModeloLrfs:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Manad\AjusteRecursoModeloLrf
+            mappedBy: fkManadRecursoModeloLrf

@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Tcepb\TipoSituacao:
+    type: entity
+    table: tcepb.tipo_situacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 50
+    oneToMany:
+        fkTcepbObras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\Obras
+            mappedBy: fkTcepbTipoSituacao

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\FormaPagamento:
+    type: entity
+    table: pessoal.forma_pagamento
+    id:
+        codFormaPagamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_forma_pagamento
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalContratoServidorFormaPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorFormaPagamento
+            mappedBy: fkPessoalFormaPagamento

@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Folhapagamento\VinculoIrrf:
+    type: entity
+    table: folhapagamento.vinculo_irrf
+    id:
+        codVinculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vinculo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 200
+        idadeLimite:
+            type: integer
+            nullable: false
+            column: idade_limite
+    oneToMany:
+        fkPessoalDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Dependente
+            mappedBy: fkFolhapagamentoVinculoIrrf

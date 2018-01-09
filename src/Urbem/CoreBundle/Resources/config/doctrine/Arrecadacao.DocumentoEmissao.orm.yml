@@ -1,0 +1,68 @@
+Urbem\CoreBundle\Entity\Arrecadacao\DocumentoEmissao:
+    type: entity
+    table: arrecadacao.documento_emissao
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\DocumentoEmissaoRepository
+    id:
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        numDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_documento
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    manyToOne:
+        fkArrecadacaoDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Documento
+            inversedBy: fkArrecadacaoDocumentoEmissoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkArrecadacaoDocumentoEmissoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkArrecadacaoDocumentoCgns:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoCgm
+            mappedBy: fkArrecadacaoDocumentoEmissao
+        fkArrecadacaoDocumentoImoveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoImovel
+            mappedBy: fkArrecadacaoDocumentoEmissao
+        fkArrecadacaoDocumentoEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoEmpresa
+            mappedBy: fkArrecadacaoDocumentoEmissao
+        fkArrecadacaoParcelaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ParcelaDocumento
+            mappedBy: fkArrecadacaoDocumentoEmissao

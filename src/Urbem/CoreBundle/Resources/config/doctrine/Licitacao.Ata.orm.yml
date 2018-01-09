@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Licitacao\Ata:
+    type: entity
+    table: licitacao.ata
+    uniqueConstraints:
+        uk_ata_1:
+            columns:
+                - num_ata
+                - exercicio_ata
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: licitacao.ata_seq
+                allocationSize: 1
+                initialValue: 1
+    fields:
+        numEdital:
+            type: integer
+            nullable: false
+            column: num_edital
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        numAta:
+            type: integer
+            nullable: false
+            column: num_ata
+        exercicioAta:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_ata
+        timestamp:
+            type: datetime
+            nullable: false
+        descricao:
+            type: text
+            nullable: false
+        dtValidadeAta:
+            type: date
+            nullable: false
+            column: dt_validade_ata
+        tipoAdesao:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: tipo_adesao
+    manyToOne:
+        fkLicitacaoEdital:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Edital
+            inversedBy: fkLicitacaoAtas
+            joinColumns:
+                num_edital:
+                    referencedColumnName: num_edital
+                exercicio:
+                    referencedColumnName: exercicio
+        fkLicitacaoTipoAdesaoAta:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\TipoAdesaoAta
+            inversedBy: fkLicitacaoAtas
+            joinColumns:
+                tipo_adesao:
+                    referencedColumnName: codigo
+    oneToMany:
+        fkLicitacaoPublicacaoAtas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\PublicacaoAta
+            mappedBy: fkLicitacaoAta

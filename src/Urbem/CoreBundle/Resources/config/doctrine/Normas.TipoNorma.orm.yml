@@ -1,0 +1,86 @@
+Urbem\CoreBundle\Entity\Normas\TipoNorma:
+    type: entity
+    table: normas.tipo_norma
+    id:
+        codTipoNorma:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: normas.tipo_norma_seq
+                allocationSize: 100
+                initialValue: 1
+            column: cod_tipo_norma
+    fields:
+        nomTipoNorma:
+            type: string
+            nullable: false
+            length: 40
+            column: nom_tipo_norma
+        codCadastro:
+            type: integer
+            nullable: false
+            column: cod_cadastro
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+    manyToOne:
+        fkAdministracaoCadastro:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Cadastro
+            inversedBy: fkNormasTipoNormas
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+    oneToMany:
+        fkNormasAtributoTipoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\AtributoTipoNorma
+            mappedBy: fkNormasTipoNorma
+        fkNormasNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            mappedBy: fkNormasTipoNorma
+        fkNormasNormaTipoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Normas\NormaTipoNorma
+            mappedBy: fkNormasTipoNorma
+    oneToOne:
+        fkTcepeVinculoTipoNorma:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\VinculoTipoNorma
+            mappedBy: fkNormasTipoNorma
+            joinColumns:
+                cod_tipo_norma:
+                    referencedColumnName: cod_tipo_norma
+        fkTcerjFundamento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcerj\Fundamento
+            mappedBy: fkNormasTipoNorma
+            joinColumns:
+                cod_tipo_norma:
+                    referencedColumnName: cod_tipo_norma
+        fkTcmbaVinculoTipoNorma:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\VinculoTipoNorma
+            mappedBy: fkNormasTipoNorma
+            joinColumns:
+                cod_tipo_norma:
+                    referencedColumnName: cod_tipo_norma

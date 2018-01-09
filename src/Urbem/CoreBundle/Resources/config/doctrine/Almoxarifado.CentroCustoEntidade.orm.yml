@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoEntidade:
+    type: entity
+    table: almoxarifado.centro_custo_entidade
+    uniqueConstraints:
+        uk_centro_custo_entidade_1:
+            columns:
+                - exercicio
+                - cod_centro
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+    fields: {  }
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkAlmoxarifadoCentroCustoEntidades
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkAlmoxarifadoCentroCusto:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCusto
+            inversedBy: fkAlmoxarifadoCentroCustoEntidades
+            joinColumns:
+                cod_centro:
+                    referencedColumnName: cod_centro
+    oneToMany:
+        fkAlmoxarifadoCentroCustoDotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CentroCustoDotacao
+            mappedBy: fkAlmoxarifadoCentroCustoEntidade

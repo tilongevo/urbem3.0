@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfComprovanteRendimento:
+    type: entity
+    table: folhapagamento.tabela_irrf_comprovante_rendimento
+    id:
+        codTabela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tabela
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoTabelaIrrf:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrf
+            inversedBy: fkFolhapagamentoTabelaIrrfComprovanteRendimentos
+            joinColumns:
+                cod_tabela:
+                    referencedColumnName: cod_tabela
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoTabelaIrrfComprovanteRendimentos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

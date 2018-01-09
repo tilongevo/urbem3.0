@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Tcemg\ArquivoEmp:
+    type: entity
+    table: tcemg.arquivo_emp
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ArquivoEmpRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+    fields:
+        codLicitacao:
+            type: integer
+            nullable: false
+            column: cod_licitacao
+        exercicioLicitacao:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_licitacao
+        codModalidade:
+            type: integer
+            nullable: false
+            column: cod_modalidade
+    manyToOne:
+        fkComprasModalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Modalidade
+            inversedBy: fkTcemgArquivoEmps
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+    oneToOne:
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkTcemgArquivoEmp
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

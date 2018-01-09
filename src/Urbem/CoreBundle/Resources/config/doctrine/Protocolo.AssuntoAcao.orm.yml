@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Protocolo\AssuntoAcao:
+    type: entity
+    table: protocolo.assunto_acao
+    repositoryClass: Urbem\CoreBundle\Repository\Protocolo\AssuntoAcaoRepository
+    id:
+        codAssunto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assunto
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codAcao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acao
+    fields: {  }
+    manyToOne:
+        fkSwAssunto:
+            targetEntity: Urbem\CoreBundle\Entity\SwAssunto
+            inversedBy: fkProtocoloAssuntoAcoes
+            joinColumns:
+                cod_assunto:
+                    referencedColumnName: cod_assunto
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+        fkAdministracaoAcao:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Acao
+            inversedBy: fkProtocoloAssuntoAcoes
+            joinColumns:
+                cod_acao:
+                    referencedColumnName: cod_acao

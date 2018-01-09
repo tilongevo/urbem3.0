@@ -1,0 +1,84 @@
+Urbem\CoreBundle\Entity\Ppa\Ppa:
+    type: entity
+    table: ppa.ppa
+    repositoryClass: Urbem\CoreBundle\Repository\Ppa\PpaRepository
+    id:
+        codPpa:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: ppa.ppa_cod_ppa_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_ppa
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        anoInicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_inicio
+        anoFinal:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_final
+        valorTotalPpa:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_total_ppa
+        destinacaoRecurso:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: destinacao_recurso
+        importado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    oneToMany:
+        fkLdoLdos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\Ldo
+            mappedBy: fkPpaPpa
+        fkPpaMacroObjetivos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\MacroObjetivo
+            mappedBy: fkPpaPpa
+        fkPpaPpaPublicacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\PpaPublicacao
+            mappedBy: fkPpaPpa
+        fkPpaPpaEstimativaOrcamentariaBases:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\PpaEstimativaOrcamentariaBase
+            mappedBy: fkPpaPpa
+    oneToOne:
+        fkPpaPpaPrecisao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ppa\PpaPrecisao
+            mappedBy: fkPpaPpa
+            joinColumns:
+                cod_ppa:
+                    referencedColumnName: cod_ppa

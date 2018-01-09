@@ -1,0 +1,47 @@
+Urbem\CoreBundle\Entity\Arrecadacao\LancamentoUsaDesoneracao:
+    type: entity
+    table: arrecadacao.lancamento_usa_desoneracao
+    id:
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+        codDesoneracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_desoneracao
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        ocorrencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkArrecadacaoLancamentoCalculo:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\LancamentoCalculo
+            inversedBy: fkArrecadacaoLancamentoUsaDesoneracoes
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+        fkArrecadacaoDesonerado:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Desonerado
+            inversedBy: fkArrecadacaoLancamentoUsaDesoneracoes
+            joinColumns:
+                cod_desoneracao:
+                    referencedColumnName: cod_desoneracao
+                numcgm:
+                    referencedColumnName: numcgm
+                ocorrencia:
+                    referencedColumnName: ocorrencia

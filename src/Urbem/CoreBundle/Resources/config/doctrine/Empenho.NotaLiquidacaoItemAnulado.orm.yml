@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoItemAnulado:
+    type: entity
+    table: empenho.nota_liquidacao_item_anulado
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\NotaLiquidacaoItemAnuladoRepository
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+        exercicioItem:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_item
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vlAnulado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_anulado
+    manyToOne:
+        fkEmpenhoNotaLiquidacaoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacaoItem
+            inversedBy: fkEmpenhoNotaLiquidacaoItemAnulados
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                num_item:
+                    referencedColumnName: num_item
+                exercicio_item:
+                    referencedColumnName: exercicio_item
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                cod_entidade:
+                    referencedColumnName: cod_entidade

@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Licitacao\MembroAdicional:
+    type: entity
+    table: licitacao.membro_adicional
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        cargo:
+            type: string
+            nullable: false
+            length: 50
+        naturezaCargo:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: natureza_cargo
+    manyToOne:
+        fkLicitacaoLicitacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Licitacao
+            inversedBy: fkLicitacaoMembroAdicionais
+            joinColumns:
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoMembroAdicionais
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkLicitacaoNaturezaCargo:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\NaturezaCargo
+            inversedBy: fkLicitacaoMembroAdicionais
+            joinColumns:
+                natureza_cargo:
+                    referencedColumnName: codigo

@@ -1,0 +1,238 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock actions %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock tab_menu %}
+
+{% block show %}
+    {% set id = object.codEmpenho ~ '~' ~ object.codEntidade ~ '~' ~ object.exercicio %}
+    <div class="container-rh">
+        <div class="col s12 profile-box">
+            <div class="row">
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.emitirEmpenhoDiversos.dadosEmpenho'|trans }}</span>
+                </h2>
+                <p class="divider grey col s12"></p>
+                <div class="simil-row equalize">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.numEmpenho'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.codEmpenho ~ " / " ~ object.exercicio }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.codTipo'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoPreEmpenho.fkEmpenhoTipoEmpenho.codTipo ~ " - "  ~ object.fkEmpenhoPreEmpenho.fkEmpenhoTipoEmpenho.nomTipo }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.dtEmpenho'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.dtEmpenho|date("d/m/Y") }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codEntidade'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.codEntidade ~ " - " ~ object.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</h6>
+                    </div>
+                </div>
+                <div class="simil-row equalize">
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.numOrgao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.numOrgao }}</h6>
+                    </div>
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.numUnidade'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.numUnidade }}</h6>
+                    </div>
+                </div>
+                <div class="simil-row equalize">
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codDespesa'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codigoReduzido }}</h6>
+                    </div>
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.codigoReduzido'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codDespesa }}</h6>
+                    </div>
+                </div>
+                <div class="simil-row equalize">
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codClassificacao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codClassificacao }}</h6>
+                    </div>
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.pao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.pao }}</h6>
+                    </div>
+                </div>
+                <div class="row equalize">
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.codPrograma'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codPrograma }}</h6>
+                    </div>
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.codCategoria'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoCategoriaEmpenho.descricao}}</h6>
+                    </div>
+                </div>
+                <div class="row equalize">
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codHistorico'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoPreEmpenho.fkEmpenhoHistorico.codHistorico ~ " - " ~ object.fkEmpenhoPreEmpenho.fkEmpenhoHistorico.nomHistorico }}</h6>
+                    </div>
+                    <div class="col s3 little1-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.descricao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoPreEmpenho.descricao|capitalize }}</h6>
+                    </div>
+                </div>
+                <div class="simil-row  equalize">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.saldoDotacao'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.saldosEmpenho.vl_saldo_anterior|number_format_currency('BRL') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.codRecurso'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codRecurso }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.credor'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoPreEmpenho.fkSwCgm.numCgm ~ " - " ~ object.fkEmpenhoPreEmpenho.fkSwCgm.nomCgm }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.dtVencimento'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ object.dtVencimento|date("d/m/Y") }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.razaoEmpenho'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">
+                            <a href="{{ path('urbem_financeiro_empenho_consultar_empenho_relatorio', {id : id}) }}">
+                                {{ 'label.emitirEmpenhoDiversos.visualizar'|trans }}
+                            </a>
+                        </h6>
+                    </div>
+                </div>
+                <p class="light-grey col s12"></p>
+                    <h2 class="blue-text text-darken-4 left">
+                        <span style="padding-top: 10px">{{ 'label.preEmpenho.atributos'|trans }}</span>
+                    </h2>
+                <p class="divider grey col s12"></p>
+                <div class="row equalize">
+                {% for atributo in admin.getAtributos %}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ atributo.label }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ atributo.data }}</h6>
+                    </div>
+                {% endfor %}
+                </div>
+                <p class="light-grey col s12"></p>
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.consultarEmpenho.saldos'|trans }}</span>
+                </h2>
+                <p class="divider grey col s12"></p>
+                <div class="row equalize">
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.valorOrcado'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.saldosEmpenho.vl_saldo_anterior|number_format_currency('BRL') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.saldoAnterior'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.saldosEmpenho.vl_saldo_anterior|number_format_currency('BRL') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.saldoDisponivel'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ (admin.saldosEmpenho.vl_saldo_anterior - admin.saldosEmpenho.vl_empenhado)|number_format_currency('BRL') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.valorEmpenhado'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.saldosEmpenho.vl_empenhado|number_format_currency('BRL') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.anulacoesEmpenho'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.saldosEmpenho.vl_empenhado_anulado|number_format_currency('BRL') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.liquidacoes'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.saldosEmpenho.vl_liquidado|number_format_currency('BRL') }}</h6>
+                    </div>
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.consultarEmpenho.pagamentos'|trans }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ admin.saldosEmpenho.vl_pago|number_format_currency('BRL') }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s11 servidor-table" style="margin-top: 20px">
+                <a style="font-size: 16px">
+                    <i class="mdi mdi-newspaper"></i>
+                    {{ 'label.consultarEmpenho.itensEmpenho'|trans }}
+                </a>
+            </div>
+            <div class="col s1" style="margin-top: 20px"></div>
+            {% if admin.itemPreEmpenho is defined %}
+            <table class="col s12 highlight bordered">
+                <thead>
+                    <th class="th-rh" width="10"></th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.nomItem'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.vlUnitario'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.quantidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.vlTotal'|trans }}</th>
+                </thead>
+                <tbody>
+                    {% for itemPreEmpenho in admin.itemPreEmpenho %}
+                        <tr>
+                            <td class="td-rh">{{ itemPreEmpenho.numItem }}</td>
+                            <td class="td-rh">{{ itemPreEmpenho.nomItem|capitalize }}</td>
+                            <td class="td-rh text-right">{{ itemPreEmpenho.vlUnitario|number_format_currency('BRL') }}</td>
+                            <td class="td-rh text-right">{{ itemPreEmpenho.quantidade|number_format_currency('BRL') }}</td>
+                            <td class="td-rh text-right">{{ itemPreEmpenho.vlTotal|number_format_currency('BRL') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col s11 servidor-table" style="margin-top: 20px">
+                <a style="font-size: 16px">
+                    <i class="material-icons left" >border_color</i>
+                    {{ 'label.empenhoAssinatura.incluir'|trans }}
+                </a>
+            </div>
+            <div class="col s1"></div>
+            {% if admin.empenhoAssinatura is defined %}
+            <table class="col s12 highlight bordered">
+                <thead>
+                    <th class="th-rh" width="10"></th>
+                    <th class="th-rh">{{ 'label.emitirEmpenhoComplementar.nome'|trans }}</th>
+                    <th class="th-rh">{{ 'label.emitirEmpenhoComplementar.cargo'|trans }}</th>
+                </thead>
+                <tbody>
+                    {% for assinatura in admin.empenhoAssinatura %}
+                        <tr>
+                            <td class="td-rh">{{ assinatura.numAssinatura }}</td>
+                            <td class="td-rh">{{ assinatura.fkSwCgm.nomCgm }}</td>
+                            <td class="td-rh text-right">{{ assinatura.cargo }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="left">
+                <a href="{{ path('urbem_financeiro_empenho_consultar_empenho_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}

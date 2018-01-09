@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Folhapagamento\FgtsCategoria:
+    type: entity
+    table: folhapagamento.fgts_categoria
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codCategoria:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_categoria
+        codFgts:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_fgts
+    fields:
+        aliquotaDeposito:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+            column: aliquota_deposito
+        aliquotaContribuicao:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+            column: aliquota_contribuicao
+    manyToOne:
+        fkFolhapagamentoFgts:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Fgts
+            inversedBy: fkFolhapagamentoFgtsCategorias
+            joinColumns:
+                cod_fgts:
+                    referencedColumnName: cod_fgts
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPessoalCategoria:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Categoria
+            inversedBy: fkFolhapagamentoFgtsCategorias
+            joinColumns:
+                cod_categoria:
+                    referencedColumnName: cod_categoria

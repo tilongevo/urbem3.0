@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Pessoal\EsferaOrigem:
+    type: entity
+    table: pessoal.esfera_origem
+    id:
+        codEsfera:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_esfera
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalAssentamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Assentamento
+            mappedBy: fkPessoalEsferaOrigem

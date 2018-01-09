@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row title-index">
+        <div class="col s8 filtro">
+            <div class="input-field">
+              <input id="1" placeholder="Digite o cargo..." type="text" class="validate">
+              <label for="1"></label>
+            </div>
+        </div>
+        <div class="col s2">
+            <a href="#" class="btn btn-fil z-depth-0 blue darken-4 white-text right-align"><i class="material-icons">search</i></a>
+        </div>
+        <div class="col s2 right-align hide-on-med-and-down">
+            <a href="{{ path('pessoal_cargo_new') }}" class="valign btn-floating btn-large waves-effect waves-light blue darken-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="{{ 'novo'|trans }} {{ 'label.cargo.modulo'|trans }}"><i class="small material-icons">add</i></a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="highlight bordered">
+            <thead>
+                <tr>
+                    <th>{{ 'label.descricao'|trans }} Cargo</th>
+                    <th>Especialidade</th>
+                    <th>{{ 'label.cargo.cargoCc'|trans }}</th>
+                    <th>{{ 'label.cargo.funcaoGratificada'|trans }}</th>
+                    <th class="hide-on-med-and-down"></th>
+                    <th class="hide-on-med-and-down"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for cargo in cargos %}
+                <tr>
+                    <td><a class="blue-text text-darken-4" href="{{ path('pessoal_cargo_show', { 'id': cargo.codCargo }) }}">{{ cargo.descricao }}</a></td>
+                    <td>Sim/Não</td>
+                    <td class="hide-on-small-only">{% if cargo.cargoCc %}{{ 'sim'|trans }}{% else %}{{ 'nao'|trans }}{% endif %}</td>
+                    <td class="hide-on-small-only">{% if cargo.funcaoGratificada %}{{ 'sim'|trans }}{% else %}{{ 'nao'|trans }}{% endif %}</td>
+                    <td class="hide-on-med-and-down"><a href="{{ path('pessoal_cargo_edit', { 'id': cargo.codCargo }) }}" class="blue-text text-darken-4 tooltipped" data-position="left" data-delay="50" data-tooltip="Editar Cargo"><i class="small material-icons">edit</i></a></td>
+                    <td class="hide-on-med-and-down"><button class="btn btn-delete blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped" data-position="right" data-delay="50" data-tooltip="Excluir Cargo" value="Delete"><i class="material-icons">delete</i></button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="center">
+            {{ knp_pagination_render(cargos) }}
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,36 @@
+Urbem\CoreBundle\Entity\Orcamento\SuplementacaoAnulada:
+    type: entity
+    table: orcamento.suplementacao_anulada
+    id:
+        codSuplementacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_suplementacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codSuplementacaoAnulacao:
+            type: integer
+            nullable: false
+            column: cod_suplementacao_anulacao
+    manyToOne:
+        fkOrcamentoSuplementacao1:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Suplementacao
+            inversedBy: fkOrcamentoSuplementacaoAnuladas1
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_suplementacao_anulacao:
+                    referencedColumnName: cod_suplementacao
+    oneToOne:
+        fkOrcamentoSuplementacao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Suplementacao
+            inversedBy: fkOrcamentoSuplementacaoAnulada
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_suplementacao:
+                    referencedColumnName: cod_suplementacao

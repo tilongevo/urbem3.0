@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamilia:
+    type: entity
+    table: folhapagamento.salario_familia
+    id:
+        codRegimePrevidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_regime_previdencia
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vigencia:
+            type: date
+            nullable: false
+        idadeLimite:
+            type: integer
+            nullable: false
+            column: idade_limite
+    manyToOne:
+        fkFolhapagamentoRegimePrevidencia:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegimePrevidencia
+            inversedBy: fkFolhapagamentoSalarioFamilias
+            joinColumns:
+                cod_regime_previdencia:
+                    referencedColumnName: cod_regime_previdencia
+    oneToMany:
+        fkFolhapagamentoFaixaPagamentoSalarioFamilias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FaixaPagamentoSalarioFamilia
+            mappedBy: fkFolhapagamentoSalarioFamilia
+        fkFolhapagamentoSalarioFamiliaEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SalarioFamiliaEvento
+            mappedBy: fkFolhapagamentoSalarioFamilia

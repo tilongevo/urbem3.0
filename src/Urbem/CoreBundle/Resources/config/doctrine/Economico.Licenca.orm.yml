@@ -1,0 +1,96 @@
+Urbem\CoreBundle\Entity\Economico\Licenca:
+    type: entity
+    table: economico.licenca
+    repositoryClass:  Urbem\CoreBundle\Repository\Economico\LicencaRepository
+    id:
+        codLicenca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licenca
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    oneToMany:
+        fkEconomicoEmissaoDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\EmissaoDocumento
+            mappedBy: fkEconomicoLicenca
+        fkEconomicoBaixaLicencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaLicenca
+            mappedBy: fkEconomicoLicenca
+        fkEconomicoLicencaAtividades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaAtividade
+            mappedBy: fkEconomicoLicenca
+        fkEconomicoLicencaDiasSemanas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiasSemana
+            mappedBy: fkEconomicoLicenca
+        fkEconomicoLicencaDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDocumento
+            mappedBy: fkEconomicoLicenca
+        fkEconomicoLicencaEspeciais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaEspecial
+            mappedBy: fkEconomicoLicenca
+        fkEconomicoProcessoLicencas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoLicenca
+            mappedBy: fkEconomicoLicenca
+    oneToOne:
+        fkEconomicoLicencaObservacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaObservacao
+            mappedBy: fkEconomicoLicenca
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio
+        fkEconomicoLicencaDiversa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiversa
+            mappedBy: fkEconomicoLicenca
+            joinColumns:
+                cod_licenca:
+                    referencedColumnName: cod_licenca
+                exercicio:
+                    referencedColumnName: exercicio

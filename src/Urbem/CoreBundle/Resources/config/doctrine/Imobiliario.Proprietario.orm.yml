@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Imobiliario\Proprietario:
+    type: entity
+    table: imobiliario.proprietario
+    indexes:
+        idx_proprietario:
+            columns:
+                - inscricao_municipal
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+    fields:
+        ordem:
+            type: integer
+            nullable: false
+        promitente:
+            type: boolean
+            nullable: false
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        cota:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkImobiliarioProprietarios
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkImobiliarioProprietarios
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

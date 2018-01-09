@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcepe\TipoCredor:
+    type: entity
+    table: tcepe.tipo_credor
+    id:
+        codTipoCredor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_credor
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 40
+    oneToMany:
+        fkTcepeCgmTipoCredores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\CgmTipoCredor
+            mappedBy: fkTcepeTipoCredor

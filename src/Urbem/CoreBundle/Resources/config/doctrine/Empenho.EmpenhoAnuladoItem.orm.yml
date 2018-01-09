@@ -1,0 +1,62 @@
+Urbem\CoreBundle\Entity\Empenho\EmpenhoAnuladoItem:
+    type: entity
+    table: empenho.empenho_anulado_item
+    id:
+        numItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_item
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codPreEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_pre_empenho
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codEmpenho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_empenho
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        vlAnulado:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_anulado
+    manyToOne:
+        fkEmpenhoItemPreEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\ItemPreEmpenho
+            inversedBy: fkEmpenhoEmpenhoAnuladoItens
+            joinColumns:
+                cod_pre_empenho:
+                    referencedColumnName: cod_pre_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                num_item:
+                    referencedColumnName: num_item
+        fkEmpenhoEmpenhoAnulado:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\EmpenhoAnulado
+            inversedBy: fkEmpenhoEmpenhoAnuladoItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                timestamp:
+                    referencedColumnName: timestamp

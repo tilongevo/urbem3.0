@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Frota\ManutencaoAnulacao:
+    type: entity
+    table: frota.manutencao_anulacao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codManutencao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_manutencao
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        observacao:
+            type: text
+            nullable: true
+    oneToOne:
+        fkFrotaManutencao:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Manutencao
+            inversedBy: fkFrotaManutencaoAnulacao
+            joinColumns:
+                cod_manutencao:
+                    referencedColumnName: cod_manutencao
+                exercicio:
+                    referencedColumnName: exercicio

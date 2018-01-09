@@ -1,0 +1,80 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoNota:
+    type: entity
+    table: fiscalizacao.retencao_nota
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        competencia:
+            type: string
+            generator:
+                strategy: NONE
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+        codUf:
+            type: integer
+            nullable: false
+            column: cod_uf
+        numSerie:
+            type: string
+            nullable: false
+            length: 10
+            column: num_serie
+        numNota:
+            type: integer
+            nullable: false
+            column: num_nota
+        dtEmissao:
+            type: date
+            nullable: false
+            column: dt_emissao
+        valorNota:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_nota
+    manyToOne:
+        fkFiscalizacaoRetencaoFonte:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoFonte
+            inversedBy: fkFiscalizacaoRetencaoNotas
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                competencia:
+                    referencedColumnName: competencia
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkFiscalizacaoRetencaoNotas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkSwMunicipio:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkFiscalizacaoRetencaoNotas
+            joinColumns:
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_uf:
+                    referencedColumnName: cod_uf
+    oneToMany:
+        fkFiscalizacaoRetencaoServicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\RetencaoServico
+            mappedBy: fkFiscalizacaoRetencaoNota

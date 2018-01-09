@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Imobiliario\MatriculaImovel:
+    type: entity
+    table: imobiliario.matricula_imovel
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        matRegistroImovel:
+            type: string
+            nullable: false
+            length: 10
+            column: mat_registro_imovel
+        zona:
+            type: string
+            nullable: false
+            length: 10
+    manyToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkImobiliarioMatriculaImoveis
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

@@ -1,0 +1,81 @@
+Urbem\CoreBundle\Entity\Folhapagamento\UltimoRegistroEventoRescisao:
+    type: entity
+    table: folhapagamento.ultimo_registro_evento_rescisao
+    id:
+        desdobramento:
+            type: string
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codRegistro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_registro
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields: {  }
+    oneToOne:
+        fkFolhapagamentoEventoRescisaoCalculado:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\EventoRescisaoCalculado
+            mappedBy: fkFolhapagamentoUltimoRegistroEventoRescisao
+            joinColumns:
+                desdobramento:
+                    referencedColumnName: desdobramento
+                timestamp:
+                    referencedColumnName: timestamp_registro
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoLogErroCalculoRescisao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\LogErroCalculoRescisao
+            mappedBy: fkFolhapagamentoUltimoRegistroEventoRescisao
+            joinColumns:
+                desdobramento:
+                    referencedColumnName: desdobramento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoRegistroEventoRescisaoParcela:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoRescisaoParcela
+            mappedBy: fkFolhapagamentoUltimoRegistroEventoRescisao
+            joinColumns:
+                desdobramento:
+                    referencedColumnName: desdobramento
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_registro:
+                    referencedColumnName: cod_registro
+                cod_evento:
+                    referencedColumnName: cod_evento
+        fkFolhapagamentoRegistroEventoRescisao:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\RegistroEventoRescisao
+            inversedBy: fkFolhapagamentoUltimoRegistroEventoRescisao
+            joinColumns:
+                cod_registro:
+                    referencedColumnName: cod_registro
+                timestamp:
+                    referencedColumnName: timestamp
+                desdobramento:
+                    referencedColumnName: desdobramento
+                cod_evento:
+                    referencedColumnName: cod_evento

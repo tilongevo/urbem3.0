@@ -1,0 +1,45 @@
+Urbem\CoreBundle\Entity\Folhapagamento\BeneficioEvento:
+    type: entity
+    table: folhapagamento.beneficio_evento
+    repositoryClass: Urbem\CoreBundle\Repository\Folhapagamento\BeneficioEventoRepository
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        codEvento:
+            type: integer
+            nullable: false
+            column: cod_evento
+    manyToOne:
+        fkFolhapagamentoConfiguracaoBeneficio:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoBeneficio
+            inversedBy: fkFolhapagamentoBeneficioEventos
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkFolhapagamentoTipoEventoBeneficio:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TipoEventoBeneficio
+            inversedBy: fkFolhapagamentoBeneficioEventos
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoBeneficioEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

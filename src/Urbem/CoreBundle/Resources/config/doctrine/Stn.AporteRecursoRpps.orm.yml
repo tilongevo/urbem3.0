@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Stn\AporteRecursoRpps:
+    type: entity
+    table: stn.aporte_recurso_rpps
+    id:
+        codAporte:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_aporte
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codGrupo:
+            type: integer
+            nullable: false
+            column: cod_grupo
+        descricao:
+            type: string
+            nullable: false
+    manyToOne:
+        fkStnAporteRecursoRppsGrupo:
+            targetEntity: Urbem\CoreBundle\Entity\Stn\AporteRecursoRppsGrupo
+            inversedBy: fkStnAporteRecursoRpps
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkStnAporteRecursoRppsReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Stn\AporteRecursoRppsReceita
+            mappedBy: fkStnAporteRecursoRpps

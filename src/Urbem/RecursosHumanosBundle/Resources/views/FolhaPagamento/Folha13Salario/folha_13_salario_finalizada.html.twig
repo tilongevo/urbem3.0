@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h4 class="blue-text text-darken-4">Folha 13 Salário</h4>
+            <div class="divider grey title-divider"><p>1</p></div>
+        </div>
+        <div class="col s12 m12 l6">
+            <table class="bordered striped">
+                <thead class="thead-rh">
+                <tr class="tr-rh"><h6 class="blue-text text-darken-4 center title-table" class="blue-text text-darken-4 center title-table">13 Salário</h6></tr>
+                <tr class="tr-rh" class="">
+                    <th class="th-rh">Código</th>
+                    <th class="th-rh">CGM</th>
+                    <th class="th-rh">Nome</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if arContratos|length > 0 %}
+                    {% for contratos in arContratos %}
+                        <tr class="tr-rh" class="tr-rh">
+                            <td class="td-rh-folha">{{ contratos.registro }}</td>
+                            <td class="td-rh-folha">{{ contratos.numcgm }}</td>
+                            <td class="td-rh-folha">{{ contratos.nom_cgm }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr class="tr-rh" class="tr-rh">
+                        <td colspan="4" style="text-align: center;">Nenhum registro encontrado</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col s12 m12 l6">
+            <table class="bordered striped">
+                <thead class="thead-rh">
+                <tr class="tr-rh"><h6 class="blue-text text-darken-4 center title-table" class="blue-text text-darken-4 center title-table">13 Salário</h6></tr>
+                <tr class="tr-rh" class="">
+                    <th class="th-rh">Código</th>
+                    <th class="th-rh">CGM</th>
+                    <th class="th-rh">Nome</th>
+                    <th class="th-rh">Motivo</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if contratosErro|length > 0 %}
+                    {% for contratos in contratosErro %}
+                        <tr class="tr-rh" class="tr-rh">
+                            <td class="td-rh-folha">{{ contratos.registro }}</td>
+                            <td class="td-rh-folha">{{ contratos.numcgm }}</td>
+                            <td class="td-rh-folha">{{ contratos.nom_cgm }}</td>
+                            <td class="td-rh-folha">{{ contratos.motivo }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr class="tr-rh" class="tr-rh">
+                        <td colspan="4" style="text-align: center;">Nenhum registro encontrado</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <a  class="btn-floating white-text blue darken-4" href="{{ path('folhapagamento_folha_13_salario_index') }}"><i class="material-icons">arrow_back</i></a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

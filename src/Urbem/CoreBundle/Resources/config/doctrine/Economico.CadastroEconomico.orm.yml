@@ -1,0 +1,177 @@
+Urbem\CoreBundle\Entity\Economico\CadastroEconomico:
+    type: entity
+    table: economico.cadastro_economico
+    repositoryClass: Urbem\CoreBundle\Repository\Economico\CadastroEconomicoRepository
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: economico.cadastro_economico_seq
+                allocationSize: 1
+                initialValue: 1
+            column: inscricao_economica
+    fields:
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+        dtAbertura:
+            type: date
+            nullable: false
+            column: dt_abertura
+    oneToMany:
+        fkArrecadacaoCadastroEconomicoFaturamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoFaturamento
+            mappedBy: fkEconomicoCadastroEconomico
+        fkArrecadacaoDocumentoEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DocumentoEmpresa
+            mappedBy: fkEconomicoCadastroEconomico
+        fkArrecadacaoDesoneradoCadEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\DesoneradoCadEconomico
+            mappedBy: fkEconomicoCadastroEconomico
+        fkArrecadacaoTomadorEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\TomadorEmpresa
+            mappedBy: fkEconomicoCadastroEconomico
+        fkDividaDividaEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Divida\DividaEmpresa
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoAtividadeCadastroEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtividadeCadastroEconomico
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoDomicilioFiscais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\DomicilioFiscal
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoCadastroEconRespContabiis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconRespContabil
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoCadastroEconRespTecnicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconRespTecnico
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoDomicilioInformados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\DomicilioInformado
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoDiasCadastroEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\DiasCadastroEconomico
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoBaixaCadastroEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaCadastroEconomico
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoProcessoCadastroEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoCadastroEconomico
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoUsoSoloEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\UsoSoloEmpresa
+            mappedBy: fkEconomicoCadastroEconomico
+        fkEconomicoProcessoAtividadeCadEcons:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoAtividadeCadEcon
+            mappedBy: fkEconomicoCadastroEconomico
+        fkFiscalizacaoAutorizacaoNotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutorizacaoNotas
+            mappedBy: fkEconomicoCadastroEconomico
+        fkFiscalizacaoAutenticacaoLivros:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\AutenticacaoLivro
+            mappedBy: fkEconomicoCadastroEconomico
+        fkFiscalizacaoProcessoFiscalEmpresas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalEmpresa
+            mappedBy: fkEconomicoCadastroEconomico
+    oneToOne:
+        fkEconomicoCadastroEconomicoAutonomo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoAutonomo
+            mappedBy: fkEconomicoCadastroEconomico
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkEconomicoCadastroEconomicoEmpresaFato:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaFato
+            mappedBy: fkEconomicoCadastroEconomico
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+        fkEconomicoCadastroEconomicoEmpresaDireito:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomicoEmpresaDireito
+            mappedBy: fkEconomicoCadastroEconomico
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica

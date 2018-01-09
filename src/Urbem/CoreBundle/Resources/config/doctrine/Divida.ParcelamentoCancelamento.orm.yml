@@ -1,0 +1,26 @@
+Urbem\CoreBundle\Entity\Divida\ParcelamentoCancelamento:
+    type: entity
+    table: divida.parcelamento_cancelamento
+    id:
+        numParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcelamento
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        motivo:
+            type: text
+            nullable: false
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: false
+    oneToOne:
+        fkDividaParcelamento:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Parcelamento
+            inversedBy: fkDividaParcelamentoCancelamento
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento

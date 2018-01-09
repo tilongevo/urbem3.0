@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Tceal\DespesaReceitaExtra:
+    type: entity
+    table: tceal.despesa_receita_extra
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        classificacao:
+            type: string
+            nullable: false
+            length: 2
+    oneToOne:
+        fkContabilidadePlanoAnalitica:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoAnalitica
+            inversedBy: fkTcealDespesaReceitaExtra
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio

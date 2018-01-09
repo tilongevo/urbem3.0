@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoClassificacaoItemValor:
+    type: entity
+    table: almoxarifado.atributo_catalogo_classificacao_item_valor
+    id:
+        codClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_classificacao
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codCatalogo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_catalogo
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        valor:
+            type: string
+            nullable: false
+            length: 1500
+    manyToOne:
+        fkAlmoxarifadoAtributoCatalogoClassificacao:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\AtributoCatalogoClassificacao
+            inversedBy: fkAlmoxarifadoAtributoCatalogoClassificacaoItemValores
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_classificacao:
+                    referencedColumnName: cod_classificacao
+                cod_catalogo:
+                    referencedColumnName: cod_catalogo
+        fkAlmoxarifadoCatalogoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItem
+            inversedBy: fkAlmoxarifadoAtributoCatalogoClassificacaoItemValores
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item

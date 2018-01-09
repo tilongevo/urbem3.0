@@ -1,0 +1,59 @@
+Urbem\CoreBundle\Entity\Economico\TipoLicencaDiversa:
+    type: entity
+    table: economico.tipo_licenca_diversa
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: economico.tipo_licenca_diversa_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_tipo
+    fields:
+        nomTipo:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_tipo
+        codUtilizacao:
+            type: integer
+            nullable: false
+            column: cod_utilizacao
+    manyToOne:
+        fkEconomicoUtilizacao:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\Utilizacao
+            inversedBy: fkEconomicoTipoLicencaDiversas
+            joinColumns:
+                cod_utilizacao:
+                    referencedColumnName: cod_utilizacao
+    oneToMany:
+        fkEconomicoAtributoTipoLicencaDiversas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\AtributoTipoLicencaDiversa
+            mappedBy: fkEconomicoTipoLicencaDiversa
+        fkEconomicoElementoTipoLicencaDiversas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ElementoTipoLicencaDiversa
+            mappedBy: fkEconomicoTipoLicencaDiversa
+        fkEconomicoLicencaDiversas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\LicencaDiversa
+            mappedBy: fkEconomicoTipoLicencaDiversa
+        fkEconomicoTipoLicencaModeloDocumentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\TipoLicencaModeloDocumento
+            mappedBy: fkEconomicoTipoLicencaDiversa

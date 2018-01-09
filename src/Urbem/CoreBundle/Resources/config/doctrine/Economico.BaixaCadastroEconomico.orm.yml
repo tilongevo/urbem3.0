@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Economico\BaixaCadastroEconomico:
+    type: entity
+    table: economico.baixa_cadastro_economico
+    id:
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        dtInicio:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_inicio
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+        deOficio:
+            type: boolean
+            nullable: false
+            column: de_oficio
+        motivo:
+            type: text
+            nullable: false
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+    manyToOne:
+        fkEconomicoCadastroEconomico:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CadastroEconomico
+            inversedBy: fkEconomicoBaixaCadastroEconomicos
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+    oneToMany:
+        fkEconomicoProcessoBaixaCadEconomicos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Economico\ProcessoBaixaCadEconomico
+            mappedBy: fkEconomicoBaixaCadastroEconomico
+    oneToOne:
+        fkEconomicoBaixaEmissao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Economico\BaixaEmissao
+            mappedBy: fkEconomicoBaixaCadastroEconomico
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                dt_inicio:
+                    referencedColumnName: dt_inicio
+                timestamp:
+                    referencedColumnName: timestamp

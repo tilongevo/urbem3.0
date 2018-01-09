@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Ponto\ConfiguracaoLotacao:
+    type: entity
+    table: ponto.configuracao_lotacao
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+    fields: {  }
+    manyToOne:
+        fkPontoConfiguracaoParametrosGerais:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoParametrosGerais
+            inversedBy: fkPontoConfiguracaoLotacoes
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkOrganogramaOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Orgao
+            inversedBy: fkPontoConfiguracaoLotacoes
+            joinColumns:
+                cod_orgao:
+                    referencedColumnName: cod_orgao

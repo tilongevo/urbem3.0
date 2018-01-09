@@ -1,0 +1,51 @@
+{% extends "base_home_cards.html.twig" %}
+
+{% block title %}{{ wo_render_breadcrumbs({ separator: '>', viewTemplate: "WhiteOctoberBreadcrumbsBundle::titlebreadcrumbs.html.twig" }) }}{% endblock title %}
+
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+<div class="container-rh">
+    <div class="row title-index">
+        <div class="col s8 filtro">
+            <div class="input-field">
+              <input id="1" placeholder="Digite..." type="text" class="validate">
+              <label for="1"></label>
+            </div>
+        </div>
+        <div class="col s2">
+            <a href="#" class="btn btn-fil z-depth-0 blue darken-4 white-text right-align"><i class="material-icons">search</i></a>
+        </div>
+        <div class="col s2 right-align">
+            <a href="{{ path('calendario_calendario_dia_compensado_new') }}" class="btn-large btn-floating waves-effect waves-light blue darken-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Incluir Dia Compensado"><i class="material-icons">add</i></a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="highlight bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for calendario in calendarios %}
+                <tr>
+                    <td><a href="{{ path('calendario_calendario_dia_compensado_show', { 'id': calendario.id }) }}" class="blue-text text-darken-4">{{ calendario.id }}</a></td>
+                    <td><a href="{{ path('calendario_calendario_dia_compensado_edit', { 'id': calendario.id }) }}" class="tooltipped" data-position="left" data-delay="50" data-tooltip="Editar Dia Compensado"><i class="material-icons blue-text text-darken-4">edit</i></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="center">
+        {{ knp_pagination_render(calendarios) }}
+        </div>
+    </div>
+</div>
+{% endblock content %}

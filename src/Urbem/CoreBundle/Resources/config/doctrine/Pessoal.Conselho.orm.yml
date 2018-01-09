@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Pessoal\Conselho:
+    type: entity
+    table: pessoal.conselho
+    uniqueConstraints:
+        uk_conselho_1:
+            columns:
+                - sigla
+    id:
+        codConselho:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            column: cod_conselho
+    fields:
+        sigla:
+            type: string
+            nullable: false
+            length: 10
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalContratoServidorConselhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorConselho
+            mappedBy: fkPessoalConselho

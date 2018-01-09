@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Tcern\ReceitaTc:
+    type: entity
+    table: tcern.receita_tc
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codReceita:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_receita
+    fields:
+        codTc:
+            type: string
+            nullable: false
+            length: 9
+            column: cod_tc
+    oneToOne:
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkTcernReceitaTc
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita

@@ -1,0 +1,84 @@
+Urbem\CoreBundle\Entity\Tcern\UnidadeOrcamentaria:
+    type: entity
+    table: tcern.unidade_orcamentaria
+    uniqueConstraints:
+        uk_unidade_orcamentaria:
+            columns:
+                - exercicio
+                - cod_institucional
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codInstitucional:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 0
+            column: cod_institucional
+        cgmUnidadeOrcamentaria:
+            type: integer
+            nullable: false
+            column: cgm_unidade_orcamentaria
+        codNorma:
+            type: integer
+            nullable: false
+            column: cod_norma
+        idUnidadeGestora:
+            type: integer
+            nullable: false
+            column: id_unidade_gestora
+        situacao:
+            type: boolean
+            nullable: false
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        numUnidade:
+            type: integer
+            nullable: false
+            column: num_unidade
+        numOrgao:
+            type: integer
+            nullable: false
+            column: num_orgao
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcernUnidadeOrcamentarias
+            joinColumns:
+                cgm_unidade_orcamentaria:
+                    referencedColumnName: numcgm
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcernUnidadeOrcamentarias
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkTcernUnidadeGestora:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeGestora
+            inversedBy: fkTcernUnidadeOrcamentarias
+            joinColumns:
+                id_unidade_gestora:
+                    referencedColumnName: id
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcernUnidadeOrcamentarias
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+    oneToMany:
+        fkTcernUnidadeOrcamentariaResponsaveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeOrcamentariaResponsavel
+            mappedBy: fkTcernUnidadeOrcamentaria

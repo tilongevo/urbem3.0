@@ -1,0 +1,103 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">{{ 'label.entradaDoacao.numLancamento'|trans }} - {{ object.numLancamento ~ '/' ~ object.exercicioLancamento }}</span>
+                </h2>
+            </div>
+        </div>
+
+        {% if object.fkAlmoxarifadoNaturezaLancamentoAlmoxarifadoLancamentoMaterial is not null %}
+            <div class="row">
+                <div class="col s11 servidor-table">
+                    <a class="btn-flat tooltipped"
+                       href="{{ path('urbem_patrimonial_frota_manutencao_item_create', { 'numLancamento': object.numLancamento, 'exercicio': object.exercicioLancamento })}}"
+                       data-position="left"
+                       data-delay="50"
+                       data-tooltip="Incluir"
+                       id="incluirManutencaoItem">
+                        <i class="mdi mdi-file-document"></i>
+                        {{ 'label.frotaManutencaoItem.manutencaoItem'|trans }}
+                    </a>
+                </div>
+                <div class="col s1">
+                    <a class="tooltipped"
+                       href="{{ path('urbem_patrimonial_frota_manutencao_item_create', { 'numLancamento': object.numLancamento, 'exercicio': object.exercicioLancamento }) }}"
+                       data-toggle="tooltip" data-placement="top" title="{{ "incluir"|trans }}">
+                        <i class="mdi mdi-plus-circle right small"></i>
+                    </a>
+                </div>
+
+                <table class="col s12 highlight bordered">
+                    <thead class="thead-rh">
+                    <th class="th-rh" width="10"></th>
+                    <th class="th-rh">{{ 'label.entradaDoacao.codItem'|trans }}</th>
+                    <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+                    </thead>
+                    <tbody>
+                    {% for item in object.fkAlmoxarifadoNaturezaLancamentoAlmoxarifadoLancamentoMaterial %}
+                        <tr>
+                            <td class="td-rh">{{ loop.index }}</td>
+                            <td class="td-rh">{{ item.fkAlmoxarifadoEstoqueMaterial.fkAlmoxarifadoCatalogoItem.codItem ~ ' - ' ~ item.fkAlmoxarifadoEstoqueMaterial.fkAlmoxarifadoCatalogoItem.codMarca.descricao }}
+                            <td class="td-rh">
+                                <div class="btn-group">
+                                    <a href="{{ path('urbem_patrimonial_frota_manutencao_item_edit', { 'id': object.numLancamento ~ '~' ~ object.exercicioLancamento ~ '~' ~ item.fkAlmoxarifadoEstoqueMaterial.fkAlmoxarifadoCatalogoItem.codItem }) }}"
+                                       class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                       data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}"
+                                       id="manutencaoItem">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a href="{{ path('urbem_patrimonial_frota_manutencao_item_delete', { 'id': object.numLancamento ~ '~' ~ object.exercicioLancamento ~ '~' ~ item.fkAlmoxarifadoEstoqueMaterial.fkAlmoxarifadoCatalogoItem.codItem }) }}"
+                                       class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                       data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="sonata-ba-form-actions well well-small form-actions row">
+                <div class="col s8 initial">
+                    <a href="{{ path('urbem_patrimonial_almoxarifado_pedido_transferencia_list') }}"
+                       class="back btn-floating white-text blue darken-4 btn-success">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock show %}

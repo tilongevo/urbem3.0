@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Tcepe\OrcamentoModalidadeDespesa:
+    type: entity
+    table: tcepe.orcamento_modalidade_despesa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codDespesa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_despesa
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields: {  }
+    manyToOne:
+        fkTcepeModalidadeDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Tcepe\ModalidadeDespesa
+            inversedBy: fkTcepeOrcamentoModalidadeDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcepeOrcamentoModalidadeDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkOrcamentoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            inversedBy: fkTcepeOrcamentoModalidadeDespesas
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_despesa:
+                    referencedColumnName: cod_despesa

@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Folhapagamento\NivelPadrao:
+    type: entity
+    table: folhapagamento.nivel_padrao
+    id:
+        codNivelPadrao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel_padrao
+    fields: {  }
+    oneToMany:
+        fkFolhapagamentoNivelPadraoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\NivelPadraoNivel
+            mappedBy: fkFolhapagamentoNivelPadrao
+        fkPessoalContratoServidorNivelPadroes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorNivelPadrao
+            mappedBy: fkFolhapagamentoNivelPadrao

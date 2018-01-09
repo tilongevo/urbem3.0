@@ -1,0 +1,110 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left" style="margin-top: 10px;">
+                    <i class="fa fa-cubes left grey-text medium" aria-hidden="true"></i>
+                    <span style="padding-top: 10px">{{ 'label.inventario.title'|trans }}:</span>
+                    <span style="padding-top: 10px; font-weight: bold" class="grey-text bold">
+                        {{ object.codInventario }}/{{ object.exercicio }}
+                    </span>
+                </h2>
+                {% if false == object.processado %}
+                <a href="{{ path('urbem_patrimonial_almoxarifado_inventario_edit', { 'id': object|objectKey }) }}"
+                   class="serv-btn right">
+                    <i class="material-icons right">edit</i>
+                </a>
+                {% endif %}
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.inventario.codInventario'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.codInventario }}/{{ object.exercicio }}
+                    </h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.inventario.codAlmoxarifado'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.fkAlmoxarifadoAlmoxarifado }}
+                    </h6>
+                </div>
+                <div class="col s6 little1-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">
+                        {{ 'label.observacao'|trans }}
+                    </h6>
+                    <h6 class="col s12 grey-text text-darken-1">
+                        {{ object.observacao }}
+                    </h6>
+                </div>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col s12" style="margin-bottom: 10px">
+                        {% if object.processado %}
+                            <a class="btn grey right">
+                                <i class="fa fa-ban left help-icon-btn"></i>Processado
+                            </a>
+                        {% else %}
+                            {% if false == object.fkAlmoxarifadoInventarioItens.last %}
+                                <a class="btn grey right">
+                                    <i class="fa fa-ban left help-icon-btn"></i>Processar
+                                </a>
+                            {% else %}
+                            {# Ficar cinza #}
+                            <a class="btn sonata-ba-action right"
+                               href="{{ path('urbem_patrimonial_almoxarifado_inventario_processar_inventario', { 'id': admin.adminRequestId }) }}">
+                                <i class="fa fa-ban left help-icon-btn"></i>Processar
+                            </a>
+                            {% endif %}
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'PatrimonialBundle::Sonata/Almoxarifado/Inventario/CRUD/show__item.html.twig' %}
+
+        <hr/>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="col s8 initial">
+                <a href="{{ path('urbem_patrimonial_almoxarifado_inventario_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock show %}

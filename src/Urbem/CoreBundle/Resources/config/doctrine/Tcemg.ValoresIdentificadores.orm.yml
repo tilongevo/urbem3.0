@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcemg\ValoresIdentificadores:
+    type: entity
+    table: tcemg.valores_identificadores
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\ValoresIdentificadoresRepository
+    id:
+        codIdentificador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_identificador
+    fields:
+        descricao:
+            type: string
+            nullable: false
+    oneToMany:
+        fkTcemgReceitaIndentificadoresPeculiarReceitas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\ReceitaIndentificadoresPeculiarReceita
+            mappedBy: fkTcemgValoresIdentificadores

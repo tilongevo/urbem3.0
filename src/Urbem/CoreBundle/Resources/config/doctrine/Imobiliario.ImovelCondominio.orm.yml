@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Imobiliario\ImovelCondominio:
+    type: entity
+    table: imobiliario.imovel_condominio
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+    fields:
+        codCondominio:
+            type: integer
+            nullable: false
+            column: cod_condominio
+    manyToOne:
+        fkImobiliarioCondominio:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Condominio
+            inversedBy: fkImobiliarioImovelCondominios
+            joinColumns:
+                cod_condominio:
+                    referencedColumnName: cod_condominio
+    oneToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkImobiliarioImovelCondominio
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal

@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Tcmba\ConfiguracaoOrdenador:
+    type: entity
+    table: tcmba.configuracao_ordenador
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        cgmOrdenador:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_ordenador
+        numUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_unidade
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        dtInicioVigencia:
+            type: date
+            nullable: false
+            column: dt_inicio_vigencia
+        dtFimVigencia:
+            type: date
+            nullable: false
+            column: dt_fim_vigencia
+        codTipoResponsavel:
+            type: integer
+            nullable: false
+            column: cod_tipo_responsavel
+    manyToOne:
+        fkOrcamentoUnidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Unidade
+            inversedBy: fkTcmbaConfiguracaoOrdenadores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                num_unidade:
+                    referencedColumnName: num_unidade
+                num_orgao:
+                    referencedColumnName: num_orgao
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcmbaConfiguracaoOrdenadores
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkTcmbaConfiguracaoOrdenadores
+            joinColumns:
+                cgm_ordenador:
+                    referencedColumnName: numcgm
+        fkTcmbaTipoResponsavel:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoResponsavel
+            inversedBy: fkTcmbaConfiguracaoOrdenadores
+            joinColumns:
+                cod_tipo_responsavel:
+                    referencedColumnName: cod_tipo_responsavel

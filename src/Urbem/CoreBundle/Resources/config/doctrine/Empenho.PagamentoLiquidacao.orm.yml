@@ -1,0 +1,72 @@
+Urbem\CoreBundle\Entity\Empenho\PagamentoLiquidacao:
+    type: entity
+    table: empenho.pagamento_liquidacao
+    repositoryClass: Urbem\CoreBundle\Repository\Empenho\PagamentoLiquidacaoRepository
+    id:
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicioLiquidacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_liquidacao
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+    fields:
+        vlPagamento:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_pagamento
+    manyToOne:
+        fkEmpenhoOrdemPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamento
+            inversedBy: fkEmpenhoPagamentoLiquidacoes
+            joinColumns:
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkEmpenhoNotaLiquidacao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\NotaLiquidacao
+            inversedBy: fkEmpenhoPagamentoLiquidacoes
+            joinColumns:
+                exercicio_liquidacao:
+                    referencedColumnName: exercicio
+                cod_nota:
+                    referencedColumnName: cod_nota
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToMany:
+        fkEmpenhoOrdemPagamentoLiquidacaoAnuladas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoLiquidacaoAnulada
+            mappedBy: fkEmpenhoPagamentoLiquidacao
+        fkEmpenhoPagamentoLiquidacaoNotaLiquidacaoPagas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\PagamentoLiquidacaoNotaLiquidacaoPaga
+            mappedBy: fkEmpenhoPagamentoLiquidacao

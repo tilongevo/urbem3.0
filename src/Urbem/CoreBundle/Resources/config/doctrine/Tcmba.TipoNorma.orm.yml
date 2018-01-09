@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoNorma:
+    type: entity
+    table: tcmba.tipo_norma
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkTcmbaVinculoTipoNormas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\VinculoTipoNorma
+            mappedBy: fkTcmbaTipoNorma

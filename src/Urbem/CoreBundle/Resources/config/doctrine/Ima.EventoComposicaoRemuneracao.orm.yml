@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Ima\EventoComposicaoRemuneracao:
+    type: entity
+    table: ima.evento_composicao_remuneracao
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+    fields: {  }
+    manyToOne:
+        fkImaConfiguracaoRais:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoRais
+            inversedBy: fkImaEventoComposicaoRemuneracoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkImaEventoComposicaoRemuneracoes
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

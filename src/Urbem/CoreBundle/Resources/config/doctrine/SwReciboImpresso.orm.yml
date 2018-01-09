@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\SwReciboImpresso:
+    type: entity
+    table: sw_recibo_impresso
+    id:
+        codAndamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_andamento
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        codRecibo:
+            type: integer
+            nullable: false
+            column: cod_recibo
+    oneToOne:
+        fkSwRecebimento:
+            targetEntity: Urbem\CoreBundle\Entity\SwRecebimento
+            inversedBy: fkSwReciboImpresso
+            joinColumns:
+                cod_andamento:
+                    referencedColumnName: cod_andamento
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

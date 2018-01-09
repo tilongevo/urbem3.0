@@ -1,0 +1,84 @@
+Urbem\CoreBundle\Entity\Administracao\Setor:
+    type: entity
+    table: administracao.setor
+    id:
+        codSetor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_setor
+        codUnidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_unidade
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+        codOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_orgao
+        codDepartamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_departamento
+    fields:
+        usuarioResponsavel:
+            type: integer
+            nullable: false
+            column: usuario_responsavel
+        nomSetor:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_setor
+    manyToOne:
+        fkAdministracaoDepartamento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Departamento
+            inversedBy: fkAdministracaoSetores
+            joinColumns:
+                cod_departamento:
+                    referencedColumnName: cod_departamento
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkAdministracaoSetores
+            joinColumns:
+                usuario_responsavel:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkAdministracaoLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Local
+            mappedBy: fkAdministracaoSetor
+    oneToOne:
+        fkOrganogramaDeParaSetor:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\DeParaSetor
+            mappedBy: fkAdministracaoSetor
+            joinColumns:
+                cod_setor:
+                    referencedColumnName: cod_setor
+                cod_unidade:
+                    referencedColumnName: cod_unidade
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+                cod_orgao:
+                    referencedColumnName: cod_orgao
+                cod_departamento:
+                    referencedColumnName: cod_departamento

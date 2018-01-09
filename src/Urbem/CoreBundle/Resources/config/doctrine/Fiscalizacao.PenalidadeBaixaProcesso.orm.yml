@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeBaixaProcesso:
+    type: entity
+    table: fiscalizacao.penalidade_baixa_processo
+    id:
+        codPenalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_penalidade
+        timestampInicio:
+            type: datetimepk
+            generator:
+                strategy: NONE
+            column: timestamp_inicio
+    fields:
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+    manyToOne:
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkFiscalizacaoPenalidadeBaixaProcessos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+    oneToOne:
+        fkFiscalizacaoPenalidadeBaixa:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\PenalidadeBaixa
+            inversedBy: fkFiscalizacaoPenalidadeBaixaProcesso
+            joinColumns:
+                cod_penalidade:
+                    referencedColumnName: cod_penalidade
+                timestamp_inicio:
+                    referencedColumnName: timestamp_inicio

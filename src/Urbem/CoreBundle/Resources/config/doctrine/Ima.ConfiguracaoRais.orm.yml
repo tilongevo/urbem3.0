@@ -1,0 +1,87 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoRais:
+    type: entity
+    table: ima.configuracao_rais
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        tipoInscricao:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_inscricao
+        telefone:
+            type: string
+            nullable: false
+            length: 11
+        email:
+            type: string
+            nullable: false
+            length: 30
+        naturezaJuridica:
+            type: string
+            nullable: false
+            length: 4
+            column: natureza_juridica
+        codMunicipio:
+            type: integer
+            nullable: false
+            column: cod_municipio
+        dtBaseCategoria:
+            type: integer
+            nullable: false
+            column: dt_base_categoria
+        ceiVinculado:
+            type: boolean
+            nullable: false
+            column: cei_vinculado
+        prefixo:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+        numeroCei:
+            type: bigint
+            nullable: false
+            options:
+                default: '0'
+            column: numero_cei
+        codTipoControlePonto:
+            type: integer
+            nullable: false
+            options:
+                default: '1'
+            column: cod_tipo_controle_ponto
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkImaConfiguracaoRais
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkImaTipoControlePonto:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\TipoControlePonto
+            inversedBy: fkImaConfiguracaoRais
+            joinColumns:
+                cod_tipo_controle_ponto:
+                    referencedColumnName: cod_tipo_controle_ponto
+    oneToMany:
+        fkImaEventoHorasExtras:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\EventoHorasExtras
+            mappedBy: fkImaConfiguracaoRais
+        fkImaEventoComposicaoRemuneracoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\EventoComposicaoRemuneracao
+            mappedBy: fkImaConfiguracaoRais

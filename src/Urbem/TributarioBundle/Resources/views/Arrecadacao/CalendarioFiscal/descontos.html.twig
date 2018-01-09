@@ -1,0 +1,50 @@
+{% set descontos = field.data.descontos %}
+
+<div class="col s12">
+    <div class="col s1 right" style="margin-top: 10px">
+        <span class="icon-input">
+            <i class="material-icons">add_circle</i>
+        </span>
+        <input class="white-text blue darken-4 btn btn-success save col s12" type="button"
+               name="addDesconto" id="addDesconto" value="Incluir">
+    </div>
+</div>
+<div class="col s12">
+    <h3 class="col s10 box-title left-align show">{{ 'label.definirVencimentos.listaVencimentos'|trans }}</h3>
+    <div class="divider grey lighten-1  title-divider"></div>
+    <table id="tableDescontos" class="bordered highlight" style="width:100%">
+        <tr class="tr-rh">
+            <th class="th-rh">{{ 'label.definirVencimentos.dataVencimento'|trans }}</th>
+            <th class="th-rh">{{ 'label.definirVencimentos.desconto'|trans }}</th>
+            <th class="th-rh">{{ 'label.definirVencimentos.formaDesconto'|trans }}</th>
+            <th class="th-rh">{{ 'label.acao'|trans }}</th>
+        </tr>
+        {% if descontos|length > 0 %}
+            {% for desconto in descontos %}
+                {% if desconto.percentual == true %}
+                    {% set percentual = 'per' %}
+                {% else %}
+                    {% set percentual = 'abs' %}
+                {% endif %}
+                {% set value = desconto.dataVencimento|date('d/m/Y') ~ '__' ~ desconto.valor ~ '__' ~ percentual %}
+                <tr class="tr-rh">
+                    <td style="display: none"><input name="descontos[]" type="hidden" value="{{ value }}" /></td>
+                    <td>{{ desconto.dataVencimento|date('d/m/Y') }}</td>
+                    <td>{{ desconto.valor }}</td>
+                    <td>
+                        {% if desconto.percentual == true %}
+                            {{ 'label.definirVencimentos.percentual'|trans }}
+                        {% else %}
+                            {{ 'label.definirVencimentos.valorAbsoluto'|trans }}
+                        {% endif %}
+                    </td>
+                    <td class="remove"><i class="material-icons blue-text text-darken-4">delete</i></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="tr-rh empty">
+                <td colspan="6">{{ 'listagemVazia'|trans }}</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

@@ -1,0 +1,153 @@
+Urbem\CoreBundle\Entity\Tesouraria\Boletim:
+    type: entity
+    table: tesouraria.boletim
+    repositoryClass: Urbem\CoreBundle\Repository\Financeiro\Tesouraria\BoletimRepository
+    id:
+        codBoletim:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_boletim
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codTerminal:
+            type: integer
+            nullable: false
+            column: cod_terminal
+        timestampTerminal:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_terminal
+        cgmUsuario:
+            type: integer
+            nullable: false
+            column: cgm_usuario
+        timestampUsuario:
+            type: datetimemicrosecondpk
+            nullable: false
+            column: timestamp_usuario
+        dtBoletim:
+            type: date
+            nullable: false
+            column: dt_boletim
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTesourariaBoletins
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTesourariaUsuarioTerminal:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\UsuarioTerminal
+            inversedBy: fkTesourariaBoletins
+            joinColumns:
+                cod_terminal:
+                    referencedColumnName: cod_terminal
+                timestamp_terminal:
+                    referencedColumnName: timestamp_terminal
+                cgm_usuario:
+                    referencedColumnName: cgm_usuario
+                timestamp_usuario:
+                    referencedColumnName: timestamp_usuario
+    oneToMany:
+        fkTesourariaArrecadacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Arrecadacao
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaAberturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Abertura
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaBorderos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Bordero
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaBoletimLoteArrecadacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteArrecadacao
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaBoletimLoteArrecadacaoInconsistencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLoteArrecadacaoInconsistencia
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaBoletimFechados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimFechado
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaPagamentoEstornados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\PagamentoEstornado
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaFechamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Fechamento
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaTransferencias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaTransferenciaEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\TransferenciaEstornada
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaPagamentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Pagamento
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaArrecadacaoEstornadas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\ArrecadacaoEstornada
+            mappedBy: fkTesourariaBoletim
+        fkTesourariaDoteProcessados:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\DoteProcessado
+            mappedBy: fkTesourariaBoletim

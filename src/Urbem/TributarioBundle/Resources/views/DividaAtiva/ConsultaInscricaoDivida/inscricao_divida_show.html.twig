@@ -1,0 +1,42 @@
+{% set dados = admin.getDadosDividaAtiva(object) %}
+
+{% if dados %}
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.dividaAtivaConsultaInscricao.contribuinte'|trans }}</th>
+        <td>{{ dados.numcgm_contribuinte ~ '-' ~dados.nom_cgm_contribuinte }}</td>
+    </tr>
+
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.dividaAtivaConsultaInscricao.inscricaoAno'|trans }}</th>
+        <td>{{ dados.cod_inscricao ~ '/' ~ dados.exercicio }}</td>
+    </tr>
+
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.dividaAtivaConsultaInscricao.dtInscricao'|trans }}</th>
+        <td>{{ dados.dt_inscricao_divida|format('d/m/Y') }}</td>
+    </tr>
+
+    {% if dados.inscricao_municipal %}
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.dividaAtivaConsultaInscricao.inscricaoImobiliaria'|trans }}</th>
+            <td>{{ dados.inscricao_municipal }}</td>
+        </tr>
+    {% endif %}
+
+    {% if dados.inscricao_economica %}
+        <tr class="sonata-ba-view-container">
+            <th>{{ 'label.dividaAtivaConsultaInscricao.inscricaoEconomica'|trans }}</th>
+            <td>{{ dados.inscricao_economica }}</td>
+        </tr>
+    {% endif %}
+
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.dividaAtivaConsultaInscricao.situacao'|trans }}</th>
+        <td>{{ dados.situacao }}</td>
+    </tr>
+
+    <tr class="sonata-ba-view-container">
+        <th>{{ 'label.dividaAtivaConsultaInscricao.autoridade'|trans }}</th>
+        <td>{{ object.getCodAutoridade() ~ ' - ' ~ dados.nom_cgm_autoridade }}</td>
+    </tr>
+{% endif %}

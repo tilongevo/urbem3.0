@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\Patrimonio\Apolice:
+    type: entity
+    table: patrimonio.apolice
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Patrimonio\ApoliceRepository
+    id:
+        codApolice:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: patrimonio.apolice_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_apolice
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        numApolice:
+            type: string
+            nullable: false
+            length: 15
+            column: num_apolice
+        dtVencimento:
+            type: date
+            nullable: false
+            column: dt_vencimento
+        contato:
+            type: string
+            nullable: false
+            length: 40
+        dtAssinatura:
+            type: date
+            nullable: true
+            column: dt_assinatura
+        inicioVigencia:
+            type: date
+            nullable: true
+            column: inicio_vigencia
+        valorApolice:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_apolice
+        valorFranquia:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_franquia
+        observacoes:
+            type: text
+            nullable: true
+        nomeArquivo:
+            type: string
+            nullable: true
+            length: 80
+            column: nome_arquivo
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkPatrimonioApolices
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToMany:
+        fkPatrimonioApoliceBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\ApoliceBem
+            mappedBy: fkPatrimonioApolice

@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Licitacao\ContratoArquivo:
+    type: entity
+    table: licitacao.contrato_arquivo
+    id:
+        numContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_contrato
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        arquivo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomArquivo:
+            type: string
+            nullable: false
+            length: 120
+            column: nom_arquivo
+    manyToOne:
+        fkLicitacaoContrato:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Contrato
+            inversedBy: fkLicitacaoContratoArquivos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_contrato:
+                    referencedColumnName: num_contrato

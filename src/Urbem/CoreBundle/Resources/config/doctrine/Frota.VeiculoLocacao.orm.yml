@@ -1,0 +1,92 @@
+Urbem\CoreBundle\Entity\Frota\VeiculoLocacao:
+    type: entity
+    table: frota.veiculo_locacao
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: frota.veiculo_locacao_seq
+                allocationSize: 1
+                initialValue: 1
+            column: id
+    fields:
+        codVeiculo:
+            type: integer
+            nullable: false
+            column: cod_veiculo
+        codProcesso:
+            type: integer
+            nullable: false
+            column: cod_processo
+        anoExercicio:
+            type: string
+            nullable: false
+            length: 4
+            column: ano_exercicio
+        cgmLocatario:
+            type: integer
+            nullable: false
+            column: cgm_locatario
+        dtContrato:
+            type: date
+            nullable: false
+            column: dt_contrato
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: false
+            column: dt_termino
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        codEntidade:
+            type: integer
+            nullable: false
+            column: cod_entidade
+        codEmpenho:
+            type: integer
+            nullable: false
+            column: cod_empenho
+        vlLocacao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_locacao
+    manyToOne:
+        fkFrotaVeiculo:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            inversedBy: fkFrotaVeiculoLocacoes
+            joinColumns:
+                cod_veiculo:
+                    referencedColumnName: cod_veiculo
+        fkSwProcesso:
+            targetEntity: Urbem\CoreBundle\Entity\SwProcesso
+            inversedBy: fkFrotaVeiculoLocacoes
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkSwCgmPessoaJuridica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaJuridica
+            inversedBy: fkFrotaVeiculoLocacoes
+            joinColumns:
+                cgm_locatario:
+                    referencedColumnName: numcgm
+        fkEmpenhoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\Empenho
+            inversedBy: fkFrotaVeiculoLocacoes
+            joinColumns:
+                cod_empenho:
+                    referencedColumnName: cod_empenho
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade

@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\SwAtributoValorPadrao:
+    type: entity
+    table: sw_atributo_valor_padrao
+    id:
+        codValor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_valor
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+    fields:
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        valorPadrao:
+            type: string
+            nullable: false
+            length: 500
+            column: valor_padrao
+    manyToOne:
+        fkSwAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\SwAtributoDinamico
+            inversedBy: fkSwAtributoValorPadroes
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo

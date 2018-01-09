@@ -1,0 +1,155 @@
+Urbem\CoreBundle\Entity\Pessoal\Servidor:
+    type: entity
+    table: pessoal.servidor
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ServidorRepository
+    uniqueConstraints:
+        uk_servidor_1:
+            columns:
+                - numcgm
+    id:
+        codServidor:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.servidor_seq
+                initialValue: 1
+                allocationSize: 1
+            column: cod_servidor
+    fields:
+        codUf:
+            type: integer
+            nullable: true
+            column: cod_uf
+        codMunicipio:
+            type: integer
+            nullable: true
+            column: cod_municipio
+        numcgm:
+            type: integer
+            nullable: false
+        nomePai:
+            type: string
+            nullable: true
+            length: 80
+            column: nome_pai
+        nomeMae:
+            type: string
+            nullable: false
+            length: 80
+            column: nome_mae
+        zonaTitulo:
+            type: string
+            nullable: false
+            length: 5
+            column: zona_titulo
+        secaoTitulo:
+            type: string
+            nullable: false
+            length: 5
+            column: secao_titulo
+        caminhoFoto:
+            type: string
+            nullable: true
+            length: 80
+            column: caminho_foto
+        nrTituloEleitor:
+            type: string
+            nullable: false
+            length: 12
+            column: nr_titulo_eleitor
+        codEstadoCivil:
+            type: integer
+            nullable: false
+            column: cod_estado_civil
+        codRaca:
+            type: integer
+            nullable: false
+            column: cod_raca
+    manyToOne:
+        fkSwMunicipio:
+            targetEntity: Urbem\CoreBundle\Entity\SwMunicipio
+            inversedBy: fkPessoalServidores
+            joinColumns:
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_uf:
+                    referencedColumnName: cod_uf
+        fkCseEstadoCivil:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\EstadoCivil
+            inversedBy: fkPessoalServidores
+            joinColumns:
+                cod_estado_civil:
+                    referencedColumnName: cod_estado
+        fkCseRaca:
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Raca
+            inversedBy: fkPessoalServidores
+            joinColumns:
+                cod_raca:
+                    referencedColumnName: cod_raca
+    oneToMany:
+        fkPessoalServidorPisPaseps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorPisPasep
+            mappedBy: fkPessoalServidor
+        fkPessoalServidorDependentes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorDependente
+            mappedBy: fkPessoalServidor
+        fkPessoalServidorConjuges:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorConjuge
+            mappedBy: fkPessoalServidor
+        fkPessoalServidorCtps:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorCtps
+            mappedBy: fkPessoalServidor
+        fkPessoalServidorCids:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorCid
+            mappedBy: fkPessoalServidor
+        fkPessoalServidorContratoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorContratoServidor
+            mappedBy: fkPessoalServidor
+        fkPessoalServidorDocumentoDigitais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorDocumentoDigital
+            mappedBy: fkPessoalServidor
+    oneToOne:
+        fkPessoalServidorReservista:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ServidorReservista
+            mappedBy: fkPessoalServidor
+            joinColumns:
+                cod_servidor:
+                    referencedColumnName: cod_servidor
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkPessoalServidor
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

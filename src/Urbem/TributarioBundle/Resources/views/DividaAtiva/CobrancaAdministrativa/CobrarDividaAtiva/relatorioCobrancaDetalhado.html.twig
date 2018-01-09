@@ -1,0 +1,124 @@
+<table class="bordered highlight" style="width:100%">
+<tr class="tr-rh">
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.creditoDescricao'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.vencimento'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.valorOrigem'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.juros'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.comissaoCobranca'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.multa'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.correcaoUrm'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.reducao'|trans }}</th>
+<th class="th-rh">{{ 'label.tributarioCobrarDividaAtiva.subtotal'|trans }}</th>
+</tr>
+
+{% set cobrancas = field.data.inscricoesVinculadas %}
+
+{% set total,subtotal = 0,0 %}
+{% for cobranca in cobrancas %}
+    {% set descricao = admin.getCreditoDescricao(cobranca.cod_inscricao, cobranca.exercicio)|first %}
+    {% if descricao %}
+        <tr>
+            <td>{{ descricao.credito_formatado }} - {{ descricao.descricao_credito }} - {{ descricao.origem }}</td>
+            <td>{{ descricao.dt_vencimento_origem|date("d/m/Y") }}</td>
+            <td>{{ descricao.valor|number_format(2, ',', '.')  }}</td>
+
+            {% set taxas = admin.getTaxas(cobranca.cod_inscricao, cobranca.exercicio, descricao.valor, descricao.dt_vencimento_origem) %}
+            {% if taxas %}
+
+                {% set juros = taxas.juros|split(';')|first %}
+
+                {% set taxaComissao = '0.00' %}
+                {% set taxaMulta = '0.00' %}
+
+                {% set acrescimos = admin.getListaAcrescimosDaModalidade(app.request.get('modalidade')) %}
+
+                {% if acrescimos is defined %}
+                    {% set acrescimoIndex = admin.getKeyAcrescimoByDescricao(acrescimos, 'Comissão de Cobrança') %}
+                    {% for comissao in taxas.multa|split(';') %}
+                        {% if taxas.multa|split(';')[loop.index] is defined and taxas.multa|split(';')[loop.index] == acrescimos[acrescimoIndex].cod_acrescimo and taxas.multa|split(';')[loop.index+1] is defined and taxas.multa|split(';')[loop.index+1] == acrescimos[acrescimoIndex].cod_tipo %}
+                            {% set taxaComissao = taxas.multa|split(';')[loop.index-1] %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% set acrescimoIndex = admin.getKeyAcrescimoByDescricao(acrescimos, 'Multa') %}
+                    {% for multa in taxas.multa|split(';') %}
+                        {% if taxas.multa|split(';')[loop.index-1] is defined and taxas.multa|split(';')[loop.index] is defined %}
+                            {% if taxas.multa|split(';')[loop.index-1] == acrescimos[acrescimoIndex].cod_acrescimo and taxas.multa|split(';')[loop.index] == acrescimos[acrescimoIndex].cod_tipo %}
+                                {% set taxaMulta = (taxas.multa|split(';')[loop.index-2]) %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% set multa = taxaMulta %}
+                {% set comissao = taxaComissao %}
+                {% set correcao = taxas.correcao|split(';')|first %}
+
+                <td>{{ juros|number_format(2, ',', '.') }}</td>
+                <td>{{ comissao|number_format(2, ',', '.') }}</td>
+                <td>{{ multa|number_format(2, ',', '.') }}</td>
+                <td>{{ correcao|number_format(2, ',', '.') }}</td>
+
+                {% set inscricao = admin.getInscricaoMunicipal(cobranca.cod_inscricao, cobranca.exercicio) %}
+
+                {% set reducao =
+                    ( admin.getReducaoModalidadeAcrescimo(
+                            app.request.get('modalidade'),
+                            inscricao,
+                            juros,
+                            2,
+                            2,
+                            descricao.dt_vencimento_origem,
+                            app.request.get('parcelas')
+                        )
+                    ) +
+                    ( admin.getReducaoModalidadeAcrescimo(
+                            app.request.get('modalidade'),
+                            inscricao,
+                            comissao,
+                            4,
+                            3,
+                            descricao.dt_vencimento_origem,
+                            app.request.get('parcelas')
+                        )
+                    ) +
+                    ( admin.getReducaoModalidadeAcrescimo(
+                            app.request.get('modalidade'),
+                            inscricao,
+                            multa,
+                            3,
+                            3,
+                            descricao.dt_vencimento_origem,
+                            app.request.get('parcelas')
+                        )
+                    ) +
+                    ( admin.getReducaoModalidadeAcrescimo(
+                            app.request.get('modalidade'),
+                            inscricao,
+                            correcao,
+                            1,
+                            1,
+                            descricao.dt_vencimento_origem,
+                            app.request.get('parcelas')
+                        )
+                    )
+                %}
+
+                <td>{{ reducao|number_format(2, ',', '.') }}</td>
+
+                {% set subtotal = (descricao.valor + juros + comissao + multa + correcao) - reducao %}
+
+                <td>{{ subtotal|number_format(2, ',', '.') }}</td>
+            {% endif %}
+        </tr>
+    {% else %}
+        <td> - </td>
+    {% endif %}
+    {% set total = subtotal + total %}
+{% endfor %}
+</table>
+    <div class="right-align right">
+        <b>Total: {{ total|number_format(2, ',', '.') }}</b>
+    </div>
+{% set subtotal = admin.setSubtotal(total) %}
+

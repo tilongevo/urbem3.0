@@ -1,0 +1,29 @@
+Urbem\CoreBundle\Entity\Tcepe\TipoContaCorrente:
+    type: entity
+    table: tcepe.tipo_conta_corrente
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 20
+    oneToMany:
+        fkContabilidadePlanoContaEstruturas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoContaEstrutura
+            mappedBy: fkTcepeTipoContaCorrente
+        fkContabilidadePlanoContas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoConta
+            mappedBy: fkTcepeTipoContaCorrente

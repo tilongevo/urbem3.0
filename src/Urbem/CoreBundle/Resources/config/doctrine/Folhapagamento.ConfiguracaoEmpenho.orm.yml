@@ -1,0 +1,125 @@
+Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenho:
+    type: entity
+    table: folhapagamento.configuracao_empenho
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        exercicioPao:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_pao
+        exercicioDespesa:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_despesa
+        codDespesa:
+            type: integer
+            nullable: false
+            column: cod_despesa
+        numPao:
+            type: integer
+            nullable: false
+            column: num_pao
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkOrcamentoPao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Pao
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhos
+            joinColumns:
+                exercicio_pao:
+                    referencedColumnName: exercicio
+                num_pao:
+                    referencedColumnName: num_pao
+        fkFolhapagamentoConfiguracaoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEvento
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhos
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkOrcamentoDespesa:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Despesa
+            inversedBy: fkFolhapagamentoConfiguracaoEmpenhos
+            joinColumns:
+                exercicio_despesa:
+                    referencedColumnName: exercicio
+                cod_despesa:
+                    referencedColumnName: cod_despesa
+    oneToMany:
+        fkFolhapagamentoConfiguracaoEmpenhoAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoAtributo
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenho
+        fkFolhapagamentoConfiguracaoEmpenhoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoEvento
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenho
+        fkFolhapagamentoConfiguracaoEmpenhoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLotacao
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenho
+        fkFolhapagamentoConfiguracaoEmpenhoSituacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoSituacao
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenho
+        fkFolhapagamentoConfiguracaoEmpenhoLocais:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoLocal
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenho
+        fkFolhapagamentoConfiguracaoEmpenhoSubdivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoSubdivisao
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenho
+    oneToOne:
+        fkFolhapagamentoConfiguracaoEmpenhoContaDespesa:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\ConfiguracaoEmpenhoContaDespesa
+            mappedBy: fkFolhapagamentoConfiguracaoEmpenho
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                exercicio:
+                    referencedColumnName: exercicio
+                sequencia:
+                    referencedColumnName: sequencia
+                timestamp:
+                    referencedColumnName: timestamp

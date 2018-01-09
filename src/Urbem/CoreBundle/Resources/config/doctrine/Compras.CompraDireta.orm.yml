@@ -1,0 +1,166 @@
+Urbem\CoreBundle\Entity\Compras\CompraDireta:
+    type: entity
+    table: compras.compra_direta
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\CompraDiretaRepository
+    id:
+        codCompraDireta:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compra_direta
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicioEntidade:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_entidade
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields:
+        codObjeto:
+            type: integer
+            nullable: false
+            column: cod_objeto
+        exercicioMapa:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_mapa
+        codMapa:
+            type: integer
+            nullable: false
+            column: cod_mapa
+        codTipoObjeto:
+            type: integer
+            nullable: false
+            column: cod_tipo_objeto
+        dtEntregaProposta:
+            type: date
+            nullable: true
+            column: dt_entrega_proposta
+        dtValidadeProposta:
+            type: date
+            nullable: true
+            column: dt_validade_proposta
+        condicoesPagamento:
+            type: string
+            nullable: true
+            length: 80
+            column: condicoes_pagamento
+        prazoEntrega:
+            type: integer
+            nullable: true
+            column: prazo_entrega
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkComprasCompraDiretas
+            joinColumns:
+                exercicio_entidade:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkComprasModalidade:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Modalidade
+            inversedBy: fkComprasCompraDiretas
+            joinColumns:
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkComprasObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Objeto
+            inversedBy: fkComprasCompraDiretas
+            joinColumns:
+                cod_objeto:
+                    referencedColumnName: cod_objeto
+        fkComprasMapa:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Mapa
+            inversedBy: fkComprasCompraDiretas
+            joinColumns:
+                exercicio_mapa:
+                    referencedColumnName: exercicio
+                cod_mapa:
+                    referencedColumnName: cod_mapa
+        fkComprasTipoObjeto:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\TipoObjeto
+            inversedBy: fkComprasCompraDiretas
+            joinColumns:
+                cod_tipo_objeto:
+                    referencedColumnName: cod_tipo_objeto
+    oneToMany:
+        fkComprasPublicacaoCompraDiretas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\PublicacaoCompraDireta
+            mappedBy: fkComprasCompraDireta
+        fkLicitacaoContratoCompraDiretas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\ContratoCompraDireta
+            mappedBy: fkComprasCompraDireta
+        fkComprasHomologacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Homologacao
+            mappedBy: fkComprasCompraDireta
+    oneToOne:
+        fkComprasJustificativaRazao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\JustificativaRazao
+            mappedBy: fkComprasCompraDireta
+            joinColumns:
+                cod_compra_direta:
+                    referencedColumnName: cod_compra_direta
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_entidade:
+                    referencedColumnName: exercicio_entidade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkComprasCompraDiretaAnulacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDiretaAnulacao
+            mappedBy: fkComprasCompraDireta
+            joinColumns:
+                cod_compra_direta:
+                    referencedColumnName: cod_compra_direta
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_entidade:
+                    referencedColumnName: exercicio_entidade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+        fkComprasCompraDiretaProcesso:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CompraDiretaProcesso
+            mappedBy: fkComprasCompraDireta
+            joinColumns:
+                cod_compra_direta:
+                    referencedColumnName: cod_compra_direta
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio_entidade:
+                    referencedColumnName: exercicio_entidade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade

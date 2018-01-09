@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorFormaPagamento:
+    type: entity
+    table: pessoal.contrato_servidor_forma_pagamento
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorFormaPagamentoRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        codFormaPagamento:
+            type: integer
+            nullable: false
+            column: cod_forma_pagamento
+    manyToOne:
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorFormaPagamentos
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalFormaPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\FormaPagamento
+            inversedBy: fkPessoalContratoServidorFormaPagamentos
+            joinColumns:
+                cod_forma_pagamento:
+                    referencedColumnName: cod_forma_pagamento

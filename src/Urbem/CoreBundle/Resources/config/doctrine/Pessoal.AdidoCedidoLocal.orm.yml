@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Pessoal\AdidoCedidoLocal:
+    type: entity
+    table: pessoal.adido_cedido_local
+    id:
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+        codLocal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_local
+    fields: {  }
+    manyToOne:
+        fkPessoalAdidoCedido:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AdidoCedido
+            inversedBy: fkPessoalAdidoCedidoLocais
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+                cod_norma:
+                    referencedColumnName: cod_norma
+                timestamp:
+                    referencedColumnName: timestamp
+        fkOrganogramaLocal:
+            targetEntity: Urbem\CoreBundle\Entity\Organograma\Local
+            inversedBy: fkPessoalAdidoCedidoLocais
+            joinColumns:
+                cod_local:
+                    referencedColumnName: cod_local

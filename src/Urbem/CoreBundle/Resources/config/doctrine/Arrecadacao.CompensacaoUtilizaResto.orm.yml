@@ -1,0 +1,28 @@
+Urbem\CoreBundle\Entity\Arrecadacao\CompensacaoUtilizaResto:
+    type: entity
+    table: arrecadacao.compensacao_utiliza_resto
+    id:
+        codCompensacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compensacao
+    fields:
+        codCompensacaoResto:
+            type: integer
+            nullable: false
+            column: cod_compensacao_resto
+    manyToOne:
+        fkArrecadacaoCompensacaoResto:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CompensacaoResto
+            inversedBy: fkArrecadacaoCompensacaoUtilizaRestos
+            joinColumns:
+                cod_compensacao_resto:
+                    referencedColumnName: cod_compensacao
+    oneToOne:
+        fkArrecadacaoCompensacao:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Compensacao
+            inversedBy: fkArrecadacaoCompensacaoUtilizaResto
+            joinColumns:
+                cod_compensacao:
+                    referencedColumnName: cod_compensacao

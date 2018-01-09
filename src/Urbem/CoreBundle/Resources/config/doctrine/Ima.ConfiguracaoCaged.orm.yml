@@ -1,0 +1,69 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoCaged:
+    type: entity
+    table: ima.configuracao_caged
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        codCnae:
+            type: integer
+            nullable: false
+            column: cod_cnae
+        tipoDeclaracao:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_declaracao
+    manyToOne:
+        fkEconomicoCnaeFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Economico\CnaeFiscal
+            inversedBy: fkImaConfiguracaoCageds
+            joinColumns:
+                cod_cnae:
+                    referencedColumnName: cod_cnae
+    oneToMany:
+        fkImaCagedEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\CagedEvento
+            mappedBy: fkImaConfiguracaoCaged
+        fkImaCagedSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ima\CagedSubDivisao
+            mappedBy: fkImaConfiguracaoCaged
+    oneToOne:
+        fkImaCagedAutorizadoCgm:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\CagedAutorizadoCgm
+            mappedBy: fkImaConfiguracaoCaged
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkImaCagedAutorizadoCei:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\CagedAutorizadoCei
+            mappedBy: fkImaConfiguracaoCaged
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkImaCagedEstabelecimento:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ima\CagedEstabelecimento
+            mappedBy: fkImaConfiguracaoCaged
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

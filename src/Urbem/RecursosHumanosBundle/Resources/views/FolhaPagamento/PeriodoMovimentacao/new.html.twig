@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <div class="col s12">
+        <div class="row title-edit">
+        <h5>{{ 'label.recursosHumanos.periodoMovimentacao.modulo'|trans }}</h5>
+        <div class="divider grey title-divider"><p>1</p></div>
+        </div>
+    </div>
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="row col s3">
+            {{ form_label(form.dtInicial, null, {'label_attr': {'class': 'control-label label-rh required '}}) }}
+            <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                <div class="">
+                    <div class="input-group date" id="dtInicial">
+                        {{ form_widget(form.dtInicial, {'attr': {'class': 'white input-rh browser-default ', 'data-date-format': 'DD/MM/YYYY', 'readonly': 'readonly', 'value': periodoMovimentacao.dtInicial|date('d/m/Y') }}) }}
+                        {{ form_errors(form.dtInicial) }}
+                        <span class="input-group-addon"><span class="fa-calendar fa"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row col s3">
+            {{ form_label(form.dtFinal, null, {'label_attr': {'class': 'control-label label-rh required '}}) }}
+            <div class="sonata-ba-field sonata-ba-field-standard-natural ">
+                <div class="">
+                    <div class="input-group date" id="dtFinal">
+                        {{ form_widget(form.dtFinal, {'attr': {'class': 'white input-rh browser-default ', 'data-date-format': 'DD/MM/YYYY', 'value': periodoMovimentacao.dtFinal|date('d/m/Y'), 'dp_min_date': periodoMovimentacao.dtInicial|date('d/m/Y'), 'dp_max_date': periodoMovimentacao.dtFinal|date('d/m/Y') }}) }}
+                        {{ form_errors(form.dtFinal) }}
+                        <span class="input-group-addon"><span class="fa-calendar fa"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form.contratos, {'attr': {'value':  contratos}}) }}
+        {{ form_widget(form.contratosStr, {'attr': {'value': contratosStr}}) }}
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <a class="btn-floating white-text blue darken-4" href="{{ path('urbem_recursos_humanos_folha_pagamento_periodo_movimentacao_list') }}"><i class="material-icons">arrow_back</i></a>
+        </div>
+        <div class="col s6 right-align">
+            <button type="submit" name="btn_create_and_list" class="waves-effect waves-light btn blue darken-4" value="Salvar"><i class="material-icons left">save</i> Salvar</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block javascripts %}
+    <script src="{{ asset('/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/bundles/sonatacore/vendor/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('/bundles/sonatacore/vendor/moment/locale/pt-br.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/recursoshumanos/javascripts/folhapagamento/periodoMovimentacao.js') }}"></script>
+    <script>
+        $(function ($) {
+            $('#dtFinal').datetimepicker({"pickTime":false,"useCurrent":true,"minDate":"{{ periodoMovimentacao.dtInicial|date('d') }}\/{{ periodoMovimentacao.dtInicial|date('m') }}\/{{ periodoMovimentacao.dtInicial|date('Y') }}","maxDate":"{{ periodoMovimentacao.dtFinal|date('d') }}\/{{ periodoMovimentacao.dtFinal|date('m') }}\/{{ periodoMovimentacao.dtFinal|date('Y') }}","showToday":true,"language":"pt_BR","defaultDate":"","disabledDates":[],"enabledDates":[],"icons":{"time":"fa fa-clock-o","date":"fa fa-calendar","up":"fa fa-chevron-up","down":"fa fa-chevron-down"},"useStrict":false,"sideBySide":false,"daysOfWeekDisabled":[],"useSeconds":false});
+        });
+    </script>
+{% endblock javascripts %}
+

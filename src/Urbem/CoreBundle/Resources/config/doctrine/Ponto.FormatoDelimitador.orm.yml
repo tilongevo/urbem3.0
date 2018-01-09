@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Ponto\FormatoDelimitador:
+    type: entity
+    table: ponto.formato_delimitador
+    id:
+        codFormato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_formato
+    fields:
+        formatoDelimitador:
+            type: string
+            nullable: false
+            length: 1
+            column: formato_delimitador
+    oneToMany:
+        fkPontoDelimitadorColunas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DelimitadorColunas
+            mappedBy: fkPontoFormatoDelimitador
+    oneToOne:
+        fkPontoFormatoImportacao:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FormatoImportacao
+            inversedBy: fkPontoFormatoDelimitador
+            joinColumns:
+                cod_formato:
+                    referencedColumnName: cod_formato

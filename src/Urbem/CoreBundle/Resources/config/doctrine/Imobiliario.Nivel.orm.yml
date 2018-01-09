@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Imobiliario\Nivel:
+    type: entity
+    table: imobiliario.nivel
+    id:
+        codNivel:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nivel
+        codVigencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_vigencia
+    fields:
+        nomNivel:
+            type: string
+            nullable: false
+            length: 80
+            column: nom_nivel
+        mascara:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkImobiliarioVigencia:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Vigencia
+            inversedBy: fkImobiliarioNiveis
+            joinColumns:
+                cod_vigencia:
+                    referencedColumnName: cod_vigencia
+    oneToMany:
+        fkImobiliarioLocalizacaoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\LocalizacaoNivel
+            mappedBy: fkImobiliarioNivel
+        fkImobiliarioAtributoNiveis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\AtributoNivel
+            mappedBy: fkImobiliarioNivel

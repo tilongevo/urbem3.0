@@ -1,0 +1,71 @@
+Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausa:
+    type: entity
+    table: pessoal.contrato_servidor_caso_causa
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\ContratoServidorCasoCausaRepository
+    id:
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        dtRescisao:
+            type: date
+            nullable: false
+            column: dt_rescisao
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+        codCasoCausa:
+            type: integer
+            nullable: false
+            column: cod_caso_causa
+        incFolhaSalario:
+            type: boolean
+            nullable: true
+            column: inc_folha_salario
+        incFolhaDecimo:
+            type: boolean
+            nullable: true
+            column: inc_folha_decimo
+    manyToOne:
+        fkPessoalCasoCausa:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CasoCausa
+            inversedBy: fkPessoalContratoServidorCasoCausas
+            joinColumns:
+                cod_caso_causa:
+                    referencedColumnName: cod_caso_causa
+    oneToOne:
+        fkPessoalCausaObito:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CausaObito
+            mappedBy: fkPessoalContratoServidorCasoCausa
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoServidorCasoCausaNorma:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorCasoCausaNorma
+            mappedBy: fkPessoalContratoServidorCasoCausa
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalAvisoPrevio:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AvisoPrevio
+            mappedBy: fkPessoalContratoServidorCasoCausa
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato
+        fkPessoalContratoServidor:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            inversedBy: fkPessoalContratoServidorCasoCausa
+            joinColumns:
+                cod_contrato:
+                    referencedColumnName: cod_contrato

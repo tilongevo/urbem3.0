@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Imobiliario\PontoCardeal:
+    type: entity
+    table: imobiliario.ponto_cardeal
+    id:
+        codPonto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ponto
+    fields:
+        codPontoOposto:
+            type: integer
+            nullable: false
+            column: cod_ponto_oposto
+        nomPonto:
+            type: string
+            nullable: false
+            length: 20
+            column: nom_ponto
+        sigla:
+            type: string
+            nullable: false
+            length: 3
+    oneToMany:
+        fkImobiliarioConfrontacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Confrontacao
+            mappedBy: fkImobiliarioPontoCardeal

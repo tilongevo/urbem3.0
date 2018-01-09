@@ -1,0 +1,137 @@
+Urbem\CoreBundle\Entity\Arrecadacao\ImovelVVenal:
+    type: entity
+    table: arrecadacao.imovel_v_venal
+    id:
+        inscricaoMunicipal:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_municipal
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        exercicio:
+            type: string
+            nullable: false
+            length: 4
+        venalTerritorialInformado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_territorial_informado
+        venalPredialInformado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_predial_informado
+        venalTotalInformado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_total_informado
+        venalTerritorialCalculado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_territorial_calculado
+        venalPredialCalculado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_predial_calculado
+        venalTotalCalculado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_total_calculado
+        venalTerritorialDeclarado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_territorial_declarado
+        venalPredialDeclarado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_predial_declarado
+        venalTotalDeclarado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_total_declarado
+        venalTerritorialAvaliado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_territorial_avaliado
+        venalPredialAvaliado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_predial_avaliado
+        venalTotalAvaliado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: venal_total_avaliado
+        valorFinanciado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: valor_financiado
+        aliquotaValorAvaliado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: aliquota_valor_avaliado
+        aliquotaValorFinanciado:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: aliquota_valor_financiado
+    manyToOne:
+        fkImobiliarioImovel:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Imovel
+            inversedBy: fkArrecadacaoImovelVVenais
+            joinColumns:
+                inscricao_municipal:
+                    referencedColumnName: inscricao_municipal
+    oneToMany:
+        fkArrecadacaoAtributoItbiValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoItbiValor
+            mappedBy: fkArrecadacaoImovelVVenal
+        fkArrecadacaoAtributoImovelVVenalValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoImovelVVenalValor
+            mappedBy: fkArrecadacaoImovelVVenal
+        fkArrecadacaoImovelCalculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ImovelCalculo
+            mappedBy: fkArrecadacaoImovelVVenal

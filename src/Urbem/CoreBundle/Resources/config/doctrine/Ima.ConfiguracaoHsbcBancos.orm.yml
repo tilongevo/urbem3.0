@@ -1,0 +1,55 @@
+Urbem\CoreBundle\Entity\Ima\ConfiguracaoHsbcBancos:
+    type: entity
+    table: ima.configuracao_hsbc_bancos
+    id:
+        codConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_convenio
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codContaCorrente:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_conta_corrente
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codBancoOutros:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco_outros
+    fields: {  }
+    manyToOne:
+        fkImaConfiguracaoHsbcConta:
+            targetEntity: Urbem\CoreBundle\Entity\Ima\ConfiguracaoHsbcConta
+            inversedBy: fkImaConfiguracaoHsbcBancos
+            joinColumns:
+                cod_convenio:
+                    referencedColumnName: cod_convenio
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia
+                cod_conta_corrente:
+                    referencedColumnName: cod_conta_corrente
+                timestamp:
+                    referencedColumnName: timestamp
+        fkMonetarioBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Banco
+            inversedBy: fkImaConfiguracaoHsbcBancos
+            joinColumns:
+                cod_banco_outros:
+                    referencedColumnName: cod_banco

@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Pessoal\Regime:
+    type: entity
+    table: pessoal.regime
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\Pessoal\RegimeRepository
+    id:
+        codRegime:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.cod_regime_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_regime
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    oneToMany:
+        fkPessoalContratoServidorRegimeFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidorRegimeFuncao
+            mappedBy: fkPessoalRegime
+        fkPessoalConfiguracaoFormaPagamentoFerias:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ConfiguracaoFormaPagamentoFerias
+            mappedBy: fkPessoalRegime
+        fkPessoalContratoServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\ContratoServidor
+            mappedBy: fkPessoalRegime
+        fkPessoalSubDivisoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\SubDivisao
+            mappedBy: fkPessoalRegime

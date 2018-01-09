@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrf:
+    type: entity
+    table: folhapagamento.tabela_irrf
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\TabelaIrrfRepository
+    id:
+        codTabela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tabela
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        vlDependente:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_dependente
+        vlLimiteIsencao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_limite_isencao
+        vigencia:
+            type: date
+            nullable: false
+    oneToMany:
+        fkFolhapagamentoFaixaDescontoIrrfs:
+            orderBy: { 'codFaixa': 'ASC' }
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\FaixaDescontoIrrf
+            mappedBy: fkFolhapagamentoTabelaIrrf
+        fkFolhapagamentoTabelaIrrfEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfEvento
+            mappedBy: fkFolhapagamentoTabelaIrrf
+        fkFolhapagamentoTabelaIrrfComprovanteRendimentos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfComprovanteRendimento
+            mappedBy: fkFolhapagamentoTabelaIrrf
+        fkFolhapagamentoTabelaIrrfCids:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\TabelaIrrfCid
+            mappedBy: fkFolhapagamentoTabelaIrrf

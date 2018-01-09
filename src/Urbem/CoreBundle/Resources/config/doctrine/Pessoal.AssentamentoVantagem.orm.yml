@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoVantagem:
+    type: entity
+    table: pessoal.assentamento_vantagem
+    repositoryClass: Urbem\CoreBundle\Repository\Pessoal\AssentamentoVantagemRepository
+    id:
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        dtInicial:
+            type: date
+            nullable: false
+            column: dt_inicial
+        dtFinal:
+            type: date
+            nullable: true
+            column: dt_final
+    oneToMany:
+        fkPessoalAssentamentoFaixaCorrecoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoFaixaCorrecao
+            mappedBy: fkPessoalAssentamentoVantagem
+    oneToOne:
+        fkPessoalAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Assentamento
+            inversedBy: fkPessoalAssentamentoVantagem
+            joinColumns:
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+                timestamp:
+                    referencedColumnName: timestamp

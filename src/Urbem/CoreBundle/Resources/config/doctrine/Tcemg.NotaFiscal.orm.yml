@@ -1,0 +1,111 @@
+Urbem\CoreBundle\Entity\Tcemg\NotaFiscal:
+    type: entity
+    table: tcemg.nota_fiscal
+    repositoryClass: Urbem\CoreBundle\Repository\Tcemg\NotaFiscalRepository
+    id:
+        codNota:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_nota
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+    fields:
+        codTipo:
+            type: integer
+            nullable: false
+            column: cod_tipo
+        nroNota:
+            type: string
+            nullable: true
+            length: 20
+            column: nro_nota
+        nroSerie:
+            type: string
+            nullable: true
+            length: 8
+            column: nro_serie
+        aidf:
+            type: string
+            nullable: true
+            length: 15
+        dataEmissao:
+            type: date
+            nullable: false
+            column: data_emissao
+        inscricaoMunicipal:
+            type: string
+            nullable: true
+            length: 30
+            column: inscricao_municipal
+        inscricaoEstadual:
+            type: string
+            nullable: true
+            length: 30
+            column: inscricao_estadual
+        chaveAcesso:
+            type: decimal
+            nullable: true
+            precision: 44
+            scale: 0
+            column: chave_acesso
+        chaveAcessoMunicipal:
+            type: string
+            nullable: true
+            length: 60
+            column: chave_acesso_municipal
+        vlTotal:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_total
+        vlDesconto:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_desconto
+        vlTotalLiquido:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_total_liquido
+    manyToOne:
+        fkTcemgTipoNotaFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\TipoNotaFiscal
+            inversedBy: fkTcemgNotaFiscais
+            joinColumns:
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcemgNotaFiscais
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+    oneToMany:
+        fkTcemgNotaFiscalEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NotaFiscalEmpenho
+            mappedBy: fkTcemgNotaFiscal
+        fkTcemgNotaFiscalEmpenhoLiquidacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcemg\NotaFiscalEmpenhoLiquidacao
+            mappedBy: fkTcemgNotaFiscal

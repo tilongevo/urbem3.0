@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Divida\ParcelaCalculo:
+    type: entity
+    table: divida.parcela_calculo
+    id:
+        numParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcelamento
+        numParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcela
+        codCalculo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_calculo
+    fields:
+        vlCredito:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_credito
+    manyToOne:
+        fkDividaParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Parcela
+            inversedBy: fkDividaParcelaCalculos
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento
+                num_parcela:
+                    referencedColumnName: num_parcela
+        fkArrecadacaoCalculo:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Calculo
+            inversedBy: fkDividaParcelaCalculos
+            joinColumns:
+                cod_calculo:
+                    referencedColumnName: cod_calculo

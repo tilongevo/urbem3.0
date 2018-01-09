@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmba\TipoCargoTce:
+    type: entity
+    table: tcmba.tipo_cargo_tce
+    id:
+        codTipoCargoTce:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_cargo_tce
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 450
+    oneToMany:
+        fkPessoalDeParaTipoCargoTcmbas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\DeParaTipoCargoTcmba
+            mappedBy: fkTcmbaTipoCargoTce

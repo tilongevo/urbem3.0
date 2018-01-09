@@ -1,0 +1,32 @@
+Urbem\CoreBundle\Entity\Folhapagamento\BasesEvento:
+    type: entity
+    table: folhapagamento.bases_evento
+    id:
+        codBase:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_base
+        codEvento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_evento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields: {  }
+    manyToOne:
+        fkFolhapagamentoBases:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Bases
+            inversedBy: fkFolhapagamentoBasesEventos
+            joinColumns:
+                cod_base:
+                    referencedColumnName: cod_base
+        fkFolhapagamentoEvento:
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\Evento
+            inversedBy: fkFolhapagamentoBasesEventos
+            joinColumns:
+                cod_evento:
+                    referencedColumnName: cod_evento

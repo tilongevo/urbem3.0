@@ -1,0 +1,116 @@
+Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItem:
+    type: entity
+    table: compras.cotacao_fornecedor_item
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Compras\CotacaoFornecedorItemRepository
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+        lote:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        codMarca:
+            type: integer
+            nullable: false
+            column: cod_marca
+        timestamp:
+            type: datetimemicrosecondpk
+            nullable: true
+        dtValidade:
+            type: date
+            nullable: true
+            column: dt_validade
+        vlCotacao:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_cotacao
+    manyToOne:
+        fkComprasCotacaoItem:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoItem
+            inversedBy: fkComprasCotacaoFornecedorItens
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                lote:
+                    referencedColumnName: lote
+                cod_item:
+                    referencedColumnName: cod_item
+        fkAlmoxarifadoCatalogoItemMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\CatalogoItemMarca
+            inversedBy: fkComprasCotacaoFornecedorItens
+            joinColumns:
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+        fkComprasFornecedor:
+            targetEntity: Urbem\CoreBundle\Entity\Compras\Fornecedor
+            inversedBy: fkComprasCotacaoFornecedorItens
+            joinColumns:
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+    oneToMany:
+        fkLicitacaoCotacaoLicitacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\CotacaoLicitacao
+            mappedBy: fkComprasCotacaoFornecedorItem
+    oneToOne:
+        fkComprasJulgamentoItem:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\JulgamentoItem
+            mappedBy: fkComprasCotacaoFornecedorItem
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                cod_item:
+                    referencedColumnName: cod_item
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                lote:
+                    referencedColumnName: lote
+        fkComprasCotacaoFornecedorItemDesclassificacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Compras\CotacaoFornecedorItemDesclassificacao
+            mappedBy: fkComprasCotacaoFornecedorItem
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                cod_item:
+                    referencedColumnName: cod_item
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+                lote:
+                    referencedColumnName: lote

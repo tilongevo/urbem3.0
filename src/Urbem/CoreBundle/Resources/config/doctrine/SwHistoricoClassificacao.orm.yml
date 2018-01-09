@@ -1,0 +1,74 @@
+Urbem\CoreBundle\Entity\SwHistoricoClassificacao:
+    type: entity
+    table: sw_historico_classificacao
+    uniqueConstraints:
+        uk_historico_classificacao:
+            columns:
+                - cod_historico
+                - cod_categoria_economica
+                - cod_grupo_despesa
+                - cod_modalidade_aplicacao
+                - cod_elemento_despesa
+                - cod_desdobramento_1
+                - cod_desdobramento_2
+                - cod_desdobramento_3
+    id:
+        codHistoricoClassificacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_historico_classificacao
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codHistorico:
+            type: integer
+            nullable: false
+            column: cod_historico
+        codCategoriaEconomica:
+            type: integer
+            nullable: false
+            column: cod_categoria_economica
+        codGrupoDespesa:
+            type: integer
+            nullable: false
+            column: cod_grupo_despesa
+        codModalidadeAplicacao:
+            type: integer
+            nullable: false
+            column: cod_modalidade_aplicacao
+        codElementoDespesa:
+            type: integer
+            nullable: false
+            column: cod_elemento_despesa
+        codDesdobramento1:
+            type: integer
+            nullable: false
+            column: cod_desdobramento_1
+        codDesdobramento2:
+            type: integer
+            nullable: false
+            column: cod_desdobramento_2
+        codDesdobramento3:
+            type: integer
+            nullable: false
+            column: cod_desdobramento_3
+    manyToOne:
+        fkSwHistoricoEmpenho:
+            targetEntity: Urbem\CoreBundle\Entity\SwHistoricoEmpenho
+            inversedBy: fkSwHistoricoClassificacoes
+            joinColumns:
+                cod_historico:
+                    referencedColumnName: cod_historico
+                exercicio:
+                    referencedColumnName: exercicio
+    oneToMany:
+        fkSwPreEmpenhos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwPreEmpenho
+            mappedBy: fkSwHistoricoClassificacao

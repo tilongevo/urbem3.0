@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalCredito:
+    type: entity
+    table: fiscalizacao.processo_fiscal_credito
+    id:
+        codProcesso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_processo
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+    fields: {  }
+    manyToOne:
+        fkFiscalizacaoProcessoFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscal
+            inversedBy: fkFiscalizacaoProcessoFiscalCreditos
+            joinColumns:
+                cod_processo:
+                    referencedColumnName: cod_processo
+        fkMonetarioCredito:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Credito
+            inversedBy: fkFiscalizacaoProcessoFiscalCreditos
+            joinColumns:
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_especie:
+                    referencedColumnName: cod_especie

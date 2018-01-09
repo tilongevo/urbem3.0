@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include '::partials/metas.html.twig' %}
+    <title>Urbem</title>
+    {% block stylesheets %}{% endblock stylesheets %}
+</head>
+<body>
+    {% include '::partials/header.html.twig' %}
+    <div class="row">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include '::partials/modulesMaterialBase.html.twig' %}
+    {% endif %}
+
+    {% include '::partials/footer.html.twig' %}
+    {% block javascripts %}
+          <script type="text/javascript">
+          $(document).ready(function() {
+              $('select').material_select();
+              $('.datepicker').pickadate({
+                  selectMonths: true,
+                  selectYears: 100,
+                  format: 'yyyy-mm-dd'
+              });
+          });
+          </script>
+    {% endblock javascripts %}
+</body>
+
+</html>

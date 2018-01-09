@@ -1,0 +1,40 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+<th{% if(is_diff|default(false)) %} class="diff"{% endif %}>{% block name %}{{ admin.trans(field.label, {}, field.translationDomain) }}{% endblock %}</th>
+<td>
+    {% block field %}
+        <table>
+            <tbody>
+            <tr>
+                <td width="300px"><b>PARÂMETRO</b></td>
+                <td><b>VALOR</b></td>
+            </tr>
+        {% for field in field.options.data %}
+            <tr>
+                <td><b>{{ field.label }} ({{ field.name }})</b></td>
+                <td>{% if field.text %}{{ field.text }}{% else %}~{% endif %}</td>
+            </tr>
+
+        {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+
+</td>
+
+{% block field_compare %}
+    {% if(value_compare is defined) %}
+        <td>
+            {% set value = value_compare %}
+            {{ block('field') }}
+        </td>
+    {% endif %}
+{% endblock %}

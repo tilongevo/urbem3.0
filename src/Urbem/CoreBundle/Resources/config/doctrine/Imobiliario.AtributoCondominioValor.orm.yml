@@ -1,0 +1,50 @@
+Urbem\CoreBundle\Entity\Imobiliario\AtributoCondominioValor:
+    type: entity
+    table: imobiliario.atributo_condominio_valor
+    id:
+        codCondominio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_condominio
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+    fields:
+        valor:
+            type: string
+            nullable: false
+            length: 1000
+    manyToOne:
+        fkImobiliarioCondominio:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Condominio
+            inversedBy: fkImobiliarioAtributoCondominioValores
+            joinColumns:
+                cod_condominio:
+                    referencedColumnName: cod_condominio
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkImobiliarioAtributoCondominioValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo

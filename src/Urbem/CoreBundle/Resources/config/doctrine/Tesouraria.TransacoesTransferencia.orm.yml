@@ -1,0 +1,93 @@
+Urbem\CoreBundle\Entity\Tesouraria\TransacoesTransferencia:
+    type: entity
+    table: tesouraria.transacoes_transferencia
+    id:
+        codBordero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bordero
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codAgencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_agencia
+        codBanco:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_banco
+        contaCorrente:
+            type: string
+            generator:
+                strategy: NONE
+            column: conta_corrente
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+    fields:
+        descricao:
+            type: text
+            nullable: false
+        valor:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+        documento:
+            type: string
+            nullable: false
+            length: 100
+    manyToOne:
+        fkTesourariaBordero:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Bordero
+            inversedBy: fkTesourariaTransacoesTransferencias
+            joinColumns:
+                cod_bordero:
+                    referencedColumnName: cod_bordero
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTesourariaTransacoesTransferencias
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkContabilidadePlanoBanco:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\PlanoBanco
+            inversedBy: fkTesourariaTransacoesTransferencias
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+        fkMonetarioAgencia:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\Agencia
+            inversedBy: fkTesourariaTransacoesTransferencias
+            joinColumns:
+                cod_banco:
+                    referencedColumnName: cod_banco
+                cod_agencia:
+                    referencedColumnName: cod_agencia

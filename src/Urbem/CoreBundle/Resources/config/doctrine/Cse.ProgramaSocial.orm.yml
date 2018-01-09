@@ -1,0 +1,65 @@
+Urbem\CoreBundle\Entity\Cse\ProgramaSocial:
+    type: entity
+    table: cse.programa_social
+    id:
+        codPrograma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_programa
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        nomPrograma:
+            type: string
+            nullable: false
+            length: 160
+            column: nom_programa
+        descricao:
+            type: string
+            nullable: false
+            length: 240
+    oneToMany:
+        fkCseCidadaoProgramas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\CidadaoPrograma
+            mappedBy: fkCseProgramaSocial
+    oneToOne:
+        fkCseMunicipal:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Municipal
+            mappedBy: fkCseProgramaSocial
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+                exercicio:
+                    referencedColumnName: exercicio
+        fkCseEstadual:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Estadual
+            mappedBy: fkCseProgramaSocial
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+                exercicio:
+                    referencedColumnName: exercicio
+        fkCseFederal:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Federal
+            mappedBy: fkCseProgramaSocial
+            joinColumns:
+                cod_programa:
+                    referencedColumnName: cod_programa
+                exercicio:
+                    referencedColumnName: exercicio

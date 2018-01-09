@@ -1,0 +1,54 @@
+Urbem\CoreBundle\Entity\Tcern\UnidadeOrcamentariaResponsavel:
+    type: entity
+    table: tcern.unidade_orcamentaria_responsavel
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        idUnidade:
+            type: integer
+            nullable: false
+            column: id_unidade
+        cgmResponsavel:
+            type: integer
+            nullable: false
+            column: cgm_responsavel
+        cargo:
+            type: string
+            nullable: false
+            length: 30
+        codFuncao:
+            type: decimal
+            nullable: false
+            precision: 1
+            scale: 0
+            column: cod_funcao
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtFim:
+            type: date
+            nullable: false
+            column: dt_fim
+    manyToOne:
+        fkTcernUnidadeOrcamentaria:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\UnidadeOrcamentaria
+            inversedBy: fkTcernUnidadeOrcamentariaResponsaveis
+            joinColumns:
+                id_unidade:
+                    referencedColumnName: id
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkTcernUnidadeOrcamentariaResponsaveis
+            joinColumns:
+                cgm_responsavel:
+                    referencedColumnName: numcgm
+        fkTcernFuncaoGestor:
+            targetEntity: Urbem\CoreBundle\Entity\Tcern\FuncaoGestor
+            inversedBy: fkTcernUnidadeOrcamentariaResponsaveis
+            joinColumns:
+                cod_funcao:
+                    referencedColumnName: cod_funcao

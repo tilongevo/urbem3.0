@@ -1,0 +1,58 @@
+Urbem\CoreBundle\Entity\Tesouraria\ConciliacaoLancamentoManual:
+    type: entity
+    table: tesouraria.conciliacao_lancamento_manual
+    id:
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        mes:
+            type: integer
+            generator:
+                strategy: NONE
+        sequencia:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        dtLancamento:
+            type: date
+            nullable: false
+            column: dt_lancamento
+        tipoValor:
+            type: string
+            nullable: false
+            length: 1
+            column: tipo_valor
+        vlLancamento:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: vl_lancamento
+        descricao:
+            type: text
+            nullable: false
+        conciliado:
+            type: boolean
+            nullable: false
+        dtConciliacao:
+            type: date
+            nullable: true
+            column: dt_conciliacao
+    manyToOne:
+        fkTesourariaConciliacao:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Conciliacao
+            inversedBy: fkTesourariaConciliacaoLancamentoManuais
+            joinColumns:
+                cod_plano:
+                    referencedColumnName: cod_plano
+                exercicio:
+                    referencedColumnName: exercicio
+                mes:
+                    referencedColumnName: mes

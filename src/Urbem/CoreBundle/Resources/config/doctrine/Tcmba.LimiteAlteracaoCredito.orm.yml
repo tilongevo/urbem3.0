@@ -1,0 +1,51 @@
+Urbem\CoreBundle\Entity\Tcmba\LimiteAlteracaoCredito:
+    type: entity
+    table: tcmba.limite_alteracao_credito
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        codTipoAlteracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_alteracao
+    fields:
+        valorAlteracao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_alteracao
+    manyToOne:
+        fkOrcamentoEntidade:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Entidade
+            inversedBy: fkTcmbaLimiteAlteracaoCreditos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcmbaLimiteAlteracaoCreditos
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma
+        fkTcmbaTipoAlteracaoOrcamentaria:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoAlteracaoOrcamentaria
+            inversedBy: fkTcmbaLimiteAlteracaoCreditos
+            joinColumns:
+                cod_tipo_alteracao:
+                    referencedColumnName: cod_tipo

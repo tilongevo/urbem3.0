@@ -1,0 +1,56 @@
+Urbem\CoreBundle\Entity\Arrecadacao\AtributoCalendarioValor:
+    type: entity
+    table: arrecadacao.atributo_calendario_valor
+    id:
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codCadastro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cadastro
+        codAtributo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_atributo
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        valor:
+            type: text
+            nullable: false
+    manyToOne:
+        fkAdministracaoAtributoDinamico:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\AtributoDinamico
+            inversedBy: fkArrecadacaoAtributoCalendarioValores
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+                cod_cadastro:
+                    referencedColumnName: cod_cadastro
+                cod_atributo:
+                    referencedColumnName: cod_atributo
+        fkArrecadacaoCalendarioFiscal:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CalendarioFiscal
+            inversedBy: fkArrecadacaoAtributoCalendarioValores
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

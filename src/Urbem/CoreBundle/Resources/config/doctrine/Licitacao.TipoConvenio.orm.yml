@@ -1,0 +1,27 @@
+Urbem\CoreBundle\Entity\Licitacao\TipoConvenio:
+    type: entity
+    table: licitacao.tipo_convenio
+    id:
+        codTipoConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_convenio
+        codUfTipoConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf_tipo_convenio
+    fields:
+        descricao:
+            type: string
+            nullable: true
+            length: 60
+    oneToMany:
+        fkLicitacaoConvenios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            mappedBy: fkLicitacaoTipoConvenio

@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Patrimonio\SituacaoBem:
+    type: entity
+    table: patrimonio.situacao_bem
+    id:
+        codSituacao:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: patrimonio.situacao_bem_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_situacao
+    fields:
+        nomSituacao:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_situacao
+    oneToMany:
+        fkPatrimonioInventarioHistoricoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\InventarioHistoricoBem
+            mappedBy: fkPatrimonioSituacaoBem
+        fkPatrimonioHistoricoBens:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Patrimonio\HistoricoBem
+            mappedBy: fkPatrimonioSituacaoBem

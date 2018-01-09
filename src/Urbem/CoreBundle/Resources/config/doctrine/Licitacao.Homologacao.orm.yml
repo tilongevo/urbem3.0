@@ -1,0 +1,137 @@
+Urbem\CoreBundle\Entity\Licitacao\Homologacao:
+    type: entity
+    table: licitacao.homologacao
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Licitacao\HomologacaoRepository
+    id:
+        numHomologacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_homologacao
+        codLicitacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_licitacao
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        numAdjudicacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_adjudicacao
+        exercicioLicitacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_licitacao
+        lote:
+            type: integer
+            generator:
+                strategy: NONE
+        codCotacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_cotacao
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        exercicioCotacao:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_cotacao
+        cgmFornecedor:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_fornecedor
+    fields:
+        timestamp:
+            type: datetime
+            nullable: false
+        codTipoDocumento:
+            type: integer
+            nullable: false
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            nullable: false
+            column: cod_documento
+        homologado:
+            type: boolean
+            nullable: false
+    manyToOne:
+        fkLicitacaoAdjudicacao:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Adjudicacao
+            inversedBy: fkLicitacaoHomologacoes
+            joinColumns:
+                num_adjudicacao:
+                    referencedColumnName: num_adjudicacao
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                exercicio_licitacao:
+                    referencedColumnName: exercicio_licitacao
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                lote:
+                    referencedColumnName: lote
+                exercicio_cotacao:
+                    referencedColumnName: exercicio_cotacao
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor
+        fkAdministracaoModeloDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\ModeloDocumento
+            inversedBy: fkLicitacaoHomologacoes
+            joinColumns:
+                cod_documento:
+                    referencedColumnName: cod_documento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+    oneToOne:
+        fkLicitacaoHomologacaoAnulada:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\HomologacaoAnulada
+            mappedBy: fkLicitacaoHomologacao
+            joinColumns:
+                num_homologacao:
+                    referencedColumnName: num_homologacao
+                cod_licitacao:
+                    referencedColumnName: cod_licitacao
+                cod_modalidade:
+                    referencedColumnName: cod_modalidade
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                num_adjudicacao:
+                    referencedColumnName: num_adjudicacao
+                exercicio_licitacao:
+                    referencedColumnName: exercicio_licitacao
+                lote:
+                    referencedColumnName: lote
+                cod_cotacao:
+                    referencedColumnName: cod_cotacao
+                cod_item:
+                    referencedColumnName: cod_item
+                exercicio_cotacao:
+                    referencedColumnName: exercicio_cotacao
+                cgm_fornecedor:
+                    referencedColumnName: cgm_fornecedor

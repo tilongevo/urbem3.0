@@ -1,0 +1,73 @@
+Urbem\CoreBundle\Entity\Orcamento\ReceitaCreditoAcrescimo:
+    type: entity
+    table: orcamento.receita_credito_acrescimo
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codAcrescimo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_acrescimo
+        codCredito:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_credito
+        codNatureza:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_natureza
+        codGenero:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_genero
+        codEspecie:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_especie
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        dividaAtiva:
+            type: boolean
+            generator:
+                strategy: NONE
+            column: divida_ativa
+    fields:
+        codReceita:
+            type: integer
+            nullable: false
+            column: cod_receita
+    manyToOne:
+        fkMonetarioCreditoAcrescimo:
+            targetEntity: Urbem\CoreBundle\Entity\Monetario\CreditoAcrescimo
+            inversedBy: fkOrcamentoReceitaCreditoAcrescimos
+            joinColumns:
+                cod_especie:
+                    referencedColumnName: cod_especie
+                cod_genero:
+                    referencedColumnName: cod_genero
+                cod_natureza:
+                    referencedColumnName: cod_natureza
+                cod_credito:
+                    referencedColumnName: cod_credito
+                cod_acrescimo:
+                    referencedColumnName: cod_acrescimo
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkOrcamentoReceita:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Receita
+            inversedBy: fkOrcamentoReceitaCreditoAcrescimos
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_receita:
+                    referencedColumnName: cod_receita

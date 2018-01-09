@@ -1,0 +1,60 @@
+Urbem\CoreBundle\Entity\SwCgmLogradouro:
+    type: entity
+    table: sw_cgm_logradouro
+    id:
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+        cep:
+            type: string
+            generator:
+                strategy: NONE
+        codBairro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_bairro
+        codMunicipio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_municipio
+        codUf:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_uf
+    fields: {  }
+    manyToOne:
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkSwCgmLogradouros
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+        fkSwBairroLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwBairroLogradouro
+            inversedBy: fkSwCgmLogradouros
+            joinColumns:
+                cod_uf:
+                    referencedColumnName: cod_uf
+                cod_municipio:
+                    referencedColumnName: cod_municipio
+                cod_bairro:
+                    referencedColumnName: cod_bairro
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro
+        fkSwCepLogradouro:
+            targetEntity: Urbem\CoreBundle\Entity\SwCepLogradouro
+            inversedBy: fkSwCgmLogradouros
+            joinColumns:
+                cep:
+                    referencedColumnName: cep
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro

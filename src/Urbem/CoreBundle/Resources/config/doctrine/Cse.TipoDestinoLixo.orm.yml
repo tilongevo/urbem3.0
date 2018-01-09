@@ -1,0 +1,23 @@
+Urbem\CoreBundle\Entity\Cse\TipoDestinoLixo:
+    type: entity
+    table: cse.tipo_destino_lixo
+    id:
+        codDestinoLixo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_destino_lixo
+    fields:
+        nomDestinoLixo:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_destino_lixo
+    oneToMany:
+        fkCseDomicilios:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Domicilio
+            mappedBy: fkCseTipoDestinoLixo

@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Divida\DocumentoParcela:
+    type: entity
+    table: divida.documento_parcela
+    id:
+        numParcelamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcelamento
+        codTipoDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo_documento
+        codDocumento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_documento
+        numParcela:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_parcela
+    fields: {  }
+    manyToOne:
+        fkDividaDocumento:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Documento
+            inversedBy: fkDividaDocumentoParcelas
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento
+                cod_tipo_documento:
+                    referencedColumnName: cod_tipo_documento
+                cod_documento:
+                    referencedColumnName: cod_documento
+        fkDividaParcela:
+            targetEntity: Urbem\CoreBundle\Entity\Divida\Parcela
+            inversedBy: fkDividaDocumentoParcelas
+            joinColumns:
+                num_parcelamento:
+                    referencedColumnName: num_parcelamento
+                num_parcela:
+                    referencedColumnName: num_parcela

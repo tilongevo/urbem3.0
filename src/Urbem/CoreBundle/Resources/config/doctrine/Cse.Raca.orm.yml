@@ -1,0 +1,34 @@
+Urbem\CoreBundle\Entity\Cse\Raca:
+    type: entity
+    table: cse.raca
+    id:
+        codRaca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_raca
+    fields:
+        nomRaca:
+            type: string
+            nullable: false
+            length: 15
+            column: nom_raca
+        codRais:
+            type: integer
+            nullable: false
+            column: cod_rais
+    oneToMany:
+        fkCseCidadoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Cse\Cidadao
+            mappedBy: fkCseRaca
+        fkPessoalServidores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\Servidor
+            mappedBy: fkCseRaca

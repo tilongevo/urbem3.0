@@ -1,0 +1,46 @@
+Urbem\CoreBundle\Entity\Tcmgo\ProjecaoAtuarial:
+    type: entity
+    table: tcmgo.projecao_atuarial
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numOrgao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_orgao
+    fields:
+        exercicioOrgao:
+            type: string
+            nullable: false
+            length: 4
+            column: exercicio_orgao
+        vlReceita:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_receita
+        vlDespesa:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_despesa
+        vlSaldo:
+            type: decimal
+            nullable: true
+            precision: 14
+            scale: 2
+            column: vl_saldo
+    manyToOne:
+        fkOrcamentoOrgao:
+            targetEntity: Urbem\CoreBundle\Entity\Orcamento\Orgao
+            inversedBy: fkTcmgoProjecaoAtuariais
+            joinColumns:
+                exercicio_orgao:
+                    referencedColumnName: exercicio
+                num_orgao:
+                    referencedColumnName: num_orgao

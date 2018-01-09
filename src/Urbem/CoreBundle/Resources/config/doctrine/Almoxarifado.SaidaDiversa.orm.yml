@@ -1,0 +1,61 @@
+Urbem\CoreBundle\Entity\Almoxarifado\SaidaDiversa:
+    type: entity
+    table: almoxarifado.saida_diversa
+    repositoryClass: Urbem\CoreBundle\Repository\Patrimonio\Almoxarifado\SaidaDiversaRepository
+    id:
+        codLancamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lancamento
+        codItem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_item
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+        codAlmoxarifado:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_almoxarifado
+        codCentro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_centro
+        cgmSolicitante:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_solicitante
+    fields:
+        observacao:
+            type: string
+            nullable: false
+            length: 160
+    manyToOne:
+        fkAlmoxarifadoLancamentoMaterial:
+            targetEntity: Urbem\CoreBundle\Entity\Almoxarifado\LancamentoMaterial
+            inversedBy: fkAlmoxarifadoSaidaDiversas
+            joinColumns:
+                cod_lancamento:
+                    referencedColumnName: cod_lancamento
+                cod_item:
+                    referencedColumnName: cod_item
+                cod_marca:
+                    referencedColumnName: cod_marca
+                cod_almoxarifado:
+                    referencedColumnName: cod_almoxarifado
+                cod_centro:
+                    referencedColumnName: cod_centro
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkAlmoxarifadoSaidaDiversas
+            joinColumns:
+                cgm_solicitante:
+                    referencedColumnName: numcgm

@@ -1,0 +1,32 @@
+<table>
+    <thead>
+    <tr>
+        <th width="5%"></th>
+        <th>{{ 'label.swLogradouro.nome'|trans }}</th>
+        <th>{{ 'label.swLogradouro.dtFim'|trans }}</th>
+        <th>{{ 'label.swLogradouro.dtInicio'|trans }}</th>
+        <th>{{ 'exercicio'|trans }}</th>
+        <th>{{ 'label.swLogradouro.norma'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for swNomeLogradouro in object.fkSwNomeLogradourosInHistorico(object.currentFkSwNomeLogradouro) %}
+        <tr class="sonata-ba-view-container">
+            <td class="center">{{ loop.index }}</td>
+            <td class="center">{{ swNomeLogradouro }}</td>
+            <td class="center">{{ swNomeLogradouro.dtInicio|date('d/m/Y') }}</td>
+            <td class="center">{{ swNomeLogradouro.dtFim|date('d/m/Y') }}</td>
+            <td class="center">{{ swNomeLogradouro.fkNormasNorma.exercicio }}</td>
+            <td class="center">{{ swNomeLogradouro.fkNormasNorma }}</td>
+        </tr>
+    {% else %}
+        <tr class="sonata-ba-view-container">
+            <td colspan="6" class="center">
+                {{ 'swLogradouro.nenhumHistoricoSwNomeLogradouro'|trans({}, 'flashes') }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br/>
+

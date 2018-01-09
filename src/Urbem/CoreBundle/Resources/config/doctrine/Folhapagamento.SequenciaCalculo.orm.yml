@@ -1,0 +1,38 @@
+Urbem\CoreBundle\Entity\Folhapagamento\SequenciaCalculo:
+    type: entity
+    table: folhapagamento.sequencia_calculo
+    repositoryClass: Urbem\CoreBundle\Repository\RecursosHumanos\FolhaPagamento\SequenciaCalculoRepository
+    uniqueConstraints:
+        sequencia_calculo_sequencia_key:
+            columns:
+                - sequencia
+    id:
+        codSequencia:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: folhapagamento.sequencia_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_sequencia
+    fields:
+        sequencia:
+            type: integer
+            nullable: false
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+        complemento:
+            type: string
+            nullable: false
+            length: 250
+    oneToMany:
+        fkFolhapagamentoSequenciaCalculoEventos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Folhapagamento\SequenciaCalculoEvento
+            mappedBy: fkFolhapagamentoSequenciaCalculo

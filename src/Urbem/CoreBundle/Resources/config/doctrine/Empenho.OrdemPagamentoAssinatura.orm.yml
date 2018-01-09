@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoAssinatura:
+    type: entity
+    table: empenho.ordem_pagamento_assinatura
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+        numAssinatura:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_assinatura
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        cargo:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkEmpenhoOrdemPagamento:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamento
+            inversedBy: fkEmpenhoOrdemPagamentoAssinaturas
+            joinColumns:
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkEmpenhoOrdemPagamentoAssinaturas
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

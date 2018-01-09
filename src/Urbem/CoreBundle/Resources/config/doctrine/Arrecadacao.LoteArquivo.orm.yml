@@ -1,0 +1,40 @@
+Urbem\CoreBundle\Entity\Arrecadacao\LoteArquivo:
+    type: entity
+    table: arrecadacao.lote_arquivo
+    id:
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        md5sum:
+            type: string
+            nullable: false
+            length: 32
+        header:
+            type: string
+            nullable: false
+            length: 400
+        footer:
+            type: string
+            nullable: false
+            length: 400
+        nomArquivo:
+            type: string
+            nullable: false
+            length: 50
+            column: nom_arquivo
+    oneToOne:
+        fkArrecadacaoLote:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Lote
+            inversedBy: fkArrecadacaoLoteArquivo
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_lote:
+                    referencedColumnName: cod_lote

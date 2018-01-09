@@ -1,0 +1,65 @@
+Urbem\CoreBundle\Entity\Tesouraria\TransferenciaOrdemPagamentoRetencao:
+    type: entity
+    table: tesouraria.transferencia_ordem_pagamento_retencao
+    id:
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+        codPlano:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_plano
+        codOrdem:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_ordem
+    fields:
+        sequencial:
+            type: integer
+            nullable: false
+            options:
+                default: '1'
+    manyToOne:
+        fkTesourariaTransferencia:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\Transferencia
+            inversedBy: fkTesourariaTransferenciaOrdemPagamentoRetencoes
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                tipo:
+                    referencedColumnName: tipo
+        fkEmpenhoOrdemPagamentoRetencao:
+            targetEntity: Urbem\CoreBundle\Entity\Empenho\OrdemPagamentoRetencao
+            inversedBy: fkTesourariaTransferenciaOrdemPagamentoRetencoes
+            joinColumns:
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                cod_ordem:
+                    referencedColumnName: cod_ordem
+                cod_plano:
+                    referencedColumnName: cod_plano
+                sequencial:
+                    referencedColumnName: sequencial

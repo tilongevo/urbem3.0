@@ -1,0 +1,42 @@
+Urbem\CoreBundle\Entity\Arrecadacao\RetencaoFonte:
+    type: entity
+    table: arrecadacao.retencao_fonte
+    id:
+        codRetencao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_retencao
+        inscricaoEconomica:
+            type: integer
+            generator:
+                strategy: NONE
+            column: inscricao_economica
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+    fields:
+        valorRetencao:
+            type: decimal
+            nullable: false
+            precision: 14
+            scale: 2
+            column: valor_retencao
+    manyToOne:
+        fkArrecadacaoCadastroEconomicoFaturamento:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CadastroEconomicoFaturamento
+            inversedBy: fkArrecadacaoRetencaoFontes
+            joinColumns:
+                inscricao_economica:
+                    referencedColumnName: inscricao_economica
+                timestamp:
+                    referencedColumnName: timestamp
+    oneToMany:
+        fkArrecadacaoRetencaoNotas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\RetencaoNota
+            mappedBy: fkArrecadacaoRetencaoFonte

@@ -1,0 +1,63 @@
+Urbem\CoreBundle\Entity\Pessoal\AssentamentoVinculado:
+    type: entity
+    table: pessoal.assentamento_vinculado
+    id:
+        codCondicao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_condicao
+        codAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento
+        codAssentamentoAssentamento:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assentamento_assentamento
+        timestamp:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+        condicao:
+            type: string
+            generator:
+                strategy: NONE
+        diasIncidencia:
+            type: integer
+            generator:
+                strategy: NONE
+            column: dias_incidencia
+        diasProtelarAverbar:
+            type: integer
+            generator:
+                strategy: NONE
+            column: dias_protelar_averbar
+    fields: {  }
+    manyToOne:
+        fkPessoalCondicaoAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CondicaoAssentamento
+            inversedBy: fkPessoalAssentamentoVinculados
+            joinColumns:
+                cod_condicao:
+                    referencedColumnName: cod_condicao
+                timestamp:
+                    referencedColumnName: timestamp
+                cod_assentamento:
+                    referencedColumnName: cod_assentamento
+        fkPessoalAssentamentoAssentamento:
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoAssentamento
+            inversedBy: fkPessoalAssentamentoVinculados
+            joinColumns:
+                cod_assentamento_assentamento:
+                    referencedColumnName: cod_assentamento
+    oneToMany:
+        fkPessoalAssentamentoVinculadoFuncoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\AssentamentoVinculadoFuncao
+            mappedBy: fkPessoalAssentamentoVinculado

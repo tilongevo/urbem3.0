@@ -1,0 +1,38 @@
+<h3>{{ 'label.conciliarConta.movimentacao'|trans }}</h3>
+<div>
+    <p>
+        <table class="col s12 highlight bordered">
+            <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.conciliarConta.data'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.descricao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.valor'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.dataConciliacao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.conciliarConta.conciliar'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if field.data|length > 0 %}
+                    {% for movimentacao in field.data %}
+                        <tr>
+                            <td style="display: none"><input name="movimentacoes_pendentes[]" type="hidden" value="{{ movimentacao.cod_lote ~ '~' ~ movimentacao.tipo ~ '~' ~ movimentacao.sequencia ~ '~' ~ movimentacao.cod_entidade ~ '~' ~ movimentacao.tipo_valor ~ '~' ~ movimentacao.cod_arrecadacao ~ '~' ~ movimentacao.timestamp_arrecadacao ~ '~' ~ movimentacao.timestamp_estornada ~ '~' ~ movimentacao.mes ~ '~' ~ movimentacao.exercicio_conciliacao  }}"/></td>
+                            <td class="td-rh">{{ movimentacao.dt_lancamento }}</td>
+                            <td class="td-rh">{{ movimentacao.descricao }}</td>
+                            <td class="td-rh">{{ movimentacao.vl_lancamento|number_format_currency('BRL') }}</td>
+                            <td class="td-rh">{{ movimentacao.dt_conciliacao }}</td>
+                            <td class="td-rh">
+                                {% if movimentacao.conciliar == 'true' %}
+                                    <input class="conciliar" type="checkbox" data-custom="{{ movimentacao.vl_lancamento }}" name="movimentacoes_pendentesConciliado[]" value="{{ movimentacao.cod_lote ~ '~' ~ movimentacao.tipo ~ '~' ~ movimentacao.sequencia ~ '~' ~ movimentacao.cod_entidade ~ '~' ~ movimentacao.tipo_valor ~ '~' ~ movimentacao.cod_arrecadacao ~ '~' ~ movimentacao.timestamp_arrecadacao ~ '~' ~ movimentacao.timestamp_estornada ~ '~' ~ movimentacao.mes ~ '~' ~ movimentacao.exercicio_conciliacao  }}" checked="checked"/>
+                                {% else %}
+                                    <input class="conciliar" type="checkbox" data-custom="{{ movimentacao.vl_lancamento }}" name="movimentacoes_pendentesConciliado[]" value="{{ movimentacao.cod_lote ~ '~' ~ movimentacao.tipo ~ '~' ~ movimentacao.sequencia ~ '~' ~ movimentacao.cod_entidade ~ '~' ~ movimentacao.tipo_valor ~ '~' ~ movimentacao.cod_arrecadacao ~ '~' ~ movimentacao.timestamp_arrecadacao ~ '~' ~ movimentacao.timestamp_estornada ~ '~' ~ movimentacao.mes ~ '~' ~ movimentacao.exercicio_conciliacao  }}"/>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="5" class="td-rh">{{ 'listagemVazia'|trans }}</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </p>
+</div>

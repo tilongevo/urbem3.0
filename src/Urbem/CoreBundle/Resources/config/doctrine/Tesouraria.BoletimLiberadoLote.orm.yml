@@ -1,0 +1,65 @@
+Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberadoLote:
+    type: entity
+    table: tesouraria.boletim_liberado_lote
+    id:
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        codBoletim:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_boletim
+        timestampFechamento:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_fechamento
+        timestampLiberado:
+            type: datetimemicrosecondpk
+            generator:
+                strategy: NONE
+            column: timestamp_liberado
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+        codLote:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_lote
+    fields: {  }
+    manyToOne:
+        fkContabilidadeLote:
+            targetEntity: Urbem\CoreBundle\Entity\Contabilidade\Lote
+            inversedBy: fkTesourariaBoletimLiberadoLotes
+            joinColumns:
+                cod_lote:
+                    referencedColumnName: cod_lote
+                exercicio:
+                    referencedColumnName: exercicio
+                tipo:
+                    referencedColumnName: tipo
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+        fkTesourariaBoletimLiberado:
+            targetEntity: Urbem\CoreBundle\Entity\Tesouraria\BoletimLiberado
+            inversedBy: fkTesourariaBoletimLiberadoLotes
+            joinColumns:
+                cod_boletim:
+                    referencedColumnName: cod_boletim
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                timestamp_liberado:
+                    referencedColumnName: timestamp_liberado
+                timestamp_fechamento:
+                    referencedColumnName: timestamp_fechamento

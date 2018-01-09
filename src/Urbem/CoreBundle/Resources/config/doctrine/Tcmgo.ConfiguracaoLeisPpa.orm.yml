@@ -1,0 +1,39 @@
+Urbem\CoreBundle\Entity\Tcmgo\ConfiguracaoLeisPpa:
+    type: entity
+    table: tcmgo.configuracao_leis_ppa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codNorma:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_norma
+        tipoConfiguracao:
+            type: string
+            generator:
+                strategy: NONE
+            column: tipo_configuracao
+    fields:
+        status:
+            type: boolean
+            nullable: false
+        codVeiculoPublicacao:
+            type: integer
+            nullable: false
+            options:
+                default: '0'
+            column: cod_veiculo_publicacao
+        descricaoPublicacao:
+            type: text
+            nullable: false
+            column: descricao_publicacao
+    manyToOne:
+        fkNormasNorma:
+            targetEntity: Urbem\CoreBundle\Entity\Normas\Norma
+            inversedBy: fkTcmgoConfiguracaoLeisPpas
+            joinColumns:
+                cod_norma:
+                    referencedColumnName: cod_norma

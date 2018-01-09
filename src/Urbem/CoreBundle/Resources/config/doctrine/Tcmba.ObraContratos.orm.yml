@@ -1,0 +1,95 @@
+Urbem\CoreBundle\Entity\Tcmba\ObraContratos:
+    type: entity
+    table: tcmba.obra_contratos
+    id:
+        codObra:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_obra
+        codEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_entidade
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        codContratacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contratacao
+        numcgm:
+            type: integer
+            generator:
+                strategy: NONE
+    fields:
+        nroInstrumento:
+            type: string
+            nullable: true
+            length: 16
+            column: nro_instrumento
+        nroContrato:
+            type: string
+            nullable: true
+            length: 16
+            column: nro_contrato
+        nroConvenio:
+            type: string
+            nullable: true
+            length: 16
+            column: nro_convenio
+        nroParceria:
+            type: string
+            nullable: true
+            length: 16
+            column: nro_parceria
+        funcaoCgm:
+            type: string
+            nullable: false
+            length: 50
+            column: funcao_cgm
+        dataInicio:
+            type: date
+            nullable: false
+            column: data_inicio
+        dataFinal:
+            type: date
+            nullable: false
+            column: data_final
+        lotacao:
+            type: string
+            nullable: true
+            length: 50
+    manyToOne:
+        fkTcmbaObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\Obra
+            inversedBy: fkTcmbaObraContratos
+            joinColumns:
+                cod_obra:
+                    referencedColumnName: cod_obra
+                cod_entidade:
+                    referencedColumnName: cod_entidade
+                exercicio:
+                    referencedColumnName: exercicio
+                cod_tipo:
+                    referencedColumnName: cod_tipo
+        fkTcmbaTipoContratacaoObra:
+            targetEntity: Urbem\CoreBundle\Entity\Tcmba\TipoContratacaoObra
+            inversedBy: fkTcmbaObraContratos
+            joinColumns:
+                cod_contratacao:
+                    referencedColumnName: cod_contratacao
+        fkSwCgmPessoaFisica:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgmPessoaFisica
+            inversedBy: fkTcmbaObraContratos
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm

@@ -1,0 +1,22 @@
+Urbem\CoreBundle\Entity\Tcmgo\ContratoAssunto:
+    type: entity
+    table: tcmgo.contrato_assunto
+    id:
+        codAssunto:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_assunto
+    fields:
+        descricao:
+            type: string
+            nullable: false
+            length: 255
+    oneToMany:
+        fkTcmgoContratos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcmgo\Contrato
+            mappedBy: fkTcmgoContratoAssunto

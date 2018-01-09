@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Pessoal\Cbo:
+    type: entity
+    table: pessoal.cbo
+    id:
+        codCbo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: pessoal.cbo_cod_cbo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_cbo
+    fields:
+        codigo:
+            type: integer
+            nullable: false
+        descricao:
+            type: string
+            nullable: false
+            length: 150
+        dtInicial:
+            type: date
+            nullable: false
+            column: dt_inicial
+        dtFinal:
+            type: date
+            nullable: true
+            column: dt_final
+    oneToMany:
+        fkPessoalCboCargos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CboCargo
+            mappedBy: fkPessoalCbo
+        fkPessoalCboEspecialidades:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Pessoal\CboEspecialidade
+            mappedBy: fkPessoalCbo

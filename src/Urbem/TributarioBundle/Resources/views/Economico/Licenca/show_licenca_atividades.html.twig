@@ -1,0 +1,102 @@
+{% extends "base.html.twig" %}
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block content %}
+
+    <div class="tab-pane fade active in" id="tab_dados_consulta">
+        <div class="box-body  container-fluid">
+            <div class="sonata-ba-collapsed-fields">
+                <div class="row">
+                    <div class="">
+                        <div class="box box-primary">
+                            <h5 class="col s12 box-title show">
+                                <div class="box-header col s12">
+                                    <h5 class="col s12 box-title show">
+                                        {{ 'label.economico.licenca.dadosLicenca'|trans }}
+                                    </h5>
+                                </div>
+                            </h5>
+                        </div>
+                        <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                        <table class="table show-table">
+                            <tbody>
+                            <tr class="sonata-ba-view-container">
+                                <th>{{ 'label.economico.licenca.codLicenca'|trans }}</th>
+                                <td>
+                                    {{ licenca.getCodLicenca() }}
+                                </td>
+                            </tr>
+                            <tr class="sonata-ba-view-container">
+                                <th>{{ 'label.exercicio'|trans }}</th>
+                                <td>
+                                    {{ licenca.getExercicio() }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box-header">
+                        <h5 class="box-title left-align">
+                            {{ 'label.economico.licenca.listaAtividades'|trans }}
+                        </h5>
+                        <div class="divider grey lighten-1  title-divider"><p>1</p></div>
+                    </div>
+                    <table class="">
+                        <thead>
+                        <tr class="sonata-ba-list-field-header">
+                            <th class="sonata-ba-list-field-header-text"
+                                style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.codigo'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text"
+                                style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.economico.licenca.atividade'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text"
+                                style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.economico.licenca.inscricaoEconomica'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text"
+                                style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.economico.licenca.dataInicio'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text"
+                                style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.economico.licenca.dataTermino'|trans }}</th>
+                            <th class="sonata-ba-list-field-header-text"
+                                style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.acao'|trans }}</th>
+                        </thead>
+                        <tbody>
+                        {% for licencaAtividade in licencaAtividades %}
+                            {% set atividade = licencaAtividade.getFkEconomicoAtividadeCadastroEconomico().getFkEconomicoAtividade() %}
+                            <tr class="tr-rh">
+                                <td>{{ licencaAtividade.getCodAtividade() }}</td>
+                                <td>{{ atividade.getCodEstrutural() ~ ' - ' ~ atividade.getNomAtividade() }}</td>
+                                <td>{{ licencaAtividade.getInscricaoEconomica() }}</td>
+                                <td>{{ licencaAtividade.getDtInicio()|date('d/m/Y') }}</td>
+                                <td>{{ licencaAtividade.getDtTermino()|date('d/m/Y') }}</td>
+                                <td>
+                                    <a href="{{ admin.generateObjectUrl('imprimir', licencaAtividade) }}"
+                                       class="blue-text text-darken-4 transparent z-depth-0 hide-on-med-and-down tooltipped btn-list"
+                                       data-placement="bottom" title="Emitir Licença">
+                                        <i class="fa fa-print fa-lg"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <a class="btn-floating white-text blue darken-4"
+                   href="{{ path('urbem_tributario_economico_licenca_licenca_atividade_list') }}"><i
+                            class="material-icons">arrow_back</i></a>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+{% block javascripts %}
+    <script src="/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/moment/min/moment.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/bundles/sonatacore/vendor/moment/locale/pt-br.js"></script>
+{% endblock javascripts %}

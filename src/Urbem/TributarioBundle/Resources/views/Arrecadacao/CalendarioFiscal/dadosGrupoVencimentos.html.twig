@@ -1,0 +1,35 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    {% if value|length > 0 %}
+        <table class="">
+            <thead>
+            <tr class="sonata-ba-list-field-header">
+                <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.calendarioFiscal.dtVencimento'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.descricao'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.calendarioFiscal.limiteInicial'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.calendarioFiscal.limiteFinal'|trans }}</th>
+                <th class="sonata-ba-list-field-header-text th-reducao" style="text-align: center !important; background-color: #dbdbdb !important;">{{ 'label.calendarioFiscal.utilizarCotaUnica'|trans }}</th>
+            </thead>
+            <tbody>
+            {% for grupoVencimento in value %}
+                <tr class="tr-rh">
+                    <td>{{ grupoVencimento.dataVencimentoParcelaUnica|date('d/m/Y') }}</td>
+                    <td>{{ grupoVencimento.descricao }}</td>
+                    <td>{{ grupoVencimento.limiteInicial }}</td>
+                    <td>{{ grupoVencimento.limiteFinal }}</td>
+                    <td>
+                        {% if grupoVencimento.utilizarUnica == true %}
+                            {{ 'label_type_yes'|trans }}
+                        {% else %}
+                            {{ 'label_type_no'|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        -
+    {% endif %}
+{% endblock %}

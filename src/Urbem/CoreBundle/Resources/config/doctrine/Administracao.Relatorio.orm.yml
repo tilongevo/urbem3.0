@@ -1,0 +1,44 @@
+Urbem\CoreBundle\Entity\Administracao\Relatorio:
+    type: entity
+    table: administracao.relatorio
+    id:
+        codGestao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_gestao
+        codModulo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modulo
+        codRelatorio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_relatorio
+    fields:
+        nomRelatorio:
+            type: string
+            nullable: false
+            length: 200
+            column: nom_relatorio
+        arquivo:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkAdministracaoModulo:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Modulo
+            inversedBy: fkAdministracaoRelatorios
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+    oneToMany:
+        fkAdministracaoRelatorioAcoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\RelatorioAcao
+            mappedBy: fkAdministracaoRelatorio

@@ -1,0 +1,48 @@
+Urbem\CoreBundle\Entity\Licitacao\PublicacaoRescisaoConvenio:
+    type: entity
+    table: licitacao.publicacao_rescisao_convenio
+    id:
+        exercicioConvenio:
+            type: string
+            generator:
+                strategy: NONE
+            column: exercicio_convenio
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+        cgmImprensa:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_imprensa
+        dtPublicacao:
+            type: datepk
+            generator:
+                strategy: NONE
+            column: dt_publicacao
+    fields:
+        observacao:
+            type: string
+            nullable: false
+            length: 100
+        numPublicacao:
+            type: integer
+            nullable: true
+            column: num_publicacao
+    manyToOne:
+        fkLicitacaoRescisaoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\RescisaoConvenio
+            inversedBy: fkLicitacaoPublicacaoRescisaoConvenios
+            joinColumns:
+                exercicio_convenio:
+                    referencedColumnName: exercicio_convenio
+                num_convenio:
+                    referencedColumnName: num_convenio
+        fkSwCgm:
+            targetEntity: Urbem\CoreBundle\Entity\SwCgm
+            inversedBy: fkLicitacaoPublicacaoRescisaoConvenios
+            joinColumns:
+                cgm_imprensa:
+                    referencedColumnName: numcgm

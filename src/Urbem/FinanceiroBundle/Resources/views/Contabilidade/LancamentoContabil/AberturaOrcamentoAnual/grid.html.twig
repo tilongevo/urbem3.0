@@ -1,0 +1,64 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <form name="form" method="post" action="/financeiro/contabilidade/lancamento-contabil/abertura-orcamento-anual/gravar">
+        <input type="hidden" value="{{ entidade.codEntidade }}" name="codEntidade" />
+        <input type="hidden" value="{{ entidade.exercicio }}" name="exercicio" />
+        <div class="container">
+            <div class="row">
+                <div class="">
+                    <div class="box box-primary">
+                        <h4>{{ 'label.aberturaOrcamentoAnual.registroSaldosIniciais'|trans }}</h4>
+                        <div class="box-header col s12 blue-text text-darken-4">
+                            <h6><span style="font-weight: bold">{{ 'label.aberturaOrcamentoAnual.entidade'|trans }}:</span> {{ entidade.codEntidade ~ ' - ' ~ entidade.fkSwCgm.nomCgm }}</h6>
+                            <h6><span style="font-weight: bold">{{ 'label.aberturaOrcamentoAnual.dataLancamento'|trans }}:</span> {{ dtLancamento }}</h6>
+                        </div>
+                        <h5>{{ 'label.aberturaOrcamentoAnual.modulo'|trans }}</h5>
+                        <table class="bordered highlight">
+                            <tr class="tr-rh">
+                                <th class="th-rh">{{ 'label.aberturaOrcamentoAnual.descricaoConta'|trans }}</th>
+                                <th class="th-rh">{{ 'label.aberturaOrcamentoAnual.valor'|trans }}</th>
+                            </tr>
+                            {% if campos|length > 0 %}
+                                {% for campo in campos %}
+                                    <tr class="tr-rh">
+                                        <td class="td-rh">{{ campo.title }}</td>
+                                        {% if campo.name is not null %}
+                                            <td class="td-rh">
+                                                <div class="input-group">
+                                                    <input
+                                                            type="text"
+                                                            class="input-rh money"
+                                                            id="{{ campo.name }}"
+                                                            name="{{ campo.name }}"
+                                                            value="{% if campo.data != null %}{{ campo.data|trim('-') }}{% endif %}"
+                                                    >
+                                                    <span class="input-group-addon">
+                                                        <span class="fa-usd fa"></span>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        {% else %}
+                                            <td class="td-rh">
+                                                <div class="input-group"></div>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">{{ 'listagemVazia'|trans }}</td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 right-align">
+            <button type="submit" class="waves-effect waves-light btn blue darken-4 btn-bold" value="AberturaOrcamentoAnual"><i class="material-icons left">save</i>{{ 'label.aberturaOrcamentoAnual.registrarSaldos'|trans }}</button>
+        </div>
+    </form>
+{% endblock content %}
+{% block javascripts %}
+    <script src="/bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+{% endblock javascripts %}

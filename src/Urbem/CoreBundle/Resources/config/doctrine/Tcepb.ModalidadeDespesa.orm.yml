@@ -1,0 +1,25 @@
+Urbem\CoreBundle\Entity\Tcepb\ModalidadeDespesa:
+    type: entity
+    table: tcepb.modalidade_despesa
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        codModalidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modalidade
+    fields:
+        modalidade:
+            type: text
+            nullable: false
+    oneToMany:
+        fkTcepbOrcamentoModalidadeDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Tcepb\OrcamentoModalidadeDespesa
+            mappedBy: fkTcepbModalidadeDespesa

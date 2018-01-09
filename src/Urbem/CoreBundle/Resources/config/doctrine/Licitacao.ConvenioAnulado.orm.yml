@@ -1,0 +1,30 @@
+Urbem\CoreBundle\Entity\Licitacao\ConvenioAnulado:
+    type: entity
+    table: licitacao.convenio_anulado
+    id:
+        exercicio:
+            type: string
+            generator:
+                strategy: NONE
+        numConvenio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: num_convenio
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        dtAnulacao:
+            type: date
+            nullable: false
+            column: dt_anulacao
+    oneToOne:
+        fkLicitacaoConvenio:
+            targetEntity: Urbem\CoreBundle\Entity\Licitacao\Convenio
+            inversedBy: fkLicitacaoConvenioAnulado
+            joinColumns:
+                num_convenio:
+                    referencedColumnName: num_convenio
+                exercicio:
+                    referencedColumnName: exercicio

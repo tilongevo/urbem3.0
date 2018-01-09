@@ -1,0 +1,53 @@
+{% block body %}
+    {% block content %}
+        {% include 'TributarioBundle::Imobiliario/Relatorios/header.html.twig' %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <td><h5>{{ 'label.imobiliarioRelatorios.BCI.dadosProprietario'|trans|upper }}</h5></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bci in bcis %}
+                    <tr>
+                        <td><strong>{{ 'label.imobiliarioRelatorios.BCI.cgm'|trans|upper }}:</strong> {{ bci.numcgm_proprietario }}</td>
+                        <td><strong>{{ 'label.imobiliarioRelatorios.BCI.nome_razaoSocial'|trans|upper }}:</strong> {{ bci.nom_cgm_proprietario }}</td>
+                        <td><strong>{{ 'label.imobiliarioRelatorios.BCI.quota'|trans|upper }}:</strong> {{ bci.cota_proprietario }}</td>
+                        <td><strong>{{ 'label.imobiliarioRelatorios.BCI.cpf_cnpj'|trans|upper}}:</strong> {{ bci.cpf_cnpj_proprietario }}</td>
+                    </tr>
+                    <tr>
+                    	<td colspan="4">
+                    		<table style="width: 100%;">
+                    			<tr>
+                    			{% for confrontacao in bci.confrontacao %}
+                    				<td style="padding-right: 10px;">
+                    					<strong>{{ 'label.imobiliarioRelatorios.BCI.confrontacao'|trans|upper }}:</strong> {{ confrontacao.conf_principal }}</br>
+                                		<strong>{{ 'label.imobiliarioRelatorios.BCI.metragem'|trans|upper }}:</strong> {{ confrontacao.conf_lot_metragem }}</br>
+                                        <strong>{{ 'label.imobiliarioRelatorios.BCI.pontoCardeal'|trans|upper }}:</strong> {{ confrontacao.conf_lot_ponto_cardeal }}</br>
+                                        <strong>{{ 'label.imobiliarioRelatorios.BCI.especificar'|trans|upper }}:</strong> {{ confrontacao.conf_lot_especificar }}</br>
+                                        <strong>{{ 'label.imobiliarioRelatorios.BCI.desativada'|trans|upper }}:</strong> {{ confrontacao.conf_ativa }}</br>
+                    				</td>
+                    			{% endfor %}
+                    			</tr>
+                    		</table>	
+                    	</td>
+                    </tr>
+                    {% include 'TributarioBundle::Imobiliario/Relatorios/bci.atributo_dinamico.html.twig' with {'attrDinamico': bci.atributosImovel} %}
+                    {% include 'TributarioBundle::Imobiliario/Relatorios/bci.atributo_dinamico.html.twig' with {'attrDinamico': bci.atributosLote} %}
+                    {% include 'TributarioBundle::Imobiliario/Relatorios/bci.atributo_dinamico.html.twig' with {'attrDinamico': bci.atributosConstrucao} %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% include 'TributarioBundle::Imobiliario/Relatorios/bci.details.html.twig' with {'filtros': filtros} %}
+
+    {% endblock content %}
+{% endblock body %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css')) }}" media="screen, projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ absolute_url(asset('/bundles/tributario/css/relatorioBCI.css')) }}"/>
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="screen" type="text/css">
+    <link href="{{ absolute_url(asset('/bundles/core/css/relatorio.css')) }}" rel="stylesheet" media="print" type="text/css">
+{% endblock %}

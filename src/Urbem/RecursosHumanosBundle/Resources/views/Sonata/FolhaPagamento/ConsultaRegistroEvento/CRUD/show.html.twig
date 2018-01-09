@@ -1,0 +1,75 @@
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock %}
+
+{% block show %}
+    <div class="container-rh">
+        <div class="row">
+            <div class="col s12 profile-box">
+                <h2 class="blue-text text-darken-4 left">
+                    <i class="mdi mdi-file-document left grey-text medium"></i>
+                    <span style="padding-top: 10px">
+                        {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.fichaFinanceira'|trans }}
+                    </span>
+                </h2>
+
+                <p class="divider grey col s12"></p>
+
+                <div class="col s3 right">
+                    <a class="white-text blue darken-4 btn btn-success save right"
+                       href="{{ path('urbem_recursos_humanos_folha_pagamento_consulta_registro_evento_gera_relatorio_consulta_registros_evento',
+                       {
+                           'id': 1,
+                           'codPeriodoMovimentacao': object.codPeriodoMovimentacao,
+                           'codContratos': object.contratoStr,
+                       })
+                       }}">
+                        <i class="fa fa-print left"></i>{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.imprimir'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 servidor-table">
+                <a class="btn-lg tooltipped"
+                   data-position="left"
+                   data-delay="50"
+                   data-tooltip="Ficha Financeira">
+                    <i class="fa fa-cubes left"></i>
+                    {{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.contratosCalculados'|trans }}
+                </a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.nomCgm'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.contrato'|trans }}</th>
+                    <th class="th-rh">{{ 'label.recursosHumanos.folhas.consultarFichaFinanceira.matricula'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contrato in object.contratos %}
+                    <tr>
+                        <td class="td-rh">{{ contrato.nom_cgm }}</td>
+                        <td class="td-rh">{{ contrato.cod_contrato }}</td>
+                        <td class="td-rh">{{ contrato.registro}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock show %}

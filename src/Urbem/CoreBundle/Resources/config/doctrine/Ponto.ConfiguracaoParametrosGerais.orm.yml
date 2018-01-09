@@ -1,0 +1,219 @@
+Urbem\CoreBundle\Entity\Ponto\ConfiguracaoParametrosGerais:
+    type: entity
+    table: ponto.configuracao_parametros_gerais
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        codDiaDsr:
+            type: integer
+            nullable: false
+            column: cod_dia_dsr
+        descricao:
+            type: string
+            nullable: false
+            length: 100
+        limitarAtrasos:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: limitar_atrasos
+        horaNoturno1:
+            type: time
+            nullable: false
+            column: hora_noturno1
+        horaNoturno2:
+            type: time
+            nullable: false
+            column: hora_noturno2
+        separarAdicional:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: separar_adicional
+        lancarAbono:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: lancar_abono
+        lancarDesconto:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: lancar_desconto
+        trabalhoFeriado:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: trabalho_feriado
+        somarExtras:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+            column: somar_extras
+        vigencia:
+            type: date
+            nullable: false
+    manyToOne:
+        fkPontoConfiguracaoRelogioPonto:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoRelogioPonto
+            inversedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+        fkAdministracaoDiasSemana:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\DiasSemana
+            inversedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_dia_dsr:
+                    referencedColumnName: cod_dia
+    oneToMany:
+        fkPontoConfiguracaoLotacoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoLotacao
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+        fkPontoDiasUteis:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\DiasUteis
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+    oneToOne:
+        fkPontoAtrasos:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\Atrasos
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoFaltas:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\Faltas
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoFaltaDsr:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FaltaDsr
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoHorasDescontoDsr:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\HorasDescontoDsr
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoFatorMultiplicacao:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\FatorMultiplicacao
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoHorasExtras:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\HorasExtras
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoHorasPosterior:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\HorasPosterior
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoHorasAnterior:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\HorasAnterior
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoRemarcacoesConsecutivas:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\RemarcacoesConsecutivas
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoArredondarTempo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ArredondarTempo
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp
+        fkPontoCalendarioPonto:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\CalendarioPonto
+            mappedBy: fkPontoConfiguracaoParametrosGerais
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao
+                timestamp:
+                    referencedColumnName: timestamp

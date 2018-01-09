@@ -1,0 +1,49 @@
+Urbem\CoreBundle\Entity\Estagio\EntidadeIntermediadoraEstagio:
+    type: entity
+    table: estagio.entidade_intermediadora_estagio
+    id:
+        codCurso:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_curso
+        codEstagio:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_estagio
+        cgmEstagiario:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_estagiario
+        cgmEntidade:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_entidade
+        cgmInstituicaoEnsino:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cgm_instituicao_ensino
+    fields: {  }
+    manyToOne:
+        fkEstagioEstagiarioEstagio:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EstagiarioEstagio
+            inversedBy: fkEstagioEntidadeIntermediadoraEstagios
+            joinColumns:
+                cod_estagio:
+                    referencedColumnName: cod_estagio
+                cgm_estagiario:
+                    referencedColumnName: cgm_estagiario
+                cod_curso:
+                    referencedColumnName: cod_curso
+                cgm_instituicao_ensino:
+                    referencedColumnName: cgm_instituicao_ensino
+        fkEstagioEntidadeIntermediadora:
+            targetEntity: Urbem\CoreBundle\Entity\Estagio\EntidadeIntermediadora
+            inversedBy: fkEstagioEntidadeIntermediadoraEstagios
+            joinColumns:
+                cgm_entidade:
+                    referencedColumnName: numcgm

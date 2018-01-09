@@ -1,0 +1,41 @@
+Urbem\CoreBundle\Entity\Ldo\TipoReceitaDespesa:
+    type: entity
+    table: ldo.tipo_receita_despesa
+    id:
+        codTipo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_tipo
+        tipo:
+            type: string
+            generator:
+                strategy: NONE
+    fields:
+        codEstrutural:
+            type: string
+            nullable: false
+            length: 150
+            column: cod_estrutural
+        nivel:
+            type: decimal
+            nullable: false
+            precision: 1
+            scale: 0
+        descricao:
+            type: string
+            nullable: false
+            length: 160
+        rpps:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    oneToMany:
+        fkLdoConfiguracaoReceitaDespesas:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Ldo\ConfiguracaoReceitaDespesa
+            mappedBy: fkLdoTipoReceitaDespesa

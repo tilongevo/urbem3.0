@@ -1,0 +1,43 @@
+Urbem\CoreBundle\Entity\Imobiliario\BaixaTrecho:
+    type: entity
+    table: imobiliario.baixa_trecho
+    id:
+        codTrecho:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_trecho
+        codLogradouro:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_logradouro
+        timestamp:
+            type: datetimepk
+            generator:
+                strategy: NONE
+    fields:
+        justificativa:
+            type: text
+            nullable: false
+        justificativaTermino:
+            type: text
+            nullable: true
+            column: justificativa_termino
+        dtInicio:
+            type: date
+            nullable: false
+            column: dt_inicio
+        dtTermino:
+            type: date
+            nullable: true
+            column: dt_termino
+    manyToOne:
+        fkImobiliarioTrecho:
+            targetEntity: Urbem\CoreBundle\Entity\Imobiliario\Trecho
+            inversedBy: fkImobiliarioBaixaTrechos
+            joinColumns:
+                cod_trecho:
+                    referencedColumnName: cod_trecho
+                cod_logradouro:
+                    referencedColumnName: cod_logradouro

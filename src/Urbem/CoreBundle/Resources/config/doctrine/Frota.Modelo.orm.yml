@@ -1,0 +1,35 @@
+Urbem\CoreBundle\Entity\Frota\Modelo:
+    type: entity
+    table: frota.modelo
+    id:
+        codModelo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_modelo
+        codMarca:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_marca
+    fields:
+        nomModelo:
+            type: string
+            nullable: false
+            length: 30
+            column: nom_modelo
+    manyToOne:
+        fkFrotaMarca:
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Marca
+            inversedBy: fkFrotaModelos
+            joinColumns:
+                cod_marca:
+                    referencedColumnName: cod_marca
+    oneToMany:
+        fkFrotaVeiculos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Frota\Veiculo
+            mappedBy: fkFrotaModelo

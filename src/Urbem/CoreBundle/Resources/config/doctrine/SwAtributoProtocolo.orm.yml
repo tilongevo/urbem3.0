@@ -1,0 +1,57 @@
+Urbem\CoreBundle\Entity\SwAtributoProtocolo:
+    type: entity
+    table: sw_atributo_protocolo
+    id:
+        codAtributo:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: sw_atributo_protocolo_cod_atributo_seq
+                allocationSize: 1
+                initialValue: 1
+            column: cod_atributo
+    fields:
+        nomAtributo:
+            type: string
+            nullable: false
+            length: 60
+            column: nom_atributo
+        tipo:
+            type: string
+            nullable: false
+            length: 1
+        valorPadrao:
+            type: text
+            nullable: false
+            column: valor_padrao
+        obrigatorio:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+    oneToMany:
+        fkSwProcessoAtributoValores:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoAtributoValor
+            mappedBy: fkSwAtributoProtocolo
+        fkSwAssuntoAtributos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\SwAssuntoAtributo
+            mappedBy: fkSwAtributoProtocolo
+    oneToOne:
+        fkSwProcessoAtributo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\SwProcessoAtributo
+            mappedBy: fkSwAtributoProtocolo
+            joinColumns:
+                cod_atributo:
+                    referencedColumnName: cod_atributo

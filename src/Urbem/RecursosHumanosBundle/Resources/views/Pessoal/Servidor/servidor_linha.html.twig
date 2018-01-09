@@ -1,0 +1,116 @@
+{% set pensao = field.options.data.pensao %}
+
+<tr class="sonata-ba-view-container">
+    <th>{{ "label.pensao.nomServidor" | trans }}</th>
+    <td>{{ pensao.fkPessoalServidorDependente.fkPessoalServidor }}</td>
+</tr>
+<tr>
+    <th>{{ "label.pensao.dependente" | trans }}</th>
+    <td>{{ pensao.fkPessoalServidorDependente.fkPessoalDependente }}</td>
+</tr>
+<tr class="sonata-ba-view-container">
+    <th>{{ "label.pensao.tipoPensao" | trans }}</th>
+    {% if pensao.tipoPensao == 'A' %}
+        <td>{{ "label.pensao.choices.tipoPensao.amigavel" | trans}}</td>
+        {% else %}
+        <td>{{ "label.pensao.choices.tipoPensao.judicial" | trans}}</td>
+    {% endif %}
+</tr>
+<tr>
+    <th>{{ "label.pensao.percentual" | trans }}</th>
+    <td>{{ pensao.percentual }}</td>
+</tr>
+<tr class="sonata-ba-view-container">
+    <th>{{ "label.pensao.dtInclusao" | trans }}</th>
+    <td>{{ pensao.dtInclusao | date("d/m/Y") }}</td>
+</tr>
+<tr>
+    <th>{{ "label.pensao.dtLimite" | trans }}</th>
+    <td>
+        {% if pensao.dtLimite %}
+            {{ pensao.dtLimite | date("d/m/Y") }}
+        {% endif %}
+    </td>
+</tr>
+<tr class="sonata-ba-view-container">
+    <th>{{ "label.pensao.valor" | trans }}</th>
+    <td>{{ pensao.fkPessoalPensaoValor }}</td>
+</tr>
+<tr>
+    <th>{{ "label.pensao.observacao" | trans }}</th>
+    <td>{{ pensao.observacao }}</td>
+</tr>
+<tr>
+    <th>{{ "label.pensao.titulo.informacoesbancarias" | trans }}</th>
+    <td>
+        <table>
+            <tbody>
+                <tr>
+                    <th>{{ "label.pensao.banco" | trans }}</th>
+                    <td>{{ pensao.fkPessoalPensaoBanco }}</td>
+                </tr>
+                <tr>
+                    <th>{{ "label.pensao.agencia" | trans }}</th>
+                    <td>
+                        {{ pensao.fkPessoalPensaoBanco.fkMonetarioAgencia.numAgencia }} -
+                        {{ pensao.fkPessoalPensaoBanco.fkMonetarioAgencia.nomAgencia }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ "label.bordero.contaCorrente" | trans }}</th>
+                    <td>{{ pensao.fkPessoalPensaoBanco.contaCorrente }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+{% if pensao.fkPessoalResponsavelLegal %}
+    <tr>
+        <th>{{ "label.pensao.rdoResponsavel" | trans}}</th>
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Nome: </th>
+                        <td>{{ pensao.fkPessoalResponsavelLegal.fkSwCgmPessoaFisica }}</td>
+                    </tr>
+                    <tr>
+                        <th>Endereço:</th>
+                        <td>
+                            {{ pensao.fkPessoalResponsavelLegal.fkSwCgmPessoaFisica.fkSwCgm.logradouro }} -
+                            {{ pensao.fkPessoalResponsavelLegal.fkSwCgmPessoaFisica.fkSwCgm.numero }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>CEP:</th>
+                        <td>{{ pensao.fkPessoalResponsavelLegal.fkSwCgmPessoaFisica.fkSwCgm.cep }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telefone:</th>
+                        <td>{{ pensao.fkPessoalResponsavelLegal.fkSwCgmPessoaFisica.fkSwCgm.foneResidencial }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+{% endif %}
+
+{% if pensao.fkPessoalPensaoIncidencias.count > 0  %}
+    <tr>
+        <th>{{ "label.pensao.chIncidencia" | trans }}</th>
+        <td>
+            <table>
+                <tbody>
+                {% for incidencia in pensao.fkPessoalPensaoIncidencias %}
+                    <tr>
+                        <td>{{ incidencia.fkPessoalIncidencia.descricao }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </td>
+    </tr>
+{% endif %}
+
+
+

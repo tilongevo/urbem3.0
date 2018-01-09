@@ -1,0 +1,97 @@
+Urbem\CoreBundle\Entity\Arrecadacao\GrupoCredito:
+    type: entity
+    table: arrecadacao.grupo_credito
+    repositoryClass: Urbem\CoreBundle\Repository\Arrecadacao\GrupoCreditoRepository
+    id:
+        codGrupo:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_grupo
+        anoExercicio:
+            type: string
+            generator:
+                strategy: NONE
+            column: ano_exercicio
+    fields:
+        codModulo:
+            type: integer
+            nullable: false
+            column: cod_modulo
+        descricao:
+            type: string
+            nullable: false
+            length: 80
+    manyToOne:
+        fkArrecadacaoArrecadacaoModulos:
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\ArrecadacaoModulos
+            inversedBy: fkArrecadacaoGrupoCreditos
+            joinColumns:
+                cod_modulo:
+                    referencedColumnName: cod_modulo
+    oneToMany:
+        fkArrecadacaoAcrescimoGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AcrescimoGrupo
+            mappedBy: fkArrecadacaoGrupoCredito
+        fkArrecadacaoCalculoGrupoCreditos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CalculoGrupoCredito
+            mappedBy: fkArrecadacaoGrupoCredito
+        fkArrecadacaoAtributoGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\AtributoGrupo
+            mappedBy: fkArrecadacaoGrupoCredito
+        fkArrecadacaoPermissoes:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\Permissao
+            mappedBy: fkArrecadacaoGrupoCredito
+        fkFiscalizacaoProcessoFiscalGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Fiscalizacao\ProcessoFiscalGrupo
+            mappedBy: fkArrecadacaoGrupoCredito
+        fkArrecadacaoCreditoGrupos:
+            cascade:
+                - persist
+                - remove
+            orphanRemoval: true
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CreditoGrupo
+            mappedBy: fkArrecadacaoGrupoCredito
+    oneToOne:
+        fkArrecadacaoCalendarioFiscal:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\CalendarioFiscal
+            mappedBy: fkArrecadacaoGrupoCredito
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio
+        fkArrecadacaoRegraDesoneracaoGrupo:
+            cascade:
+                - persist
+                - remove
+            targetEntity: Urbem\CoreBundle\Entity\Arrecadacao\RegraDesoneracaoGrupo
+            mappedBy: fkArrecadacaoGrupoCredito
+            joinColumns:
+                cod_grupo:
+                    referencedColumnName: cod_grupo
+                ano_exercicio:
+                    referencedColumnName: ano_exercicio

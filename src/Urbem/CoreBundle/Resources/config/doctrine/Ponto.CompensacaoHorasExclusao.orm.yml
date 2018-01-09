@@ -1,0 +1,37 @@
+Urbem\CoreBundle\Entity\Ponto\CompensacaoHorasExclusao:
+    type: entity
+    table: ponto.compensacao_horas_exclusao
+    id:
+        codCompensacao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_compensacao
+        codContrato:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_contrato
+    fields:
+        numcgm:
+            type: integer
+            nullable: false
+        timestamp:
+            type: datetime
+            nullable: false
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkPontoCompensacaoHorasExclusoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkPontoCompensacaoHoras:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\CompensacaoHoras
+            inversedBy: fkPontoCompensacaoHorasExclusao
+            joinColumns:
+                cod_compensacao:
+                    referencedColumnName: cod_compensacao
+                cod_contrato:
+                    referencedColumnName: cod_contrato

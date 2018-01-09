@@ -1,0 +1,31 @@
+Urbem\CoreBundle\Entity\Ponto\ConfiguracaoRelogioPontoExclusao:
+    type: entity
+    table: ponto.configuracao_relogio_ponto_exclusao
+    id:
+        codConfiguracao:
+            type: integer
+            generator:
+                strategy: NONE
+            column: cod_configuracao
+    fields:
+        timestampExclusao:
+            type: datetime
+            nullable: false
+            column: timestamp_exclusao
+        numcgm:
+            type: integer
+            nullable: false
+    manyToOne:
+        fkAdministracaoUsuario:
+            targetEntity: Urbem\CoreBundle\Entity\Administracao\Usuario
+            inversedBy: fkPontoConfiguracaoRelogioPontoExclusoes
+            joinColumns:
+                numcgm:
+                    referencedColumnName: numcgm
+    oneToOne:
+        fkPontoConfiguracaoRelogioPonto:
+            targetEntity: Urbem\CoreBundle\Entity\Ponto\ConfiguracaoRelogioPonto
+            inversedBy: fkPontoConfiguracaoRelogioPontoExclusao
+            joinColumns:
+                cod_configuracao:
+                    referencedColumnName: cod_configuracao

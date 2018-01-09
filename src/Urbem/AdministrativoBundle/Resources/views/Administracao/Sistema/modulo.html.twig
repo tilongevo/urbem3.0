@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'label.servidor.modulo'|trans }}{% endblock title %}
+
+{% block menu %}
+    {% include '::partials/menu.html.twig' %}
+{% endblock menu %}
+
+{% block content %}
+    <div class="container-rh">
+        <div class="row">
+            <table class="highlight bordered">
+                <thead class="thead-rh">
+                <tr class="sonata-ba-list-field-header">
+                    <th class="th-rh">{{ 'label.atributoDinamico.codGestao'|trans }}</th>
+                    <th class="th-rh">{{ 'label.atributoDinamico.codModulo'|trans }}</th>
+                    <th class="th-rh">{{ 'label.responsavel'|trans }}</th>
+                    <th class="th-rh">{{ 'label.setor'|trans }}</th>
+                    <th class="th-rh"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for modulo in modulos %}
+                    <tr>
+                        <td>{{ modulo.nom_gestao}}</td>
+                        <td>{{ modulo.nom_modulo}}</td>
+                        <td>{{ modulo.username}}</td>
+                        <td>{{ modulo.nom_setor}}</td>
+                        <td>
+                            <a class="hide-on-med-and-down blue-text text-darken-4 tooltipped right"
+                               data-position="left"
+                               data-delay="50"
+                               data-tooltip="Editar"
+                               href="{{ path('urbem_administrativo_administracao_modulo_edit', { 'id': modulo.cod_modulo }) }}">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

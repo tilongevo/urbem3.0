@@ -1,0 +1,184 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "CoreBundle::Sonata/standard_layout.html.twig" %}
+
+{% import 'CoreBundle:Sonata/CRUD:base_show_macro.html.twig' as show_helper %}
+
+{% block actions %}
+    {% include 'CoreBundle:Sonata/CRUD:action_buttons.html.twig' %}
+{% endblock actions %}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {
+        'currentClass' : 'active',
+        'template': sonata_admin.adminPool.getTemplate('tab_menu_template')
+    }, 'twig') }}
+{% endblock tab_menu %}
+
+{% block show %}
+    <form name="show" method="get">
+        <input type="hidden" name="change" value="1">
+    </form>
+    <div class="container-rh">
+        <div class="col s12 profile-box">
+            <div class="row">
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.emitirEmpenhoDiversos.dadosEmpenho'|trans }}</span>
+                </h2>
+                <p class="divider grey col s12"></p>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.numEmpenho'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.getEmpenho.codEmpenho }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codEntidade'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.getEmpenho.codEntidade ~ " - " ~ admin.getEmpenho.fkOrcamentoEntidade.fkSwCgm.nomCgm }}</h6>
+                </div>
+                <div class="col s3 little3-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codDespesa'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codDespesa }}</h6>
+                </div>
+                <div class="col s3 little1-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codClassificacao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codClassificacao }}</h6>
+                </div>
+                <div class="col s3 little1-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.codRecurso'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.codRecurso }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">Saldo Dotação</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.getSaldoDotacao|number_format_currency('BRL') }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">Orgão Orçamentário</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.numOrgao }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">Unidade Orçamentária</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.despesa.numUnidade }}</h6>
+                </div>
+                <div class="col s3 little-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.credor'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkSwCgm.numCgm ~ " - " ~ object.fkSwCgm.nomCgm }}</h6>
+                </div>
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.dtEmissao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.getEmpenho.dtEmpenho|date("d/m/Y") }}</h6>
+                </div>
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.dtVencimento'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ admin.getEmpenho.dtVencimento|date("d/m/Y") }}</h6>
+                </div>
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.codTipo'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoTipoEmpenho.codTipo ~ " - "  ~ object.fkEmpenhoTipoEmpenho.nomTipo }}</h6>
+                </div>
+                {%  if object.fkEmpenhoHistorico is not empty %}
+                <div class="col s3 little-box" style="min-height: 80px">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.preEmpenho.codHistorico'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.fkEmpenhoHistorico.codHistorico ~ " - " ~ object.fkEmpenhoHistorico.nomHistorico }}</h6>
+                </div>
+                {% endif %}
+                <div class="col s3 little2-box">
+                    <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ 'label.emitirEmpenhoDiversos.descricao'|trans }}</h6>
+                    <h6 class="col s12 grey-text text-darken-1">{{ object.descricao }}</h6>
+                </div>
+                <p class="light-grey col s12"></p>
+                <h2 class="blue-text text-darken-4 left">
+                    <span style="padding-top: 10px">{{ 'label.preEmpenho.atributos'|trans }}</span>
+                </h2>
+                <p class="divider grey col s12"></p>
+                {% for atributo in admin.getAtributos %}
+                    <div class="col s3 little-box">
+                        <h6 class="col s12 blue-text text-darken-4 profile-titles">{{ atributo.label }}</h6>
+                        <h6 class="col s12 grey-text text-darken-1">{{ atributo.data }}</h6>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s11 servidor-table" style="margin-top: 20px">
+                <a href="{{ path('urbem_financeiro_empenho_item_empenho_diversos_create', { 'pre_empenho': object.codPreEmpenho, 'exercicio': object.exercicio }) }}">
+                    <i class="material-icons left" style="font-size: 20px">vpn_key</i>
+                    {{ 'label.itemPreEmpenho.itensAutorizacao'|trans }}
+                </a>
+            </div>
+            <div class="col s1" style="margin-top: 20px">
+                <a class="tooltipped incluir"
+                href="{{ path('urbem_financeiro_empenho_item_empenho_diversos_create', { 'pre_empenho': object.codPreEmpenho, 'exercicio': object.exercicio }) }}">
+                <i class="mdi mdi-plus-circle right small"></i>
+                </a>
+            </div>
+
+            <table class="col s12 highlight bordered">
+                <thead>
+                    <th class="th-rh" width="10"></th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.nomItem'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.vlUnitario'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.quantidade'|trans }}</th>
+                    <th class="th-rh">{{ 'label.itemPreEmpenho.vlTotal'|trans }}</th>
+                    <th class="th-rh" width="100">{{ 'acoes'|trans }}</th>
+                </thead>
+                <tbody>
+                    {% for itemPreEmpenho in admin.itemPreEmpenho %}
+                        <tr>
+                            <td class="td-rh">{{ itemPreEmpenho.numItem }}</td>
+                            <td class="td-rh">{{ itemPreEmpenho.nomItem }}</td>
+                            <td class="td-rh text-right">{{ itemPreEmpenho.vlUnitario|number_format_currency('BRL') }}</td>
+                            <td class="td-rh text-right">{{ itemPreEmpenho.quantidade|number_format_currency('BRL') }}</td>
+                            <td class="td-rh text-right">{{ itemPreEmpenho.vlTotal|number_format_currency('BRL') }}</td>
+                            <td class="td-rh">
+                              <div class="btn-group">
+                                  <a href="{{ path('urbem_financeiro_empenho_item_empenho_diversos_edit', { 'id': itemPreEmpenho.codPreEmpenho ~ "~" ~ itemPreEmpenho.exercicio ~ "~" ~ itemPreEmpenho.numItem}) }}"
+                                     class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                     data-toggle="tooltip" data-placement="top" title="{{ 'editar'|trans }}">
+                                      <i class="material-icons">edit</i>
+                                  </a>
+                                  <a href="{{ path('urbem_financeiro_empenho_item_empenho_diversos_delete', { 'id': itemPreEmpenho.codPreEmpenho ~ "~" ~ itemPreEmpenho.exercicio ~ "~" ~ itemPreEmpenho.numItem}) }}"
+                                     class="hide-on-med-and-down blue-text text-darken-4 tooltipped left"
+                                     data-toggle="tooltip" data-placement="top" title="{{ 'deletar'|trans }}">
+                                      <i class="material-icons">delete</i>
+                                  </a>
+                              </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td class="td-rh" colspan="4">{{ 'label.itemPreEmpenho.total'|trans }}</td>
+                        <td class="td-rh text-right">{{ admin.getVlTotal()|number_format_currency('BRL') }}</td>
+                        <td class="td-rh" width="100"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <div class="sonata-ba-form-actions well well-small form-actions row">
+            <div class="left">
+                <a href="{{ path('urbem_financeiro_empenho_autorizacao_list') }}"
+                   class="back btn-floating white-text blue darken-4 btn-success">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+            <div class="right">
+                <a href="{{ path('urbem_financeiro_empenho_emitir_empenho_diversos_create') }}"
+                   class="white-text blue darken-4 btn btn-success save">
+                    <i class="mdi mdi-checkbox-multiple-marked left"></i>
+                    Concluir
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock show %}
