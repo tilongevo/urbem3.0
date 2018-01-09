@@ -1,0 +1,119 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require "bunny"
+require "optparse"
+
+def start
+    $options = {}
+    $options[:host] = '127.0.0.1'
+    $options[:port] = '5672'
+    $options[:uri] = nil
+
+    OptionParser.new do |opts|
+      opts.banner = "Usage: consumer [options]"
+      opts.on('-r n', '--route_key', 'Route KEY') { |v| $options[:route_key] = v }
+      opts.on('-x n', '--exchange', 'Exchange KEY') { |v| $options[:exchange] = v }
+      opts.on('-c n', '--console_path', 'SF console path') { |v| $options[:console_path] = v }
+      opts.on('-e n', '--env', 'SF ENV') { |v| $options[:env] = v }
+      opts.on('-p n', '--pid', 'PID file') { |v| $options[:pid] = v }
+      opts.on('-h n', '--host', 'host') { |v| $options[:host] = v }
+      opts.on('-P n', '--port', 'port') { |v| $options[:port] = v }
+      opts.on('-u n', '--uri', 'URI') { |v| $options[:uri] = v }
+    end.parse!
+
+    raise OptionParser::MissingArgument if $options[:route_key].nil?
+    raise OptionParser::MissingArgument if $options[:exchange].nil?
+    raise OptionParser::MissingArgument if $options[:console_path].nil?
+    raise OptionParser::MissingArgument if $options[:env].nil?
+    raise OptionParser::MissingArgument if $options[:pid].nil?
+
+    $pid = nil
+
+    if File.exist?($options[:pid]) then
+        log("Process already running. If it's not, please remove " + $options[:pid])
+        exit
+    end
+
+    if $options[:uri].nil?
+        $options[:uri] = "amqp://#{$options[:host]}:#{$options[:port]}"
+    end
+
+    begin
+        $pid = File.new($options[:pid], "w")
+
+        work
+
+    rescue Exception => e
+        log(e.message)
+        terminate
+        exit
+    end
+
+end
+
+def work
+    $pid.sync = true
+    $pid.puts(Process.pid.to_s)
+
+    handle_signals
+
+    $connection = Bunny.new($options[:uri])
+    $connection.start
+
+    $channel = $connection.create_channel
+    $channel.prefetch(1)
+
+    $queue = $channel.queue($options[:route_key], durable: true)
+    $exchange = $channel.exchange($options[:exchange], type: "x-delayed-message", arguments: {"x-delayed-type" => "direct"}, durable: true)
+    $queue.bind($exchange, :routing_key => $options[:route_key])
+
+    log("Waiting for messages. To exit press CTRL+C")
+
+    begin
+      $queue.subscribe(:manual_ack => true, :block => true) do |delivery_info, properties, body|
+        log(body)
+        Thread.new {
+            r = `#{$options[:console_path]} queue:consume -b '#{body}' --env '#{$options[:env]}'`
+            log(r)
+            $channel.ack(delivery_info.delivery_tag)
+        }
+      end
+    rescue Interrupt => _
+      conn.close
+    end
+end
+
+def handle_signals
+    # termination signal
+    Signal.trap("TERM") do
+        terminate
+    end
+
+    # kill signal
+    Signal.trap("SIGTERM") do
+        terminate
+    end
+
+    # keyboard interruption
+    Signal.trap("INT") do
+        terminate
+    end
+end
+
+def terminate
+    log("exiting")
+
+    if File.exist?($options[:pid]) then
+        $pid.close
+        File.delete($options[:pid])
+    end
+
+    exit
+end
+
+def log(str)
+    puts "[#{Time.now.strftime("%m/%d/%Y %H:%M:%S")}] #{str}"
+end
+
+start
